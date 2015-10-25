@@ -1,0 +1,78 @@
+#ifndef SPRITE_H
+#define SPRITE_H
+
+// uses:
+#include <string>
+
+// inherits:
+#include <QGraphicsItem>
+#include <QObject>
+
+// members:
+#include <unordered_map>
+#include <vector>
+#include <QPixmap>
+#include <QGraphicsPixmapItem>
+#include <QTimer>
+
+/// A QGraphicsItem that represents a sprite with named animations that can
+/// be played.
+/// @author Abdullah Aghazadah
+/// @date 5-16-15
+///
+/// To create a Sprite, you must pass a default frame to the constructor. The
+/// default frame is not a named animation. It is just the starting image of
+/// the sprite (before any animations are played). It is recommended to use
+/// the first frame of a stand/idle animation as the default image.
+///
+/// Since a Sprite is a QGraphicsItem, it can be placed inside a
+/// QGraphicsScene. To add a QPixmap to an animation, use
+/// Sprite::addFrame(QPixmap,std::string). The specified pixmap will then
+/// be added to the specified animation. If an animation of that name does not
+/// exist, it will be created. If an animation of that name already exists,
+/// then the pixmap will be added as the next image in the animation. To add a
+/// bunch of images from a resource folder to an animation use
+/// Sprite::addFrames(std::string,int,std::string).
+///
+/// A Sprite can play an animation a certain number of times by using
+/// Sprite::play(std::string,int,int). A value of -1 times means that the
+/// animation will be played again and again forever.
+///
+class Sprite:public QObject, public QGraphicsItem{
+    Q_OBJECT
+public:
+    // constructor
+    Sprite(QGraphicsItem* parent=nullptr);
+
+    // readers
+    QRectF boundingRect() const;
+    bool hasAnimation(std::string animation) const;
+    std::string playingAnimation();
+
+    // modifiers
+    void addFrame(QPixmap frame, std::string toAnimation);
+    void addFrames(std::string resourceFolder, int numOfImages, std::string imagePrefix);
+    void setPixmap(QPixmap pixmap);
+    void stop();
+    void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
+    void play(std::string animation, int timesToPlay, int delayBetweenFrames);
+
+public slots:
+    void nextFrame();
+
+private:
+    // mapping of string : vector of pixmaps (an animation)
+    std::unordered_map<std::string,std::vector<QPixmap>> animation_;
+    std::string playingAnimation_;
+
+    QGraphicsPixmapItem* pixmap_;
+    QTimer* timer_;
+    std::vector<QPixmap> animationPixmaps; // frames of the currently
+                                           // playing animation
+    int currentFrame_;
+    int timesPlayed_;
+    int timesToPlay_;
+
+};
+
+#endif // SPRITE_H
