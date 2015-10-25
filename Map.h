@@ -29,6 +29,7 @@ public:
     Map(int numCellsWide=20, int numCellsLong=20, int cellSize=64);
 
     bool contains(const QPointF& pos);
+    bool contains(Entity* entity);
 
     PathingMap& pathingMap();
 

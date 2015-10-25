@@ -35,6 +35,12 @@ bool Map::contains(const QPointF &pos){
     return pos.x() < qreal(width()) && pos.y() < qreal(height());
 }
 
+/// Returns true if the Map contains the specified Entity.
+bool Map::contains(Entity *entity)
+{
+    return entities().count(entity);
+}
+
 /// Returns a reference to the Map's PathingMap.
 PathingMap &Map::pathingMap(){
     return pathingMap_;
@@ -179,7 +185,11 @@ void Map::addEntity(Entity *entity){
     // make sure the entity's position is inside the map
     assert(contains(entity->pointPos()));
 
-    // TODO warn (with a qDebug messege) if the entity is alread in the map
+    // if the entity is already in the map, do nothing (just display a messege)
+    if (contains(entity)) {
+        qDebug() << "Entity is already in the map!";
+        return;
+    }
 
     // add the entity to the list of entities
     entities_.insert(entity);

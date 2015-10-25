@@ -108,7 +108,6 @@ private:
     std::vector<Entity*> children_;
     Entity* parent_;
 
-
     // moving
     int stepSize_;
     int stepFrequency_;
