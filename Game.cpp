@@ -46,15 +46,15 @@ void Game::mousePressEvent(QMouseEvent *event){
     // =TODO test code, remove=
 
     // move to clicked pos
-//    if (event->button() == Qt::LeftButton){
-//        // move player
-//        player_->moveTo(event->pos());
-//    }
-
-    // spear thrust
     if (event->button() == Qt::LeftButton){
-        player_->spear_->attackThrust();
+        // move player
+        player_->moveTo(event->pos());
     }
+
+//    // spear thrust
+//    if (event->button() == Qt::LeftButton){
+//        player_->spear_->attackThrust();
+//    }
 
     // add rock (block cells at position)
     if (event->button() == Qt::RightButton){

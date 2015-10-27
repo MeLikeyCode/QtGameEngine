@@ -36,53 +36,13 @@ int main(int argc, char *argv[])
     player->addNamedPoint(QPointF(-20,50),"right shoulder");
     player->addNamedPoint(QPointF(25,25),"head");
 
+    // attach spear to left shoulder of player Entity
     Spear* spear = new Spear();
     map->addEntity(spear);
     player->spear_ = spear;
     spear->setPointPos(player->namedPoint("left shoulder"));
     spear->setParentEntity(player);
     spear->setOwner(player);
-
-//    Spear* spear2 = new Spear();
-//    map->addEntity(spear2);
-//    player->spear2_ = spear2;
-//    spear2->setPointPos(player->namedPoint("right shoulder"));
-//    spear2->setParentEntity(player);
-//    spear2->setOwner(player);
-
-    // enemies
-    Entity* e1 = new Entity();
-    Sprite* e1s = new Sprite();
-    e1s->addFrames(":resources/graphics/human",1,"stand");
-    e1s->addFrames(":resources/graphics/human",6,"walk");
-    map->addEntity(e1);
-    e1->setSprite(e1s);
-    e1->setCellPos(Node(8,8));
-
-    Entity* e2 = new Entity();
-    Sprite* e2s = new Sprite();
-    e2s->addFrames(":resources/graphics/human",1,"stand");
-    e2s->addFrames(":resources/graphics/human",6,"walk");
-    map->addEntity(e2);
-    e2->setSprite(e2s);
-    e2->setCellPos(Node(3,8));
-
-//    Entity* e2 = new Entity();
-//    map->addEntity(e2);
-//    e2->setCellPos(Node(6,8));
-
-//    Entity* e3 = new Entity();
-//    map->addEntity(e3);
-//    e3->setCellPos(Node(6,5));
-
-//    Entity* e4 = new Entity();
-//    map->addEntity(e4);
-//    e4->setCellPos(Node(8,5));
-
-    game->enemies_.push_back(e1);
-    game->enemies_.push_back(e2);
-
-
 
     return a.exec();
 }

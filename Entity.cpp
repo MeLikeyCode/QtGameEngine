@@ -117,7 +117,7 @@ void Entity::moveStepAutomatic(){
         // face target
         rotateTo(pointsToFollow_[targetPointIndex_]);
 
-        // recalculate path (in case pathingmap changed)
+        // recalculate path (in case pathingmap changed) TODO enable
         moveTo(pointsToFollow_.back());
     }
 
