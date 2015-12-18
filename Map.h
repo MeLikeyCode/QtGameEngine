@@ -31,6 +31,8 @@ public:
     bool contains(const QPointF& pos);
     bool contains(Entity* entity);
 
+    QPointF getMousePosition();
+
     PathingMap& pathingMap();
 
     int width() const;
@@ -40,6 +42,8 @@ public:
     int numCellsWide() const;
     int numCellsLong() const;
     int cellSize() const;
+    QPointF cellToPoint(const Node &cell);
+    Node pointToCell(const QPointF& point);
 
     std::set<Entity*> entities();
     void addEntity(Entity* entity);

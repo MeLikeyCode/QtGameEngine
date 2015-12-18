@@ -40,6 +40,7 @@ public:
     void keyReleaseEvent(QKeyEvent* event);
 
     std::set<int> keysPressed();
+    QPoint getMousePos();
 
     void setPlayer(Entity* player);
     Entity* player();

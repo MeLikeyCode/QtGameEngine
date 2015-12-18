@@ -29,7 +29,10 @@ SOURCES += main.cpp \
     Entity.cpp \
     CountExpiringTimer.cpp \
     MeleeWeapon.cpp \
-    Spear.cpp
+    Spear.cpp \
+    PlayerControlledMoveBehavior.cpp \
+    MoveRelativeToSelf.cpp \
+    MoveRelativeToScreen.cpp
 
 HEADERS  += \
     Map.h \
@@ -48,7 +51,10 @@ HEADERS  += \
     Entity.h \
     CountExpiringTimer.h \
     MeleeWeapon.h \
-    Spear.h
+    Spear.h \
+    PlayerControlledMoveBehavior.h \
+    MoveRelativeToSelf.h \
+    MoveRelativeToScreen.h
 
 RESOURCES += \
     res.qrc

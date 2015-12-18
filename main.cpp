@@ -19,6 +19,8 @@ int main(int argc, char *argv[])
     Entity* player = new Entity();
     map->addEntity(player);
     player->setCellPos(Node(2,2));
+    player->setPlayerControlled(true);
+    game->setPlayer(player); // game knows about this entity (for testing)
 
     // give the entity a sprite (overrides default one)
     Sprite* spr = new Sprite();
@@ -26,10 +28,6 @@ int main(int argc, char *argv[])
     spr->addFrames(":resources/graphics/human",1,"stand"); // stand anim
     spr->addFrames(":resources/graphics/human",6,"walk");  // walk anim
     spr->play("stand",1,1); // play stand anim
-
-    // allow this Entity to be accessed by Entity* Game::player()
-    // allow Entity to move in response to keyboard/mouse
-    game->setPlayer(player);
 
     // add some attachment points for the player
     player->addNamedPoint(QPointF(-20,0),"left shoulder");

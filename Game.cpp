@@ -45,11 +45,19 @@ Map *Game::map(){
 void Game::mousePressEvent(QMouseEvent *event){
     // =TODO test code, remove=
 
-    // move to clicked pos
-    if (event->button() == Qt::LeftButton){
-        // move player
-        player_->moveTo(event->pos());
+    // toggle between player controlled/ai controlled
+    static bool playerControlled = false;
+    if (!playerControlled){
+        player_->setPlayerControlled(true);
+        playerControlled = true;
     }
+    else{
+        player_->setPlayerControlled(false);
+        playerControlled = false;
+
+        player_->moveTo(Node(8,8));
+    }
+
 
 //    // spear thrust
 //    if (event->button() == Qt::LeftButton){
@@ -77,7 +85,7 @@ void Game::mousePressEvent(QMouseEvent *event){
 
 void Game::mouseMoveEvent(QMouseEvent *event)
 {
-    player()->rotateTo(event->pos());
+
 }
 
 void Game::keyPressEvent(QKeyEvent *event)
@@ -94,15 +102,21 @@ void Game::keyReleaseEvent(QKeyEvent *event)
     }
 }
 
+/// Returns the keys that are _currently_ pressed.
 std::set<int> Game::keysPressed()
 {
     return keysPressed_;
 }
 
+/// Returns the current mouse position in Game coordinates.
+QPoint Game::getMousePos()
+{
+    return mapFromGlobal(cursor().pos());
+}
+
 /// Sets the Entity controlled by the Player via keyboard and mouse.
 void Game::setPlayer(Entity *player){
     player_ = player;
-    player_->setCanMoveWithKeys(true);
 }
 
 Entity *Game::player(){

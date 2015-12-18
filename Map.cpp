@@ -4,6 +4,7 @@
 #include <cassert>
 #include <QBrush>
 #include <QGraphicsScene>
+#include "Game.h"
 
 // TODO remove test
 #include <QDebug>
@@ -41,6 +42,13 @@ bool Map::contains(Entity *entity)
     return entities().count(entity);
 }
 
+/// Returns the current mouse position in Map coordinates.
+QPointF Map::getMousePosition()
+{
+    QPoint pos = game()->getMousePos();
+    return game()->mapToScene(pos);
+}
+
 /// Returns a reference to the Map's PathingMap.
 PathingMap &Map::pathingMap(){
     return pathingMap_;
@@ -68,6 +76,18 @@ int Map::numCellsLong() const{
 
 int Map::cellSize() const{
     return cellSize_;
+}
+
+/// Returns the point representing the top left corner of the specified cell.
+QPointF Map::cellToPoint(const Node& cell)
+{
+    return pathingMap().cellToPoint(cell);
+}
+
+/// Returns the cell at the specified point.
+Node Map::pointToCell(const QPointF &point)
+{
+    return pathingMap().pointToCell(point);
 }
 
 std::set<Entity *> Map::entities(){

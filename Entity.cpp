@@ -8,31 +8,34 @@
 #include "CountExpiringTimer.h"
 #include <QLineF>
 #include "Game.h"
+#include "MoveRelativeToScreen.h"
+#include "MoveRelativeToSelf.h"
 
 /// Default constructor.
 Entity::Entity():
-    pathingMap_(1,1,63), // default 1x1 filled (in body) PathingMap
+    pathingMap_(1,1,63),    // default 1x1 filled (in body) PathingMap
     stepSize_(5),
     stepFrequency_(50),
     targetPointIndex_(0),
     rotationFrequency_(3),
-    targetAngle_(0),
-    canMoveWithKeys_(false),
-    movingWithKeys_(false)
+    targetAngle_(0)
 {
     // constructor body
     // = some defaults=
     map_ = nullptr;
     sprite_ = nullptr;
-    automaticMoveTimer_ = new QTimer(this);
+    moveTimer_ = new QTimer(this);
     rotationTimer_ = new QTimer(this);
-    moveWithKeysTimer_ = new QTimer(this);
+    isPlayerControlled_ = false;
+    moveBehavior_ = new MoveRelativeToSelf();
+    moveBehavior_->setEntity(this);
 
     // default sprite
     Sprite* spr = new Sprite();
     setSprite(spr);
 }
 
+/// When an Entity is deleted, it will delete all of its child entities.
 Entity::~Entity()
 {
     for (Entity* entity: children_){
@@ -84,12 +87,7 @@ Node Entity::cellPos(){
 }
 
 /// Causes the Entity to take 1 step closer to moving to its target point.
-void Entity::moveStepAutomatic(){
-    // manual movment with keys should override this
-    if (movingWithKeys_){
-        stopAutomaticMovement();
-    }
-
+void Entity::moveStepAIControlled(){
     // if there are no more points to follow and entity has reached its target
     // - stop moving
     if (targetPointIndex_ >= pointsToFollow_.size() - 1 && targetPointReached()){
@@ -364,11 +362,19 @@ void Entity::moveTo(const QPointF &pos){
     pointsToFollow_ = pts;
     targetPointIndex_ = 1; // start at 1eth not 0eth point (to prevent
                            // back movement if two quick move commands are given)
-    connect(automaticMoveTimer_,SIGNAL(timeout()),this,SLOT(moveStepAutomatic()));
-    automaticMoveTimer_->start(stepFrequency());
+    connect(moveTimer_,SIGNAL(timeout()),this,SLOT(moveStepAIControlled()));
+    moveTimer_->start(stepFrequency());
 
     // play walk animation
     sprite()->play("walk",-1,100);
+}
+
+/// Tells the Entity to move to the specified cell.
+///
+/// @see Entity::moveTo(const QPointF&)
+void Entity::moveTo(const Node &cell)
+{
+    moveTo(map()->cellToPoint(cell));
 }
 
 /// Tells the Entity to move up by one cell of the Map's PathingMap.
@@ -417,29 +423,43 @@ void Entity::moveRight(){
 
 /// Tells the Entity to stop moving.
 void Entity::stopAutomaticMovement(){
-    automaticMoveTimer_->disconnect();
+    moveTimer_->disconnect();
 
     // play stand animation
     sprite()->play("stand",-1,100);
 }
 
-/// Returns True if the Entity moves in response to key presses.
-bool Entity::canMovesWithKeys()
+/// Sets the movement behavior of the Entity when being controlled by a player.
+void Entity::setPlayerControlledMoveBehavior(PlayerControlledMoveBehavior *behavior)
 {
-    return canMoveWithKeys_;
+    moveBehavior_ = behavior;
 }
 
-/// Sets whether the Entity moves in response to key presses.
-void Entity::setCanMoveWithKeys(bool b)
+/// Returns true if the Entity is controlled by a player.
+bool Entity::isPlayerControlled()
 {
-    canMoveWithKeys_ = b;
+    return isPlayerControlled_;
+}
 
-    if (b == true){
-        connect(moveWithKeysTimer_,SIGNAL(timeout()),this,SLOT(moveStepWithKeys()));
-        moveWithKeysTimer_->start(stepFrequency());
+/// Sets whether the Entity is controlled by the player or not.
+///
+/// If the Entity is controlled by a player, it will move in response to
+/// keyboard/mouse input. If the Entity is not controlled by a player, it will
+/// move in response to its own thinking.
+void Entity::setPlayerControlled(bool tf)
+{
+    isPlayerControlled_ = tf;
+
+    // if player controlled
+    if (tf == true){
+        // connect moveTimer_ with movePlayerControlled()
+        moveTimer_->disconnect();
+        connect(moveTimer_,SIGNAL(timeout()),this,SLOT(moveStepPlayerControlled()));
+        moveTimer_->start(stepFrequency());
     }
     else{
-        moveWithKeysTimer_->disconnect();
+        // connect moveTimer_ with moveAIControlled()
+        moveTimer_->disconnect();
     }
 }
 
@@ -527,118 +547,8 @@ QPointF Entity::namedPoint(std::string name)
 }
 
 /// Moves the Entity 1 step closer to its movement in response to keys.
-void Entity::moveStepWithKeys()
+void Entity::moveStepPlayerControlled()
 {
-    // TODO, a lot of repeate code, this can be factored out somewhere.
-
-    bool wPressed = map()->game()->keysPressed().count(Qt::Key_W);
-    bool sPressed = map()->game()->keysPressed().count(Qt::Key_S);
-    bool aPressed = map()->game()->keysPressed().count(Qt::Key_A);
-    bool dPressed = map()->game()->keysPressed().count(Qt::Key_D);
-
-    // move up if W is pressed
-    if (wPressed){
-        // find newPt to move to
-        QLineF line(pointPos(),QPoint(0,0));
-        line.setAngle(360-facingAngle());
-        line.setLength(stepSize());
-        double newX = pointPos().x() + line.dx();
-        double newY = pointPos().y() + line.dy();
-        QPointF newPt(newX,newY);
-
-        // move if the newPt is free
-        if (canFit(newPt)){
-            setPointPos(newPt);
-
-            movingWithKeys_ = true;
-
-            // if the walk animation isn't playing already, play it.
-            if (sprite()->playingAnimation() != std::string("walk")){
-                sprite()->play("walk",-1,100);
-            }
-        }
-
-    }
-
-    // move down if S is pressed
-    if (sPressed){
-        QLineF line(pointPos(),QPoint(0,0));
-        line.setAngle(360-facingAngle());
-        line.setLength(stepSize());
-        line.setAngle(line.angle()+180);
-        double newX = pointPos().x() + line.dx();
-        double newY = pointPos().y() + line.dy();
-        QPointF newPt(newX,newY);
-
-        // move if the newPt is free
-        if (canFit(newPt)){
-            setPointPos(newPt);
-
-            movingWithKeys_ = true;
-
-            // if the walk animation isn't playing already, play it.
-            if (sprite()->playingAnimation() != std::string("walk")){
-                sprite()->play("walk",-1,100);
-            }
-        }
-    }
-
-    // move left if A is pressed
-    if (aPressed){
-        QLineF line(pointPos(),QPoint(0,0));
-        line.setAngle(360-facingAngle());
-        line.setLength(stepSize());
-        line.setAngle(line.angle()+90);
-        double newX = pointPos().x() + line.dx();
-        double newY = pointPos().y() + line.dy();
-        QPointF newPt(newX,newY);
-
-        // move if the newPt is free
-        if (canFit(newPt)){
-            setPointPos(newPt);
-
-            movingWithKeys_ = true;
-
-            // if the walk animation isn't playing already, play it.
-            if (sprite()->playingAnimation() != std::string("walk")){
-                sprite()->play("walk",-1,100);
-            }
-        }
-
-    }
-
-    // move right if D is pressed
-    if (dPressed){
-        QLineF line(pointPos(),QPoint(0,0));
-        line.setAngle(360-facingAngle());
-        line.setLength(stepSize());
-        line.setAngle(line.angle()-90);
-        double newX = pointPos().x() + line.dx();
-        double newY = pointPos().y() + line.dy();
-        QPointF newPt(newX,newY);
-
-        // move if the newPt is free
-        if (canFit(newPt)){
-            setPointPos(newPt);
-
-            movingWithKeys_ = true;
-
-            // if the walk animation isn't playing already, play it.
-            if (sprite()->playingAnimation() != std::string("walk")){
-                sprite()->play("walk",-1,100);
-            }
-        }
-
-    }
-
-    // if none of the keys are pressed, play stand animation
-    if (!wPressed && !aPressed && !sPressed && !dPressed){
-        // only play if it isn't already playing
-        if (sprite()->playingAnimation() != std::string("stand")){
-            sprite()->play("stand",-1,100);
-        }
-
-        movingWithKeys_ = false;
-    }
-
+    // delegate to moveBehavior
+    moveBehavior_->moveStep();
 }

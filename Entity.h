@@ -14,6 +14,7 @@ class Map;
 #include "Sprite.h"
 #include <QPointF>
 #include <unordered_map>
+#include "PlayerControlledMoveBehavior.h"
 
 /// An Entity is the base class for anything that can go inside a Map.
 /// @author Abdullah Aghazadah
@@ -39,6 +40,9 @@ public:
 
     PathingMap pathingMap() const;
     void setPathingMap(const PathingMap& pathingMap);
+    bool canFit(const QPointF& atPos);
+    void disablePathingMap();
+    void enablePathingMap();
 
     Map* map() const;
     void setMap(Map* toMap);
@@ -69,18 +73,17 @@ public:
     void stopRotating();
 
     void moveTo(const QPointF& pos);
+    void moveTo(const Node& cell);
     void moveUp();
     void moveDown();
     void moveLeft();
     void moveRight();
     void stopAutomaticMovement();
+    void setPlayerControlledMoveBehavior(PlayerControlledMoveBehavior* behavior);
 
-    bool canMovesWithKeys();
-    void setCanMoveWithKeys(bool b);
-    bool canFit(const QPointF& atPos);
 
-    void disablePathingMap();
-    void enablePathingMap();
+    bool isPlayerControlled();
+    void setPlayerControlled(bool tf);
 
     std::vector<Entity*> children() const;
     void setParentEntity(Entity* parent);
@@ -95,8 +98,8 @@ public:
     Spear* spear2_;
 
 public slots:
-    void moveStepWithKeys();
-    void moveStepAutomatic();
+    void moveStepPlayerControlled();
+    void moveStepAIControlled();
     void rotateStep();
 
 private:
@@ -111,7 +114,7 @@ private:
     // moving
     int stepSize_;
     int stepFrequency_;
-    QTimer* automaticMoveTimer_;
+    QTimer* moveTimer_;
     bool targetPointReached();
     void stepTowardsTarget();
     std::vector<QPointF> pointsToFollow_;
@@ -121,9 +124,10 @@ private:
     QTimer* rotationTimer_;
     void rotateTowardsTargetAngle();
     bool canMoveWithKeys_;
-    QTimer* moveWithKeysTimer_;
-    bool movingWithKeys_;
     std::map<std::string,QPointF> namedPoints_;
+    bool isPlayerControlled_;
+    PlayerControlledMoveBehavior* moveBehavior_;
+
 
 };
 
