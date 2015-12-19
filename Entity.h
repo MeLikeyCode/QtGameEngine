@@ -1,13 +1,8 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-class Spear; // TODO remove, test only
-
-// uses:
+// knows of:
 class Map;
-
-// inherits:
-#include <QGraphicsItem>
 
 // members:
 #include "PathingMap.h"
@@ -25,18 +20,17 @@ class Map;
 /// moved, it will notify the Map so that it can once again update the
 /// PathingMap.
 ///
-/// An entity also has health and energy and provides functions for moving around
-/// the map. Furthermore, an entity has "sight" in the sense that it provdes
-/// functions for retrieving all other entities within a certain radius of it
-/// (this is delgated to the map).
-class Entity:public QObject{
-    Q_OBJECT
+/// Entities support parent/child relationships. When a parent Entity moves or
+/// rotates, so do all of its children. When a parent Entity is deleted, so
+/// are all of its children.
+class Entity
+{
 public:
     // constructor
     Entity();
 
     // deconstructor
-    ~Entity();
+    virtual ~Entity();
 
     PathingMap pathingMap() const;
     void setPathingMap(const PathingMap& pathingMap);
@@ -56,34 +50,8 @@ public:
     Sprite* sprite() const;
     QRectF boundingRect();
 
-    void setStepSize(int stepSize);
-    int stepSize();
-    void setStepFrequency(int to);
-    int stepFrequency();
-
-    int rotationFrequency() const;
-    void setRotationFrequency(int freq);
     int facingAngle();
-    void rotateRight();
-    void rotateLeft();
-    void rotateRight(int degrees);
-    void rotateLeft(int degrees);
-    void rotateTo(int angle);
-    void rotateTo(QPointF point);
-    void stopRotating();
-
-    void moveTo(const QPointF& pos);
-    void moveTo(const Node& cell);
-    void moveUp();
-    void moveDown();
-    void moveLeft();
-    void moveRight();
-    void stopAutomaticMovement();
-    void setPlayerControlledMoveBehavior(PlayerControlledMoveBehavior* behavior);
-
-
-    bool isPlayerControlled();
-    void setPlayerControlled(bool tf);
+    void setFacingAngle(double angle);
 
     std::vector<Entity*> children() const;
     void setParentEntity(Entity* parent);
@@ -93,42 +61,14 @@ public:
     void addNamedPoint(const QPointF& point, std::string name);
     QPointF namedPoint(std::string name);
 
-    // TODO for testing out spear only, delete after
-    Spear* spear_;
-    Spear* spear2_;
-
-public slots:
-    void moveStepPlayerControlled();
-    void moveStepAIControlled();
-    void rotateStep();
-
 private:
     // main attributes
     PathingMap pathingMap_;
     Map* map_;
     Sprite* sprite_;
-    int rotationFrequency_;
     std::vector<Entity*> children_;
     Entity* parent_;
-
-    // moving
-    int stepSize_;
-    int stepFrequency_;
-    QTimer* moveTimer_;
-    bool targetPointReached();
-    void stepTowardsTarget();
-    std::vector<QPointF> pointsToFollow_;
-    int targetPointIndex_;
-    int targetAngle_;
-    bool rotateRight_; // true is right, false is left
-    QTimer* rotationTimer_;
-    void rotateTowardsTargetAngle();
-    bool canMoveWithKeys_;
     std::map<std::string,QPointF> namedPoints_;
-    bool isPlayerControlled_;
-    PlayerControlledMoveBehavior* moveBehavior_;
-
-
 };
 
 #endif // ENTITY_H

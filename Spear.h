@@ -7,7 +7,7 @@
 // value members
 #include <QTimer>
 
-class Spear: public MeleeWeapon{
+class Spear: public QObject, public MeleeWeapon{
     Q_OBJECT
 public:
     // constructor

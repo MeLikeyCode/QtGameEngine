@@ -3,8 +3,7 @@
 #include "Game.h"
 #include "Sprite.h"
 #include "Spear.h"
-
-Game* game;
+#include "DynamicEntity.h"
 
 int main(int argc, char *argv[])
 {
@@ -12,11 +11,11 @@ int main(int argc, char *argv[])
 
     // create a Map and a Game
     Map* map = new Map(15,15,64);
-    game = new Game(map);
+    Game* game = new Game(map);
     game->launch();
 
-    // create an Entity
-    Entity* player = new Entity();
+    // create a DynamicEntity (an Entity that can move around)
+    DynamicEntity* player = new DynamicEntity();
     map->addEntity(player);
     player->setCellPos(Node(2,2));
     player->setPlayerControlled(true);

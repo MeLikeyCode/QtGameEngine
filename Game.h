@@ -39,13 +39,15 @@ public:
     void keyPressEvent(QKeyEvent* event);
     void keyReleaseEvent(QKeyEvent* event);
 
+    QPointF mapToMap(const QPoint &point);
+
     std::set<int> keysPressed();
     QPoint getMousePos();
 
-    void setPlayer(Entity* player);
-    Entity* player();
+    void setPlayer(DynamicEntity* player);
+    DynamicEntity* player();
 
-    std::vector<Entity*> enemies_; // TODO delete test
+    std::vector<DynamicEntity*> enemies_; // TODO delete test
 
 public slots:
     void askEnemiesToMove(); // TODO delete test
@@ -56,7 +58,7 @@ private:
     std::set<int> keysPressed_;
 
     // TODO remove the following attributes, test attributes
-    Entity* player_;
+    DynamicEntity* player_;
 
 
 };

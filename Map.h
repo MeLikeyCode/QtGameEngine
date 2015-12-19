@@ -46,8 +46,8 @@ public:
     Node pointToCell(const QPointF& point);
 
     std::set<Entity*> entities();
-    void addEntity(Entity* entity);
-    void removeEntity(Entity* entity);
+    void addEntity(Entity *entity);
+    void removeEntity(Entity *entity);
 
     void setTerrain(Terrain* to);
 

@@ -20,11 +20,6 @@
 /// @author Abdullah Aghazadah
 /// @date 5-16-15
 ///
-/// To create a Sprite, you must pass a default frame to the constructor. The
-/// default frame is not a named animation. It is just the starting image of
-/// the sprite (before any animations are played). It is recommended to use
-/// the first frame of a stand/idle animation as the default image.
-///
 /// Since a Sprite is a QGraphicsItem, it can be placed inside a
 /// QGraphicsScene. To add a QPixmap to an animation, use
 /// Sprite::addFrame(QPixmap,std::string). The specified pixmap will then

@@ -1,10 +1,10 @@
 #include "MoveRelativeToSelf.h"
-#include "Entity.h"
+#include "DynamicEntity.h"
 #include "Map.h"
 #include "Game.h"
 
 /// Sets the entity to move.
-void MoveRelativeToSelf::setEntity(Entity *entity)
+void MoveRelativeToSelf::setEntity(DynamicEntity *entity)
 {
     entity_ = entity;
 }

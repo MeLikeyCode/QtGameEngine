@@ -5,14 +5,14 @@
 #include "PlayerControlledMoveBehavior.h"
 
 // knows about:
-class Entity_;
+class DynamicEntity;
 
 class MoveRelativeToSelf: public PlayerControlledMoveBehavior{
 public:
-    void setEntity(Entity* entity);
+    void setEntity(DynamicEntity* entity);
     void moveStep();
 private:
-    Entity* entity_;
+    DynamicEntity* entity_;
 };
 
 #endif // MOVERELATIVETOSELF_H

@@ -3,6 +3,8 @@
 #include <QMouseEvent>
 #include <QDebug> // TODO remove, testing purpose only
 #include "Spear.h" // TODO remove, test
+#include "DynamicEntity.h"
+#include "Entity.h"
 
 /// Creates an instance of the Game with some default options.
 ///
@@ -45,36 +47,29 @@ Map *Game::map(){
 void Game::mousePressEvent(QMouseEvent *event){
     // =TODO test code, remove=
 
-    // toggle between player controlled/ai controlled
-    static bool playerControlled = false;
-    if (!playerControlled){
-        player_->setPlayerControlled(true);
-        playerControlled = true;
-    }
-    else{
-        player_->setPlayerControlled(false);
-        playerControlled = false;
-
-        player_->moveTo(Node(8,8));
+    // spear thrust
+    if (event->button() == Qt::LeftButton){
+        player_->spear_->attackThrust();
     }
 
-
-//    // spear thrust
-//    if (event->button() == Qt::LeftButton){
-//        player_->spear_->attackThrust();
-//    }
-
-    // add rock (block cells at position)
+    // spawn entity
     if (event->button() == Qt::RightButton){
-        // add rock
-        QPixmap pic(":resources/graphics/terrain/rock.png");
-        QGraphicsPixmapItem* picI = new QGraphicsPixmapItem(pic);
-        picI->setPos(event->pos().x()/64 * 64,event->pos().y()/64 * 64);
-        map_->scene()->addItem(picI);
-
-        map_->pathingMap().fill(event->pos());
-        map_->drawPathingMap();
+        Entity* ent = new Entity();
+        map()->addEntity(ent);
+        ent->setCellPos(map()->pointToCell(mapToMap(event->pos())));
     }
+
+//    // add rock (block cells at position)
+//    if (event->button() == Qt::RightButton){
+//        // add rock
+//        QPixmap pic(":resources/graphics/terrain/rock.png");
+//        QGraphicsPixmapItem* picI = new QGraphicsPixmapItem(pic);
+//        picI->setPos(event->pos().x()/64 * 64,event->pos().y()/64 * 64);
+//        map_->scene()->addItem(picI);
+
+//        map_->pathingMap().fill(event->pos());
+//        map_->drawPathingMap();
+//    }
 
 //    // thrust right spear
 //    if (event->button() == Qt::RightButton){
@@ -102,6 +97,12 @@ void Game::keyReleaseEvent(QKeyEvent *event)
     }
 }
 
+/// Converts the specified point from Game coordinates to Map coordinates.
+QPointF Game::mapToMap(const QPoint& point)
+{
+    return mapToScene(point);
+}
+
 /// Returns the keys that are _currently_ pressed.
 std::set<int> Game::keysPressed()
 {
@@ -115,17 +116,17 @@ QPoint Game::getMousePos()
 }
 
 /// Sets the Entity controlled by the Player via keyboard and mouse.
-void Game::setPlayer(Entity *player){
+void Game::setPlayer(DynamicEntity *player){
     player_ = player;
 }
 
-Entity *Game::player(){
+DynamicEntity *Game::player(){
     return player_;
 }
 
 void Game::askEnemiesToMove()
 {
-    for (Entity* e:enemies_){
+    for (DynamicEntity* e:enemies_){
         if (e){
             e->moveTo(player_->pointPos());
         }

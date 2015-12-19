@@ -1,6 +1,6 @@
 #include "Map.h"
 #include "Terrain.h"
-#include "Entity.h"
+#include "DynamicEntity.h"
 #include <cassert>
 #include <QBrush>
 #include <QGraphicsScene>
@@ -221,7 +221,7 @@ void Map::addEntity(Entity *entity){
     // update the PathingMap
     // entity->enablePathingMap(); // TODO work on
 
-    drawPathingMap();
+    drawPathingMap(); // TODO test remove
 }
 
 /// Removes the specified entity from the map.

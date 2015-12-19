@@ -26,13 +26,14 @@ SOURCES += main.cpp \
     Tree.cpp \
     Tests/TestPathGrid.cpp \
     Tests/TestPathingMap.cpp \
-    Entity.cpp \
     CountExpiringTimer.cpp \
     MeleeWeapon.cpp \
     Spear.cpp \
     PlayerControlledMoveBehavior.cpp \
     MoveRelativeToSelf.cpp \
-    MoveRelativeToScreen.cpp
+    MoveRelativeToScreen.cpp \
+    DynamicEntity.cpp \
+    Entity.cpp
 
 HEADERS  += \
     Map.h \
@@ -48,13 +49,14 @@ HEADERS  += \
     Tree.h \
     Tests/TestPathGrid.h \
     Tests/TestPathingMap.h \
-    Entity.h \
     CountExpiringTimer.h \
     MeleeWeapon.h \
     Spear.h \
     PlayerControlledMoveBehavior.h \
     MoveRelativeToSelf.h \
-    MoveRelativeToScreen.h
+    MoveRelativeToScreen.h \
+    DynamicEntity.h \
+    Entity.h
 
 RESOURCES += \
     res.qrc
