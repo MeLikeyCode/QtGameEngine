@@ -29,17 +29,16 @@ int main(int argc, char *argv[])
     spr->play("stand",1,1); // play stand anim
 
     // add some attachment points for the player
-    player->addNamedPoint(QPointF(-20,0),"left shoulder");
-    player->addNamedPoint(QPointF(-20,50),"right shoulder");
-    player->addNamedPoint(QPointF(25,25),"head");
+    player->addNamedPoint(QPointF(24,5),"left shoulder");
+    player->addNamedPoint(QPointF(24,58),"right shoulder");
 
     // attach spear to left shoulder of player Entity
     Spear* spear = new Spear();
     map->addEntity(spear);
     player->spear_ = spear;
-    spear->setPointPos(player->namedPoint("left shoulder"));
     spear->setParentEntity(player);
     spear->setOwner(player);
+    spear->setPointPos(spear->attachmentPoint(),player->namedPoint("left shoulder"));
 
     return a.exec();
 }

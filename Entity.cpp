@@ -72,6 +72,35 @@ void Entity::setPointPos(const QPointF &pos){
     sprite()->setPos(pos);
 }
 
+/// Sets the position of the Entity by moving the specified named position.
+void Entity::setPointPos(std::string namedPos, const QPointF &pos)
+{
+    // move regularly
+    setPointPos(pos);
+
+    // shift by amount
+    QLineF line(namedPoint("namedPos"),QPointF(0,0));
+    double newX = pointPos().x() - line.dx();
+    double newY = pointPos().y() - line.dy();
+    setPointPos(QPointF(newX,newY));
+}
+
+/// Sets the position of the Entity's specific point.
+///
+/// So if you wanted to move the Entity's 50,50 to somewhere, you would use this
+/// function.
+void Entity::setPointPos(const QPointF &moveThisPt, const QPointF &toThisPoint)
+{
+    // move regularly
+    setPointPos(toThisPoint);
+
+    // shift back
+    QLineF line(moveThisPt,QPointF(0,0));
+    double newX = pointPos().x() + line.dx();
+    double newY = pointPos().y() + line.dy();
+    setPointPos(QPointF(newX,newY));
+}
+
 /// Returns the cell that the Entity is in.
 Node Entity::cellPos(){
     return map()->pathingMap().pointToCell(pointPos());

@@ -10,6 +10,7 @@ class Map;
 #include <QPointF>
 #include <unordered_map>
 #include "PlayerControlledMoveBehavior.h"
+#include <string>
 
 /// An Entity is the base class for anything that can go inside a Map.
 /// @author Abdullah Aghazadah
@@ -43,6 +44,8 @@ public:
 
     QPointF pointPos() const;
     void setPointPos(const QPointF &pos);
+    void setPointPos(std::string namedPos, const QPointF& pos);
+    void setPointPos(const QPointF& moveThisPt, const QPointF& toThisPoint);
     Node cellPos();
     void setCellPos(const Node& cell);
 

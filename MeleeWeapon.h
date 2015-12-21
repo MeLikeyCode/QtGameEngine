@@ -23,6 +23,7 @@ public:
     void setOwner(Entity* entity);
 
     virtual void attackThrust() = 0; // makes this class abstract
+    virtual QPointF attachmentPoint() = 0;
 //    virtual void attackThrust(int atAngle);
 //    virtual void attackThrust(QPointF atPoint);
 
