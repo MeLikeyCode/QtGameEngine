@@ -33,7 +33,8 @@ SOURCES += main.cpp \
     MoveRelativeToSelf.cpp \
     MoveRelativeToScreen.cpp \
     DynamicEntity.cpp \
-    Entity.cpp
+    Entity.cpp \
+    Axe.cpp
 
 HEADERS  += \
     Map.h \
@@ -56,7 +57,8 @@ HEADERS  += \
     MoveRelativeToSelf.h \
     MoveRelativeToScreen.h \
     DynamicEntity.h \
-    Entity.h
+    Entity.h \
+    Axe.h
 
 RESOURCES += \
     res.qrc

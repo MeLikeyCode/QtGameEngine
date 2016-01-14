@@ -1,7 +1,7 @@
 #ifndef DYNAMICENTITY_H
 #define DYNAMICENTITY_H
 
-class Spear; // TODO remove, test only
+class MeleeWeapon; // TODO remove, test only
 
 // uses:
 class Map;
@@ -57,8 +57,8 @@ public:
     void setPlayerControlled(bool tf);
 
     // TODO for testing out spear only, delete after
-    Spear* spear_;
-    Spear* spear2_;
+    MeleeWeapon* w1_;
+    MeleeWeapon* w2_;
 
 public slots:
     void moveStepPlayerControlled();

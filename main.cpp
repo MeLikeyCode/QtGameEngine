@@ -3,6 +3,7 @@
 #include "Game.h"
 #include "Sprite.h"
 #include "Spear.h"
+#include "Axe.h"
 #include "DynamicEntity.h"
 
 int main(int argc, char *argv[])
@@ -32,13 +33,20 @@ int main(int argc, char *argv[])
     player->addNamedPoint(QPointF(24,5),"left shoulder");
     player->addNamedPoint(QPointF(24,58),"right shoulder");
 
+    Axe* axe = new Axe();
+    map->addEntity(axe);
+    player->w1_ = axe;
+    axe->setParentEntity(player);
+    axe->setOwner(player);
+    axe->setPointPos(axe->attachmentPoint(),player->namedPoint("left shoulder"));
+
     // attach spear to left shoulder of player Entity
     Spear* spear = new Spear();
     map->addEntity(spear);
-    player->spear_ = spear;
+    player->w2_ = spear;
     spear->setParentEntity(player);
     spear->setOwner(player);
-    spear->setPointPos(spear->attachmentPoint(),player->namedPoint("left shoulder"));
+    spear->setPointPos(spear->attachmentPoint(),player->namedPoint("right shoulder"));
 
     return a.exec();
 }

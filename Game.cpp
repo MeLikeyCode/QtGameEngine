@@ -47,9 +47,14 @@ Map *Game::map(){
 void Game::mousePressEvent(QMouseEvent *event){
     // =TODO test code, remove=
 
-    // spear thrust
+    // weapon 1 attack
     if (event->button() == Qt::LeftButton){
-        player_->spear_->attackThrust();
+        player_->w1_->attack();
+    }
+
+    // weapon 2 attack
+    if (event->button() == Qt::RightButton){
+        player_->w2_->attack();
     }
 
     // spawn entity

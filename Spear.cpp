@@ -29,11 +29,6 @@ Spear::Spear()
     // default tip (length and width/2)
     resetTip();
 
-
-
-    setLength(600);
-    setWidth(20);
-
     // default attachment point
     QPointF pt;
     pt.setX(pm_.width()/3);
@@ -43,15 +38,15 @@ Spear::Spear()
     timer_ = new QTimer(this);
     resetVariables();
 
-    setThrustDistance(200);
-    setThrustSpeed(500);
+//    setThrustDistance(200);
+//    setThrustSpeed(500);
 }
 
 /// Tells the weapon to do a thrust.
 ///
 /// The spear will thrust forward. It will thrust backward if it either hits
 /// something or goes as far as it can.
-void Spear::attackThrust()
+void Spear::attack()
 {
     // if its already thrusting, don't do anything
     if (alreadyThrusting_){

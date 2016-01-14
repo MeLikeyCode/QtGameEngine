@@ -7,13 +7,16 @@
 // value members
 #include <QTimer>
 
+/// Represents a spear.
+/// @author Abdullah Aghazadah
+/// @date 1-9-16
 class Spear: public QObject, public MeleeWeapon{
     Q_OBJECT
 public:
     // constructor
     Spear();
 
-    void attackThrust();
+    void attack();
     QPointF attachmentPoint();
 
     void setAttachmentPoint(QPointF point);
