@@ -4,23 +4,18 @@
 #include <QGraphicsScene>
 #include <QDebug>
 
-void Axe::resetVariables()
-{
-    headingBackward_ = false;
-    swingingForward_ = false;
-    headingBackwardDueToCollision_ = false;
-    alreadySwinging_ = false;
-    swingingOut_ = true;
-}
-
 Axe::Axe()
 {
-    // default performance
-    currentSwingStep_ = 0;
+    // defaults
     swingAngleEachStep_ = 5;
-    swingStepFrequency_ = 25; // TODO replace with setSwingSpeed()
-    maxSwingSteps_ = 10; // TODO replace with setTotalSwingAngle()
-    maxSwingOutSteps_ = 5;
+    swingFrequency_ = 50;
+    numOfSwingStepsBackward_ = 9;
+    numOfSwingStepsForward_ = 8;
+    numOfCurrentSwingSteps_ = 0;
+    swingingForwardPhase_ = false;
+    swingingOutPhase_ = false;
+    alreadySwinging_ = false;
+    headingBackwardPhase_ = false;
 
     // default sprite
     spr_ = new Sprite();
@@ -38,7 +33,6 @@ Axe::Axe()
     setAttachmentPoint(pt);
 
     timer_ = new QTimer(this);
-    resetVariables();
 }
 
 /// Tells the weapon to do a thrust.
@@ -51,13 +45,17 @@ void Axe::attack()
         return;
     }
 
-    headingBackward_ = false;
-    swingingForward_ = true;
-    currentSwingStep_ = 0;
-    currentSwingOutStep_ = 0;
-    connect(timer_,SIGNAL(timeout()),this,SLOT(swingStep()));
-    timer_->start(swingStepFrequency_);
+    // set initial state variables
+    numOfCurrentSwingSteps_ = 0;
+    swingingForwardPhase_ = false;
+    headingBackwardPhase_ = false;
+    swingingOutPhase_ = true;
     alreadySwinging_ = true;
+
+
+    // connect to attackStep
+    connect(timer_,SIGNAL(timeout()),this,SLOT(swingStep()));
+    timer_->start(swingFrequency_);
 }
 
 /// Returns the point at which the weapon should be attached at.
@@ -133,116 +131,47 @@ double Axe::width()
     return sprite()->boundingRect().height();
 }
 
-/// Returns the number of degrees the Axe thrusts.
-double Axe::totalSwingAgnel()
-{
-    return totalSwingAngle_;
-}
-
-/// Returns the number of pixels per second the Axe thrusts at.
-double Axe::swingSpeed()
-{
-    return swingSpeed_;
-}
-
-/// Sets how fast the Axe thrusts at (in pixels pers second).
-void Axe::setSwingingSpeed(double speed)
-{
-    // thrust speed is set by changing thrustFrequency_
-    double thrustsPerSecond = speed / swingAngleEachStep_;
-    swingStepFrequency_ = 1000*(1.0/thrustsPerSecond);
-    swingSpeed_ = swingAngleEachStep_ * thrustsPerSecond;
-}
-
-/// Sets how far the Axe thrusts (in pixels).
-void Axe::setTotalSwingAngle(double distance)
-{
-    // thrust distance is set by changing the maxThrustSteps_
-    int numOfThrusts =  distance / swingAngleEachStep_;
-    maxSwingSteps_ = numOfThrusts;
-    totalSwingAngle_ = swingAngleEachStep_ * numOfThrusts;
-}
-
 void Axe::swingStep()
 {
-    // if swinging out, move backward
-    if (swingingOut_ && currentSwingOutStep_ < maxSwingOutSteps_){
-        // rotate axe backward
-        setFacingAngle(facingAngle() - swingAngleEachStep_);
-        currentSwingOutStep_++;
+    // if in swinging out phase
+    if (swingingOutPhase_ && numOfCurrentSwingSteps_ < numOfSwingStepsBackward_){
+        setFacingAngle(facingAngle()-swingAngleEachStep_);
+        numOfCurrentSwingSteps_++;
         return;
     }
 
-    // if enough swinging out
-    if (currentSwingOutStep_ >= maxSwingOutSteps_){
-        swingingOut_ = false;
+    // if done with swinging out phase
+    if (swingingOutPhase_ && numOfCurrentSwingSteps_ >= numOfSwingStepsBackward_){
+        swingingOutPhase_ = false;
+        swingingForwardPhase_ = true;
+        numOfCurrentSwingSteps_ = 0;
     }
 
-    // if moved backward enough, stop moving
-    if (headingBackward_ && currentSwingStep_ >= maxSwingSteps_){
+    // if swinging forward
+    if (swingingForwardPhase_ && numOfCurrentSwingSteps_ < numOfSwingStepsForward_ + numOfSwingStepsBackward_){
+        setFacingAngle(facingAngle()+swingAngleEachStep_);
+        numOfCurrentSwingSteps_++;
+        return;
+    }
+
+    // if done swinging forward
+    if (swingingForwardPhase_ && numOfCurrentSwingSteps_ >= numOfSwingStepsForward_ + numOfSwingStepsBackward_){
+        swingingForwardPhase_ = false;
+        headingBackwardPhase_ = true;
+        numOfCurrentSwingSteps_ = 0;
+        return;
+    }
+
+    // if heading backward
+    if (headingBackwardPhase_ && numOfCurrentSwingSteps_ < numOfSwingStepsForward_){
+        setFacingAngle(facingAngle()-swingAngleEachStep_);
+        numOfCurrentSwingSteps_++;
+        return;
+    }
+
+    // if done heading backward
+    if (headingBackwardPhase_ && numOfCurrentSwingSteps_ >= numOfSwingStepsForward_){
         timer_->disconnect();
-
-        resetVariables();
-        return;
+        alreadySwinging_ = false;
     }
-
-    // if moved backward enough due to collision, stop
-    if (headingBackwardDueToCollision_ && currentSwingStep_ == 0){
-        timer_->disconnect();
-
-        resetVariables();
-        return;
-    }
-
-    // if still moving forward, kill things with tip, then move backward
-    // due to collision
-    std::vector<Entity*> collidingEntities = map()->entities(mapToMap(tip()));
-    for (Entity* e: collidingEntities){
-        if (e != this && e!= owner() && swingingForward_){
-            map()->removeEntity(e);
-            delete e;
-            headingBackwardDueToCollision_ = true;
-            headingBackward_ = false;
-            swingingForward_ = false;
-            return;
-        }
-    }
-
-    // if heading backward due to collision, move backward
-    if (headingBackwardDueToCollision_ && currentSwingStep_ > 0){
-
-        // rotate axe backward
-        setFacingAngle(facingAngle() - swingAngleEachStep_);
-        currentSwingStep_--;
-        return;
-    }
-
-    // if moving forward, move forward
-    if (swingingForward_ && currentSwingStep_ < maxSwingSteps_){
-
-
-        // rotate axe forward
-        setFacingAngle(facingAngle() + swingAngleEachStep_);
-        currentSwingStep_++;
-        return;
-    }
-
-    // if moving backward, move backward
-    if (headingBackward_ && currentSwingStep_ < maxSwingSteps_){
-
-        // rotate axe
-        setFacingAngle(facingAngle() - swingAngleEachStep_);
-        currentSwingStep_++;
-        return;
-    }
-
-    // if moved forward enough, move backward
-    if (swingingForward_ && currentSwingStep_ >= maxSwingSteps_){
-        swingingForward_ = false;
-        headingBackward_ = true;
-        currentSwingStep_ = 0;
-
-        return;
-    }
-
 }

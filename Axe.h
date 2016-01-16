@@ -30,33 +30,28 @@ public:
     void setWidth(double width);
     double width();
 
-    double totalSwingAgnel();
-    double swingSpeed();
-    void setSwingingSpeed(double speed);
-    void setTotalSwingAngle(double distance);
-
 public slots:
     void swingStep();
 private:
     QTimer* timer_;
-    int swingStepFrequency_;
-    int maxSwingSteps_;
-    int currentSwingStep_;
+
     double swingAngleEachStep_;
-    double totalSwingAngle_; // calculate from other attributes, here for perf
-    double swingSpeed_; // calculated from other attributes, here for perf
-    bool swingingForward_; // is axe swinging forward or heading backward?
-    bool headingBackward_;
-    bool headingBackwardDueToCollision_;
-    bool alreadySwinging_;
-    bool swingingOut_; // is the axe in its initial swing out stage?
-    int maxSwingOutSteps_; // how many steps to swing out for?
-    int currentSwingOutStep_;
-    void resetVariables();
+    int swingFrequency_; // how often we step
+    int numOfSwingStepsBackward_; // how many steps to swing backwards
+    int numOfSwingStepsForward_; // how many steps to swing forward
+
+    bool swingingOutPhase_;
+    bool swingingForwardPhase_; // are we swinging forward or backward in this step?
+    bool headingBackwardPhase_; // are we heading bakcward after a full swing?
+    bool alreadySwinging_; // has the weapon already begun swinging?
+
+    int numOfCurrentSwingSteps_; // how many swing steps have we taken
+
     QPixmap pm_; // allows scaling
     Sprite* spr_;
     QPointF tip_;
     QPointF attachmentPoint_;
+
 };
 
 #endif // AXE_H
