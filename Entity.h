@@ -1,16 +1,18 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-// knows of:
-class Map;
-
-// members:
 #include "PathingMap.h"
 #include "Sprite.h"
 #include <QPointF>
 #include <unordered_map>
 #include "PlayerControlledMoveBehavior.h"
 #include <string>
+
+class Map;
+class Inventory;
+class EquipableItem;
+class Item;
+
 
 /// An Entity is the base class for anything that can go inside a Map.
 /// @author Abdullah Aghazadah
@@ -30,7 +32,7 @@ public:
     // constructor
     Entity();
 
-    // deconstructor
+    // destructor
     virtual ~Entity();
 
     PathingMap pathingMap() const;
@@ -58,11 +60,15 @@ public:
 
     std::vector<Entity*> children() const;
     void setParentEntity(Entity* parent);
+    Entity* parent();
 
     QPointF mapToMap(const QPointF& point) const;
 
     void addNamedPoint(const QPointF& point, std::string name);
     QPointF namedPoint(std::string name);
+
+    void equipItem(EquipableItem* item, const QPointF& at);
+    void addItemToInventory(Item* item);
 
 private:
     // main attributes
@@ -72,6 +78,7 @@ private:
     std::vector<Entity*> children_;
     Entity* parent_;
     std::map<std::string,QPointF> namedPoints_;
+    Inventory* inventory_;
 };
 
 #endif // ENTITY_H

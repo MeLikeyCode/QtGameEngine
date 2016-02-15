@@ -9,6 +9,7 @@ class DynamicEntity;
 class PlayerControlledMoveBehavior
 {
 public:
+    virtual ~PlayerControlledMoveBehavior() {} // virtual empty desctructor
     virtual void setEntity(DynamicEntity* entity) = 0;
     virtual void moveStep() = 0;
 };

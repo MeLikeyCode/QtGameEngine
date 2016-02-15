@@ -9,6 +9,8 @@
 #include <QLineF>
 #include "Game.h"
 #include "MoveRelativeToScreen.h"
+#include "EquipableItem.h"
+#include "Inventory.h"
 
 /// Default constructor.
 Entity::Entity():
@@ -18,6 +20,8 @@ Entity::Entity():
     // = some defaults=
     map_ = nullptr;
     sprite_ = nullptr;
+    inventory_ = new Inventory();
+    inventory_->setEntity(this);
 
     // default sprite
     Sprite* spr = new Sprite();
@@ -42,15 +46,16 @@ void Entity::setPathingMap(const PathingMap &pathingMap){
     pathingMap_ = pathingMap;
 }
 
-/// Returns a pointer to the Map that the Entity is in.
+/// Returns a pointer to the Map that the Entity is in. If the Entity is not
+/// in any Maps, returns nullptr.
 Map *Entity::map() const{
-    // make sure it has a map
-    assert(map_);
-
     return map_;
 }
 
-/// Sets the map that the Entity is in.
+/// DO NOT USE. Only Map::AddEntity(Entity*) can be used to add an Entity to a
+/// Map. Similarly, only Map::removeEntity(Entity*) can be used to remove an
+/// Entity from a Map. This funcion is internal but had to be public for various
+/// reasons that you shouldn't care for :).
 void Entity::setMap(Map *toMap)
 {
     map_ = toMap;
@@ -235,6 +240,12 @@ void Entity::setParentEntity(Entity *parent)
     sprite()->setParentItem(parent->sprite());
 }
 
+/// Returns the Entity's parent.
+Entity *Entity::parent()
+{
+    return parent_;
+}
+
 /// Maps a point from local (Entity) coordinates to the Map (scene) coordinates.
 QPointF Entity::mapToMap(const QPointF &point) const
 {
@@ -242,6 +253,7 @@ QPointF Entity::mapToMap(const QPointF &point) const
 }
 
 /// Names the specified point (so it can be retrieved with a name).
+/// The point is in local (Entity) coordinates.
 void Entity::addNamedPoint(const QPointF &point, std::string name)
 {
     namedPoints_[name] = point;
@@ -254,4 +266,26 @@ QPointF Entity::namedPoint(std::string name)
     assert(namedPoints_.count(name));
 
     return namedPoints_[name];
+}
+
+/// Attempts to equip the specified item at the specified place.
+/// Can only equip Items that are in the Entity's Inventory.
+void Entity::equipItem(EquipableItem *item, const QPointF &at)
+{
+    // make sure item is in the Entity's Inventory
+    assert(inventory_->contains(item));
+
+    item->equip(at);
+}
+
+/// Adds the specified item to the Inventory of the Entity. The Item will also
+/// be added to this Entity's map (if it hasn't already been added).
+void Entity::addItemToInventory(Item *item)
+{
+    inventory_->addItem(item);
+
+    // if not in this map, add to this map
+    if (item->map() != map()){
+
+    }
 }

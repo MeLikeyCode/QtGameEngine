@@ -17,18 +17,6 @@ public:
     Axe();
 
     void attack();
-    QPointF attachmentPoint();
-
-    void setAttachmentPoint(QPointF point);
-
-    void setTip(QPointF point);
-    void resetTip();
-    QPointF tip();
-
-    void setLength(double length);
-    double length();
-    void setWidth(double width);
-    double width();
 
 public slots:
     void swingStep();
@@ -46,12 +34,6 @@ private:
     bool alreadySwinging_; // has the weapon already begun swinging?
 
     int numOfCurrentSwingSteps_; // how many swing steps have we taken
-
-    QPixmap pm_; // allows scaling
-    Sprite* spr_;
-    QPointF tip_;
-    QPointF attachmentPoint_;
-
 };
 
 #endif // AXE_H

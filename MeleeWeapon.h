@@ -1,32 +1,30 @@
 #ifndef MELEEWEAPON_H
 #define MELEEWEAPON_H
 
-// inherits
-#include "Entity.h"
+#include "EquipableItem.h"
+#include <QPixmap>
 
-// pointer members
 class Map;
-
-// function arguments
 class Sprite;
 class QPointF;
 
-/// An abstract class that represents a weapon entity.
+/// An abstract class that represents a MeleeWeapon EquipableItem.
 /// @author Abdullah Aghazadah
 /// @date 10-18-15
-class MeleeWeapon: public Entity{
+class MeleeWeapon: public EquipableItem{
 public:
     // constructor
     MeleeWeapon();
 
-    Entity* owner() const;
-    void setOwner(Entity* entity);
-
     virtual void attack() = 0; // makes this class abstract
-    virtual QPointF attachmentPoint() = 0;
+
+    void setTip(QPointF point);
+    void resetTip();
+    QPointF tip();
 
 private:
-    Entity* owner_;
+    QPointF tip_;
+
 };
 
 #endif // MELEEWEAPON_H

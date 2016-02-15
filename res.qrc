@@ -14,5 +14,7 @@
         <file>graphics/human/walk5.png</file>
         <file>graphics/weapons/spear.png</file>
         <file>graphics/weapons/axe.png</file>
+        <file>sounds/music.mp3</file>
+        <file>graphics/misc/defaultMeleeWeapon.png</file>
     </qresource>
 </RCC>

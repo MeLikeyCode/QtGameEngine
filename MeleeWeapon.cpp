@@ -3,23 +3,33 @@
 #include "Sprite.h"
 #include "Map.h"
 
-MeleeWeapon::MeleeWeapon():
-    owner_(nullptr)
-{
+#include "Inventory.h"
 
+MeleeWeapon::MeleeWeapon()
+{
+   
 }
 
-/// Returns (a pointer to) the Entity which owns this weapon.
-Entity *MeleeWeapon::owner() const
+/// Set the tip of the MeleeWeapon.
+/// @see MeleeWeapon::tip()
+void MeleeWeapon::setTip(QPointF point)
 {
-    // make sure the weapon has an owner
-    assert(owner_);
-
-    return owner_;
+    tip_ = point;
 }
 
-/// Sets the owner of the weapon.
-void MeleeWeapon::setOwner(Entity *entity)
+/// Sets the tip of the MeleeWeapon to be at x = length() and y = width()/2
+/// (i.e. at the very lengthwise, and middle widthwise of the sprite).
+void MeleeWeapon::resetTip()
 {
-    owner_ = entity;
+    QPointF pt;
+    pt.setX(length());
+    pt.setY(width()/2);
+    setTip(pt);
+}
+
+/// Returs the tip of the MeleeWeapon. The tip is the point that will be check
+/// for collision with things.
+QPointF MeleeWeapon::tip()
+{
+    return tip_;
 }

@@ -28,6 +28,9 @@ public:
     // constructor
     DynamicEntity();
 
+    // deconstructor (empty virtual)
+    virtual ~DynamicEntity() {}
+
     void setStepSize(int stepSize);
     int stepSize();
     void setStepFrequency(int to);

@@ -2,7 +2,8 @@
 #include "Sprite.h"
 #include "Map.h"
 #include <QGraphicsScene>
-#include <QDebug>
+#include <QDebug> // TODO: remove
+#include "Inventory.h"
 
 void Spear::resetVariables()
 {
@@ -14,7 +15,7 @@ void Spear::resetVariables()
 
 Spear::Spear()
 {
-    // default performance
+    // default thrust parameters
     currentThrustStep_ = 0;
     thrustLengthEachStep_ = 5;
     setThrustDistance(35);
@@ -42,10 +43,7 @@ Spear::Spear()
 //    setThrustSpeed(500);
 }
 
-/// Tells the weapon to do a thrust.
-///
-/// The spear will thrust forward. It will thrust backward if it either hits
-/// something or goes as far as it can.
+/// Will thrust the spear forward.
 void Spear::attack()
 {
     // if its already thrusting, don't do anything
@@ -59,79 +57,6 @@ void Spear::attack()
     connect(timer_,SIGNAL(timeout()),this,SLOT(thrustStep()));
     timer_->start(thrustStepFrequency_);
     alreadyThrusting_ = true;
-}
-
-/// Returns the point at which the weapon should be attached at.
-///
-/// This point is in local coordinates.
-QPointF Spear::attachmentPoint()
-{
-    return attachmentPoint_;
-}
-
-/// Sets the attachment point to the specified point.
-///
-/// The attachment point is defined in local coordinates. It is the point that
-/// tells us where the weapon should be be attached at.
-void Spear::setAttachmentPoint(QPointF point)
-{
-    attachmentPoint_ = point;
-}
-
-/// Sets the tip of the spear, which will be used to do damage.
-///
-/// By default the tip of the spear is set as the length of the spear for the x,
-/// and width of the spear/2 for the y. But depending on the drawing of the
-/// spear you can set this to whatever you want.
-void Spear::setTip(QPointF point)
-{
-    tip_ = point;
-}
-
-/// Resets the tip of the spear so that it is at x = length, and y = width/2.
-void Spear::resetTip()
-{
-    QPointF pt;
-    pt.setX(length());
-    pt.setY(width()/2);
-    setTip(pt);
-}
-
-/// Returns the position of the tip of the spear in local coordinates.
-QPointF Spear::tip()
-{
-    return tip_;
-}
-
-/// Sets how long the spear is in pixels. Will move the tip appropriately.
-void Spear::setLength(double length)
-{
-    pm_ = pm_.scaled(length,pm_.height());
-    spr_->setPixmap(pm_);
-
-    resetTip();
-
-}
-
-/// Returns the length of the spear in pixels.
-double Spear::length()
-{
-    return sprite()->boundingRect().width();
-}
-
-/// Sets how wide the spear is in pixels. Will move the tip appropriately.
-void Spear::setWidth(double width)
-{
-    pm_ = pm_.scaled(pm_.width(),width);
-    spr_->setPixmap(pm_);
-
-    resetTip();
-}
-
-/// Returns width of the spear in pixels.
-double Spear::width()
-{
-    return sprite()->boundingRect().height();
 }
 
 /// Returns the number of pixels the spear thrusts.
@@ -185,8 +110,9 @@ void Spear::thrustStep()
     // if still moving forward, kill things with tip, then move backward
     // due to collision
     std::vector<Entity*> collidingEntities = map()->entities(mapToMap(tip()));
+    Entity* theOwner = inventory()->entity();
     for (Entity* e: collidingEntities){
-        if (e != this && e!= owner() && headingForward_){
+        if (e != this && e!= theOwner && e->parent() != theOwner && headingForward_){
             map()->removeEntity(e);
             delete e;
             headingBackwardDueToCollision_ = true;

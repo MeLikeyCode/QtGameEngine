@@ -5,6 +5,9 @@
 #include "Spear.h"
 #include "Axe.h"
 #include "DynamicEntity.h"
+#include "Sound.h"
+
+#include <QMediaPlayer>
 
 int main(int argc, char *argv[])
 {
@@ -36,17 +39,18 @@ int main(int argc, char *argv[])
     Axe* axe = new Axe();
     map->addEntity(axe);
     player->w1_ = axe;
-    axe->setParentEntity(player);
-    axe->setOwner(player);
-    axe->setPointPos(axe->attachmentPoint(),player->namedPoint("left shoulder"));
+    player->addItemToInventory(axe);
+    player->equipItem(axe, player->namedPoint("left shoulder"));
 
-    // attach spear to left shoulder of player Entity
     Spear* spear = new Spear();
     map->addEntity(spear);
     player->w2_ = spear;
-    spear->setParentEntity(player);
-    spear->setOwner(player);
-    spear->setPointPos(spear->attachmentPoint(),player->namedPoint("right shoulder"));
+    player->addItemToInventory(spear);
+    player->equipItem(spear, player->namedPoint("right shoulder"));
+
+    // play a sound
+    Sound* sound = new Sound("qrc:/resources/sounds/music.mp3");
+    sound->play(10);
 
     return a.exec();
 }

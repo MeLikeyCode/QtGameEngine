@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -34,7 +34,14 @@ SOURCES += main.cpp \
     MoveRelativeToScreen.cpp \
     DynamicEntity.cpp \
     Entity.cpp \
-    Axe.cpp
+    Axe.cpp \
+    Sound.cpp \
+    Item.cpp \
+    Inventory.cpp \
+    EquipableItem.cpp \
+    EntityTargetItem.cpp \
+    NoTargetItem.cpp \
+    PointTargetItem.cpp
 
 HEADERS  += \
     Map.h \
@@ -58,7 +65,14 @@ HEADERS  += \
     MoveRelativeToScreen.h \
     DynamicEntity.h \
     Entity.h \
-    Axe.h
+    Axe.h \
+    Sound.h \
+    Item.h \
+    Inventory.h \
+    EquipableItem.h \
+    EntityTargetItem.h \
+    NoTargetItem.h \
+    PointTargetItem.h
 
 RESOURCES += \
     res.qrc

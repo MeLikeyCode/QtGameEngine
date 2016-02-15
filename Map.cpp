@@ -202,10 +202,7 @@ void Map::setTerrain(Terrain *to){
 
 /// Adds the specified Entity to the Map and updates the PathingMap.
 void Map::addEntity(Entity *entity){
-    // make sure the entity's position is inside the map
-    assert(contains(entity->pointPos()));
-
-    // if the entity is already in the map, do nothing (just display a messege)
+    // if the entity is already in the map, do nothing (just display a warning)
     if (contains(entity)) {
         qDebug() << "Entity is already in the map!";
         return;
@@ -232,6 +229,8 @@ void Map::removeEntity(Entity *entity)
 
     // remove sprite
     scene()->removeItem(entity->sprite());
+
+    // TODO: remove the leftover pathing of the Entity
 }
 
 /// Returns (a pointer to) the internal scene.

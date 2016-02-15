@@ -17,18 +17,6 @@ public:
     Spear();
 
     void attack();
-    QPointF attachmentPoint();
-
-    void setAttachmentPoint(QPointF point);
-
-    void setTip(QPointF point);
-    void resetTip();
-    QPointF tip();
-
-    void setLength(double length);
-    double length();
-    void setWidth(double width);
-    double width();
 
     double thrustDistance();
     double thrustSpeed();
@@ -50,10 +38,6 @@ private:
     bool headingBackwardDueToCollision_;
     bool alreadyThrusting_;
     void resetVariables();
-    QPixmap pm_; // allows scaling
-    Sprite* spr_;
-    QPointF tip_;
-    QPointF attachmentPoint_;
 };
 
 #endif // SPEAR_H
