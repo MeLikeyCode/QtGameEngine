@@ -201,11 +201,17 @@ void Map::setTerrain(Terrain *to){
 }
 
 /// Adds the specified Entity to the Map and updates the PathingMap.
+/// If the Entity is already in the Map, does nothing.
+/// If the Entity is in another Map, it will be removed from that Map first.
 void Map::addEntity(Entity *entity){
-    // if the entity is already in the map, do nothing (just display a warning)
+    // if the Entity is already in the Map, do nothing
     if (contains(entity)) {
-        qDebug() << "Entity is already in the map!";
         return;
+    }
+
+    // if the Entity is in another Map, remove it first
+    if (entity->map() != nullptr ){
+        entity->map()->removeEntity(entity);
     }
 
     // add the entity to the list of entities
@@ -213,7 +219,9 @@ void Map::addEntity(Entity *entity){
 
     // add its sprite to the interal QGraphicsScene
     scene_->addItem(entity->sprite());
-    entity->setMap(this);
+
+    // update Entity's map_ ptr
+    entity->map_ = this;
 
     // update the PathingMap
     // entity->enablePathingMap(); // TODO work on
@@ -221,14 +229,22 @@ void Map::addEntity(Entity *entity){
     drawPathingMap(); // TODO test remove
 }
 
-/// Removes the specified entity from the map.
+/// Removes the specified entity from the map. If the Entity is not in the Map,
+/// does nothing.
 void Map::removeEntity(Entity *entity)
 {
+    // Entity not in map
+    if (!contains(entity)){
+        return;
+    }
+
     // remove from list
     entities_.erase(entity);
 
     // remove sprite
     scene()->removeItem(entity->sprite());
+
+    entity->map_ = nullptr;
 
     // TODO: remove the leftover pathing of the Entity
 }

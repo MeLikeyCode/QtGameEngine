@@ -14,6 +14,7 @@ class Inventory;
 /// @date 2/13/16
 class Item: public Entity
 {
+    friend class Inventory;
 public:
     Item();
 

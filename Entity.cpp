@@ -52,13 +52,12 @@ Map *Entity::map() const{
     return map_;
 }
 
-/// DO NOT USE. Only Map::AddEntity(Entity*) can be used to add an Entity to a
-/// Map. Similarly, only Map::removeEntity(Entity*) can be used to remove an
-/// Entity from a Map. This funcion is internal but had to be public for various
-/// reasons that you shouldn't care for :).
+/// Sets the Map that the Entity should be in.
+/// Simply delegates to Map::addEntity(Entity*);
+/// @see Map::addEntity(Entity*)
 void Entity::setMap(Map *toMap)
 {
-    map_ = toMap;
+    toMap->addEntity(this);
 }
 
 /// Returns the position of the Entity.
@@ -278,14 +277,16 @@ void Entity::equipItem(EquipableItem *item, const QPointF &at)
     item->equip(at);
 }
 
-/// Adds the specified item to the Inventory of the Entity. The Item will also
-/// be added to this Entity's map (if it hasn't already been added).
+/// Adds the specified item to the Inventory of the Entity.
+/// If the Entity has a Map, the Item will be added to the same Map (if it's
+/// not already in there).
 void Entity::addItemToInventory(Item *item)
 {
     inventory_->addItem(item);
 
-    // if not in this map, add to this map
-    if (item->map() != map()){
-
+    // add to map
+    if (map() != nullptr){
+        map()->addEntity(item);
     }
+
 }

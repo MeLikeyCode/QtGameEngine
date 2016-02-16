@@ -20,6 +20,7 @@ public:
     void setEntity(Entity* entity);
 
     void addItem(Item* item);
+    void removeItem(Item* item);
     bool contains(Item* item);
 
     std::unordered_set<EquipableItem*> getEquipableItems();

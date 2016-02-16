@@ -28,6 +28,9 @@ class Item;
 /// are all of its children.
 class Entity
 {
+    friend class Map; // Map needs to be able to set the map_
+                      // pointer of the Entity (we cannot use a public setter
+                      // because we don't want ANYONE else to be able to set this)
 public:
     // constructor
     Entity();

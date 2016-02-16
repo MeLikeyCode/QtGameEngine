@@ -17,8 +17,9 @@ Inventory *Item::inventory()
     return inventory_;
 }
 
-/// Set the Inventory that this Item belongs to. If nullptr is passed in,
-/// will set the Item to be on the ground.
+/// Set the Inventory that this Item should belong to.
+/// Simply delegates to Inventory::addItem(this)
+/// @see Inventory::addItem(Item*)
 void Item::setInventory(Inventory *inv)
 {
     // set on ground

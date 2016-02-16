@@ -24,10 +24,35 @@ void Inventory::setEntity(Entity *entity)
 }
 
 /// Adds the specified item to the Inventory.
+/// If the Item is already in the Inventory, does nothing.
+/// If the Item is in another Inventory, it will be removed from there first.
 void Inventory::addItem(Item *item)
 {
+    // item in this inventory
+    if (contains(item)){
+        return;
+    }
+
+    // item in another inventory
+    if (item->inventory() != nullptr){
+        item->inventory()->removeItem(item);
+    }
+
     items_.insert(item);
-    item->setInventory(this);
+    item->inventory_ = this;
+}
+
+/// Removes the specified Item from the Inventory.
+/// If the Item is not in the Inventory, does nothing.
+void Inventory::removeItem(Item *item)
+{
+    // item not in inventory
+    if (!contains(item)){
+        return;
+    }
+
+    items_.erase(item);
+    item->inventory_ = nullptr;
 }
 
 /// Returns true if the Inventory contains the specified item.

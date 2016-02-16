@@ -37,13 +37,11 @@ int main(int argc, char *argv[])
     player->addNamedPoint(QPointF(24,58),"right shoulder");
 
     Axe* axe = new Axe();
-    map->addEntity(axe);
     player->w1_ = axe;
     player->addItemToInventory(axe);
     player->equipItem(axe, player->namedPoint("left shoulder"));
 
     Spear* spear = new Spear();
-    map->addEntity(spear);
     player->w2_ = spear;
     player->addItemToInventory(spear);
     player->equipItem(spear, player->namedPoint("right shoulder"));
