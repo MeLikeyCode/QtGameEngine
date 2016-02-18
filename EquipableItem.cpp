@@ -2,6 +2,7 @@
 #include <QPointF>
 #include <cassert>
 #include "Inventory.h"
+#include "Slot.h"
 
 EquipableItem::EquipableItem()
 {
@@ -14,11 +15,11 @@ bool EquipableItem::isEquipped()
     return isEquipped_;
 }
 
-/// Equips the EquipableItem at the specified point on the owning Entity. The
+/// Equips the EquipableItem at the specified Slot. The
 /// owning Entity is the Entity of the Inventory that the EquipableItem is a part
 /// of. If the Equipable Item is not part of an Inventory (i.e. is on the ground)
 /// this function will fail (assertion will fail).
-void EquipableItem::equip(QPointF whereToEquip)
+void EquipableItem::equip(Slot *slotToEquipIn)
 {
     // make sure the Item is not on the ground
     assert(inventory() != nullptr);
@@ -26,7 +27,7 @@ void EquipableItem::equip(QPointF whereToEquip)
     sprite()->setVisible(true);
     sprite()->setScale(1);
     setParentEntity(inventory()->entity());
-    setPointPos(attachmentPoint(),whereToEquip);
+    setPointPos(attachmentPoint(),slotToEquipIn->position());
 
 }
 

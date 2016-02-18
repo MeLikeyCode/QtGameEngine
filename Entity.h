@@ -7,11 +7,13 @@
 #include <unordered_map>
 #include "PlayerControlledMoveBehavior.h"
 #include <string>
+#include <unordered_map>
 
 class Map;
 class Inventory;
 class EquipableItem;
 class Item;
+class Slot;
 
 
 /// An Entity is the base class for anything that can go inside a Map.
@@ -70,8 +72,14 @@ public:
     void addNamedPoint(const QPointF& point, std::string name);
     QPointF namedPoint(std::string name);
 
-    void equipItem(EquipableItem* item, const QPointF& at);
+    void addSlot(Slot* slot);
+    Slot* slot(std::string name);
+
+    void equipItem(EquipableItem* item, std::string slot);
+    void equipItem(EquipableItem* item, Slot* slot);
     void addItemToInventory(Item* item);
+
+
 
 private:
     // main attributes
@@ -82,6 +90,8 @@ private:
     Entity* parent_;
     std::map<std::string,QPointF> namedPoints_;
     Inventory* inventory_;
+    std::unordered_map<std::string,Slot*> stringToSlot_;
+
 };
 
 #endif // ENTITY_H

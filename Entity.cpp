@@ -11,6 +11,7 @@
 #include "MoveRelativeToScreen.h"
 #include "EquipableItem.h"
 #include "Inventory.h"
+#include "Slot.h"
 
 /// Default constructor.
 Entity::Entity():
@@ -267,14 +268,19 @@ QPointF Entity::namedPoint(std::string name)
     return namedPoints_[name];
 }
 
-/// Attempts to equip the specified item at the specified place.
+/// Attempts to equip the specified item at the specified Slot.
 /// Can only equip Items that are in the Entity's Inventory.
-void Entity::equipItem(EquipableItem *item, const QPointF &at)
+void Entity::equipItem(EquipableItem *item, std::string slot)
 {
     // make sure item is in the Entity's Inventory
     assert(inventory_->contains(item));
+    item->equip(stringToSlot_[slot]);
+}
 
-    item->equip(at);
+/// Overload of Entity::equipItem(EquipableItem*,std::string).
+void Entity::equipItem(EquipableItem *item, Slot *slot)
+{
+    equipItem(item,slot->name());
 }
 
 /// Adds the specified item to the Inventory of the Entity.
@@ -289,4 +295,16 @@ void Entity::addItemToInventory(Item *item)
         map()->addEntity(item);
     }
 
+}
+
+/// Add the specified Slot to the Entity.
+void Entity::addSlot(Slot *slot)
+{
+    stringToSlot_[slot->name()] = slot;
+}
+
+/// Returns the Slot with the specified name.
+Slot *Entity::slot(std::string name)
+{
+    return stringToSlot_[name];
 }

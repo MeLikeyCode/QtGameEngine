@@ -41,7 +41,9 @@ SOURCES += main.cpp \
     EquipableItem.cpp \
     EntityTargetItem.cpp \
     NoTargetItem.cpp \
-    PointTargetItem.cpp
+    PointTargetItem.cpp \
+    Slot.cpp \
+    MeleeWeaponSlot.cpp
 
 HEADERS  += \
     Map.h \
@@ -72,7 +74,9 @@ HEADERS  += \
     EquipableItem.h \
     EntityTargetItem.h \
     NoTargetItem.h \
-    PointTargetItem.h
+    PointTargetItem.h \
+    Slot.h \
+    MeleeWeaponSlot.h
 
 RESOURCES += \
     res.qrc

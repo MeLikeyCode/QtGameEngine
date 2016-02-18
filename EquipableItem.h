@@ -22,7 +22,7 @@ public:
 
     bool isEquipped();
 
-    void equip(QPointF whereToEquip);
+    void equip(Slot* slotToEquipIn);
     void unEquip();
 
 protected:
