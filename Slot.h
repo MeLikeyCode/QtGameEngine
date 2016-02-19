@@ -11,6 +11,10 @@ class EquipableItem;
 /// @date 2/17/16
 class Slot
 {
+    // EquipableItem and Slot reference each other
+    // The association behavior is only in one of them (EquipableItem),
+    // the others setter simply delegates.
+    friend class EquipableItem;
 public:
     Slot();
 

@@ -58,10 +58,6 @@ int main(int argc, char *argv[])
     player->equipItem(axe,leftHand);
     player->equipItem(spear,rightHand);
 
-    // keep track of the axe and spear for testing purpose
-    player->w1_ = axe;
-    player->w2_ = spear;
-
     // play a sound
     Sound* sound = new Sound("qrc:/resources/sounds/music.mp3");
     sound->play(10);

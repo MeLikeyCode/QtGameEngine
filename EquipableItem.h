@@ -22,7 +22,7 @@ public:
 
     bool isEquipped();
 
-    void equip(Slot* slotToEquipIn);
+    bool equip(Slot* slotToEquipIn);
     void unEquip();
 
 protected:

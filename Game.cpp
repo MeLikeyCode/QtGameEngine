@@ -5,6 +5,7 @@
 #include "Spear.h" // TODO remove, test
 #include "DynamicEntity.h"
 #include "Entity.h"
+#include "Slot.h"
 
 /// Creates an instance of the Game with some default options.
 ///
@@ -49,12 +50,12 @@ void Game::mousePressEvent(QMouseEvent *event){
 
     // weapon 1 attack
     if (event->button() == Qt::LeftButton){
-        player_->w1_->attack();
+        player_->slot("leftHand")->use();
     }
 
     // weapon 2 attack
     if (event->button() == Qt::RightButton){
-        player_->w2_->attack();
+        player_->slot("rightHand")->use();
     }
 
     // spawn entity

@@ -22,7 +22,7 @@ Entity::Entity():
     map_ = nullptr;
     sprite_ = nullptr;
     inventory_ = new Inventory();
-    inventory_->setEntity(this);
+    inventory_->entity_ = this;
 
     // default sprite
     Sprite* spr = new Sprite();

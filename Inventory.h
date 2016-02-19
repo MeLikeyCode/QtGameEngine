@@ -13,11 +13,14 @@ class PointTargetItem;
 /// Represents a collection of Items that can belong to an Entity.
 class Inventory
 {
+    // Entity and Inventory reference each other.
+    // The association code is in the Entity, which needs private access
+    // to set the pointer in Inventory.
+    friend class Entity;
 public:
     Inventory();
 
     Entity* entity();
-    void setEntity(Entity* entity);
 
     void addItem(Item* item);
     void removeItem(Item* item);

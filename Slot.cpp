@@ -1,4 +1,5 @@
 #include "Slot.h"
+#include "EquipableItem.h"
 
 Slot::Slot()
 {
@@ -42,14 +43,8 @@ bool Slot::isFilled()
 /// Slot.
 bool Slot::equip(EquipableItem *item)
 {
-    if (canBeEquipped(item)){
-        item_ = item;
-        filled_ = true;
-        return true;
-    }
-    else{
-        return false;
-    }
+    // simply delegate to item->equip()
+    return item->equip(this);
 }
 
 /// Unequips whatever Item is in this Slot.

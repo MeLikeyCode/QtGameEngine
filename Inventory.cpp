@@ -17,12 +17,6 @@ Entity *Inventory::entity()
     return entity_;
 }
 
-/// Set the Entity that this Inventory belongs to.
-void Inventory::setEntity(Entity *entity)
-{
-    entity_ = entity;
-}
-
 /// Adds the specified item to the Inventory.
 /// If the Item is already in the Inventory, does nothing.
 /// If the Item is in another Inventory, it will be removed from there first.

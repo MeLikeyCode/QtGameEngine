@@ -20,6 +20,7 @@ Inventory *Item::inventory()
 /// Set the Inventory that this Item should belong to.
 /// Simply delegates to Inventory::addItem(this)
 /// @see Inventory::addItem(Item*)
+/// If you want to drop an Item on the ground, pass nullptr.
 void Item::setInventory(Inventory *inv)
 {
     // set on ground
@@ -30,13 +31,9 @@ void Item::setInventory(Inventory *inv)
         setParentEntity(nullptr);
         inventory_ = inv;
     }
-    // put in inv
+    // put in inv (delgate to Inventory)
     else {
-        // make sure not already in inventory
-        assert(inventory_ == nullptr);
-
-        sprite()->setVisible(false);        // make invisble
-        inventory_ = inv;
+        inv->addItem(this);
     }
 }
 

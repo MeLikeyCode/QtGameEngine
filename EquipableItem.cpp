@@ -15,19 +15,30 @@ bool EquipableItem::isEquipped()
     return isEquipped_;
 }
 
-/// Equips the EquipableItem at the specified Slot. The
-/// owning Entity is the Entity of the Inventory that the EquipableItem is a part
-/// of. If the Equipable Item is not part of an Inventory (i.e. is on the ground)
-/// this function will fail (assertion will fail).
-void EquipableItem::equip(Slot *slotToEquipIn)
+/// Equips the EquipableItem at the specified Slot.
+/// Returns true if equipped sucessfully, otherwise returns false (if the Slot
+/// can't equip the Item).
+bool EquipableItem::equip(Slot *slotToEquipIn)
 {
     // make sure the Item is not on the ground
+    // only items in the inventory can be equipped
     assert(inventory() != nullptr);
 
-    sprite()->setVisible(true);
-    sprite()->setScale(1);
-    setParentEntity(inventory()->entity());
-    setPointPos(attachmentPoint(),slotToEquipIn->position());
+    // equp, if it can be equipped
+    if (slotToEquipIn->canBeEquipped(this)){
+
+        sprite()->setVisible(true);
+        sprite()->setScale(1);
+        setParentEntity(inventory()->entity());
+        setPointPos(attachmentPoint(),slotToEquipIn->position());
+
+        slotToEquipIn->item_ = this;
+        slotToEquipIn->filled_ = true;
+        return true;
+    }
+    else {
+        return false;
+    }
 
 }
 
