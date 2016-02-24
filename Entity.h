@@ -79,8 +79,6 @@ public:
     void equipItem(EquipableItem* item, Slot* slot);
     void addItemToInventory(Item* item);
 
-
-
 private:
     // main attributes
     PathingMap pathingMap_;

@@ -6,6 +6,7 @@
 #include "DynamicEntity.h"
 #include "Entity.h"
 #include "Slot.h"
+#include "StraightProjectile.h"
 
 /// Creates an instance of the Game with some default options.
 ///
@@ -58,11 +59,19 @@ void Game::mousePressEvent(QMouseEvent *event){
         player_->slot("rightHand")->use();
     }
 
-    // spawn entity
+    // spawn straight projectile
     if (event->button() == Qt::RightButton){
-        Entity* ent = new Entity();
-        map()->addEntity(ent);
-        ent->setCellPos(map()->pointToCell(mapToMap(event->pos())));
+//        Entity* ent = new Entity();
+//        map()->addEntity(ent);
+//        ent->setCellPos(map()->pointToCell(mapToMap(event->pos())));
+
+        StraightProjectile* p = new StraightProjectile();
+        map()->addEntity(p);
+        p->setPointPos(player_->pointPos());
+        p->setFacingAngle(player_->facingAngle());
+        p->setTargetPoint(event->pos());
+        p->start();
+
     }
 
 //    // add rock (block cells at position)
