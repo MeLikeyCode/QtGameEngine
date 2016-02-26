@@ -7,6 +7,8 @@
 #include "DynamicEntity.h"
 #include "Sound.h"
 #include "MeleeWeaponSlot.h"
+#include "Bow.h"
+#include "RangedWeaponSlot.h"
 
 #include <QMediaPlayer>
 
@@ -36,6 +38,7 @@ int main(int argc, char *argv[])
     // add some attachment points for the player
     player->addNamedPoint(QPointF(24,5),"left shoulder");
     player->addNamedPoint(QPointF(24,58),"right shoulder");
+    player->addNamedPoint(QPointF(50,30),"center");
 
     // add some equipment slots for the player
     MeleeWeaponSlot* leftHand = new MeleeWeaponSlot();
@@ -46,6 +49,10 @@ int main(int argc, char *argv[])
     rightHand->setName("rightHand");
     rightHand->setPosition(player->namedPoint("right shoulder"));
     player->addSlot(rightHand);
+    RangedWeaponSlot* leftHandRanged = new RangedWeaponSlot();
+    leftHandRanged->setName("leftHandRanged");
+    leftHandRanged->setPosition(player->namedPoint("center"));
+    player->addSlot(leftHandRanged);
 
     // create some weapons (MeleeWeapons)
     Axe* axe = new Axe();
@@ -54,9 +61,13 @@ int main(int argc, char *argv[])
     Spear* spear = new Spear();
     player->addItemToInventory(spear);
 
+    Bow* bow = new Bow();
+    player->addItemToInventory(bow);
+
     // equip weapons to slots
-    player->equipItem(axe,leftHand);
-    player->equipItem(spear,rightHand);
+    //player->equipItem(axe,leftHand);
+//    player->equipItem(spear,rightHand);
+    player->equipItem(bow,leftHandRanged);
 
     // play a sound
     Sound* sound = new Sound("qrc:/resources/sounds/music.mp3");

@@ -54,10 +54,10 @@ void Game::mousePressEvent(QMouseEvent *event){
         player_->slot("leftHand")->use();
     }
 
-    // weapon 2 attack
-    if (event->button() == Qt::RightButton){
-        player_->slot("rightHand")->use();
-    }
+//    // weapon 2 attack
+//    if (event->button() == Qt::RightButton){
+//        player_->slot("rightHand")->use();
+//    }
 
     // spawn straight projectile
     if (event->button() == Qt::RightButton){
@@ -65,12 +65,15 @@ void Game::mousePressEvent(QMouseEvent *event){
 //        map()->addEntity(ent);
 //        ent->setCellPos(map()->pointToCell(mapToMap(event->pos())));
 
-        StraightProjectile* p = new StraightProjectile();
-        map()->addEntity(p);
-        p->setPointPos(player_->pointPos());
-        p->setFacingAngle(player_->facingAngle());
-        p->setTargetPoint(event->pos());
-        p->start();
+//        StraightProjectile* p = new StraightProjectile();
+//        map()->addEntity(p);
+//        p->setPointPos(player_->pointPos());
+//        p->setFacingAngle(player_->facingAngle());
+//        p->setTargetPoint(event->pos());
+//        p->start();
+
+        Slot* slot = player_->slot("leftHandRanged");
+        slot->use();
 
     }
 

@@ -12,6 +12,7 @@
 #include "EquipableItem.h"
 #include "Inventory.h"
 #include "Slot.h"
+#include <algorithm>
 
 /// Default constructor.
 Entity::Entity():
@@ -23,6 +24,7 @@ Entity::Entity():
     sprite_ = nullptr;
     inventory_ = new Inventory();
     inventory_->entity_ = this;
+    parent_ = nullptr;
 
     // default sprite
     Sprite* spr = new Sprite();
@@ -223,7 +225,7 @@ void Entity::enablePathingMap(){
 }
 
 /// Returns the children of this Entity.
-std::vector<Entity *> Entity::children() const
+std::unordered_set<Entity *> Entity::children() const
 {
     return children_;
 }
@@ -233,11 +235,36 @@ std::vector<Entity *> Entity::children() const
 /// When a parent Entity moves or rotates, all of its children do too!
 void Entity::setParentEntity(Entity *parent)
 {
-    parent_ = parent;
-    parent->children().push_back(this);
+    // if nullptr passed in and doesn't have a parent return
+    if (parent == nullptr && parent_ == nullptr){
+        return;
+    }
 
-    // make sprite set parent too
-    sprite()->setParentItem(parent->sprite());
+    // if nullptr passed in, and has a parent, remove parent
+    if (parent == nullptr && parent_ != nullptr){
+        parent_->children().erase(this);
+        parent_ = nullptr;
+
+        sprite()->setParentItem(nullptr);
+        return;
+    }
+
+    // if parent passed in and has no parent
+    if (parent != nullptr && parent_ == nullptr){
+        parent_ = parent;
+        parent->children().insert(this);
+        sprite()->setParentItem(parent->sprite());
+        return;
+    }
+
+    // if parent passed in and has a parent
+    if (parent != nullptr && parent_ != nullptr){
+        parent_->children().erase(this);
+        parent_ = parent;
+        parent->children().insert(this);
+        sprite()->setParentItem(parent->sprite());
+        return;
+    }
 }
 
 /// Returns the Entity's parent.
@@ -295,6 +322,12 @@ void Entity::addItemToInventory(Item *item)
         map()->addEntity(item);
     }
 
+}
+
+void Entity::setRotationPoint(QPointF point)
+{
+    assert(sprite() != nullptr);  // needs a sprite to have a rotation point
+    sprite()->setTransformOriginPoint(point);
 }
 
 /// Add the specified Slot to the Entity.

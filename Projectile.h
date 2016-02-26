@@ -61,7 +61,7 @@ public:
     int stepFrequency();
     void setStepFrequency(int f);
 
-    void addToNoDmageList(Entity* entity);
+    void addToNoDamageList(Entity* entity);
     bool isInNoDamageList(Entity* entity);
 
     std::vector<Entity*> collidingEntities();

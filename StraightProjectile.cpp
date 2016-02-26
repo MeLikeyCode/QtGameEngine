@@ -13,7 +13,7 @@ StraightProjectile::StraightProjectile()
 
     // defaults
     setStepSize(50);
-    setStepFrequency(50);
+    setStepFrequency(70);
 }
 
 void StraightProjectile::setStepSize(int size)

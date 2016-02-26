@@ -16,5 +16,6 @@
         <file>graphics/weapons/axe.png</file>
         <file>sounds/music.mp3</file>
         <file>graphics/misc/defaultMeleeWeapon.png</file>
+        <file>graphics/weapons/bow.png</file>
     </qresource>
 </RCC>

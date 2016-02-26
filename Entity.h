@@ -7,7 +7,7 @@
 #include <unordered_map>
 #include "PlayerControlledMoveBehavior.h"
 #include <string>
-#include <unordered_map>
+#include <unordered_set>
 
 class Map;
 class Inventory;
@@ -63,7 +63,7 @@ public:
     int facingAngle();
     void setFacingAngle(double angle);
 
-    std::vector<Entity*> children() const;
+    std::unordered_set<Entity*> children() const;
     void setParentEntity(Entity* parent);
     Entity* parent();
 
@@ -79,12 +79,14 @@ public:
     void equipItem(EquipableItem* item, Slot* slot);
     void addItemToInventory(Item* item);
 
+    void setRotationPoint(QPointF point);
+
 private:
     // main attributes
     PathingMap pathingMap_;
     Map* map_;
     Sprite* sprite_;
-    std::vector<Entity*> children_;
+    std::unordered_set<Entity*> children_;
     Entity* parent_;
     std::map<std::string,QPointF> namedPoints_;
     Inventory* inventory_;

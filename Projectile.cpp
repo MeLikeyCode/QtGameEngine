@@ -35,7 +35,7 @@ void Projectile::setStepFrequency(int f)
     this->stepFrequency_ = f;
 }
 
-void Projectile::addToNoDmageList(Entity *entity)
+void Projectile::addToNoDamageList(Entity *entity)
 {
     this->noDamageList_.insert(entity);
 }
