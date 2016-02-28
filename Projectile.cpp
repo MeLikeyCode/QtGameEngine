@@ -49,8 +49,18 @@ bool Projectile::isInNoDamageList(Entity *entity)
 /// (at its current position).
 std::vector<Entity *> Projectile::collidingEntities()
 {
-    std::vector<Entity*> ents = map()->entities(mapToMap(this->pointPos()));
+    std::vector<Entity*> ents = map()->entities(this->pointPos());
     return ents;
+}
+
+void Projectile::setStepSize(int size)
+{
+    this->stepSize_ = size;
+}
+
+int Projectile::stepSize()
+{
+    return this->stepSize_;
 }
 
 /// Executed every "step" the projectile needs to take.
@@ -62,16 +72,20 @@ std::vector<Entity *> Projectile::collidingEntities()
 /// and disconnect timer.
 void Projectile::step_()
 {
-    // first call the virtual move so the projectile can move
-    // in whatever way it wants to
+    // move one step closer to target
     this->moveStep();
 
-    // then call virtual function passing in all collided items, so
-    // subclass can decide what to do
+    // check for collisions
     std::vector<Entity*> cEntities = collidingEntities();
-    this->collidedWith(cEntities);
+    if (cEntities.size() > 0){
+        this->collidedWith(cEntities);
+    }
 
-    // if target point is reached, call virtual function
-//    this->targetReached();
-//    timer_->disconnect();
+    // check if done moving
+    int EPSILON = stepSize();
+    double distance = QLineF(pointPos(),targetPoint()).length();
+    if (distance < EPSILON){
+        timer_->disconnect();
+        this->targetReached();
+    }
 }

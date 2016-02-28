@@ -61,6 +61,9 @@ public:
     int stepFrequency();
     void setStepFrequency(int f);
 
+    void setStepSize(int size);
+    int stepSize();
+
     void addToNoDamageList(Entity* entity);
     bool isInNoDamageList(Entity* entity);
 
@@ -79,6 +82,7 @@ private:
     QPointF targetPoint_;
     std::unordered_set<Entity*> noDamageList_;
     int stepFrequency_;
+    int stepSize_;
     QTimer* timer_;
 
 

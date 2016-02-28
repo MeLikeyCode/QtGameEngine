@@ -7,6 +7,7 @@
 #include "Entity.h"
 #include "Slot.h"
 #include "StraightProjectile.h"
+#include "HomingProjectile.h"
 
 /// Creates an instance of the Game with some default options.
 ///
@@ -49,32 +50,37 @@ Map *Game::map(){
 void Game::mousePressEvent(QMouseEvent *event){
     // =TODO test code, remove=
 
-    // weapon 1 attack
-    if (event->button() == Qt::LeftButton){
-        player_->slot("leftHand")->use();
-    }
+//    // weapon 1 attack
+//    if (event->button() == Qt::LeftButton){
+//        player_->slot("leftHand")->use();
+//    }
 
 //    // weapon 2 attack
 //    if (event->button() == Qt::RightButton){
 //        player_->slot("rightHand")->use();
 //    }
 
-    // spawn straight projectile
+    // shoot straight projectile
     if (event->button() == Qt::RightButton){
-//        Entity* ent = new Entity();
-//        map()->addEntity(ent);
-//        ent->setCellPos(map()->pointToCell(mapToMap(event->pos())));
-
-//        StraightProjectile* p = new StraightProjectile();
-//        map()->addEntity(p);
-//        p->setPointPos(player_->pointPos());
-//        p->setFacingAngle(player_->facingAngle());
-//        p->setTargetPoint(event->pos());
-//        p->start();
 
         Slot* slot = player_->slot("leftHandRanged");
         slot->use();
 
+    }
+
+//    // add default entity
+//    if (event->button() == Qt::LeftButton){
+//        Entity* e = new Entity();
+//        map()->addEntity(e);
+//        e->setPointPos(event->pos());
+//    }
+
+    // spawn homing projectile towards player_
+    if (event->button() == Qt::LeftButton){
+        HomingProjectile* p = new HomingProjectile(player_);
+        p->setPointPos(QPointF(600,600));
+        map()->addEntity(p);
+        p->start();
     }
 
 //    // add rock (block cells at position)

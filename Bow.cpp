@@ -29,21 +29,20 @@ void Bow::attack(QPointF targetPoint)
     Entity* owningEntity = inventory()->entity();
 
     // create projectile
-    StraightProjectile* projectile = new StraightProjectile();
+    StraightProjectile* projectile = new StraightProjectile(
+                mapToMap(projectileSpawnPoint()),
+                targetPoint);
+
     map()->addEntity(projectile);
 
-    // place projectile at projectile spawn point of bow
-    projectile->setPointPos(mapToMap(projectileSpawnPoint()));
+    // add owner to no damage list
+    projectile->addToNoDamageList(owningEntity);
+    projectile->addToNoDamageList(this);
+
+    // set projectile rotation point
     double rx = 0;
     double ry = projectile->sprite()->boundingRect().height()/2;
     projectile->setRotationPoint(QPointF(rx,ry));
-    projectile->setFacingAngle(owningEntity->facingAngle());
-
-    // make sure owning entity is not killed by this projectile
-    projectile->addToNoDamageList(owningEntity);
-
-    // set where it should go to
-    projectile->setTargetPoint(targetPoint);
 
     // make it go
     projectile->start();

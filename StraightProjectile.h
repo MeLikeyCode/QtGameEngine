@@ -9,17 +9,11 @@ class StraightProjectile : public Projectile
 {
     Q_OBJECT
 public:
-    StraightProjectile();
-
-    void setStepSize(int size);
-    int stepSize();
+    StraightProjectile(QPointF startPoint, QPointF targetPoint);
 
     void moveStep();
     void collidedWith(std::vector<Entity*> entities);
     void targetReached();
-
-private:
-    int stepSize_;
 };
 
 #endif // STRAIGHTPROJECTILE_H

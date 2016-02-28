@@ -60,7 +60,7 @@ private:
     std::unordered_map<std::string,std::vector<QPixmap>> animation_;
     std::string playingAnimation_;
 
-    QGraphicsPixmapItem* pixmap_;
+    QGraphicsPixmapItem* pixmap_; // currently displayed pixmap
     QTimer* timer_;
     std::vector<QPixmap> animationPixmaps; // frames of the currently
                                            // playing animation

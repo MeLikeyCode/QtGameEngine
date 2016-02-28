@@ -26,6 +26,7 @@ int main(int argc, char *argv[])
     map->addEntity(player);
     player->setCellPos(Node(2,2));
     player->setPlayerControlled(true);
+    player->setStepSize(25);
     game->setPlayer(player); // game knows about this entity (for testing)
 
     // give the entity a sprite (overrides default one)

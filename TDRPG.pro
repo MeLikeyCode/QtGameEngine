@@ -48,7 +48,8 @@ SOURCES += main.cpp \
     StraightProjectile.cpp \
     RangedWeapon.cpp \
     Bow.cpp \
-    RangedWeaponSlot.cpp
+    RangedWeaponSlot.cpp \
+    HomingProjectile.cpp
 
 HEADERS  += \
     Map.h \
@@ -86,7 +87,8 @@ HEADERS  += \
     StraightProjectile.h \
     RangedWeapon.h \
     Bow.h \
-    RangedWeaponSlot.h
+    RangedWeaponSlot.h \
+    HomingProjectile.h
 
 RESOURCES += \
     res.qrc
