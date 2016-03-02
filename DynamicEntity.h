@@ -59,6 +59,8 @@ public:
     bool isPlayerControlled();
     void setPlayerControlled(bool tf);
 
+    std::unordered_set<Entity*> entitiesInView();
+
     // TODO for testing out spear only, delete after
     MeleeWeapon* w1_;
     MeleeWeapon* w2_;
@@ -86,6 +88,10 @@ private:
     void rotateTowardsTargetAngle();
     bool isPlayerControlled_;
     PlayerControlledMoveBehavior* moveBehavior_;
+
+
+    double fieldOfViewDistance_;
+    double fieldOfViewAngle_; // FULL angle
 
 
 };

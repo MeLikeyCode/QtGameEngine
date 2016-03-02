@@ -9,6 +9,7 @@
 #include "MeleeWeaponSlot.h"
 #include "Bow.h"
 #include "RangedWeaponSlot.h"
+#include "Map.h"
 
 #include <QMediaPlayer>
 

@@ -1,12 +1,11 @@
 #ifndef GAME_H
 #define GAME_H
 
-//inherits
 #include <QGraphicsView>
-
-// members
-#include "Map.h"
 #include <set>
+
+class Map;
+class DynamicEntity;
 
 /// Represents an instance of the game.
 /// @author Abdullah Aghazadah

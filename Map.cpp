@@ -191,6 +191,19 @@ std::vector<Entity *> Map::entities(const QPointF &atPoint)
     return ents;
 }
 
+/// Returns the Entities in the specified region.
+std::vector<Entity *> Map::entities(const QPolygonF &inRegion)
+{
+    std::vector<Entity*> ents;
+    for (Entity* entity:entities()){
+        if (inRegion.containsPoint(entity->pointPos(),Qt::OddEvenFill)){
+            ents.push_back(entity);
+        }
+    }
+
+    return ents;
+}
+
 /// Sets the Terrain of the Map.
 void Map::setTerrain(Terrain *to){
     terrain_ = to;

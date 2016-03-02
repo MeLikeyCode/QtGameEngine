@@ -1,18 +1,16 @@
 #ifndef MAP_H
 #define MAP_H
 
-// containers
 #include <vector>
 #include <set>
+#include "PathingMap.h"
 
-// pointer members
+class QPolygonF;
+class QGraphicsItem;
 class QGraphicsScene;
-#include "Entity.h"
 class Terrain;
 class Game;
-
-// value members
-#include "PathingMap.h"
+class Entity;
 
 /// Represents a map which can contain a bunch of interacting Entities.
 ///
@@ -64,6 +62,7 @@ public:
     Entity* closest(const QPointF& point);
     std::vector<Entity*> entities(const QRectF& inRegion);
     std::vector<Entity*> entities(const QPointF& atPoint);
+    std::vector<Entity*> entities(const QPolygonF& inRegion);
 
 private:
     int width_;

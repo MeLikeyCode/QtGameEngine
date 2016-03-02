@@ -9,6 +9,7 @@
 #include <QLineF>
 #include "Game.h"
 #include "MoveRelativeToScreen.h"
+#include <QGraphicsLineItem> // TODO: remove
 
 /// Default constructor.
 DynamicEntity::DynamicEntity():
@@ -25,6 +26,9 @@ DynamicEntity::DynamicEntity():
     isPlayerControlled_ = false;
     moveBehavior_ = new MoveRealtiveToScreen();
     moveBehavior_->setEntity(this);
+
+    fieldOfViewAngle_ = 45;
+    fieldOfViewDistance_ = 500;
 }
 
 /// Causes the Entity to take 1 step closer to moving to its target point.
@@ -345,6 +349,52 @@ void DynamicEntity::setPlayerControlled(bool tf)
         // connect moveTimer_ with moveAIControlled()
         moveTimer_->disconnect();
     }
+}
+
+/// Returns the Entities that are in the field of view of this Entity.
+std::unordered_set<Entity *> DynamicEntity::entitiesInView()
+{
+    // - create QPolygon triangel w/ distance and angle
+    // - pass this triangle to map to get entities in their
+
+    QPointF p1(mapToMap(QPointF(0,0)));
+    QLineF adjacent(p1,QPointF(-5,-5));
+    adjacent.setAngle(-1 * this->facingAngle());
+    adjacent.setLength(this->fieldOfViewDistance_);
+    QLineF topL(adjacent);
+    topL.setAngle(topL.angle() + this->fieldOfViewAngle_/2);
+    QPointF p2(topL.p2());
+    QLineF bottomL(adjacent);
+    bottomL.setAngle(bottomL.angle() - this->fieldOfViewAngle_/2);
+    QPointF p3(bottomL.p2());
+
+    QVector<QPointF> points;
+    points.append(p1);
+    points.append(p2);
+    points.append(p3);
+
+    QPolygonF poly(points);
+
+    // TODO: when map()->entities() returns a set, erase below code
+    std::unordered_set<Entity*> ents;
+    std::vector<Entity*> ess = map()->entities(poly);
+    for (Entity* e: map()->entities(poly)){
+        ents.insert(e);
+    }
+
+//    // visualize line of site
+//    QGraphicsLineItem* line = new QGraphicsLineItem();
+//    line->setLine(topL);
+//    QGraphicsLineItem* line2 = new QGraphicsLineItem();
+//    line2->setLine(bottomL);
+//    QGraphicsLineItem* line3 = new QGraphicsLineItem();
+//    line3->setLine(QLineF(p2,p3));
+//    map()->scene()->addItem(line);
+//    map()->scene()->addItem(line2);
+//    map()->scene()->addItem(line3);
+
+    return ents;
+
 }
 
 

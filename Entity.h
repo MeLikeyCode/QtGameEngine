@@ -81,6 +81,8 @@ public:
 
     void setRotationPoint(QPointF point);
 
+
+
 private:
     // main attributes
     PathingMap pathingMap_;
@@ -89,8 +91,11 @@ private:
     std::unordered_set<Entity*> children_;
     Entity* parent_;
     std::map<std::string,QPointF> namedPoints_;
+
+    // inventory/items
     Inventory* inventory_;
     std::unordered_map<std::string,Slot*> stringToSlot_;
+
 
 };
 
