@@ -375,12 +375,7 @@ std::unordered_set<Entity *> DynamicEntity::entitiesInView()
 
     QPolygonF poly(points);
 
-    // TODO: when map()->entities() returns a set, erase below code
-    std::unordered_set<Entity*> ents;
-    std::vector<Entity*> ess = map()->entities(poly);
-    for (Entity* e: map()->entities(poly)){
-        ents.insert(e);
-    }
+    return map()->entities(poly);
 
 //    // visualize line of site
 //    QGraphicsLineItem* line = new QGraphicsLineItem();
@@ -393,7 +388,6 @@ std::unordered_set<Entity *> DynamicEntity::entitiesInView()
 //    map()->scene()->addItem(line2);
 //    map()->scene()->addItem(line3);
 
-    return ents;
 
 }
 

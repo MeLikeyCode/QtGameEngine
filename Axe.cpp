@@ -81,7 +81,7 @@ void Axe::swingStep()
 
         // kill things (except its owner or any of the owner's children)
         Entity* theOwner = inventory()->entity();
-        std::vector<Entity*> collidingEntities = map()->entities(mapToMap(tip()));
+        std::unordered_set<Entity*> collidingEntities = map()->entities(mapToMap(tip()));
         for (Entity* e: collidingEntities){
             if (e != this && e != theOwner && e->parent() != theOwner){
                 map()->removeEntity(e);

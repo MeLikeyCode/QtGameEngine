@@ -109,7 +109,7 @@ void Spear::thrustStep()
 
     // if still moving forward, kill things with tip, then move backward
     // due to collision
-    std::vector<Entity*> collidingEntities = map()->entities(mapToMap(tip()));
+    std::unordered_set<Entity*> collidingEntities = map()->entities(mapToMap(tip()));
     Entity* theOwner = inventory()->entity();
     for (Entity* e: collidingEntities){
         if (e != this && e!= theOwner && e->parent() != theOwner && headingForward_){

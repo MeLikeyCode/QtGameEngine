@@ -2,7 +2,6 @@
 #define MAP_H
 
 #include <vector>
-#include <set>
 #include "PathingMap.h"
 
 class QPolygonF;
@@ -43,7 +42,7 @@ public:
     QPointF cellToPoint(const Node &cell);
     Node pointToCell(const QPointF& point);
 
-    std::set<Entity*> entities();
+    std::unordered_set<Entity*> entities();
     void addEntity(Entity *entity);
     void removeEntity(Entity *entity);
 
@@ -60,9 +59,9 @@ public:
     double distance(Entity* e1, Entity* e2);
 
     Entity* closest(const QPointF& point);
-    std::vector<Entity*> entities(const QRectF& inRegion);
-    std::vector<Entity*> entities(const QPointF& atPoint);
-    std::vector<Entity*> entities(const QPolygonF& inRegion);
+    std::unordered_set<Entity*> entities(const QRectF& inRegion);
+    std::unordered_set<Entity *> entities(const QPointF& atPoint);
+    std::unordered_set<Entity*> entities(const QPolygonF& inRegion);
 
 private:
     int width_;
@@ -71,7 +70,7 @@ private:
     int numCellsLong_;
     int cellSize_;
     PathingMap pathingMap_;
-    std::set<Entity*> entities_;
+    std::unordered_set<Entity*> entities_;
     Terrain* terrain_;
     Game* game_;
 

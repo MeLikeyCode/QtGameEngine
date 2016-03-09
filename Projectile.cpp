@@ -1,18 +1,53 @@
 #include "Projectile.h"
 #include "Map.h"
+#include "ProjectileMoveBehavior.h"
+#include "ProjectileCollisionBehavior.h"
+#include "ProjectileRangeReachedBehavior.h"
 
-Projectile::Projectile()
+Projectile::Projectile(ProjectileMoveBehavior* moveBehavior, ProjectileCollisionBehavior* collisionBehavior, ProjectileRangeReachedBehavior* rangeReachedBehavior)
 {
+    this->moveBehavior_ = moveBehavior;
+    moveBehavior->projectile_ = this;
+    this->collisionBehavior_ = collisionBehavior;
+    collisionBehavior->projectile_ = this;
+    this->rangeReachedBehavior_ = rangeReachedBehavior;
+    rangeReachedBehavior->projectile_ = this;
 
+    // default sprite
+    Sprite* spr_ = new Sprite();
+    QPixmap pm_ = QPixmap(":resources/graphics/weapons/axe.png");
+    spr_->setPixmap(pm_);
+    setSprite(spr_);
+
+    // defaults
+    stepFrequency_ = 50;
+    stepSize_ = 15;
+    distanceMoved_ = 0;
+    range_ = 500;
 }
 
 /// Start moving the projectile.
-void Projectile::start()
+void Projectile::go(QPointF start, QPointF targetPoint, double range)
 {
+    setStart(start);
+    setPointPos(start);
+    setTargetPoint(targetPoint);
+    setRange(range);
+
     // connect timer
     timer_ = new QTimer();
     connect(timer_,SIGNAL(timeout()),this,SLOT(step_()));
     timer_->start(this->stepFrequency());
+}
+
+QPointF Projectile::start()
+{
+    return this->start_;
+}
+
+void Projectile::setStart(QPointF start)
+{
+    this->start_ = start;
 }
 
 QPointF Projectile::targetPoint()
@@ -23,6 +58,21 @@ QPointF Projectile::targetPoint()
 void Projectile::setTargetPoint(QPointF target)
 {
     this->targetPoint_ = target;
+}
+
+double Projectile::range()
+{
+    return range_;
+}
+
+void Projectile::setRange(double range)
+{
+    range_ = range;
+}
+
+double Projectile::distanceTravelled()
+{
+    return distanceMoved_;
 }
 
 int Projectile::stepFrequency()
@@ -47,9 +97,13 @@ bool Projectile::isInNoDamageList(Entity *entity)
 
 /// Returns a list of entities that the projectile is currently colliding with
 /// (at its current position).
-std::vector<Entity *> Projectile::collidingEntities()
+std::unordered_set<Entity *> Projectile::collidingEntities()
 {
-    std::vector<Entity*> ents = map()->entities(this->pointPos());
+    std::unordered_set<Entity*> ents = map()->entities(this->pointPos());
+
+    // make sure the projectile itself is not in this list
+    ents.erase(this);
+
     return ents;
 }
 
@@ -64,28 +118,28 @@ int Projectile::stepSize()
 }
 
 /// Executed every "step" the projectile needs to take.
-/// First, a virtual function is called that determines where the projectile
-/// move.
-/// Second, all colliding entities are detected at the new position, and
-/// passed into a second virtual function that determines what to do with em.
-/// Third, if the targetPoint is reached, will call a virtual function,
-/// and disconnect timer.
+/// First the moveBehavior is called which determines how it should move.
+/// (we keep track of how much it has moved in order to be able to tell when
+/// it has reached its range).
+/// After moving, a collision check is done, if the projectile collides with
+/// any Entities, the collisionBehavior will be notified.
+/// Third, if the Projectile has reached its range, the rangeReachedBehavior
+/// will be notified.
 void Projectile::step_()
 {
     // move one step closer to target
-    this->moveStep();
+    double amountMoved = this->moveBehavior_->onMoveStep();
+    distanceMoved_ += amountMoved;
 
     // check for collisions
-    std::vector<Entity*> cEntities = collidingEntities();
+    std::unordered_set<Entity*> cEntities = collidingEntities();
     if (cEntities.size() > 0){
-        this->collidedWith(cEntities);
+        this->collisionBehavior_->onCollisionWith(cEntities);
     }
 
-    // check if done moving
-    int EPSILON = stepSize();
-    double distance = QLineF(pointPos(),targetPoint()).length();
-    if (distance < EPSILON){
+    // check if range reached
+    if (distanceMoved_ > range_){
         timer_->disconnect();
-        this->targetReached();
+        this->rangeReachedBehavior_->onRangeReached();
     }
 }

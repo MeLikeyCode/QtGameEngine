@@ -1,7 +1,10 @@
 #include "Bow.h"
-#include "StraightProjectile.h"
+#include "Projectile.h"
 #include "Inventory.h"
 #include "Map.h"
+#include "ProjectileMoveBehaviorStraight.h"
+#include "ProjectileCollisionBehaviorDamage.h"
+#include "ProjectileRangeReachedBehaviorDestroy.h"
 
 Bow::Bow()
 {
@@ -29,10 +32,10 @@ void Bow::attack(QPointF targetPoint)
     Entity* owningEntity = inventory()->entity();
 
     // create projectile
-    StraightProjectile* projectile = new StraightProjectile(
-                mapToMap(projectileSpawnPoint()),
-                targetPoint);
-
+    ProjectileMoveBehaviorStraight* mb = new ProjectileMoveBehaviorStraight();
+    ProjectileCollisionBehaviorDamage* cb = new ProjectileCollisionBehaviorDamage();
+    ProjectileRangeReachedBehaviorDestroy* rrb = new ProjectileRangeReachedBehaviorDestroy();
+    Projectile* projectile = new Projectile(mb,cb,rrb);
     map()->addEntity(projectile);
 
     // add owner to no damage list
@@ -45,5 +48,5 @@ void Bow::attack(QPointF targetPoint)
     projectile->setRotationPoint(QPointF(rx,ry));
 
     // make it go
-    projectile->start();
+    projectile->go(mapToMap(this->projectileSpawnPoint()),targetPoint,900);
 }

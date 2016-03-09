@@ -6,8 +6,10 @@
 #include "DynamicEntity.h"
 #include "Entity.h"
 #include "Slot.h"
-#include "StraightProjectile.h"
-#include "HomingProjectile.h"
+#include "ProjectileMoveBehaviorHoming.h"
+#include "ProjectileCollisionBehaviorDamage.h"
+#include "ProjectileRangeReachedBehaviorDestroy.h"
+#include "Projectile.h"
 
 /// Creates an instance of the Game with some default options.
 ///
@@ -60,32 +62,36 @@ void Game::mousePressEvent(QMouseEvent *event){
 //        player_->slot("rightHand")->use();
 //    }
 
-//    // shoot straight projectile
-//    if (event->button() == Qt::RightButton){
-
-//        Slot* slot = player_->slot("leftHandRanged");
-//        slot->use();
-
-//    }
-
-    // add default entity
-    if (event->button() == Qt::LeftButton){
-        Entity* e = new Entity();
-        map()->addEntity(e);
-        e->setPointPos(event->pos());
-    }
-
+    // shoot straight projectile
     if (event->button() == Qt::RightButton){
-        qDebug() << player_->entitiesInView().size();
+
+        Slot* slot = player_->slot("leftHandRanged");
+        slot->use();
+
     }
 
-//    // spawn homing projectile towards player_
+//    // add default entity
 //    if (event->button() == Qt::LeftButton){
-//        HomingProjectile* p = new HomingProjectile(player_);
-//        p->setPointPos(QPointF(600,600));
-//        map()->addEntity(p);
-//        p->start();
+//        Entity* e = new Entity();
+//        map()->addEntity(e);
+//        e->setPointPos(event->pos());
 //    }
+
+      // display number of entities in view
+//    if (event->button() == Qt::RightButton){
+//        qDebug() << player_->entitiesInView().size();
+//    }
+
+    // spawn homing projectile towards player_
+    if (event->button() == Qt::LeftButton){
+        ProjectileMoveBehaviorHoming* mb = new ProjectileMoveBehaviorHoming(player_);
+        ProjectileCollisionBehaviorDamage* cb = new ProjectileCollisionBehaviorDamage();
+        ProjectileRangeReachedBehaviorDestroy* rc = new ProjectileRangeReachedBehaviorDestroy();
+
+        Projectile* p = new Projectile(mb,cb,rc);
+        map()->addEntity(p);
+        p->go(QPointF(0,0),QPointF(400,400),1000);
+    }
 
 //    // add rock (block cells at position)
 //    if (event->button() == Qt::RightButton){

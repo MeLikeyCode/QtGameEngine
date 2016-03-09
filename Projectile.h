@@ -5,45 +5,43 @@
 #include <QObject>
 #include <QPointF>
 #include <unordered_set>
-#include <vector>
 #include <QTimer>
 
-/// Abstract class that represents a projectile that moves to a target.
-/// A projectile has a point that it should be traveling towards.
-/// When it reaches that point, it will call the virtual targetReached()
-/// function. Along the way, if it collides with any Entities, it will
-/// call the virtual collidedWith() function.
+class ProjectileMoveBehavior;
+class ProjectileCollisionBehavior;
+class ProjectileRangeReachedBehavior;
+
+/// Represents a projectile that moves a certain distance.
+/// Strategy pattern is used to determine the behaviors of the projectile.
+/// Projectiles have 3 behaviors:
+/// -ProjectileMoveBehavior
+/// -ProjectileCollisionBehavior
+/// -ProjectileRangeReachedBehavior
 ///
-/// In order to create your own projectile, sub class this and then implement
-/// the following virtual functions:
-/// -moveStep();
-/// -collidedWith(std::vector<Entity*> entities);
-/// -targetReached()
+/// The ProjectileMoveBehavior determines how the projectile moves. It has a
+/// function that is executed each time the projectile is asked to move. This
+/// function should move the projectile and then return how much it has moved.
+/// (The amount moved is used to determine when a projectile has reached its range)
 ///
-/// The moveStep function will be called every time the projectile needs to
-/// move. You can use setStepFrequency() to set how often this function is called.
+/// The ProjectileCollisionBehavior determines how the projectile responds when
+/// it collides with Entities.
 ///
-/// The collidedWith function will be called whenever the projectile has collided
-/// with some entity(s).
+/// The ProjectileRangeReachedBehavior determines what the projectile does when
+/// it has reached its max range (i.e. it has traveled as far as it was supposed
+/// to).
 ///
-/// The targetReached() function will be called whenever the projectile has reached
-/// its aimed target.
+/// In order to create your own Projectiles, you should sublcass one or more of the
+/// behaviors to create your own behaviors. Then simply construct a projectile and
+/// give them your own behaviors :).
 ///
-/// During the life of a projectile, every so often the moveStep will be called,
-/// which should move the projectile 1 step forward in its path, after it has moved
-/// forward, the projectile will be tested for collision and every entity that
-/// it collides with will be returned via the collidedWith function. Finally,
-/// when a projectile has reached its endpoint, it will call the targetReached
-/// function. Most of the times, you'd want to destroy the projectile when it
-/// reaches its target.
-///
-/// Note that several subclasses of Projectile exist that provide
-/// some default implementations for some of these virtual functions.
-/// StraightProjectile is one of these subclasses.
+/// Note that several prebuilt behaviors are included.
 ///
 /// Every projectile maintains a list of entities that it should not damage.
 /// The Entity that spawns a projectile should be adde to this list to prevent
 /// the projectile from damaging him (addToNoDamageList()).
+///
+/// IMPORTANT: After creating a projectile, invoke the start() method to get it
+/// to start moving.
 ///
 /// @author Abdullah Aghazadah
 /// @date 2/21/16
@@ -51,12 +49,22 @@ class Projectile : public QObject, public Entity
 {
     Q_OBJECT
 public:
-    Projectile();
+    Projectile(ProjectileMoveBehavior *moveBehavior,
+               ProjectileCollisionBehavior *collisionBehavior,
+               ProjectileRangeReachedBehavior *rangeReachedBehavior);
 
-    void start();
+    void go(QPointF start, QPointF targetPoint, double range);
+
+    QPointF start();
+    void setStart(QPointF start);
 
     QPointF targetPoint();
     void setTargetPoint(QPointF target);
+
+    double range();
+    void setRange(double range);
+
+    double distanceTravelled();
 
     int stepFrequency();
     void setStepFrequency(int f);
@@ -67,23 +75,25 @@ public:
     void addToNoDamageList(Entity* entity);
     bool isInNoDamageList(Entity* entity);
 
-    std::vector<Entity*> collidingEntities();
-
-    virtual void targetReached() = 0;
-    // this function is called whenever the projectile collides with any
-    // entities along its path
-    virtual void collidedWith(std::vector<Entity*> entities) = 0;
-    virtual void moveStep() = 0;
+    std::unordered_set<Entity*> collidingEntities();
 
 public slots:
     void step_();
 
 private:
     QPointF targetPoint_;
+    QPointF start_;
+    double range_;
+    double distanceMoved_;
     std::unordered_set<Entity*> noDamageList_;
     int stepFrequency_;
     int stepSize_;
     QTimer* timer_;
+
+    // behaviors
+    ProjectileMoveBehavior* moveBehavior_;
+    ProjectileCollisionBehavior* collisionBehavior_;
+    ProjectileRangeReachedBehavior* rangeReachedBehavior_;
 
 
 };

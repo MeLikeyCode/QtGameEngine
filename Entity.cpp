@@ -317,7 +317,7 @@ void Entity::addItemToInventory(Item *item)
 {
     inventory_->addItem(item);
 
-    // add to map
+    // add item to map
     if (map() != nullptr){
         map()->addEntity(item);
     }

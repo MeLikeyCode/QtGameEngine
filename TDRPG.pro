@@ -45,11 +45,16 @@ SOURCES += main.cpp \
     Slot.cpp \
     MeleeWeaponSlot.cpp \
     Projectile.cpp \
-    StraightProjectile.cpp \
     RangedWeapon.cpp \
     Bow.cpp \
     RangedWeaponSlot.cpp \
-    HomingProjectile.cpp
+    ProjectileMoveBehavior.cpp \
+    ProjectileCollisionBehavior.cpp \
+    ProjectileRangeReachedBehavior.cpp \
+    ProjectileMoveBehaviorStraight.cpp \
+    ProjectileCollisionBehaviorDamage.cpp \
+    ProjectileRangeReachedBehaviorDestroy.cpp \
+    ProjectileMoveBehaviorHoming.cpp
 
 HEADERS  += \
     Map.h \
@@ -84,11 +89,16 @@ HEADERS  += \
     Slot.h \
     MeleeWeaponSlot.h \
     Projectile.h \
-    StraightProjectile.h \
     RangedWeapon.h \
     Bow.h \
     RangedWeaponSlot.h \
-    HomingProjectile.h
+    ProjectileMoveBehavior.h \
+    ProjectileCollisionBehavior.h \
+    ProjectileRangeReachedBehavior.h \
+    ProjectileMoveBehaviorStraight.h \
+    ProjectileCollisionBehaviorDamage.h \
+    ProjectileRangeReachedBehaviorDestroy.h \
+    ProjectileMoveBehaviorHoming.h
 
 RESOURCES += \
     res.qrc

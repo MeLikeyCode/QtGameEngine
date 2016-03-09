@@ -90,7 +90,7 @@ Node Map::pointToCell(const QPointF &point)
     return pathingMap().pointToCell(point);
 }
 
-std::set<Entity *> Map::entities(){
+std::unordered_set<Entity *> Map::entities(){
     return entities_;
 }
 
@@ -159,11 +159,11 @@ Entity *Map::closest(const QPointF &point){
 }
 
 /// Returns the Entities in the specified region.
-std::vector<Entity *> Map::entities(const QRectF &inRegion){
-    std::vector<Entity*> ents;
+std::unordered_set<Entity *> Map::entities(const QRectF &inRegion){
+    std::unordered_set<Entity*> ents;
     for (Entity* entity:entities()){
         if (inRegion.contains(entity->pointPos())){
-            ents.push_back(entity);
+            ents.insert(entity);
         }
     }
 
@@ -172,11 +172,11 @@ std::vector<Entity *> Map::entities(const QRectF &inRegion){
 
 
 /// Returns the Entitys at the specified point.
-std::vector<Entity *> Map::entities(const QPointF &atPoint)
+std::unordered_set<Entity *> Map::entities(const QPointF &atPoint)
 {
     // traverse through list of Entities and see if Entity's bounding
     // rect contains the specified point
-    std::vector<Entity*> ents;
+    std::unordered_set<Entity*> ents;
     for (Entity* entity:entities()){
         // get the Entity's bounding rect
         QRectF bRect(entity->boundingRect());
@@ -184,7 +184,7 @@ std::vector<Entity *> Map::entities(const QPointF &atPoint)
 
         // see if the bounding rect contains the point
         if (bRect.contains(atPoint)){
-            ents.push_back(entity);
+            ents.insert(entity);
         }
     }
 
@@ -192,12 +192,12 @@ std::vector<Entity *> Map::entities(const QPointF &atPoint)
 }
 
 /// Returns the Entities in the specified region.
-std::vector<Entity *> Map::entities(const QPolygonF &inRegion)
+std::unordered_set<Entity *> Map::entities(const QPolygonF &inRegion)
 {
-    std::vector<Entity*> ents;
+    std::unordered_set<Entity*> ents;
     for (Entity* entity:entities()){
         if (inRegion.containsPoint(entity->pointPos(),Qt::OddEvenFill)){
-            ents.push_back(entity);
+            ents.insert(entity);
         }
     }
 
