@@ -10,6 +10,10 @@
 #include "ProjectileCollisionBehaviorDamage.h"
 #include "ProjectileRangeReachedBehaviorDestroy.h"
 #include "Projectile.h"
+#include "Enemy.h"
+#include "WeaponSlot.h"
+#include "Axe.h"
+#include "Bow.h"
 
 /// Creates an instance of the Game with some default options.
 ///
@@ -70,6 +74,16 @@ void Game::mousePressEvent(QMouseEvent *event){
 
     }
 
+    // create enemy
+    if (event->button() == Qt::LeftButton){
+        // create enemy (will follow/attack its enemies)
+        Enemy* e = new Enemy();
+        e->setPointPos(event->pos());
+        map()->addEntity(e);
+
+
+    }
+
 //    // add default entity
 //    if (event->button() == Qt::LeftButton){
 //        Entity* e = new Entity();
@@ -82,16 +96,16 @@ void Game::mousePressEvent(QMouseEvent *event){
 //        qDebug() << player_->entitiesInView().size();
 //    }
 
-    // spawn homing projectile towards player_
-    if (event->button() == Qt::LeftButton){
-        ProjectileMoveBehaviorHoming* mb = new ProjectileMoveBehaviorHoming(player_);
-        ProjectileCollisionBehaviorDamage* cb = new ProjectileCollisionBehaviorDamage();
-        ProjectileRangeReachedBehaviorDestroy* rc = new ProjectileRangeReachedBehaviorDestroy();
+//    // spawn homing projectile towards player_
+//    if (event->button() == Qt::LeftButton){
+//        ProjectileMoveBehaviorHoming* mb = new ProjectileMoveBehaviorHoming(player_);
+//        ProjectileCollisionBehaviorDamage* cb = new ProjectileCollisionBehaviorDamage();
+//        ProjectileRangeReachedBehaviorDestroy* rc = new ProjectileRangeReachedBehaviorDestroy();
 
-        Projectile* p = new Projectile(mb,cb,rc);
-        map()->addEntity(p);
-        p->go(QPointF(0,0),QPointF(400,400),1000);
-    }
+//        Projectile* p = new Projectile(mb,cb,rc);
+//        map()->addEntity(p);
+//        p->go(QPointF(0,0),QPointF(400,400),1000);
+//    }
 
 //    // add rock (block cells at position)
 //    if (event->button() == Qt::RightButton){

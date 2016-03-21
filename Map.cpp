@@ -216,6 +216,7 @@ void Map::setTerrain(Terrain *to){
 /// Adds the specified Entity to the Map and updates the PathingMap.
 /// If the Entity is already in the Map, does nothing.
 /// If the Entity is in another Map, it will be removed from that Map first.
+/// All of the Entities children are added to this map as well.
 void Map::addEntity(Entity *entity){
     // if the Entity is already in the Map, do nothing
     if (contains(entity)) {
@@ -238,6 +239,13 @@ void Map::addEntity(Entity *entity){
 
     // update the PathingMap
     // entity->enablePathingMap(); // TODO work on
+
+    // add all child entities
+    std::unordered_set<Entity*> childs = entity->children(); // TODO: remove, for debugging
+    int cout = childs.size(); // TODO: remove, for debuggin
+    for (Entity* childEntity:entity->children()){
+        addEntity(childEntity);
+    }
 
     drawPathingMap(); // TODO test remove
 }

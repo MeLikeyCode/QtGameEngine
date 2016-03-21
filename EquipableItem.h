@@ -5,6 +5,7 @@
 
 class QPointF;
 class Entity;
+class Slot;
 
 /// An abstract class that Represents an Item which is equipable.
 class EquipableItem : public Item

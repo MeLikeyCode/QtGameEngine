@@ -56,19 +56,19 @@ int main(int argc, char *argv[])
     leftHandRanged->setPosition(player->namedPoint("center"));
     player->addSlot(leftHandRanged);
 
-    // create some weapons (MeleeWeapons)
-    Axe* axe = new Axe();
-    player->addItemToInventory(axe);
+//    // create some weapons (MeleeWeapons)
+//    Axe* axe = new Axe();
+//    player->addItemToInventory(axe);
 
-    Spear* spear = new Spear();
-    player->addItemToInventory(spear);
+//    Spear* spear = new Spear();
+//    player->addItemToInventory(spear);
 
     Bow* bow = new Bow();
     player->addItemToInventory(bow);
 
     // equip weapons to slots
     //player->equipItem(axe,leftHand);
-//    player->equipItem(spear,rightHand);
+    //player->equipItem(spear,rightHand);
     player->equipItem(bow,leftHandRanged);
 
     // play a sound

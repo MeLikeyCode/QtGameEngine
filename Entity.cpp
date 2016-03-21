@@ -22,8 +22,6 @@ Entity::Entity():
     // = some defaults=
     map_ = nullptr;
     sprite_ = nullptr;
-    inventory_ = new Inventory();
-    inventory_->entity_ = this;
     parent_ = nullptr;
 
     // default sprite
@@ -225,14 +223,15 @@ void Entity::enablePathingMap(){
 }
 
 /// Returns the children of this Entity.
-std::unordered_set<Entity *> Entity::children() const
+std::unordered_set<Entity *> &Entity::children()
 {
     return children_;
 }
 
 /// Sets the parent of this Entity.
 ///
-/// When a parent Entity moves or rotates, all of its children do too!
+/// When a parent Entity moves or rotates, all of its children do too.
+/// When a parent Entity gets added to a Map, all of its children do too.
 void Entity::setParentEntity(Entity *parent)
 {
     // if nullptr passed in and doesn't have a parent return
@@ -295,49 +294,8 @@ QPointF Entity::namedPoint(std::string name)
     return namedPoints_[name];
 }
 
-/// Attempts to equip the specified item at the specified Slot.
-/// Can only equip Items that are in the Entity's Inventory.
-void Entity::equipItem(EquipableItem *item, std::string slot)
-{
-    // make sure item is in the Entity's Inventory
-    assert(inventory_->contains(item));
-    item->equip(stringToSlot_[slot]);
-}
-
-/// Overload of Entity::equipItem(EquipableItem*,std::string).
-void Entity::equipItem(EquipableItem *item, Slot *slot)
-{
-    equipItem(item,slot->name());
-}
-
-/// Adds the specified item to the Inventory of the Entity.
-/// If the Entity has a Map, the Item will be added to the same Map (if it's
-/// not already in there).
-void Entity::addItemToInventory(Item *item)
-{
-    inventory_->addItem(item);
-
-    // add item to map
-    if (map() != nullptr){
-        map()->addEntity(item);
-    }
-
-}
-
 void Entity::setRotationPoint(QPointF point)
 {
     assert(sprite() != nullptr);  // needs a sprite to have a rotation point
     sprite()->setTransformOriginPoint(point);
-}
-
-/// Add the specified Slot to the Entity.
-void Entity::addSlot(Slot *slot)
-{
-    stringToSlot_[slot->name()] = slot;
-}
-
-/// Returns the Slot with the specified name.
-Slot *Entity::slot(std::string name)
-{
-    return stringToSlot_[name];
 }

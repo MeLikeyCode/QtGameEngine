@@ -54,7 +54,10 @@ SOURCES += main.cpp \
     ProjectileMoveBehaviorStraight.cpp \
     ProjectileCollisionBehaviorDamage.cpp \
     ProjectileRangeReachedBehaviorDestroy.cpp \
-    ProjectileMoveBehaviorHoming.cpp
+    ProjectileMoveBehaviorHoming.cpp \
+    Enemy.cpp \
+    Weapon.cpp \
+    WeaponSlot.cpp
 
 HEADERS  += \
     Map.h \
@@ -98,7 +101,10 @@ HEADERS  += \
     ProjectileMoveBehaviorStraight.h \
     ProjectileCollisionBehaviorDamage.h \
     ProjectileRangeReachedBehaviorDestroy.h \
-    ProjectileMoveBehaviorHoming.h
+    ProjectileMoveBehaviorHoming.h \
+    Enemy.h \
+    Weapon.h \
+    WeaponSlot.h
 
 RESOURCES += \
     res.qrc

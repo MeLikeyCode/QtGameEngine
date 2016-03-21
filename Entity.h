@@ -13,7 +13,6 @@ class Map;
 class Inventory;
 class EquipableItem;
 class Item;
-class Slot;
 
 
 /// An Entity is the base class for anything that can go inside a Map.
@@ -63,7 +62,7 @@ public:
     int facingAngle();
     void setFacingAngle(double angle);
 
-    std::unordered_set<Entity*> children() const;
+    std::unordered_set<Entity*>& children();
     void setParentEntity(Entity* parent);
     Entity* parent();
 
@@ -71,13 +70,6 @@ public:
 
     void addNamedPoint(const QPointF& point, std::string name);
     QPointF namedPoint(std::string name);
-
-    void addSlot(Slot* slot);
-    Slot* slot(std::string name);
-
-    void equipItem(EquipableItem* item, std::string slot);
-    void equipItem(EquipableItem* item, Slot* slot);
-    void addItemToInventory(Item* item);
 
     void setRotationPoint(QPointF point);
 
@@ -91,12 +83,6 @@ private:
     std::unordered_set<Entity*> children_;
     Entity* parent_;
     std::map<std::string,QPointF> namedPoints_;
-
-    // inventory/items
-    Inventory* inventory_;
-    std::unordered_map<std::string,Slot*> stringToSlot_;
-
-
 };
 
 #endif // ENTITY_H

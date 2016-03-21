@@ -1,9 +1,5 @@
 #include "RangedWeapon.h"
 
-RangedWeapon::RangedWeapon()
-{
-}
-
 /// Returns the point at which projectiles will be spawn.
 /// This point is in local coordinates (relative to the RangedWeapon itself).
 QPointF RangedWeapon::projectileSpawnPoint()

@@ -18,7 +18,7 @@ Spear::Spear()
     // default thrust parameters
     currentThrustStep_ = 0;
     thrustLengthEachStep_ = 5;
-    setThrustDistance(35);
+    setThrustDistance(45);
     setThrustSpeed(250);
 
     // default sprite
@@ -43,8 +43,8 @@ Spear::Spear()
 //    setThrustSpeed(500);
 }
 
-/// Will thrust the spear forward.
-void Spear::attack()
+/// Will thrust the spear forward. The "position" argument is ignored.
+void Spear::attack(QPointF position)
 {
     // if its already thrusting, don't do anything
     if (alreadyThrusting_){
@@ -80,13 +80,15 @@ void Spear::setThrustSpeed(double speed)
     thrustSpeed_ = thrustLengthEachStep_ * thrustsPerSecond;
 }
 
-/// Sets how far the spear thrusts (in pixels).
+/// Sets how far the spear thrusts (in pixels). Also sets the cast range accordingly.
 void Spear::setThrustDistance(double distance)
 {
     // thrust distance is set by changing the maxThrustSteps_
     int numOfThrusts =  distance / thrustLengthEachStep_;
     maxThrustSteps_ = numOfThrusts;
     thrustDistance_ = thrustLengthEachStep_ * numOfThrusts;
+
+    setCastRange(thrustDistance_);
 }
 
 void Spear::thrustStep()

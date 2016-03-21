@@ -3,6 +3,7 @@
 #include <cassert>
 #include "Inventory.h"
 #include "Slot.h"
+#include "DynamicEntity.h"
 
 EquipableItem::EquipableItem()
 {
@@ -29,7 +30,7 @@ bool EquipableItem::equip(Slot *slotToEquipIn)
 
         sprite()->setVisible(true);
         sprite()->setScale(1);
-        setParentEntity(inventory()->entity());
+        setParentEntity(slotToEquipIn->owner());
         setPointPos(attachmentPoint(),slotToEquipIn->position());
 
         slotToEquipIn->item_ = this;

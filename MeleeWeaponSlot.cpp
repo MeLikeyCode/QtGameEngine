@@ -2,9 +2,6 @@
 
 #include "MeleeWeapon.h"
 
-MeleeWeaponSlot::MeleeWeaponSlot()
-{
-}
 
 bool MeleeWeaponSlot::canBeEquipped(EquipableItem *item)
 {
@@ -17,5 +14,5 @@ void MeleeWeaponSlot::use()
 {
     // call attack on the MeleeWeapon
     MeleeWeapon* asMeleeWeapon = dynamic_cast<MeleeWeapon*>(item_);
-    asMeleeWeapon->attack();
+    asMeleeWeapon->attack(QPointF(0,0));
 }

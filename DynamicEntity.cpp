@@ -10,6 +10,9 @@
 #include "Game.h"
 #include "MoveRelativeToScreen.h"
 #include <QGraphicsLineItem> // TODO: remove
+#include "Inventory.h"
+#include "EquipableItem.h"
+#include "Slot.h"
 
 /// Default constructor.
 DynamicEntity::DynamicEntity():
@@ -27,8 +30,73 @@ DynamicEntity::DynamicEntity():
     moveBehavior_ = new MoveRealtiveToScreen();
     moveBehavior_->setEntity(this);
 
-    fieldOfViewAngle_ = 45;
+    fieldOfViewAngle_ = 90;
     fieldOfViewDistance_ = 500;
+
+    inventory_ = new Inventory();
+    inventory_->entity_ = this;
+
+}
+
+/// Add the specified Slot to the DynamicEntity.
+void DynamicEntity::addSlot(Slot *slot)
+{
+    stringToSlot_[slot->name()] = slot;
+    slot->owner_ = this;
+}
+
+/// Returns the Slot with the specified name.
+Slot *DynamicEntity::slot(std::string name)
+{
+    return stringToSlot_[name];
+}
+
+
+/// Attempts to equip the specified item at the specified Slot.
+/// Can only
+///
+///
+///
+///
+///
+///
+///
+///
+///
+///
+///  Items that are in the DynamicEntity's Inventory.
+void DynamicEntity::equipItem(EquipableItem *item, std::string slot)
+{
+    // make sure item is in the Entity's Inventory
+    assert(inventory_->contains(item));
+    item->equip(stringToSlot_[slot]);
+}
+
+/// Overload of DyanmicEntity::equipItem(EquipableItem*,std::string).
+void DynamicEntity::equipItem(EquipableItem *item, Slot *slot)
+{
+    equipItem(item,slot->name());
+}
+
+/// Adds the specified item to the Inventory of the DynamicEntity.
+/// If the DynamicEntity has a Map, the Item will be added to the same Map (if it's
+/// not already in there).
+void DynamicEntity::addItemToInventory(Item *item)
+{
+    inventory_->addItem(item);
+
+    // add item to map
+    if (map() != nullptr){
+        map()->addEntity(item);
+    }
+
+}
+
+/// Returns true if the Inventory of the DynamicEntity contains the specified
+/// Item.
+bool DynamicEntity::inventoryContains(Item *item)
+{
+    return inventory_->contains(item);
 }
 
 /// Causes the Entity to take 1 step closer to moving to its target point.

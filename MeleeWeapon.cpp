@@ -5,11 +5,6 @@
 
 #include "Inventory.h"
 
-MeleeWeapon::MeleeWeapon()
-{
-   
-}
-
 /// Set the tip of the MeleeWeapon.
 /// @see MeleeWeapon::tip()
 void MeleeWeapon::setTip(QPointF point)

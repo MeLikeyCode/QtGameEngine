@@ -16,7 +16,7 @@ public:
     // constructor
     Axe();
 
-    void attack();
+    virtual void attack(QPointF position);
 
 public slots:
     void swingStep();

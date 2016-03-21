@@ -16,7 +16,7 @@ public:
     // constructor
     Spear();
 
-    void attack();
+    virtual void attack(QPointF position);
 
     double thrustDistance();
     double thrustSpeed();

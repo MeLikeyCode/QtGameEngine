@@ -22,6 +22,9 @@ Bow::Bow()
     pt.setX(pm_.width()/2);
     pt.setY(pm_.height()/2);
     setAttachmentPoint(pt);
+
+    // range
+    setCastRange(400);
 }
 
 /// Spawns a projectile towards the targetPoint.
@@ -36,7 +39,7 @@ void Bow::attack(QPointF targetPoint)
     ProjectileCollisionBehaviorDamage* cb = new ProjectileCollisionBehaviorDamage();
     ProjectileRangeReachedBehaviorDestroy* rrb = new ProjectileRangeReachedBehaviorDestroy();
     Projectile* projectile = new Projectile(mb,cb,rrb);
-    map()->addEntity(projectile);
+    inventory()->entity()->map()->addEntity(projectile);
 
     // add owner to no damage list
     projectile->addToNoDamageList(owningEntity);

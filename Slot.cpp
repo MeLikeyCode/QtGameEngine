@@ -3,6 +3,7 @@
 
 Slot::Slot()
 {
+    this->owner_ = nullptr;
 }
 
 /// Sets the position of the Slot.
@@ -52,4 +53,16 @@ void Slot::unequip()
 {
     item_ = nullptr;
     filled_ = false;
+}
+
+/// Returns the EquipableItem housed in the Slot.
+EquipableItem *Slot::item()
+{
+    return item_;
+}
+
+/// Returns the Entity that this slot belongs to.
+DynamicEntity *Slot::owner()
+{
+    return owner_;
 }

@@ -1,17 +1,14 @@
 #ifndef RANGEDWEAPON_H
 #define RANGEDWEAPON_H
 
-#include "EquipableItem.h"
-#include <QPointF>
+#include "Weapon.h"
+
+class QPointF;
 
 /// Abstract class that represents a weapon that fires projectiles.
-class RangedWeapon : public EquipableItem
+class RangedWeapon : public Weapon
 {
 public:
-    RangedWeapon();
-
-    virtual void attack(QPointF targetPoint) = 0;
-
     QPointF projectileSpawnPoint();
     void setProjectileSpawnPoint(QPointF point);
     void resetProjectileSpawnPoint();

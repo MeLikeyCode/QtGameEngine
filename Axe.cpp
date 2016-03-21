@@ -33,11 +33,14 @@ Axe::Axe()
     pt.setY(pm_.height()/2);
     setAttachmentPoint(pt);
 
+    // default cast range
+    setCastRange(100);
+
     timer_ = new QTimer(this);
 }
 
-/// The axe will start swinging.
-void Axe::attack()
+/// The axe will start swinging. The "position" argument is ignored.
+void Axe::attack(QPointF position)
 {
     // if its already swinging, don't do anything
     if (alreadySwinging_){

@@ -1,22 +1,19 @@
 #ifndef DYNAMICENTITY_H
 #define DYNAMICENTITY_H
 
-class MeleeWeapon; // TODO remove, test only
-
-// uses:
-class Map;
-
-// inherits:
 #include "Entity.h"
-
-// members:
 #include "PathingMap.h"
 #include "Sprite.h"
 #include <QPointF>
 #include <unordered_map>
 #include "PlayerControlledMoveBehavior.h"
 
-/// An Entity that can move around on its own or in resposne to user input.
+class MeleeWeapon; // TODO remove, test only
+class Map;
+class Weapon;
+class Slot;
+
+/// An Entity that can move around, see, and take action.
 /// @author Abdullah Aghazadah
 /// @date 5-20-15
 ///
@@ -61,9 +58,13 @@ public:
 
     std::unordered_set<Entity*> entitiesInView();
 
-    // TODO for testing out spear only, delete after
-    MeleeWeapon* w1_;
-    MeleeWeapon* w2_;
+    void addSlot(Slot* slot);
+    Slot* slot(std::string name);
+    void equipItem(EquipableItem* item, std::string slot);
+    void equipItem(EquipableItem* item, Slot* slot);
+    void addItemToInventory(Item* item);
+    bool inventoryContains(Item* item);
+
 
 public slots:
     void moveStepPlayerControlled();
@@ -89,9 +90,13 @@ private:
     bool isPlayerControlled_;
     PlayerControlledMoveBehavior* moveBehavior_;
 
-
+    // field of view
     double fieldOfViewDistance_;
     double fieldOfViewAngle_; // FULL angle
+
+    // inventory/items
+    Inventory* inventory_;
+    std::unordered_map<std::string,Slot*> stringToSlot_;
 
 
 };
