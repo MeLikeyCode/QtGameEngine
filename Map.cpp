@@ -241,8 +241,6 @@ void Map::addEntity(Entity *entity){
     // entity->enablePathingMap(); // TODO work on
 
     // add all child entities
-    std::unordered_set<Entity*> childs = entity->children(); // TODO: remove, for debugging
-    int cout = childs.size(); // TODO: remove, for debuggin
     for (Entity* childEntity:entity->children()){
         addEntity(childEntity);
     }
@@ -262,8 +260,10 @@ void Map::removeEntity(Entity *entity)
     // remove from list
     entities_.erase(entity);
 
-    // remove sprite
-    scene()->removeItem(entity->sprite());
+    // remove sprite (if it has one)
+    if (entity->sprite() != nullptr){
+        scene()->removeItem(entity->sprite());
+    }
 
     entity->map_ = nullptr;
 

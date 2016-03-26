@@ -1,5 +1,6 @@
 #include "PathingMap.h"
 #include <cassert>
+#include <QDebug> // TODO: remove
 
 /// Constructs a PathingMap with the specified number of cells wide/long and
 /// with the specified cell size. All cells are initially empty.

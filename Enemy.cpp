@@ -66,6 +66,12 @@ Enemy::Enemy()
     setDefaultWeapon(axe);
 }
 
+Enemy::~Enemy()
+{
+    timerCheckFov_->disconnect();
+    attackTimer_->disconnect();
+}
+
 /// Returns the default weapon equipped by the entity. If the Entity does not
 /// have a weapon equipped, returns nullptr.
 Weapon *Enemy::defaultWeapon()
@@ -93,10 +99,7 @@ void Enemy::checkFov_()
             this->moveTo(entity->pointPos());
             timerCheckFov_->disconnect();
 
-            timerStartCheckingFov_ = new QTimer();
-            timerStartCheckingFov_->setSingleShot(true);
-            connect(timerStartCheckingFov_,&QTimer::timeout,this,&Enemy::startCheckingFov_);
-            timerStartCheckingFov_->start(2000);
+            QTimer::singleShot(2000,this,SLOT(startCheckingFov_()));
         }
     }
 }

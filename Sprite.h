@@ -32,7 +32,6 @@
 /// A Sprite can play an animation a certain number of times by using
 /// Sprite::play(std::string,int,int). A value of -1 times means that the
 /// animation will be played again and again forever.
-///
 class Sprite:public QObject, public QGraphicsItem{
     Q_OBJECT
 public:

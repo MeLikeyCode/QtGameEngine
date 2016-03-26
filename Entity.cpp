@@ -30,10 +30,25 @@ Entity::Entity():
 }
 
 /// When an Entity is deleted, it will delete all of its child entities.
+/// If the Entity was in a map, it will be removed from the map first (the
+/// same thing will happen with all the child entities).
 Entity::~Entity()
 {
-    for (Entity* entity: children_){
+    // if the entity has a parent, remove from parents list of children
+    Entity* parentEntity = parent();
+    if (parentEntity != nullptr){
+        parentEntity->removeChild(this);
+    }
+
+    // delete child entities (recursive)
+    int numOfC = children_.size();
+    for (Entity* entity: children()){
         delete entity;
+    }
+
+    // if the entity is in a map, remove it
+    if (map() != nullptr){
+        map()->removeEntity(this);
     }
 }
 
@@ -133,11 +148,9 @@ void Entity::setSprite(Sprite *sprite){
 
 }
 
-/// Returns the Entity's Sprite.
+/// Returns the Entity's Sprite. If the Entity does not have a sprite,
+/// returns nullptr.
 Sprite *Entity::sprite() const{
-    // make sure the Entity has a sprite
-    assert(sprite_);
-
     return sprite_;
 }
 
@@ -223,9 +236,19 @@ void Entity::enablePathingMap(){
 }
 
 /// Returns the children of this Entity.
-std::unordered_set<Entity *> &Entity::children()
+std::unordered_set<Entity *> Entity::children()
 {
     return children_;
+}
+
+void Entity::addChild(Entity *entity)
+{
+    children_.insert(entity);
+}
+
+void Entity::removeChild(Entity *entity)
+{
+    children_.erase(entity);
 }
 
 /// Sets the parent of this Entity.
@@ -241,7 +264,7 @@ void Entity::setParentEntity(Entity *parent)
 
     // if nullptr passed in, and has a parent, remove parent
     if (parent == nullptr && parent_ != nullptr){
-        parent_->children().erase(this);
+        parent_->removeChild(this);
         parent_ = nullptr;
 
         sprite()->setParentItem(nullptr);
@@ -251,16 +274,16 @@ void Entity::setParentEntity(Entity *parent)
     // if parent passed in and has no parent
     if (parent != nullptr && parent_ == nullptr){
         parent_ = parent;
-        parent->children().insert(this);
+        parent_->addChild(this);
         sprite()->setParentItem(parent->sprite());
         return;
     }
 
     // if parent passed in and has a parent
     if (parent != nullptr && parent_ != nullptr){
-        parent_->children().erase(this);
+        parent_->removeChild(this);
         parent_ = parent;
-        parent->children().insert(this);
+        parent_->addChild(this);
         sprite()->setParentItem(parent->sprite());
         return;
     }

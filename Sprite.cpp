@@ -1,6 +1,7 @@
 #include "Sprite.h"
 #include <cassert>
 #include <QDebug>
+#include <QGraphicsScene>
 
 Sprite::Sprite(QGraphicsItem *parent):
     QGraphicsItem(parent)

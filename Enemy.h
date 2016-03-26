@@ -10,6 +10,7 @@ class Enemy: public DynamicEntity
     Q_OBJECT
 public:
     Enemy();
+    ~Enemy();
 
     Weapon* defaultWeapon();
     void setDefaultWeapon(Weapon* weapon);
@@ -20,7 +21,6 @@ public slots:
     void swingIfInRange_();
 private:
     QTimer* timerCheckFov_;
-    QTimer* timerStartCheckingFov_;
     QTimer* attackTimer_;
 
     Weapon* defaultWeapon_;

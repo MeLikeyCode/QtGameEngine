@@ -35,7 +35,7 @@ void Projectile::go(QPointF start, QPointF targetPoint, double range)
     setRange(range);
 
     // connect timer
-    timer_ = new QTimer();
+    timer_ = new QTimer(this);
     connect(timer_,SIGNAL(timeout()),this,SLOT(step_()));
     timer_->start(this->stepFrequency());
 }
