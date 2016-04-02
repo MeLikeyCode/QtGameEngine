@@ -57,7 +57,8 @@ SOURCES += main.cpp \
     ProjectileMoveBehaviorHoming.cpp \
     Enemy.cpp \
     Weapon.cpp \
-    WeaponSlot.cpp
+    WeaponSlot.cpp \
+    AsyncShortestPathFinder.cpp
 
 HEADERS  += \
     Map.h \
@@ -104,7 +105,8 @@ HEADERS  += \
     ProjectileMoveBehaviorHoming.h \
     Enemy.h \
     Weapon.h \
-    WeaponSlot.h
+    WeaponSlot.h \
+    AsyncShortestPathFinder.h
 
 RESOURCES += \
     res.qrc
