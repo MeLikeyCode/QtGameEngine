@@ -56,6 +56,28 @@ Map *Game::map(){
 void Game::mousePressEvent(QMouseEvent *event){
     // =TODO test code, remove=
 
+    // move test entities to target pos
+    if (event->button() == Qt::LeftButton){
+        for (DynamicEntity* entity:testEntities_){
+            entity->moveTo(event->pos());
+        }
+    }
+
+    // create a test entity and add it
+    if (event->button() == Qt::RightButton){
+        DynamicEntity* testE = new DynamicEntity();
+        map_->addEntity(testE);
+        testE->setPointPos(event->pos());
+        testEntities_.push_back(testE);
+
+        // give the entity a sprite (overrides default one)
+        Sprite* spr = new Sprite();
+        testE->setSprite(spr);
+        spr->addFrames(":resources/graphics/human",1,"stand"); // stand anim
+        spr->addFrames(":resources/graphics/human",6,"walk");  // walk anim
+        spr->play("stand",1,1); // play stand anim
+    }
+
 //    // weapon 1 attack
 //    if (event->button() == Qt::LeftButton){
 //        player_->slot("leftHand")->use();
@@ -66,23 +88,23 @@ void Game::mousePressEvent(QMouseEvent *event){
 //        player_->slot("rightHand")->use();
 //    }
 
-    // shoot straight projectile
-    if (event->button() == Qt::RightButton){
+//    // shoot straight projectile
+//    if (event->button() == Qt::RightButton){
 
-        Slot* slot = player_->slot("leftHandRanged");
-        slot->use();
+//        Slot* slot = player_->slot("leftHandRanged");
+//        slot->use();
 
-    }
+//    }
 
-    // create enemy
-    if (event->button() == Qt::LeftButton){
-        // create enemy (will follow/attack its enemies)
-        Enemy* e = new Enemy();
-        e->setPointPos(event->pos());
-        map()->addEntity(e);
+//    // create enemy
+//    if (event->button() == Qt::LeftButton){
+//        // create enemy (will follow/attack its enemies)
+//        Enemy* e = new Enemy();
+//        e->setPointPos(event->pos());
+//        map()->addEntity(e);
 
 
-    }
+//    }
 
 //    // add default entity
 //    if (event->button() == Qt::LeftButton){
@@ -117,6 +139,11 @@ void Game::mousePressEvent(QMouseEvent *event){
 
 //        map_->pathingMap().fill(event->pos());
 //        map_->drawPathingMap();
+//    }
+
+//    // mvoe player to target pos
+//    if (event->button() == Qt::LeftButton){
+//        player_->moveTo(event->pos());
 //    }
 
 //    // thrust right spear

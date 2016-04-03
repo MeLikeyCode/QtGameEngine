@@ -36,6 +36,9 @@ DynamicEntity::DynamicEntity():
 
     inventory_ = new Inventory();
     inventory_->entity_ = this;
+
+    pf_ = new AsyncShortestPathFinder();
+    connect(pf_,SIGNAL(pathFound(std::vector<QPointF>)),this,SLOT(moveInternal_(std::vector<QPointF>)));
 }
 
 /// Add the specified Slot to the DynamicEntity.
@@ -53,18 +56,7 @@ Slot *DynamicEntity::slot(std::string name)
 
 
 /// Attempts to equip the specified item at the specified Slot.
-/// Can only
-///
-///
-///
-///
-///
-///
-///
-///
-///
-///
-///  Items that are in the DynamicEntity's Inventory.
+/// Can only equip Items that are in the DynamicEntity's Inventory.
 void DynamicEntity::equipItem(EquipableItem *item, std::string slot)
 {
     // make sure item is in the Entity's Inventory
@@ -302,8 +294,6 @@ void DynamicEntity::stopRotating()
 }
 
 void DynamicEntity::moveInternal_(std::vector<QPointF> path){
-    qDebug() << "new path calculated";
-
     // stop following previous list of points
     stopAutomaticMovement();
 
@@ -326,9 +316,9 @@ void DynamicEntity::moveTo(QPointF pos){
     // disablePathingMap();
 
     // get list of points from map (in a diff thread)
-    AsyncShortestPathFinder* pf = new AsyncShortestPathFinder();
-    connect(pf,SIGNAL(pathFound(std::vector<QPointF>)),this,SLOT(moveInternal_(std::vector<QPointF>)));
-    pf->findPath(map()->pathingMap(),pointPos(),pos);
+    pf_->findPath(map()->pathingMap(),pointPos(),pos);
+
+    //moveInternal_(map()->pathingMap().shortestPath(pointPos(),pos));
 }
 
 /// Tells the Entity to move to the specified cell.

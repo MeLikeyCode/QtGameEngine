@@ -27,8 +27,8 @@ int main(int argc, char *argv[])
     DynamicEntity* player = new DynamicEntity();
     map->addEntity(player);
     player->setCellPos(Node(2,2));
-    player->setPlayerControlled(true);
-    player->setStepSize(25);
+    //player->setPlayerControlled(true);
+    //player->setStepSize(25);
     game->setPlayer(player); // game knows about this entity (for testing)
 
     // give the entity a sprite (overrides default one)

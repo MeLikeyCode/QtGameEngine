@@ -99,6 +99,8 @@ private:
     // inventory/items
     Inventory* inventory_;
     std::unordered_map<std::string,Slot*> stringToSlot_;
+
+    AsyncShortestPathFinder* pf_;
 };
 
 #endif // DYNAMICENTITY_H

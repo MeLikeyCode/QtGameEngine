@@ -58,6 +58,7 @@ private:
 
     // TODO remove the following attributes, test attributes
     DynamicEntity* player_;
+    std::vector<DynamicEntity*> testEntities_;
 
 
 };
