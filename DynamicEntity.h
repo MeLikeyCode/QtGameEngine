@@ -7,6 +7,7 @@
 #include <QPointF>
 #include <unordered_map>
 #include "PlayerControlledMoveBehavior.h"
+#include "AsyncShortestPathFinder.h"
 
 class MeleeWeapon; // TODO remove, test only
 class Map;
@@ -43,7 +44,7 @@ public:
     void rotateTo(QPointF point);
     void stopRotating();
 
-    void moveTo(const QPointF& pos);
+    void moveTo(QPointF pos);
     void moveTo(const Node& cell);
     void moveUp();
     void moveDown();
@@ -70,6 +71,7 @@ public slots:
     void moveStepPlayerControlled();
     void moveStepAIControlled();
     void rotateStep();
+    void moveInternal_(std::vector<QPointF> path);
 
 private:
     // main attributes
@@ -97,8 +99,6 @@ private:
     // inventory/items
     Inventory* inventory_;
     std::unordered_map<std::string,Slot*> stringToSlot_;
-
-
 };
 
 #endif // DYNAMICENTITY_H

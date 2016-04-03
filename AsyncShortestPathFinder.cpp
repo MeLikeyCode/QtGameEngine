@@ -2,14 +2,27 @@
 #include <QDebug>
 
 
-AsyncShortestPathFinder::AsyncShortestPathFinder(const PathingMap &pathingMap, const Node &start, const Node &end)
+AsyncShortestPathFinder::AsyncShortestPathFinder()
 {
-    controller_ = new Controller(this);
-    controller_->operate();
+    worker = new Worker();
+    worker->moveToThread(&workerThread);
+    connect(&workerThread,&QThread::finished,worker,&QObject::deleteLater);
+    connect(worker,&Worker::resultReady,this,&AsyncShortestPathFinder::pathFound_);
+    workerThread.start();
 }
 
-void Controller::handleResults(const std::vector<Node> &result){
-    qDebug() << "path found";
-    owner_->path_ = result;
-    emit owner_->pathFound();
+void AsyncShortestPathFinder::findPath(const PathingMap& pathingMap, const QPointF& start, const QPointF& end)
+{
+    worker->doWork(pathingMap,start,end);
+}
+
+AsyncShortestPathFinder::~AsyncShortestPathFinder()
+{
+    workerThread.quit();
+    workerThread.wait();
+}
+
+void AsyncShortestPathFinder::pathFound_(std::vector<QPointF> path)
+{
+    emit pathFound(path);
 }

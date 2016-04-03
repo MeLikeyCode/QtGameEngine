@@ -7,69 +7,42 @@
 #include <QThread>
 #include <QDebug>
 
-class AsyncShortestPathFinder;
-
 // private helper class
 class Worker : public QObject
 {
     Q_OBJECT
-
 public slots:
-    void doWork(const PathingMap &parameter, const Node& start, const Node& end) {
-        std::vector<Node> result;
-        /* ... here is the expensive or blocking operation ... */
-        result.push_back(Node(0,0));
+    void doWork(const PathingMap &pathingMap, const QPointF& start, const QPointF& end) {
+        std::vector<QPointF> result;
+        // ... here is the expensive or blocking operation ...
+        result = pathingMap.shortestPath(start,end);
         emit resultReady(result);
     }
 
 signals:
-    void resultReady(const std::vector<Node> &result);
+    void resultReady(std::vector<QPointF> result);
 };
 
-// private helper class
-class Controller : public QObject
+/// Represents an object that can asynchronously find the shortest path between
+/// two points.
+/// - create an instance of the object
+/// - connect a slot to its pathFound() signal
+/// - call findPath(PathingMap,startPoint,endPoint)
+class AsyncShortestPathFinder : public QObject
 {
     Q_OBJECT
     QThread workerThread;
 public:
-    Controller(AsyncShortestPathFinder* owner) {
-        owner_ = owner;
-        Worker *worker = new Worker;
-        worker->moveToThread(&workerThread);
-        connect(&workerThread, &QThread::finished, worker, &QObject::deleteLater);
-        connect(this, &Controller::operate, worker, &Worker::doWork);
-        connect(worker, &Worker::resultReady, this, &Controller::handleResults);
-        workerThread.start();
-    }
-    ~Controller() {
-        workerThread.quit();
-        workerThread.wait();
-    }
-public slots:
-    void handleResults(const std::vector<Node> &result);
-signals:
-    void operate(const PathingMap &parameter, const Node& start, const Node& end);
-private:
-    AsyncShortestPathFinder* owner_;
-};
-
-/// Represents an object that can asynchronously find the shortest path between
-/// two nodes.
-class AsyncShortestPathFinder : public QObject
-{
-    Q_OBJECT
-    friend class Controller;
-public:
-    AsyncShortestPathFinder(const PathingMap& pathingMap, const Node& start, const Node& end);
-    std::vector<Node> path();
+    AsyncShortestPathFinder();
+    void findPath(const PathingMap &pathingMap, const QPointF &start, const QPointF &end);
+    ~AsyncShortestPathFinder();
 
 signals:
-    void pathFound();
+    void pathFound(std::vector<QPointF> path);
 public slots:
-
+    void pathFound_(std::vector<QPointF> path); // internal use
 private:
-    std::vector<Node> path_;
-    Controller* controller_;
+    Worker* worker;
 };
 
 #endif // ASYNCSHORTESTPATHFINDER_H

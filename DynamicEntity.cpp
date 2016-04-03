@@ -13,6 +13,7 @@
 #include "Inventory.h"
 #include "EquipableItem.h"
 #include "Slot.h"
+#include "AsyncShortestPathFinder.h"
 
 /// Default constructor.
 DynamicEntity::DynamicEntity():
@@ -35,7 +36,6 @@ DynamicEntity::DynamicEntity():
 
     inventory_ = new Inventory();
     inventory_->entity_ = this;
-
 }
 
 /// Add the specified Slot to the DynamicEntity.
@@ -128,7 +128,7 @@ void DynamicEntity::moveStepAIControlled(){
         // face target
         rotateTo(pointsToFollow_[targetPointIndex_]);
 
-        // recalculate path (in case pathingmap changed) TODO enable
+        // recalculate path (in case pathingmap changed)
         moveTo(pointsToFollow_.back());
     }
 
@@ -301,21 +301,14 @@ void DynamicEntity::stopRotating()
     rotationTimer_->disconnect();
 }
 
-/// Tells the Entity to move to the specified position.
-///
-/// Please ensure that the Entity has a "walk" animation.
-void DynamicEntity::moveTo(const QPointF &pos){
-    // temporarly disable entities own footing so a path can be retrieved
-    // disablePathingMap();
-
-    // get list of points from map
-    std::vector<QPointF> pts = map()->pathingMap().shortestPath(pointPos(),pos);
+void DynamicEntity::moveInternal_(std::vector<QPointF> path){
+    qDebug() << "new path calculated";
 
     // stop following previous list of points
     stopAutomaticMovement();
 
     // follow this list of pts
-    pointsToFollow_ = pts;
+    pointsToFollow_ = path;
     targetPointIndex_ = 1; // start at 1eth not 0eth point (to prevent
                            // back movement if two quick move commands are given)
     connect(moveTimer_,SIGNAL(timeout()),this,SLOT(moveStepAIControlled()));
@@ -323,6 +316,19 @@ void DynamicEntity::moveTo(const QPointF &pos){
 
     // play walk animation
     sprite()->play("walk",-1,100);
+}
+
+/// Tells the Entity to move to the specified position.
+///
+/// Please ensure that the Entity has a "walk" animation.
+void DynamicEntity::moveTo(QPointF pos){
+    // temporarly disable entities own footing so a path can be retrieved
+    // disablePathingMap();
+
+    // get list of points from map (in a diff thread)
+    AsyncShortestPathFinder* pf = new AsyncShortestPathFinder();
+    connect(pf,SIGNAL(pathFound(std::vector<QPointF>)),this,SLOT(moveInternal_(std::vector<QPointF>)));
+    pf->findPath(map()->pathingMap(),pointPos(),pos);
 }
 
 /// Tells the Entity to move to the specified cell.

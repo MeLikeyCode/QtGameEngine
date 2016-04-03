@@ -77,7 +77,6 @@ int main(int argc, char *argv[])
     sound->play(10);
 
     // test asyn
-    AsyncShortestPathFinder* apf = new AsyncShortestPathFinder(map->pathingMap(),Node(0,0),Node(0,0));
 
     return a.exec();
 }
