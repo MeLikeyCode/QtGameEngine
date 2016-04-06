@@ -52,8 +52,8 @@ public:
     void setPointPos(const QPointF &pos);
     void setPointPos(std::string namedPos, const QPointF& pos);
     void setPointPos(const QPointF& moveThisPt, const QPointF& toThisPoint);
-    Node cellPos();
-    void setCellPos(const Node& cell);
+    MyNode cellPos();
+    void setCellPos(const MyNode& cell);
 
     void setSprite(Sprite* sprite);
     Sprite* sprite() const;

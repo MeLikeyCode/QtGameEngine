@@ -1,0 +1,294 @@
+===TASKS===-----------------DONE
+Allow an Entity to quickly swap its movment behavior
+-an Entity can be AI or Player controlled
+-if it is player controlled, its movePlayerControlled() function will be executed
+    -this function will move the Entity 1 step closer in response to the current keys being pressed
+-if it is AI controlled, TODO will figure this out later
+-encapsulate movement behaviors in classes
+-an entity has a MovementBehavior
+
+
+===TASK===----------------DONE
+An entity should have two move functions
+    -movePlayerControlled() // fires when entity is player controlled - moves in response to input
+    -moveAIControlled() // fiers when entity is AI controlled - moves in response to its own thinking
+If the entity isPlayerControlled(), its movePlayerControlled() function should executed, other wise its moveAIControlled()
+
+
+===TASK===---------------DONE
+Test to see if you can dynamically set/unset an entity to be controlled by player/ai
+-how:connect to right click of mouse in game
+
+===TASK===------------DONE
+An entity that is player controlled should be able to dynamically swap the way it moves (up/down relative to facing, or relative to screen? etc...)
+Right now:
+    -if an entity isPlayerControlled(), its moveStepPlayerControlled() function will periodically executed
+    -this function has the code that will move the enity in response to keyboard/mouse events
+    -i need to take this code out and put it in a class that provides a moveStep() function
+        -this class points to an entity
+        -calling its moveStep() will operate on that entity
+     -i can make anotehr class that also provides a moveStep() function but moves in a diff way (still has an entity ptr)
+SO:
+    -need interface PlayerControlledMoveBehavior w functions:
+        -setEntity()
+        -moveStep() // when called moves the entity according to logic of this MoveBehavior
+     -need two classes that implement this interface
+        -one that moves in the way currently
+        -another that moves in relative to screen coordinates
+        
+===TASK===--------------DONE
+Create a new PlayerControlledMoveBehavior called MoveRelativeToScreen that moves the entity relative to 
+the screen.
+
+===TASK===--------------DONE
+A Weapon should not have all the qualities of an advanced entity such as path finding and such. You should not be able even call this type of functionality on a Weapon. Therefore I must extract the base functionality and put it in an Entity class. Advanced entities can subclass this (such as a Character entity, with pathfinding abilities). Weapon class can also subclass this and have its own abilities (such as attack).
+Thinking stack:
+-a MeleeWeapon should not have all the behaviors of an Entity (such as moveTo())
+-then it should not inherit Entity, why is it inheriting the entity?
+-to be able to use the Entity parent/child system
+-entity parent/child system should be implemented at the "Entity" level (Character and Weapon should inherit)
+SO:
+    -need a bare Entity class where parent/child system is implemented ----- done
+        -when parent moves, children move
+        -when parent rotates, children rotates
+        -when parent dies, children are killed
+    -need a 
+SO:
+    -need an need a dynamic entity that can move on its own or in response to user control
+
+    
+===TASK===--------------DONE
+Improve spear system
+-should only do damage if it is hitting while going forward - done
+-should go back as soon as hitting something - done
+-should have a length variable - done
+-should have a width variable - done
+-should have an attachment point variable - done
+-should have a thrust speed and thrust distance variable - done
+
+===TASK===--------------DONE
+-remove attackSwing(), attackThrust(), etc...from MeleeWeapon class and just give it a attack() method - done
+-the attack() method should smartly determine whether it wants to swing, thrust, etc...
+
+===TASK===--------------DONE
+-download/polish/import axe picture - done
+create basic Axe class (skeletal framework, copy spear and then edit accordingly)
+
+===TASK=== --------------DONE
+Plan a swinging weapon (Axe class)
+-should have a set swingClockWise(), set counterClockWise()
+-Axe::attack()
+    -should attack by swinging
+    -should check for collision at "point"
+    -each step, should move in the direction of clock or counter clock wise
+
+===TASK===
+Fix Axe swing animation --------DONE
+
+===TASK===----------DONE
+Move function documentation from the .cpp files to the .h files.
+I changed my mind. Since I will be releasing the source of this framework, the user can easily browse through function declarations and "follow" the ones he/she would like to see the documentation for.Additionally, putting the docuementation 
+in the source file is advantageous because the public api docuementation is close to an additional source of docuementation - the code itself (as well as any comments around it).
+
+===TASK===----------DONE
+I want a MusicPlayer class. Internally it has a QMediaPlayer. It can take a list of songs and play them in order or in shuffel.
+It can loop a song a certain number of times or infinitely.
+
+===TASK===-------------DONE
+Move common behavior of Axe and Spear into a base class.
+Common behavior:
+setTip()
+resetTip()
+tip()
+setLength()
+setWidth()
+width()
+
+===TASK===---------------DONE
+Give DynamicEntitys an Inventory of Items. A DynamicEntity can equip() certain Items (EquipableItems) in its Inventory. When an Item is equipped, that Item remembers who it is equiped by, and it will do its effect to the benefit of that DynamicEntity. Furthermore, Items know which Inventory they are a part of, and an Inventory knows which DynamicEntity it is a part of, therefore essentially each Item will know whos Inventory they are a part of, thus they will give their effect to that DynamicEntity.
+
+need the following classes:
+Inventory
+-entity()
+Item
+-inventory()
+-charges()
+-use()
+-equip() // some items need to be told where to equip to (leftHand, rightHand, any namedPoint)
+
+===TASK===----------------DONE
+Implement equipment slot system:
+-an Entity has a bunch of equipment slots
+-when an EquipableItem is equiped at a certain slot, that slot gets filled (trying to equip to it again won't work)
+-Entity needs to maintain a set of "slots"
+-The Entity can use() the item at a certain slot (if an Item has be equipped at that slot) 
+
+
+===TASK===-------------DONE
+make a range weapon
+|
+V
+- create a RangedWeapon class with an attack(point) virtual function
+- create a RangedWeaponSlot class whos canEquip(Item) function returns true only for RangedWeaponSlot
+- create a Bow class (concrete RangedWeapon) that shoots an arrow at the specified point
+- create a Projectile base class
+    -a projectile moves to a target
+- create a StraightProjectile class that moves in a straight line till it reaches its target
+- create a ZigzagProjectile that will zigzag to its target point
+|
+V----done
+- create a Projectile class that
+    - has a target point (QPointF)
+    - has a set of entities that it will not damage
+    - has a virtual step() function
+    - has an int describing how often the step() function should be called
+    - has a start() function that will connect timer and start calling step()
+    
+- create a StraightProjectile
+    -inherits from Projectile
+    - has a settable sprite
+    - has a settable damage
+    - step() - every step will move closer to point (which must be passed in constructr)
+    
+===TASK===----------DONE
+Move ""setting the facing angle"" responsibility of a StraightProjectile to the StraightProjectile class itself
+
+===TASK===-----------DONE
+-entities should have a field of view  modeled as a triangle
+-entities should be able to tell you the other entities in its field of view
+
+===TASK===------------DONE
+Test field of view for Entities
+-one click should place entity
+-the other click should tell you the number of things in view
+-draw sides just to check
+*debug: it doesn't work, find out why DynamicEntity::entitiesInFieldOfView() doesn't work?
+
+===TASK===-----------DONE
+Make Projectile system use strateg pattern rathern than inheretence
+-a Projectile should have a ProjectileMoveBehavior that has a onStep() which defines how the projectile moves every step.
+-a Projectile should have a ProjectileCollisionBehavior that has a onCollide(std::unordered_set<Entity> entities) function that determines the behavior of the projectile in response to colliding
+-a Projectile should have a ProjectileRangeReachedBehavior that has a onRangeReached() that defines how the projectile responds to reaching its range.
+
+-implement a ProjectileMoveBehaviorStraight
+-implement a ProjectileCollisionBehaviorDamage
+-implement a ProjectileRangeReachedBehaviorDestroy
+-implment a ProjectileMoveBehaviorHoming
+    -this algorithm is already defined in one of my classes
+    -copy it from there 
+    
+===TASK===------------DONE
+Create an Enemy that will continueously check his field of view, if someone not in his group enters, he will move to that 
+position.
+|
+V
+Enemy will have a function that will periodically check what is in his field of view, it will travers through them and if
+the group doesnt match the Enemies, then it will move to the location of the entity and disconnect for a little while
+
+===TASK===------------DONE
+start: 830 pm
+end:
+When Enemy is moving to attack an entity, when it gets close enough (range of his default weapon), he will use his weapon.
+
+subtasks
+- all Weapons should have a castRange -- done
+- MeleeWeapon and RangedWeapon should inherti from Weapon, which has an attack(point) abstract method -- done
+    -MeleeWeapon will ignore the point
+    -Ranged will use it
+ -Weapon Slot that can house any Weapon (Melee or Ranged), will simplly call the attack of the weapon -- done
+-move inventory/item/equipment responsibility from Entity to DynamicEntity -- done
+-When a DynamicEntity equips a Weapon, if its the first, it should be the defaultWeapon.
+-when enemy is moving towards its enemy, it should check if weapon is in range, if so, it should swing/attach it
+
+===TASK===------done
+When an Entity is added to a map
+-all child entities should be added to map (if they are already not in the map, if in other map, should be removed from there and then added to new map)
+
+===TASK=== --- done
+-test if enemy works with other weapons
+-spear? __ no
+-axe? __ no
+
+-spear and axe kill Enemy when it strikes
+
+debugging
+-the spear does not have a map to return via map() function
+-when Enemy adds the spear to its inv in its constructor, the enemy has no map therefore the spear has no map either/
+    -then why it shows up?
+    
+-when the enemy is added to map, all of its children are added also
+-but the spear is not a child of the enemy
+
+-Entity::setParentEntity() works imporperly
+    -
+    
+===TASK=== ---- done
+Entity::children() returns a reference to an internal collection
+-have a addChild(), removeChild() member function
+-search for all code that uses children(), replace it w one of above functions
+-have children() return a read only list (copy)
+
+===TASK===
+Pathfinding algorithm should take place in another thread and call back when done (move like a dumbass till then)
+
+===TASK===---------done
+-entities move backward every once in a while
+-this is probably because when the path is finally calculated in the other thread, the object has already moved forward,
+so then when he gets the results, he starts going to the first point (which was at a previous place)
+
+===TASK===-------done
+Clean up/refactor movement system and async path finder
+-see if movement is fast enough now - done (ok for now, can handle about 5-6 entiteis at same time)
+-see if adding rocks in path still succesfully recalculates - done
+-make sure after asyncshortestpathfinder finds path, it cleans up the worker and thread - done
+    
+==================================================================================
+
+
+
+===TASK===
+GREAT IDEA
+-DynamicEntitys should not auto recalculate path upon EACH move
+-instead they should recalculate path only when "stuck"
+-make it so that entities cannot go forward unless there is freedom in that cell (just like player controlled move does)
+-when an entity has been "stuck" for x amount of time, it should recalculate path to its target!
+
+===TASK===
+Go back and handle deleting/removing/clean up of all objects/classes
+-when one enemy destroys another enemy (crashes)
+    -b/c the killer enemy still has a dangling reference to the killed enemy
+
+solution: QObjects have a destroyed() signal that is emitted right before the object gets deleted. You should listen 
+for this signal and respond appropriately to avoid dangling references.
+-enemies should do this
+
+===TASK===
+Implement "group" system
+-each AI entity should have a groupId
+-each AI entity should have a list of friend groups and  a list of enemy groups
+-when an enemy group is in view, it should set it as its target
+-when the enemy is out of view, it should stop pursueing (target=nullptr)
+-when the pursuent (entity being purused) is dead, should stop pursueing (need to know when target entity dies)
+
+===TASK===
+Research on C++ move ctor
+Research why new should be decoupled from business logic (besides making classes testable)
+Research if using static data/functions is something you should (almost) always avoid?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

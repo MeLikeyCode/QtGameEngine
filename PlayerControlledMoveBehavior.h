@@ -1,7 +1,6 @@
 #ifndef PLAYERCONTROLLEDMOVEBEHAVIOR_H
 #define PLAYERCONTROLLEDMOVEBEHAVIOR_H
 
-// know about:
 class DynamicEntity;
 
 /// Represents any movement behavior that moves the entity in response

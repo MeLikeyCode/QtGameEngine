@@ -19,16 +19,16 @@ PathGrid::PathGrid( int numCols,  int numRows):
     // for each column
     for (size_t i = 0; i < numCols; i++){
         // push back a vector of Nodes
-        std::vector<Node> colOfNodes;
+        std::vector<MyNode> colOfNodes;
         for (size_t j = 0; j < numRows; j++){
-            Node node(i,j);
+            MyNode node(i,j);
             colOfNodes.push_back(node);
         }
         nodes_.push_back(colOfNodes);
     }
 
     // make all nodes unfilled
-    for (Node node:nodes()){
+    for (MyNode node:nodes()){
         filled_[node] = false;
     }
 }
@@ -37,25 +37,25 @@ PathGrid::PathGrid( int numCols,  int numRows):
 ///
 /// A PathGrid maintains a mapping of Node:bool determining which Nodes are filled. This member function
 /// will mark the specified node as filled.
-void PathGrid::fill(const Node &node){
+void PathGrid::fill(const MyNode &node){
     filled_[node] = true;
 }
 
 /// Overload of PathGrid::fill(const Node&)
 void PathGrid::fill( int x,  int y){
-    fill(Node(x,y));
+    fill(MyNode(x,y));
 }
 
 /// Unfills the specified Node.
 ///
 /// @see PathGrid::fill(const Node&)
-void PathGrid::unfill(const Node &node){
+void PathGrid::unfill(const MyNode &node){
     filled_[node] = false;
 }
 
 /// Overload of PathGrid::unfill(const Node&)
 void PathGrid::unfill( int x,  int y){
-    unfill(Node(x,y));
+    unfill(MyNode(x,y));
 }
 
 /// Fills/unfills Nodes based on the values of a 2d int vector.
@@ -79,13 +79,13 @@ void PathGrid::setFilling(const std::vector<std::vector<int>>& vec){
 
 /// Sets the filling _starting_ at the specified location to be the same filling
 /// as that of the specified PathGrid.
-void PathGrid::setFilling(const PathGrid &pathGrid, const Node &pos){
+void PathGrid::setFilling(const PathGrid &pathGrid, const MyNode &pos){
     // approach:
     // -traverse through Nodes of new PathGrid
     // -set shadowed Node to be the same fillness
 
-    for (Node node:pathGrid.nodes()){
-        Node shadowed(node.x()+pos.x(),node.y()+pos.y());
+    for (MyNode node:pathGrid.nodes()){
+        MyNode shadowed(node.x()+pos.x(),node.y()+pos.y());
         // if node is filled, then fill shadowed node
         if (pathGrid.filled(node)){
             fill(shadowed);
@@ -99,13 +99,13 @@ void PathGrid::setFilling(const PathGrid &pathGrid, const Node &pos){
 /// Adds the specified PathGrid to this PathGrid at the specified positino.
 ///
 /// The resulting PathGrid can be more filled but not less filled.
-void PathGrid::addPathGrid(const PathGrid &pathGrid, const Node &pos){
+void PathGrid::addPathGrid(const PathGrid &pathGrid, const MyNode &pos){
     // approach
     // -traverse through Nodes of new path
     // -if Node is filled, make sure shadowed is filled too
 
-    for (Node node:pathGrid.nodes()){
-        Node shadowed(node.x()+pos.x(),node.y()+pos.y());
+    for (MyNode node:pathGrid.nodes()){
+        MyNode shadowed(node.x()+pos.x(),node.y()+pos.y());
         // if node is filled and shadowed node is not
         if (pathGrid.filled(node)){
             // fill shadowed node
@@ -115,12 +115,12 @@ void PathGrid::addPathGrid(const PathGrid &pathGrid, const Node &pos){
 }
 
 /// Returns a vector of all the Nodes of the PathGrid.
-std::vector<Node> PathGrid::nodes() const{
-    return nodes(Node(0,0),Node(numCols_-1,numRows_-1));
+std::vector<MyNode> PathGrid::nodes() const{
+    return nodes(MyNode(0,0),MyNode(numCols_-1,numRows_-1));
 }
 
 /// Returns true if the specified Node is filled.
-bool PathGrid::filled(const Node &node) const{
+bool PathGrid::filled(const MyNode &node) const{
     // make sure the node is actually in the PathGrid
     assert(contains(node));
 
@@ -129,21 +129,21 @@ bool PathGrid::filled(const Node &node) const{
 
 /// Overload of PathGrid::filled(const Node&).
 bool PathGrid::filled( int x,  int y) const{
-    return filled(Node(x,y));
+    return filled(MyNode(x,y));
 }
 
 /// Returns a vector of all the adjacent unfilled neighboring Nodes of the specified node.
 ///
 /// This represents all the diretions in which one could move from the specfied Node.
-std::vector<Node> PathGrid::unfilledNeighbors(const Node &of) const{
+std::vector<MyNode> PathGrid::unfilledNeighbors(const MyNode &of) const{
     int numCols = nodes_.size();
     int numRows = nodes_[0].size();
 
-    std::vector<Node> neighbors;
+    std::vector<MyNode> neighbors;
 
     // up
     if (of.y() > 0){
-        Node upNode(of.x(),of.y()-1);
+        MyNode upNode(of.x(),of.y()-1);
         if (!filled(upNode)){
             neighbors.push_back(upNode);
         }
@@ -151,7 +151,7 @@ std::vector<Node> PathGrid::unfilledNeighbors(const Node &of) const{
 
     // down
     if (of.y() < numRows - 1){
-        Node downNode(of.x(),of.y()+1);
+        MyNode downNode(of.x(),of.y()+1);
         if (!filled(downNode)){
             neighbors.push_back(downNode);
         }
@@ -159,7 +159,7 @@ std::vector<Node> PathGrid::unfilledNeighbors(const Node &of) const{
 
     // left
     if (of.x() > 0){
-        Node leftNode(of.x()-1,of.y());
+        MyNode leftNode(of.x()-1,of.y());
         if (!filled(leftNode)){
             neighbors.push_back(leftNode);
         }
@@ -167,7 +167,7 @@ std::vector<Node> PathGrid::unfilledNeighbors(const Node &of) const{
 
     // right
     if (of.x() < numCols - 1){
-        Node rightNode(of.x()+1,of.y());
+        MyNode rightNode(of.x()+1,of.y());
         if (!filled(rightNode)){
             neighbors.push_back(rightNode);
         }
@@ -184,20 +184,20 @@ Graph PathGrid::toGraph() const{
     Graph g;
 
     // add all nodes
-    for (Node node:nodes()){
+    for (MyNode node:nodes()){
         g.addNode(node);
     }
 
     // add all edges
-    for (Node node:g.nodes()){
+    for (MyNode node:g.nodes()){
         // skip if the node is filled
         if (filled(node)){
             continue;
         }
 
         // get all the neighbors of the node
-        std::vector<Node> neighbors = unfilledNeighbors(node);
-        for (Node neighbor:neighbors){
+        std::vector<MyNode> neighbors = unfilledNeighbors(node);
+        for (MyNode neighbor:neighbors){
             g.addEdge(node,neighbor,1);
             g.addEdge(neighbor,node,1);
         }
@@ -207,30 +207,30 @@ Graph PathGrid::toGraph() const{
 }
 
 /// Returns a vector of Nodes that represents the shortest path between the specified Nodes.
-std::vector<Node> PathGrid::shortestPath(const Node &from, const Node &to) const{
+std::vector<MyNode> PathGrid::shortestPath(const MyNode &from, const MyNode &to) const{
     return toGraph().shortestPath(from,to);
 }
 
 /// Returns a vector of all the Nodes in the i-eth column.
-std::vector<Node> PathGrid::column( int i) const{
-    return nodes(Node(i,0),Node(i,numRows_-1));
+std::vector<MyNode> PathGrid::column( int i) const{
+    return nodes(MyNode(i,0),MyNode(i,numRows_-1));
 }
 
 /// Returns a vector of all the Nodes in the i-eth row.
-std::vector<Node> PathGrid::row(int i) const{
-    return nodes(Node(0,i),Node(numCols_-1,i));
+std::vector<MyNode> PathGrid::row(int i) const{
+    return nodes(MyNode(0,i),MyNode(numCols_-1,i));
 }
 
 /// Returns a vector of Nodes enclosed by the rectangular region defined by a top
 /// left Node and a bottom right Node. Both Nodes are inclusive.
-std::vector<Node> PathGrid::nodes(const Node &topLeft, const Node &bottomRight) const{
+std::vector<MyNode> PathGrid::nodes(const MyNode &topLeft, const MyNode &bottomRight) const{
     // make sure the region is in the PathGrid
     assert(contains(topLeft) && contains(bottomRight));
 
-    std::vector<Node> nodesInRegion;
+    std::vector<MyNode> nodesInRegion;
     for (int x = topLeft.x(), n = bottomRight.x(); x <= n; ++x){
         for (int y = topLeft.y(), p = bottomRight.y(); y <= p; ++y){
-            nodesInRegion.push_back(Node(x,y));
+            nodesInRegion.push_back(MyNode(x,y));
         }
     }
 
@@ -239,7 +239,7 @@ std::vector<Node> PathGrid::nodes(const Node &topLeft, const Node &bottomRight) 
 }
 
 /// Returns true if the PathGrid contains the specified Node.
-bool PathGrid::contains(const Node &node) const{
+bool PathGrid::contains(const MyNode &node) const{
     // if the node's x and y values are less than the width and height, its in
     return (node.x() < numCols_ && node.y() < numRows_);
 }

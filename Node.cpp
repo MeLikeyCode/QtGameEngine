@@ -1,36 +1,36 @@
 #include "Node.h"
 
 /// Do not use. This is just here so Nodes can be stored in Maps.
-Node::Node(){
+MyNode::MyNode(){
 
 }
 
 /// Constructs a Node with the specified x and y values.
-Node::Node( int x,  int y): x_(x), y_(y){
+MyNode::MyNode( int x,  int y): x_(x), y_(y){
 
 }
 
 /// Returns the x value of the Node.
-int Node::x() const{
+int MyNode::x() const{
     return x_;
 }
 
 /// Returns the y value of the Node.
-int Node::y() const{
+int MyNode::y() const{
     return y_;
 }
 
 /// Sets the x value of the Node.
-void Node::setX( int x){
+void MyNode::setX( int x){
     x_ = x;
 }
 
 /// Sets the y value of the Node.
-void Node::setY( int y){
+void MyNode::setY( int y){
     y_ = y;
 }
 
 /// Returns true if both Nodes have the same x and y values.
-bool operator==(const Node &lhs, const Node &rhs){
+bool operator==(const MyNode &lhs, const MyNode &rhs){
     return (lhs.x() == rhs.x()) && (lhs.y() == rhs.y());
 }

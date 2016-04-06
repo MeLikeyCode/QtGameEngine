@@ -18,31 +18,31 @@ public:
     PathGrid(int numCols,  int numRows);
 
     // readers ("getters")
-    bool filled(const Node& node) const;
+    bool filled(const MyNode& node) const;
     bool filled(int x, int y) const;
-    std::vector<Node> unfilledNeighbors(const Node& of) const;
-    std::vector<Node> shortestPath(const Node& from, const Node& to) const;
-    std::vector<Node> nodes(const Node& topLeft, const Node& bottomRight) const;
-    std::vector<Node> column(int i) const;
-    std::vector<Node> row(int i) const;
-    std::vector<Node> nodes() const;
-    bool contains(const Node& node) const;
+    std::vector<MyNode> unfilledNeighbors(const MyNode& of) const;
+    std::vector<MyNode> shortestPath(const MyNode& from, const MyNode& to) const;
+    std::vector<MyNode> nodes(const MyNode& topLeft, const MyNode& bottomRight) const;
+    std::vector<MyNode> column(int i) const;
+    std::vector<MyNode> row(int i) const;
+    std::vector<MyNode> nodes() const;
+    bool contains(const MyNode& node) const;
     int numCols() const;
     int numRows() const;
 
     // modifiers ("setters")
-    void fill(const Node& node);
+    void fill(const MyNode& node);
     void fill(int x, int y);
-    void unfill(const Node& node);
+    void unfill(const MyNode& node);
     void unfill(int x, int y);
     void setFilling(const std::vector<std::vector<int>>& vec);
-    void setFilling(const PathGrid& pathGrid, const Node& pos);
-    void addPathGrid(const PathGrid& pathGrid, const Node& pos);
+    void setFilling(const PathGrid& pathGrid, const MyNode& pos);
+    void addPathGrid(const PathGrid& pathGrid, const MyNode& pos);
 
 private:
     // main private attributes
-    std::vector<std::vector<Node>> nodes_;
-    std::unordered_map<Node,bool> filled_;
+    std::vector<std::vector<MyNode>> nodes_;
+    std::unordered_map<MyNode,bool> filled_;
     int numCols_;
     int numRows_;
 

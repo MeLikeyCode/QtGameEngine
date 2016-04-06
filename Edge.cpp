@@ -7,18 +7,18 @@ Edge::Edge(){
 }
 
 /// Constructs an Edge from the specfieid Nodes and of the specified weight.
-Edge::Edge(const Node &from, const Node &to,  int weight): from_(from), to_(to), weight_(weight){
+Edge::Edge(const MyNode &from, const MyNode &to,  int weight): from_(from), to_(to), weight_(weight){
     // make sure the from and to Edges are not the same Edge, that makes no sense
     assert(!(from == to));
 }
 
 /// Returns the starting Node of the Edge.
-Node Edge::from() const{
+MyNode Edge::from() const{
     return from_;
 }
 
 /// Returns the ending Node of the Edge.
-Node Edge::to() const{
+MyNode Edge::to() const{
     return to_;
 }
 

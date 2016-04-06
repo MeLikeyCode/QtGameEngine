@@ -39,8 +39,8 @@ public:
     int numCellsWide() const;
     int numCellsLong() const;
     int cellSize() const;
-    QPointF cellToPoint(const Node &cell);
-    Node pointToCell(const QPointF& point);
+    QPointF cellToPoint(const MyNode &cell);
+    MyNode pointToCell(const QPointF& point);
 
     std::unordered_set<Entity*> entities();
     void addEntity(Entity *entity);

@@ -43,10 +43,9 @@ void Sound::stateChanged()
     // approach:
     // - check if it stopped
     // - if so, check to see if we should play it again
-    // - if so, play it again
+    // - TODO: if so, play it again
 
     if (mediaPlayer_->state() == QMediaPlayer::StoppedState){
-        qDebug() << "stop detected";
 //        if (numTimesPlayed_ < numTimesToPlay_ || numTimesToPlay_ == -1){
 //            mediaPlayer_->setPosition(0);
 //            mediaPlayer_->play();

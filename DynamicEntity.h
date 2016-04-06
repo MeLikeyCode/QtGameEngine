@@ -45,7 +45,7 @@ public:
     void stopRotating();
 
     void moveTo(QPointF pos);
-    void moveTo(const Node& cell);
+    void moveTo(const MyNode& cell);
     void moveUp();
     void moveDown();
     void moveLeft();
@@ -71,7 +71,7 @@ public slots:
     void moveStepPlayerControlled();
     void moveStepAIControlled();
     void rotateStep();
-    void moveInternal_(std::vector<QPointF> path);
+    void pathRecalculated(std::vector<QPointF> newPath);
 
 private:
     // main attributes
@@ -99,8 +99,6 @@ private:
     // inventory/items
     Inventory* inventory_;
     std::unordered_map<std::string,Slot*> stringToSlot_;
-
-    AsyncShortestPathFinder* pf_;
 };
 
 #endif // DYNAMICENTITY_H

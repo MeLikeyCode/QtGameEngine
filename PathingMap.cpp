@@ -18,7 +18,7 @@ PathingMap::PathingMap( int numCellsWide,  int numCellsLong,  int cellSize):
 ///
 /// Please use this function carefully, as it can be expensive for large regions.
 /// Big O is n^2.
-std::vector<Node> PathingMap::cells(const Node &topLeft, const Node &bottomRight) const{
+std::vector<MyNode> PathingMap::cells(const MyNode &topLeft, const MyNode &bottomRight) const{
     return pathGrid_.nodes(topLeft,bottomRight);
 }
 
@@ -27,7 +27,7 @@ std::vector<Node> PathingMap::cells(const Node &topLeft, const Node &bottomRight
 ///
 /// Please use this function carefully, as it can be expensive for large regions.
 /// Big O is n^2.
-std::vector<Node> PathingMap::cells(const QPointF &topLeft, const QPointF &bottomRight) const{
+std::vector<MyNode> PathingMap::cells(const QPointF &topLeft, const QPointF &bottomRight) const{
     return cells(pointToCell(topLeft),pointToCell(bottomRight));
 }
 
@@ -36,7 +36,7 @@ std::vector<Node> PathingMap::cells(const QPointF &topLeft, const QPointF &botto
 ///
 /// Please use this function carefully, as it can be expensive for large regions.
 /// Big O is n^2.
-std::vector<Node> PathingMap::cells(const QRectF &inRegion) const{
+std::vector<MyNode> PathingMap::cells(const QRectF &inRegion) const{
     return cells(inRegion.topLeft(),inRegion.bottomRight());
 }
 
@@ -45,14 +45,14 @@ std::vector<Node> PathingMap::cells(const QRectF &inRegion) const{
 ///
 /// Please use this function carefully, as it can be expensive for large regions.
 /// Big O is n^2.
-std::vector<QRectF> PathingMap::cellsAsRects(const Node &topLeft, const Node &bottomRight) const{
+std::vector<QRectF> PathingMap::cellsAsRects(const MyNode &topLeft, const MyNode &bottomRight) const{
     // get the cells as nodes
-    std::vector<Node> cellsAsNodes = cells(topLeft,bottomRight);
+    std::vector<MyNode> cellsAsNodes = cells(topLeft,bottomRight);
 
     // convert them to rects
     std::vector<QRectF> cellsAsRects;
     int s = cellSize();
-    for (Node node:cellsAsNodes){
+    for (MyNode node:cellsAsNodes){
         cellsAsRects.push_back(QRectF(cellToPoint(node),QSizeF(s,s)));
     }
 
@@ -80,18 +80,18 @@ std::vector<QRectF> PathingMap::cellsAsRects(const QRectF &inRegion) const{
 /// Returns a vector of QRects representing the cells of the _entire_ PathingMap.
 /// Please use this function sparingly as it is quite expensive (big O of n^2).
 std::vector<QRectF> PathingMap::cellsAsRects() const{
-    return cellsAsRects(Node(0,0),Node(numCellsWide()-1,numCellsLong()-1));
+    return cellsAsRects(MyNode(0,0),MyNode(numCellsWide()-1,numCellsLong()-1));
 }
 
 /// Returns a vector of Nodes representing the cells of the entire PathingMap.
 ///
 /// Please use this function sparingly as it is quite expensive (big O of n^2).
-std::vector<Node> PathingMap::cells() const{
-    return cells(Node(0,0),Node(numCellsWide()-1,numCellsLong()-1));
+std::vector<MyNode> PathingMap::cells() const{
+    return cells(MyNode(0,0),MyNode(numCellsWide()-1,numCellsLong()-1));
 }
 
 /// Returns a QRectF representing the specified cell.
-QRectF PathingMap::cellAsRect(Node cell) const{
+QRectF PathingMap::cellAsRect(MyNode cell) const{
     int rectWidth = cellSize();
     int rectHeight = cellSize();
     int rectX = cell.x() * cellSize();
@@ -100,7 +100,7 @@ QRectF PathingMap::cellAsRect(Node cell) const{
 }
 
 /// Returns true if the specified cell is filled.
-bool PathingMap::filled(const Node &cell) const{
+bool PathingMap::filled(const MyNode &cell) const{
     return pathGrid_.filled(cell);
 }
 
@@ -116,7 +116,7 @@ bool PathingMap::filled(const QRectF &region) const
 {
     bool result = true;
     // get all the cells in the region
-    for (Node cell:cells(region)){
+    for (MyNode cell:cells(region)){
         if (!filled(cell)){
             result = false;
             break;
@@ -129,7 +129,7 @@ bool PathingMap::filled(const QRectF &region) const
 bool PathingMap::free(const QRectF &region) const
 {
     bool result = true;
-    for (Node cell:cells(region)){
+    for (MyNode cell:cells(region)){
         if (filled(cell)){
             result = false;
             break;
@@ -140,13 +140,13 @@ bool PathingMap::free(const QRectF &region) const
 }
 
 /// Returns a vector of points representing a path between the specfieid cells.
-std::vector<QPointF> PathingMap::shortestPath(const Node &fromCell, const Node &toCell) const{
+std::vector<QPointF> PathingMap::shortestPath(const MyNode &fromCell, const MyNode &toCell) const{
     // get path from pathGrid_
-    std::vector<Node> path = pathGrid_.shortestPath(fromCell,toCell);
+    std::vector<MyNode> path = pathGrid_.shortestPath(fromCell,toCell);
 
     // scale them up into points
     std::vector<QPointF> ptPath;
-    for (Node node:path){
+    for (MyNode node:path){
         ptPath.push_back(cellToPoint(node));
     }
 
@@ -188,14 +188,14 @@ int PathingMap::numCellsWide() const{
 
 
 /// Returns the cell at the specified point.
-Node PathingMap::pointToCell(const QPointF &point) const{
+MyNode PathingMap::pointToCell(const QPointF &point) const{
     int cellX = point.x() / cellSize();
     int cellY = point.y() / cellSize();
-    return Node(cellX,cellY);
+    return MyNode(cellX,cellY);
 }
 
 /// Returns a point representing the top left corner of the specified cell.
-QPointF PathingMap::cellToPoint(const Node &cell) const{
+QPointF PathingMap::cellToPoint(const MyNode &cell) const{
     double ptX = cell.x() * cellSize();
     double ptY = cell.y() * cellSize();
     return QPointF(ptX,ptY);
@@ -205,14 +205,14 @@ QPointF PathingMap::cellToPoint(const Node &cell) const{
 /// specified point.
 QPointF PathingMap::pointToCellPoint(const QPointF &point){
     // get the cell
-    Node cell = pointToCell(point);
+    MyNode cell = pointToCell(point);
 
     // convert the cell to a point
     return cellToPoint(cell);
 }
 
 /// Fills the specified cell.
-void PathingMap::fill(const Node &cell){
+void PathingMap::fill(const MyNode &cell){
     // delegate to pathGrid_
     pathGrid_.fill(cell);
 }
@@ -225,12 +225,12 @@ void PathingMap::fill(const QPointF &point){
 }
 
 /// Fills the cells in the specified region.
-void PathingMap::fill(const Node &topLeft, const Node &bottomRight){
+void PathingMap::fill(const MyNode &topLeft, const MyNode &bottomRight){
     // get all the cells
-    std::vector<Node> allCells = cells(topLeft,bottomRight);
+    std::vector<MyNode> allCells = cells(topLeft,bottomRight);
 
     // fill them
-    for (Node cell:allCells){
+    for (MyNode cell:allCells){
         fill(cell);
     }
 }
@@ -246,7 +246,7 @@ void PathingMap::fill(const QRectF &region){
 }
 
 /// Unfills the specified cell.
-void PathingMap::unfill(const Node &cell){
+void PathingMap::unfill(const MyNode &cell){
     pathGrid_.unfill(cell);
 }
 
@@ -258,12 +258,12 @@ void PathingMap::unfill(const QPointF &point){
 }
 
 /// Unfills the specified region.
-void PathingMap::unfill(const Node &topLeft, const Node &bottomRight){
+void PathingMap::unfill(const MyNode &topLeft, const MyNode &bottomRight){
     // get the cells
-    std::vector<Node> allCells = cells(topLeft,bottomRight);
+    std::vector<MyNode> allCells = cells(topLeft,bottomRight);
 
     // unfill them
-    for (Node cell:allCells){
+    for (MyNode cell:allCells){
         unfill(cell);
     }
 
@@ -291,21 +291,21 @@ void PathingMap::setFilling(const std::vector<std::vector<int> > &vec){
 ///
 /// This works best when the two PathingMaps have the same cell sizes. If the
 /// cell sizes are different, the resulting pathing is a little inaccurate.
-void PathingMap::setFilling(const Node &pos, const PathingMap &littleMap){
+void PathingMap::setFilling(const MyNode &pos, const PathingMap &littleMap){
 
     // set the whole region as unfilled at first
     QRectF unfillRegion;
     unfillRegion.setTopLeft(cellToPoint(pos));
     unfillRegion.setWidth(littleMap.width());
     unfillRegion.setHeight(littleMap.height());
-    for (Node cell:cells(unfillRegion)){
+    for (MyNode cell:cells(unfillRegion)){
         unfill(cell);
     }
 
     // get all of the filled cells of the littleMap as QRectFs
     std::vector<QRectF> filledLittleRects;
-    std::vector<Node> littleCells = littleMap.cells();
-    for (Node cell:littleCells){
+    std::vector<MyNode> littleCells = littleMap.cells();
+    for (MyNode cell:littleCells){
         if (littleMap.filled(cell)){
             QRectF rect = littleMap.cellAsRect(cell);
             //shift it
@@ -319,8 +319,8 @@ void PathingMap::setFilling(const Node &pos, const PathingMap &littleMap){
 
     // fill the necessary ones
     for (QRectF rect:filledLittleRects){
-        std::vector<Node> intersectedCells = cells(rect);
-        for (Node cell:intersectedCells){
+        std::vector<MyNode> intersectedCells = cells(rect);
+        for (MyNode cell:intersectedCells){
             fill(cell);
         }
     }
@@ -337,7 +337,7 @@ void PathingMap::setFilling(const QPointF &pos, const PathingMap &littleMap){
 /// Adding a pathing map "blends" the two PathingMap's filled
 /// regions. In other words, the resulting PathingMap can be more filled but never
 /// less filled.
-void PathingMap::addFilling(const PathingMap &littleMap, const Node &pos){
+void PathingMap::addFilling(const PathingMap &littleMap, const MyNode &pos){
     // get all the filled cells of the little PathingMap as QRectF that are
     // shifted by pos.x and pos.y
     QPointF posAsPoint = cellToPoint(pos);
@@ -355,8 +355,8 @@ void PathingMap::addFilling(const PathingMap &littleMap, const Node &pos){
     // fill any cells that intersect with these rects
     for (QRectF rect:filledLittleRects){
         // get all the cells it intersects
-        std::vector<Node> intersectedCells = cells(rect);
-        for (Node cell:intersectedCells){
+        std::vector<MyNode> intersectedCells = cells(rect);
+        for (MyNode cell:intersectedCells){
             // mark the intersected cells as filled
             fill(cell);
         }

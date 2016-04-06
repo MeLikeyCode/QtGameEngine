@@ -17,6 +17,9 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    typedef std::vector<QPointF> MyArray;
+    // ...
+    qRegisterMetaType<MyArray>("MyArray");
 
     // create a Map and a Game
     Map* map = new Map(15,15,64);
@@ -26,7 +29,7 @@ int main(int argc, char *argv[])
     // create a DynamicEntity (an Entity that can move around)
     DynamicEntity* player = new DynamicEntity();
     map->addEntity(player);
-    player->setCellPos(Node(2,2));
+    player->setCellPos(MyNode(2,2));
     //player->setPlayerControlled(true);
     //player->setStepSize(25);
     game->setPlayer(player); // game knows about this entity (for testing)
