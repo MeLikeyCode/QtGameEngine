@@ -343,8 +343,9 @@ void DynamicEntity::pathRecalculated(std::vector<QPointF> newPath){
 /// Tells the Entity to move to the specified position.
 /// Please ensure that the Entity has a "walk" animation.
 void DynamicEntity::moveTo(QPointF pos){
-    // temporarly disable entities own footing so a path can be retrieved
-    // disablePathingMap();
+    // TODO: throw an error if movement mode is one of the MoveBehaviorKeyboardMouseX
+    // TODO: assert (make sure) that the
+    moveBehavior_->
 
     AsyncShortestPathFinder* pf = new AsyncShortestPathFinder(map()->pathingMap(),pointPos(),pos);
     connect(pf,SIGNAL(pathFound(std::vector<QPointF>)),this,SLOT(pathRecalculated(std::vector<QPointF>)));
