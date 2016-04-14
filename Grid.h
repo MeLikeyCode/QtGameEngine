@@ -3,7 +3,7 @@
 
 // uses:
 class QPointF;
-class MyNode;
+class Node;
 #include <vector>
 
 /// Represents a region of space that is divided into Nodes in a grid
@@ -27,11 +27,11 @@ public:
     Grid(int numXNodes, int numYNodes, int nodeWidth, int nodeHeight);
 
     // readers
-    QPointF nodeToPoint(const MyNode& node) const;
-    MyNode pointToNode(const QPointF& point) const;
-    std::vector<MyNode> nodesOfColumn(int i) const;
-    std::vector<MyNode> nodesOfRow(int i) const;
-    std::vector<MyNode> nodes() const;
+    QPointF nodeToPoint(const Node& node) const;
+    Node pointToNode(const QPointF& point) const;
+    std::vector<Node> nodesOfColumn(int i) const;
+    std::vector<Node> nodesOfRow(int i) const;
+    std::vector<Node> nodes() const;
     std::vector<QPointF> pointsOfColumn(int i) const;
     std::vector<QPointF> pointsOfRow(int i) const;
     std::vector<QPointF> points() const;

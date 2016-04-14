@@ -129,17 +129,17 @@ void Game::mousePressEvent(QMouseEvent *event){
 //        p->go(QPointF(0,0),QPointF(400,400),1000);
 //    }
 
-    // add rock (block cells at position)
-    if (event->button() == Qt::MiddleButton){
-        // add rock
-        QPixmap pic(":resources/graphics/terrain/rock.png");
-        QGraphicsPixmapItem* picI = new QGraphicsPixmapItem(pic);
-        picI->setPos(event->pos().x()/64 * 64,event->pos().y()/64 * 64);
-        map_->scene()->addItem(picI);
+//    // add rock (block cells at position)
+//    if (event->button() == Qt::RightButton){
+//        // add rock
+//        QPixmap pic(":resources/graphics/terrain/rock.png");
+//        QGraphicsPixmapItem* picI = new QGraphicsPixmapItem(pic);
+//        picI->setPos(event->pos().x()/64 * 64,event->pos().y()/64 * 64);
+//        map_->scene()->addItem(picI);
 
-        map_->pathingMap().fill(event->pos());
-        map_->drawPathingMap();
-    }
+//        map_->pathingMap().fill(event->pos());
+//        map_->drawPathingMap();
+//    }
 
 //    // mvoe player to target pos
 //    if (event->button() == Qt::LeftButton){

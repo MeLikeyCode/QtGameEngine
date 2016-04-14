@@ -5,7 +5,6 @@
 #include <QBrush>
 #include <QGraphicsScene>
 #include "Game.h"
-#include "Node.h"
 
 // TODO remove test
 #include <QDebug>
@@ -80,13 +79,13 @@ int Map::cellSize() const{
 }
 
 /// Returns the point representing the top left corner of the specified cell.
-QPointF Map::cellToPoint(const MyNode& cell)
+QPointF Map::cellToPoint(const Node& cell)
 {
     return pathingMap().cellToPoint(cell);
 }
 
 /// Returns the cell at the specified point.
-MyNode Map::pointToCell(const QPointF &point)
+Node Map::pointToCell(const QPointF &point)
 {
     return pathingMap().pointToCell(point);
 }
@@ -105,7 +104,7 @@ void Map::drawPathingMap(){
     drawings_.clear();
 
     // draw all cells
-    for (MyNode cell:pathingMap().cells()){
+    for (Node cell:pathingMap().cells()){
         QGraphicsRectItem* rect = new QGraphicsRectItem();
         rect->setRect(0,0,pathingMap().cellSize(),pathingMap().cellSize());
         rect->setPos(cell.x()*pathingMap().cellSize(),cell.y()*pathingMap().cellSize());

@@ -19,7 +19,7 @@ Terrain::Terrain(int numXTiles, int numYTiles, int tileWidth, int tileHeight):
 }
 
 /// Fills the specified cell with the specified pixmap.
-void Terrain::fill(const MyNode &cell, QPixmap pixmap){
+void Terrain::fill(const Node &cell, QPixmap pixmap){
     // create the QGraphicsPixmapItem
     QGraphicsPixmapItem* pItem = new QGraphicsPixmapItem(parentItem_);
 
@@ -36,7 +36,7 @@ void Terrain::fill(const MyNode &cell, QPixmap pixmap){
 /// Fills the entire terrain with the specified pixmap.
 void Terrain::fill(QPixmap pixmap){
     // for each cell (node) in the terrain
-    for (MyNode cell:grid_.nodes()){
+    for (Node cell:grid_.nodes()){
         // fill it with the specified pixmap
         fill(cell,pixmap);
     }

@@ -7,49 +7,42 @@
 #include <QThread>
 #include <QDebug>
 
-/// This is a private internal class used by AsyncShortestPathFinder.
-/// Do not use.
-class APFWorker : public QObject
+// private helper class
+class Worker : public QObject
 {
     Q_OBJECT
-public:
-    APFWorker(PathingMap pathingMap, QPointF start, QPointF end);
 public slots:
-    void doWork();
+    void doWork(const PathingMap &pathingMap, const QPointF& start, const QPointF& end) {
+        std::vector<QPointF> result;
+        // ... here is the expensive or blocking operation ...
+        result = pathingMap.shortestPath(start,end);
+        emit resultReady(result);
+    }
+
 signals:
     void resultReady(std::vector<QPointF> result);
-private:
-    PathingMap pathingMap_;
-    QPointF start_;
-    QPointF end_;
 };
 
 /// Represents an object that can asynchronously find the shortest path between
 /// two points.
-/// @code
-/// // example usage
-/// PathingMap p;           // a PathingMap
-/// QPointF s(200,200);     // start of the path
-/// QPointF e(500,500);     // end of the path
-///
-/// AsyncShortestPathFinder* pf = new AsynchShortetPathFinder(p,s,e);
-/// connect(pf,&AsyncShortestPathFinder::pathFound,yourObject,yourCallBackSlot)
-/// pf->findPath();
-/// @endcode
+/// - create an instance of the object
+/// - connect a slot to its pathFound() signal
+/// - call findPath(PathingMap,startPoint,endPoint)
 class AsyncShortestPathFinder : public QObject
 {
     Q_OBJECT
+    QThread workerThread;
 public:
-    AsyncShortestPathFinder(const PathingMap& pathingMap, const QPointF& start, const QPointF& end);
+    AsyncShortestPathFinder();
+    void findPath(const PathingMap &pathingMap, const QPointF &start, const QPointF &end);
     ~AsyncShortestPathFinder();
+
 signals:
     void pathFound(std::vector<QPointF> path);
-    void findPath();
 public slots:
     void pathFound_(std::vector<QPointF> path); // internal use
 private:
-    QThread* workerThread_;
-    APFWorker* worker_;
+    Worker* worker;
 };
 
 #endif // ASYNCSHORTESTPATHFINDER_H

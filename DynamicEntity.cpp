@@ -14,8 +14,6 @@
 #include "EquipableItem.h"
 #include "Slot.h"
 #include "AsyncShortestPathFinder.h"
-#include <QApplication> // TODO: remove
-#include "Node.h"
 
 /// Default constructor.
 DynamicEntity::DynamicEntity():
@@ -38,6 +36,9 @@ DynamicEntity::DynamicEntity():
 
     inventory_ = new Inventory();
     inventory_->entity_ = this;
+
+    pf_ = new AsyncShortestPathFinder();
+    connect(pf_,SIGNAL(pathFound(std::vector<QPointF>)),this,SLOT(moveInternal_(std::vector<QPointF>)));
 }
 
 /// Add the specified Slot to the DynamicEntity.
@@ -292,43 +293,12 @@ void DynamicEntity::stopRotating()
     rotationTimer_->disconnect();
 }
 
-void DynamicEntity::pathRecalculated(std::vector<QPointF> newPath){
-    // stay on same path (if nothing has changed)
-    std::unordered_set<MyNode> nodesInCurrentPath;
-    for (QPointF point:pointsToFollow_){
-        MyNode pointAsNode = map()->pointToCell(point);
-        nodesInCurrentPath.insert(pointAsNode);
-    }
-
-    std::unordered_set<MyNode> nodesInNewPath;
-    for (QPointF point:newPath){
-        MyNode pointAsNode = map()->pointToCell(point);
-        nodesInNewPath.insert(pointAsNode);
-    }
-    int numNodesNewPath = nodesInNewPath.size();
-
-
-    bool samePath = true;
-    if (nodesInCurrentPath.size() <= 0){
-        samePath = false;
-    }
-    for (MyNode node:nodesInNewPath){
-        if (nodesInCurrentPath.count(node) == 0){
-            samePath = false;
-            break;
-        }
-    }
-
-    if (samePath){
-        // use old path, do nothing, return
-        return;
-    }
-
+void DynamicEntity::moveInternal_(std::vector<QPointF> path){
     // stop following previous list of points
     stopAutomaticMovement();
 
     // follow this list of pts
-    pointsToFollow_ = newPath;
+    pointsToFollow_ = path;
     targetPointIndex_ = 1; // start at 1eth not 0eth point (to prevent
                            // back movement if two quick move commands are given)
     connect(moveTimer_,SIGNAL(timeout()),this,SLOT(moveStepAIControlled()));
@@ -338,24 +308,23 @@ void DynamicEntity::pathRecalculated(std::vector<QPointF> newPath){
     sprite()->play("walk",-1,100);
 }
 
-
-
 /// Tells the Entity to move to the specified position.
+///
 /// Please ensure that the Entity has a "walk" animation.
 void DynamicEntity::moveTo(QPointF pos){
-    // TODO: throw an error if movement mode is one of the MoveBehaviorKeyboardMouseX
-    // TODO: assert (make sure) that the
-    moveBehavior_->
+    // temporarly disable entities own footing so a path can be retrieved
+    // disablePathingMap();
 
-    AsyncShortestPathFinder* pf = new AsyncShortestPathFinder(map()->pathingMap(),pointPos(),pos);
-    connect(pf,SIGNAL(pathFound(std::vector<QPointF>)),this,SLOT(pathRecalculated(std::vector<QPointF>)));
-    pf->findPath();
+    // get list of points from map (in a diff thread)
+    pf_->findPath(map()->pathingMap(),pointPos(),pos);
+
+    //moveInternal_(map()->pathingMap().shortestPath(pointPos(),pos));
 }
 
 /// Tells the Entity to move to the specified cell.
 ///
 /// @see Entity::moveTo(const QPointF&)
-void DynamicEntity::moveTo(const MyNode &cell)
+void DynamicEntity::moveTo(const Node &cell)
 {
     moveTo(map()->cellToPoint(cell));
 }
@@ -363,7 +332,7 @@ void DynamicEntity::moveTo(const MyNode &cell)
 /// Tells the Entity to move up by one cell of the Map's PathingMap.
 void DynamicEntity::moveUp(){
     // get the location of one cell up
-    MyNode c = map()->pathingMap().pointToCell(pointPos());
+    Node c = map()->pathingMap().pointToCell(pointPos());
     c.setY(c.y()-1);
     QPointF pt = map()->pathingMap().cellToPoint(c);
 
@@ -374,7 +343,7 @@ void DynamicEntity::moveUp(){
 /// Tells the Entity to move up down one cell of the Map's PathingMap.
 void DynamicEntity::moveDown(){
     // get the location of one cell up
-    MyNode c = map()->pathingMap().pointToCell(pointPos());
+    Node c = map()->pathingMap().pointToCell(pointPos());
     c.setY(c.y()+1);
     QPointF pt = map()->pathingMap().cellToPoint(c);
 
@@ -385,7 +354,7 @@ void DynamicEntity::moveDown(){
 /// Tells the Entity to move left by one cell of the Map's PathingMap.
 void DynamicEntity::moveLeft(){
     // get the location of one cell up
-    MyNode c = map()->pathingMap().pointToCell(pointPos());
+    Node c = map()->pathingMap().pointToCell(pointPos());
     c.setX(c.x()-1);
     QPointF pt = map()->pathingMap().cellToPoint(c);
 
@@ -396,7 +365,7 @@ void DynamicEntity::moveLeft(){
 /// Tells the Entity to move right by one cell of the Map's PathingMap.
 void DynamicEntity::moveRight(){
     // get the location of one cell up
-    MyNode c = map()->pathingMap().pointToCell(pointPos());
+    Node c = map()->pathingMap().pointToCell(pointPos());
     c.setX(c.x()+1);
     QPointF pt = map()->pathingMap().cellToPoint(c);
 

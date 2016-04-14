@@ -29,6 +29,9 @@ SOURCES += main.cpp \
     CountExpiringTimer.cpp \
     MeleeWeapon.cpp \
     Spear.cpp \
+    PlayerControlledMoveBehavior.cpp \
+    MoveRelativeToSelf.cpp \
+    MoveRelativeToScreen.cpp \
     DynamicEntity.cpp \
     Entity.cpp \
     Axe.cpp \
@@ -55,11 +58,7 @@ SOURCES += main.cpp \
     Enemy.cpp \
     Weapon.cpp \
     WeaponSlot.cpp \
-    AsyncShortestPathFinder.cpp \
-    MoveBehavior.cpp \
-    MoveBehaviorPathFinding.cpp \
-    MoveBehaviorKeyboardMouseRelativeToScreen.cpp \
-    MoveBehaviorKeyboardMouseRelativeToSelf.cpp
+    AsyncShortestPathFinder.cpp
 
 HEADERS  += \
     Map.h \
@@ -78,6 +77,9 @@ HEADERS  += \
     CountExpiringTimer.h \
     MeleeWeapon.h \
     Spear.h \
+    PlayerControlledMoveBehavior.h \
+    MoveRelativeToSelf.h \
+    MoveRelativeToScreen.h \
     DynamicEntity.h \
     Entity.h \
     Axe.h \
@@ -104,11 +106,7 @@ HEADERS  += \
     Enemy.h \
     Weapon.h \
     WeaponSlot.h \
-    AsyncShortestPathFinder.h \
-    MoveBehavior.h \
-    MoveBehaviorPathFinding.h \
-    MoveBehaviorKeyboardMouseRelativeToScreen.h \
-    MoveBehaviorKeyboardMouseRelativeToSelf.h
+    AsyncShortestPathFinder.h
 
 RESOURCES += \
     res.qrc

@@ -14,11 +14,11 @@ class Graph;
 /// have the same x and y values. A Node object is similar to a point except
 /// that a Node object is more discreet because its x and y values have to be
 /// integers.
-class MyNode{
+class Node{
 public:
     // constructors
-    MyNode();
-    MyNode( int x,  int y); // every node needs an x and y coordinate - it is what defines them!
+    Node();
+    Node( int x,  int y); // every node needs an x and y coordinate - it is what defines them!
 
     // readers (getters)
     int x() const;
@@ -34,16 +34,14 @@ private:
 };
 
 // non member comparison operator
-bool operator==(const MyNode& lhs, const MyNode& rhs);
+bool operator==(const Node& lhs, const Node& rhs);
 
 // make node hashable
 namespace std {
-template <> struct hash<MyNode>
+template <> struct hash<Node>
 {
-    size_t operator()(const MyNode& node) const{
-        size_t mem1Hash = hash<int>()(node.x());
-        size_t mem2Hash = hash<int>()(node.y());
-        return mem1Hash ^ mem2Hash;
+    size_t operator()(const Node& node) const{
+        return hash<int>()(node.x()) + hash<int>()(node.y());
     }
 };
 }

@@ -13,21 +13,21 @@ Graph::Graph(){
 /// Please ensure that all of the Nodes of the Edges are actually Nodes in the set of Nodes. In other words,
 /// please make sure that the set of Nodes and Edges being passed in actually represent a graph. This constructor
 /// does not do any checking.
-Graph::Graph(const std::unordered_set<MyNode> &nodes, const std::unordered_set<Edge> &edges): nodes_(nodes),edges_(edges){
+Graph::Graph(const std::unordered_set<Node> &nodes, const std::unordered_set<Edge> &edges): nodes_(nodes),edges_(edges){
 
 }
 
 /// Adds the specified Node to the Graph.
 ///
 /// The Node will not be added if an equivalent one is already in the Graph.
-void Graph::addNode(const MyNode &node){
+void Graph::addNode(const Node &node){
     nodes_.insert(node);
 }
 
 /// Adds an Edge between the specified Nodes.
 ///
 /// The Edge will not be added if an equivalent one is already added in the Graph.
-void Graph::addEdge(const MyNode &from, const MyNode &to,  int weight){
+void Graph::addEdge(const Node &from, const Node &to,  int weight){
     // make sure from and to nodes exist in the graph
     assert(contains(from));
     assert(contains(to));
@@ -40,7 +40,7 @@ void Graph::addEdge(const MyNode &from, const MyNode &to,  int weight){
 }
 
 /// Returns a set of all the Nodes in the Graph.
-std::unordered_set<MyNode> Graph::nodes() const{
+std::unordered_set<Node> Graph::nodes() const{
     return nodes_;
 }
 
@@ -54,7 +54,7 @@ std::unordered_set<Edge> Graph::edges() const{
 /// Outgoing edges are those that _start_ at the specified Node (and end on any other Node).
 ///
 /// @param from The Node to get all the outoing Edges of.
-std::vector<Edge> Graph::outgoingEdges(const MyNode &from) const{
+std::vector<Edge> Graph::outgoingEdges(const Node &from) const{
     // make sure the from Node actually exists
     assert(contains(from));
 
@@ -72,7 +72,7 @@ std::vector<Edge> Graph::outgoingEdges(const MyNode &from) const{
 /// Incoming edges are those that _end_ at the specified Node (can start on any other Node).
 ///
 /// @param to The Node to get all the incoming Edges of.
-std::vector<Edge> Graph::incomingEdges(const MyNode &to) const{
+std::vector<Edge> Graph::incomingEdges(const Node &to) const{
     // make sure the to Node actually exists
     assert(contains(to));
 
@@ -90,7 +90,7 @@ std::vector<Edge> Graph::incomingEdges(const MyNode &to) const{
 /// I.e. all the Nodes that this Node has an outoing Edge to.
 ///
 /// @param from The Node to get the adjacent outgoing Nodes of.
-std::vector<MyNode> Graph::outgoingNodes(const MyNode &from) const{
+std::vector<Node> Graph::outgoingNodes(const Node &from) const{
     // make sure the from Node exists
     assert(contains(from));
 
@@ -98,7 +98,7 @@ std::vector<MyNode> Graph::outgoingNodes(const MyNode &from) const{
     std::vector<Edge> outgoingE = outgoingEdges(from);
 
     // create a vector of the outgoing nodes
-    std::vector<MyNode> outgoingN;
+    std::vector<Node> outgoingN;
     for (auto edge:outgoingE){
         outgoingN.push_back(edge.to());
     }
@@ -111,7 +111,7 @@ std::vector<MyNode> Graph::outgoingNodes(const MyNode &from) const{
 /// I.e all the Nodes that have an incoming Edge to this Node.
 ///
 /// @param to The Node to get all the _adjacent_ incoming Nodes of.
-std::vector<MyNode> Graph::incomingNodes(const MyNode &to) const{
+std::vector<Node> Graph::incomingNodes(const Node &to) const{
     // make sure the to Node exists
     assert(contains(to));
 
@@ -119,7 +119,7 @@ std::vector<MyNode> Graph::incomingNodes(const MyNode &to) const{
     std::vector<Edge> incomingE = incomingEdges(to);
 
     // create a vector of the incoming nodes
-    std::vector<MyNode> incomingN;
+    std::vector<Node> incomingN;
     for (auto edge:incomingE){
         incomingN.push_back(edge.from());
     }
@@ -128,7 +128,7 @@ std::vector<MyNode> Graph::incomingNodes(const MyNode &to) const{
 }
 
 /// Returns true if the Graph contains the specified Node.
-bool Graph::contains(const MyNode &node) const{
+bool Graph::contains(const Node &node) const{
     return (nodes_.count(node) == 1); // sets have either 1 of each value or 0
 }
 
@@ -138,14 +138,14 @@ bool Graph::contains(const Edge &edge) const{
 }
 
 /// Returns a vector of Nodes that represent the shortest path between the specified Nodes.
-std::vector<MyNode> Graph::shortestPath(const MyNode &from, const MyNode &to) const{
+std::vector<Node> Graph::shortestPath(const Node &from, const Node &to) const{
     Tree t = spt(from);
-    std::vector<MyNode> path = t.pathTo(to);
+    std::vector<Node> path = t.pathTo(to);
     return path;
 }
 
 /// Returns a shortest path Tree rooted at the specified ("source") Node.
-Tree Graph::spt(const MyNode &source) const{
+Tree Graph::spt(const Node &source) const{
     // make sure the source Node exists
     assert(contains(source));
 
@@ -153,7 +153,7 @@ Tree Graph::spt(const MyNode &source) const{
     Graph copy = *this;
 
     // need to remember the first picked node as the root
-    MyNode rootNode(0,0);
+    Node rootNode(0,0);
 
     // mark all nodes as unpicked
     copy.unpickAll();
@@ -165,7 +165,7 @@ Tree Graph::spt(const MyNode &source) const{
     bool isFirstNode = true;
     while (copy.hasUnpickedNode()){
         // pick the one with the lightest weight
-        MyNode lightest = copy.lightestUnpickedNode();
+        Node lightest = copy.lightestUnpickedNode();
         copy.pick(lightest);
 
         // update its neighbors weights
@@ -195,7 +195,7 @@ Tree Graph::spt(const MyNode &source) const{
 /// A Graph maintains a set of picked and a set of unpicked Nodes, which are helper attributes to
 /// finding the spt of the Graph. This function will remove the specified node from the unpicked set
 /// and puts it in the picked set.
-void Graph::pick(const MyNode &node){
+void Graph::pick(const Node &node){
     // make sure the node is in unpickedNodes_
     assert(unpickedNodes_.count(node) == 1);
 
@@ -227,7 +227,7 @@ void Graph::pick(const Edge &edge){
 /// Returns true if the specified Node is picked.
 ///
 /// @see Graph::pick(const Node&)
-bool Graph::picked(const MyNode &node) const{
+bool Graph::picked(const Node &node) const{
     // make sure the Node exists
     assert(contains(node));
 
@@ -248,7 +248,7 @@ bool Graph::picked(const Edge &edge) const{
 ///
 /// A Graph maintains a mapping of Node:int so that every Node has a weight. This is a helper attribute to
 /// finding the spt of the Graph.
-void Graph::setWeight(const MyNode &of,  int weight){
+void Graph::setWeight(const Node &of,  int weight){
     // make sure the of Node exists
     assert(contains(of));
 
@@ -258,7 +258,7 @@ void Graph::setWeight(const MyNode &of,  int weight){
 /// Returns the weight of the specified Node.
 ///
 /// @see Graph::setWeight(const Node&, int);
- int Graph::weight(const MyNode &of) const{
+ int Graph::weight(const Node &of) const{
     // make sure the of Node exists
     assert(contains(of));
 
@@ -269,7 +269,7 @@ void Graph::setWeight(const MyNode &of,  int weight){
 /// Returns the Edge between the specified Nodes.
 ///
 /// Helper function for determining the spt of the Graph.
-Edge Graph::edge(const MyNode &from, const MyNode &to) const{
+Edge Graph::edge(const Node &from, const Node &to) const{
     // make sure the from node and the to node exists
     assert(contains(from));
     assert(contains(to));
@@ -298,7 +298,7 @@ Edge Graph::edge(const MyNode &from, const MyNode &to) const{
 /// @see Graph::pick(const Edge&)
 void Graph::unpickAll(){
     // unpick nodes
-    for (MyNode node:nodes_){
+    for (Node node:nodes_){
         unpickedNodes_.insert(node);
     }
 
@@ -309,7 +309,7 @@ void Graph::unpickAll(){
 }
 
 /// Gives source Node weight of 0 and all other nodes weight of 1000
-void Graph::initializeNodeWeights(const MyNode &source){
+void Graph::initializeNodeWeights(const Node &source){
     // make sure the source Node exists
     assert(contains(source));
 
@@ -317,7 +317,7 @@ void Graph::initializeNodeWeights(const MyNode &source){
     setWeight(source,0);
 
     // Give all other nodes weight of 1000
-    for (MyNode node:nodes_){
+    for (Node node:nodes_){
         if (!(node == source)){
             setWeight(node,1000);
         }
@@ -330,15 +330,15 @@ bool Graph::hasUnpickedNode() const{
 }
 
 /// Returns the lightest unicked Node.
-MyNode Graph::lightestUnpickedNode() const{
+Node Graph::lightestUnpickedNode() const{
     // make sure there is at least one unpicked node
     assert(hasUnpickedNode());
 
     // assume the first one is the lightest
-    MyNode lightest = *(unpickedNodes_.begin());
+    Node lightest = *(unpickedNodes_.begin());
 
     // try to find a lighter one
-    for (MyNode node: unpickedNodes_){
+    for (Node node: unpickedNodes_){
         if (weight(node) < weight(lightest)){
             lightest = node;
         }
@@ -352,7 +352,7 @@ MyNode Graph::lightestUnpickedNode() const{
 /// This is a helper function for determining the spt of the Graph. When a Node is picked,
 /// there is an appropriate Edge that must also be picked, therefore whenever a Node is picked,
 /// I keep track of the appropriate Edge, this funtion simply picks that Edge.
-void Graph::pickConnetedEdge(const MyNode &of){
+void Graph::pickConnetedEdge(const Node &of){
     Edge edge = updatedEdge_[of];
     pick(edge);
 
@@ -361,11 +361,11 @@ void Graph::pickConnetedEdge(const MyNode &of){
 /// Returns a vector of the unpicked neighbors of the specified Node.
 ///
 /// This is a helper function for determining the spt of the Graph.
-std::vector<MyNode> Graph::unpickedNeighbors(const MyNode &of) const{
+std::vector<Node> Graph::unpickedNeighbors(const Node &of) const{
     // find all neighbors, see which ones are unpicked
-    std::vector<MyNode> neighbors = outgoingNodes(of);
+    std::vector<Node> neighbors = outgoingNodes(of);
 
-    std::vector<MyNode> unpicked;
+    std::vector<Node> unpicked;
     for (auto neighbor:neighbors){
         if (!picked(neighbor)){ // if unpicked
             unpicked.push_back(neighbor);
@@ -379,9 +379,9 @@ std::vector<MyNode> Graph::unpickedNeighbors(const MyNode &of) const{
 /// Updates the weights of the neighboring Nodes if the new weight is smaller.
 ///
 /// This is a helper function for determining the spt of the Graph.
-void Graph::updateNeighborWeights(const MyNode &of){
+void Graph::updateNeighborWeights(const Node &of){
     // For each unpicked neighbor
-    for (MyNode neighbor:unpickedNeighbors(of)){
+    for (Node neighbor:unpickedNeighbors(of)){
         // find weight of edge to neighbor
         Edge edgeToNeighbor = edge(of,neighbor);
         int edgeWeight = edgeToNeighbor.weight();

@@ -2,7 +2,7 @@
 #include <cassert>
 
 /// Constructs a Tree with just a root Node.
-Tree::Tree(const MyNode &root): root_(root), graph_(){
+Tree::Tree(const Node &root): root_(root), graph_(){
     // add the root node to the graph
     graph_.addNode(root);
 }
@@ -11,12 +11,12 @@ Tree::Tree(const MyNode &root): root_(root), graph_(){
 ///
 /// Please make sure that the Graph is actually a Tree (i.e. has no cycles).
 /// This constructor will not check for validity of the graph.
-Tree::Tree(const Graph &graph, const MyNode &root): graph_(graph), root_(root){
+Tree::Tree(const Graph &graph, const Node &root): graph_(graph), root_(root){
 
 }
 
 /// Adds a child to the specified Node.
-void Tree::addChild(const MyNode &to, const MyNode &child, int weight){
+void Tree::addChild(const Node &to, const Node &child, int weight){
     // make sure the to Node exists
     assert(graph_.contains(to));
 
@@ -28,16 +28,16 @@ void Tree::addChild(const MyNode &to, const MyNode &child, int weight){
 }
 
 /// Returns the vector of Nodes that goes from the root Node to the specified Node.
-std::vector<MyNode> Tree::pathTo(const MyNode &node) const{
+std::vector<Node> Tree::pathTo(const Node &node) const{
     // since this is const, create a copy of the tree, and run dfs on the copy
     // (since dfs is a modifier function)
     Tree copy  = *this;
-    std::vector<MyNode> empty;
+    std::vector<Node> empty;
     return copy.dfs(root_,node,empty);
 }
 
 /// Returns a set of all the Nodes.
-std::unordered_set<MyNode> Tree::nodes() const{
+std::unordered_set<Node> Tree::nodes() const{
     return graph_.nodes();
 }
 
@@ -47,7 +47,7 @@ std::unordered_set<Edge> Tree::edges() const{
 }
 
 /// Recursive dfs. Used by Tree::pathTo(const Node&).
-std::vector<MyNode> Tree::dfs(const MyNode &node, const MyNode &target, std::vector<MyNode> path){
+std::vector<Node> Tree::dfs(const Node &node, const Node &target, std::vector<Node> path){
     // mark node visited & add it to the vector
     visit(node);
 
@@ -59,7 +59,7 @@ std::vector<MyNode> Tree::dfs(const MyNode &node, const MyNode &target, std::vec
 
     // if node doesn't have any unvisited children, remove it, and run dfs on previous node in path
     if (!hasUnvisitedChild(node)){
-        MyNode lastNode = path.back();
+        Node lastNode = path.back();
         path.pop_back();
         return dfs(lastNode,target,path);
     }
@@ -67,7 +67,7 @@ std::vector<MyNode> Tree::dfs(const MyNode &node, const MyNode &target, std::vec
     // if node has unvisited children, pick one and run dfs on it
     if (hasUnvisitedChild(node)){
         path.push_back(node);
-        MyNode unvisited = anUnvisitedChild(node);
+        Node unvisited = anUnvisitedChild(node);
         return dfs(unvisited,target,path);
     }
 
@@ -76,21 +76,21 @@ std::vector<MyNode> Tree::dfs(const MyNode &node, const MyNode &target, std::vec
 /// Marks the Node as visited (adds the Node to the set of visited Nodes).
 ///
 /// The Tree maintains a set of visited Nodes as a helper attribute to dfs.
-void Tree::visit(const MyNode &node){
+void Tree::visit(const Node &node){
     assert(graph_.contains(node));
 
     visitedNodes_.insert(node);
 }
 
 /// Returns true if the specified Node is visited.
-bool Tree::isVisited(const MyNode &node){
+bool Tree::isVisited(const Node &node){
     return (visitedNodes_.count(node) == 1);
 }
 
 /// Returns true if the specified Node has at least one unvisited child.
-bool Tree::hasUnvisitedChild(const MyNode &node){
+bool Tree::hasUnvisitedChild(const Node &node){
     // get a list of all of the nodes children
-    std::vector<MyNode> children = graph_.outgoingNodes(node);
+    std::vector<Node> children = graph_.outgoingNodes(node);
 
     // see if there is at least one unvisited child
     int numUnvisited = 0;
@@ -106,12 +106,12 @@ bool Tree::hasUnvisitedChild(const MyNode &node){
 /// Returns an unvisited child of the specified Node.
 ///
 /// Which child is returned, is unpredictable.
-MyNode Tree::anUnvisitedChild(const MyNode &of){
+Node Tree::anUnvisitedChild(const Node &of){
     // make sure it has an unvisited child!
     assert(hasUnvisitedChild(of));
 
     // get a list of all the childern of the node
-    std::vector<MyNode> children = graph_.outgoingNodes(of);
+    std::vector<Node> children = graph_.outgoingNodes(of);
 
     // return the 1st unvisited child
     for (auto child : children){

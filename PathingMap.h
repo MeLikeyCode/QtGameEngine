@@ -34,45 +34,45 @@ public:
     PathingMap(int numCellsWide, int numCellsLong, int cellSize);
 
     // readers ("getters")
-    std::vector<MyNode> cells(const MyNode& topLeft, const MyNode& bottomRight) const;
-    std::vector<MyNode> cells(const QPointF& topLeft, const QPointF& bottomRight) const;
-    std::vector<MyNode> cells(const QRectF& inRegion) const;
-    std::vector<MyNode> cells() const;
-    QRectF cellAsRect(MyNode cell) const;
-    std::vector<QRectF> cellsAsRects(const MyNode& topLeft, const MyNode& bottomRight) const;
+    std::vector<Node> cells(const Node& topLeft, const Node& bottomRight) const;
+    std::vector<Node> cells(const QPointF& topLeft, const QPointF& bottomRight) const;
+    std::vector<Node> cells(const QRectF& inRegion) const;
+    std::vector<Node> cells() const;
+    QRectF cellAsRect(Node cell) const;
+    std::vector<QRectF> cellsAsRects(const Node& topLeft, const Node& bottomRight) const;
     std::vector<QRectF> cellsAsRects(const QPointF& topLeft, const QPointF& bottomRight) const;
     std::vector<QRectF> cellsAsRects(const QRectF& inRegion) const;
     std::vector<QRectF> cellsAsRects() const;
-    bool filled(const MyNode& cell) const;
+    bool filled(const Node& cell) const;
     bool filled(const QPointF& point) const;
     bool filled(const QRectF& region) const;
     bool free(const QRectF& region) const;
-    std::vector<QPointF> shortestPath(const MyNode& fromCell, const MyNode& toCell) const;
+    std::vector<QPointF> shortestPath(const Node& fromCell, const Node& toCell) const;
     std::vector<QPointF> shortestPath(const QPointF& fromPt, const QPointF& toPt) const;
     int width() const;
     int height() const;
     int cellSize() const;
     int numCellsLong() const;
     int numCellsWide() const;
-    MyNode pointToCell(const QPointF& point) const;
-    QPointF cellToPoint(const MyNode& cell) const;
+    Node pointToCell(const QPointF& point) const;
+    QPointF cellToPoint(const Node& cell) const;
     QPointF pointToCellPoint(const QPointF& point);
 
     // modifiers ("setters")
-    void fill(const MyNode& cell);
+    void fill(const Node& cell);
     void fill(const QPointF& point);
-    void fill(const MyNode& topLeft, const MyNode& bottomRight);
+    void fill(const Node& topLeft, const Node& bottomRight);
     void fill(const QPointF& topLeft, const QPointF& bottomRight);
     void fill(const QRectF& region);
-    void unfill(const MyNode& cell);
+    void unfill(const Node& cell);
     void unfill(const QPointF& point);
-    void unfill(const MyNode& topLeft, const MyNode& bottomRight);
+    void unfill(const Node& topLeft, const Node& bottomRight);
     void unfill(const QPointF& topLeft, const QPointF& bottomRight);
     void unfill(const QRectF& region);
     void setFilling(const std::vector<std::vector<int>>& vec);
-    void setFilling(const MyNode& pos, const PathingMap& littleMap);
+    void setFilling(const Node& pos, const PathingMap& littleMap);
     void setFilling(const QPointF& pos, const PathingMap& littleMap);
-    void addFilling(const PathingMap& littleMap, const MyNode& pos);
+    void addFilling(const PathingMap& littleMap, const Node& pos);
     void addFilling(const PathingMap& littleMap, const QPointF& pos);
 
 private:

@@ -14,31 +14,31 @@
 class Tree{
 public:
     // constructors
-    Tree(const MyNode& root); // constructor must be given a node
-    Tree(const Graph& graph, const MyNode& root);
+    Tree(const Node& root); // constructor must be given a node
+    Tree(const Graph& graph, const Node& root);
 
     // readers ("getters")
-    std::vector<MyNode> pathTo(const MyNode& node) const;
-    std::unordered_set<MyNode> nodes() const;
+    std::vector<Node> pathTo(const Node& node) const;
+    std::unordered_set<Node> nodes() const;
     std::unordered_set<Edge> edges() const;
 
     // modifiers ("setters")
-    void addChild(const MyNode& to, const MyNode& child, int weight);
+    void addChild(const Node& to, const Node& child, int weight);
 
 private:
     // main private attributes
     Graph graph_;
-    MyNode root_;
+    Node root_;
 
     // private helper attributes
-    std::unordered_set<MyNode> visitedNodes_;
+    std::unordered_set<Node> visitedNodes_;
 
     // private helper methods
-    void visit(const MyNode& node);
-    bool isVisited(const MyNode& node);
-    bool hasUnvisitedChild(const MyNode& node);
-    MyNode anUnvisitedChild(const MyNode& of);
-    std::vector<MyNode> dfs(const MyNode& node, const MyNode& target, std::vector<MyNode> path);
+    void visit(const Node& node);
+    bool isVisited(const Node& node);
+    bool hasUnvisitedChild(const Node& node);
+    Node anUnvisitedChild(const Node& of);
+    std::vector<Node> dfs(const Node& node, const Node& target, std::vector<Node> path);
 
 };
 

@@ -16,18 +16,18 @@ class Edge{
 public:
     // construtors
     Edge();
-    Edge(const MyNode& from, const MyNode& to, int weight);
+    Edge(const Node& from, const Node& to, int weight);
 
     // readers ("getters")
-    MyNode from() const;
-    MyNode to() const;
+    Node from() const;
+    Node to() const;
     int weight() const;
 
 private:
     // main private attributes
     int weight_;
-    MyNode from_;
-    MyNode to_;
+    Node from_;
+    Node to_;
 };
 
 // comparison operator
@@ -38,7 +38,7 @@ namespace std {
 template <> struct hash<Edge>
 {
     size_t operator()(const Edge& edge) const{
-        return hash<MyNode>()(edge.from()) + hash<MyNode>()(edge.to());
+        return hash<Node>()(edge.from()) + hash<Node>()(edge.to());
     }
 };
 }

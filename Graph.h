@@ -17,52 +17,52 @@ class Graph{
 public:
     // constructors
     Graph();
-    Graph(const std::unordered_set<MyNode>& nodes, const std::unordered_set<Edge>& edges);
+    Graph(const std::unordered_set<Node>& nodes, const std::unordered_set<Edge>& edges);
 
     // readers (getters)
-    std::unordered_set<MyNode> nodes() const;
+    std::unordered_set<Node> nodes() const;
     std::unordered_set<Edge> edges() const;
-    std::vector<Edge> outgoingEdges(const MyNode& from) const;
-    std::vector<Edge> incomingEdges(const MyNode& to) const;
-    std::vector<MyNode> outgoingNodes(const MyNode& from) const; // all ADJACENT nodes this node can go to
-    std::vector<MyNode> incomingNodes(const MyNode& to) const; // all ADJACENT nodes that can come to this node
-    bool contains(const MyNode& node) const;
+    std::vector<Edge> outgoingEdges(const Node& from) const;
+    std::vector<Edge> incomingEdges(const Node& to) const;
+    std::vector<Node> outgoingNodes(const Node& from) const; // all ADJACENT nodes this node can go to
+    std::vector<Node> incomingNodes(const Node& to) const; // all ADJACENT nodes that can come to this node
+    bool contains(const Node& node) const;
     bool contains(const Edge& edge) const;
-    std::vector<MyNode> shortestPath(const MyNode& from, const MyNode& to) const;
-    Tree spt(const MyNode& source) const;
+    std::vector<Node> shortestPath(const Node& from, const Node& to) const;
+    Tree spt(const Node& source) const;
 
     // modifiers (setters)
-    void addNode(const MyNode& node);
-    void addEdge(const MyNode& from, const MyNode& to,  int weight);
+    void addNode(const Node& node);
+    void addEdge(const Node& from, const Node& to,  int weight);
 
 private:
     // main private attributes
-    std::unordered_set<MyNode> nodes_;
+    std::unordered_set<Node> nodes_;
     std::unordered_set<Edge> edges_;
 
     // helper attributes
-    std::unordered_set<MyNode> pickedNodes_;
-    std::unordered_set<MyNode> unpickedNodes_;
+    std::unordered_set<Node> pickedNodes_;
+    std::unordered_set<Node> unpickedNodes_;
     std::unordered_set<Edge> pickedEdges_;
     std::unordered_set<Edge> unpickedEdges_;
-    std::unordered_map<MyNode, int> nodeWeight_;
-    std::unordered_map<MyNode,Edge> updatedEdge_;
+    std::unordered_map<Node, int> nodeWeight_;
+    std::unordered_map<Node,Edge> updatedEdge_;
 
     // helper functions
-    void pick(const MyNode& node);
+    void pick(const Node& node);
     void pick(const Edge& edge);
-    bool picked(const MyNode& node) const;
+    bool picked(const Node& node) const;
     bool picked(const Edge& edge) const;
-    void setWeight(const MyNode& of,  int weight);
-    int weight(const MyNode& of) const;
-    Edge edge(const MyNode& from, const MyNode& to) const;
+    void setWeight(const Node& of,  int weight);
+    int weight(const Node& of) const;
+    Edge edge(const Node& from, const Node& to) const;
     void unpickAll();
-    void initializeNodeWeights(const MyNode& source);
+    void initializeNodeWeights(const Node& source);
     bool hasUnpickedNode() const;
-    MyNode lightestUnpickedNode() const;
-    void pickConnetedEdge(const MyNode& of);
-    std::vector<MyNode> unpickedNeighbors(const MyNode& of) const;
-    void updateNeighborWeights(const MyNode& of);
+    Node lightestUnpickedNode() const;
+    void pickConnetedEdge(const Node& of);
+    std::vector<Node> unpickedNeighbors(const Node& of) const;
+    void updateNeighborWeights(const Node& of);
 
 };
 

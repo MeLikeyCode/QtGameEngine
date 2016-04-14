@@ -16,7 +16,7 @@ Grid::Grid(int numXNodes, int numYNodes, int nodeWidth, int nodeHeight):
 
 }
 
-QPointF Grid::nodeToPoint(const MyNode &node) const{
+QPointF Grid::nodeToPoint(const Node &node) const{
     // make sure the Node is in the Grid
     assert(node.x() < numXNodes() && node.y() < numYNodes());
 
@@ -26,45 +26,45 @@ QPointF Grid::nodeToPoint(const MyNode &node) const{
 }
 
 /// Returns the Node closest to the top left of the specified point.
-MyNode Grid::pointToNode(const QPointF &point) const{
+Node Grid::pointToNode(const QPointF &point) const{
     // make sure the point is in the Grid
     assert(int(point.x()) < width() && int(point.y()) << height());
 
     int nodeX = point.x() / nodeWidth();
     int nodeY = point.y() / nodeHeight();
-    return MyNode(nodeX,nodeY);
+    return Node(nodeX,nodeY);
 }
 
-std::vector<MyNode> Grid::nodesOfColumn(int i) const{
+std::vector<Node> Grid::nodesOfColumn(int i) const{
     // make sure the column is in the grid
     assert (i < numXNodes());
 
-    std::vector<MyNode> nodesOfC;
+    std::vector<Node> nodesOfC;
     for (int y = 0, n = numYNodes(); y < n; ++y ){
-        nodesOfC.push_back(MyNode(i,y));
+        nodesOfC.push_back(Node(i,y));
     }
 
     return nodesOfC;
 }
 
-std::vector<MyNode> Grid::nodesOfRow(int i) const{
+std::vector<Node> Grid::nodesOfRow(int i) const{
     // make sure the row is in the grid
     assert(i < numYNodes());
 
-    std::vector<MyNode> nodesOfR;
+    std::vector<Node> nodesOfR;
     for (int x = 0, n = numXNodes(); x < n; ++x ){
-        nodesOfR.push_back(MyNode(x,i));
+        nodesOfR.push_back(Node(x,i));
     }
 
     return nodesOfR;
 }
 
-std::vector<MyNode> Grid::nodes() const{
-    std::vector<MyNode> allNodes;
+std::vector<Node> Grid::nodes() const{
+    std::vector<Node> allNodes;
     // add all columns
     for (int x = 0, n = numXNodes(); x < n; ++x){
-        std::vector<MyNode> colNodes = nodesOfColumn(x);
-        for (MyNode node:colNodes){
+        std::vector<Node> colNodes = nodesOfColumn(x);
+        for (Node node:colNodes){
             allNodes.push_back(node);
         }
     }
@@ -74,9 +74,9 @@ std::vector<MyNode> Grid::nodes() const{
 
 std::vector<QPointF> Grid::pointsOfColumn(int i) const{
     // get nodes of column
-    std::vector<MyNode> nodesOfC = nodesOfColumn(i);
+    std::vector<Node> nodesOfC = nodesOfColumn(i);
     std::vector<QPointF> pointsOfC;
-    for (MyNode node:nodesOfC){
+    for (Node node:nodesOfC){
         pointsOfC.push_back(nodeToPoint(node));
     }
 
@@ -85,9 +85,9 @@ std::vector<QPointF> Grid::pointsOfColumn(int i) const{
 
 std::vector<QPointF> Grid::pointsOfRow(int i) const{
     // get nodes of row
-    std::vector<MyNode> nodesOfR = nodesOfRow(i);
+    std::vector<Node> nodesOfR = nodesOfRow(i);
     std::vector<QPointF> pointsOfR;
-    for (MyNode node:nodesOfR){
+    for (Node node:nodesOfR){
         pointsOfR.push_back(nodeToPoint(node));
     }
 
@@ -96,9 +96,9 @@ std::vector<QPointF> Grid::pointsOfRow(int i) const{
 
 std::vector<QPointF> Grid::points() const{
     // get nodes
-    std::vector<MyNode> allNodes = nodes();
+    std::vector<Node> allNodes = nodes();
     std::vector<QPointF> allPoints;
-    for (MyNode node:allNodes){
+    for (Node node:allNodes){
         allPoints.push_back(nodeToPoint(node));
     }
 

@@ -122,7 +122,7 @@ void Entity::setPointPos(const QPointF &moveThisPt, const QPointF &toThisPoint)
 }
 
 /// Returns the cell that the Entity is in.
-MyNode Entity::cellPos(){
+Node Entity::cellPos(){
     return map()->pathingMap().pointToCell(pointPos());
 }
 
@@ -172,7 +172,7 @@ void Entity::setFacingAngle(double angle)
 }
 
 /// Instantly moves the Entity to the specified cell in the Map.
-void Entity::setCellPos(const MyNode &cell){
+void Entity::setCellPos(const Node &cell){
     // make sure the entity has a Map
     assert(map_);
 
@@ -216,8 +216,8 @@ void Entity::disablePathingMap(){
     clearRegion.setTopLeft(pointPos());
     clearRegion.setWidth(pathingMap().width());
     clearRegion.setHeight(pathingMap().height());
-    std::vector<MyNode> cellsInRegion = map()->pathingMap().cells(clearRegion);
-    for (MyNode cell:cellsInRegion){
+    std::vector<Node> cellsInRegion = map()->pathingMap().cells(clearRegion);
+    for (Node cell:cellsInRegion){
         map()->pathingMap().unfill(cell);
     }
 

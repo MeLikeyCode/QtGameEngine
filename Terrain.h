@@ -23,7 +23,7 @@ public:
     // constructor
     Terrain(int numXTiles, int numYTiles, int tileWidth, int tileHeight);
 
-    void fill(const MyNode& cell, QPixmap pixmap);
+    void fill(const Node& cell, QPixmap pixmap);
     void fill(QPixmap pixmap);
 
     // internal thing, needed by Map when terrain is changed. Terrain needs
