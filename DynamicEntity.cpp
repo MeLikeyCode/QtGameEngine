@@ -37,6 +37,8 @@ DynamicEntity::DynamicEntity():
     inventory_ = new Inventory();
     inventory_->entity_ = this;
 
+    timeStuck_ = 0;
+
     pf_ = new AsyncShortestPathFinder();
     connect(pf_,SIGNAL(pathFound(std::vector<QPointF>)),this,SLOT(moveInternal_(std::vector<QPointF>)));
 }
@@ -105,6 +107,14 @@ void DynamicEntity::moveStepAIControlled(){
         return;
     }
 
+    // if the entity has been stuck for long enough, recalculate
+    if (timeStuck_ > 1500){
+        // recalculate path (in case pathingmap changed)
+        moveTo(pointsToFollow_.back());
+
+        timeStuck_ = 0;
+    }
+
     // if there are more points to follow and entity has reached its target
     // - snap to current target
     // - set next point as target
@@ -119,9 +129,6 @@ void DynamicEntity::moveStepAIControlled(){
 
         // face target
         rotateTo(pointsToFollow_[targetPointIndex_]);
-
-        // recalculate path (in case pathingmap changed)
-        moveTo(pointsToFollow_.back());
     }
 
     // take a step closer towards the target
@@ -150,7 +157,8 @@ bool DynamicEntity::targetPointReached(){
     return ln.length() < stepSize_;
 }
 
-/// Takes a step towards the targetPoint.
+/// Causes the DynamicEntity to attempt to takes a step towards the targetPoint.
+/// If the Entity cannot take a step, timeStuck_ will be incremented.
 void DynamicEntity::stepTowardsTarget(){
     // get a line b/w the entity's pos and the target pos
     QLineF ln(pointPos(),pointsToFollow_[targetPointIndex_]);
@@ -158,11 +166,18 @@ void DynamicEntity::stepTowardsTarget(){
     // set the length of this line to be the same as stepSize
     ln.setLength(stepSize_);
 
-    // move by ln.dx and ln.dy
+    // find new pos
     double newX = pointPos().x() + ln.dx();
     double newY = pointPos().y() + ln.dy();
     QPointF newPt(newX,newY);
-    setPointPos(newPt);
+
+    // move if the new pos is free, otherwise increment timeStuck_
+    if (canFit(newPt)){
+        setPointPos(newPt);
+    } else{
+        timeStuck_ += stepFrequency_;
+    }
+
 }
 
 /// Rotates 1 degrees towards the target angle
