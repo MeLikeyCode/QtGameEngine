@@ -10,7 +10,7 @@
 /// Represents a spear.
 /// @author Abdullah Aghazadah
 /// @date 1-9-16
-class Spear: public QObject, public MeleeWeapon{
+class Spear: public MeleeWeapon{
     Q_OBJECT
 public:
     // constructor

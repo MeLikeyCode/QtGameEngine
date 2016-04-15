@@ -19,6 +19,7 @@ public slots:
     void checkFov_();
     void startCheckingFov_();
     void swingIfInRange_();
+    void onTargetDelete_();
 private:
     QTimer* timerCheckFov_;
     QTimer* attackTimer_;

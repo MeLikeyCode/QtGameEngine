@@ -45,7 +45,7 @@ class ProjectileRangeReachedBehavior;
 ///
 /// @author Abdullah Aghazadah
 /// @date 2/21/16
-class Projectile : public QObject, public Entity
+class Projectile: public Entity
 {
     Q_OBJECT
 public:

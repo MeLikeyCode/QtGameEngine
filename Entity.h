@@ -27,8 +27,9 @@ class Item;
 /// Entities support parent/child relationships. When a parent Entity moves or
 /// rotates, so do all of its children. When a parent Entity is deleted, so
 /// are all of its children.
-class Entity
+class Entity: public QObject
 {
+    Q_OBJECT
     friend class Map; // Map needs to be able to set the map_
                       // pointer of the Entity (we cannot use a public setter
                       // because we don't want ANYONE else to be able to set this)
@@ -74,8 +75,6 @@ public:
     QPointF namedPoint(std::string name);
 
     void setRotationPoint(QPointF point);
-
-
 
 private:
     // main attributes

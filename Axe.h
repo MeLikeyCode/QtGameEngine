@@ -10,7 +10,7 @@
 /// Represents an Axe.
 /// @author Abdullah Aghazadah
 /// @date 1-9-16
-class Axe: public QObject, public MeleeWeapon{
+class Axe: public MeleeWeapon{
     Q_OBJECT
 public:
     // constructor

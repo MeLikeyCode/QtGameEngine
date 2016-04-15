@@ -96,6 +96,10 @@ void Enemy::checkFov_()
         bool isFriend = false; // TODO: determine if entity is friend
         if (!isFriend && entity != this){
             targetEntity_ = entity;
+
+            // get notified when target dies
+            connect(targetEntity_,&QObject::destroyed,this,&Enemy::onTargetDelete_);
+
             this->moveTo(entity->pointPos());
             timerCheckFov_->disconnect();
 
@@ -114,7 +118,7 @@ void Enemy::startCheckingFov_()
 /// If the Enemy is in range of an enemy will attack with its def weapon.
 void Enemy::swingIfInRange_()
 {
-    // don't do anything if not arget
+    // don't do anything if doesn't have a target
     if (targetEntity_ == nullptr){
         return;
     }
@@ -126,4 +130,11 @@ void Enemy::swingIfInRange_()
         rotateTo(targetEntity_->pointPos());
         defaultWeapon()->attack(targetEntity_->pointPos());
     }
+}
+
+/// Executed when the target of this Enemy gets deleted.
+/// Stops referencing it (prevents dangling pointer related memory curruption)
+void Enemy::onTargetDelete_()
+{
+    targetEntity_ = nullptr;
 }

@@ -20,7 +20,7 @@ class Slot;
 ///
 /// A DynamicEntity is an Entity that has functionality for moving from point to
 /// point and rotating in real time.
-class DynamicEntity:public QObject, public Entity{
+class DynamicEntity: public Entity{
     Q_OBJECT
 public:
     // constructor

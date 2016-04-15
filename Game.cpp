@@ -56,39 +56,39 @@ Map *Game::map(){
 void Game::mousePressEvent(QMouseEvent *event){
     // =TODO test code, remove=
 
-    // move test entities to target pos
-    if (event->button() == Qt::LeftButton){
-        for (DynamicEntity* entity:testEntities_){
-            entity->moveTo(event->pos());
-        }
-    }
+//    // move test entities to target pos
+//    if (event->button() == Qt::LeftButton){
+//        for (DynamicEntity* entity:testEntities_){
+//            entity->moveTo(event->pos());
+//        }
+//    }
 
-    // create a test entity and add it
-    if (event->button() == Qt::RightButton){
-        DynamicEntity* testE = new DynamicEntity();
-        map_->addEntity(testE);
-        testE->setPointPos(event->pos());
-        testEntities_.push_back(testE);
+//    // create a test entity and add it
+//    if (event->button() == Qt::RightButton){
+//        DynamicEntity* testE = new DynamicEntity();
+//        map_->addEntity(testE);
+//        testE->setPointPos(event->pos());
+//        testEntities_.push_back(testE);
 
-        // give the entity a sprite (overrides default one)
-        Sprite* spr = new Sprite();
-        testE->setSprite(spr);
-        spr->addFrames(":resources/graphics/human",1,"stand"); // stand anim
-        spr->addFrames(":resources/graphics/human",6,"walk");  // walk anim
-        spr->play("stand",1,1); // play stand anim
-    }
+//        // give the entity a sprite (overrides default one)
+//        Sprite* spr = new Sprite();
+//        testE->setSprite(spr);
+//        spr->addFrames(":resources/graphics/human",1,"stand"); // stand anim
+//        spr->addFrames(":resources/graphics/human",6,"walk");  // walk anim
+//        spr->play("stand",1,1); // play stand anim
+//    }
 
-    // add rock (block cells at position)
-    if (event->button() == Qt::MiddleButton){
-        // add rock
-        QPixmap pic(":resources/graphics/terrain/rock.png");
-        QGraphicsPixmapItem* picI = new QGraphicsPixmapItem(pic);
-        picI->setPos(event->pos().x()/64 * 64,event->pos().y()/64 * 64);
-        map_->scene()->addItem(picI);
+//    // add rock (block cells at position)
+//    if (event->button() == Qt::MiddleButton){
+//        // add rock
+//        QPixmap pic(":resources/graphics/terrain/rock.png");
+//        QGraphicsPixmapItem* picI = new QGraphicsPixmapItem(pic);
+//        picI->setPos(event->pos().x()/64 * 64,event->pos().y()/64 * 64);
+//        map_->scene()->addItem(picI);
 
-        map_->pathingMap().fill(event->pos());
-        map_->drawPathingMap();
-    }
+//        map_->pathingMap().fill(event->pos());
+//        map_->drawPathingMap();
+//    }
 
 //    // weapon 1 attack
 //    if (event->button() == Qt::LeftButton){
@@ -108,15 +108,15 @@ void Game::mousePressEvent(QMouseEvent *event){
 
 //    }
 
-//    // create enemy
-//    if (event->button() == Qt::LeftButton){
-//        // create enemy (will follow/attack its enemies)
-//        Enemy* e = new Enemy();
-//        e->setPointPos(event->pos());
-//        map()->addEntity(e);
+    // create enemy
+    if (event->button() == Qt::LeftButton){
+        // create enemy (will follow/attack its enemies)
+        Enemy* e = new Enemy();
+        e->setPointPos(event->pos());
+        map()->addEntity(e);
 
 
-//    }
+    }
 
 //    // add default entity
 //    if (event->button() == Qt::LeftButton){
