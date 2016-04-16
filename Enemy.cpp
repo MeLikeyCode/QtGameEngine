@@ -9,11 +9,11 @@
 
 Enemy::Enemy()
 {
-    timerCheckFov_ = new QTimer();
+    timerCheckFov_ = new QTimer(this);
     connect(timerCheckFov_,&QTimer::timeout,this,&Enemy::checkFov_);
     timerCheckFov_->start(500);
 
-    attackTimer_ = new QTimer();
+    attackTimer_ = new QTimer(this);
     connect(attackTimer_,&QTimer::timeout,this,&Enemy::swingIfInRange_);
     attackTimer_->start(1500);
 

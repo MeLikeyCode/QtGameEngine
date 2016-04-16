@@ -22,6 +22,7 @@ public slots:
     void swingStep();
 private:
     QTimer* timer_;
+    double damage_;
 
     double swingAngleEachStep_;
     int swingFrequency_; // how often we step

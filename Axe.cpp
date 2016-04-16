@@ -36,6 +36,9 @@ Axe::Axe()
     // default cast range
     setCastRange(100);
 
+    // default damge
+    damage_ = 5;
+
     timer_ = new QTimer(this);
 }
 
@@ -87,13 +90,12 @@ void Axe::swingStep()
         std::unordered_set<Entity*> collidingEntities = map()->entities(mapToMap(tip()));
         for (Entity* e: collidingEntities){
             if (e != this && e != theOwner && e->parent() != theOwner){
-                map()->removeEntity(e);
-                delete e;
+                damage(e,0.2);
 
-                // move back
-                // swingingForwardPhase_ = false;
-                // headingBackwardPhase_ = true;
-                // numOfCurrentSwingSteps_ = numOfSwingStepsForward_ - numOfCurrentSwingSteps_;
+                 // move back
+                 swingingForwardPhase_ = false;
+                 headingBackwardPhase_ = true;
+                 numOfCurrentSwingSteps_ = numOfSwingStepsForward_ - numOfCurrentSwingSteps_;
             }
         }
 

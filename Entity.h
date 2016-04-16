@@ -8,6 +8,9 @@
 #include "PlayerControlledMoveBehavior.h"
 #include <string>
 #include <unordered_set>
+#include <typeinfo>
+#include <typeindex>
+#include <set>
 
 class Map;
 class Inventory;
@@ -76,6 +79,15 @@ public:
 
     void setRotationPoint(QPointF point);
 
+    void setHealth(double health);
+    double health();
+    void damage(Entity* entity, double amount);
+
+    void setCanOnlyBeDamagedBy(bool tf);
+    void addCanBeDamagedBy(std::type_index typeOfEntity);
+    void addCannotBeDamagedBy(std::type_index typeOfEntity);
+    bool canBeDamagedBy(Entity* entity);
+
 private:
     // main attributes
     PathingMap pathingMap_;
@@ -84,6 +96,11 @@ private:
     std::unordered_set<Entity*> children_;
     Entity* parent_;
     std::map<std::string,QPointF> namedPoints_;
+    double health_;
+    std::set<std::type_index> canOnlyBeDamagedBy_;
+    std::set<std::type_index> canBeDamagedByAllExcept_;
+    bool canOnlyBeDamagedByMode_;
+
 };
 
 #endif // ENTITY_H

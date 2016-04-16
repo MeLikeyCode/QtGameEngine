@@ -314,8 +314,7 @@ void DynamicEntity::moveInternal_(std::vector<QPointF> path){
 
     // follow this list of pts
     pointsToFollow_ = path;
-    targetPointIndex_ = 1; // start at 1eth not 0eth point (to prevent
-                           // back movement if two quick move commands are given)
+    targetPointIndex_ = 0;
     connect(moveTimer_,SIGNAL(timeout()),this,SLOT(moveStepAIControlled()));
     moveTimer_->start(stepFrequency());
 

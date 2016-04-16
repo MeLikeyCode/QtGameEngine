@@ -23,10 +23,15 @@ Entity::Entity():
     map_ = nullptr;
     sprite_ = nullptr;
     parent_ = nullptr;
+    health_ = 10;
 
     // default sprite
     Sprite* spr = new Sprite();
     setSprite(spr);
+
+    // by default, entities can be damaged by anything
+    setCanOnlyBeDamagedBy(false);
+
 }
 
 /// When an Entity is deleted, it will delete all of its child entities.
@@ -317,8 +322,76 @@ QPointF Entity::namedPoint(std::string name)
     return namedPoints_[name];
 }
 
+// Sets the point the Entity should rotate about.
 void Entity::setRotationPoint(QPointF point)
 {
     assert(sprite() != nullptr);  // needs a sprite to have a rotation point
     sprite()->setTransformOriginPoint(point);
+}
+
+/// Sets the health of the entity, if set below 0, entity dies.
+void Entity::setHealth(double health)
+{
+    health_ = health;
+
+    if (health_ < 0){
+        map()->removeEntity(this);
+        delete this;
+    }
+}
+
+double Entity::health()
+{
+    return health_;
+}
+
+/// Attempts to damage the specified Entity. Every Entity can specifiy,
+/// what can and can't damage them.
+void Entity::damage(Entity *entity, double amount)
+{
+    // if can't damage the entity, return
+    if (!entity->canBeDamagedBy(this)){
+        return;
+    }
+
+    // can be damaged
+    entity->setHealth(entity->health() - amount);
+
+
+}
+
+/// True sets is so that the entity can only be damaged by entites specified
+/// in the canOnlyBeDamagedBy_ set.
+/// False sets it so that the entity can be damaged by all except those
+/// specified in the canBeDamagedByAllExcept_ set.
+void Entity::setCanOnlyBeDamagedBy(bool tf)
+{
+    canOnlyBeDamagedByMode_ = tf;
+}
+
+/// Adds a type that this Entity can be damaged by.
+void Entity::addCanBeDamagedBy(std::type_index typeOfEntity)
+{
+    canOnlyBeDamagedBy_.insert(typeOfEntity);
+}
+
+void Entity::addCannotBeDamagedBy(std::type_index typeOfEntity)
+{
+    canBeDamagedByAllExcept_.insert(typeOfEntity);
+}
+
+/// Returns true if the Entity can be damaged by the specified entity.
+bool Entity::canBeDamagedBy(Entity *entity)
+{
+    // entity is not in the list of thigns allowed to damage
+    if (canOnlyBeDamagedByMode_ && canOnlyBeDamagedBy_.count(std::type_index(typeid(*entity))) == 0){
+        return false;
+    }
+    // entity is in the list of things not allowed to domage
+    if (!canOnlyBeDamagedByMode_ && canBeDamagedByAllExcept_.count(std::type_index(typeid(*entity))) != 0){
+        return false;
+    }
+
+    // entity should be able to dmage
+    return true;
 }

@@ -139,6 +139,11 @@ bool Graph::contains(const Edge &edge) const{
 
 /// Returns a vector of Nodes that represent the shortest path between the specified Nodes.
 std::vector<Node> Graph::shortestPath(const Node &from, const Node &to) const{
+    // if to == from, return an empty vector
+    if (from == to){
+        return std::vector<Node>();
+    }
+
     Tree t = spt(from);
     std::vector<Node> path = t.pathTo(to);
     return path;
