@@ -1,11 +1,9 @@
 #ifndef AXE_H
 #define AXE_H
 
-// inherits
 #include "MeleeWeapon.h"
 
-// value members
-#include <QTimer>
+class QTimer;
 
 /// Represents an Axe.
 /// @author Abdullah Aghazadah
@@ -24,17 +22,23 @@ private:
     QTimer* timer_;
     double damage_;
 
+    bool alreadySwinging_; // has the weapon already begun swinging?
     double swingAngleEachStep_;
     int swingFrequency_; // how often we step
-    int numOfSwingStepsBackward_; // how many steps to swing backwards
-    int numOfSwingStepsForward_; // how many steps to swing forward
+    int maxDrawBackSteps_; // how many steps to initially swing out
+    int currentDrawBackStep_;
+    int maxDrawForwardSteps_;
+    int currentDrawForwardStep_;
+    int maxForwardSteps_; // how many steps to go after coming back from draw
+    int currentForwardStep_;
+    int maxBackwardSteps_;
+    int currentBackwardStep_;
+    int stepsToGoBackwardToNeutral_; // if we hit someting going forward,
+                                     // how many steps till we get back to neutral?
+    int currentStepToGoingBackToNeutral_;
 
-    bool swingingOutPhase_;
-    bool swingingForwardPhase_; // are we swinging forward or backward in this step?
-    bool headingBackwardPhase_; // are we heading bakcward after a full swing?
-    bool alreadySwinging_; // has the weapon already begun swinging?
-
-    int numOfCurrentSwingSteps_; // how many swing steps have we taken
+    bool hitSomethingComingBackFromDraw_;
+    bool hitSomethingDuringForwardStep_;
 };
 
 #endif // AXE_H

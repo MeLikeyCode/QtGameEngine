@@ -10,13 +10,11 @@ Axe::Axe()
     // defaults swing parameters
     swingAngleEachStep_ = 5;
     swingFrequency_ = 19;
-    numOfSwingStepsBackward_ = 9;
-    numOfSwingStepsForward_ = 8;
-    numOfCurrentSwingSteps_ = 0;
-    swingingForwardPhase_ = false;
-    swingingOutPhase_ = false;
     alreadySwinging_ = false;
-    headingBackwardPhase_ = false;
+    maxDrawBackSteps_ = 9;
+    maxDrawForwardSteps_ = 9;
+    maxForwardSteps_ = 7;
+    maxBackwardSteps_ = 7;
 
     // default sprite
     spr_ = new Sprite();
@@ -51,12 +49,14 @@ void Axe::attack(QPointF position)
     }
 
     // set initial state variables
-    numOfCurrentSwingSteps_ = 0;
-    swingingForwardPhase_ = false;
-    headingBackwardPhase_ = false;
-    swingingOutPhase_ = true;
+    currentDrawBackStep_ = 0;
+    currentDrawForwardStep_ = 0;
+    currentForwardStep_ = 0;
+    currentBackwardStep_ = 0;
+    currentStepToGoingBackToNeutral_ = 0;
+    hitSomethingComingBackFromDraw_ = false;
+    hitSomethingDuringForwardStep_ = false;
     alreadySwinging_ = true;
-
 
     // connect to swingStep()
     connect(timer_,SIGNAL(timeout()),this,SLOT(swingStep()));
@@ -65,61 +65,84 @@ void Axe::attack(QPointF position)
 
 void Axe::swingStep()
 {
-    // if in swinging out phase
-    if (swingingOutPhase_ && numOfCurrentSwingSteps_ < numOfSwingStepsBackward_){
+    // if we have hit something going forward
+    if (hitSomethingDuringForwardStep_){
         setFacingAngle(facingAngle()-swingAngleEachStep_);
-        numOfCurrentSwingSteps_++;
+        currentStepToGoingBackToNeutral_++;
+        if (currentStepToGoingBackToNeutral_ >= stepsToGoBackwardToNeutral_){
+            timer_->disconnect();
+            alreadySwinging_ = false;
+            return;
+        }
         return;
     }
 
-    // if done with swinging out phase
-    if (swingingOutPhase_ && numOfCurrentSwingSteps_ >= numOfSwingStepsBackward_){
-        swingingOutPhase_ = false;
-        swingingForwardPhase_ = true;
-        numOfCurrentSwingSteps_ = 0;
+    // if we have hit something coming back from draw
+    if (hitSomethingComingBackFromDraw_){
+        // keep moving towards neutral position (w/o damaging) and rest there
+        setFacingAngle(facingAngle()+swingAngleEachStep_);
+        currentDrawForwardStep_++;
+        if (currentDrawForwardStep_ >= maxDrawForwardSteps_){
+            timer_->disconnect();
+            alreadySwinging_ = false;
+        }
+        return;
     }
 
-    // if swinging forward
-    if (swingingForwardPhase_ && numOfCurrentSwingSteps_ < numOfSwingStepsForward_ + numOfSwingStepsBackward_){
-        // swing forward
-        setFacingAngle(facingAngle()+swingAngleEachStep_);
-        numOfCurrentSwingSteps_++;
+    // if initially drawing
+    if (currentDrawBackStep_ < maxDrawBackSteps_){
+        setFacingAngle(facingAngle()-swingAngleEachStep_);
+        currentDrawBackStep_++;
+        return;
+    }
 
-        // kill things (except its owner or any of the owner's children)
+    // if coming back from draw
+    if (currentDrawForwardStep_ < maxDrawForwardSteps_){
+        setFacingAngle(facingAngle()+swingAngleEachStep_);
+        currentDrawForwardStep_++;
+
+        // if hit something
         Entity* theOwner = inventory()->entity();
         std::unordered_set<Entity*> collidingEntities = map()->entities(mapToMap(tip()));
         for (Entity* e: collidingEntities){
             if (e != this && e != theOwner && e->parent() != theOwner){
-                damage(e,0.2);
-
-                 // move back
-                 swingingForwardPhase_ = false;
-                 headingBackwardPhase_ = true;
-                 numOfCurrentSwingSteps_ = numOfSwingStepsForward_ - numOfCurrentSwingSteps_;
+                damage(e,damage_);
+                hitSomethingComingBackFromDraw_ = true;
+                return;
             }
         }
-
-        return;  
-    }
-
-    // if done swinging forward
-    if (swingingForwardPhase_ && numOfCurrentSwingSteps_ >= numOfSwingStepsForward_ + numOfSwingStepsBackward_){
-        swingingForwardPhase_ = false;
-        headingBackwardPhase_ = true;
-        numOfCurrentSwingSteps_ = 0;
         return;
     }
 
-    // if heading backward
-    if (headingBackwardPhase_ && numOfCurrentSwingSteps_ < numOfSwingStepsForward_){
+    // if forward step
+    if (currentForwardStep_ < maxForwardSteps_){
+        setFacingAngle(facingAngle()+swingAngleEachStep_);
+        currentForwardStep_++;
+
+        // if hit something
+        Entity* theOwner = inventory()->entity();
+        std::unordered_set<Entity*> collidingEntities = map()->entities(mapToMap(tip()));
+        for (Entity* e: collidingEntities){
+            if (e != this && e != theOwner && e->parent() != theOwner){
+                damage(e,damage_);
+                hitSomethingDuringForwardStep_ = true;
+                stepsToGoBackwardToNeutral_ = currentForwardStep_;
+                return;
+            }
+        }
+        return;
+    }
+
+    // if backward step
+    if (currentBackwardStep_ < maxBackwardSteps_){
         setFacingAngle(facingAngle()-swingAngleEachStep_);
-        numOfCurrentSwingSteps_++;
-        return;
-    }
+        currentBackwardStep_++;
 
-    // if done heading backward
-    if (headingBackwardPhase_ && numOfCurrentSwingSteps_ >= numOfSwingStepsForward_){
-        timer_->disconnect();
-        alreadySwinging_ = false;
+        // if last backward step, stop
+        if (currentBackwardStep_ >= maxBackwardSteps_){
+            timer_->disconnect();
+            alreadySwinging_ = false;
+        }
+        return;
     }
 }

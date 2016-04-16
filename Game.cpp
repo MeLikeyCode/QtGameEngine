@@ -90,10 +90,10 @@ void Game::mousePressEvent(QMouseEvent *event){
 //        map_->drawPathingMap();
 //    }
 
-//    // weapon 1 attack
-//    if (event->button() == Qt::LeftButton){
-//        player_->slot("leftHand")->use();
-//    }
+    // weapon 1 attack
+    if (event->button() == Qt::RightButton){
+        player_->slot("leftHand")->use();
+    }
 
 //    // weapon 2 attack
 //    if (event->button() == Qt::RightButton){

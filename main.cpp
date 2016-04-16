@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     DynamicEntity* player = new DynamicEntity();
     map->addEntity(player);
     player->setCellPos(Node(2,2));
-    //player->setPlayerControlled(true);
+    player->setPlayerControlled(true);
     //player->setStepSize(25);
     game->setPlayer(player); // game knows about this entity (for testing)
 
@@ -57,20 +57,20 @@ int main(int argc, char *argv[])
     leftHandRanged->setPosition(player->namedPoint("center"));
     player->addSlot(leftHandRanged);
 
-//    // create some weapons (MeleeWeapons)
-//    Axe* axe = new Axe();
-//    player->addItemToInventory(axe);
+    // create some weapons (MeleeWeapons)
+    Axe* axe = new Axe();
+    player->addItemToInventory(axe);
 
 //    Spear* spear = new Spear();
 //    player->addItemToInventory(spear);
 
-    Bow* bow = new Bow();
-    player->addItemToInventory(bow);
+//    Bow* bow = new Bow();
+//    player->addItemToInventory(bow);
 
     // equip weapons to slots
-    //player->equipItem(axe,leftHand);
+    player->equipItem(axe,leftHand);
     //player->equipItem(spear,rightHand);
-    player->equipItem(bow,leftHandRanged);
+    //player->equipItem(bow,leftHandRanged);
 
     // play a sound
     Sound* sound = new Sound("qrc:/resources/sounds/music.mp3");

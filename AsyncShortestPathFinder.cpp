@@ -1,28 +1,38 @@
 #include "AsyncShortestPathFinder.h"
 #include <QDebug>
 
+/// Calculates a Path from a starting point to an ending point in the specified
+/// PathingMap.
+void Worker::findPath(const PathingMap &pathingMap, const QPointF &start, const QPointF &end){
+    std::vector<QPointF> pathPoints;
+    pathPoints = pathingMap.shortestPath(start,end);
+    emit pathFound(pathPoints);
+}
 
 AsyncShortestPathFinder::AsyncShortestPathFinder()
 {
-    worker = new Worker();
-    worker->moveToThread(&workerThread);
-    connect(&workerThread,&QThread::finished,worker,&QObject::deleteLater);
-    connect(worker,&Worker::resultReady,this,&AsyncShortestPathFinder::pathFound_);
-     workerThread.start();
+    worker_.moveToThread(&workerThread_);
+    connect(&worker_,&Worker::pathFound,this,&AsyncShortestPathFinder::pathFound_);
+    workerThread_.start();
 }
 
+/// Calculates a Path from a starting point to an ending point in the specified
+/// PathingMap.
 void AsyncShortestPathFinder::findPath(const PathingMap& pathingMap, const QPointF& start, const QPointF& end)
 {
-
-    worker->doWork(pathingMap,start,end);
+    worker_.findPath(pathingMap,start,end);
 }
 
 AsyncShortestPathFinder::~AsyncShortestPathFinder()
 {
-    workerThread.quit();
-    workerThread.wait();
+    workerThread_.quit();
+    workerThread_.wait(); // block this thread, until workerThread is finished
+                         // (finished quitting in this case)
 }
 
+/// Worker thread will execute this function when path is found.
+/// AsynchShortestPathFinder will in turn emit an event so all listeners
+/// get the path.
 void AsyncShortestPathFinder::pathFound_(std::vector<QPointF> path)
 {
     emit pathFound(path);
