@@ -29,6 +29,9 @@ void Tree::addChild(const Node &to, const Node &child, int weight){
 
 /// Returns the vector of Nodes that goes from the root Node to the specified Node.
 std::vector<Node> Tree::pathTo(const Node &node) const{
+    // initialze variables
+    visitedNodes_.clear();
+
     std::vector<Node> empty;
     return dfs(root_,node,empty);
 }

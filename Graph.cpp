@@ -139,23 +139,13 @@ bool Graph::contains(const Edge &edge) const{
 }
 
 /// Returns a vector of Nodes that represent the shortest path between the specified Nodes.
-/// Uses dijkstras algorithm to create a spt rooted at Node "from", and then does dfs to
-/// retrieve path to Node "to". Overall complexity is O(n^2), n being number of Nodes.
+/// Uses A* pathfinding algorithm.
 std::vector<Node> Graph::shortestPath(const Node &from, const Node &to) const{
-    // short circuit (type of lazy eval): if to == from, return an empty vector
+    // GUARD: short circuit (type of lazy eval) if to == from, just return an empty vector
     if (from == to){
         return std::vector<Node>();
     }
 
-    Tree t = spt(from);
-    std::vector<Node> path = t.pathTo(to);
-    return path;
-}
-
-/// Returns a vector of Nodes that represents the shortest path between the specified Nodes.
-/// Uses A*, therefore has overall complexity of O(n), n being the number of Nodes.
-std::vector<Node> Graph::shortestPathAS(const Node &from, const Node &to) const
-{
     // initialize variables
     openNodes_.clear();
     closedNodes_.clear();
@@ -164,11 +154,15 @@ std::vector<Node> Graph::shortestPathAS(const Node &from, const Node &to) const
     nodeToGCost_.clear();
     nodeToHCost_.clear();
 
+    // calculate costs
+    calculateCosts_(from,to);
+
     // add the start node to open
     openNodes_.insert(from);
 
-    Node current = getNodeInOpenWithLowestFCost();
+    Node current;
     while (true){
+        current = getNodeInOpenWithLowestFCost();
         openNodes_.erase(current);
         closedNodes_.insert(current);
 
@@ -188,7 +182,8 @@ std::vector<Node> Graph::shortestPathAS(const Node &from, const Node &to) const
             int newGCostOfNeighbor = nodeToGCost_[current] + 1;
             // if new path to neighbor is shorter OR neighbor is not in open
             if (newGCostOfNeighbor < originalGCostOfNeighbor || openNodes_.count(neighbor) == 0){
-                // set f cost of neighbor
+                // set cost of neighbor
+                nodeToGCost_[neighbor] = nodeToGCost_[current] + 1;
                 nodeToFCost_[neighbor] = nodeToGCost_[neighbor] + nodeToHCost_[neighbor];
 
                 // set parent of neighbor
@@ -222,6 +217,14 @@ std::vector<Node> Graph::shortestPathAS(const Node &from, const Node &to) const
 Tree Graph::spt(const Node &source) const{
     // make sure the source Node exists
     assert(contains(source));
+
+    // initialize variables
+    pickedNodes_.clear();
+    unpickedNodes_.clear();
+    pickedEdges_.clear();
+    unpickedEdges_.clear();
+    nodeWeight_.clear();
+    updatedEdge_.clear();
 
     // need to remember the first picked node as the root
     Node rootNode(0,0);
@@ -494,7 +497,7 @@ Node Graph::getNodeInOpenWithLowestFCost() const
     // get all Nodes that have this f cost
     std::vector<Node> lowestFCostNodes;
     for (Node node:openNodes_){
-        if (nodeToFCost_(node) == lowestFCost){
+        if (nodeToFCost_[node] == lowestFCost){
             lowestFCostNodes.push_back(node);
         }
     }
@@ -503,7 +506,7 @@ Node Graph::getNodeInOpenWithLowestFCost() const
     bool initialHCostSet = false;
     Node lowestCost;
     for (Node node:lowestFCostNodes){
-        if (!initialFCostSet){
+        if (!initialHCostSet){
             lowestCost = node;
             initialHCostSet = true;
         }
@@ -516,4 +519,14 @@ Node Graph::getNodeInOpenWithLowestFCost() const
 
     // Node lowestCost is the one with lowest F cost (lowest H cost if multiple equal F costs)
     return lowestCost;
+}
+
+/// Calculates H, G, and F costs for each Node.
+void Graph::calculateCosts_(Node from, Node to) const
+{
+    for (Node node:nodes_){
+        nodeToHCost_[node] = abs(to.x() - node.x()) + abs(to.y() - node.y());
+        nodeToGCost_[node] = abs(from.x() - node.x()) + abs(from.y() - node.y());
+        nodeToFCost_[node] = nodeToGCost_[node] + nodeToHCost_[node];
+    }
 }

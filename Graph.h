@@ -75,6 +75,7 @@ private:
 
     // helper functions for A*
     Node getNodeInOpenWithLowestFCost() const;
+    void calculateCosts_(Node from, Node to) const;
 
 };
 
