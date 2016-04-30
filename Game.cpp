@@ -10,7 +10,7 @@
 #include "ProjectileCollisionBehaviorDamage.h"
 #include "ProjectileRangeReachedBehaviorDestroy.h"
 #include "Projectile.h"
-#include "Enemy.h"
+#include "AIEntity.h"
 #include "WeaponSlot.h"
 #include "Axe.h"
 #include "Bow.h"
@@ -40,7 +40,8 @@ Game::Game(Map *map){
 
 /// Launches the Game.
 void Game::launch(){
-    showNormal();
+    showNormal(); // TODO: eventually should showFullscreen() (or parametrize to
+                  // allow launching normal or full screen
 }
 
 /// Sets the Map.
@@ -53,8 +54,64 @@ Map *Game::map(){
     return map_;
 }
 
+/// Sets the center of the camear to be looking at the specified point on the
+/// Map.
+void Game::setCamPos(QPointF to)
+{
+    double camWidth = this->sceneRect().width();
+    double camHeight = this->sceneRect().height();
+    QPointF topLeft(to.x() - camWidth/2,to.y() - camHeight/2);
+    this->setSceneRect(topLeft.x(),topLeft.y(),camWidth,camHeight);
+}
+
+/// Moves the camera by the specified vector on the Map.
+void Game::moveCam(QVector2D byVector)
+{
+    QPointF oldPoint(this->sceneRect().topLeft().x(),this->sceneRect().topLeft().y());
+    QPointF newPoint(oldPoint.x() + byVector.x(),oldPoint.y() + byVector.y());
+    double oldWidth = this->sceneRect().width();
+    double oldHeight = this->sceneRect().height();
+    this->setSceneRect(newPoint.x(), newPoint.y(), oldWidth,oldHeight);
+}
+
+/// Moves the camera up by the specified amount.
+/// If byAmount is negative, then obviously, it will be moved down...
+/// I can't believe I felt like I had to tell you that ^__^
+void Game::moveCamUp(double byAmount)
+{
+    moveCam(QVector2D(0,-1 * byAmount));
+}
+
+/// Moves the camera down by the specified amount.
+void Game::moveCamDown(double byAmount)
+{
+    moveCam(QVector2D(0,byAmount));
+}
+
+/// Moves the camera left by the specified amount.
+void Game::moveCamLeft(double byAmount)
+{
+    moveCam(QVector2D(-1 * byAmount,0));
+}
+
+/// Moves the camera right by the specified amount.
+void Game::moveCamRight(double byAmount)
+{
+    moveCam(QVector2D(byAmount,0));
+}
+
 void Game::mousePressEvent(QMouseEvent *event){
     // =TODO test code, remove=
+
+//    // move cam to pos
+//    if (event->button() == Qt::LeftButton){
+//        setCamPos(mapToMap(event->pos()));
+//    }
+
+//    // move cam by vec
+//    if (event->button() == Qt::LeftButton){
+//       moveCam(QVector2D(-10,-10));
+//    }
 
 //    // move test entities to target pos
 //    if (event->button() == Qt::LeftButton){
@@ -78,20 +135,20 @@ void Game::mousePressEvent(QMouseEvent *event){
 //        spr->play("stand",1,1); // play stand anim
 //    }
 
-//    // add rock (block cells at position)
-//    if (event->button() == Qt::MiddleButton){
-//        // add rock
-//        QPixmap pic(":resources/graphics/terrain/rock.png");
-//        QGraphicsPixmapItem* picI = new QGraphicsPixmapItem(pic);
-//        picI->setPos(event->pos().x()/64 * 64,event->pos().y()/64 * 64);
-//        map_->scene()->addItem(picI);
+    // add rock (block cells at position)
+    if (event->button() == Qt::MiddleButton){
+        // add rock
+        QPixmap pic(":resources/graphics/terrain/rock.png");
+        QGraphicsPixmapItem* picI = new QGraphicsPixmapItem(pic);
+        picI->setPos(event->pos().x()/64 * 64,event->pos().y()/64 * 64);
+        map_->scene()->addItem(picI);
 
-//        map_->pathingMap().fill(event->pos());
-//        map_->drawPathingMap();
-//    }
+        map_->pathingMap().fill(event->pos());
+        map_->drawPathingMap();
+    }
 
     // weapon 1 attack
-    if (event->button() == Qt::RightButton){
+    if (event->button() == Qt::LeftButton){
         player_->slot("leftHand")->use();
     }
 
@@ -108,15 +165,25 @@ void Game::mousePressEvent(QMouseEvent *event){
 
 //    }
 
-    // create enemy
-    if (event->button() == Qt::LeftButton){
+    // create AIEntity (part of grp 1)
+    if (event->button() == Qt::RightButton){
         // create enemy (will follow/attack its enemies)
-        Enemy* e = new Enemy();
-        e->setPointPos(event->pos());
+        AIEntity* e = new AIEntity();
+        e->setGroupID(1);
+        e->addEnemy(0);
+        e->setPointPos(mapToMap(event->pos()));
         map()->addEntity(e);
-
-
     }
+
+//    // create AIEntity (part of grp 2)
+//    if (event->button() == Qt::RightButton){
+//        // create enemy (will follow/attack its enemies)
+//        AIEntity* e = new AIEntity();
+//        e->setGroupID(2);
+//        e->addEnemy(1);
+//        e->setPointPos(event->pos());
+//        map()->addEntity(e);
+//    }
 
 //    // add default entity
 //    if (event->button() == Qt::LeftButton){
@@ -162,6 +229,20 @@ void Game::keyPressEvent(QKeyEvent *event)
 {
     if (!event->isAutoRepeat()){
         keysPressed_.insert(event->key());
+    }
+
+    // TODO: test remove
+    if (event->key() == Qt::Key_Up){
+        moveCamUp(10);
+    }
+    if (event->key() == Qt::Key_Down){
+        moveCamDown(10);
+    }
+    if (event->key() == Qt::Key_Left){
+        moveCamLeft(10);
+    }
+    if (event->key() == Qt::Key_Right){
+        moveCamRight(10);
     }
 }
 

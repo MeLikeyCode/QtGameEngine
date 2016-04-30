@@ -29,11 +29,8 @@ void Tree::addChild(const Node &to, const Node &child, int weight){
 
 /// Returns the vector of Nodes that goes from the root Node to the specified Node.
 std::vector<Node> Tree::pathTo(const Node &node) const{
-    // since this is const, create a copy of the tree, and run dfs on the copy
-    // (since dfs is a modifier function)
-    Tree copy  = *this;
     std::vector<Node> empty;
-    return copy.dfs(root_,node,empty);
+    return dfs(root_,node,empty);
 }
 
 /// Returns a set of all the Nodes.
@@ -47,7 +44,7 @@ std::unordered_set<Edge> Tree::edges() const{
 }
 
 /// Recursive dfs. Used by Tree::pathTo(const Node&).
-std::vector<Node> Tree::dfs(const Node &node, const Node &target, std::vector<Node> path){
+std::vector<Node> Tree::dfs(const Node &node, const Node &target, std::vector<Node> path) const{
     // mark node visited & add it to the vector
     visit(node);
 
@@ -76,19 +73,19 @@ std::vector<Node> Tree::dfs(const Node &node, const Node &target, std::vector<No
 /// Marks the Node as visited (adds the Node to the set of visited Nodes).
 ///
 /// The Tree maintains a set of visited Nodes as a helper attribute to dfs.
-void Tree::visit(const Node &node){
+void Tree::visit(const Node &node) const{
     assert(graph_.contains(node));
 
     visitedNodes_.insert(node);
 }
 
 /// Returns true if the specified Node is visited.
-bool Tree::isVisited(const Node &node){
+bool Tree::isVisited(const Node &node) const{
     return (visitedNodes_.count(node) == 1);
 }
 
 /// Returns true if the specified Node has at least one unvisited child.
-bool Tree::hasUnvisitedChild(const Node &node){
+bool Tree::hasUnvisitedChild(const Node &node) const{
     // get a list of all of the nodes children
     std::vector<Node> children = graph_.outgoingNodes(node);
 
@@ -106,7 +103,7 @@ bool Tree::hasUnvisitedChild(const Node &node){
 /// Returns an unvisited child of the specified Node.
 ///
 /// Which child is returned, is unpredictable.
-Node Tree::anUnvisitedChild(const Node &of){
+Node Tree::anUnvisitedChild(const Node &of) const{
     // make sure it has an unvisited child!
     assert(hasUnvisitedChild(of));
 

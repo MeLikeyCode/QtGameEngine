@@ -2,6 +2,7 @@
 #include <vector>
 #include <cassert>
 #include "Tree.h"
+#include <algorithm>
 
 /// Default constructor, constructs a Graph with no Nodes or Edges (empty Graph).
 Graph::Graph(){
@@ -138,8 +139,10 @@ bool Graph::contains(const Edge &edge) const{
 }
 
 /// Returns a vector of Nodes that represent the shortest path between the specified Nodes.
+/// Uses dijkstras algorithm to create a spt rooted at Node "from", and then does dfs to
+/// retrieve path to Node "to". Overall complexity is O(n^2), n being number of Nodes.
 std::vector<Node> Graph::shortestPath(const Node &from, const Node &to) const{
-    // if to == from, return an empty vector
+    // short circuit (type of lazy eval): if to == from, return an empty vector
     if (from == to){
         return std::vector<Node>();
     }
@@ -149,32 +152,95 @@ std::vector<Node> Graph::shortestPath(const Node &from, const Node &to) const{
     return path;
 }
 
+/// Returns a vector of Nodes that represents the shortest path between the specified Nodes.
+/// Uses A*, therefore has overall complexity of O(n), n being the number of Nodes.
+std::vector<Node> Graph::shortestPathAS(const Node &from, const Node &to) const
+{
+    // initialize variables
+    openNodes_.clear();
+    closedNodes_.clear();
+    nodeToParent_.clear();
+    nodeToFCost_.clear();
+    nodeToGCost_.clear();
+    nodeToHCost_.clear();
+
+    // add the start node to open
+    openNodes_.insert(from);
+
+    Node current = getNodeInOpenWithLowestFCost();
+    while (true){
+        openNodes_.erase(current);
+        closedNodes_.insert(current);
+
+        // if current is the target node, path has been found
+        if (current == to){
+            break;
+        }
+
+        // for each neighbor of the current node
+        for (Node neighbor:outgoingNodes(current)){
+            // if neighbor is in closed, skip to next neighbor
+            if (closedNodes_.count(neighbor) > 0){
+                continue;
+            }
+
+            int originalGCostOfNeighbor = nodeToGCost_[neighbor];
+            int newGCostOfNeighbor = nodeToGCost_[current] + 1;
+            // if new path to neighbor is shorter OR neighbor is not in open
+            if (newGCostOfNeighbor < originalGCostOfNeighbor || openNodes_.count(neighbor) == 0){
+                // set f cost of neighbor
+                nodeToFCost_[neighbor] = nodeToGCost_[neighbor] + nodeToHCost_[neighbor];
+
+                // set parent of neighbor
+                nodeToParent_[neighbor] = current;
+
+                // if neighbor is not in open, add neighbor to open
+                if (openNodes_.count(neighbor) == 0){
+                    openNodes_.insert(neighbor);
+                }
+            }
+        }
+    }
+
+    // at this point, current is the target node, follow it back to the start
+    std::vector<Node> path;
+    path.push_back(current);
+    while (nodeToParent_.count(current) > 0){ // while the Node has a parent
+        // add parent to path
+        path.push_back(nodeToParent_[current]);
+        // try next node
+        current = nodeToParent_[current];
+    }
+
+    // path reversified
+    std::reverse(path.begin(),path.end());
+    return path;
+}
+
 /// Returns a shortest path Tree rooted at the specified ("source") Node.
+/// Uses dijkstras algorithm therefore it is O(mlog(n)).
 Tree Graph::spt(const Node &source) const{
     // make sure the source Node exists
     assert(contains(source));
-
-    // operate on a copy of this Graph (since we want this function to be const)
-    Graph copy = *this;
 
     // need to remember the first picked node as the root
     Node rootNode(0,0);
 
     // mark all nodes as unpicked
-    copy.unpickAll();
+    unpickAll();
 
     // initialize weights
-    copy.initializeNodeWeights(source);
+    initializeNodeWeights(source);
 
     // while there is an unpicked node
     bool isFirstNode = true;
-    while (copy.hasUnpickedNode()){
+    while (hasUnpickedNode()){
         // pick the one with the lightest weight
-        Node lightest = copy.lightestUnpickedNode();
-        copy.pick(lightest);
+        Node lightest = lightestUnpickedNode();
+        pick(lightest);
 
         // update its neighbors weights
-        copy.updateNeighborWeights(lightest);
+        updateNeighborWeights(lightest);
 
         // if this is the first picked node, it should also be the root & don't pick any edges!
         if (isFirstNode){
@@ -184,11 +250,11 @@ Tree Graph::spt(const Node &source) const{
         }
 
         // pick its edge
-        copy.pickConnetedEdge(lightest);
+        pickConnetedEdge(lightest);
     }
 
     // create a graph from the picked set of nodes and edges
-    Graph graph(copy.pickedNodes_,copy.pickedEdges_);
+    Graph graph(pickedNodes_,pickedEdges_);
 
     // create/return a tree from the graph
     return Tree(graph,rootNode);
@@ -200,7 +266,7 @@ Tree Graph::spt(const Node &source) const{
 /// A Graph maintains a set of picked and a set of unpicked Nodes, which are helper attributes to
 /// finding the spt of the Graph. This function will remove the specified node from the unpicked set
 /// and puts it in the picked set.
-void Graph::pick(const Node &node){
+void Graph::pick(const Node &node) const{
     // make sure the node is in unpickedNodes_
     assert(unpickedNodes_.count(node) == 1);
 
@@ -218,7 +284,7 @@ void Graph::pick(const Node &node){
 /// A Graph maintains a set of picked and a set of unpicked Edges, which is a helper attribute to
 /// finding the spt of the Graph. This function will remove the specified Edge from the unpicked set
 /// and put it in the picked set.
-void Graph::pick(const Edge &edge){
+void Graph::pick(const Edge &edge) const{
     // make sure its unpicked
     //assert(unpickedEdges_.count(edge) == 1);
     //assert(!picked(edge)); TODO find out why this breaks code!?
@@ -253,7 +319,7 @@ bool Graph::picked(const Edge &edge) const{
 ///
 /// A Graph maintains a mapping of Node:int so that every Node has a weight. This is a helper attribute to
 /// finding the spt of the Graph.
-void Graph::setWeight(const Node &of,  int weight){
+void Graph::setWeight(const Node &of,  int weight) const{
     // make sure the of Node exists
     assert(contains(of));
 
@@ -301,7 +367,7 @@ Edge Graph::edge(const Node &from, const Node &to) const{
 ///
 /// @see Graph::pick(const Node&)
 /// @see Graph::pick(const Edge&)
-void Graph::unpickAll(){
+void Graph::unpickAll() const{
     // unpick nodes
     for (Node node:nodes_){
         unpickedNodes_.insert(node);
@@ -314,7 +380,7 @@ void Graph::unpickAll(){
 }
 
 /// Gives source Node weight of 0 and all other nodes weight of 1000
-void Graph::initializeNodeWeights(const Node &source){
+void Graph::initializeNodeWeights(const Node &source) const{
     // make sure the source Node exists
     assert(contains(source));
 
@@ -357,7 +423,7 @@ Node Graph::lightestUnpickedNode() const{
 /// This is a helper function for determining the spt of the Graph. When a Node is picked,
 /// there is an appropriate Edge that must also be picked, therefore whenever a Node is picked,
 /// I keep track of the appropriate Edge, this funtion simply picks that Edge.
-void Graph::pickConnetedEdge(const Node &of){
+void Graph::pickConnetedEdge(const Node &of) const{
     Edge edge = updatedEdge_[of];
     pick(edge);
 
@@ -384,7 +450,7 @@ std::vector<Node> Graph::unpickedNeighbors(const Node &of) const{
 /// Updates the weights of the neighboring Nodes if the new weight is smaller.
 ///
 /// This is a helper function for determining the spt of the Graph.
-void Graph::updateNeighborWeights(const Node &of){
+void Graph::updateNeighborWeights(const Node &of) const{
     // For each unpicked neighbor
     for (Node neighbor:unpickedNeighbors(of)){
         // find weight of edge to neighbor
@@ -402,4 +468,52 @@ void Graph::updateNeighborWeights(const Node &of){
         }
 
     }
+}
+
+/// Returns the Node in openNodes_ with the lowest F cost. If two Nodes have the
+/// equivalent F cost, will return the one with the lower H cost. If two
+/// Nodes have the same F and H cost, returns an arbitrary one.
+Node Graph::getNodeInOpenWithLowestFCost() const
+{
+    // find the lowest f cost in open
+    bool initialFCostSet = false;
+    int lowestFCost;
+    for (Node node:openNodes_){
+        // assume initial one is lowest
+        if (!initialFCostSet){
+           lowestFCost = nodeToFCost_[node];
+           initialFCostSet = true;
+        }
+
+        // if we find a lower one, set that as lowest
+        if (nodeToFCost_[node] < lowestFCost){
+            lowestFCost = nodeToFCost_[node];
+        }
+    }
+
+    // get all Nodes that have this f cost
+    std::vector<Node> lowestFCostNodes;
+    for (Node node:openNodes_){
+        if (nodeToFCost_(node) == lowestFCost){
+            lowestFCostNodes.push_back(node);
+        }
+    }
+
+    // return the one with lowest h cost
+    bool initialHCostSet = false;
+    Node lowestCost;
+    for (Node node:lowestFCostNodes){
+        if (!initialFCostSet){
+            lowestCost = node;
+            initialHCostSet = true;
+        }
+
+        // if lower, set this one
+        if (nodeToHCost_[node] < nodeToHCost_[lowestCost]){
+            lowestCost = node;
+        }
+    }
+
+    // Node lowestCost is the one with lowest F cost (lowest H cost if multiple equal F costs)
+    return lowestCost;
 }

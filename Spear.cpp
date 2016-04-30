@@ -41,6 +41,9 @@ Spear::Spear()
 
 //    setThrustDistance(200);
 //    setThrustSpeed(500);
+
+    // default damage
+    damage_ = 5;
 }
 
 /// Will thrust the spear forward. The "position" argument is ignored.
@@ -115,8 +118,7 @@ void Spear::thrustStep()
     Entity* theOwner = inventory()->entity();
     for (Entity* e: collidingEntities){
         if (e != this && e!= theOwner && e->parent() != theOwner && headingForward_){
-            map()->removeEntity(e);
-            delete e;
+            damage(e,damage_);
             headingBackwardDueToCollision_ = true;
             headingBackward_ = false;
             headingForward_ = false;

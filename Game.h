@@ -33,6 +33,13 @@ public:
     void setMap(Map* map);
     Map* map();
 
+    void setCamPos(QPointF to);
+    void moveCam(QVector2D byVector);
+    void moveCamUp(double byAmount);
+    void moveCamDown(double byAmount);
+    void moveCamLeft(double byAmount);
+    void moveCamRight(double byAmount);
+
     void mousePressEvent(QMouseEvent* event);
     void mouseMoveEvent(QMouseEvent* event);
     void keyPressEvent(QKeyEvent* event);

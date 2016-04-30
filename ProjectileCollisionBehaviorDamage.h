@@ -6,7 +6,11 @@
 class ProjectileCollisionBehaviorDamage : public ProjectileCollisionBehavior
 {
 public:
+    ProjectileCollisionBehaviorDamage();
+
     virtual void onCollisionWith(std::unordered_set<Entity*> entities);
+private:
+    double damage_;
 };
 
 #endif // PROJECTILECOLLISIONBEHAVIORDAMAGE_H

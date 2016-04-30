@@ -38,6 +38,8 @@ private:
     bool headingBackwardDueToCollision_;
     bool alreadyThrusting_;
     void resetVariables();
+
+    double damage_;
 };
 
 #endif // SPEAR_H

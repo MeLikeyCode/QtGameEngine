@@ -55,10 +55,10 @@ SOURCES += main.cpp \
     ProjectileCollisionBehaviorDamage.cpp \
     ProjectileRangeReachedBehaviorDestroy.cpp \
     ProjectileMoveBehaviorHoming.cpp \
-    Enemy.cpp \
     Weapon.cpp \
     WeaponSlot.cpp \
-    AsyncShortestPathFinder.cpp
+    AsyncShortestPathFinder.cpp \
+    AIEntity.cpp
 
 HEADERS  += \
     Map.h \
@@ -103,10 +103,10 @@ HEADERS  += \
     ProjectileCollisionBehaviorDamage.h \
     ProjectileRangeReachedBehaviorDestroy.h \
     ProjectileMoveBehaviorHoming.h \
-    Enemy.h \
     Weapon.h \
     WeaponSlot.h \
-    AsyncShortestPathFinder.h
+    AsyncShortestPathFinder.h \
+    AIEntity.h
 
 RESOURCES += \
     res.qrc

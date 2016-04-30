@@ -3,6 +3,12 @@
 #include <QDebug>
 #include "Tree.h"
 
+
+PathGrid::PathGrid()
+{
+
+}
+
 /// Constructs a PathGrid with the specified number of columns and rows.
 ///
 /// All the Nodes are initially unfilled.

@@ -1,10 +1,7 @@
 #ifndef COUNTEXPIRINGTIMER_H
 #define COUNTEXPIRINGTIMER_H
 
-// inherits
 #include <QObject>
-
-// pointer member
 #include <QTimer>
 
 /// Represents a timer that will fire a specific number of times and then
@@ -23,7 +20,7 @@ public:
     void disconnect();
 
 public slots:
-    void fired();
+    void fired_();
 
 signals:
     void timeout();
@@ -32,8 +29,6 @@ private:
     int numTimesToFire_;
     int numTimesFired_;
     bool started_;
-
-    // internal
     QTimer* timer_;
 };
 

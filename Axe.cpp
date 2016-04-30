@@ -48,7 +48,7 @@ void Axe::attack(QPointF position)
         return;
     }
 
-    // set initial state variables
+    // set initial variables
     currentDrawBackStep_ = 0;
     currentDrawForwardStep_ = 0;
     currentForwardStep_ = 0;
@@ -58,7 +58,7 @@ void Axe::attack(QPointF position)
     hitSomethingDuringForwardStep_ = false;
     alreadySwinging_ = true;
 
-    // connect to swingStep()
+    // start swinging
     connect(timer_,SIGNAL(timeout()),this,SLOT(swingStep()));
     timer_->start(swingFrequency_);
 }

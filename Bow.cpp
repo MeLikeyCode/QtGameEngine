@@ -14,7 +14,7 @@ Bow::Bow()
     spr_->setPixmap(pm_);
     setSprite(spr_);
 
-    // default projectile spawn point
+    // default projectile spawn point (center of sprite)
     resetProjectileSpawnPoint();
 
     // default attachment point
@@ -33,13 +33,14 @@ void Bow::attack(QPointF targetPoint)
 {
     // entity that owns this bow
     Entity* owningEntity = inventory()->entity();
+    Map* map = owningEntity->map();
 
-    // create projectile
+    // create projectile behaviors
     ProjectileMoveBehaviorStraight* mb = new ProjectileMoveBehaviorStraight();
     ProjectileCollisionBehaviorDamage* cb = new ProjectileCollisionBehaviorDamage();
     ProjectileRangeReachedBehaviorDestroy* rrb = new ProjectileRangeReachedBehaviorDestroy();
     Projectile* projectile = new Projectile(mb,cb,rrb);
-    inventory()->entity()->map()->addEntity(projectile);
+    map->addEntity(projectile);
 
     // add owner to no damage list
     projectile->addToNoDamageList(owningEntity);

@@ -24,6 +24,7 @@ Entity::Entity():
     sprite_ = nullptr;
     parent_ = nullptr;
     health_ = 10;
+    isFollowedByCam_ = false;
 
     // default sprite
     Sprite* spr = new Sprite();
@@ -34,9 +35,10 @@ Entity::Entity():
 
 }
 
-/// When an Entity is deleted, it will delete all of its child entities.
-/// If the Entity was in a map, it will be removed from the map first (the
-/// same thing will happen with all the child entities).
+/// When an Entity is deleted, it will delete all of its children, and then remove
+/// itself from the Map. As each child is deleted, it will delete its own children and then
+/// remove itself from the Map.
+/// You can kinda see how the "flow" of deletion happens :).
 Entity::~Entity()
 {
     // if the entity has a parent, remove from parents list of children
@@ -46,7 +48,6 @@ Entity::~Entity()
     }
 
     // delete child entities (recursive)
-    int numOfC = children_.size();
     for (Entity* entity: children()){
         delete entity;
     }
@@ -55,6 +56,8 @@ Entity::~Entity()
     if (map() != nullptr){
         map()->removeEntity(this);
     }
+
+    delete sprite_;
 }
 
 /// Returns the PathingMap of the Entity.
@@ -95,6 +98,11 @@ QPointF Entity::pointPos() const{
 /// parent Entitiy, it is relative to the Map.
 void Entity::setPointPos(const QPointF &pos){
     sprite()->setPos(pos);
+
+    // if followed by the camear, tell game cam to move here
+    if (isFollowedByCam()){
+        map()->game()->setCamPos(this->pointPos());
+    }
 }
 
 /// Sets the position of the Entity by moving the specified named position.
@@ -394,4 +402,29 @@ bool Entity::canBeDamagedBy(Entity *entity)
 
     // entity should be able to dmage
     return true;
+}
+
+void Entity::setGroupID(int id)
+{
+    groupID_ = id;
+}
+
+int Entity::groupID()
+{
+    return groupID_;
+}
+
+/// Returns true if the Entity is followed by the camera.
+/// If an Entity is followed by the camera, then every time that Entity's
+/// position is changed, the camera goes to that new position.
+bool Entity::isFollowedByCam()
+{
+    return isFollowedByCam_;
+}
+
+/// Sets weather the Entity should be followed by the camera or not.
+/// @see Entity::isFollowedByCam()
+void Entity::setFollowedByCam(bool tf)
+{
+    isFollowedByCam_ = tf;
 }

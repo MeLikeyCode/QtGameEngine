@@ -14,6 +14,7 @@
 #include "EquipableItem.h"
 #include "Slot.h"
 #include "AsyncShortestPathFinder.h"
+#include "Node.h"
 
 /// Default constructor.
 DynamicEntity::DynamicEntity():
@@ -40,7 +41,13 @@ DynamicEntity::DynamicEntity():
     timeStuck_ = 0;
 
     pf_ = new AsyncShortestPathFinder();
-    connect(pf_,SIGNAL(pathFound(std::vector<QPointF>)),this,SLOT(moveInternal_(std::vector<QPointF>)));
+    connect(pf_,SIGNAL(pathFound(std::vector<QPointF>)),this,SLOT(followNewPath_(std::vector<QPointF>)));
+}
+
+DynamicEntity::~DynamicEntity()
+{
+    delete pf_;
+    delete inventory_;
 }
 
 /// Add the specified Slot to the DynamicEntity.
@@ -51,8 +58,13 @@ void DynamicEntity::addSlot(Slot *slot)
 }
 
 /// Returns the Slot with the specified name.
+/// Returns null if no such slot exists.
 Slot *DynamicEntity::slot(std::string name)
 {
+    if (stringToSlot_.count(name) == 0){
+        return nullptr;
+    }
+
     return stringToSlot_[name];
 }
 
@@ -95,14 +107,20 @@ bool DynamicEntity::inventoryContains(Item *item)
 
 /// Causes the Entity to take 1 step closer to moving to its target point.
 void DynamicEntity::moveStepAIControlled(){
+    // if there are no points to follow, don't do anything
+    if (pointsToFollow_.size() == 0){
+        stopAutomaticMovement();
+        return;
+    }
+
     // if there are no more points to follow and entity has reached its target
     // - stop moving
     if (targetPointIndex_ >= pointsToFollow_.size() - 1 && targetPointReached()){
-        stopAutomaticMovement();
-
         // snap
         QPointF snapPt = pointsToFollow_[targetPointIndex_];
         setCellPos(map()->pathingMap().pointToCell(snapPt));
+
+        stopAutomaticMovement();
 
         return;
     }
@@ -308,7 +326,32 @@ void DynamicEntity::stopRotating()
     rotationTimer_->disconnect();
 }
 
-void DynamicEntity::moveInternal_(std::vector<QPointF> path){
+/// Called everytime a path is calclated. When DynamicEntities are "stuck"
+/// for a certain amount of time, they will attempt to calculate a new path. When
+/// the new path is found, this function is called.
+void DynamicEntity::followNewPath_(std::vector<QPointF> path){
+//    // if new path is a super set of old path, just follow old path
+//    if (pointsToFollow_.size() > 0){
+//        std::unordered_set<Node> newPath;
+//        for (QPointF point:path){
+//            newPath.insert(map()->pointToCell(point));
+//        }
+
+//        bool newPathIsSuperSet = true;
+//        for (QPointF point:pointsToFollow_){
+//            Node node = map()->pointToCell(point);
+//            if (newPath.count(node) == 0){
+//                newPathIsSuperSet = false;
+//                break;
+//            }
+//        }
+
+//        if (newPathIsSuperSet){
+//            return;
+//        }
+//    }
+
+
     // stop following previous list of points
     stopAutomaticMovement();
 
@@ -331,8 +374,6 @@ void DynamicEntity::moveTo(QPointF pos){
 
     // get list of points from map (in a diff thread)
     pf_->findPath(map()->pathingMap(),pointPos(),pos);
-
-    //moveInternal_(map()->pathingMap().shortestPath(pointPos(),pos));
 }
 
 /// Tells the Entity to move to the specified cell.
@@ -390,6 +431,8 @@ void DynamicEntity::moveRight(){
 /// Tells the Entity to stop moving.
 void DynamicEntity::stopAutomaticMovement(){
     moveTimer_->disconnect();
+    pointsToFollow_.clear();
+    targetPointIndex_ = 0;
 
     // play stand animation
     sprite()->play("stand",-1,100);
@@ -399,6 +442,12 @@ void DynamicEntity::stopAutomaticMovement(){
 void DynamicEntity::setPlayerControlledMoveBehavior(PlayerControlledMoveBehavior *behavior)
 {
     moveBehavior_ = behavior;
+}
+
+/// Returns true if the DynamicEntity is currently moving.
+bool DynamicEntity::isMoving()
+{
+    return pointsToFollow_.size() > 0;
 }
 
 /// Returns true if the Entity is controlled by a player.
@@ -453,7 +502,10 @@ std::unordered_set<Entity *> DynamicEntity::entitiesInView()
 
     QPolygonF poly(points);
 
-    return map()->entities(poly);
+    std::unordered_set<Entity*> entities = map()->entities(poly);
+    entities.erase(this);
+
+    return entities;
 
 //    // visualize line of site
 //    QGraphicsLineItem* line = new QGraphicsLineItem();
@@ -465,8 +517,6 @@ std::unordered_set<Entity *> DynamicEntity::entitiesInView()
 //    map()->scene()->addItem(line);
 //    map()->scene()->addItem(line2);
 //    map()->scene()->addItem(line3);
-
-
 }
 
 

@@ -4,6 +4,7 @@
 #include "PathGrid.h"
 #include <QPointF>
 #include <QRectF>
+#include <QMetaType>
 
 /// Represents a pathing map in which each cell is either filled or unfilled.
 /// @author Abdullah Aghazadah
@@ -31,7 +32,9 @@
 class PathingMap{
 public:
     // constructors
-    PathingMap(int numCellsWide, int numCellsLong, int cellSize);
+    PathingMap();
+    PathingMap(int numCellsWid, int numCellsLong, int cellSize);
+    PathingMap(const PathingMap& copy) = default;
 
     // readers ("getters")
     std::vector<Node> cells(const Node& topLeft, const Node& bottomRight) const;
@@ -82,5 +85,7 @@ private:
     int numCellsLong_;
     int cellSize_;
 };
+
+Q_DECLARE_METATYPE(PathingMap);
 
 #endif // PATHINGMAP_H

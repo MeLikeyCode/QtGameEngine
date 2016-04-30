@@ -13,14 +13,8 @@ AsyncShortestPathFinder::AsyncShortestPathFinder()
 {
     worker_.moveToThread(&workerThread_);
     connect(&worker_,&Worker::pathFound,this,&AsyncShortestPathFinder::pathFound_);
+    connect(this,&AsyncShortestPathFinder::findPath,&worker_,&Worker::findPath);
     workerThread_.start();
-}
-
-/// Calculates a Path from a starting point to an ending point in the specified
-/// PathingMap.
-void AsyncShortestPathFinder::findPath(const PathingMap& pathingMap, const QPointF& start, const QPointF& end)
-{
-    worker_.findPath(pathingMap,start,end);
 }
 
 AsyncShortestPathFinder::~AsyncShortestPathFinder()

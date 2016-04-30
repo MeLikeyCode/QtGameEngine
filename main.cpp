@@ -18,8 +18,12 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
+    // register types that needed to be used in cross thread signal-slot stuff
+     qRegisterMetaType<PathingMap>();
+     qRegisterMetaType<std::vector<QPointF>>();
+
     // create a Map and a Game
-    Map* map = new Map(15,15,64);
+    Map* map = new Map(30,30,64);
     Game* game = new Game(map);
     game->launch();
 
@@ -28,8 +32,10 @@ int main(int argc, char *argv[])
     map->addEntity(player);
     player->setCellPos(Node(2,2));
     player->setPlayerControlled(true);
-    //player->setStepSize(25);
+    player->setStepSize(10);
     game->setPlayer(player); // game knows about this entity (for testing)
+    player->setFollowedByCam(true);
+    player->setGroupID(0);
 
     // give the entity a sprite (overrides default one)
     Sprite* spr = new Sprite();

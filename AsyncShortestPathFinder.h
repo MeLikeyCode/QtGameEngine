@@ -32,11 +32,11 @@ class AsyncShortestPathFinder : public QObject
     Q_OBJECT
 public:
     AsyncShortestPathFinder();
-    void findPath(const PathingMap &pathingMap, const QPointF &start, const QPointF &end);
     ~AsyncShortestPathFinder();
 
 signals:
     void pathFound(std::vector<QPointF> path);
+    void findPath(const PathingMap &pathingMap, const QPointF &start, const QPointF &end);
 public slots:
     void pathFound_(std::vector<QPointF> path); // internal use
 private:

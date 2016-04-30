@@ -15,7 +15,9 @@
 class PathGrid{
 public:
     // constructors
+    PathGrid();
     PathGrid(int numCols,  int numRows);
+    PathGrid(const PathGrid& copy) = default;
 
     // readers ("getters")
     bool filled(const Node& node) const;

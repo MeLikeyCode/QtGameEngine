@@ -26,8 +26,8 @@ public:
     // constructor
     DynamicEntity();
 
-    // deconstructor (empty virtual)
-    virtual ~DynamicEntity() {}
+    // deconstructor
+    virtual ~DynamicEntity();
 
     void setStepSize(int stepSize);
     int stepSize();
@@ -52,7 +52,7 @@ public:
     void moveRight();
     void stopAutomaticMovement();
     void setPlayerControlledMoveBehavior(PlayerControlledMoveBehavior* behavior);
-
+    bool isMoving();
 
     bool isPlayerControlled();
     void setPlayerControlled(bool tf);
@@ -66,12 +66,11 @@ public:
     void addItemToInventory(Item* item);
     bool inventoryContains(Item* item);
 
-
 public slots:
     void moveStepPlayerControlled();
     void moveStepAIControlled();
     void rotateStep();
-    void moveInternal_(std::vector<QPointF> path);
+    void followNewPath_(std::vector<QPointF> path);
 
 private:
     // main attributes

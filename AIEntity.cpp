@@ -1,4 +1,4 @@
-#include "Enemy.h"
+#include "AIEntity.h"
 #include <QTimer>
 #include <QDebug> // TODO: remove
 #include <cassert>
@@ -7,14 +7,14 @@
 #include "Spear.h"
 #include "Axe.h"
 
-Enemy::Enemy()
+AIEntity::AIEntity()
 {
     timerCheckFov_ = new QTimer(this);
-    connect(timerCheckFov_,&QTimer::timeout,this,&Enemy::checkFov_);
+    connect(timerCheckFov_,&QTimer::timeout,this,&AIEntity::checkFov_);
     timerCheckFov_->start(500);
 
     attackTimer_ = new QTimer(this);
-    connect(attackTimer_,&QTimer::timeout,this,&Enemy::swingIfInRange_);
+    connect(attackTimer_,&QTimer::timeout,this,&AIEntity::swingIfInRange_);
     attackTimer_->start(1500);
 
     targetEntity_ = nullptr;
@@ -66,7 +66,7 @@ Enemy::Enemy()
     setDefaultWeapon(axe);
 }
 
-Enemy::~Enemy()
+AIEntity::~AIEntity()
 {
     timerCheckFov_->disconnect();
     attackTimer_->disconnect();
@@ -74,12 +74,12 @@ Enemy::~Enemy()
 
 /// Returns the default weapon equipped by the entity. If the Entity does not
 /// have a weapon equipped, returns nullptr.
-Weapon *Enemy::defaultWeapon()
+Weapon *AIEntity::defaultWeapon()
 {
     return this->defaultWeapon_;
 }
 
-void Enemy::setDefaultWeapon(Weapon *weapon)
+void AIEntity::setDefaultWeapon(Weapon *weapon)
 {
     // make sure the weapon is in the inventory of the Enemy
     // assert(inventoryContains(weapon)); TODO: find out why this line gives error
@@ -89,16 +89,44 @@ void Enemy::setDefaultWeapon(Weapon *weapon)
 
 }
 
-/// Checks the fov, if there is an enemy, will move to its location.
-void Enemy::checkFov_()
+/// Adds an enemy group to the AIEntity.
+void AIEntity::addEnemy(int groupID)
 {
+    enemyGroups_.insert(groupID);
+}
+
+/// Returns true if the specified group is an enemy to this AIEntity.
+bool AIEntity::isEnemy(int groupID)
+{
+    return enemyGroups_.count(groupID) > 0;
+}
+
+/// Returns true if the specified Entity is an enemy.
+bool AIEntity::isEnemy(Entity *entity)
+{
+    return enemyGroups_.count(entity->groupID()) > 0;
+}
+
+/// Removes the specified group from the enemies list of this AIEntity.
+void AIEntity::removeEnemy(int groupID)
+{
+    enemyGroups_.erase(groupID);
+}
+
+/// Checks the fov, if there is an enemy, will move to its location while
+/// swinging.
+void AIEntity::checkFov_()
+{
+    if (isMoving()){
+        return;
+    }
+
     for (Entity* entity:entitiesInView()){
-        bool isFriend = false; // TODO: determine if entity is friend
-        if (!isFriend && entity != this){
+        if (isEnemy(entity) && entity != this){
             targetEntity_ = entity;
 
             // get notified when target dies
-            connect(targetEntity_,&QObject::destroyed,this,&Enemy::onTargetDelete_);
+            connect(targetEntity_,&QObject::destroyed,this,&AIEntity::onTargetDelete_);
 
             this->moveTo(entity->pointPos());
             timerCheckFov_->disconnect();
@@ -109,14 +137,14 @@ void Enemy::checkFov_()
 }
 
 /// Starts firing the checkFov_ function periodically.
-void Enemy::startCheckingFov_()
+void AIEntity::startCheckingFov_()
 {
-    connect(timerCheckFov_,&QTimer::timeout,this,&Enemy::checkFov_);
+    connect(timerCheckFov_,&QTimer::timeout,this,&AIEntity::checkFov_);
     timerCheckFov_->start(500);
 }
 
 /// If the Enemy is in range of an enemy will attack with its def weapon.
-void Enemy::swingIfInRange_()
+void AIEntity::swingIfInRange_()
 {
     // don't do anything if doesn't have a target
     if (targetEntity_ == nullptr){
@@ -134,7 +162,7 @@ void Enemy::swingIfInRange_()
 
 /// Executed when the target of this Enemy gets deleted.
 /// Stops referencing it (prevents dangling pointer related memory curruption)
-void Enemy::onTargetDelete_()
+void AIEntity::onTargetDelete_()
 {
     targetEntity_ = nullptr;
 }

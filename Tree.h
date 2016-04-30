@@ -9,8 +9,7 @@
 /// @author Abdullah Aghazadah
 /// @date 4-24-15
 ///
-/// A Tree, like a Graph, is set of Nodes and a set of Edges. The distinctive feature of a Tree is
-/// that it does not contain any cycles.
+/// A Tree is a Graph with no cycles.
 class Tree{
 public:
     // constructors
@@ -31,14 +30,14 @@ private:
     Node root_;
 
     // private helper attributes
-    std::unordered_set<Node> visitedNodes_;
+    mutable std::unordered_set<Node> visitedNodes_;
 
     // private helper methods
-    void visit(const Node& node);
-    bool isVisited(const Node& node);
-    bool hasUnvisitedChild(const Node& node);
-    Node anUnvisitedChild(const Node& of);
-    std::vector<Node> dfs(const Node& node, const Node& target, std::vector<Node> path);
+    void visit(const Node& node) const;
+    bool isVisited(const Node& node) const;
+    bool hasUnvisitedChild(const Node& node) const;
+    Node anUnvisitedChild(const Node& of) const;
+    std::vector<Node> dfs(const Node& node, const Node& target, std::vector<Node> path) const;
 
 };
 

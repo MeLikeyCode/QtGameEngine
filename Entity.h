@@ -88,6 +88,12 @@ public:
     void addCannotBeDamagedBy(std::type_index typeOfEntity);
     bool canBeDamagedBy(Entity* entity);
 
+    void setGroupID(int id);
+    int groupID();
+
+    bool isFollowedByCam();
+    void setFollowedByCam(bool tf);
+
 private:
     // main attributes
     PathingMap pathingMap_;
@@ -100,6 +106,9 @@ private:
     std::set<std::type_index> canOnlyBeDamagedBy_;
     std::set<std::type_index> canBeDamagedByAllExcept_;
     bool canOnlyBeDamagedByMode_;
+    int groupID_;
+
+    bool isFollowedByCam_;
 
 };
 

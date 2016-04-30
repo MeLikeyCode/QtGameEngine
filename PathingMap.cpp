@@ -2,6 +2,12 @@
 #include <cassert>
 #include <QDebug> // TODO: remove
 
+
+PathingMap::PathingMap()
+{
+
+}
+
 /// Constructs a PathingMap with the specified number of cells wide/long and
 /// with the specified cell size. All cells are initially empty.
 PathingMap::PathingMap( int numCellsWide,  int numCellsLong,  int cellSize):

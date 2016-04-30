@@ -10,7 +10,7 @@ CountExpiringTimer::CountExpiringTimer(QObject *parent):
     // constructor body
 
     timer_ = new QTimer(this);
-    connect(timer_,SIGNAL(timeout()),this,SLOT(fired()));
+    connect(timer_,SIGNAL(timeout()),this,SLOT(fired_()));
 }
 
 /// Starts the timer, which will fire with the given frequency, the given
@@ -41,7 +41,7 @@ void CountExpiringTimer::disconnect()
 /// This function is called whenever the internal timer fires.
 ///
 /// If it has fired enough times, it will disconnect and delete itself.
-void CountExpiringTimer::fired(){
+void CountExpiringTimer::fired_(){
     emit timeout();
 
     ++numTimesFired_;

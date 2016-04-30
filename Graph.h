@@ -29,6 +29,7 @@ public:
     bool contains(const Node& node) const;
     bool contains(const Edge& edge) const;
     std::vector<Node> shortestPath(const Node& from, const Node& to) const;
+    std::vector<Node> shortestPathAS(const Node& from, const Node& to) const;
     Tree spt(const Node& source) const;
 
     // modifiers (setters)
@@ -40,29 +41,40 @@ private:
     std::unordered_set<Node> nodes_;
     std::unordered_set<Edge> edges_;
 
-    // helper attributes
-    std::unordered_set<Node> pickedNodes_;
-    std::unordered_set<Node> unpickedNodes_;
-    std::unordered_set<Edge> pickedEdges_;
-    std::unordered_set<Edge> unpickedEdges_;
-    std::unordered_map<Node, int> nodeWeight_;
-    std::unordered_map<Node,Edge> updatedEdge_;
+    // helper attributes for dijkstras
+    mutable std::unordered_set<Node> pickedNodes_;
+    mutable std::unordered_set<Node> unpickedNodes_;
+    mutable std::unordered_set<Edge> pickedEdges_;
+    mutable std::unordered_set<Edge> unpickedEdges_;
+    mutable std::unordered_map<Node, int> nodeWeight_;
+    mutable std::unordered_map<Node,Edge> updatedEdge_;
 
-    // helper functions
-    void pick(const Node& node);
-    void pick(const Edge& edge);
+    // helper functions for dijkstras
+    void pick(const Node& node) const;
+    void pick(const Edge& edge) const;
     bool picked(const Node& node) const;
     bool picked(const Edge& edge) const;
-    void setWeight(const Node& of,  int weight);
+    void setWeight(const Node& of,  int weight) const;
     int weight(const Node& of) const;
     Edge edge(const Node& from, const Node& to) const;
-    void unpickAll();
-    void initializeNodeWeights(const Node& source);
+    void unpickAll() const;
+    void initializeNodeWeights(const Node& source) const;
     bool hasUnpickedNode() const;
     Node lightestUnpickedNode() const;
-    void pickConnetedEdge(const Node& of);
+    void pickConnetedEdge(const Node& of) const;
     std::vector<Node> unpickedNeighbors(const Node& of) const;
-    void updateNeighborWeights(const Node& of);
+    void updateNeighborWeights(const Node& of) const;
+
+    // helper attributes for A*
+    mutable std::unordered_set<Node> openNodes_;
+    mutable std::unordered_set<Node> closedNodes_;
+    mutable std::unordered_map<Node,Node> nodeToParent_; // mapping of a Node to its parent
+    mutable std::unordered_map<Node,int> nodeToFCost_; // mapping of a Node and its F cost
+    mutable std::unordered_map<Node,int> nodeToGCost_; // mapping of a Node and its G cost
+    mutable std::unordered_map<Node,int> nodeToHCost_; // mapping of a Node and its H cost
+
+    // helper functions for A*
+    Node getNodeInOpenWithLowestFCost() const;
 
 };
 

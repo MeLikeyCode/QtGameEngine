@@ -2,18 +2,28 @@
 #define ENEMY_H
 
 #include "DynamicEntity.h"
+#include <set>
 
 class Weapon;
 
-class Enemy: public DynamicEntity
+/// Represents an Entity that can move and think on its own. AIEntities will
+/// attack any enemies in their field of view.
+/// @author Abdullah Aghazadah
+/// @date 4/18/16
+class AIEntity: public DynamicEntity
 {
     Q_OBJECT
 public:
-    Enemy();
-    ~Enemy();
+    AIEntity();
+    ~AIEntity();
 
     Weapon* defaultWeapon();
     void setDefaultWeapon(Weapon* weapon);
+
+    void addEnemy(int groupID);
+    bool isEnemy(int groupID);
+    bool isEnemy(Entity* entity);
+    void removeEnemy(int groupID);
 
 public slots:
     void checkFov_();
@@ -27,7 +37,7 @@ private:
     Weapon* defaultWeapon_;
     Entity* targetEntity_;
 
-
+    std::set<int> enemyGroups_;
 };
 
 #endif // ENEMY_H
