@@ -149,7 +149,7 @@ void Game::mousePressEvent(QMouseEvent *event){
 
     // weapon 1 attack
     if (event->button() == Qt::LeftButton){
-        player_->slot("leftHand")->use();
+        player_->slot("leftHandRanged")->use();
     }
 
 //    // weapon 2 attack

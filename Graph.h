@@ -8,7 +8,7 @@
 
 class Tree;
 
-/// Represents a graph.
+/// Represents a Graph.
 /// @author Abdullah Aghazadah
 /// @date 4-24-15
 ///
@@ -25,17 +25,15 @@ public:
     std::vector<Edge> outgoingEdges(const Node& from) const;
     std::vector<Edge> incomingEdges(const Node& to) const;
     std::vector<Node> outgoingNodes(const Node& from) const; // all ADJACENT nodes this node can go to
-    std::vector<Node> incomingNodes(const Node& to) const; // all ADJACENT nodes that can come to this node
+    std::vector<Node> incomingNodes(const Node& to) const;   // all ADJACENT nodes that can come to this node
     bool contains(const Node& node) const;
     bool contains(const Edge& edge) const;
     std::vector<Node> shortestPath(const Node& from, const Node& to) const;
-    std::vector<Node> shortestPathAS(const Node& from, const Node& to) const;
     Tree spt(const Node& source) const;
 
     // modifiers (setters)
     void addNode(const Node& node);
     void addEdge(const Node& from, const Node& to,  int weight);
-
 private:
     // main private attributes
     std::unordered_set<Node> nodes_;
@@ -68,15 +66,14 @@ private:
     // helper attributes for A*
     mutable std::unordered_set<Node> openNodes_;
     mutable std::unordered_set<Node> closedNodes_;
-    mutable std::unordered_map<Node,Node> nodeToParent_; // mapping of a Node to its parent
-    mutable std::unordered_map<Node,int> nodeToFCost_; // mapping of a Node and its F cost
-    mutable std::unordered_map<Node,int> nodeToGCost_; // mapping of a Node and its G cost
-    mutable std::unordered_map<Node,int> nodeToHCost_; // mapping of a Node and its H cost
+    mutable std::unordered_map<Node,Node> nodeToParent_;    // mapping of a Node to its parent
+    mutable std::unordered_map<Node,int> nodeToFCost_;      // mapping of a Node and its F cost
+    mutable std::unordered_map<Node,int> nodeToGCost_;      // mapping of a Node and its G cost
+    mutable std::unordered_map<Node,int> nodeToHCost_;      // mapping of a Node and its H cost
 
     // helper functions for A*
-    Node getNodeInOpenWithLowestFCost() const;
+    Node nodeInOpenWithLowestFCost() const;
     void calculateCosts_(Node from, Node to) const;
-
 };
 
 #endif // GRAPH_H

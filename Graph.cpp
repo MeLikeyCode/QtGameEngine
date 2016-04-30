@@ -141,7 +141,9 @@ bool Graph::contains(const Edge &edge) const{
 /// Returns a vector of Nodes that represent the shortest path between the specified Nodes.
 /// Uses A* pathfinding algorithm.
 std::vector<Node> Graph::shortestPath(const Node &from, const Node &to) const{
-    // GUARD: short circuit (type of lazy eval) if to == from, just return an empty vector
+    // consider lazy evaluation (retrieving stored value, short circuiting, etc..)
+    // for functions that are expensive
+    // GUARD: short circuit if to == from, just return an empty vector
     if (from == to){
         return std::vector<Node>();
     }
@@ -154,34 +156,46 @@ std::vector<Node> Graph::shortestPath(const Node &from, const Node &to) const{
     nodeToGCost_.clear();
     nodeToHCost_.clear();
 
-    // calculate costs
+    // calculate costs (H, G, and F)
     calculateCosts_(from,to);
 
-    // add the start node to open
+    // add the start node ("from" to list of open nodes
     openNodes_.insert(from);
 
+    // traverse through
     Node current;
     while (true){
-        current = getNodeInOpenWithLowestFCost();
-        openNodes_.erase(current);
-        closedNodes_.insert(current);
+        // set the current Node as the one with the lowest F cost
+        current = nodeInOpenWithLowestFCost();
+        openNodes_.erase(current);      // remove it from the open nodes
+        closedNodes_.insert(current);   // add it to the closed nodes ("visited")
 
-        // if current is the target node, path has been found
+        // if current node is the target node, path has been found
         if (current == to){
             break;
         }
 
         // for each neighbor of the current node
         for (Node neighbor:outgoingNodes(current)){
-            // if neighbor is in closed, skip to next neighbor
+            // if neighbor is in closed, skip it
             if (closedNodes_.count(neighbor) > 0){
                 continue;
             }
 
+            // if neighbor is in open, but the new path is shorter
             int originalGCostOfNeighbor = nodeToGCost_[neighbor];
             int newGCostOfNeighbor = nodeToGCost_[current] + 1;
-            // if new path to neighbor is shorter OR neighbor is not in open
-            if (newGCostOfNeighbor < originalGCostOfNeighbor || openNodes_.count(neighbor) == 0){
+            if (newGCostOfNeighbor < originalGCostOfNeighbor){
+                // update the cost of neighbor
+                nodeToGCost_[neighbor] = nodeToGCost_[current] + 1;
+                nodeToFCost_[neighbor] = nodeToGCost_[neighbor] + nodeToHCost_[neighbor];
+
+                // set parent of neighbor
+                nodeToParent_[neighbor] = current;
+            }
+
+            // if neighbor is NOT in open
+            if (openNodes_.count(neighbor) == 0){
                 // set cost of neighbor
                 nodeToGCost_[neighbor] = nodeToGCost_[current] + 1;
                 nodeToFCost_[neighbor] = nodeToGCost_[neighbor] + nodeToHCost_[neighbor];
@@ -189,26 +203,22 @@ std::vector<Node> Graph::shortestPath(const Node &from, const Node &to) const{
                 // set parent of neighbor
                 nodeToParent_[neighbor] = current;
 
-                // if neighbor is not in open, add neighbor to open
-                if (openNodes_.count(neighbor) == 0){
-                    openNodes_.insert(neighbor);
-                }
+                // add it to open
+                openNodes_.insert(neighbor);
             }
         }
     }
 
-    // at this point, current is the target node, follow it back to the start
+    // at this point, current is the target Node, follow it back to the start
     std::vector<Node> path;
     path.push_back(current);
-    while (nodeToParent_.count(current) > 0){ // while the Node has a parent
-        // add parent to path
-        path.push_back(nodeToParent_[current]);
-        // try next node
-        current = nodeToParent_[current];
+    while (nodeToParent_.count(current) > 0){   // while current Node has a parent
+        path.push_back(nodeToParent_[current]); // add parent to path
+        current = nodeToParent_[current];       // go one backwards
     }
 
-    // path reversified
-    std::reverse(path.begin(),path.end());
+    // reverse the path (because it goes back->front) and then return it
+    std::reverse(std::begin(path),std::end(path));
     return path;
 }
 
@@ -476,7 +486,7 @@ void Graph::updateNeighborWeights(const Node &of) const{
 /// Returns the Node in openNodes_ with the lowest F cost. If two Nodes have the
 /// equivalent F cost, will return the one with the lower H cost. If two
 /// Nodes have the same F and H cost, returns an arbitrary one.
-Node Graph::getNodeInOpenWithLowestFCost() const
+Node Graph::nodeInOpenWithLowestFCost() const
 {
     // find the lowest f cost in open
     bool initialFCostSet = false;

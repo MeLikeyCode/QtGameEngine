@@ -70,13 +70,13 @@ int main(int argc, char *argv[])
 //    Spear* spear = new Spear();
 //    player->addItemToInventory(spear);
 
-//    Bow* bow = new Bow();
-//    player->addItemToInventory(bow);
+    Bow* bow = new Bow();
+    player->addItemToInventory(bow);
 
     // equip weapons to slots
-    player->equipItem(axe,leftHand);
+    // player->equipItem(axe,leftHand);
     //player->equipItem(spear,rightHand);
-    //player->equipItem(bow,leftHandRanged);
+    player->equipItem(bow,leftHandRanged);
 
     // play a sound
     Sound* sound = new Sound("qrc:/resources/sounds/music.mp3");
