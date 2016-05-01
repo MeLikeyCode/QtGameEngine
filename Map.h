@@ -62,7 +62,6 @@ public:
     std::unordered_set<Entity*> entities(const QRectF& inRegion);
     std::unordered_set<Entity *> entities(const QPointF& atPoint);
     std::unordered_set<Entity*> entities(const QPolygonF& inRegion);
-
 private:
     int width_;
     int height_;

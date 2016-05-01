@@ -11,6 +11,7 @@
 #include <typeinfo>
 #include <typeindex>
 #include <set>
+#include <QPointer>
 
 class Map;
 class Inventory;
@@ -94,6 +95,8 @@ public:
     bool isFollowedByCam();
     void setFollowedByCam(bool tf);
 
+    int debugID_; // TODO remove, num 1 used to make sure hasn't been freed
+
 private:
     // main attributes
     PathingMap pathingMap_;
@@ -108,8 +111,20 @@ private:
     bool canOnlyBeDamagedByMode_;
     int groupID_;
 
+
+
     bool isFollowedByCam_;
 
 };
+
+// make QPointer<Entity> hashable
+namespace std {
+template <> struct hash<QPointer<Entity>>
+{
+    size_t operator()(const QPointer<Entity>& node) const{
+        return hash<Entity*>()(node.data());
+    }
+};
+}
 
 #endif // ENTITY_H

@@ -9,7 +9,7 @@ class ProjectileMoveBehaviorHoming: public ProjectileMoveBehavior
 {
 public:
     ProjectileMoveBehaviorHoming(Entity* entityToFollow);
-    virtual double onMoveStep();
+    virtual void onMoveStep();
 private:
     Entity* entityToFollow_;
 };

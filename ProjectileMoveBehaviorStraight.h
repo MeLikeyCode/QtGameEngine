@@ -2,11 +2,18 @@
 #define PROJECTILEMOVEBEHAVIORSTRAIGHT_H
 
 #include "ProjectileMoveBehavior.h"
+#include "QPointF"
 
 class ProjectileMoveBehaviorStraight : public ProjectileMoveBehavior
 {
 public:
-    virtual double onMoveStep();
+    ProjectileMoveBehaviorStraight(double range, QPointF target);
+
+    virtual void onMoveStep();
+private:
+    double range_;
+    QPointF target_;
+    double distanceMoved_;
 };
 
 #endif // PROJECTILEMOVEBEHAVIORSTRAIGHT_H

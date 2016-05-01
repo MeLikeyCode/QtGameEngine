@@ -7,6 +7,7 @@ RangedWeaponSlot::RangedWeaponSlot()
 {
 }
 
+/// Returns weather the RangedWeaponSlot can equip the specified item.
 bool RangedWeaponSlot::canBeEquipped(EquipableItem *item)
 {
     // only RangeWeapons can be equipped
@@ -17,7 +18,6 @@ bool RangedWeaponSlot::canBeEquipped(EquipableItem *item)
 void RangedWeaponSlot::use()
 {
     // call attack of the RangeWeapon passing in a point ahead of the entity
-
     Entity* owner = this->item_->inventory()->entity();
     int RANGE = 400; //TODO: get from item_
 
@@ -29,5 +29,4 @@ void RangedWeaponSlot::use()
 
     RangedWeapon* asRW = dynamic_cast<RangedWeapon*>(item_);
     asRW->attack(target);
-
 }

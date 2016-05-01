@@ -2,16 +2,17 @@
 #include "Map.h"
 #include "ProjectileMoveBehavior.h"
 #include "ProjectileCollisionBehavior.h"
-#include "ProjectileRangeReachedBehavior.h"
+#include <QDebug> // TODO: remove, test
 
-Projectile::Projectile(ProjectileMoveBehavior* moveBehavior, ProjectileCollisionBehavior* collisionBehavior, ProjectileRangeReachedBehavior* rangeReachedBehavior)
+Projectile::Projectile(QPointF start, ProjectileMoveBehavior* moveBehavior, ProjectileCollisionBehavior* collisionBehavior):
+    start_(start),
+    moveBehavior_(moveBehavior),
+    collisionBehavior_(collisionBehavior),
+    timer_(new QTimer(this))
 {
-    this->moveBehavior_ = moveBehavior;
+    // make sure behaviors act on this projectile
     moveBehavior->projectile_ = this;
-    this->collisionBehavior_ = collisionBehavior;
     collisionBehavior->projectile_ = this;
-    this->rangeReachedBehavior_ = rangeReachedBehavior;
-    rangeReachedBehavior->projectile_ = this;
 
     // default sprite
     Sprite* spr_ = new Sprite();
@@ -19,102 +20,74 @@ Projectile::Projectile(ProjectileMoveBehavior* moveBehavior, ProjectileCollision
     spr_->setPixmap(pm_);
     setSprite(spr_);
 
-    // defaults
+    // defaults params
     stepFrequency_ = 50;
     stepSize_ = 15;
-    distanceMoved_ = 0;
-    range_ = 500;
+
+    setPointPos(start);    // set the position of the Projectile to start
+
+    // start moving
+    connect(timer_,&QTimer::timeout,this,&Projectile::step_);
+    timer_->start(stepFrequency());
 }
 
-/// Start moving the projectile.
-void Projectile::go(QPointF start, QPointF targetPoint, double range)
+Projectile::~Projectile()
 {
-    setStart(start);
-    setPointPos(start);
-    setTargetPoint(targetPoint);
-    setRange(range);
-
-    // connect timer
-    timer_ = new QTimer(this);
-    connect(timer_,SIGNAL(timeout()),this,SLOT(step_()));
-    timer_->start(this->stepFrequency());
+    delete timer_;
+    delete moveBehavior_;
+    delete collisionBehavior_;
 }
 
 QPointF Projectile::start()
 {
-    return this->start_;
-}
-
-void Projectile::setStart(QPointF start)
-{
-    this->start_ = start;
-}
-
-QPointF Projectile::targetPoint()
-{
-    return this->targetPoint_;
-}
-
-void Projectile::setTargetPoint(QPointF target)
-{
-    this->targetPoint_ = target;
-}
-
-double Projectile::range()
-{
-    return range_;
-}
-
-void Projectile::setRange(double range)
-{
-    range_ = range;
-}
-
-double Projectile::distanceTravelled()
-{
-    return distanceMoved_;
+    return start_;
 }
 
 int Projectile::stepFrequency()
 {
-    return this->stepFrequency_;
+    return stepFrequency_;
 }
 
 void Projectile::setStepFrequency(int f)
 {
-    this->stepFrequency_ = f;
+    stepFrequency_ = f;
 }
 
 void Projectile::addToNoDamageList(Entity *entity)
 {
-    this->noDamageList_.insert(entity);
+    noDamageList_.insert(entity);
 }
 
 bool Projectile::isInNoDamageList(Entity *entity)
 {
-    return this->noDamageList_.count(entity) > 0;
+    return noDamageList_.count(entity) > 0;
 }
 
 /// Returns a list of entities that the projectile is currently colliding with
 /// (at its current position).
-std::unordered_set<Entity *> Projectile::collidingEntities()
+std::unordered_set<QPointer<Entity>> Projectile::collidingEntities()
 {
-    std::unordered_set<Entity*> ents = map()->entities(this->pointPos());
+    std::unordered_set<Entity*> entities = map()->entities(this->pointPos());
+    entities.erase(this);     // make sure the projectile itself is not in this list
 
-    // make sure the projectile itself is not in this list
-    ents.erase(this);
+    // return QPointer<Entity>s so that they can be checked for null
+    std::unordered_set<QPointer<Entity>> ePointers;
+    for (Entity* e:entities){
+        QPointer<Entity> p = e;
+        ePointers.insert(p);
+    }
 
-    return ents;
+    return ePointers;
 }
 
 void Projectile::setStepSize(int size)
 {
-    this->stepSize_ = size;
+    stepSize_ = size;
 }
 
 int Projectile::stepSize()
 {
-    return this->stepSize_;
+    return stepSize_;
 }
 
 /// Executed every "step" the projectile needs to take.
@@ -127,19 +100,12 @@ int Projectile::stepSize()
 /// will be notified.
 void Projectile::step_()
 {
-    // move one step closer to target
-    double amountMoved = this->moveBehavior_->onMoveStep();
-    distanceMoved_ += amountMoved;
+    // call move behavior
+    moveBehavior_->onMoveStep();
 
-    // check for collisions
-    std::unordered_set<Entity*> cEntities = collidingEntities();
+    // call collision behavior (passing all collided entities)
+    std::unordered_set<QPointer<Entity>> cEntities = collidingEntities();
     if (cEntities.size() > 0){
         this->collisionBehavior_->onCollisionWith(cEntities);
-    }
-
-    // check if range reached
-    if (distanceMoved_ > range_){
-        timer_->disconnect();
-        this->rangeReachedBehavior_->onRangeReached();
     }
 }

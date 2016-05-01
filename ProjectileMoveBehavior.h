@@ -9,7 +9,7 @@ class ProjectileMoveBehavior
 {
     friend class Projectile;
 public:
-    virtual double onMoveStep() = 0;
+    virtual void onMoveStep() = 0;
 protected:
     Projectile* projectile_;
 };

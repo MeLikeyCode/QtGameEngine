@@ -33,6 +33,7 @@ Entity::Entity():
     // by default, entities can be damaged by anything
     setCanOnlyBeDamagedBy(false);
 
+    debugID_ = 1; // TODO, remove
 }
 
 /// When an Entity is deleted, it will delete all of its children, and then remove

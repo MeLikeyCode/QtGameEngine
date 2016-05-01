@@ -8,7 +8,6 @@
 #include "Slot.h"
 #include "ProjectileMoveBehaviorHoming.h"
 #include "ProjectileCollisionBehaviorDamage.h"
-#include "ProjectileRangeReachedBehaviorDestroy.h"
 #include "Projectile.h"
 #include "AIEntity.h"
 #include "WeaponSlot.h"

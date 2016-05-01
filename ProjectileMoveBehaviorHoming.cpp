@@ -7,7 +7,7 @@ ProjectileMoveBehaviorHoming::ProjectileMoveBehaviorHoming(Entity *entityToFollo
     this->entityToFollow_ = entityToFollow;
 }
 
-double ProjectileMoveBehaviorHoming::onMoveStep()
+void ProjectileMoveBehaviorHoming::onMoveStep()
 {
     // executed every time the HomingProectile has to move
 
@@ -23,6 +23,4 @@ double ProjectileMoveBehaviorHoming::onMoveStep()
     double newX = projectile_->pointPos().x() + line.dx();
     double newY = projectile_->pointPos().y() + line.dy();
     projectile_->setPointPos(QPointF(newX,newY));
-
-    return line.length();
 }

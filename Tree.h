@@ -38,7 +38,6 @@ private:
     bool hasUnvisitedChild(const Node& node) const;
     Node anUnvisitedChild(const Node& of) const;
     std::vector<Node> dfs(const Node& node, const Node& target, std::vector<Node> path) const;
-
 };
 
 #endif // TREE_H

@@ -4,7 +4,6 @@
 #include "Map.h"
 #include "ProjectileMoveBehaviorStraight.h"
 #include "ProjectileCollisionBehaviorDamage.h"
-#include "ProjectileRangeReachedBehaviorDestroy.h"
 
 Bow::Bow()
 {
@@ -36,10 +35,10 @@ void Bow::attack(QPointF targetPoint)
     Map* map = owningEntity->map();
 
     // create projectile behaviors
-    ProjectileMoveBehaviorStraight* mb = new ProjectileMoveBehaviorStraight();
-    ProjectileCollisionBehaviorDamage* cb = new ProjectileCollisionBehaviorDamage();
-    ProjectileRangeReachedBehaviorDestroy* rrb = new ProjectileRangeReachedBehaviorDestroy();
-    Projectile* projectile = new Projectile(mb,cb,rrb);
+    ProjectileMoveBehaviorStraight* mb = new ProjectileMoveBehaviorStraight(300,targetPoint);
+    ProjectileCollisionBehaviorDamage* cb = new ProjectileCollisionBehaviorDamage(5);
+    QPointF start = mapToMap(projectileSpawnPoint());
+    Projectile* projectile = new Projectile(start,mb,cb);
     map->addEntity(projectile);
 
     // add owner to no damage list
@@ -50,7 +49,4 @@ void Bow::attack(QPointF targetPoint)
     double rx = 0;
     double ry = projectile->sprite()->boundingRect().height()/2;
     projectile->setRotationPoint(QPointF(rx,ry));
-
-    // make it go
-    projectile->go(mapToMap(this->projectileSpawnPoint()),targetPoint,900);
 }

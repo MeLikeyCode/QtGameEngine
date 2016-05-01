@@ -1,19 +1,29 @@
 #include "ProjectileMoveBehaviorStraight.h"
 #include "Projectile.h"
 
-
-double ProjectileMoveBehaviorStraight::onMoveStep()
+ProjectileMoveBehaviorStraight::ProjectileMoveBehaviorStraight(double range, QPointF target):
+    range_(range),
+    target_(target),
+    distanceMoved_(0)
 {
-    // executed every time the projectile needs to move forward
 
-    QLineF line(projectile_->pointPos(),projectile_->targetPoint());
+}
+
+/// Executed every time the projectile is asked to move.
+/// Will move straight by the step size, if its moved far enough deletes projectile.
+void ProjectileMoveBehaviorStraight::onMoveStep()
+{
+    // move forward by step size
+    QLineF line(projectile_->pointPos(),target_);
+    projectile_->setFacingAngle(-1 * line.angle()); // make sure projectile faces target_
     line.setLength(projectile_->stepSize());
-    projectile_->setFacingAngle(-1 * line.angle());
-
     double newX = projectile_->pointPos().x() + line.dx();
     double newY = projectile_->pointPos().y() + line.dy();
-
     projectile_->setPointPos(QPointF(newX,newY));
+    distanceMoved_ += line.length();
 
-    return line.length();
+    // if moved far enough (distanceMoved exceeds range)
+    if (distanceMoved_ > range_){
+        projectile_->deleteLater(); // give collision a chance
+    }
 }

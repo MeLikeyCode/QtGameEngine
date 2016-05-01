@@ -2,6 +2,7 @@
 #define PROJECTILECOLLISIONBEHAVIOR_H
 
 #include <unordered_set>
+#include <QPointer>
 
 class Projectile;
 class Entity;
@@ -12,7 +13,7 @@ class ProjectileCollisionBehavior
 {
     friend class Projectile;
 public:
-    virtual void onCollisionWith(std::unordered_set<Entity*> entities) = 0;
+    virtual void onCollisionWith(std::unordered_set<QPointer<Entity>> entities) = 0;
 protected:
     Projectile* projectile_;
 };
