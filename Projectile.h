@@ -1,12 +1,12 @@
 #ifndef PROJECTILE_H
 #define PROJECTILE_H
 
-#include "Entity.h"
 #include <QObject>
 #include <QPointF>
 #include <unordered_set>
 #include <QTimer>
 #include <QPointer>
+#include "Entity.h"
 
 class ProjectileMoveBehavior;
 class ProjectileCollisionBehavior;

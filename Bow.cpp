@@ -4,6 +4,7 @@
 #include "Map.h"
 #include "ProjectileMoveBehaviorStraight.h"
 #include "ProjectileCollisionBehaviorDamage.h"
+#include "Sprite.h"
 
 Bow::Bow()
 {

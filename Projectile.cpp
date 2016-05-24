@@ -2,6 +2,7 @@
 #include "Map.h"
 #include "ProjectileMoveBehavior.h"
 #include "ProjectileCollisionBehavior.h"
+#include "Sprite.h"
 #include <QDebug> // TODO: remove, test
 
 Projectile::Projectile(QPointF start, ProjectileMoveBehavior* moveBehavior, ProjectileCollisionBehavior* collisionBehavior):
@@ -16,7 +17,8 @@ Projectile::Projectile(QPointF start, ProjectileMoveBehavior* moveBehavior, Proj
 
     // default sprite
     Sprite* spr_ = new Sprite();
-    QPixmap pm_ = QPixmap(":resources/graphics/weapons/axe.png");
+    QPixmap pm_ = QPixmap(":resources/graphics/weapons/spear.png");
+    //pm_ = pm_.scaled(100,100);
     spr_->setPixmap(pm_);
     setSprite(spr_);
 

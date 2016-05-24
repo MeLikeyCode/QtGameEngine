@@ -35,10 +35,11 @@ bool operator==(const Edge& lhs, const Edge& rhs);
 
 // Make Edge hashable
 namespace std {
-template <> struct hash<Edge>
+template <>
+struct hash<Edge> // full template specialization
 {
     size_t operator()(const Edge& edge) const{
-        return hash<Node>()(edge.from()) + hash<Node>()(edge.to());
+        return hash<Node>()(edge.from()) ^ hash<Node>()(edge.to());
     }
 };
 }

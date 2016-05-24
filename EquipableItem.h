@@ -2,6 +2,7 @@
 #define EQUIPABLEITEM_H
 
 #include "Item.h"
+#include <QPixmap>
 
 class QPointF;
 class Entity;

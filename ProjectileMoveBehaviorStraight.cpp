@@ -1,5 +1,6 @@
 #include "ProjectileMoveBehaviorStraight.h"
 #include "Projectile.h"
+#include <QLineF>
 
 ProjectileMoveBehaviorStraight::ProjectileMoveBehaviorStraight(double range, QPointF target):
     range_(range),

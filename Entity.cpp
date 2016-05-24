@@ -16,24 +16,22 @@
 
 /// Default constructor.
 Entity::Entity():
-    pathingMap_(1,1,63)    // default 1x1 filled (in body) PathingMap
+    pathingMap_(1,1,63),            // default 1x1 filled (in body) PathingMap
+    map_(nullptr),
+    children_(),
+    parent_(nullptr),
+    health_(10),                    // default health of 10
+    canOnlyBeDamagedBy_(),
+    canBeDamagedByAllExcept_(),
+    canOnlyBeDamagedByMode_(false), // by default, can be damaged by all
+    groupID_(0),                     // default group id of 0
+    isFollowedByCam_(false)
 {
     // constructor body
     // = some defaults=
-    map_ = nullptr;
-    sprite_ = nullptr;
-    parent_ = nullptr;
-    health_ = 10;
-    isFollowedByCam_ = false;
-
     // default sprite
     Sprite* spr = new Sprite();
     setSprite(spr);
-
-    // by default, entities can be damaged by anything
-    setCanOnlyBeDamagedBy(false);
-
-    debugID_ = 1; // TODO, remove
 }
 
 /// When an Entity is deleted, it will delete all of its children, and then remove

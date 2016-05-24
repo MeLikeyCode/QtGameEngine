@@ -1,6 +1,7 @@
 #include "ProjectileMoveBehaviorHoming.h"
 #include "Entity.h"
 #include "Projectile.h"
+#include <QLineF>
 
 ProjectileMoveBehaviorHoming::ProjectileMoveBehaviorHoming(Entity *entityToFollow)
 {

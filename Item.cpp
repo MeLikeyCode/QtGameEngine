@@ -1,6 +1,7 @@
 #include "Item.h"
 #include <cassert>
 #include "Inventory.h"
+#include "Sprite.h"
 
 Item::Item()
 {

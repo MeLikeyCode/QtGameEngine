@@ -2,7 +2,7 @@
 #define PROJECTILEMOVEBEHAVIORSTRAIGHT_H
 
 #include "ProjectileMoveBehavior.h"
-#include "QPointF"
+#include <QPointF>
 
 class ProjectileMoveBehaviorStraight : public ProjectileMoveBehavior
 {

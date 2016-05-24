@@ -2,14 +2,11 @@
 #define ENTITY_H
 
 #include "PathingMap.h"
-#include "Sprite.h"
-#include <QPointF>
 #include <unordered_map>
-#include "PlayerControlledMoveBehavior.h"
 #include <string>
 #include <unordered_set>
-#include <typeinfo>
-#include <typeindex>
+#include <typeinfo> // run time type identification (RTTI)
+#include <typeindex>// same ^
 #include <set>
 #include <QPointer>
 
@@ -17,7 +14,8 @@ class Map;
 class Inventory;
 class EquipableItem;
 class Item;
-
+class Sprite;
+class QPointF;
 
 /// An Entity is the base class for anything that can go inside a Map.
 /// @author Abdullah Aghazadah
@@ -95,8 +93,6 @@ public:
     bool isFollowedByCam();
     void setFollowedByCam(bool tf);
 
-    int debugID_; // TODO remove, num 1 used to make sure hasn't been freed
-
 private:
     // main attributes
     PathingMap pathingMap_;
@@ -111,10 +107,7 @@ private:
     bool canOnlyBeDamagedByMode_;
     int groupID_;
 
-
-
     bool isFollowedByCam_;
-
 };
 
 // make QPointer<Entity> hashable

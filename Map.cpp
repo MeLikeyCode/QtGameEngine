@@ -248,8 +248,8 @@ void Map::addEntity(Entity *entity){
     drawPathingMap(); // TODO test remove
 }
 
-/// Removes the specified entity from the map. If the Entity is not in the Map,
-/// does nothing.
+/// Removes the specified entity (and all of its children) from the map. If the
+/// Entity is not in the Map, does nothing.
 void Map::removeEntity(Entity *entity)
 {
     // Entity not in map
@@ -265,7 +265,13 @@ void Map::removeEntity(Entity *entity)
         scene()->removeItem(entity->sprite());
     }
 
+    // set its internal pointer
     entity->map_ = nullptr;
+
+    // recursively, remove its children as well
+    for (Entity* child:entity->children()){
+        removeEntity(child);
+    }
 
     // TODO: remove the leftover pathing of the Entity
 }
