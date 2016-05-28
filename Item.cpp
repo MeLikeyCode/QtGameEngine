@@ -3,11 +3,11 @@
 #include "Inventory.h"
 #include "Sprite.h"
 
-Item::Item()
+Item::Item():
+    inventory_(nullptr),
+    numOfCharges_(1)
 {
-    // initialize:
-    inventory_ = nullptr;
-    numOfCharges_ = 1;
+    // empty constructor body
 }
 
 /// Returns the Inventory that this Item belongs to. If this Item is on the

@@ -20,12 +20,15 @@ class Item: public Entity
     // set the private inventory_ pointer to nullptr
     friend class Inventory;
 public:
-    Item();
 
     Inventory* inventory();
     void setInventory(Inventory* inv);
     int numOfCharges();
     void setNumOfCharges(int n);
+
+protected:
+    Item(); // constructor protected so that objects cannot be instantiated, but subclasses
+            // can still use the constructor to set up the Item portion of the state
 
 private:
     Inventory* inventory_; // the Inventory, nullptr means on ground
