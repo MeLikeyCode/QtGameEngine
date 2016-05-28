@@ -11,7 +11,7 @@
 class ProjectileMoveBehavior;
 class ProjectileCollisionBehavior;
 
-/// Represents a projectile that moves a certain distance and collides with things
+/// Represents a projectile that moves a certain way and collides with things
 /// along the way. Strategy pattern is used to determine the behaviors of the projectile.
 /// Projectiles have 2 behaviors:
 /// -ProjectileMoveBehavior
@@ -19,11 +19,11 @@ class ProjectileCollisionBehavior;
 ///
 /// The ProjectileMoveBehavior determines how the projectile moves. It has a
 /// function that is executed each time the projectile is asked to move. This
-/// function should move the projectile in its own way (straight, squiggily, etc...).
+/// function moves the projectile in its own way (straight, squiggily, etc...).
 ///
 /// The ProjectileCollisionBehavior determines how the projectile responds when
 /// it collides with Entities. It has a function that recieves what it has collided
-/// with, the function should respond accordingly (weather it damages, heals, etc..).
+/// with, the function responds accordingly (weather it damages, heals, etc..).
 ///
 /// In order to create your own Projectiles, you should sublcass one or more of the
 /// behaviors to create your own behaviors. Then simply construct a projectile and
@@ -35,7 +35,7 @@ class ProjectileCollisionBehavior;
 /// The Entity that spawns a projectile should be added to this list to prevent
 /// the projectile from damaging him (addToNoDamageList(Entity*)).
 ///
-/// A Projectile starts moving immediately after it's constructed.
+/// To make the projectile start moving call its startMoving() function.
 ///
 /// @author Abdullah Aghazadah
 /// @date 2/21/16
@@ -45,11 +45,15 @@ class Projectile: public Entity
 public:
     Projectile(QPointF start,
                ProjectileMoveBehavior *moveBehavior,
-               ProjectileCollisionBehavior *collisionBehavior);
+               ProjectileCollisionBehavior *collisionBehavior,
+               Sprite *spr,
+               std::unordered_set<Entity*> noDamageList,
+               Map* map);
 
     ~Projectile();
 
     QPointF start();
+    void setStart(QPointF start);
 
     int stepFrequency();
     void setStepFrequency(int f);
@@ -57,10 +61,20 @@ public:
     void setStepSize(int size);
     int stepSize();
 
+    std::unordered_set<Entity*> noDamageList();
+    void setNoDamageList(std::unordered_set<Entity*> noDamageList);
     void addToNoDamageList(Entity* entity);
     bool isInNoDamageList(Entity* entity);
 
     std::unordered_set<QPointer<Entity>> collidingEntities();
+
+    ProjectileMoveBehavior* moveBehavior();
+    void setMoveBehavior(ProjectileMoveBehavior* moveBehavior);
+
+    ProjectileCollisionBehavior* collisionBehavior();
+    void setCollisionBehavior(ProjectileCollisionBehavior* collisionBehavior);
+
+    void startMoving();
 public slots:
     void step_();
 

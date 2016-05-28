@@ -5,32 +5,35 @@
 #include "Sprite.h"
 #include <QDebug> // TODO: remove, test
 
-Projectile::Projectile(QPointF start, ProjectileMoveBehavior* moveBehavior, ProjectileCollisionBehavior* collisionBehavior):
+Projectile::Projectile(QPointF start,
+                       ProjectileMoveBehavior* moveBehavior,
+                       ProjectileCollisionBehavior* collisionBehavior,
+                       Sprite* spr,
+                       std::unordered_set<Entity *> noDamageList, Map *map):
     start_(start),
     moveBehavior_(moveBehavior),
     collisionBehavior_(collisionBehavior),
+    noDamageList_(noDamageList),
     timer_(new QTimer(this))
 {
     // make sure behaviors act on this projectile
     moveBehavior->projectile_ = this;
     collisionBehavior->projectile_ = this;
 
-    // default sprite
-    Sprite* spr_ = new Sprite();
-    QPixmap pm_ = QPixmap(":resources/graphics/weapons/spear.png");
-    //pm_ = pm_.scaled(100,100);
-    spr_->setPixmap(pm_);
-    setSprite(spr_);
+    setSprite(spr);     // set the sprite
 
-    // defaults params
+    // make projectile's rotation point its center
+    double rx = 0;
+    double ry = sprite()->boundingRect().height()/2;
+    setRotationPoint(QPointF(rx,ry));
+
+    // default step frequency and size
     stepFrequency_ = 50;
     stepSize_ = 15;
 
-    setPointPos(start);    // set the position of the Projectile to start
+    setPointPos(start);    // set the position of the Projectile to the start
 
-    // start moving
-    connect(timer_,&QTimer::timeout,this,&Projectile::step_);
-    timer_->start(stepFrequency());
+    map->addEntity(this); // add the projectile to the map (could alternatively use setMap(map));
 }
 
 Projectile::~Projectile()
@@ -43,6 +46,11 @@ Projectile::~Projectile()
 QPointF Projectile::start()
 {
     return start_;
+}
+
+void Projectile::setStart(QPointF start)
+{
+    start_ = start;
 }
 
 int Projectile::stepFrequency()
@@ -82,6 +90,38 @@ std::unordered_set<QPointer<Entity>> Projectile::collidingEntities()
     return ePointers;
 }
 
+/// Returns the ProjectileMoveBehavior of the Projectile.
+ProjectileMoveBehavior *Projectile::moveBehavior()
+{
+    return moveBehavior_;
+}
+
+/// Sets the ProjectileMoveBehavior of the Projectile.
+void Projectile::setMoveBehavior(ProjectileMoveBehavior *moveBehavior)
+{
+    moveBehavior_ = moveBehavior;
+    moveBehavior_->projectile_ = this;
+}
+
+/// Returns the ProjectileCollisionsBehvaior of the Projectile.
+ProjectileCollisionBehavior *Projectile::collisionBehavior()
+{
+    return collisionBehavior_;
+}
+
+/// Sets the ProjectileCollisionBehavior of the Projectile.
+void Projectile::setCollisionBehavior(ProjectileCollisionBehavior *collisionBehavior)
+{
+    collisionBehavior_ = collisionBehavior;
+    collisionBehavior_->projectile_ = this;
+}
+
+void Projectile::startMoving()
+{
+    connect(timer_,&QTimer::timeout,this,&Projectile::step_);
+    timer_->start(stepFrequency());
+}
+
 void Projectile::setStepSize(int size)
 {
     stepSize_ = size;
@@ -90,6 +130,16 @@ void Projectile::setStepSize(int size)
 int Projectile::stepSize()
 {
     return stepSize_;
+}
+
+std::unordered_set<Entity *> Projectile::noDamageList()
+{
+    return noDamageList_;
+}
+
+void Projectile::setNoDamageList(std::unordered_set<Entity *> noDamageList)
+{
+    noDamageList_ = noDamageList;
 }
 
 /// Executed every "step" the projectile needs to take.

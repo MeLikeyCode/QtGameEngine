@@ -12,8 +12,12 @@ class Inventory;
 /// it will return nullptr.
 /// @author Abdullah Aghazadah
 /// @date 2/13/16
+/// // TODO: make Item uninstantiateable (abstract class)
 class Item: public Entity
 {
+    // An Item can be inside an Inventory.
+    // When an Item is removed from the Inventory, the Inventory needs to
+    // set the private inventory_ pointer to nullptr
     friend class Inventory;
 public:
     Item();

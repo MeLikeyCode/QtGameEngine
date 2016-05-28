@@ -5,11 +5,6 @@
 #include "Slot.h"
 #include "DynamicEntity.h"
 
-EquipableItem::EquipableItem()
-{
-    
-}
-
 // Returns true if the EquipableItem is equipped, otherwise false.
 bool EquipableItem::isEquipped()
 {

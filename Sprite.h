@@ -37,6 +37,7 @@ class Sprite:public QObject, public QGraphicsItem{
 public:
     // constructor
     Sprite(QGraphicsItem* parent=nullptr);
+    Sprite(QPixmap pixmap, QGraphicsItem* parent=nullptr);
 
     // readers
     QRectF boundingRect() const;

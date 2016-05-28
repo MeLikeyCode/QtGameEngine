@@ -13,12 +13,10 @@ class PointTargetItem;
 /// Represents a collection of Items that can belong to an Entity.
 class Inventory
 {
-    // DynamicEntity and Inventory reference each other.
-    // The association code is in the Entity, which needs private access
-    // to set the pointer in Inventory.
-    friend class DynamicEntity;
-public:
-    Inventory();
+    // DynamicEntity and Inventory reference each other. The association set up
+    // code is in the Dynamic Entity, which needs private access to set the
+    // pointer in Inventory.
+    friend class DynamicEntity; public: Inventory();
 
     Entity* entity();
 
@@ -31,7 +29,6 @@ public:
     std::unordered_set<EntityTargetItem*> getEntityTargetItems();
     std::unordered_set<PointTargetItem*> getPointTargetItems();
     std::unordered_set<Item*> getItems();
-
 private:
     Entity* entity_;
     std::unordered_set<Item*> items_;

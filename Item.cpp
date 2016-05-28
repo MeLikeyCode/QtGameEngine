@@ -10,7 +10,6 @@ Item::Item()
     numOfCharges_ = 1;
 }
 
-
 /// Returns the Inventory that this Item belongs to. If this Item is on the
 /// ground (i.e. does not belong to any Inventory), will return nullptr.
 Inventory *Item::inventory()

@@ -3,15 +3,14 @@
 
 #include "Item.h"
 
-/// Represents an Item that does not require any targets to use. It can simply
-/// be used.
+/// Abstract class that represents an Item that does not require any targets to
+/// use. It can simply be used.
 /// @author Abdullah Aghazadah
 /// @date 2/13/16
 class NoTargetItem : public Item
 {
 public:
-    NoTargetItem();
-    void use();
+    virtual void use() = 0;
 };
 
 #endif // NOTARGETITEM_H

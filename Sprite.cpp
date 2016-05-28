@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QGraphicsScene>
 
+/// Constructs a Sprite with no animations and no current frame.
 Sprite::Sprite(QGraphicsItem *parent):
     QGraphicsItem(parent)
 {
@@ -10,6 +11,23 @@ Sprite::Sprite(QGraphicsItem *parent):
     // initialize
     timer_ = new QTimer(this);
     pixmap_ = new QGraphicsPixmapItem((QPixmap(":resources/graphics/misc/defaultEntity.png")),this);
+    currentFrame_ = 0;
+    timesPlayed_ = 0;
+    timesToPlay_ = 0;
+
+    // origin
+    setTransformOriginPoint(pixmap_->boundingRect().width()/2,
+                            pixmap_->boundingRect().height()/2);
+}
+
+/// Constructs a Sprite with the specified pixmap being the currently displayed frame.
+Sprite::Sprite(QPixmap pixmap, QGraphicsItem *parent): QGraphicsItem(parent)
+{
+    // TODO, this and default ctor have duplicated code, take care of it
+    // constructor body
+    // initialize
+    timer_ = new QTimer(this);
+    pixmap_ = new QGraphicsPixmapItem(pixmap,this);
     currentFrame_ = 0;
     timesPlayed_ = 0;
     timesToPlay_ = 0;

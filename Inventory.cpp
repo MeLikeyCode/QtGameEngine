@@ -22,16 +22,17 @@ Entity *Inventory::entity()
 /// If the Item is in another Inventory, it will be removed from there first.
 void Inventory::addItem(Item *item)
 {
-    // item in this inventory
+    // if item is already in this inventory, do nothing
     if (contains(item)){
         return;
     }
 
-    // item in another inventory
+    // if item is in another inventory, remove it first
     if (item->inventory() != nullptr){
         item->inventory()->removeItem(item);
     }
 
+    // add to this inventory
     items_.insert(item);
     item->inventory_ = this;
 }

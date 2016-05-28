@@ -9,11 +9,10 @@ class Entity;
 class Slot;
 
 /// An abstract class that Represents an Item which is equipable.
+/// // TODO: make uninstantiateable (abstract)
 class EquipableItem : public Item
 {
 public:
-    EquipableItem();
-
     QPointF attachmentPoint();
     void setAttachmentPoint(QPointF point);
 

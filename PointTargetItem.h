@@ -5,14 +5,14 @@
 
 class QPointF;
 
-/// Represents an Item that can be used on some location (Point).
+/// An abstract class that represents an Item that can be used on some location
+/// (Point).
 /// @author Abdullah Aghazadah
 /// @date 2/13/16
 class PointTargetItem : public Item
 {
 public:
-    PointTargetItem();
-    void use(const QPointF& point);
+    virtual void use(const QPointF& point) = 0;
 };
 
 #endif // POINTTARGETENTITY_H
