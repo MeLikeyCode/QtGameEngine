@@ -52,9 +52,13 @@ public:
     void setMap(Map* toMap);
 
     QPointF pointPos() const;
+    double pointX() const;
+    double pointY() const;
     void setPointPos(const QPointF &pos);
     void setPointPos(std::string namedPos, const QPointF& pos);
     void setPointPos(const QPointF& moveThisPt, const QPointF& toThisPoint);
+    void setPointX(double x);
+    void setPointY(double y);
     Node cellPos();
     void setCellPos(const Node& cell);
 

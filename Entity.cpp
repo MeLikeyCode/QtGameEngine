@@ -91,6 +91,20 @@ QPointF Entity::pointPos() const{
     return sprite()->pos();
 }
 
+/// Returns the x position of the Entity relative to the parent, relative to
+/// Map if no parent.
+double Entity::pointX() const
+{
+    return pointPos().x();
+}
+
+/// Returns the y position of the Entity relative to the parent, relative to
+/// Map if no parent.
+double Entity::pointY() const
+{
+    return pointPos().y();
+}
+
 /// Sets the position of the Entity.
 ///
 /// The position is relative to the parent Entity. If there is no
@@ -131,6 +145,20 @@ void Entity::setPointPos(const QPointF &moveThisPt, const QPointF &toThisPoint)
     double newX = pointPos().x() + line.dx();
     double newY = pointPos().y() + line.dy();
     setPointPos(QPointF(newX,newY));
+}
+
+/// Sets the x position of the Entity.
+void Entity::setPointX(double x)
+{
+    QPointF newPoint(x,pointY());
+    setPointPos(newPoint);
+}
+
+/// Sets the y position of the Entity.
+void Entity::setPointY(double y)
+{
+    QPointF newPoint(pointX(),y);
+    setPointPos(newPoint);
 }
 
 /// Returns the cell that the Entity is in.

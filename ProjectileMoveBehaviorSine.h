@@ -2,7 +2,7 @@
 #define PROJECTILEMOVEBEHAVIORSINE_H
 
 #include "ProjectileMoveBehavior.h"
-#include <QPointF>
+#include <QLineF>
 
 class Entity;
 
@@ -19,9 +19,9 @@ private:
     double range_;
     QPointF target_;
 
-    bool startPosStored_;
-    QPointF start_;
-    double xPos_; // current x position in the *sine graph* (not map)
+    double distanceMoved_;
+    bool horMoveVecCalculated_;
+    QLineF horMoveVector_;
 };
 
 #endif // PROJECTILEMOVEBEHAVIORSINE_H

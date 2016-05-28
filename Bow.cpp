@@ -38,39 +38,35 @@ void Bow::attack(QPointF targetPoint)
     Entity* owningEntity = inventory()->entity();     // Entity that owns this bow
     Map* map = owningEntity->map();                   // Map that the owner is in
 
-//    // create a spear projectile
-//    QPointF startPos = mapToMap(projectileSpawnPoint());
-
-//    std::unordered_set<Entity*> noDamageList;
-//    noDamageList.insert(owningEntity);
-//    noDamageList.insert(this);
-
-//    SpearProjectile* spearProjectile = new SpearProjectile(startPos, targetPoint, 300, 5,
-//                                                           noDamageList, map);
-//    spearProjectile->startMoving();
-
-    // create projectile (using Projectile and instantiating all the behaviors, etc...)
-    ProjectileMoveBehaviorStraight* mb = new ProjectileMoveBehaviorStraight(1000,targetPoint);
-    ProjectileCollisionBehaviorDamage* cb = new ProjectileCollisionBehaviorDamage(5);
-
-    QPointF start = mapToMap(projectileSpawnPoint());
-
-    Sprite* sprite = new Sprite();
-    QPixmap pm = QPixmap(":resources/graphics/weapons/axe.png");
-    sprite->setPixmap(pm);
+    // create a spear projectile
+    QPointF startPos = mapToMap(projectileSpawnPoint());
 
     std::unordered_set<Entity*> noDamageList;
     noDamageList.insert(owningEntity);
     noDamageList.insert(this);
 
-    Projectile* projectile = new Projectile(start,mb,cb,sprite,noDamageList,map);
+    SpearProjectile* spearProjectile = new SpearProjectile(startPos, targetPoint, 300, 5,
+                                                           noDamageList, map);
+    spearProjectile->startMoving();
 
-    projectile->setStepSize(10);
-    projectile->setStepFrequency(13);
+//    // create projectile (using Projectile and instantiating all the behaviors, etc...)
+//    ProjectileMoveBehaviorSine* mb = new ProjectileMoveBehaviorSine(100,200,1000,targetPoint);
+//    ProjectileCollisionBehaviorDamage* cb = new ProjectileCollisionBehaviorDamage(5);
 
-    double rx = projectile->sprite()->boundingRect().width()/2;
-    double ry = projectile->sprite()->boundingRect().height()/2;
-    projectile->setRotationPoint(QPointF(rx,ry));
+//    QPointF start = mapToMap(projectileSpawnPoint());
 
-    projectile->startMoving();
+//    Sprite* sprite = new Sprite();
+//    QPixmap pm = QPixmap(":resources/graphics/weapons/spear.png");
+//    sprite->setPixmap(pm);
+
+//    std::unordered_set<Entity*> noDamageList;
+//    noDamageList.insert(owningEntity);
+//    noDamageList.insert(this);
+
+//    Projectile* projectile = new Projectile(start,mb,cb,sprite,noDamageList,map);
+
+//    projectile->setStepSize(10);
+//    projectile->setStepFrequency(13);
+
+//    projectile->startMoving();
 }

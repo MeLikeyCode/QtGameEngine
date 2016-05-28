@@ -22,11 +22,6 @@ Projectile::Projectile(QPointF start,
 
     setSprite(spr);     // set the sprite
 
-    // make projectile's rotation point its center
-    double rx = 0;
-    double ry = sprite()->boundingRect().height()/2;
-    setRotationPoint(QPointF(rx,ry));
-
     // default step frequency and size
     stepFrequency_ = 50;
     stepSize_ = 15;
