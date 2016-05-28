@@ -4,6 +4,7 @@
 #include <QGraphicsScene>
 #include <QDebug> // TODO: remove
 #include "Inventory.h"
+#include "DynamicEntity.h"
 
 void Spear::resetVariables()
 {

@@ -11,6 +11,7 @@
 #include "RangedWeaponSlot.h"
 #include "Map.h"
 #include "AsyncShortestPathFinder.h"
+#include "InventoryCell.h"
 
 #include <QMediaPlayer>
 
@@ -78,11 +79,17 @@ int main(int argc, char *argv[])
     //player->equipItem(spear,rightHand);
     player->equipItem(bow,leftHandRanged);
 
-    // play a sound
-    Sound* sound = new Sound("qrc:/resources/sounds/music.mp3");
-    sound->play(10);
+//    // play a sound
+//    Sound* sound = new Sound("qrc:/resources/sounds/music.mp3");
+//    sound->play(10);
 
-    // test asyn
+    // test InventoryCell
+    InventoryCell* ic = new InventoryCell();
+    ic->setPos(100,100);
+
+    game->addInventoryCell(ic);
+
+    ic->setItem(axe);
 
     return a.exec();
 }

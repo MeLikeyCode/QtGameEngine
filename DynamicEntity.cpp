@@ -68,14 +68,27 @@ Slot *DynamicEntity::slot(std::string name)
     return stringToSlot_[name];
 }
 
+/// Returns all the slots the Entity has.
+std::unordered_set<Slot *> DynamicEntity::getSlots()
+{
+    std::unordered_set<Slot*> allSlots;
+    for (std::pair<std::string,Slot*> stringSlotPair:stringToSlot_){
+        allSlots.insert(stringSlotPair.second);
+    }
+    return allSlots;
+}
+
 
 /// Attempts to equip the specified item at the specified Slot.
 /// Can only equip Items that are in the DynamicEntity's Inventory.
 void DynamicEntity::equipItem(EquipableItem *item, std::string slot)
 {
-    // make sure item is in the Entity's Inventory
-    assert(inventory_->contains(item));
-    item->equip(stringToSlot_[slot]);
+    // make sure Entity has the specified Slot
+    Slot* slotToEquipIn = this->slot(slot);
+    assert(slotToEquipIn != nullptr);
+
+    // equip the Item into the Slot
+    slotToEquipIn->equip(item);
 }
 
 /// Overload of DyanmicEntity::equipItem(EquipableItem*,std::string).
@@ -84,18 +97,16 @@ void DynamicEntity::equipItem(EquipableItem *item, Slot *slot)
     equipItem(item,slot->name());
 }
 
-/// Adds the specified item to the Inventory of the DynamicEntity.
-/// If the DynamicEntity has a Map, the Item will be added to the same Map (if it's
-/// not already in there).
+/// Adds the specified Item to the Inventory of the DynamicEntity.
 void DynamicEntity::addItemToInventory(Item *item)
 {
     inventory_->addItem(item);
+}
 
-    // add item to map
-    if (map() != nullptr){
-        map()->addEntity(item);
-    }
-
+/// Removes the specified Item from the Inventory of the DynamicEntity
+void DynamicEntity::removeItemFromInventory(Item *item)
+{
+    inventory_->removeItem(item);
 }
 
 /// Returns true if the Inventory of the DynamicEntity contains the specified

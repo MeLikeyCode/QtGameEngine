@@ -36,14 +36,12 @@ AIEntity::AIEntity()
     WeaponSlot* lhs = new WeaponSlot();
     lhs->setName("lhs");
     lhs->setPosition(namedPoint("left shoulder"));
-
     WeaponSlot* rhs = new WeaponSlot();
-    rhs->setName("rhs");
-    rhs->setPosition(namedPoint("right shoulder"));
-
+    lhs->setName("rhs");
+    lhs->setPosition(namedPoint("right shoulder"));
     WeaponSlot* cs = new WeaponSlot();
-    cs->setName("cs");
-    cs->setPosition(namedPoint("center"));
+    lhs->setName("cs");
+    lhs->setPosition(namedPoint("center"));
 
     addSlot(lhs);
     addSlot(rhs);

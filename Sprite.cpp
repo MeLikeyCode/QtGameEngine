@@ -74,6 +74,12 @@ std::string Sprite::playingAnimation()
     return playingAnimation_;
 }
 
+/// Returns the current frame of the Sprite.
+QPixmap Sprite::currentFrame() const
+{
+    return pixmap_->pixmap();
+}
+
 /// Adds the specified pixmap as a frame to the specified animation.
 ///
 /// If the animation already exists, the pixmap will simply be added as the next

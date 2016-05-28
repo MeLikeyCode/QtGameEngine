@@ -12,7 +12,7 @@ Inventory::Inventory()
 }
 
 /// Returns the Entity that owns this Inventory.
-Entity *Inventory::entity()
+DynamicEntity *Inventory::entity()
 {
     return entity_;
 }

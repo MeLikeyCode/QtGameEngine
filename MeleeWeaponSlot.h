@@ -9,6 +9,8 @@ class EquipableItem;
 class MeleeWeaponSlot : public Slot
 {
 public:
+    MeleeWeaponSlot();
+
     bool canBeEquipped(EquipableItem* item);
     void use();
 };

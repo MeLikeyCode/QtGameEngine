@@ -1,9 +1,14 @@
 #include "Slot.h"
 #include "EquipableItem.h"
+#include "Sprite.h"
+#include "DynamicEntity.h"
+#include <cassert>
 
-Slot::Slot()
+Slot::Slot():
+    item_(nullptr),
+    owner_(nullptr)
 {
-    this->owner_ = nullptr;
+    // empty constructor body
 }
 
 /// Sets the position of the Slot.
@@ -37,22 +42,52 @@ std::string Slot::name()
 /// Returns true if the Slot is filled (i.e. taken by an Item).
 bool Slot::isFilled()
 {
-    return filled_;
+    if (item_ != nullptr){
+        return true;
+    } else {
+        return false;
+    }
 }
 
 /// Equips the specified Item. Returns false if the Item can't be equiped in
 /// Slot.
 bool Slot::equip(EquipableItem *item)
 {
-    // simply delegate to item->equip()
-    return item->equip(this);
+    // make sure the item is in in the owners inventory
+    DynamicEntity* o = owner();
+    assert(o->inventoryContains(item));
+
+    // return false if the item cannot be equipped
+    if (!canBeEquipped(item)){
+        return false;
+    }
+
+    // =equip item
+    // make Item's sprite visible, make sure Item is located in proper location
+    item->sprite()->setVisible(true);
+    item->setParentEntity(owner());
+    item->setPointPos(item->attachmentPoint(),position());
+    // update references for both Slot and Item
+    item_ = item;
+    item->slotEquippedIn_ = this;
+
+    return true;
 }
 
 /// Unequips whatever Item is in this Slot.
 void Slot::unequip()
 {
+    // do nothing, if nothing is equiped in the slot
+    if (item_ == nullptr){
+        return;
+    }
+
+    // make the Item invisible
+    item_->sprite()->setVisible(false);
+
+    // update references
+    item_->slotEquippedIn_ = nullptr;
     item_ = nullptr;
-    filled_ = false;
 }
 
 /// Returns the EquipableItem housed in the Slot.

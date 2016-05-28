@@ -3,10 +3,13 @@
 
 #include "Slot.h"
 
+class EquipableItem;
 
 class WeaponSlot : public Slot
 {
 public:
+    WeaponSlot();
+
     bool canBeEquipped(EquipableItem* item);
     void use();
 };

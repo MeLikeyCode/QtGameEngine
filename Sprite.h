@@ -43,6 +43,7 @@ public:
     QRectF boundingRect() const;
     bool hasAnimation(std::string animation) const;
     std::string playingAnimation();
+    QPixmap currentFrame() const;
 
     // modifiers
     void addFrame(QPixmap frame, std::string toAnimation);

@@ -6,6 +6,7 @@
 
 class Map;
 class DynamicEntity;
+class InventoryCell;
 
 /// Represents an instance of the game.
 /// @author Abdullah Aghazadah
@@ -32,6 +33,7 @@ public:
 
     void setMap(Map* map);
     Map* map();
+    QPointF mapToMap(const QPoint &point);
 
     void setCamPos(QPointF to);
     void moveCam(QVector2D byVector);
@@ -45,7 +47,7 @@ public:
     void keyPressEvent(QKeyEvent* event);
     void keyReleaseEvent(QKeyEvent* event);
 
-    QPointF mapToMap(const QPoint &point);
+    void addInventoryCell(InventoryCell* cell);
 
     std::set<int> keysPressed();
     QPoint getMousePos();

@@ -8,41 +8,10 @@
 // Returns true if the EquipableItem is equipped, otherwise false.
 bool EquipableItem::isEquipped()
 {
-    return isEquipped_;
-}
-
-/// Equips the EquipableItem at the specified Slot.
-/// Returns true if equipped sucessfully, otherwise returns false (if the Slot
-/// can't equip the Item).
-bool EquipableItem::equip(Slot *slotToEquipIn)
-{
-    // make sure the Item is not on the ground
-    // only items in the inventory can be equipped
-    assert(inventory() != nullptr);
-
-    // equp, if it can be equipped
-    if (slotToEquipIn->canBeEquipped(this)){
-
-        sprite()->setVisible(true);
-        sprite()->setScale(1);
-        setParentEntity(slotToEquipIn->owner());
-        setPointPos(attachmentPoint(),slotToEquipIn->position());
-
-        slotToEquipIn->item_ = this;
-        slotToEquipIn->filled_ = true;
+    if (slotEquippedIn_ != nullptr){
         return true;
-    }
-    else {
+    } else {
         return false;
-    }
-
-}
-
-/// Unequips the EquipableItem. Does nothing if its already unequiped.
-void EquipableItem::unEquip()
-{
-    if (isEquipped()){
-        sprite()->setVisible(false);
     }
 }
 

@@ -3,6 +3,11 @@
 #include "MeleeWeapon.h"
 
 
+MeleeWeaponSlot::MeleeWeaponSlot()
+{
+    // empty ctor body
+}
+
 bool MeleeWeaponSlot::canBeEquipped(EquipableItem *item)
 {
     // MeeleeWeaponSlot can only equip MeleeWeapons

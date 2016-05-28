@@ -12,6 +12,9 @@ class Slot;
 /// // TODO: make uninstantiateable (abstract)
 class EquipableItem : public Item
 {
+    // Slot and EquipableItem reference each other. After an EquipableItem has been
+    // equipped in a Slot, the slot needs to update the slot_ pointer of the EquipableItem
+    friend class Slot;
 public:
     QPointF attachmentPoint();
     void setAttachmentPoint(QPointF point);
@@ -23,14 +26,13 @@ public:
 
     bool isEquipped();
 
-    bool equip(Slot* slotToEquipIn);
     void unEquip();
 
 protected:
     QPixmap pm_; // allows scaling of the Sprite's QPixmap
     Sprite* spr_;
     QPointF attachmentPoint_;
-    bool isEquipped_;
+    Slot* slotEquippedIn_;
 };
 
 #endif // EQUIPABLEITEM_H

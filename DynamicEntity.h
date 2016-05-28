@@ -8,6 +8,7 @@
 #include <unordered_map>
 #include "PlayerControlledMoveBehavior.h"
 #include "AsyncShortestPathFinder.h"
+#include "unordered_set"
 
 class MeleeWeapon; // TODO remove, test only
 class Map;
@@ -61,9 +62,11 @@ public:
 
     void addSlot(Slot* slot);
     Slot* slot(std::string name);
+    std::unordered_set<Slot*> getSlots();
     void equipItem(EquipableItem* item, std::string slot);
     void equipItem(EquipableItem* item, Slot* slot);
     void addItemToInventory(Item* item);
+    void removeItemFromInventory(Item* item);
     bool inventoryContains(Item* item);
 
 public slots:

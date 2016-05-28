@@ -4,21 +4,23 @@
 #include <unordered_set>
 
 class Item;
-class Entity;
+class DynamicEntity;
 class EquipableItem;
 class NoTargetItem;
 class EntityTargetItem;
 class PointTargetItem;
 
-/// Represents a collection of Items that can belong to an Entity.
+/// Represents a collection of Items that can belong to a DynamicEntity.
 class Inventory
 {
     // DynamicEntity and Inventory reference each other. The association set up
     // code is in the Dynamic Entity, which needs private access to set the
     // pointer in Inventory.
-    friend class DynamicEntity; public: Inventory();
+    friend class DynamicEntity;
+public:
+    Inventory();
 
-    Entity* entity();
+    DynamicEntity* entity();
 
     void addItem(Item* item);
     void removeItem(Item* item);
@@ -30,7 +32,7 @@ class Inventory
     std::unordered_set<PointTargetItem*> getPointTargetItems();
     std::unordered_set<Item*> getItems();
 private:
-    Entity* entity_;
+    DynamicEntity* entity_;
     std::unordered_set<Item*> items_;
 };
 

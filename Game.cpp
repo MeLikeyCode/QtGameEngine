@@ -13,6 +13,7 @@
 #include "WeaponSlot.h"
 #include "Axe.h"
 #include "Bow.h"
+#include "InventoryCell.h"
 
 /// Creates an instance of the Game with some default options.
 ///
@@ -134,22 +135,22 @@ void Game::mousePressEvent(QMouseEvent *event){
 //        spr->play("stand",1,1); // play stand anim
 //    }
 
-    // add rock (block cells at position)
-    if (event->button() == Qt::MiddleButton){
-        // add rock
-        QPixmap pic(":resources/graphics/terrain/rock.png");
-        QGraphicsPixmapItem* picI = new QGraphicsPixmapItem(pic);
-        picI->setPos(event->pos().x()/64 * 64,event->pos().y()/64 * 64);
-        map_->scene()->addItem(picI);
+//    // add rock (block cells at position)
+//    if (event->button() == Qt::MiddleButton){
+//        // add rock
+//        QPixmap pic(":resources/graphics/terrain/rock.png");
+//        QGraphicsPixmapItem* picI = new QGraphicsPixmapItem(pic);
+//        picI->setPos(event->pos().x()/64 * 64,event->pos().y()/64 * 64);
+//        map_->scene()->addItem(picI);
 
-        map_->pathingMap().fill(event->pos());
-        map_->drawPathingMap();
-    }
+//        map_->pathingMap().fill(event->pos());
+//        map_->drawPathingMap();
+//    }
 
-    // weapon 1 attack
-    if (event->button() == Qt::LeftButton){
-        player_->slot("leftHandRanged")->use();
-    }
+//    // weapon 1 attack
+//    if (event->button() == Qt::LeftButton){
+//        player_->slot("leftHandRanged")->use();
+//    }
 
 //    // weapon 2 attack
 //    if (event->button() == Qt::RightButton){
@@ -164,15 +165,15 @@ void Game::mousePressEvent(QMouseEvent *event){
 
 //    }
 
-    // create AIEntity (part of grp 1)
-    if (event->button() == Qt::RightButton){
-        // create enemy (will follow/attack its enemies)
-        AIEntity* e = new AIEntity();
-        e->setGroupID(1);
-        e->addEnemy(0);
-        e->setPointPos(mapToMap(event->pos()));
-        map()->addEntity(e);
-    }
+//    // create AIEntity (part of grp 1)
+//    if (event->button() == Qt::RightButton){
+//        // create enemy (will follow/attack its enemies)
+//        AIEntity* e = new AIEntity();
+//        e->setGroupID(1);
+//        e->addEnemy(0);
+//        e->setPointPos(mapToMap(event->pos()));
+//        map()->addEntity(e);
+//    }
 
 //    // create AIEntity (part of grp 2)
 //    if (event->button() == Qt::RightButton){
@@ -217,6 +218,7 @@ void Game::mousePressEvent(QMouseEvent *event){
 //        player_->spear2_->attackThrust();
 //    }
 
+    QGraphicsView::mousePressEvent(event);
 }
 
 void Game::mouseMoveEvent(QMouseEvent *event)
@@ -250,6 +252,11 @@ void Game::keyReleaseEvent(QKeyEvent *event)
     if (!event->isAutoRepeat()){
         keysPressed_.erase(event->key());
     }
+}
+
+void Game::addInventoryCell(InventoryCell *cell)
+{
+    scene()->addItem(cell);
 }
 
 /// Converts the specified point from Game coordinates to Map coordinates.
