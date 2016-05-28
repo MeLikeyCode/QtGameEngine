@@ -1,27 +1,32 @@
-#include "ProjectileMoveBehaviorStraight.h"
-#include "Projectile.h"
+#include "ProjectileMoveBehaviorSpinning.h"
 #include <QLineF>
+#include "Projectile.h"
 
-ProjectileMoveBehaviorStraight::ProjectileMoveBehaviorStraight(double range, QPointF target):
+ProjectileMoveBehaviorSpinning::ProjectileMoveBehaviorSpinning(double range, QPointF target):
     range_(range),
     target_(target),
     distanceMoved_(0),
+    rotation_(0),
     moveAngleCalculated_(false)
 {
-
+    // empty constructor body
 }
 
 /// Executed every time the projectile is asked to move.
-/// Will move straight by the step size, if its moved far enough deletes projectile.
-void ProjectileMoveBehaviorStraight::onMoveStep()
+/// Will move straight by the step size and rotate it.
+/// If the projectile has moved far enough, its asked to delete itself.
+void ProjectileMoveBehaviorSpinning::onMoveStep()
 {
     // calculate move angle
     if (!moveAngleCalculated_){
         QLineF line(projectile_->pointPos(),target_);
         moveAngle_ = line.angle();
-        projectile_->setFacingAngle(-1 * line.angle());
         moveAngleCalculated_ = true;
     }
+
+    // set next rotation
+    projectile_->setFacingAngle(rotation_);
+    rotation_ += 15;
 
     // move forward by step size
     QLineF line(projectile_->pointPos(),QPointF(-3,-3));
@@ -36,4 +41,5 @@ void ProjectileMoveBehaviorStraight::onMoveStep()
     if (distanceMoved_ > range_){
         projectile_->deleteLater(); // give collision a chance
     }
+
 }

@@ -58,7 +58,8 @@ SOURCES += main.cpp \
     AsyncShortestPathFinder.cpp \
     AIEntity.cpp \
     SpearProjectile.cpp \
-    ProjectileMoveBehaviorSine.cpp
+    ProjectileMoveBehaviorSine.cpp \
+    ProjectileMoveBehaviorSpinning.cpp
 
 HEADERS  += \
     Map.h \
@@ -106,7 +107,8 @@ HEADERS  += \
     AsyncShortestPathFinder.h \
     AIEntity.h \
     SpearProjectile.h \
-    ProjectileMoveBehaviorSine.h
+    ProjectileMoveBehaviorSine.h \
+    ProjectileMoveBehaviorSpinning.h
 
 RESOURCES += \
     res.qrc

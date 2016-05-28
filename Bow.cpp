@@ -5,6 +5,7 @@
 #include "ProjectileMoveBehaviorStraight.h" // TODO: remove, unused
 #include "ProjectileCollisionBehaviorDamage.h" // TODO: remove, unused
 #include "ProjectileMoveBehaviorSine.h" // TODO: remove, unused
+#include "ProjectileMoveBehaviorSpinning.h" // TODO: remove, unused
 #include "SpearProjectile.h"
 #include "Sprite.h"
 
@@ -49,13 +50,13 @@ void Bow::attack(QPointF targetPoint)
 //    spearProjectile->startMoving();
 
     // create projectile (using Projectile and instantiating all the behaviors, etc...)
-    ProjectileMoveBehaviorSine* mb = new ProjectileMoveBehaviorSine(40,110,600,targetPoint);
+    ProjectileMoveBehaviorStraight* mb = new ProjectileMoveBehaviorStraight(1000,targetPoint);
     ProjectileCollisionBehaviorDamage* cb = new ProjectileCollisionBehaviorDamage(5);
 
     QPointF start = mapToMap(projectileSpawnPoint());
 
     Sprite* sprite = new Sprite();
-    QPixmap pm = QPixmap(":resources/graphics/weapons/spear.png");
+    QPixmap pm = QPixmap(":resources/graphics/weapons/axe.png");
     sprite->setPixmap(pm);
 
     std::unordered_set<Entity*> noDamageList;
@@ -65,7 +66,11 @@ void Bow::attack(QPointF targetPoint)
     Projectile* projectile = new Projectile(start,mb,cb,sprite,noDamageList,map);
 
     projectile->setStepSize(10);
-    projectile->setStepFrequency(20);
+    projectile->setStepFrequency(13);
+
+    double rx = projectile->sprite()->boundingRect().width()/2;
+    double ry = projectile->sprite()->boundingRect().height()/2;
+    projectile->setRotationPoint(QPointF(rx,ry));
 
     projectile->startMoving();
 }
