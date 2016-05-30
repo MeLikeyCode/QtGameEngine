@@ -26,8 +26,6 @@ public:
 
     bool isEquipped();
 
-    void unEquip();
-
 protected:
     QPixmap pm_; // allows scaling of the Sprite's QPixmap
     Sprite* spr_;

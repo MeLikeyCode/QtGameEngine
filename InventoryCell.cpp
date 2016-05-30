@@ -11,6 +11,7 @@
 #include <cassert>
 #include <QPixmap>
 #include <QImage>
+#include <QGraphicsSceneMouseEvent>
 
 InventoryCell::InventoryCell(int width, int height, Item *item, QGraphicsItem *parent):
     QGraphicsPixmapItem(parent),
@@ -70,6 +71,12 @@ void InventoryCell::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
     // no item TODO: return
 
+    if (event->button() == Qt::RightButton){
+        // drop item on ground
+        item_->inventory()->removeItem(item_);
+        return;
+    }
+
     // NoTargetItem
     NoTargetItem* asNoTargetItem = dynamic_cast<NoTargetItem*>(item());
     if (asNoTargetItem){
@@ -95,5 +102,6 @@ void InventoryCell::mousePressEvent(QGraphicsSceneMouseEvent *event)
             firstViableSlot->unequip();
         }
         firstViableSlot->equip(asEquipableItem);
+        return;
     }
 }

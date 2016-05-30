@@ -104,10 +104,6 @@ void DynamicEntity::equipItem(EquipableItem *item, Slot *slot)
 void DynamicEntity::addItemToInventory(Item *item)
 {
     inventory_->addItem(item);
-
-    if (item->map() == nullptr && map() != nullptr){
-        map()->addEntity(item);
-    }
 }
 
 /// Removes the specified Item from the Inventory of the DynamicEntity

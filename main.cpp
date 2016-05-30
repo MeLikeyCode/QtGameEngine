@@ -13,6 +13,7 @@
 #include "AsyncShortestPathFinder.h"
 #include "InventoryViewer.h"
 #include "Inventory.h"
+#include "ItemRainOfSpears.h"
 
 #include <QMediaPlayer>
 
@@ -56,24 +57,24 @@ int main(int argc, char *argv[])
     leftHand->setName("leftHand");
     leftHand->setPosition(player->namedPoint("left shoulder"));
     player->addSlot(leftHand);
-    MeleeWeaponSlot* rightHand = new MeleeWeaponSlot();
-    rightHand->setName("rightHand");
-    rightHand->setPosition(player->namedPoint("right shoulder"));
-    player->addSlot(rightHand);
+//    MeleeWeaponSlot* rightHand = new MeleeWeaponSlot();
+//    rightHand->setName("rightHand");
+//    rightHand->setPosition(player->namedPoint("right shoulder"));
+//    player->addSlot(rightHand);
 //    RangedWeaponSlot* leftHandRanged = new RangedWeaponSlot();
 //    leftHandRanged->setName("leftHandRanged");
 //    leftHandRanged->setPosition(player->namedPoint("center"));
 //    player->addSlot(leftHandRanged);
 
-    // create some weapons (MeleeWeapons)
-    Axe* axe = new Axe();
-    player->addItemToInventory(axe);
+//    // create some weapons (MeleeWeapons)
+//    Axe* axe = new Axe();
+//    player->addItemToInventory(axe);
 
 //    Spear* spear = new Spear();
 //    player->addItemToInventory(spear);
 
-    Bow* bow = new Bow();
-    player->addItemToInventory(bow);
+//    Bow* bow = new Bow();
+//    player->addItemToInventory(bow);
 
     // equip weapons to slots
     // player->equipItem(axe,leftHand);
@@ -89,11 +90,18 @@ int main(int argc, char *argv[])
     qDebug() << player->inventory()->getItems().size();
     game->addInventoryViewer(v);
 
-    // test item pick up
+    // add some items to ground
     Spear* spear = new Spear();
     spear->setPointPos(QPointF(300,300));
     map->addEntity(spear);
 
+    Axe* axe = new Axe();
+    axe->setPointPos(QPointF(400,300));
+    map->addEntity(axe);
+
+    ItemRainOfSpears* ros = new ItemRainOfSpears();
+    ros->setPointPos(QPointF(500,500));
+    map->addEntity(ros);
 
     return a.exec();
 }

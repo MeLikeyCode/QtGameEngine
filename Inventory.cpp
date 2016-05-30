@@ -4,14 +4,17 @@
 #include "EntityTargetItem.h"
 #include "PointTargetItem.h"
 #include <cassert>
+#include "Sprite.h"
+#include "DynamicEntity.h"
+#include "Map.h"
 
-Inventory::Inventory()
+Inventory::Inventory():
+    entity_(nullptr)
 {
-    // initialize
-    entity_ = nullptr;
 }
 
-/// Returns the Entity that owns this Inventory.
+/// Returns the Entity that owns this Inventory. Returns nullptr if no Entity
+/// owns this inventory.
 DynamicEntity *Inventory::entity()
 {
     return entity_;
@@ -35,16 +38,43 @@ void Inventory::addItem(Item *item)
     // add to this inventory
     items_.insert(item);
     item->inventory_ = this;
+
+    // make sprite of item invisible (no longer on ground)
+    item->sprite()->setVisible(false);
+
+    // if the inventory belongs to an entity that is on a map, add item to map
+    DynamicEntity* owner = entity();
+    if (owner != nullptr){
+        Map* theMap = owner->map();
+        if (theMap != nullptr){
+            theMap->addEntity(item);
+        }
+    }
+
     emit itemAdded(item);
 }
 
 /// Removes the specified Item from the Inventory.
 /// If the Item is not in the Inventory, does nothing.
+/// If the Inventory belongs to an Entity who is in a map.
 void Inventory::removeItem(Item *item)
 {
     // item not in inventory
     if (!contains(item)){
         return;
+    }
+
+    // = remove the item
+    // if there is a map, drop it on the ground (make it visible)
+    DynamicEntity* owner = entity();
+    if (owner != nullptr){
+        Map* theMap = owner->map();
+        if ( theMap != nullptr){
+            item->sprite()->setVisible(true);
+            QPointF offSetFromEnt = owner->pointPos();
+            offSetFromEnt.setY(offSetFromEnt.y() + 100);
+            item->setPointPos(offSetFromEnt);
+        }
     }
 
     items_.erase(item);
