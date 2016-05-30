@@ -11,7 +11,8 @@
 #include "RangedWeaponSlot.h"
 #include "Map.h"
 #include "AsyncShortestPathFinder.h"
-#include "InventoryCell.h"
+#include "InventoryViewer.h"
+#include "Inventory.h"
 
 #include <QMediaPlayer>
 
@@ -59,10 +60,10 @@ int main(int argc, char *argv[])
     rightHand->setName("rightHand");
     rightHand->setPosition(player->namedPoint("right shoulder"));
     player->addSlot(rightHand);
-    RangedWeaponSlot* leftHandRanged = new RangedWeaponSlot();
-    leftHandRanged->setName("leftHandRanged");
-    leftHandRanged->setPosition(player->namedPoint("center"));
-    player->addSlot(leftHandRanged);
+//    RangedWeaponSlot* leftHandRanged = new RangedWeaponSlot();
+//    leftHandRanged->setName("leftHandRanged");
+//    leftHandRanged->setPosition(player->namedPoint("center"));
+//    player->addSlot(leftHandRanged);
 
     // create some weapons (MeleeWeapons)
     Axe* axe = new Axe();
@@ -77,19 +78,22 @@ int main(int argc, char *argv[])
     // equip weapons to slots
     // player->equipItem(axe,leftHand);
     //player->equipItem(spear,rightHand);
-    player->equipItem(bow,leftHandRanged);
+    // player->equipItem(bow,leftHandRanged);
 
 //    // play a sound
 //    Sound* sound = new Sound("qrc:/resources/sounds/music.mp3");
 //    sound->play(10);
 
-    // test InventoryCell
-    InventoryCell* ic = new InventoryCell();
-    ic->setPos(100,100);
+    // test inventoryviewoer
+    InventoryViewer* v = new InventoryViewer(500,128,player->inventory());
+    qDebug() << player->inventory()->getItems().size();
+    game->addInventoryViewer(v);
 
-    game->addInventoryCell(ic);
+    // test item pick up
+    Spear* spear = new Spear();
+    spear->setPointPos(QPointF(300,300));
+    map->addEntity(spear);
 
-    ic->setItem(axe);
 
     return a.exec();
 }

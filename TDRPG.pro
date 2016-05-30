@@ -60,7 +60,8 @@ SOURCES += main.cpp \
     SpearProjectile.cpp \
     ProjectileMoveBehaviorSine.cpp \
     ProjectileMoveBehaviorSpinning.cpp \
-    InventoryCell.cpp
+    InventoryCell.cpp \
+    InventoryViewer.cpp
 
 HEADERS  += \
     Map.h \
@@ -110,7 +111,8 @@ HEADERS  += \
     SpearProjectile.h \
     ProjectileMoveBehaviorSine.h \
     ProjectileMoveBehaviorSpinning.h \
-    InventoryCell.h
+    InventoryCell.h \
+    InventoryViewer.h
 
 RESOURCES += \
     res.qrc

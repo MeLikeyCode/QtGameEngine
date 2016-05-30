@@ -9,16 +9,23 @@
 #include "Slot.h"
 #include "EquipableItem.h"
 #include <cassert>
+#include <QPixmap>
+#include <QImage>
 
-InventoryCell::InventoryCell(QGraphicsItem *parent):
-    QGraphicsRectItem(parent)
+InventoryCell::InventoryCell(int width, int height, Item *item, QGraphicsItem *parent):
+    QGraphicsPixmapItem(parent),
+    width_(width),
+    height_(height),
+    item_(item)
 {
-    setRect(0,0,64,64);
+    // fill background with blue
+    QImage img(QSize(width,height),QImage::Format_RGB32);
+    img.fill(Qt::darkBlue);
+    setPixmap(QPixmap::fromImage(img));
 
-    QBrush brush;
-    brush.setColor(Qt::blue);
-    brush.setStyle(Qt::SolidPattern);
-    setBrush(brush);
+    if (item != nullptr){
+        setItem(item);
+    }
 }
 
 void InventoryCell::setItem(Item *item)
@@ -26,19 +33,27 @@ void InventoryCell::setItem(Item *item)
     // make sure the item is in an inventory
     assert(item->inventory() != nullptr);
 
-    // update graphics
-    QBrush brush;
-    QPixmap texture = item->sprite()->currentFrame().scaledToHeight(rect().height());
-    texture = texture.scaledToWidth(rect().width());
-    brush.setTexture(texture);
-    setBrush(brush);
-
     item_ = item;
+
+    // update graphics
+    QPixmap pixmap = item_->sprite()->currentFrame();
+    pixmap =  pixmap.scaled(width_,height_);
+    setPixmap(pixmap);
 }
 
 Item *InventoryCell::item()
 {
     return item_;
+}
+
+/// Sets the width and height of the InventoryCell.
+void InventoryCell::setSize(int width, int height)
+{
+    width_ = width;
+    height_ = height;
+
+    if (item_)
+    setPixmap(item_->sprite()->currentFrame().scaled(width,height));
 }
 
 void InventoryCell::mousePressEvent(QGraphicsSceneMouseEvent *event)

@@ -42,6 +42,9 @@ DynamicEntity::DynamicEntity():
 
     pf_ = new AsyncShortestPathFinder();
     connect(pf_,SIGNAL(pathFound(std::vector<QPointF>)),this,SLOT(followNewPath_(std::vector<QPointF>)));
+
+    // listen to events
+    connect(this,&DynamicEntity::collided,this,&DynamicEntity::onCollided);
 }
 
 DynamicEntity::~DynamicEntity()
@@ -101,6 +104,10 @@ void DynamicEntity::equipItem(EquipableItem *item, Slot *slot)
 void DynamicEntity::addItemToInventory(Item *item)
 {
     inventory_->addItem(item);
+
+    if (item->map() == nullptr && map() != nullptr){
+        map()->addEntity(item);
+    }
 }
 
 /// Removes the specified Item from the Inventory of the DynamicEntity
@@ -114,6 +121,12 @@ void DynamicEntity::removeItemFromInventory(Item *item)
 bool DynamicEntity::inventoryContains(Item *item)
 {
     return inventory_->contains(item);
+}
+
+/// Returns the inventory of the Entity.
+Inventory *DynamicEntity::inventory()
+{
+    return inventory_;
 }
 
 /// Causes the Entity to take 1 step closer to moving to its target point.
@@ -162,6 +175,12 @@ void DynamicEntity::moveStepAIControlled(){
 
     // take a step closer towards the target
     stepTowardsTarget();
+
+    // check collisions and emit
+    QRectF entityRect = sprite()->boundingRect();
+    entityRect.moveTopLeft(pointPos());
+    std::unordered_set<Entity*> collidingEntities = map()->entities(entityRect);
+    emit collided(collidingEntities);
 }
 
 /// Causes the Entity to take 1 step towards completing it's rotation.
@@ -376,6 +395,20 @@ void DynamicEntity::followNewPath_(std::vector<QPointF> path){
     sprite()->play("walk",-1,100);
 }
 
+/// Executed in response to the the Dynamic Entity colliding with something.
+void DynamicEntity::onCollided(std::unordered_set<Entity *> entities)
+{
+    for (Entity* entity:entities){
+        // item that is on the ground
+        Item* asItem = dynamic_cast<Item*>(entity);
+        if (asItem){
+            if (asItem->inventory() == nullptr){
+                addItemToInventory(asItem);
+            }
+        }
+    }
+}
+
 /// Tells the Entity to move to the specified position.
 ///
 /// Please ensure that the Entity has a "walk" animation.
@@ -536,4 +569,10 @@ void DynamicEntity::moveStepPlayerControlled()
 {
     // delegate to moveBehavior
     moveBehavior_->moveStep();
+
+    // check collisions and emit
+    QRectF entityRect = sprite()->boundingRect();
+    entityRect.moveTopLeft(pointPos());
+    std::unordered_set<Entity*> collidingEntities = map()->entities(entityRect);
+    emit collided(collidingEntities);
 }

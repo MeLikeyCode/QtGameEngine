@@ -3,10 +3,11 @@
 
 #include <QGraphicsView>
 #include <set>
+#include <unordered_set>
 
 class Map;
 class DynamicEntity;
-class InventoryCell;
+class InventoryViewer;
 
 /// Represents an instance of the game.
 /// @author Abdullah Aghazadah
@@ -47,7 +48,7 @@ public:
     void keyPressEvent(QKeyEvent* event);
     void keyReleaseEvent(QKeyEvent* event);
 
-    void addInventoryCell(InventoryCell* cell);
+    void addInventoryViewer(InventoryViewer *viewer);
 
     std::set<int> keysPressed();
     QPoint getMousePos();
@@ -59,11 +60,16 @@ public:
 
 public slots:
     void askEnemiesToMove(); // TODO delete test
+    void updatePosOverlays();
 
 private:
     // main private attributes
     Map* map_;
     std::set<int> keysPressed_;
+
+    QTimer* updateTimer_;
+
+    std::unordered_set<InventoryViewer*> inventoryViewers_;
 
     // TODO remove the following attributes, test attributes
     DynamicEntity* player_;

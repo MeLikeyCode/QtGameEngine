@@ -68,12 +68,17 @@ public:
     void addItemToInventory(Item* item);
     void removeItemFromInventory(Item* item);
     bool inventoryContains(Item* item);
+    Inventory* inventory();
+
+signals:
+    void collided(std::unordered_set<Entity*>);
 
 public slots:
     void moveStepPlayerControlled();
     void moveStepAIControlled();
     void rotateStep();
     void followNewPath_(std::vector<QPointF> path);
+    void onCollided(std::unordered_set<Entity*> entities);
 
 private:
     // main attributes

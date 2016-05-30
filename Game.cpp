@@ -13,7 +13,7 @@
 #include "WeaponSlot.h"
 #include "Axe.h"
 #include "Bow.h"
-#include "InventoryCell.h"
+#include "InventoryViewer.h"
 
 /// Creates an instance of the Game with some default options.
 ///
@@ -36,6 +36,10 @@ Game::Game(Map *map){
     QTimer* timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(askEnemiesToMove()));
     timer->start(4000);
+
+    updateTimer_ = new QTimer(this);
+    connect(updateTimer_,&QTimer::timeout,this,&Game::updatePosOverlays);
+    updateTimer_->start(0);
 }
 
 /// Launches the Game.
@@ -103,16 +107,6 @@ void Game::moveCamRight(double byAmount)
 void Game::mousePressEvent(QMouseEvent *event){
     // =TODO test code, remove=
 
-//    // move cam to pos
-//    if (event->button() == Qt::LeftButton){
-//        setCamPos(mapToMap(event->pos()));
-//    }
-
-//    // move cam by vec
-//    if (event->button() == Qt::LeftButton){
-//       moveCam(QVector2D(-10,-10));
-//    }
-
 //    // move test entities to target pos
 //    if (event->button() == Qt::LeftButton){
 //        for (DynamicEntity* entity:testEntities_){
@@ -147,10 +141,10 @@ void Game::mousePressEvent(QMouseEvent *event){
 //        map_->drawPathingMap();
 //    }
 
-//    // weapon 1 attack
-//    if (event->button() == Qt::LeftButton){
-//        player_->slot("leftHandRanged")->use();
-//    }
+    // weapon 1 attack
+    if (event->button() == Qt::MiddleButton){
+        player_->slot("leftHand")->use();
+    }
 
 //    // weapon 2 attack
 //    if (event->button() == Qt::RightButton){
@@ -165,15 +159,15 @@ void Game::mousePressEvent(QMouseEvent *event){
 
 //    }
 
-//    // create AIEntity (part of grp 1)
-//    if (event->button() == Qt::RightButton){
-//        // create enemy (will follow/attack its enemies)
-//        AIEntity* e = new AIEntity();
-//        e->setGroupID(1);
-//        e->addEnemy(0);
-//        e->setPointPos(mapToMap(event->pos()));
-//        map()->addEntity(e);
-//    }
+    // create AIEntity (part of grp 1)
+    if (event->button() == Qt::RightButton){
+        // create enemy (will follow/attack its enemies)
+        AIEntity* e = new AIEntity();
+        e->setGroupID(1);
+        e->addEnemy(0);
+        e->setPointPos(mapToMap(event->pos()));
+        map()->addEntity(e);
+    }
 
 //    // create AIEntity (part of grp 2)
 //    if (event->button() == Qt::RightButton){
@@ -254,9 +248,11 @@ void Game::keyReleaseEvent(QKeyEvent *event)
     }
 }
 
-void Game::addInventoryCell(InventoryCell *cell)
+void Game::addInventoryViewer(InventoryViewer *viewer)
 {
-    scene()->addItem(cell);
+    inventoryViewers_.insert(viewer);
+    viewer->setZValue(100); // ontop of everything else
+    scene()->addItem(viewer);
 }
 
 /// Converts the specified point from Game coordinates to Map coordinates.
@@ -292,5 +288,13 @@ void Game::askEnemiesToMove()
         if (e){
             e->moveTo(player_->pointPos());
         }
+    }
+}
+
+void Game::updatePosOverlays()
+{
+    for (InventoryViewer* viewer:inventoryViewers_){
+        QPointF newPos = mapToScene(viewer->viewPos().toPoint());
+        viewer->setPos(newPos);
     }
 }

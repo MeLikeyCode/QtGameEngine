@@ -35,6 +35,7 @@ void Inventory::addItem(Item *item)
     // add to this inventory
     items_.insert(item);
     item->inventory_ = this;
+    emit itemAdded(item);
 }
 
 /// Removes the specified Item from the Inventory.
@@ -48,6 +49,7 @@ void Inventory::removeItem(Item *item)
 
     items_.erase(item);
     item->inventory_ = nullptr;
+    emit itemRemoved(item);
 }
 
 /// Returns true if the Inventory contains the specified item.
