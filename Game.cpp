@@ -44,8 +44,10 @@ Game::Game(Map *map){
 
 /// Launches the Game.
 void Game::launch(){
-    showNormal(); // TODO: eventually should showFullscreen() (or parametrize to
+    //showNormal(); // TODO: eventually should showFullscreen() (or parametrize to
                   // allow launching normal or full screen
+
+    showFullScreen();
 }
 
 /// Sets the Map.
@@ -222,6 +224,10 @@ void Game::mouseMoveEvent(QMouseEvent *event)
 
 void Game::keyPressEvent(QKeyEvent *event)
 {
+    if (event->key() == Qt::Key_Escape){
+        close();
+    }
+
     if (!event->isAutoRepeat()){
         keysPressed_.insert(event->key());
     }
