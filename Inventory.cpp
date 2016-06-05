@@ -31,8 +31,9 @@ void Inventory::addItem(Item *item)
     }
 
     // if item is in another inventory, remove it first
-    if (item->inventory() != nullptr){
-        item->inventory()->removeItem(item);
+    Inventory* itemsInventory = item->inventory();
+    if (itemsInventory != nullptr && itemsInventory != this){
+        itemsInventory->removeItem(item);
     }
 
     // add to this inventory

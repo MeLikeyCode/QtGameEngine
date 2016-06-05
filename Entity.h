@@ -70,8 +70,6 @@ public:
     void setFacingAngle(double angle);
 
     std::unordered_set<Entity*> children();
-    void addChild(Entity* entity);
-    void removeChild(Entity* entity);
     void setParentEntity(Entity* parent);
     Entity* parent();
 

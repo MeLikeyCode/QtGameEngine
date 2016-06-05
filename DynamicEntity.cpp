@@ -391,7 +391,7 @@ void DynamicEntity::followNewPath_(std::vector<QPointF> path){
     sprite()->play("walk",-1,100);
 }
 
-/// Executed in response to the the Dynamic Entity colliding with something.
+/// Executed in response to the the DynamicEntity colliding with something.
 void DynamicEntity::onCollided(std::unordered_set<Entity *> entities)
 {
     for (Entity* entity:entities){

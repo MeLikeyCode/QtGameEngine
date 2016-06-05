@@ -19,4 +19,6 @@ SpearProjectile::SpearProjectile(QPointF start, QPointF target, double range, do
 
     // make projectile face target initially
     setFacingAngle(QLineF(start,target).angle() * -1);
+
+    setStepFrequency(15);
 }

@@ -62,7 +62,8 @@ SOURCES += main.cpp \
     ProjectileMoveBehaviorSpinning.cpp \
     InventoryCell.cpp \
     InventoryViewer.cpp \
-    ItemRainOfSpears.cpp
+    ItemRainOfSpears.cpp \
+    ItemTeleport.cpp
 
 HEADERS  += \
     Map.h \
@@ -114,7 +115,8 @@ HEADERS  += \
     ProjectileMoveBehaviorSpinning.h \
     InventoryCell.h \
     InventoryViewer.h \
-    ItemRainOfSpears.h
+    ItemRainOfSpears.h \
+    ItemTeleport.h
 
 RESOURCES += \
     res.qrc

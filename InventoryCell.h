@@ -3,16 +3,19 @@
 
 #include <QGraphicsPixmapItem>
 #include <QSize>
-#include <QMouseEvent>
+#include <QObject>
 
+class QGraphicsSceneMouseEvent;
 class Item;
+class Game;
 
-/// Represents a QGraphicsItem that visualizes and allows interaction with an Item
-/// in an Inventory.
-class InventoryCell: public QGraphicsPixmapItem
+/// Represents a QGraphicsItem that visualizes and allows interaction with an Item.
+/// The Item must be in an Inventory in order to be used by InventoryCell.
+class InventoryCell: public QObject, public QGraphicsPixmapItem
 {
+    Q_OBJECT
 public:
-    InventoryCell(int width, int height, Item* item = nullptr, QGraphicsItem*parent=nullptr);
+    InventoryCell(Game* game, int width, int height, Item* item = nullptr, QGraphicsItem*parent=nullptr);
 
     void setItem(Item* item);
     Item* item();
@@ -21,10 +24,14 @@ public:
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
+public slots:
+    void positionSelectedWhileUsingPointTargetItem(QPointF pos);
+
 private:
     int width_;
     int height_;
     Item* item_;
+    Game* game_;
 };
 
 #endif // INVENTORYCELL_H

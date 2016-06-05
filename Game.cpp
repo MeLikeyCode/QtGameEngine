@@ -25,7 +25,7 @@ Game::Game(Map *map){
     setMouseTracking(true);
 
     setScene(map->scene());
-    setFixedSize(1024,768); // TODO REMOVE HARD CODED NUMBER
+    setFixedSize(1024,768); // TODO REMOVE HARD CODED NUMBERS
     setSceneRect(0,0,1024,768);
 
     // disable QGraphicsView's scroll bars
@@ -40,14 +40,16 @@ Game::Game(Map *map){
     updateTimer_ = new QTimer(this);
     connect(updateTimer_,&QTimer::timeout,this,&Game::updatePosOverlays);
     updateTimer_->start(0);
+
+    setMouseMode(MouseMode::regular);
 }
 
 /// Launches the Game.
 void Game::launch(){
-    //showNormal(); // TODO: eventually should showFullscreen() (or parametrize to
+    showNormal(); // TODO: eventually should showFullscreen() (or parametrize to
                   // allow launching normal or full screen
 
-    showFullScreen();
+    //showFullScreen();
 }
 
 /// Sets the Map.
@@ -107,6 +109,27 @@ void Game::moveCamRight(double byAmount)
 }
 
 void Game::mousePressEvent(QMouseEvent *event){
+    // if in selectPosition MouseMode, emit positionSelected
+    if (mouseMode_ == MouseMode::selectPosition){
+        emit positionSelected(mapToMap(event->pos()));
+        return;
+    }
+
+    // if in selectEntity MouseMode and there is an entity under click,
+    // get that entity and emit entitySelected
+    if (mouseMode_ == MouseMode::selectEntity){
+        std::unordered_set<Entity*> entitiesUnderClick = map()->entities(mapToMap(event->pos()));
+        if (entitiesUnderClick.size() > 0){
+            emit entitySelected(*entitiesUnderClick.begin());
+            return;
+        }
+    }
+
+    // if control reaches here, we are in regular MouseMode, just let the event
+    // propogate to the correct QGraphicsItem, which will handle it
+    // TODO: someday, set up your own event propogation system at the Entity level
+    // as opposed to at the QGraphicsItem level
+
     // =TODO test code, remove=
 
 //    // move test entities to target pos
@@ -161,15 +184,15 @@ void Game::mousePressEvent(QMouseEvent *event){
 
 //    }
 
-//    // create AIEntity (part of grp 1)
-//    if (event->button() == Qt::RightButton){
-//        // create enemy (will follow/attack its enemies)
-//        AIEntity* e = new AIEntity();
-//        e->setGroupID(1);
-//        e->addEnemy(0);
-//        e->setPointPos(mapToMap(event->pos()));
-//        map()->addEntity(e);
-//    }
+    // create AIEntity (part of grp 1)
+    if (event->button() == Qt::RightButton){
+        // create enemy (will follow/attack its enemies)
+        AIEntity* e = new AIEntity();
+        e->setGroupID(1);
+        e->addEnemy(0);
+        e->setPointPos(mapToMap(event->pos()));
+        map()->addEntity(e);
+    }
 
 //    // create AIEntity (part of grp 2)
 //    if (event->button() == Qt::RightButton){
@@ -257,8 +280,7 @@ void Game::keyReleaseEvent(QKeyEvent *event)
 void Game::addInventoryViewer(InventoryViewer *viewer)
 {
     inventoryViewers_.insert(viewer);
-    viewer->setZValue(100); // ontop of everything else
-    scene()->addItem(viewer);
+    scene()->addItem(viewer->rectItem_);
 }
 
 /// Converts the specified point from Game coordinates to Map coordinates.
@@ -277,6 +299,33 @@ std::set<int> Game::keysPressed()
 QPoint Game::getMousePos()
 {
     return mapFromGlobal(cursor().pos());
+}
+
+/// Returns the MouseMode that the Game is in.
+Game::MouseMode Game::mouseMode()
+{
+    return mouseMode_;
+}
+
+/// Sets the MouseMode that the game should b in.
+/// Regular - Mouse events go to Item clicked on, they can respond accordingly.
+/// SelectPosition - Every click will trigger the PositionSelected signal
+/// SelectEntity - When an Entity is clicked, will trigger the EntitySelected signal.
+void Game::setMouseMode(Game::MouseMode mode)
+{
+    mouseMode_ = mode;
+
+    switch (mode){
+    case MouseMode::regular:
+        setCursor(Qt::ArrowCursor);
+        break;
+    case MouseMode::selectPosition:
+        setCursor(Qt::CrossCursor);
+        break;
+    case MouseMode::selectEntity:
+        QCursor cur(QPixmap(":/resources/graphics/misc/targetMouseCursor.png"));
+        setCursor(cur);
+    }
 }
 
 /// Sets the Entity controlled by the Player via keyboard and mouse.
@@ -301,6 +350,6 @@ void Game::updatePosOverlays()
 {
     for (InventoryViewer* viewer:inventoryViewers_){
         QPointF newPos = mapToScene(viewer->viewPos().toPoint());
-        viewer->setPos(newPos);
+        viewer->rectItem_->setPos(newPos);
     }
 }

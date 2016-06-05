@@ -22,15 +22,18 @@ void ItemRainOfSpears::use()
     assert(inventory() != nullptr);
 
     // make sure the inventory has an owner
-    assert(inventory()->entity() != nullptr);
-
     DynamicEntity* owner = inventory()->entity();
+    assert(owner != nullptr);
 
-    int NUM_SPEARS_TO_GENERATE = 15;
+    int NUM_SPEARS_TO_GENERATE = 10;
+    int X_OFFSET_RANGE = 1000; // number of pixels around the owner's x position to spawn
+                               // projectiles at
+    int Y_OFFSET = 1000; // number of pixels ABOVE the owner to spawn projectiles
+    int Y_OFFSET_RANGE = 600; // the y value "thickness" of possible y locations projectiles can spawn
     for (int i = 0, n = NUM_SPEARS_TO_GENERATE; i < n; i++){
         // get a random position some where above the entity.
-        int randomXoffset = rand() % 1200 - 600;
-        int randomYoffset = rand() % 1200 - 600;
+        int randomXoffset = (rand() % X_OFFSET_RANGE) - (X_OFFSET_RANGE/2);
+        int randomYoffset = rand() % Y_OFFSET_RANGE - Y_OFFSET;
         int posX = owner->pointPos().x() + randomXoffset;
         int posY = owner->pointPos().y() + randomYoffset;
         QPointF randomPos(posX,posY);
@@ -41,9 +44,10 @@ void ItemRainOfSpears::use()
         targetPos.setX(targetPos.x() + 10);
         std::unordered_set<Entity*> noDmgList;
         noDmgList.insert(owner);
+        noDmgList.insert(this);
         SpearProjectile* spearProjectile = new SpearProjectile(randomPos,
                                                                targetPos,
-                                                               600,
+                                                               2000,
                                                                5,
                                                                noDmgList,
                                                                owner->map());

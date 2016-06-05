@@ -5,6 +5,12 @@
 #include "Slot.h"
 #include "DynamicEntity.h"
 
+EquipableItem::EquipableItem():
+    slotEquippedIn_(nullptr)
+{
+
+}
+
 // Returns true if the EquipableItem is equipped, otherwise false.
 bool EquipableItem::isEquipped()
 {
@@ -13,6 +19,13 @@ bool EquipableItem::isEquipped()
     } else {
         return false;
     }
+}
+
+/// Returns the Slot that the EquipableItem is equipped in.
+/// Returns nullptr if not equipped in any slot.
+Slot *EquipableItem::slotEquippedIn()
+{
+    return slotEquippedIn_;
 }
 
 /// Returns the EquipableItem's attachment point. The attachment point is the

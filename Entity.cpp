@@ -40,20 +40,21 @@ Entity::Entity():
 /// You can kinda see how the "flow" of deletion happens :).
 Entity::~Entity()
 {
-    // if the entity has a parent, remove from parents list of children
-    Entity* parentEntity = parent();
-    if (parentEntity != nullptr){
-        parentEntity->removeChild(this);
-    }
-
-    // delete child entities (recursive)
+    // recursively delete child Entities
     for (Entity* entity: children()){
         delete entity;
     }
 
+    // if the entity has a parent, remove from parents list of children
+    Entity* parentEntity = parent();
+    if (parentEntity != nullptr){
+        parentEntity->children_.erase(this);
+    }
+
     // if the entity is in a map, remove it
-    if (map() != nullptr){
-        map()->removeEntity(this);
+    Map* entitysMap = map();
+    if (entitysMap != nullptr){
+        entitysMap->removeEntity(this);
     }
 
     delete sprite_;
@@ -281,51 +282,31 @@ std::unordered_set<Entity *> Entity::children()
     return children_;
 }
 
-void Entity::addChild(Entity *entity)
-{
-    children_.insert(entity);
-}
-
-void Entity::removeChild(Entity *entity)
-{
-    children_.erase(entity);
-}
-
 /// Sets the parent of this Entity.
-///
-/// When a parent Entity moves or rotates, all of its children do too.
-/// When a parent Entity gets added to a Map, all of its children do too.
+/// When a parent Entity moves, rotates, gets added to a Map, gets removed
+/// from a Map, or gets deleted, so do all of its children.
 void Entity::setParentEntity(Entity *parent)
 {
-    // if nullptr passed in and doesn't have a parent return
-    if (parent == nullptr && parent_ == nullptr){
-        return;
-    }
-
-    // if nullptr passed in, and has a parent, remove parent
-    if (parent == nullptr && parent_ != nullptr){
-        parent_->removeChild(this);
-        parent_ = nullptr;
-
+    // if nullptr passed in, make sure Entity has no parent
+    if (parent == nullptr){
+        if (parent_ != nullptr){
+            parent_->children_.erase(this);
+            parent_ = nullptr;
+        }
         sprite()->setParentItem(nullptr);
         return;
     }
 
-    // if parent passed in and has no parent
-    if (parent != nullptr && parent_ == nullptr){
+    // if parent passed in, set the parent of the Entity
+    if (parent != nullptr){
+        // if already has a parent, remove parent first
+        if (parent_ != nullptr){
+            setParentEntity(nullptr);
+        }
+        // set new parent
         parent_ = parent;
-        parent_->addChild(this);
+        parent_->children_.insert(this);
         sprite()->setParentItem(parent->sprite());
-        return;
-    }
-
-    // if parent passed in and has a parent
-    if (parent != nullptr && parent_ != nullptr){
-        parent_->removeChild(this);
-        parent_ = parent;
-        parent_->addChild(this);
-        sprite()->setParentItem(parent->sprite());
-        return;
     }
 }
 

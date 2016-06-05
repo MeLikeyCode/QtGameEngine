@@ -213,10 +213,10 @@ void Map::setTerrain(Terrain *to){
 
 }
 
-/// Adds the specified Entity to the Map and updates the PathingMap.
+/// Adds the specified Entity (and all of its children) to the Map and updates
+/// the PathingMap.
 /// If the Entity is already in the Map, does nothing.
 /// If the Entity is in another Map, it will be removed from that Map first.
-/// All of the Entities children are added to this map as well.
 void Map::addEntity(Entity *entity){
     // if the Entity is already in the Map, do nothing
     if (contains(entity)) {
@@ -224,8 +224,9 @@ void Map::addEntity(Entity *entity){
     }
 
     // if the Entity is in another Map, remove it first
-    if (entity->map() != nullptr ){
-        entity->map()->removeEntity(entity);
+    Map* entitysMap = entity->map();
+    if (entitysMap != nullptr && entitysMap != this ){
+        entitysMap->removeEntity(entity);
     }
 
     // add the entity to the list of entities
@@ -240,7 +241,7 @@ void Map::addEntity(Entity *entity){
     // update the PathingMap
     // entity->enablePathingMap(); // TODO work on
 
-    // add all child entities
+    // recursively add all child entities
     for (Entity* childEntity:entity->children()){
         addEntity(childEntity);
     }
@@ -257,21 +258,22 @@ void Map::removeEntity(Entity *entity)
         return;
     }
 
+    // recursively remove its children
+    for (Entity* child:entity->children()){
+        removeEntity(child);
+    }
+
     // remove from list
     entities_.erase(entity);
 
     // remove sprite (if it has one)
-    if (entity->sprite() != nullptr){
-        scene()->removeItem(entity->sprite());
+    Sprite* entitysSprite = entity->sprite();
+    if (entitysSprite != nullptr){
+        scene()->removeItem(entitysSprite);
     }
 
     // set its internal pointer
     entity->map_ = nullptr;
-
-    // recursively, remove its children as well
-    for (Entity* child:entity->children()){
-        removeEntity(child);
-    }
 
     // TODO: remove the leftover pathing of the Entity
 }

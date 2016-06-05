@@ -8,6 +8,7 @@
 class Map;
 class DynamicEntity;
 class InventoryViewer;
+class Entity;
 
 /// Represents an instance of the game.
 /// @author Abdullah Aghazadah
@@ -27,6 +28,9 @@ class InventoryViewer;
 class Game: public QGraphicsView{
     Q_OBJECT //todo delete test
 public:
+    // enums
+    enum class MouseMode { regular, selectPosition, selectEntity };
+
     // constructor
     Game(Map* map);
 
@@ -52,11 +56,18 @@ public:
 
     std::set<int> keysPressed();
     QPoint getMousePos();
+    MouseMode mouseMode();
+    void setMouseMode(MouseMode mode);
+
 
     void setPlayer(DynamicEntity* player);
     DynamicEntity* player();
 
     std::vector<DynamicEntity*> enemies_; // TODO delete test
+
+signals:
+    void positionSelected(QPointF pos);
+    void entitySelected(Entity* entity);
 
 public slots:
     void askEnemiesToMove(); // TODO delete test
@@ -66,6 +77,7 @@ private:
     // main private attributes
     Map* map_;
     std::set<int> keysPressed_;
+    MouseMode mouseMode_;
 
     QTimer* updateTimer_;
 

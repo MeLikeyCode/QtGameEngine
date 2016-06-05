@@ -82,8 +82,9 @@ void Slot::unequip()
         return;
     }
 
-    // make the Item invisible
+    // make the Item invisible/in proper place
     item_->sprite()->setVisible(false);
+    item_->setParentEntity(nullptr);
 
     // update references
     item_->slotEquippedIn_ = nullptr;

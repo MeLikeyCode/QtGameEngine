@@ -8,16 +8,20 @@
 #include "Inventory.h"
 #include "Slot.h"
 #include "EquipableItem.h"
+#include "PointTargetItem.h"
+#include "EntityTargetItem.h"
 #include <cassert>
 #include <QPixmap>
 #include <QImage>
 #include <QGraphicsSceneMouseEvent>
+#include "Game.h"
 
-InventoryCell::InventoryCell(int width, int height, Item *item, QGraphicsItem *parent):
+InventoryCell::InventoryCell(Game* game, int width, int height, Item *item, QGraphicsItem *parent):
     QGraphicsPixmapItem(parent),
     width_(width),
     height_(height),
-    item_(item)
+    item_(item),
+    game_(game)
 {
     // fill background with blue
     QImage img(QSize(width,height),QImage::Format_RGB32);
@@ -69,39 +73,89 @@ void InventoryCell::mousePressEvent(QGraphicsSceneMouseEvent *event)
     //  -have a PositionSelectedWhileInPointTargetMode, that will then use(position)
     // if item type is EntityTargetItem, similar
 
-    // no item TODO: return
+    Item* theItem = item();
 
+    // if no item, don't do anything
+    if (theItem == nullptr){
+        return;
+    }
+
+    // if right mouse button, drop the item clicked on the ground
     if (event->button() == Qt::RightButton){
+        // if its an equipeable item that is equiped, unequip it
+        EquipableItem* asEqupiableItem = dynamic_cast<EquipableItem*>(theItem);
+        if (asEqupiableItem){
+            if (asEqupiableItem->isEquipped()){
+                asEqupiableItem->slotEquippedIn()->unequip();
+            }
+        }
         // drop item on ground
-        item_->inventory()->removeItem(item_);
+        theItem->inventory()->removeItem(theItem);
         return;
     }
 
-    // NoTargetItem
-    NoTargetItem* asNoTargetItem = dynamic_cast<NoTargetItem*>(item());
-    if (asNoTargetItem){
-        asNoTargetItem->use();
-        return;
-    }
+    // if left mouse button, do something depending on the type of the Item
+    if (event->button() == Qt::LeftButton){
 
-    // EquipableItem
-    // traverse through all slots of entity looking for a slot that can equip this type of EquipableItem
-    // if there is already an item in that slot, swap em
-    EquipableItem* asEquipableItem = dynamic_cast<EquipableItem*>(item());
-    DynamicEntity* owner = item()->inventory()->entity();
-    Slot* firstViableSlot = nullptr;
-    for (Slot* slot:owner->getSlots()){
-        if (slot->canBeEquipped(asEquipableItem)){
-            firstViableSlot = slot;
-            break;
+        // NoTargetItem, use it
+        NoTargetItem* asNoTargetItem = dynamic_cast<NoTargetItem*>(theItem);
+        if (asNoTargetItem){
+            asNoTargetItem->use();
+            return;
         }
-    }
-    if (firstViableSlot){
-        // if there is already an item in that slot, take it out
-        if (firstViableSlot->isFilled()){
-            firstViableSlot->unequip();
+
+        // EquipableItem
+        // traverse through all slots of entity looking for a slot that can equip this type of EquipableItem
+        // if there is already an item in that slot, swap em
+        EquipableItem* asEquipableItem = dynamic_cast<EquipableItem*>(theItem);
+        DynamicEntity* owner = theItem->inventory()->entity();
+        Slot* viableSlot = nullptr;
+        for (Slot* slot:owner->getSlots()){
+            if (slot->canBeEquipped(asEquipableItem)){
+                viableSlot = slot;
+                break;
+            }
         }
-        firstViableSlot->equip(asEquipableItem);
-        return;
+        if (viableSlot){
+            // if there is already an item in that slot, take it out
+            if (viableSlot->isFilled()){
+                viableSlot->unequip();
+            }
+            viableSlot->equip(asEquipableItem);
+            return;
+        }
+
+        // PointTargetItem
+        // Put mouseMode of the game to select position, connect to mouseMode's
+        // positionSelected
+        PointTargetItem* asPointTargetItem = dynamic_cast<PointTargetItem*>(theItem);
+        if (asPointTargetItem){
+            game_->setMouseMode(Game::MouseMode::selectPosition);
+            QObject::disconnect(game_,&Game::positionSelected,this,&InventoryCell::positionSelectedWhileUsingPointTargetItem);
+            QObject::connect(game_,&Game::positionSelected,this,&InventoryCell::positionSelectedWhileUsingPointTargetItem);
+            return;
+        }
+
+
+        // EntityTargetItem
+        // Similar as above, except entitySelected mode instead of positionSelected mode
+
     }
+}
+
+/// Executed when a position has been selected, while using a PointTargetItem.
+void InventoryCell::positionSelectedWhileUsingPointTargetItem(QPointF pos)
+{
+    // make sure the Item is PointTargetItem
+    PointTargetItem* asPointTargetItem = dynamic_cast<PointTargetItem*>(item());
+    assert (asPointTargetItem != nullptr);
+
+    // use the item at the position
+    asPointTargetItem->use(pos);
+
+    // disconnect
+    QObject::disconnect(game_,&Game::positionSelected,this,&InventoryCell::positionSelectedWhileUsingPointTargetItem);
+
+    // set regular mouse mode
+    game_->setMouseMode(Game::MouseMode::regular);
 }

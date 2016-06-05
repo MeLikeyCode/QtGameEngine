@@ -14,6 +14,7 @@
 #include "InventoryViewer.h"
 #include "Inventory.h"
 #include "ItemRainOfSpears.h"
+#include "ItemTeleport.h"
 
 #include <QMediaPlayer>
 
@@ -86,7 +87,7 @@ int main(int argc, char *argv[])
 //    sound->play(10);
 
     // test inventoryviewoer
-    InventoryViewer* v = new InventoryViewer(500,128,player->inventory());
+    InventoryViewer* v = new InventoryViewer(game,500,128,player->inventory());
     qDebug() << player->inventory()->getItems().size();
     game->addInventoryViewer(v);
 
@@ -102,6 +103,10 @@ int main(int argc, char *argv[])
     ItemRainOfSpears* ros = new ItemRainOfSpears();
     ros->setPointPos(QPointF(500,500));
     map->addEntity(ros);
+
+    ItemTeleport* tel = new ItemTeleport();
+    tel->setPointPos(QPointF(600,600));
+    map->addEntity(tel);
 
     return a.exec();
 }

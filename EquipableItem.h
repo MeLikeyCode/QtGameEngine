@@ -16,6 +16,8 @@ class EquipableItem : public Item
     // equipped in a Slot, the slot needs to update the slot_ pointer of the EquipableItem
     friend class Slot;
 public:
+    EquipableItem();
+
     QPointF attachmentPoint();
     void setAttachmentPoint(QPointF point);
 
@@ -25,6 +27,7 @@ public:
     double width();
 
     bool isEquipped();
+    Slot* slotEquippedIn();
 
 protected:
     QPixmap pm_; // allows scaling of the Sprite's QPixmap
