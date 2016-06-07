@@ -12,7 +12,8 @@ Slot::Slot():
 }
 
 /// Sets the position of the Slot.
-/// The position determines where any Items equipped in the Slot appear.
+/// The position determines where any EquipableItems equipped in the Slot appear
+/// relative to the owning DynamicEntity.
 void Slot::setPosition(const QPointF &pos)
 {
     position_ = pos;

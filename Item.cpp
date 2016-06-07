@@ -20,13 +20,12 @@ Inventory *Item::inventory()
 /// Set the Inventory that this Item should belong to.
 /// Simply delegates to Inventory::addItem(this)
 /// @see Inventory::addItem(Item*)
-/// If you want to drop an Item on the ground, pass nullptr.
+/// If you want to drop an Item on the ground, do setInventory(nullptr).
 void Item::setInventory(Inventory *inv)
 {
     // set on ground
     if (inv == nullptr){
         sprite()->setVisible(true);         // make visible
-        sprite()->setScale(0.75);           // make smaller
         setPointPos(mapToMap(pointPos()));  // put pos relative to map
         setParentEntity(nullptr);
         inventory_ = inv;

@@ -6,13 +6,11 @@
 class Inventory;
 
 /// Abstract class that represents any Item (such as HealthPotion, Axe, etc..)
-/// that can be in an Inventory or lying around on the Map. An Item can either be
-/// in an Inventory or on the ground. If an item is in an Inventory, the Inventory()
-/// function will return that Inventory, otherwies if the Item is on the ground,
-/// it will return nullptr.
+/// that can be in an Inventory or lying around on the Map. If an item is in an
+/// Inventory, the Inventory() function will return that Inventory, otherwise
+/// if the Item is on the ground, it will return nullptr.
 /// @author Abdullah Aghazadah
 /// @date 2/13/16
-/// // TODO: make Item uninstantiateable (abstract class)
 class Item: public Entity
 {
     // An Item can be inside an Inventory.
@@ -20,7 +18,6 @@ class Item: public Entity
     // set the private inventory_ pointer to nullptr
     friend class Inventory;
 public:
-
     Inventory* inventory();
     void setInventory(Inventory* inv);
     int numOfCharges();
@@ -28,7 +25,7 @@ public:
 
 protected:
     Item(); // constructor protected so that objects cannot be instantiated, but subclasses
-            // can still use the constructor to set up the Item portion of the state
+            // can still use the constructor to set up the base class portion of the state
 
 private:
     Inventory* inventory_; // the Inventory, nullptr means on ground

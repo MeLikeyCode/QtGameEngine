@@ -20,5 +20,6 @@
         <file>graphics/weapons/trippleSpear.png</file>
         <file>graphics/misc/targetMouseCursor.png</file>
         <file>graphics/misc/teleport.png</file>
+        <file>graphics/misc/pushback.png</file>
     </qresource>
 </RCC>

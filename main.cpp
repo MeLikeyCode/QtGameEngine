@@ -15,6 +15,7 @@
 #include "Inventory.h"
 #include "ItemRainOfSpears.h"
 #include "ItemTeleport.h"
+#include "ItemPushback.h"
 
 #include <QMediaPlayer>
 
@@ -107,6 +108,10 @@ int main(int argc, char *argv[])
     ItemTeleport* tel = new ItemTeleport();
     tel->setPointPos(QPointF(600,600));
     map->addEntity(tel);
+
+    ItemPushback* pb = new ItemPushback();
+    pb->setPointPos(QPointF(700,700));
+    map->addEntity(pb);
 
     return a.exec();
 }

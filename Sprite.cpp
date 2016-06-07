@@ -54,9 +54,28 @@ void Sprite::play(std::string animation, int timesToPlay, int delayBetweenFrames
     timesToPlay_ = timesToPlay;
 
     // play the animation
-    connect(timer_,SIGNAL(timeout()),this,SLOT(nextFrame()));
+    connect(timer_,SIGNAL(timeout()),this,SLOT(nextFrame_()));
     timer_->start(delayBetweenFrames);
 
+}
+
+/// Sets the size (width and height) of the frames of the specified
+/// animation.
+void Sprite::setSize(std::string animation, int width, int height)
+{
+    assert(hasAnimation(animation)); // make sure the animation exists
+
+    // set size of each frame in the animation
+    std::vector<QPixmap> frames = animation_[animation];
+    for (QPixmap& pixmap:frames){
+        pixmap = pixmap.scaled(width,height);
+    }
+}
+
+/// Sets the size (width and height) of the currently displayed frame.
+void Sprite::setSize(int width, int height)
+{
+    pixmap_->setPixmap(pixmap_->pixmap().scaled(width,height));
 }
 
 QRectF Sprite::boundingRect() const{
@@ -143,7 +162,7 @@ void Sprite::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
 
 /// Displays the next frame of the current animation. Do not use. It is only
 /// meant to be used by the play() method.
-void Sprite::nextFrame(){
+void Sprite::nextFrame_(){
     // if we have played it enough times and we are not supposed to play it
     // forever, stop
     if (timesPlayed_ >= timesToPlay_ && timesToPlay_ != -1){

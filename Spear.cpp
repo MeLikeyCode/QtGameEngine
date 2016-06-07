@@ -23,18 +23,16 @@ Spear::Spear()
     setThrustSpeed(250);
 
     // default sprite
-    spr_ = new Sprite();
-    pm_ = QPixmap(":resources/graphics/weapons/spear.png");
-    spr_->setPixmap(pm_);
-    setSprite(spr_);
+    Sprite* spr = new Sprite(QPixmap(":resources/graphics/weapons/spear.png"));
+    setSprite(spr);
 
     // default tip (length and width/2)
     resetTip();
 
     // default attachment point
     QPointF pt;
-    pt.setX(pm_.width()/3);
-    pt.setY(pm_.height()/2);
+    pt.setX(spr->currentFrame().width()/3);
+    pt.setY(spr->currentFrame().height()/2);
     setAttachmentPoint(pt);
 
     timer_ = new QTimer(this);

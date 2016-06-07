@@ -25,7 +25,8 @@ Entity::Entity():
     canBeDamagedByAllExcept_(),
     canOnlyBeDamagedByMode_(false), // by default, can be damaged by all
     groupID_(0),                     // default group id of 0
-    isFollowedByCam_(false)
+    isFollowedByCam_(false),
+    invulnerable_(false)
 {
     // constructor body
     // = some defaults=
@@ -366,7 +367,7 @@ double Entity::health()
 void Entity::damage(Entity *entity, double amount)
 {
     // if can't damage the entity, return
-    if (!entity->canBeDamagedBy(this)){
+    if (!entity->canBeDamagedBy(this) || entity->isInvulnerable() ){
         return;
     }
 
@@ -410,6 +411,20 @@ bool Entity::canBeDamagedBy(Entity *entity)
 
     // entity should be able to dmage
     return true;
+}
+
+/// Returns true if the Entity is invulnerable. An invulnerable Entity cannot
+/// be damaged.
+bool Entity::isInvulnerable()
+{
+    return invulnerable_;
+}
+
+/// Pass true to make the Entity invulnerable, false to make it vulnearable.
+/// An invulnerable Entity cannot be damaged.
+void Entity::setInvulnerable(bool tf)
+{
+    invulnerable_ = tf;
 }
 
 void Entity::setGroupID(int id)

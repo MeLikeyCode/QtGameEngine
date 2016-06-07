@@ -88,6 +88,8 @@ public:
     void addCanBeDamagedBy(std::type_index typeOfEntity);
     void addCannotBeDamagedBy(std::type_index typeOfEntity);
     bool canBeDamagedBy(Entity* entity);
+    bool isInvulnerable();
+    void setInvulnerable(bool tf);
 
     void setGroupID(int id);
     int groupID();
@@ -108,6 +110,7 @@ private:
     std::set<std::type_index> canBeDamagedByAllExcept_;
     bool canOnlyBeDamagedByMode_;
     int groupID_;
+    bool invulnerable_;
 
     bool isFollowedByCam_;
 };

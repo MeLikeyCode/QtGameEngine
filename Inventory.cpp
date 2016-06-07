@@ -43,6 +43,8 @@ void Inventory::addItem(Item *item)
     // make sprite of item invisible (no longer on ground)
     item->sprite()->setVisible(false);
 
+    item->setInvulnerable(true);
+
     // if the inventory belongs to an entity that is on a map, add item to map
     DynamicEntity* owner = entity();
     if (owner != nullptr){
@@ -72,6 +74,7 @@ void Inventory::removeItem(Item *item)
         Map* theMap = owner->map();
         if ( theMap != nullptr){
             item->sprite()->setVisible(true);
+            item->setInvulnerable(false);
             QPointF offSetFromEnt = owner->pointPos();
             offSetFromEnt.setY(offSetFromEnt.y() + 100);
             item->setPointPos(offSetFromEnt);

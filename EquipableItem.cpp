@@ -29,7 +29,7 @@ Slot *EquipableItem::slotEquippedIn()
 }
 
 /// Returns the EquipableItem's attachment point. The attachment point is the
-/// position of the EquipableItem that is to be attached to the Entity.
+/// position of the EquipableItem that is to be attached to the DynamicEntity.
 QPointF EquipableItem::attachmentPoint()
 {
     return attachmentPoint_;
@@ -40,30 +40,4 @@ QPointF EquipableItem::attachmentPoint()
 void EquipableItem::setAttachmentPoint(QPointF point)
 {
     attachmentPoint_ = point;
-}
-
-/// Sets the length of the EquipableItem in pixels.
-void EquipableItem::setLength(double length)
-{
-    pm_ = pm_.scaled(length,pm_.height());
-    spr_->setPixmap(pm_);
-}
-
-/// Returns the length of the EquipableItem in pixels.
-double EquipableItem::length()
-{
-    return sprite()->boundingRect().width();
-}
-
-/// Sets the width of the EquipableItem in pixels.
-void EquipableItem::setWidth(double width)
-{
-    pm_ = pm_.scaled(pm_.width(),width);
-    spr_->setPixmap(pm_);
-}
-
-/// Returns the width of the EquipableItem in pixels.
-double EquipableItem::width()
-{
-    return sprite()->boundingRect().height();
 }

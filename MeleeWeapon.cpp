@@ -12,13 +12,13 @@ void MeleeWeapon::setTip(QPointF point)
     tip_ = point;
 }
 
-/// Sets the tip of the MeleeWeapon to be at x = length() and y = width()/2
-/// (i.e. at the very lengthwise, and middle widthwise of the sprite).
+/// Sets the tip of the MeleeWeapon to be at x = widthOfWeapon and
+/// y = heightOfWeapon/2.
 void MeleeWeapon::resetTip()
 {
     QPointF pt;
-    pt.setX(length());
-    pt.setY(width()/2);
+    pt.setX(sprite()->currentFrame().width());
+    pt.setY(sprite()->currentFrame().height()/2);
     setTip(pt);
 }
 

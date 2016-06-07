@@ -9,7 +9,6 @@ class Entity;
 class Slot;
 
 /// An abstract class that Represents an Item which is equipable.
-/// // TODO: make uninstantiateable (abstract)
 class EquipableItem : public Item
 {
     // Slot and EquipableItem reference each other. After an EquipableItem has been
@@ -21,17 +20,10 @@ public:
     QPointF attachmentPoint();
     void setAttachmentPoint(QPointF point);
 
-    void setLength(double length);
-    double length();
-    void setWidth(double width);
-    double width();
-
     bool isEquipped();
     Slot* slotEquippedIn();
 
-protected:
-    QPixmap pm_; // allows scaling of the Sprite's QPixmap
-    Sprite* spr_;
+private:
     QPointF attachmentPoint_;
     Slot* slotEquippedIn_;
 };

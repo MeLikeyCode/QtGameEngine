@@ -12,7 +12,7 @@ ProjectileCollisionBehaviorDamage::ProjectileCollisionBehaviorDamage(int damageA
 void ProjectileCollisionBehaviorDamage::onCollisionWith(std::unordered_set<QPointer<Entity>> entities)
 {
     // executed every time the projectile collides with some entities
-    // - traverse through, if not on nodamage list, kill it
+    // - traverse through, if not on nodamage list, damage it
     for (QPointer<Entity> entity:entities){
         if (entity.isNull() == false){
             if (!projectile_->isInNoDamageList(entity)){

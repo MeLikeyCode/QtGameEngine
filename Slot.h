@@ -12,7 +12,7 @@ class DynamicEntity;
 /// @date 2/17/16
 class Slot
 {
-    // Entity has an addSlot(Slot* s) function, that needs to update the Slot's owner_
+    // DynamicEntity has an addSlot(Slot* s) function, that needs to update the Slot's owner_
     // attribute
     friend class DynamicEntity;
 public:

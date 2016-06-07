@@ -63,7 +63,8 @@ SOURCES += main.cpp \
     InventoryCell.cpp \
     InventoryViewer.cpp \
     ItemRainOfSpears.cpp \
-    ItemTeleport.cpp
+    ItemTeleport.cpp \
+    ItemPushback.cpp
 
 HEADERS  += \
     Map.h \
@@ -116,7 +117,8 @@ HEADERS  += \
     InventoryCell.h \
     InventoryViewer.h \
     ItemRainOfSpears.h \
-    ItemTeleport.h
+    ItemTeleport.h \
+    ItemPushback.h
 
 RESOURCES += \
     res.qrc

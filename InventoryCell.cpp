@@ -139,7 +139,13 @@ void InventoryCell::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
         // EntityTargetItem
         // Similar as above, except entitySelected mode instead of positionSelected mode
-
+        EntityTargetItem* asEntityTargetItem = dynamic_cast<EntityTargetItem*>(theItem);
+        if (asEntityTargetItem){
+            game_->setMouseMode(Game::MouseMode::selectEntity);
+            QObject::disconnect(game_,&Game::entitySelected,this,&InventoryCell::entitySelectedWhileUsingEntityTargetItem);
+            QObject::connect(game_,&Game::entitySelected,this,&InventoryCell::entitySelectedWhileUsingEntityTargetItem);
+            return;
+        }
     }
 }
 
@@ -155,6 +161,20 @@ void InventoryCell::positionSelectedWhileUsingPointTargetItem(QPointF pos)
 
     // disconnect
     QObject::disconnect(game_,&Game::positionSelected,this,&InventoryCell::positionSelectedWhileUsingPointTargetItem);
+
+    // set regular mouse mode
+    game_->setMouseMode(Game::MouseMode::regular);
+}
+
+/// Executed when an entity has been selected, while using a EntitySelectItem.
+void InventoryCell::entitySelectedWhileUsingEntityTargetItem(Entity *ent)
+{
+    // use the item at the entity
+    EntityTargetItem* asEntityTargetItem = dynamic_cast<EntityTargetItem*>(item());
+    asEntityTargetItem->use(ent);
+
+    // disconnect
+    QObject::disconnect(game_,&Game::entitySelected,this,&InventoryCell::entitySelectedWhileUsingEntityTargetItem);
 
     // set regular mouse mode
     game_->setMouseMode(Game::MouseMode::regular);

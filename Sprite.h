@@ -40,7 +40,7 @@ public:
     Sprite(QPixmap pixmap, QGraphicsItem* parent=nullptr);
 
     // readers
-    QRectF boundingRect() const;
+    virtual QRectF boundingRect() const;
     bool hasAnimation(std::string animation) const;
     std::string playingAnimation();
     QPixmap currentFrame() const;
@@ -52,9 +52,11 @@ public:
     void stop();
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
     void play(std::string animation, int timesToPlay, int delayBetweenFrames);
+    void setSize(std::string animation, int width, int height);
+    void setSize(int width, int height);
 
 public slots:
-    void nextFrame();
+    void nextFrame_();
 
 private:
     // mapping of string : vector of pixmaps (an animation)

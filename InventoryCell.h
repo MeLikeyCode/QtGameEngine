@@ -8,6 +8,7 @@
 class QGraphicsSceneMouseEvent;
 class Item;
 class Game;
+class Entity;
 
 /// Represents a QGraphicsItem that visualizes and allows interaction with an Item.
 /// The Item must be in an Inventory in order to be used by InventoryCell.
@@ -26,6 +27,7 @@ public:
 
 public slots:
     void positionSelectedWhileUsingPointTargetItem(QPointF pos);
+    void entitySelectedWhileUsingEntityTargetItem(Entity* ent);
 
 private:
     int width_;

@@ -13,18 +13,16 @@
 Bow::Bow()
 {
     // default sprite
-    spr_ = new Sprite();
-    pm_ = QPixmap(":resources/graphics/weapons/bow.png");
-    spr_->setPixmap(pm_);
-    setSprite(spr_);
+    Sprite* spr = new Sprite(QPixmap(":resources/graphics/weapons/bow.png"));
+    setSprite(spr);
 
     // default projectile spawn point (center of sprite)
     resetProjectileSpawnPoint();
 
     // default attachment point
     QPointF pt;
-    pt.setX(pm_.width()/2);
-    pt.setY(pm_.height()/2);
+    pt.setX(spr->currentFrame().width()/2);
+    pt.setY(spr->currentFrame().height()/2);
     setAttachmentPoint(pt);
 
     // range
