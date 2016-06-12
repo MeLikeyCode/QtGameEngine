@@ -116,9 +116,28 @@ double Entity::pointY() const
 void Entity::setPointPos(const QPointF &pos){
     sprite()->setPos(pos);
 
+    // if is in a Map, move pathingmap
+    Map* entitysMap = map();
+    if (entitysMap != nullptr){
+        // clear old pathing map
+        QRectF clearRegion;
+        clearRegion.setTopLeft(QPointF(pointX()-10,pointY()-10));
+        clearRegion.setWidth(pathingMap().width());
+        clearRegion.setHeight(pathingMap().height());
+        std::vector<Node> cellsInRegion = entitysMap->pathingMap().cells(clearRegion);
+        for (Node cell:cellsInRegion){
+            entitysMap->pathingMap().unfill(cell);
+        }
+
+        // add new region
+        entitysMap->pathingMap().setFilling(pointPos(),pathingMap());
+
+        //entitysMap->drawPathingMap(); // TODO: remove test
+    }
+
     // if followed by the camear, tell game cam to move here
     if (isFollowedByCam()){
-        map()->game()->setCamPos(this->pointPos());
+        entitysMap->game()->setCamPos(this->pointPos());
     }
 }
 

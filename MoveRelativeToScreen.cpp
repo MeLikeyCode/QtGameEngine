@@ -27,7 +27,7 @@ void MoveRealtiveToScreen::moveStep()
         double newY = entity_->pointPos().y() - entity_->stepSize();
         QPointF newPt(newX,newY);
 
-        // move if the newPt is free
+        // move if the newPt is free (or if its w/in the same cell)
         if (entity_->canFit(newPt)){
             entity_->setPointPos(newPt);
 
