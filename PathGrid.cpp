@@ -189,7 +189,9 @@ std::vector<Node> PathGrid::unfilledNeighbors(const Node &of) const{
 
 /// Returns a Graph representation of the PathGrid.
 ///
-/// More specifically, returns a Graph containing all the _unfilled_ Nodes and the Edges between them.
+/// More specifically, returns a Graph containing all the *unfilled* Nodes and the Edges between them.
+/// The start and end node will be included in the graph even if they are filled,
+/// that is why they must be passed to this function.
 Graph PathGrid::toGraph(const Node& start, const Node& end) const{
     Graph g;
 

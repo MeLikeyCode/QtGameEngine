@@ -17,7 +17,7 @@ public:
     // constructors
     PathGrid();
     PathGrid(int numCols,  int numRows);
-    PathGrid(const PathGrid& copy) = default;
+    PathGrid(const PathGrid& copy) = default; // make compiler generate default copy ctor
 
     // readers ("getters")
     bool filled(const Node& node) const;
