@@ -186,21 +186,18 @@ std::vector<Node> PathGrid::unfilledNeighbors(const Node &of) const{
 /// Returns a Graph representation of the PathGrid.
 ///
 /// More specifically, returns a Graph containing all the _unfilled_ Nodes and the Edges between them.
-Graph PathGrid::toGraph() const{
+Graph PathGrid::toGraph(const Node& start, const Node& end) const{
     Graph g;
 
-    // add all nodes
+    // add all unfilled nodes (add start/end Nodes even if they are filled)
     for (Node node:nodes()){
-        g.addNode(node);
+        if (!filled(node) || node == start || node == end){
+            g.addNode(node);
+        }
     }
 
-    // add all edges
+    // add all edges between unfilled nodes
     for (Node node:g.nodes()){
-        // skip if the node is filled
-        if (filled(node)){
-            continue;
-        }
-
         // get all the neighbors of the node
         std::vector<Node> neighbors = unfilledNeighbors(node);
         for (Node neighbor:neighbors){
@@ -214,7 +211,7 @@ Graph PathGrid::toGraph() const{
 
 /// Returns a vector of Nodes that represents the shortest path between the specified Nodes.
 std::vector<Node> PathGrid::shortestPath(const Node &from, const Node &to) const{
-    return toGraph().shortestPath(from,to);
+    return toGraph(from,to).shortestPath(from,to);
 }
 
 /// Returns a vector of all the Nodes in the i-eth column.

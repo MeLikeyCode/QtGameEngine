@@ -154,22 +154,22 @@ void Game::mousePressEvent(QMouseEvent *event){
 //        spr->play("stand",1,1); // play stand anim
 //    }
 
-//    // add rock (block cells at position)
-//    if (event->button() == Qt::MiddleButton){
-//        // add rock
+    // add rock (block cells at position)
+    if (event->button() == Qt::MiddleButton){
+        // add rock
 //        QPixmap pic(":resources/graphics/terrain/rock.png");
 //        QGraphicsPixmapItem* picI = new QGraphicsPixmapItem(pic);
 //        picI->setPos(event->pos().x()/64 * 64,event->pos().y()/64 * 64);
 //        map_->scene()->addItem(picI);
 
-//        map_->pathingMap().fill(event->pos());
-//        map_->drawPathingMap();
-//    }
-
-    // weapon 1 attack
-    if (event->button() == Qt::MiddleButton){
-        player_->slot("leftHand")->use();
+        map_->pathingMap().fill(mapToMap(event->pos()));
+        map_->drawPathingMap();
     }
+
+//    // weapon 1 attack
+//    if (event->button() == Qt::MiddleButton){
+//        player_->slot("leftHand")->use();
+//    }
 
 //    // weapon 2 attack
 //    if (event->button() == Qt::RightButton){

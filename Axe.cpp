@@ -21,7 +21,7 @@ Axe::Axe()
     Sprite* spr = new Sprite(QPixmap(":resources/graphics/weapons/axe.png"));
     setSprite(spr);
 
-    // default tip (length and width/2)
+    // default tip (spriteWidth and spriteHeight/2)
     resetTip();
 
     // default attachment point

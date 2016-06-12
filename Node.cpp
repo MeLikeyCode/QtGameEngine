@@ -34,3 +34,9 @@ void Node::setY( int y){
 bool operator==(const Node &lhs, const Node &rhs){
     return (lhs.x() == rhs.x()) && (lhs.y() == rhs.y());
 }
+
+/// Returns true if the two Nodes do not have the same x and y values.
+bool operator!=(const Node &lhs, const Node &rhs)
+{
+    return !(operator==(lhs,rhs));
+}

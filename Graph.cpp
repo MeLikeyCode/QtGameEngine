@@ -141,6 +141,10 @@ bool Graph::contains(const Edge &edge) const{
 /// Returns a vector of Nodes that represent the shortest path between the specified Nodes.
 /// Uses A* pathfinding algorithm.
 std::vector<Node> Graph::shortestPath(const Node &from, const Node &to) const{
+    // make sure from and to are in the graph
+    assert(contains(from));
+    assert(contains(to));
+
     // return spt(from).pathTo(to);
 
     // consider lazy evaluation (retrieving stored value, short circuiting, etc..)

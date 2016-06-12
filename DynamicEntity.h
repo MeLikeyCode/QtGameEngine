@@ -75,9 +75,9 @@ signals:
 
 public slots:
     void moveStepPlayerControlled();
-    void moveStepAIControlled();
+    void moveStepAIControlled_();
     void rotateStep();
-    void followNewPath_(std::vector<QPointF> path);
+    void followPath_(std::vector<QPointF> path);
     void onCollided(std::unordered_set<Entity*> entities);
 
 private:

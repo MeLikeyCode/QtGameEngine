@@ -239,7 +239,7 @@ void Map::addEntity(Entity *entity){
     entity->map_ = this;
 
     // update the PathingMap
-    // entity->enablePathingMap(); // TODO work on
+    pathingMap().setFilling(entity->pointPos(),entity->pathingMap());
 
     // recursively add all child entities
     for (Entity* childEntity:entity->children()){

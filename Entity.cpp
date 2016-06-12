@@ -33,6 +33,8 @@ Entity::Entity():
     // default sprite
     Sprite* spr = new Sprite();
     setSprite(spr);
+
+    pathingMap_.fill(Node(0,0));
 }
 
 /// When an Entity is deleted, it will delete all of its children, and then remove
@@ -247,34 +249,6 @@ bool Entity::canFit(const QPointF &atPos)
     // see if that region is free in the map
     return map()->pathingMap().free(checkRegion);
 
-}
-
-/// Disables the Entity's PathingMap.
-///
-/// Essentially, clears the region in the Map that corresponds to the Entity's
-/// PathingMap.
-void Entity::disablePathingMap(){
-    QRectF clearRegion;
-    clearRegion.setTopLeft(pointPos());
-    clearRegion.setWidth(pathingMap().width());
-    clearRegion.setHeight(pathingMap().height());
-    std::vector<Node> cellsInRegion = map()->pathingMap().cells(clearRegion);
-    for (Node cell:cellsInRegion){
-        map()->pathingMap().unfill(cell);
-    }
-
-    // TODO test remove
-    map()->drawPathingMap();
-}
-
-/// Enables the Entity's PathingMap.
-///
-/// Essentially, "draws" the PathingMap of the Entity on the Map's PathingMap.
-void Entity::enablePathingMap(){
-    map()->pathingMap().setFilling(pointPos(),pathingMap());
-
-    // TODO test, remove
-    map()->drawPathingMap();
 }
 
 /// Returns the children of this Entity.

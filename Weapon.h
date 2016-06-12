@@ -3,6 +3,8 @@
 
 #include "EquipableItem.h"
 
+/// An abstract class that represents an EquipableItem that can
+/// attack.
 class Weapon : public EquipableItem
 {
 public:

@@ -49,7 +49,7 @@ private:
     int numRows_;
 
     // helper
-    Graph toGraph() const;
+    Graph toGraph(const Node &start, const Node &end) const;
 
 };
 

@@ -41,7 +41,7 @@ DynamicEntity::DynamicEntity():
     timeStuck_ = 0;
 
     pf_ = new AsyncShortestPathFinder();
-    connect(pf_,SIGNAL(pathFound(std::vector<QPointF>)),this,SLOT(followNewPath_(std::vector<QPointF>)));
+    connect(pf_,SIGNAL(pathFound(std::vector<QPointF>)),this,SLOT(followPath_(std::vector<QPointF>)));
 
     // listen to events
     connect(this,&DynamicEntity::collided,this,&DynamicEntity::onCollided);
@@ -126,7 +126,7 @@ Inventory *DynamicEntity::inventory()
 }
 
 /// Causes the Entity to take 1 step closer to moving to its target point.
-void DynamicEntity::moveStepAIControlled(){
+void DynamicEntity::moveStepAIControlled_(){
     // if there are no points to follow, don't do anything
     if (pointsToFollow_.size() == 0){
         stopAutomaticMovement();
@@ -215,12 +215,13 @@ void DynamicEntity::stepTowardsTarget(){
     double newY = pointPos().y() + ln.dy();
     QPointF newPt(newX,newY);
 
-    // move if the new pos is free, otherwise increment timeStuck_
-    if (canFit(newPt)){
-        setPointPos(newPt);
-    } else{
-        timeStuck_ += stepFrequency_;
-    }
+//    // move if the new pos is free, otherwise increment timeStuck_
+//    if (canFit(newPt)){
+//        setPointPos(newPt);
+//    } else{
+//        timeStuck_ += stepFrequency_;
+//    }
+    setPointPos(newPt);
 
 }
 
@@ -352,39 +353,15 @@ void DynamicEntity::stopRotating()
     rotationTimer_->disconnect();
 }
 
-/// Called everytime a path is calclated. When DynamicEntities are "stuck"
-/// for a certain amount of time, they will attempt to calculate a new path. When
-/// the new path is found, this function is called.
-void DynamicEntity::followNewPath_(std::vector<QPointF> path){
-//    // if new path is a super set of old path, just follow old path
-//    if (pointsToFollow_.size() > 0){
-//        std::unordered_set<Node> newPath;
-//        for (QPointF point:path){
-//            newPath.insert(map()->pointToCell(point));
-//        }
-
-//        bool newPathIsSuperSet = true;
-//        for (QPointF point:pointsToFollow_){
-//            Node node = map()->pointToCell(point);
-//            if (newPath.count(node) == 0){
-//                newPathIsSuperSet = false;
-//                break;
-//            }
-//        }
-
-//        if (newPathIsSuperSet){
-//            return;
-//        }
-//    }
-
-
-    // stop following previous list of points
+/// Makes the DynamicEntity follow the specified list of points ("path").
+void DynamicEntity::followPath_(std::vector<QPointF> path){
+    // stop following previous list of points (if any)
     stopAutomaticMovement();
 
     // follow this list of pts
     pointsToFollow_ = path;
     targetPointIndex_ = 0;
-    connect(moveTimer_,SIGNAL(timeout()),this,SLOT(moveStepAIControlled()));
+    connect(moveTimer_,SIGNAL(timeout()),this,SLOT(moveStepAIControlled_()));
     moveTimer_->start(stepFrequency());
 
     // play walk animation

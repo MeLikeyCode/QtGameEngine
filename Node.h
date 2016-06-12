@@ -33,8 +33,9 @@ private:
     int y_;
 };
 
-// non member comparison operator
+// non member comparison operators
 bool operator==(const Node& lhs, const Node& rhs);
+bool operator!=(const Node& lhs, const Node& rhs);
 
 // make node hashable
 namespace std {

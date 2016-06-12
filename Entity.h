@@ -45,8 +45,6 @@ public:
     PathingMap pathingMap() const;
     void setPathingMap(const PathingMap& pathingMap);
     bool canFit(const QPointF& atPos);
-    void disablePathingMap();
-    void enablePathingMap();
 
     Map* map() const;
     void setMap(Map* toMap);
