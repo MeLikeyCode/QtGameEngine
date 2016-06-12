@@ -3,8 +3,12 @@
 #include <QDebug>
 #include "Tree.h"
 
-
-PathGrid::PathGrid()
+/// Constructs a PathGrid with no Nodes.
+PathGrid::PathGrid():
+    numCols_(0),
+    numRows_(0),
+    filled_(),
+    nodes_()
 {
 
 }

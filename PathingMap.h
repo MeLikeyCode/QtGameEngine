@@ -6,7 +6,8 @@
 #include <QRectF>
 #include <QMetaType>
 
-/// Represents a pathing map in which each cell is either filled or unfilled.
+/// Represents a region divided into cells where each cell can either be filled
+/// or unfilled.
 /// @author Abdullah Aghazadah
 /// @date 4-28-15
 ///
@@ -25,16 +26,17 @@
 /// To set the filling of the PathingMap based on a 2d int vector, use
 /// PathingMap::setFilling(const std::vector<std::vector<int>>&).
 ///
-/// Several functions are provided for retrieving a subregion of cells.
-/// PathingMap::cells() and its overloads returns a subregion of cells represented
-/// by Nodes. PathingMap::cellsAsRects() and its overloads returns a subregion
+/// Several functions are provided for retrieving a subset of cells.
+/// PathingMap::cells() and its overloads returns a subset of cells represented
+/// by Nodes. PathingMap::cellsAsRects() and its overloads returns a subset
 /// of cells represented by QRectFs.
 class PathingMap{
 public:
     // constructors
     PathingMap();
     PathingMap(int numCellsWid, int numCellsLong, int cellSize);
-    PathingMap(const PathingMap& copy) = default;
+    PathingMap(const PathingMap& copy) = default;   // make compiler generate default copy ctor
+                                                    // (memberwise copy).
 
     // readers ("getters")
     std::vector<Node> cells(const Node& topLeft, const Node& bottomRight) const;
@@ -59,7 +61,6 @@ public:
     int numCellsWide() const;
     Node pointToCell(const QPointF& point) const;
     QPointF cellToPoint(const Node& cell) const;
-    QPointF pointToCellPoint(const QPointF& point);
 
     // modifiers ("setters")
     void fill(const Node& cell);

@@ -2,8 +2,12 @@
 #include <cassert>
 #include <QDebug> // TODO: remove
 
-
-PathingMap::PathingMap()
+/// Constructs a PathingMap with no cells.
+PathingMap::PathingMap():
+    numCellsWide_(0),
+    numCellsLong_(0),
+    cellSize_(0),
+    pathGrid_()
 {
 
 }
@@ -205,16 +209,6 @@ QPointF PathingMap::cellToPoint(const Node &cell) const{
     double ptX = cell.x() * cellSize();
     double ptY = cell.y() * cellSize();
     return QPointF(ptX,ptY);
-}
-
-/// Returns a point representing the top left corner of the cell at the
-/// specified point.
-QPointF PathingMap::pointToCellPoint(const QPointF &point){
-    // get the cell
-    Node cell = pointToCell(point);
-
-    // convert the cell to a point
-    return cellToPoint(cell);
 }
 
 /// Fills the specified cell.
