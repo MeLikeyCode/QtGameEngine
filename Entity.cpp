@@ -132,7 +132,7 @@ void Entity::setPointPos(const QPointF &pos){
         // add new region
         entitysMap->pathingMap().setFilling(pointPos(),pathingMap());
 
-        //entitysMap->drawPathingMap(); // TODO: remove test
+        entitysMap->drawPathingMap(); // TODO: remove test
     }
 
     // if followed by the camear, tell game cam to move here
@@ -256,14 +256,17 @@ void Entity::setCellPos(const Node &cell){
 /// I.e if it doesn't intersect with any filled cells in the Map's PathingMap.
 bool Entity::canFit(const QPointF &atPos)
 {
-    // get the bounding rect
-    int CUSHION = 20;
+//    // get the bounding rect
+//    int CUSHION = 20;
+
+//    QRectF checkRegion = boundingRect();
+//    checkRegion.moveTo(atPos);
+//    checkRegion.setWidth(checkRegion.width() - CUSHION);
+//    checkRegion.setHeight(checkRegion.height() -CUSHION);
+//    checkRegion.moveTopLeft(QPointF(checkRegion.x() + CUSHION/2,checkRegion.y() + CUSHION/2));
 
     QRectF checkRegion = boundingRect();
     checkRegion.moveTo(atPos);
-    checkRegion.setWidth(checkRegion.width() - CUSHION);
-    checkRegion.setHeight(checkRegion.height() -CUSHION);
-    checkRegion.moveTopLeft(QPointF(checkRegion.x() + CUSHION/2,checkRegion.y() + CUSHION/2));
 
     // see if that region is free in the map
     return map()->pathingMap().free(checkRegion);

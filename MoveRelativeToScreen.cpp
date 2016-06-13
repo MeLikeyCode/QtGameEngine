@@ -15,19 +15,22 @@ void MoveRealtiveToScreen::moveStep()
     // rotate towards mouse pos
     entity_->rotateTo(entity_->map()->getMousePosition());
 
+    // find out which keys are pressed during this step
     bool wPressed = entity_->map()->game()->keysPressed().count(Qt::Key_W);
     bool sPressed = entity_->map()->game()->keysPressed().count(Qt::Key_S);
     bool aPressed = entity_->map()->game()->keysPressed().count(Qt::Key_A);
     bool dPressed = entity_->map()->game()->keysPressed().count(Qt::Key_D);
 
     // move up if W is pressed
-    if (wPressed){
+    if (wPressed){        
         // find newPt to move to
         double newX = entity_->pointPos().x();
         double newY = entity_->pointPos().y() - entity_->stepSize();
         QPointF newPt(newX,newY);
 
-        // move if the newPt is free (or if its w/in the same cell)
+        // move if the newPt is free
+        // temporarly free its own pathingmap (will be filled when pos is set)
+        entity_->map()->pathingMap().unfill(entity_->pointPos());
         if (entity_->canFit(newPt)){
             entity_->setPointPos(newPt);
 
@@ -46,6 +49,8 @@ void MoveRealtiveToScreen::moveStep()
         QPointF newPt(newX,newY);
 
         // move if the newPt is free
+        // temporarly free its own pathingmap (will be filled when pos is set)
+        entity_->map()->pathingMap().unfill(entity_->pointPos());
         if (entity_->canFit(newPt)){
             entity_->setPointPos(newPt);
 
@@ -63,6 +68,8 @@ void MoveRealtiveToScreen::moveStep()
         QPointF newPt(newX,newY);
 
         // move if the newPt is free
+        // temporarly free its own pathingmap (will be filled when pos is set)
+        entity_->map()->pathingMap().unfill(entity_->pointPos());
         if (entity_->canFit(newPt)){
             entity_->setPointPos(newPt);
 
@@ -81,6 +88,8 @@ void MoveRealtiveToScreen::moveStep()
         QPointF newPt(newX,newY);
 
         // move if the newPt is free
+        // temporarly free its own pathingmap (will be filled when pos is set)
+        entity_->map()->pathingMap().unfill(entity_->pointPos());
         if (entity_->canFit(newPt)){
             entity_->setPointPos(newPt);
 
