@@ -114,25 +114,26 @@ double Entity::pointY() const
 /// The position is relative to the parent Entity. If there is no
 /// parent Entitiy, it is relative to the Map.
 void Entity::setPointPos(const QPointF &pos){
+    QPointF oldPos = pointPos();
     sprite()->setPos(pos);
 
     // if is in a Map, move pathingmap
     Map* entitysMap = map();
     if (entitysMap != nullptr){
-        // clear old pathing map
-        QRectF clearRegion;
-        clearRegion.setTopLeft(QPointF(pointX()-10,pointY()-10));
-        clearRegion.setWidth(pathingMap().width());
-        clearRegion.setHeight(pathingMap().height());
-        std::vector<Node> cellsInRegion = entitysMap->pathingMap().cells(clearRegion);
-        for (Node cell:cellsInRegion){
-            entitysMap->pathingMap().unfill(cell);
-        }
+//        // clear old pathing map
+//        QRectF clearRegion;
+//        clearRegion.setTopLeft(QPointF(pointX(),pointY()));
+//        clearRegion.setWidth(pathingMap().width());
+//        clearRegion.setHeight(pathingMap().height());
+//        std::vector<Node> cellsInRegion = entitysMap->pathingMap().cells(clearRegion);
+//        for (Node cell:cellsInRegion){
+//            entitysMap->pathingMap().unfill(cell);
+//        }
 
+        entitysMap->pathingMap().unfill(oldPos);
+        entitysMap->pathingMap().fill(pos);
         // add new region
-        entitysMap->pathingMap().setFilling(pointPos(),pathingMap());
-
-        entitysMap->drawPathingMap(); // TODO: remove test
+        //entitysMap->pathingMap().setFilling(pointPos(),pathingMap());
     }
 
     // if followed by the camear, tell game cam to move here
