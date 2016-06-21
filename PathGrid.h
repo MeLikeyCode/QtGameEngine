@@ -35,8 +35,10 @@ public:
     // modifiers ("setters")
     void fill(const Node& node);
     void fill(int x, int y);
+    void fill();
     void unfill(const Node& node);
     void unfill(int x, int y);
+    void unfill();
     void setFilling(const std::vector<std::vector<int>>& vec);
     void setFilling(const PathGrid& pathGrid, const Node& pos);
     void addPathGrid(const PathGrid& pathGrid, const Node& pos);

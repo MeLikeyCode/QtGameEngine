@@ -16,7 +16,7 @@
 
 /// Default constructor.
 Entity::Entity():
-    pathingMap_(1,1,63),            // default 1x1 filled (in body) PathingMap
+    pathingMap_(1,1,64),            // default 1x1 filled (in body) PathingMap
     map_(nullptr),
     children_(),
     parent_(nullptr),
@@ -34,7 +34,7 @@ Entity::Entity():
     Sprite* spr = new Sprite();
     setSprite(spr);
 
-    pathingMap_.fill(Node(0,0));
+    pathingMap_.fill();
 }
 
 /// When an Entity is deleted, it will delete all of its children, and then remove
@@ -114,26 +114,12 @@ double Entity::pointY() const
 /// The position is relative to the parent Entity. If there is no
 /// parent Entitiy, it is relative to the Map.
 void Entity::setPointPos(const QPointF &pos){
-    QPointF oldPos = pointPos();
     sprite()->setPos(pos);
 
-    // if is in a Map, move pathingmap
+    // if the Entity is in a Map, update the PathingMap
     Map* entitysMap = map();
-    if (entitysMap != nullptr){
-//        // clear old pathing map
-//        QRectF clearRegion;
-//        clearRegion.setTopLeft(QPointF(pointX(),pointY()));
-//        clearRegion.setWidth(pathingMap().width());
-//        clearRegion.setHeight(pathingMap().height());
-//        std::vector<Node> cellsInRegion = entitysMap->pathingMap().cells(clearRegion);
-//        for (Node cell:cellsInRegion){
-//            entitysMap->pathingMap().unfill(cell);
-//        }
-
-        entitysMap->pathingMap().unfill(oldPos);
-        entitysMap->pathingMap().fill(pos);
-        // add new region
-        //entitysMap->pathingMap().setFilling(pointPos(),pathingMap());
+    if (entitysMap){
+        entitysMap->updatePathingMap();
     }
 
     // if followed by the camear, tell game cam to move here

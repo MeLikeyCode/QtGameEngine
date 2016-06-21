@@ -56,6 +56,14 @@ void PathGrid::fill( int x,  int y){
     fill(Node(x,y));
 }
 
+/// Fills all the Nodes.
+void PathGrid::fill()
+{
+    for (Node node: nodes()){
+        fill(node);
+    }
+}
+
 /// Unfills the specified Node.
 ///
 /// @see PathGrid::fill(const Node&)
@@ -66,6 +74,14 @@ void PathGrid::unfill(const Node &node){
 /// Overload of PathGrid::unfill(const Node&)
 void PathGrid::unfill( int x,  int y){
     unfill(Node(x,y));
+}
+
+/// Unfills all the Nodes.
+void PathGrid::unfill()
+{
+    for (Node node:nodes()){
+        unfill(node);
+    }
 }
 
 /// Fills/unfills Nodes based on the values of a 2d int vector.

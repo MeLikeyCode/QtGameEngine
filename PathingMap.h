@@ -68,11 +68,13 @@ public:
     void fill(const Node& topLeft, const Node& bottomRight);
     void fill(const QPointF& topLeft, const QPointF& bottomRight);
     void fill(const QRectF& region);
+    void fill();
     void unfill(const Node& cell);
     void unfill(const QPointF& point);
     void unfill(const Node& topLeft, const Node& bottomRight);
     void unfill(const QPointF& topLeft, const QPointF& bottomRight);
     void unfill(const QRectF& region);
+    void unfill();
     void setFilling(const std::vector<std::vector<int>>& vec);
     void setFilling(const Node& pos, const PathingMap& littleMap);
     void setFilling(const QPointF& pos, const PathingMap& littleMap);

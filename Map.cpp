@@ -54,6 +54,22 @@ PathingMap &Map::pathingMap(){
     return pathingMap_;
 }
 
+/// Updates the PathingMap with the positions of all entities.
+void Map::updatePathingMap()
+{
+    // approach:
+    // - clear pathing map (make it all unfil)
+    // - traverse through entities, put thier pathingmap in pathing map
+
+    // unfill the entire PathingMap
+    pathingMap().unfill();
+
+    // fill each Entity's pathing map
+    for (Entity* entity:entities()){
+        pathingMap().addFilling(entity->pathingMap(),entity->pointPos());
+    }
+}
+
 int Map::width() const{
     return width_;
 }
@@ -239,7 +255,7 @@ void Map::addEntity(Entity *entity){
     entity->map_ = this;
 
     // update the PathingMap
-    pathingMap().setFilling(entity->pointPos(),entity->pathingMap());
+    updatePathingMap();
 
     // recursively add all child entities
     for (Entity* childEntity:entity->children()){

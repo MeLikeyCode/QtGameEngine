@@ -245,6 +245,12 @@ void PathingMap::fill(const QRectF &region){
     fill(region.topLeft(),region.bottomRight());
 }
 
+/// Fills all the cells of the PathingMap.
+void PathingMap::fill()
+{
+    pathGrid_.fill();
+}
+
 /// Unfills the specified cell.
 void PathingMap::unfill(const Node &cell){
     pathGrid_.unfill(cell);
@@ -277,6 +283,12 @@ void PathingMap::unfill(const QPointF &topLeft, const QPointF &bottomRight){
 /// Overload of PathingMap::unfill(const QPointF&, const QPointF&).
 void PathingMap::unfill(const QRectF &region){
     unfill(region.topLeft(),region.bottomRight());
+}
+
+/// Unfills all the cells of the PathingMap.
+void PathingMap::unfill()
+{
+    pathGrid_.unfill();
 }
 
 /// Fill/unfill cells based on values of a 2d vector.

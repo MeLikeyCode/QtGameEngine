@@ -31,6 +31,7 @@ public:
     QPointF getMousePosition();
 
     PathingMap& pathingMap();
+    void updatePathingMap();
 
     int width() const;
     int height() const;

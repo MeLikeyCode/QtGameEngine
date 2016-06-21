@@ -145,13 +145,13 @@ void DynamicEntity::moveStepAIControlled_(){
         return;
     }
 
-    // if the entity has been stuck for long enough, recalculate
-    if (timeStuck_ > 1500){
-        // recalculate path (in case pathingmap changed)
-        moveTo(pointsToFollow_.back());
+//    // if the entity has been stuck for long enough, recalculate
+//    if (timeStuck_ > 1500){
+//        // recalculate path (in case pathingmap changed)
+//        moveTo(pointsToFollow_.back());
 
-        timeStuck_ = 0;
-    }
+//        timeStuck_ = 0;
+//    }
 
     // if there are more points to follow and entity has reached its target
     // - snap to current target
