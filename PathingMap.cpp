@@ -63,7 +63,7 @@ std::vector<QRectF> PathingMap::cellsAsRects(const Node &topLeft, const Node &bo
     std::vector<QRectF> cellsAsRects;
     int s = cellSize();
     for (Node node:cellsAsNodes){
-        cellsAsRects.push_back(QRectF(cellToPoint(node),QSizeF(s,s)));
+        cellsAsRects.push_back(QRectF(cellToPoint(node),QSizeF(s-1,s-1)));
     }
 
     return cellsAsRects;

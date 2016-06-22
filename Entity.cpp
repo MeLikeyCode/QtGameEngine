@@ -16,7 +16,7 @@
 
 /// Default constructor.
 Entity::Entity():
-    pathingMap_(1,1,64),            // default 1x1 filled (in body) PathingMap
+    pathingMap_(2,2,64),            // default 1x1 filled (in body) PathingMap
     map_(nullptr),
     children_(),
     parent_(nullptr),
@@ -34,7 +34,8 @@ Entity::Entity():
     Sprite* spr = new Sprite();
     setSprite(spr);
 
-    pathingMap_.fill();
+    pathingMap_.fill(Node(0,0));
+    pathingMap_.fill(Node(1,1));
 }
 
 /// When an Entity is deleted, it will delete all of its children, and then remove
@@ -239,25 +240,34 @@ void Entity::setCellPos(const Node &cell){
 
 /// Returns true if the Entity can fit at the specified point.
 ///
-/// Takes the Entity's bounding rect and sees if it can fit in the specified point.
-/// I.e if it doesn't intersect with any filled cells in the Map's PathingMap.
+/// Basically checks if the Entity's PathingMap can fit at the specified point
+/// like a puzzle piece.
 bool Entity::canFit(const QPointF &atPos)
 {
-//    // get the bounding rect
-//    int CUSHION = 20;
+    QPointF entitysPos = pointPos();
 
-//    QRectF checkRegion = boundingRect();
-//    checkRegion.moveTo(atPos);
-//    checkRegion.setWidth(checkRegion.width() - CUSHION);
-//    checkRegion.setHeight(checkRegion.height() -CUSHION);
-//    checkRegion.moveTopLeft(QPointF(checkRegion.x() + CUSHION/2,checkRegion.y() + CUSHION/2));
+    std::vector<QRectF> entitysCellsAsRects = pathingMap().cellsAsRects();
+    std::vector<QRectF> entitysFilledCellsAsRects;
+    for (QRectF rect:entitysCellsAsRects){
+        if (pathingMap().filled(rect)){
+            // shift it and add it to filled collection
+            rect.moveTopLeft(QPointF(entitysPos.x() + rect.x(), entitysPos.y() + rect.y()));
+            entitysFilledCellsAsRects.push_back(rect);
+        }
+    }
 
-    QRectF checkRegion = boundingRect();
-    checkRegion.moveTo(atPos);
+    // make sure any map cells that intersect with the entitys filled cells
+    // are free, if so return true, else false
+    for (QRectF rect:entitysFilledCellsAsRects){
+        std::vector<Node> intersectedCells = map()->pathingMap().cells(rect);
+        for (Node cell:intersectedCells){
+            if (map()->pathingMap().filled(cell)){
+                return false;
+            }
+        }
+    }
 
-    // see if that region is free in the map
-    return map()->pathingMap().free(checkRegion);
-
+    return true;
 }
 
 /// Returns the children of this Entity.

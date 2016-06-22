@@ -12,6 +12,26 @@ void MoveRealtiveToScreen::setEntity(DynamicEntity *entity)
 /// Moves the entity relative to the screen.
 void MoveRealtiveToScreen::moveStep()
 {
+    // temporarly disable pathingmap (will be automatically reenabled when moved)
+    QPointF entitysPos = entity_->map()->cellToPoint(entity_->cellPos());
+
+    std::vector<QRectF> entitysCellsAsRects = entity_->pathingMap().cellsAsRects();
+    std::vector<QRectF> entitysFilledCellsAsRects;
+    for (QRectF rect:entitysCellsAsRects){
+        if (entity_->pathingMap().filled(rect)){
+            // shift it and add it to filled collection
+            rect.moveTopLeft(QPointF(entitysPos.x() + rect.x(), entitysPos.y() + rect.y()));
+            entitysFilledCellsAsRects.push_back(rect);
+        }
+    }
+
+    for (QRectF rect:entitysFilledCellsAsRects){
+        std::vector<Node> intersectedCells = entity_->map()->pathingMap().cells(rect);
+        for (Node cell:intersectedCells){
+            entity_->map()->pathingMap().unfill(cell);
+        }
+    }
+
     // rotate towards mouse pos
     entity_->rotateTo(entity_->map()->getMousePosition());
 
@@ -28,9 +48,7 @@ void MoveRealtiveToScreen::moveStep()
         double newY = entity_->pointPos().y() - entity_->stepSize();
         QPointF newPt(newX,newY);
 
-        // move if the newPt is free
-        // temporarly free its own pathingmap (will be filled when pos is set)
-        entity_->map()->pathingMap().unfill(entity_->pointPos());
+        // move if the new location is free
         if (entity_->canFit(newPt)){
             entity_->setPointPos(newPt);
 
@@ -49,8 +67,6 @@ void MoveRealtiveToScreen::moveStep()
         QPointF newPt(newX,newY);
 
         // move if the newPt is free
-        // temporarly free its own pathingmap (will be filled when pos is set)
-        entity_->map()->pathingMap().unfill(entity_->pointPos());
         if (entity_->canFit(newPt)){
             entity_->setPointPos(newPt);
 
@@ -68,8 +84,6 @@ void MoveRealtiveToScreen::moveStep()
         QPointF newPt(newX,newY);
 
         // move if the newPt is free
-        // temporarly free its own pathingmap (will be filled when pos is set)
-        entity_->map()->pathingMap().unfill(entity_->pointPos());
         if (entity_->canFit(newPt)){
             entity_->setPointPos(newPt);
 
@@ -88,8 +102,6 @@ void MoveRealtiveToScreen::moveStep()
         QPointF newPt(newX,newY);
 
         // move if the newPt is free
-        // temporarly free its own pathingmap (will be filled when pos is set)
-        entity_->map()->pathingMap().unfill(entity_->pointPos());
         if (entity_->canFit(newPt)){
             entity_->setPointPos(newPt);
 
