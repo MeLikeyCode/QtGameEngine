@@ -61,6 +61,7 @@ public:
     int numCellsWide() const;
     Node pointToCell(const QPointF& point) const;
     QPointF cellToPoint(const Node& cell) const;
+    bool canFit(const PathingMap& specifiedPathingMap, const QPointF& specifiedPos) const;
 
     // modifiers ("setters")
     void fill(const Node& cell);

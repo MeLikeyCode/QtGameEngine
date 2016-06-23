@@ -238,33 +238,10 @@ void Entity::setCellPos(const Node &cell){
 }
 
 /// Returns true if the Entity can fit at the specified point.
-///
-/// Basically checks if the Entity's PathingMap can fit at the specified point
-/// like a puzzle piece.
+/// @see PathingMap::canFit(PathingMap,QPointF).
 bool Entity::canFit(const QPointF &atPos)
 {
-    std::vector<QRectF> entitysCellsAsRects = pathingMap().cellsAsRects();
-    std::vector<QRectF> entitysFilledCellsAsRects;
-    for (QRectF rect:entitysCellsAsRects){
-        if (pathingMap().filled(rect)){
-            // shift it and add it to filled collection
-            rect.moveTopLeft(QPointF(atPos.x() + rect.x(), atPos.y() + rect.y()));
-            entitysFilledCellsAsRects.push_back(rect);
-        }
-    }
-
-    // make sure any map cells that intersect with the entitys filled cells
-    // are free, if so return true, else false
-    for (QRectF rect:entitysFilledCellsAsRects){
-        std::vector<Node> intersectedCells = map()->pathingMap().cells(rect);
-        for (Node cell:intersectedCells){
-            if (map()->pathingMap().filled(cell)){
-                return false;
-            }
-        }
-    }
-
-    return true;
+    return map()->pathingMap().canFit(pathingMap(),atPos);
 }
 
 /// Returns the children of this Entity.

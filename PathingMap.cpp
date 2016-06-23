@@ -211,6 +211,43 @@ QPointF PathingMap::cellToPoint(const Node &cell) const{
     return QPointF(ptX,ptY);
 }
 
+/// Returns true if the specified PathingMap can fit in this PathingMap at the
+/// specified position.
+/// Basically, places the specified PathingMap in this PathingMap at the specified
+/// position and sees if it "fits" there without any collision between the filled
+/// cells of the two PathingMaps.
+bool PathingMap::canFit(const PathingMap &specifiedPathingMap, const QPointF &specifiedPos) const
+{
+    // get specifiedPathingMap's cells as rects
+    std::vector<QRectF> cellsAsRects = specifiedPathingMap.cellsAsRects();
+
+    // get only the filled cells as rects
+    std::vector<QRectF> filledCellsAsRects;
+    for (QRectF rect:cellsAsRects){
+        if (specifiedPathingMap.filled(rect)){
+            filledCellsAsRects.push_back(rect);
+        }
+    }
+
+    // shift them so they're on the specifiedPos on this PathingMap
+    std::vector<QRectF> shiftedCells;
+    for (QRectF rect:filledCellsAsRects){
+        rect.moveTopLeft(QPointF(specifiedPos.x() + rect.x(), specifiedPos.y() + rect.y()));
+        shiftedCells.push_back(rect);
+    }
+
+    // if any filled cells intersect with the shiftedCells, return false
+    for (QRectF shiftedRect:shiftedCells){
+        for (Node cell:cells(shiftedRect)){
+            if (filled(cell)){
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
 /// Fills the specified cell.
 void PathingMap::fill(const Node &cell){
     // delegate to pathGrid_
