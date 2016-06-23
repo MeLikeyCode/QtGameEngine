@@ -16,7 +16,7 @@
 
 /// Default constructor.
 Entity::Entity():
-    pathingMap_(1,1,64),            // default 1x1 filled (in body) PathingMap
+    pathingMap_(1,1,64),            // default 1x1 unfilled (in body) PathingMap
     map_(nullptr),
     children_(),
     parent_(nullptr),
@@ -33,8 +33,6 @@ Entity::Entity():
     // default sprite
     Sprite* spr = new Sprite();
     setSprite(spr);
-
-    pathingMap_.fill(Node(0,0));
 }
 
 /// When an Entity is deleted, it will delete all of its children, and then remove

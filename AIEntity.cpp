@@ -47,21 +47,21 @@ AIEntity::AIEntity()
     addSlot(rhs);
     addSlot(cs);
 
-    // a weapon
+//    // a weapon
 //    Bow* bow = new Bow();
 //    addItemToInventory(bow);
 //    equipItem(bow,cs);
 
-//    Spear* spear = new Spear();
-//    addItemToInventory(spear);
-//    equipItem(spear,rhs);
+    Spear* spear = new Spear();
+    addItemToInventory(spear);
+    equipItem(spear,rhs);
 
-    Axe* axe = new Axe();
-    addItemToInventory(axe);
-    equipItem(axe,lhs);
+//    Axe* axe = new Axe();
+//    addItemToInventory(axe);
+//    equipItem(axe,lhs);
 
     // default weapon
-    setDefaultWeapon(axe);
+    setDefaultWeapon(spear);
 }
 
 AIEntity::~AIEntity()

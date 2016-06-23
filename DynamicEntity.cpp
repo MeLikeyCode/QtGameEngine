@@ -26,6 +26,9 @@ DynamicEntity::DynamicEntity():
 {
     // constructor body
     // = some defaults=
+    PathingMap pm(1,1,64);
+    pm.fill(Node(0,0));
+    setPathingMap(pm);
     moveTimer_ = new QTimer(this);
     rotationTimer_ = new QTimer(this);
     isPlayerControlled_ = false;

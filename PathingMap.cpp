@@ -135,7 +135,7 @@ bool PathingMap::filled(const QRectF &region) const
     return result;
 }
 
-/// Returns true if all the cells intersectiong the region are free (not filled).
+/// Returns true if *all* the cells intersectiong the region are free (not filled).
 bool PathingMap::free(const QRectF &region) const
 {
     bool result = true;

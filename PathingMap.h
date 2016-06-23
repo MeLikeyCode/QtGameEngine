@@ -17,11 +17,9 @@
 /// To find the shortest path between any two cells (or points),
 /// PathingMap::shortestPath().
 ///
-/// To set a region of this PathingMap to be the same as the filling of another
-/// PathingMap use PathingMap::setFilling().
-///
-/// To add pathing from another PathingMap to a region of this PathingMap, use
-/// PathingMap::addPathing().
+/// Several functions help with filling the PathingMap in various ways, such as
+/// "adding" another PathingMap, or setting a certain region of the PathingMap
+/// to be filled in the pattern of another PathingMap, etc...
 ///
 /// To set the filling of the PathingMap based on a 2d int vector, use
 /// PathingMap::setFilling(const std::vector<std::vector<int>>&).
@@ -34,7 +32,7 @@ class PathingMap{
 public:
     // constructors
     PathingMap();
-    PathingMap(int numCellsWid, int numCellsLong, int cellSize);
+    PathingMap(int numCellsWide, int numCellsLong, int cellSize);
     PathingMap(const PathingMap& copy) = default;   // make compiler generate default copy ctor
                                                     // (memberwise copy).
 
