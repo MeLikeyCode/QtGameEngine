@@ -16,7 +16,7 @@
 
 /// Default constructor.
 Entity::Entity():
-    pathingMap_(2,2,64),            // default 1x1 filled (in body) PathingMap
+    pathingMap_(1,1,64),            // default 1x1 filled (in body) PathingMap
     map_(nullptr),
     children_(),
     parent_(nullptr),
@@ -35,7 +35,6 @@ Entity::Entity():
     setSprite(spr);
 
     pathingMap_.fill(Node(0,0));
-    pathingMap_.fill(Node(1,1));
 }
 
 /// When an Entity is deleted, it will delete all of its children, and then remove
@@ -244,14 +243,12 @@ void Entity::setCellPos(const Node &cell){
 /// like a puzzle piece.
 bool Entity::canFit(const QPointF &atPos)
 {
-    QPointF entitysPos = pointPos();
-
     std::vector<QRectF> entitysCellsAsRects = pathingMap().cellsAsRects();
     std::vector<QRectF> entitysFilledCellsAsRects;
     for (QRectF rect:entitysCellsAsRects){
         if (pathingMap().filled(rect)){
             // shift it and add it to filled collection
-            rect.moveTopLeft(QPointF(entitysPos.x() + rect.x(), entitysPos.y() + rect.y()));
+            rect.moveTopLeft(QPointF(atPos.x() + rect.x(), atPos.y() + rect.y()));
             entitysFilledCellsAsRects.push_back(rect);
         }
     }
