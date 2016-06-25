@@ -168,7 +168,10 @@ void Game::mousePressEvent(QMouseEvent *event){
 
     // weapon 1 attack
     if (event->button() == Qt::MiddleButton){
-        player_->slot("leftHand")->use();
+        for (Slot* slot:player_->getSlots()){
+            if (slot->isFilled())
+            slot->use();
+        }
     }
 
 //    // weapon 2 attack

@@ -543,8 +543,6 @@ std::unordered_set<Entity *> DynamicEntity::entitiesInView()
 /// Moves the Entity 1 step closer to its movement in response to keys.
 void DynamicEntity::moveStepPlayerControlled()
 {
-    map()->drawPathingMap();
-
     // delegate to moveBehavior
     moveBehavior_->moveStep();
 

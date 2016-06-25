@@ -261,8 +261,6 @@ void Map::addEntity(Entity *entity){
     for (Entity* childEntity:entity->children()){
         addEntity(childEntity);
     }
-
-    drawPathingMap(); // TODO test remove
 }
 
 /// Removes the specified entity (and all of its children) from the map. If the

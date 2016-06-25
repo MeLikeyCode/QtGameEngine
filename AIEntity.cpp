@@ -9,21 +9,23 @@
 
 AIEntity::AIEntity()
 {
+    // connect timer to check the field of view every once in a while
     timerCheckFov_ = new QTimer(this);
     connect(timerCheckFov_,&QTimer::timeout,this,&AIEntity::checkFov_);
-    timerCheckFov_->start(500);
+    timerCheckFov_->start(CHECK_FOV_FREQUENCY_MS);
 
+    // connect a timer to attack every once in a while (if in range of an enemy)
     attackTimer_ = new QTimer(this);
     connect(attackTimer_,&QTimer::timeout,this,&AIEntity::swingIfInRange_);
-    attackTimer_->start(1500);
+    attackTimer_->start(ATTACK_FREQUENCY_MS);
 
     targetEntity_ = nullptr;
 
     // sprite
     Sprite* spr = new Sprite();
     setSprite(spr);
-    spr->addFrames(":resources/graphics/human",1,"stand"); // stand anim
-    spr->addFrames(":resources/graphics/human",6,"walk");  // walk anim
+    spr->addFrames(":resources/graphics/human2",1,"stand"); // stand anim
+    spr->addFrames(":resources/graphics/human2",6,"walk");  // walk anim
     spr->play("stand",1,1); // play stand anim
 
     // some attachment points

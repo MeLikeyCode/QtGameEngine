@@ -63,10 +63,10 @@ int main(int argc, char *argv[])
 //    rightHand->setName("rightHand");
 //    rightHand->setPosition(player->namedPoint("right shoulder"));
 //    player->addSlot(rightHand);
-//    RangedWeaponSlot* leftHandRanged = new RangedWeaponSlot();
-//    leftHandRanged->setName("leftHandRanged");
-//    leftHandRanged->setPosition(player->namedPoint("center"));
-//    player->addSlot(leftHandRanged);
+    RangedWeaponSlot* leftHandRanged = new RangedWeaponSlot();
+    leftHandRanged->setName("leftHandRanged");
+    leftHandRanged->setPosition(player->namedPoint("center"));
+    player->addSlot(leftHandRanged);
 
 //    // create some weapons (MeleeWeapons)
 //    Axe* axe = new Axe();
@@ -91,6 +91,9 @@ int main(int argc, char *argv[])
     InventoryViewer* v = new InventoryViewer(game,500,128,player->inventory());
     qDebug() << player->inventory()->getItems().size();
     game->addInventoryViewer(v);
+
+    Bow* bow = new Bow();
+    player->addItemToInventory(bow);
 
     // add some items to ground
     Spear* spear = new Spear();

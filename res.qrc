@@ -21,5 +21,22 @@
         <file>graphics/misc/targetMouseCursor.png</file>
         <file>graphics/misc/teleport.png</file>
         <file>graphics/misc/pushback.png</file>
+        <file>graphics/human2/stand0.png</file>
+        <file>graphics/human2/walk0.png</file>
+        <file>graphics/human2/walk1.png</file>
+        <file>graphics/human2/walk2.png</file>
+        <file>graphics/human2/walk3.png</file>
+        <file>graphics/human2/walk4.png</file>
+        <file>graphics/human2/walk5.png</file>
+        <file>graphics/effects/poof/poof0.png</file>
+        <file>graphics/effects/poof/poof1.png</file>
+        <file>graphics/effects/poof/poof2.png</file>
+        <file>graphics/effects/poof/poof3.png</file>
+        <file>graphics/effects/poof/poof4.png</file>
+        <file>graphics/effects/poof/poof5.png</file>
+        <file>graphics/effects/poof/poof6.png</file>
+        <file>graphics/effects/poof/poof7.png</file>
+        <file>graphics/effects/poof/poof8.png</file>
+        <file>graphics/effects/poof/poof9.png</file>
     </qresource>
 </RCC>
