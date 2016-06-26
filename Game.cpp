@@ -14,6 +14,8 @@
 #include "Axe.h"
 #include "Bow.h"
 #include "InventoryViewer.h"
+#include <cstdlib>
+#include <ctime>
 
 /// Creates an instance of the Game with some default options.
 ///
@@ -42,6 +44,18 @@ Game::Game(Map *map){
     updateTimer_->start(0);
 
     setMouseMode(MouseMode::regular);
+
+    // create some rains randomly across top of screen
+    srand(time(0));
+    for (int i = 0, n = 25; i < n; i ++){
+        QGraphicsPixmapItem* rain = new QGraphicsPixmapItem(QPixmap(":/resources/graphics/effects/rain.png"));
+        rains_.push_back(rain);
+        scene()->addItem(rain);
+    }
+
+    QTimer* rainTimer_ = new QTimer(this);
+    connect(rainTimer_,&QTimer::timeout,this,&Game::rainStep_);
+    rainTimer_->start(40);
 }
 
 /// Launches the Game.
@@ -70,6 +84,14 @@ void Game::setCamPos(QPointF to)
     double camHeight = this->sceneRect().height();
     QPointF topLeft(to.x() - camWidth/2,to.y() - camHeight/2);
     this->setSceneRect(topLeft.x(),topLeft.y(),camWidth,camHeight);
+}
+
+/// Returns the pos of the center of teh camera.
+QPointF Game::camPos()
+{
+    double x = sceneRect().topLeft().x() + sceneRect().width()/2;
+    double y = sceneRect().topLeft().y() + sceneRect().height()/2;
+    return QPointF(x,y);
 }
 
 /// Moves the camera by the specified vector on the Map.
@@ -355,4 +377,26 @@ void Game::updatePosOverlays()
         QPointF newPos = mapToScene(viewer->viewPos().toPoint());
         viewer->rectItem_->setPos(newPos);
     }
+}
+
+/// Advance the next rain step.
+void Game::rainStep_()
+{
+    // move em, if too far down, move back up
+    double bottomY = camPos().y() + sceneRect().height()/2;
+    double topY = camPos().y() - sceneRect().height()/2;
+    for (QGraphicsPixmapItem* rain:rains_){
+        // move down
+        rain->moveBy(0,100);
+
+        // move back up if too far down
+        if (rain->y() > bottomY){
+            double yPos = rand() % 700 - 700; // b/w -100 and 0
+            double xPos = rand() % 1200 -200; //0 - 768
+            double xPosShifted = xPos + camPos().x() - sceneRect().width()/2;
+            double yPosShifted = yPos + camPos().y() - sceneRect().height()/2;
+            rain->setPos(mapToMap(QPoint(xPosShifted,yPosShifted)));
+        }
+    }
+
 }

@@ -41,6 +41,7 @@ public:
     QPointF mapToMap(const QPoint &point);
 
     void setCamPos(QPointF to);
+    QPointF camPos();
     void moveCam(QVector2D byVector);
     void moveCamUp(double byAmount);
     void moveCamDown(double byAmount);
@@ -72,6 +73,7 @@ signals:
 public slots:
     void askEnemiesToMove(); // TODO delete test
     void updatePosOverlays();
+    void rainStep_();
 
 private:
     // main private attributes
@@ -86,6 +88,7 @@ private:
     // TODO remove the following attributes, test attributes
     DynamicEntity* player_;
     std::vector<DynamicEntity*> testEntities_;
+    std::vector<QGraphicsPixmapItem*> rains_;
 
 
 };
