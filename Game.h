@@ -40,8 +40,9 @@ public:
     Map* map();
     QPointF mapToMap(const QPoint &point);
 
-    void setCamPos(QPointF to);
-    QPointF camPos();
+    void setCenterCamPos(QPointF position);
+    QPointF centerCamPos();
+    QRectF cam();
     void moveCam(QVector2D byVector);
     void moveCamUp(double byAmount);
     void moveCamDown(double byAmount);

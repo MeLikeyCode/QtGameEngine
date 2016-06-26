@@ -27,8 +27,6 @@ Game::Game(Map *map){
     setMouseTracking(true);
 
     setScene(map->scene());
-    setFixedSize(1024,768); // TODO REMOVE HARD CODED NUMBERS
-    setSceneRect(0,0,1024,768);
 
     // disable QGraphicsView's scroll bars
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -45,7 +43,8 @@ Game::Game(Map *map){
 
     setMouseMode(MouseMode::regular);
 
-    // create some rains
+    // create some rain graphics (that will keep moving down/then back up to
+    // simulate rain)
     srand(time(0));
     for (int i = 0, n = 25; i < n; i ++){
         QGraphicsPixmapItem* rain = new QGraphicsPixmapItem(QPixmap(":/resources/graphics/effects/rain.png"));
@@ -64,10 +63,10 @@ Game::Game(Map *map){
 
 /// Launches the Game.
 void Game::launch(){
-    showNormal(); // TODO: eventually should showFullscreen() (or parametrize to
+    //showNormal(); // TODO: eventually should showFullscreen() (or parametrize to
                   // allow launching normal or full screen
 
-    //showFullScreen();
+    showFullScreen();
 }
 
 /// Sets the Map.
@@ -82,20 +81,26 @@ Map *Game::map(){
 
 /// Sets the center of the camear to be looking at the specified point on the
 /// Map.
-void Game::setCamPos(QPointF to)
+void Game::setCenterCamPos(QPointF position)
 {
     double camWidth = this->sceneRect().width();
     double camHeight = this->sceneRect().height();
-    QPointF topLeft(to.x() - camWidth/2,to.y() - camHeight/2);
+    QPointF topLeft(position.x() - camWidth/2,position.y() - camHeight/2);
     this->setSceneRect(topLeft.x(),topLeft.y(),camWidth,camHeight);
 }
 
-/// Returns the pos of the center of teh camera.
-QPointF Game::camPos()
+/// Returns the pos of the center of the camera.
+QPointF Game::centerCamPos()
 {
     double x = sceneRect().topLeft().x() + sceneRect().width()/2;
     double y = sceneRect().topLeft().y() + sceneRect().height()/2;
     return QPointF(x,y);
+}
+
+/// Returns a rectangle representing the current position/size of the camera.
+QRectF Game::cam()
+{
+    return sceneRect();
 }
 
 /// Moves the camera by the specified vector on the Map.
@@ -383,20 +388,21 @@ void Game::updatePosOverlays()
     }
 }
 
-/// Advance the next rain step.
+/// Executed every so often to simulate rain.
+/// Will move the rain graphics down, when the reached far down enough,
+/// will move them back up.
 void Game::rainStep_()
 {
-    // move em, if too far down, move back up
-    double bottomY = camPos().y() + sceneRect().height()/2;
-    double topY = camPos().y() - sceneRect().height()/2;
+    double screenBottomY = centerCamPos().y() + sceneRect().height()/2;
+    double screenTopY = centerCamPos().y() - sceneRect().height()/2;
     for (QGraphicsPixmapItem* rain:rains_){
         // move down
         rain->moveBy(0,100);
 
         // move back up if too far down
-        if (rain->y() > bottomY){
+        if (rain->y() > screenBottomY){
             double yPos = rand() % 700 - 700; // b/w -700 and 0
-            double xPos = rand() % 1200 -200; // -200 - 1000
+            double xPos = rand() % ((int)(cam().width()) + 400) - 200; // -200 -> camWidth+200
             rain->setPos(mapToMap(QPoint(xPos,yPos)));
         }
     }
@@ -408,8 +414,8 @@ void Game::splashStep_()
     for (int i = 0, n = 7; i < n; i++){
         Sprite* splash = new Sprite();
         splash->addFrames(":/resources/graphics/effects/splash",4,"splash");
-        double xPos = rand() % 1024; // 0 - 1024
-        double yPos = rand() % 768;  // 0-768
+        double xPos = rand() % ((int)cam().width()); // 0 - camWidth
+        double yPos = rand() % ((int)cam().height());  // 0 - camHeight
         QPointF pos = mapToMap(QPoint(xPos,yPos));
         map()->playOnce(splash,"splash",50,pos);
     }

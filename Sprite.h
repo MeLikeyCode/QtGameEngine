@@ -52,6 +52,8 @@ public:
     void stop();
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
     void play(std::string animation, int timesToPlay, int delayBetweenFrames);
+
+    // resizing
     void setSize(std::string animation, int width, int height);
     void setSize(int width, int height);
     void setSizeOfCurrentFrame(int width, int height);

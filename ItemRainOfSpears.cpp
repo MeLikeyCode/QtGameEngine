@@ -41,7 +41,7 @@ void ItemRainOfSpears::use()
         // spawn projectile
         QPointF targetPos = randomPos;
         targetPos.setY(targetPos.y() + 20);
-        targetPos.setX(targetPos.x() + 10);
+        targetPos.setX(targetPos.x());
         std::unordered_set<Entity*> noDmgList;
         noDmgList.insert(owner);
         noDmgList.insert(this);

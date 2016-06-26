@@ -122,7 +122,7 @@ void Entity::setPointPos(const QPointF &pos){
 
     // if followed by the camear, tell game cam to move here
     if (isFollowedByCam()){
-        entitysMap->game()->setCamPos(this->pointPos());
+        entitysMap->game()->setCenterCamPos(this->pointPos());
     }
 }
 

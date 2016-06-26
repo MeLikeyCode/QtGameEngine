@@ -89,7 +89,6 @@ int main(int argc, char *argv[])
 
     // test inventoryviewoer
     InventoryViewer* v = new InventoryViewer(game,500,128,player->inventory());
-    qDebug() << player->inventory()->getItems().size();
     game->addInventoryViewer(v);
 
     Bow* bow = new Bow();
