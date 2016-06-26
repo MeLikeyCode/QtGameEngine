@@ -73,8 +73,17 @@ void Sprite::setSize(std::string animation, int width, int height)
     animation_[animation] = frames;
 }
 
-/// Sets the size (width and height) of the currently displayed frame.
+/// Sets the size of all the frames of all the animations.
 void Sprite::setSize(int width, int height)
+{
+    for (std::pair<std::string,std::vector<QPixmap>> pair:animation_){
+        std::string theAnim = pair.first;
+        setSize(theAnim,width,height);
+    }
+}
+
+/// Sets the size (width and height) of the currently displayed frame.
+void Sprite::setSizeOfCurrentFrame(int width, int height)
 {
     pixmap_->setPixmap(pixmap_->pixmap().scaled(width,height));
 }

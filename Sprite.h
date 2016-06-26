@@ -54,6 +54,7 @@ public:
     void play(std::string animation, int timesToPlay, int delayBetweenFrames);
     void setSize(std::string animation, int width, int height);
     void setSize(int width, int height);
+    void setSizeOfCurrentFrame(int width, int height);
 
 public slots:
     void nextFrame_();
