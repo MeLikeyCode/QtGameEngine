@@ -70,6 +70,7 @@ void Sprite::setSize(std::string animation, int width, int height)
     for (QPixmap& pixmap:frames){
         pixmap = pixmap.scaled(width,height);
     }
+    animation_[animation] = frames;
 }
 
 /// Sets the size (width and height) of the currently displayed frame.

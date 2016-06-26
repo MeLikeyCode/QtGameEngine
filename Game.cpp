@@ -55,7 +55,7 @@ Game::Game(Map *map){
 
     QTimer* rainTimer_ = new QTimer(this);
     connect(rainTimer_,&QTimer::timeout,this,&Game::rainStep_);
-    rainTimer_->start(40);
+    rainTimer_->start(10);
 
     QTimer* splashTimer_ = new QTimer(this);
     connect(splashTimer_,&QTimer::timeout,this,&Game::splashStep_);
