@@ -45,7 +45,7 @@ Game::Game(Map *map){
 
     setMouseMode(MouseMode::regular);
 
-    // create some rains randomly across top of screen
+    // create some rains
     srand(time(0));
     for (int i = 0, n = 25; i < n; i ++){
         QGraphicsPixmapItem* rain = new QGraphicsPixmapItem(QPixmap(":/resources/graphics/effects/rain.png"));
@@ -56,6 +56,10 @@ Game::Game(Map *map){
     QTimer* rainTimer_ = new QTimer(this);
     connect(rainTimer_,&QTimer::timeout,this,&Game::rainStep_);
     rainTimer_->start(40);
+
+    QTimer* splashTimer_ = new QTimer(this);
+    connect(splashTimer_,&QTimer::timeout,this,&Game::splashStep_);
+    splashTimer_->start(75);
 }
 
 /// Launches the Game.
@@ -391,12 +395,22 @@ void Game::rainStep_()
 
         // move back up if too far down
         if (rain->y() > bottomY){
-            double yPos = rand() % 700 - 700; // b/w -100 and 0
-            double xPos = rand() % 1200 -200; //0 - 768
-            double xPosShifted = xPos + camPos().x() - sceneRect().width()/2;
-            double yPosShifted = yPos + camPos().y() - sceneRect().height()/2;
-            rain->setPos(mapToMap(QPoint(xPosShifted,yPosShifted)));
+            double yPos = rand() % 700 - 700; // b/w -700 and 0
+            double xPos = rand() % 1200 -200; // -200 - 1000
+            rain->setPos(mapToMap(QPoint(xPos,yPos)));
         }
     }
 
+}
+
+void Game::splashStep_()
+{
+    for (int i = 0, n = 7; i < n; i++){
+        Sprite* splash = new Sprite();
+        splash->addFrames(":/resources/graphics/effects/splash",4,"splash");
+        double xPos = rand() % 1024; // 0 - 1024
+        double yPos = rand() % 768;  // 0-768
+        QPointF pos = mapToMap(QPoint(xPos,yPos));
+        map()->playOnce(splash,"splash",50,pos);
+    }
 }

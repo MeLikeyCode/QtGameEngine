@@ -74,6 +74,7 @@ public slots:
     void askEnemiesToMove(); // TODO delete test
     void updatePosOverlays();
     void rainStep_();
+    void splashStep_();
 
 private:
     // main private attributes

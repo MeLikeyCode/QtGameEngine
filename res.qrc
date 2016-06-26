@@ -39,5 +39,9 @@
         <file>graphics/effects/poof/poof8.png</file>
         <file>graphics/effects/poof/poof9.png</file>
         <file>graphics/effects/rain.png</file>
+        <file>graphics/effects/splash/splash0.png</file>
+        <file>graphics/effects/splash/splash1.png</file>
+        <file>graphics/effects/splash/splash2.png</file>
+        <file>graphics/effects/splash/splash3.png</file>
     </qresource>
 </RCC>

@@ -54,9 +54,9 @@ void Sprite::play(std::string animation, int timesToPlay, int delayBetweenFrames
     timesToPlay_ = timesToPlay;
 
     // play the animation
-    connect(timer_,SIGNAL(timeout()),this,SLOT(nextFrame_()));
-    timer_->start(delayBetweenFrames);
-
+    nextFrame_();   // go to next frame immediately
+    connect(timer_,SIGNAL(timeout()),this,SLOT(nextFrame_())); // keep going to
+    timer_->start(delayBetweenFrames);                         // next frames
 }
 
 /// Sets the size (width and height) of the frames of the specified
