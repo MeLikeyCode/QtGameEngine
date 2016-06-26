@@ -27,7 +27,7 @@ Map::Map(int numCellsWide, int numCellsLong, int cellSize):
     int TILE_SIZE = 256;
     terrain_ = new Terrain(width()/TILE_SIZE+1,height()/TILE_SIZE+1,
                            TILE_SIZE,TILE_SIZE);
-    terrain_->fill(QPixmap(":resources/graphics/terrain/grass.png"));
+    terrain_->fill(QPixmap(":resources/graphics/terrain/grassstone.png"));
     setTerrain(terrain_);
 }
 

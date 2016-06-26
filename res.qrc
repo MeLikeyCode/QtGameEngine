@@ -38,5 +38,6 @@
         <file>graphics/effects/poof/poof7.png</file>
         <file>graphics/effects/poof/poof8.png</file>
         <file>graphics/effects/poof/poof9.png</file>
+        <file>graphics/effects/rain.png</file>
     </qresource>
 </RCC>
