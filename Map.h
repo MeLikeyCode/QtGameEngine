@@ -10,6 +10,7 @@ class QGraphicsScene;
 class Terrain;
 class Game;
 class Entity;
+class Sprite;
 
 /// Represents a map which can contain a bunch of interacting Entities.
 ///
@@ -63,6 +64,8 @@ public:
     std::unordered_set<Entity*> entities(const QRectF& inRegion);
     std::unordered_set<Entity *> entities(const QPointF& atPoint);
     std::unordered_set<Entity*> entities(const QPolygonF& inRegion);
+
+    void playOnce(Sprite* sprite, std::string animation, int delaybwFramesMS, QPointF atPos);
 private:
     int width_;
     int height_;

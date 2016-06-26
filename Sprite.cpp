@@ -166,12 +166,14 @@ void Sprite::nextFrame_(){
     // if we have played it enough times and we are not supposed to play it
     // forever, stop
     if (timesPlayed_ >= timesToPlay_ && timesToPlay_ != -1){
+        emit animationFinished(playingAnimation());
         stop();
         return;
     }
 
     // if there are no more frames, start again and increment times played
     if (currentFrame_ >= animationPixmaps.size()){
+        emit animationFinished(playingAnimation());
         currentFrame_ = 0;
         ++timesPlayed_;
     }

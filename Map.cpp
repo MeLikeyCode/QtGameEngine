@@ -220,6 +220,22 @@ std::unordered_set<Entity *> Map::entities(const QPolygonF &inRegion)
     return ents;
 }
 
+/// Plays the specified sprite's specified animation at the specified position
+/// on the map - once.
+/// @warning Deletes the sprite after it is finished playing.
+/// TODO: don't delete the sprite (create a copy, delete the copy, or something...)
+void Map::playOnce(Sprite *sprite, std::string animationName, int delaybwFramesMS, QPointF atPos)
+{
+    Entity* spritesEntity = new Entity();
+    spritesEntity->setSprite(sprite);
+    spritesEntity->setPointPos(atPos);
+    addEntity(spritesEntity);
+
+    QObject::connect(sprite,&Sprite::animationFinished,spritesEntity,&QObject::deleteLater);
+
+    sprite->play(animationName,1,delaybwFramesMS);
+}
+
 /// Sets the Terrain of the Map.
 void Map::setTerrain(Terrain *to){
     terrain_ = to;

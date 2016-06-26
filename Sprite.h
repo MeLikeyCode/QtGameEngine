@@ -58,6 +58,10 @@ public:
 public slots:
     void nextFrame_();
 
+signals:
+    // emitted each time an animation has finished playing
+    void animationFinished(std::string animation);
+
 private:
     // mapping of string : vector of pixmaps (an animation)
     std::unordered_map<std::string,std::vector<QPixmap>> animation_;
