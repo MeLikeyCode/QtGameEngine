@@ -16,6 +16,8 @@
 #include "InventoryViewer.h"
 #include <cstdlib>
 #include <ctime>
+#include "Weather.h"
+#include "RainWeather.h"
 
 /// Creates an instance of the Game with some default options.
 ///
@@ -43,22 +45,9 @@ Game::Game(Map *map){
 
     setMouseMode(MouseMode::regular);
 
-    // create some rain graphics (that will keep moving down/then back up to
-    // simulate rain)
-    srand(time(0));
-    for (int i = 0, n = 25; i < n; i ++){
-        QGraphicsPixmapItem* rain = new QGraphicsPixmapItem(QPixmap(":/resources/graphics/effects/rain.png"));
-        rains_.push_back(rain);
-        scene()->addItem(rain);
-    }
-
-    QTimer* rainTimer_ = new QTimer(this);
-    connect(rainTimer_,&QTimer::timeout,this,&Game::rainStep_);
-    rainTimer_->start(10);
-
-    QTimer* splashTimer_ = new QTimer(this);
-    connect(splashTimer_,&QTimer::timeout,this,&Game::splashStep_);
-    splashTimer_->start(75);
+    weather_ = nullptr;
+    RainWeather* rain = new RainWeather(this);
+    setWeather(rain);
 }
 
 /// Launches the Game.
@@ -199,6 +188,7 @@ void Game::mousePressEvent(QMouseEvent *event){
 
     // weapon 1 attack
     if (event->button() == Qt::MiddleButton){
+        setWeather(nullptr);
         for (Slot* slot:player_->getSlots()){
             if (slot->isFilled())
             slot->use();
@@ -220,6 +210,8 @@ void Game::mousePressEvent(QMouseEvent *event){
 
     // create AIEntity (part of grp 1)
     if (event->button() == Qt::RightButton){
+        setWeather(new RainWeather(this));
+
         // create enemy (will follow/attack its enemies)
         AIEntity* e = new AIEntity();
         e->setGroupID(1);
@@ -371,6 +363,22 @@ DynamicEntity *Game::player(){
     return player_;
 }
 
+/// Sets the weather effect of the game. If there is already a weather effect,
+/// stops it first. Pass in nullptr to set the weather to nothing.
+void Game::setWeather(Weather *weather)
+{
+
+    if (weather_){
+      weather_->stop();
+    }
+
+    weather_ = weather;
+
+    if (weather){
+        weather->start();
+    }
+}
+
 void Game::askEnemiesToMove()
 {
     for (DynamicEntity* e:enemies_){
@@ -385,38 +393,5 @@ void Game::updatePosOverlays()
     for (InventoryViewer* viewer:inventoryViewers_){
         QPointF newPos = mapToScene(viewer->viewPos().toPoint());
         viewer->rectItem_->setPos(newPos);
-    }
-}
-
-/// Executed every so often to simulate rain.
-/// Will move the rain graphics down, when the reached far down enough,
-/// will move them back up.
-void Game::rainStep_()
-{
-    double screenBottomY = centerCamPos().y() + sceneRect().height()/2;
-    double screenTopY = centerCamPos().y() - sceneRect().height()/2;
-    for (QGraphicsPixmapItem* rain:rains_){
-        // move down
-        rain->moveBy(0,100);
-
-        // move back up if too far down
-        if (rain->y() > screenBottomY){
-            double yPos = rand() % 700 - 700; // b/w -700 and 0
-            double xPos = rand() % ((int)(cam().width()) + 400) - 200; // -200 -> camWidth+200
-            rain->setPos(mapToMap(QPoint(xPos,yPos)));
-        }
-    }
-
-}
-
-void Game::splashStep_()
-{
-    for (int i = 0, n = 7; i < n; i++){
-        Sprite* splash = new Sprite();
-        splash->addFrames(":/resources/graphics/effects/splash",4,"splash");
-        double xPos = rand() % ((int)cam().width()); // 0 - camWidth
-        double yPos = rand() % ((int)cam().height());  // 0 - camHeight
-        QPointF pos = mapToMap(QPoint(xPos,yPos));
-        map()->playOnce(splash,"splash",50,pos);
     }
 }

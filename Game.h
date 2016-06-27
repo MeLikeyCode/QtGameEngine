@@ -9,6 +9,7 @@ class Map;
 class DynamicEntity;
 class InventoryViewer;
 class Entity;
+class Weather;
 
 /// Represents an instance of the game.
 /// @author Abdullah Aghazadah
@@ -67,6 +68,8 @@ public:
 
     std::vector<DynamicEntity*> enemies_; // TODO delete test
 
+    void setWeather(Weather* weather);
+
 signals:
     void positionSelected(QPointF pos);
     void entitySelected(Entity* entity);
@@ -74,14 +77,13 @@ signals:
 public slots:
     void askEnemiesToMove(); // TODO delete test
     void updatePosOverlays();
-    void rainStep_();
-    void splashStep_();
 
 private:
     // main private attributes
     Map* map_;
     std::set<int> keysPressed_;
     MouseMode mouseMode_;
+    Weather* weather_;
 
     QTimer* updateTimer_;
 
