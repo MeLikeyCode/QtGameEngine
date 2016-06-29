@@ -5,6 +5,7 @@
 #include <QDebug> // TODO: remove
 #include "Inventory.h"
 #include "DynamicEntity.h"
+#include "Sound.h"
 
 void Spear::resetVariables()
 {
@@ -43,11 +44,15 @@ Spear::Spear()
 
     // default damage
     damage_ = 5;
+
+    soundEffect_ = new Sound("qrc:/resources/sounds/spear.wav");
 }
 
 /// Will thrust the spear forward. The "position" argument is ignored.
 void Spear::attack(QPointF position)
 {
+    soundEffect_->play(1);
+
     // if its already thrusting, don't do anything
     if (alreadyThrusting_){
         return;

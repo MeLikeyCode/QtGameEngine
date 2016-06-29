@@ -5,6 +5,7 @@
 #include <QDebug> // TODO: remove
 #include "Inventory.h"
 #include "DynamicEntity.h"
+#include "Sound.h"
 
 Axe::Axe()
 {
@@ -37,11 +38,15 @@ Axe::Axe()
     damage_ = 5;
 
     timer_ = new QTimer(this);
+
+    soundEffect_ = new Sound("qrc:/resources/sounds/axe.wav");
 }
 
 /// The axe will start swinging. The "position" argument is ignored.
 void Axe::attack(QPointF position)
 {
+    soundEffect_->play(1);
+
     // if its already swinging, don't do anything
     if (alreadySwinging_){
         return;

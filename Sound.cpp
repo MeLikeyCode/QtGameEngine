@@ -46,10 +46,10 @@ void Sound::stateChanged()
     // - if so, play it again
 
     if (mediaPlayer_->state() == QMediaPlayer::StoppedState){
-//        if (numTimesPlayed_ < numTimesToPlay_ || numTimesToPlay_ == -1){
-//            mediaPlayer_->setPosition(0);
-//            mediaPlayer_->play();
-//            numTimesPlayed_++;
-//        }
+        if (numTimesPlayed_ < numTimesToPlay_ || numTimesToPlay_ == -1){
+            mediaPlayer_->setPosition(0);
+            mediaPlayer_->play();
+            numTimesPlayed_++;
+        }
     }
 }

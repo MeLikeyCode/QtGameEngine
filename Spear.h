@@ -7,6 +7,8 @@
 // value members
 #include <QTimer>
 
+class Sound;
+
 /// Represents a spear.
 /// @author Abdullah Aghazadah
 /// @date 1-9-16
@@ -40,6 +42,8 @@ private:
     void resetVariables();
 
     double damage_;
+
+    Sound* soundEffect_;
 };
 
 #endif // SPEAR_H

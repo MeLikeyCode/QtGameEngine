@@ -43,5 +43,9 @@
         <file>graphics/effects/splash/splash1.png</file>
         <file>graphics/effects/splash/splash2.png</file>
         <file>graphics/effects/splash/splash3.png</file>
+        <file>sounds/music2.mp3</file>
+        <file>sounds/bow.wav</file>
+        <file>sounds/axe.wav</file>
+        <file>sounds/spear.wav</file>
     </qresource>
 </RCC>

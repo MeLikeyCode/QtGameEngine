@@ -4,6 +4,7 @@
 #include "MeleeWeapon.h"
 
 class QTimer;
+class Sound;
 
 /// Represents an Axe.
 /// @author Abdullah Aghazadah
@@ -39,6 +40,8 @@ private:
 
     bool hitSomethingComingBackFromDraw_;
     bool hitSomethingDuringForwardStep_;
+
+    Sound* soundEffect_;
 };
 
 #endif // AXE_H

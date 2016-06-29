@@ -27,6 +27,9 @@ int main(int argc, char *argv[])
      qRegisterMetaType<PathingMap>();
      qRegisterMetaType<std::vector<QPointF>>();
 
+     Sound* s = new Sound("qrc:/resources/sounds/music2.mp3");
+     s->play(-1);
+
     // create a Map and a Game
     Map* map = new Map(30,30,64);
     Game* game = new Game(map);

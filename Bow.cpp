@@ -9,6 +9,7 @@
 #include "SpearProjectile.h"
 #include "Sprite.h"
 #include "DynamicEntity.h"
+#include "Sound.h"
 
 Bow::Bow()
 {
@@ -25,6 +26,9 @@ Bow::Bow()
     pt.setY(spr->currentFrame().height()/2);
     setAttachmentPoint(pt);
 
+    // default sound effect
+    soundEffect_ = new Sound("qrc:/resources/sounds/bow.wav");
+
     // range
     setCastRange(400);
 }
@@ -32,7 +36,8 @@ Bow::Bow()
 /// Spawns a projectile towards the targetPoint.
 /// taretPoint is in map coordinates.
 void Bow::attack(QPointF targetPoint)
-{
+{   
+    soundEffect_->play(1);
 
     DynamicEntity* owningEntity = inventory()->entity();     // Entity that owns this bow
     Map* map = owningEntity->map();                          // Map that the owner is in

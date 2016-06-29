@@ -48,6 +48,8 @@ Game::Game(Map *map){
     weather_ = nullptr;
     RainWeather* rain = new RainWeather(this);
     setWeather(rain);
+
+
 }
 
 /// Launches the Game.
@@ -56,6 +58,7 @@ void Game::launch(){
                   // allow launching normal or full screen
 
     showFullScreen();
+    setSceneRect(0,0,width(),height());
 }
 
 /// Sets the Map.
@@ -279,20 +282,6 @@ void Game::keyPressEvent(QKeyEvent *event)
 
     if (!event->isAutoRepeat()){
         keysPressed_.insert(event->key());
-    }
-
-    // TODO: test remove
-    if (event->key() == Qt::Key_Up){
-        moveCamUp(10);
-    }
-    if (event->key() == Qt::Key_Down){
-        moveCamDown(10);
-    }
-    if (event->key() == Qt::Key_Left){
-        moveCamLeft(10);
-    }
-    if (event->key() == Qt::Key_Right){
-        moveCamRight(10);
     }
 }
 
