@@ -47,5 +47,6 @@
         <file>sounds/bow.wav</file>
         <file>sounds/axe.wav</file>
         <file>sounds/spear.wav</file>
+        <file>sounds/blink.wav</file>
     </qresource>
 </RCC>

@@ -45,14 +45,14 @@ Axe::Axe()
 /// The axe will start swinging. The "position" argument is ignored.
 void Axe::attack(QPointF position)
 {
-    soundEffect_->play(1);
-
     // if its already swinging, don't do anything
     if (alreadySwinging_){
         return;
     }
 
-    // set initial variables
+    soundEffect_->play(1);
+
+    // set variables for brand new swing
     currentDrawBackStep_ = 0;
     currentDrawForwardStep_ = 0;
     currentForwardStep_ = 0;
@@ -60,11 +60,11 @@ void Axe::attack(QPointF position)
     currentStepToGoingBackToNeutral_ = 0;
     hitSomethingComingBackFromDraw_ = false;
     hitSomethingDuringForwardStep_ = false;
-    alreadySwinging_ = true;
 
     // start swinging
     connect(timer_,SIGNAL(timeout()),this,SLOT(swingStep()));
     timer_->start(swingFrequency_);
+    alreadySwinging_ = true;
 }
 
 void Axe::swingStep()

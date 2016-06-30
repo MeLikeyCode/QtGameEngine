@@ -191,7 +191,6 @@ void Game::mousePressEvent(QMouseEvent *event){
 
     // weapon 1 attack
     if (event->button() == Qt::MiddleButton){
-        setWeather(nullptr);
         for (Slot* slot:player_->getSlots()){
             if (slot->isFilled())
             slot->use();
@@ -213,8 +212,6 @@ void Game::mousePressEvent(QMouseEvent *event){
 
     // create AIEntity (part of grp 1)
     if (event->button() == Qt::RightButton){
-        setWeather(new RainWeather(this));
-
         // create enemy (will follow/attack its enemies)
         AIEntity* e = new AIEntity();
         e->setGroupID(1);

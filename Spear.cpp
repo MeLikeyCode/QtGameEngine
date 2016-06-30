@@ -51,12 +51,12 @@ Spear::Spear()
 /// Will thrust the spear forward. The "position" argument is ignored.
 void Spear::attack(QPointF position)
 {
-    soundEffect_->play(1);
-
     // if its already thrusting, don't do anything
     if (alreadyThrusting_){
         return;
     }
+
+    soundEffect_->play(1);
 
     headingBackward_ = false;
     headingForward_ = true;
