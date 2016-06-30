@@ -66,7 +66,8 @@ SOURCES += main.cpp \
     ItemTeleport.cpp \
     ItemPushback.cpp \
     Weather.cpp \
-    RainWeather.cpp
+    RainWeather.cpp \
+    MapGrid.cpp
 
 HEADERS  += \
     Map.h \
@@ -122,7 +123,8 @@ HEADERS  += \
     ItemTeleport.h \
     ItemPushback.h \
     Weather.h \
-    RainWeather.h
+    RainWeather.h \
+    MapGrid.h
 
 RESOURCES += \
     res.qrc

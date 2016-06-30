@@ -6,6 +6,7 @@
 #include <unordered_set>
 
 class Map;
+class MapGrid;
 class DynamicEntity;
 class InventoryViewer;
 class Entity;
@@ -15,30 +16,24 @@ class Weather;
 /// @author Abdullah Aghazadah
 /// @date 6-3-15
 ///
-/// A Game has a Map with a bunch of Entities in it. It also has a Camera to
-/// view parts of the Map.
-///
-/// To create a Game:
-/// Game* game = new Game();
-///
-/// To start the Game:
-/// game->launch(); // a default Map/Camera will be generated
-///
-/// To set the Map of the game, use Game::setMap(Map*).
-/// To set the Camera, use Game::setCamera(Camera*).
+/// A Game represents an instance of the game as a whole.
+/// It controls things such as GUIs, screen size, changing maps, etc...
 class Game: public QGraphicsView{
     Q_OBJECT //todo delete test
 public:
     // enums
     enum class MouseMode { regular, selectPosition, selectEntity };
+    enum class Direction { up, down, left, right };
 
     // constructor
-    Game(Map* map);
+    Game(MapGrid* mapGrid, int xPosOfStartingMap, int yPosOfStartingMap);
+
 
     void launch();
 
-    void setMap(Map* map);
-    Map* map();
+    MapGrid* mapGrid();
+    void setCurrentMap(Map* currentMap);
+    Map* currentMap();
     QPointF mapToMap(const QPoint &point);
 
     void setCenterCamPos(QPointF position);
@@ -71,8 +66,14 @@ public:
     void setWeather(Weather* weather);
 
 signals:
+    /// Emitted Whenever a position is selected while Game is in selectPosition mode.
     void positionSelected(QPointF pos);
+
+    /// Emitted whenever an Entity is selected while the Game is in select Entity mode.
     void entitySelected(Entity* entity);
+
+    /// Emitted when the current Map of the game is changed.
+    void mapChanged(Map* oldMap, Map* newMap);
 
 public slots:
     void askEnemiesToMove(); // TODO delete test
@@ -80,7 +81,8 @@ public slots:
 
 private:
     // main private attributes
-    Map* map_;
+    MapGrid* mapGrid_;
+    Map* currentMap_;
     std::set<int> keysPressed_;
     MouseMode mouseMode_;
     Weather* weather_;

@@ -16,6 +16,8 @@
 #include "ItemRainOfSpears.h"
 #include "ItemTeleport.h"
 #include "ItemPushback.h"
+#include "MapGrid.h"
+#include "Terrain.h"
 
 #include <QMediaPlayer>
 
@@ -31,14 +33,26 @@ int main(int argc, char *argv[])
      s->play(-1);
 
     // create a Map and a Game
-    Map* map = new Map(30,30,64);
-    Game* game = new Game(map);
+    MapGrid* mapGrid = new MapGrid(3,3);
+    Map* mainMap = new Map(30,30,64);
+    mapGrid->insertMap(mainMap,0,1);
+
+    Map* secondaryMap = new Map(20,20,64);
+    int TILE_SIZE = 256;
+    Terrain* terrain_ = new Terrain(20*64/TILE_SIZE+1,20*64/TILE_SIZE+1,
+                           TILE_SIZE,TILE_SIZE);
+    terrain_->fill(QPixmap(":resources/graphics/terrain/grassstonedry.png"));
+    secondaryMap->setTerrain(terrain_);
+
+    mapGrid->insertMap(secondaryMap,0,0);
+
+    Game* game = new Game(mapGrid,0,1);
     game->launch();
 
     // create a DynamicEntity (an Entity that can move around)
     DynamicEntity* player = new DynamicEntity();
-    map->addEntity(player);
-    player->setCellPos(Node(2,2));
+    mainMap->addEntity(player);
+    player->setCellPos(Node(4,4));
     player->setPlayerControlled(true);
     player->setStepSize(10);
     game->setPlayer(player); // game knows about this entity (for testing)
@@ -100,23 +114,23 @@ int main(int argc, char *argv[])
     // add some items to ground
     Spear* spear = new Spear();
     spear->setPointPos(QPointF(300,300));
-    map->addEntity(spear);
+    mainMap->addEntity(spear);
 
     Axe* axe = new Axe();
     axe->setPointPos(QPointF(400,300));
-    map->addEntity(axe);
+    mainMap->addEntity(axe);
 
     ItemRainOfSpears* ros = new ItemRainOfSpears();
     ros->setPointPos(QPointF(500,500));
-    map->addEntity(ros);
+    mainMap->addEntity(ros);
 
     ItemTeleport* tel = new ItemTeleport();
     tel->setPointPos(QPointF(600,600));
-    map->addEntity(tel);
+    mainMap->addEntity(tel);
 
     ItemPushback* pb = new ItemPushback();
     pb->setPointPos(QPointF(700,700));
-    map->addEntity(pb);
+    mainMap->addEntity(pb);
 
     return a.exec();
 }

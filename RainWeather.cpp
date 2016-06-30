@@ -83,6 +83,6 @@ void RainWeather::splashStep_()
         double xPos = rand() % ((int)game_->cam().width()); // 0 - camWidth
         double yPos = rand() % ((int)game_->cam().height());  // 0 - camHeight
         QPointF pos = game_->mapToMap(QPoint(xPos,yPos));
-        game_->map()->playOnce(splash,"splash",50,pos);
+        game_->currentMap()->playOnce(splash,"splash",50,pos);
     }
 }

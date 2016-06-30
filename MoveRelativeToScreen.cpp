@@ -2,6 +2,7 @@
 #include "DynamicEntity.h"
 #include "Map.h"
 #include "Game.h"
+#include "MapGrid.h"
 
 /// Sets the entity to be moved.
 void MoveRealtiveToScreen::setEntity(DynamicEntity *entity)
@@ -58,6 +59,16 @@ void MoveRealtiveToScreen::moveStep()
             }
         }
 
+        // MUSTDO: test, remove load next map if far up
+        if (entity_->pointY() < 25 ){
+            Map* nextMap = entity_->map()->game()->mapGrid()->mapAt(0,0);
+            if(nextMap){
+                entity_->map()->game()->setCurrentMap(nextMap);
+                entity_->setPointY(nextMap->height() - 200);
+                nextMap->addEntity(entity_->map()->game()->player());
+            }
+        }
+
     }
 
     // move down if S is pressed
@@ -73,6 +84,16 @@ void MoveRealtiveToScreen::moveStep()
             // if the walk animation isn't playing already, play it.
             if (entity_->sprite()->playingAnimation() != std::string("walk")){
                 entity_->sprite()->play("walk",-1,100);
+            }
+        }
+
+        // MUSTDO: test, remove load next map if far up
+        if (entity_->pointY() > entity_->map()->height() - 50 ){
+            Map* nextMap = entity_->map()->game()->mapGrid()->mapAt(0,1);
+            if(nextMap){
+                entity_->map()->game()->setCurrentMap(nextMap);
+                entity_->setPointY(200);
+                nextMap->addEntity(entity_->map()->game()->player());
             }
         }
     }

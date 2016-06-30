@@ -18,17 +18,22 @@
 #include <ctime>
 #include "Weather.h"
 #include "RainWeather.h"
+#include "MapGrid.h"
 
 /// Creates an instance of the Game with some default options.
 ///
 /// Creates a default Map, Camera, etc...
-Game::Game(Map *map){
-    map_ = map;
+Game::Game(MapGrid *mapGrid, int xPosOfStartingMap, int yPosOfStartingMap){
+    mapGrid_ = mapGrid;
     player_ = nullptr;
-    map->setGame(this);
+
+    for (Map* map:mapGrid_->maps()){
+        map->setGame(this);
+    }
     setMouseTracking(true);
 
-    setScene(map->scene());
+    currentMap_ = mapGrid_->mapAt(xPosOfStartingMap,yPosOfStartingMap);
+    setScene(currentMap_->scene());
 
     // disable QGraphicsView's scroll bars
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -45,11 +50,9 @@ Game::Game(Map *map){
 
     setMouseMode(MouseMode::regular);
 
-    weather_ = nullptr;
-    RainWeather* rain = new RainWeather(this);
-    setWeather(rain);
-
-
+//    weather_ = nullptr;
+//    RainWeather* rain = new RainWeather(this);
+//    setWeather(rain);
 }
 
 /// Launches the Game.
@@ -61,18 +64,27 @@ void Game::launch(){
     setSceneRect(0,0,width(),height());
 }
 
-/// Sets the Map.
-void Game::setMap(Map *map){
-    map_ = map;
+MapGrid *Game::mapGrid()
+{
+    return mapGrid_;
 }
 
-/// Returns (a pointer to) the Game's Map.
-Map *Game::map(){
-    return map_;
+/// Sets the current Map.
+void Game::setCurrentMap(Map *map){
+    Map* oldMap = currentMap_;
+    currentMap_ = map;
+    setScene(currentMap_->scene());
+    setSceneRect(0,0,width(),height());
+    emit mapChanged(oldMap,map);
+}
+
+/// Returns the current Map.
+Map *Game::currentMap(){
+    return currentMap_;
 }
 
 /// Sets the center of the camear to be looking at the specified point on the
-/// Map.
+/// current Map.
 void Game::setCenterCamPos(QPointF position)
 {
     double camWidth = this->sceneRect().width();
@@ -141,7 +153,7 @@ void Game::mousePressEvent(QMouseEvent *event){
     // if in selectEntity MouseMode and there is an entity under click,
     // get that entity and emit entitySelected
     if (mouseMode_ == MouseMode::selectEntity){
-        std::unordered_set<Entity*> entitiesUnderClick = map()->entities(mapToMap(event->pos()));
+        std::unordered_set<Entity*> entitiesUnderClick = currentMap()->entities(mapToMap(event->pos()));
         if (entitiesUnderClick.size() > 0){
             emit entitySelected(*entitiesUnderClick.begin());
             return;
@@ -217,7 +229,7 @@ void Game::mousePressEvent(QMouseEvent *event){
         e->setGroupID(1);
         e->addEnemy(0);
         e->setPointPos(mapToMap(event->pos()));
-        map()->addEntity(e);
+        currentMap()->addEntity(e);
     }
 
 //    // create AIEntity (part of grp 2)
@@ -295,7 +307,8 @@ void Game::addInventoryViewer(InventoryViewer *viewer)
     scene()->addItem(viewer->rectItem_);
 }
 
-/// Converts the specified point from Game coordinates to Map coordinates.
+/// Converts the specified point from Game coordinates to Map coordinates (
+/// of the current Map).
 QPointF Game::mapToMap(const QPoint& point)
 {
     return mapToScene(point);

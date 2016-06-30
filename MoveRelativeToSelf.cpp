@@ -2,6 +2,7 @@
 #include "DynamicEntity.h"
 #include "Map.h"
 #include "Game.h"
+#include "MapGrid.h"
 
 /// Sets the entity to move.
 void MoveRelativeToSelf::setEntity(DynamicEntity *entity)
@@ -39,7 +40,6 @@ void MoveRelativeToSelf::moveStep()
                 entity_->sprite()->play("walk",-1,100);
             }
         }
-
     }
 
     // move down if S is pressed
