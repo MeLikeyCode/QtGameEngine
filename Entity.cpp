@@ -239,6 +239,11 @@ void Entity::setCellPos(const Node &cell){
 /// @see PathingMap::canFit(PathingMap,QPointF).
 bool Entity::canFit(const QPointF &atPos)
 {
+    // if the point is out of map, return false
+    if (!map_->contains(atPos)){
+        return false;
+    }
+
     return map()->pathingMap().canFit(pathingMap(),atPos);
 }
 

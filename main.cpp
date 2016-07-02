@@ -18,6 +18,7 @@
 #include "ItemPushback.h"
 #include "MapGrid.h"
 #include "Terrain.h"
+#include "RainWeather.h"
 
 #include <QMediaPlayer>
 
@@ -34,13 +35,16 @@ int main(int argc, char *argv[])
 
     // create a Map and a Game
     MapGrid* mapGrid = new MapGrid(3,3);
-    Map* mainMap = new Map(30,30,64);
+    PathingMap mainMapPathingMap(20,20,64);
+    Map* mainMap = new Map(mainMapPathingMap);
+    RainWeather* rain = new RainWeather(*mainMap);
     mapGrid->insertMap(mainMap,0,1);
 
-    Map* secondaryMap = new Map(20,20,64);
+    PathingMap secondaryMapPathingMap(20,20,64);
+    Map* secondaryMap = new Map(secondaryMapPathingMap);
     int TILE_SIZE = 256;
-    Terrain* terrain_ = new Terrain(20*64/TILE_SIZE+1,20*64/TILE_SIZE+1,
-                           TILE_SIZE,TILE_SIZE);
+    Terrain* terrain_ = new Terrain(TILE_SIZE,TILE_SIZE,
+                           secondaryMap->width(),secondaryMap->height());
     terrain_->fill(QPixmap(":resources/graphics/terrain/grassstonedry.png"));
     secondaryMap->setTerrain(terrain_);
 
@@ -48,6 +52,7 @@ int main(int argc, char *argv[])
 
     Game* game = new Game(mapGrid,0,1);
     game->launch();
+        mainMap->setWeather(rain);
 
     // create a DynamicEntity (an Entity that can move around)
     DynamicEntity* player = new DynamicEntity();

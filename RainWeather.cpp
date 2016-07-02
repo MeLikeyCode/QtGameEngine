@@ -4,10 +4,10 @@
 #include "Sprite.h"
 #include "Map.h"
 
-RainWeather::RainWeather(Game *game):
+RainWeather::RainWeather(Map &map):
+    Weather(map),
     rainTimer_(new QTimer()),
-    splashTimer_(new QTimer()),
-    game_(game)
+    splashTimer_(new QTimer())
 {
     // connect timers
     connect(rainTimer_,&QTimer::timeout,this,&RainWeather::rainStep_);
@@ -16,8 +16,9 @@ RainWeather::RainWeather(Game *game):
 
 RainWeather::~RainWeather()
 {
+    // delete all rain graphics from the scene of the map
     for (QGraphicsPixmapItem* rain:rains_){
-        game_->scene()->removeItem(rain);
+        map_.scene()->removeItem(rain);
     }
     rainTimer_->disconnect();
     splashTimer_->disconnect();
@@ -32,7 +33,7 @@ void RainWeather::start()
     for (int i = 0, n = 25; i < n; i ++){
         QGraphicsPixmapItem* rain = new QGraphicsPixmapItem(QPixmap(":/resources/graphics/effects/rain.png"));
         rains_.push_back(rain);
-        game_->scene()->addItem(rain);
+        map_.scene()->addItem(rain);
     }
 
     rainTimer_->start(10);
@@ -48,7 +49,7 @@ void RainWeather::stop()
 
     // clean graphics (splashes remove themselves)
     for (QGraphicsPixmapItem* rain:rains_){
-        game_->scene()->removeItem(rain);
+        map_.scene()->removeItem(rain);
     }
     rains_.clear();
 }
@@ -57,9 +58,18 @@ void RainWeather::stop()
 /// Will move the rain graphics down, when the reached far down enough,
 /// will move them back up.
 void RainWeather::rainStep_()
-{
-    double screenBottomY = game_->centerCamPos().y() + game_->sceneRect().height()/2;
-    double screenTopY = game_->centerCamPos().y() - game_->sceneRect().height()/2;
+{    
+    // do nothing if this Map isn't currently in a Game
+    Game* mapsGame = map_.game();
+    if (mapsGame == nullptr){
+        return;
+    }
+    if (mapsGame->currentMap() != &map_){
+        return;
+    }
+
+    double screenBottomY = map_.game()->centerCamPos().y() + map_.game()->sceneRect().height()/2;
+    double screenTopY = map_.game()->centerCamPos().y() - map_.game()->sceneRect().height()/2;
     for (QGraphicsPixmapItem* rain:rains_){
         // move down
         rain->moveBy(0,100);
@@ -67,8 +77,8 @@ void RainWeather::rainStep_()
         // move back up if too far down
         if (rain->y() > screenBottomY){
             double yPos = rand() % 700 - 700; // b/w -700 and 0
-            double xPos = rand() % ((int)(game_->cam().width()) + 400) - 200; // -200 -> camWidth+200
-            rain->setPos(game_->mapToMap(QPoint(xPos,yPos)));
+            double xPos = rand() % ((int)(map_.game()->cam().width()) + 400) - 200; // -200 -> camWidth+200
+            rain->setPos(map_.game()->mapToMap(QPoint(xPos,yPos)));
         }
     }
 }
@@ -77,12 +87,21 @@ void RainWeather::rainStep_()
 /// Will randomly generate splash graphics where the cam is currently looking at.
 void RainWeather::splashStep_()
 {
+    // do nothing if this Map isn't currently in a Game
+    Game* mapsGame = map_.game();
+    if (mapsGame == nullptr){
+        return;
+    }
+    if (mapsGame->currentMap() != &map_){
+        return;
+    }
+
     for (int i = 0, n = 7; i < n; i++){
         Sprite* splash = new Sprite();
         splash->addFrames(":/resources/graphics/effects/splash",4,"splash");
-        double xPos = rand() % ((int)game_->cam().width()); // 0 - camWidth
-        double yPos = rand() % ((int)game_->cam().height());  // 0 - camHeight
-        QPointF pos = game_->mapToMap(QPoint(xPos,yPos));
-        game_->currentMap()->playOnce(splash,"splash",50,pos);
+        double xPos = rand() % ((int)map_.game()->cam().width()); // 0 - camWidth
+        double yPos = rand() % ((int)map_.game()->cam().height());  // 0 - camHeight
+        QPointF pos = map_.game()->mapToMap(QPoint(xPos,yPos));
+        map_.game()->currentMap()->playOnce(splash,"splash",50,pos);
     }
 }

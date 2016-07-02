@@ -5,35 +5,39 @@
 #include <QBrush>
 #include <QGraphicsScene>
 #include "Game.h"
+#include "Weather.h"
 
 // TODO remove test
 #include <QDebug>
 
-Map::Map(int numCellsWide, int numCellsLong, int cellSize):
-    numCellsWide_(numCellsWide),
-    numCellsLong_(numCellsLong),
-    cellSize_(cellSize),
-    pathingMap_(numCellsWide,numCellsLong,cellSize)
+Map::Map(PathingMap pathingMap):
+    numCellsWide_(pathingMap.numCellsWide()),
+    numCellsLong_(pathingMap.numCellsLong()),
+    cellSize_(pathingMap.cellSize()),
+    pathingMap_(pathingMap),
+    scene_(new QGraphicsScene()),
+    weather_(nullptr),
+    game_(nullptr)
 {
-    // constructor body
-    scene_ = new QGraphicsScene();
-
     // calculate width and height
-    width_ = numCellsWide * cellSize;
-    height_ = numCellsLong * cellSize;
+    width_ = pathingMap.width();
+    height_ = pathingMap.height();
+
     scene_->setSceneRect(0,0,width_,height_);
 
     // set up a default terrain (grass.png)
     int TILE_SIZE = 256;
-    terrain_ = new Terrain(width()/TILE_SIZE+1,height()/TILE_SIZE+1,
-                           TILE_SIZE,TILE_SIZE);
+    terrain_ = new Terrain(TILE_SIZE,TILE_SIZE,
+                           width_,height_);
     terrain_->fill(QPixmap(":resources/graphics/terrain/grassstone.png"));
     setTerrain(terrain_);
 }
 
 /// Returns true if the specified pos is in the Map.
 bool Map::contains(const QPointF &pos){
-    return pos.x() < qreal(width()) && pos.y() < qreal(height());
+    bool botR = pos.x() < qreal(width()) && pos.y() < qreal(height());
+    bool topL = pos.x() > 0 && pos.y() > 0;
+    return botR && topL;
 }
 
 /// Returns true if the Map contains the specified Entity.
@@ -236,12 +240,27 @@ void Map::playOnce(Sprite *sprite, std::string animationName, int delaybwFramesM
     sprite->play(animationName,1,delaybwFramesMS);
 }
 
+/// Sets the weather effect for Map. Pass in nullptr for no weather.
+/// If there is already a weather effect, will stop it first.
+void Map::setWeather(Weather *weather)
+{
+    if (weather_){
+      weather_->stop();
+    }
+
+    weather_ = weather;
+
+    if (weather){
+        weather->start();
+    }
+}
+
 /// Sets the Terrain of the Map.
 void Map::setTerrain(Terrain *to){
     terrain_ = to;
 
     // add the parent terrain to the map's scene
-    scene()->addItem(to->parentItem());
+    scene()->addItem(to->parentItem_);
 
 }
 

@@ -218,6 +218,10 @@ QPointF PathingMap::cellToPoint(const Node &cell) const{
 /// cells of the two PathingMaps.
 bool PathingMap::canFit(const PathingMap &specifiedPathingMap, const QPointF &specifiedPos) const
 {
+    if (!contains(specifiedPos)){
+        return false;
+    }
+
     // get specifiedPathingMap's cells as rects
     std::vector<QRectF> cellsAsRects = specifiedPathingMap.cellsAsRects();
 
@@ -246,6 +250,14 @@ bool PathingMap::canFit(const PathingMap &specifiedPathingMap, const QPointF &sp
     }
 
     return true;
+}
+
+/// Returns if the specified pos is in the PathingMap.
+bool PathingMap::contains(const QPointF &pos) const
+{
+    bool botR = pos.x() < qreal(width()) && pos.y() < qreal(height());
+    bool topL = pos.x() > 0 && pos.y() > 0;
+    return botR && topL;
 }
 
 /// Fills the specified cell.

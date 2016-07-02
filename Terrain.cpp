@@ -3,19 +3,17 @@
 #include <QPixmap>
 #include "Node.h"
 
-Terrain::Terrain(int numXTiles, int numYTiles, int tileWidth, int tileHeight):
-    numXTiles_(numXTiles),
-    numYTiles_(numYTiles),
+Terrain::Terrain(int tileWidth, int tileHeight, int mapWidth, int mapHeight):
     tileWidth_(tileWidth),
     tileHeight_(tileHeight),
-    grid_(numXTiles,numYTiles,tileWidth,tileHeight)
+    width_(mapWidth),
+    height_(mapHeight),
+    parentItem_(new QGraphicsPixmapItem())
 {
-    // constructor body
-    // calculate width_ and height_
-    width_ = numXTiles * tileWidth;
-    height_ = numYTiles * tileHeight;
+    numXTiles_ = mapWidth / tileWidth;
+    numYTiles_ = mapHeight / tileHeight;
 
-    parentItem_ = new QGraphicsPixmapItem();
+    grid_ = Grid(numXTiles_,numYTiles_,tileWidth_,tileHeight_);
 }
 
 /// Fills the specified cell with the specified pixmap.
@@ -40,13 +38,4 @@ void Terrain::fill(QPixmap pixmap){
         // fill it with the specified pixmap
         fill(cell,pixmap);
     }
-}
-
-/// Returns (a pointer to) the QGraphicsPixmapItem that is the parent of all the
-/// Tiles.
-///
-/// This is an internal things, use with caution. I use it to add the parentItem
-/// to the Map's scene when the Map's Terrain is set.
-QGraphicsPixmapItem *Terrain::parentItem(){
-    return parentItem_;
 }

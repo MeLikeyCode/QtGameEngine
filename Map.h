@@ -11,6 +11,7 @@ class Terrain;
 class Game;
 class Entity;
 class Sprite;
+class Weather;
 
 /// Represents a map which can contain a bunch of interacting Entities.
 ///
@@ -24,7 +25,7 @@ class Sprite;
 class Map{
 public:
     // constructor
-    Map(int numCellsWide=20, int numCellsLong=20, int cellSize=64);
+    Map(PathingMap pathingMap);
 
     bool contains(const QPointF& pos);
     bool contains(Entity* entity);
@@ -66,6 +67,8 @@ public:
     std::unordered_set<Entity*> entities(const QPolygonF& inRegion);
 
     void playOnce(Sprite* sprite, std::string animation, int delaybwFramesMS, QPointF atPos);
+
+    void setWeather(Weather* weather);
 private:
     int width_;
     int height_;
@@ -76,6 +79,7 @@ private:
     std::unordered_set<Entity*> entities_;
     Terrain* terrain_;
     Game* game_;
+    Weather* weather_;
 
     // for testing
     std::vector<QGraphicsItem*> drawings_;

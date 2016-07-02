@@ -4,17 +4,17 @@
 #include "Weather.h"
 #include <QGraphicsPixmapItem>
 
-class Game;
 class QTimer;
 
-/// Class that represents rain behavior in a Game.
+/// Class that represents rain behavior in a Map;
 /// @author Abdullah Aghazadah
 /// @date 6/26/16
 class RainWeather : public QObject, public Weather
 {
     Q_OBJECT
+    friend class Map;
 public:
-    RainWeather(Game* game);
+    RainWeather(Map& map);
     ~RainWeather();
 
     virtual void start();
@@ -24,7 +24,6 @@ public slots:
     void rainStep_();
     void splashStep_();
 private:
-    Game* game_;
     QTimer* rainTimer_;
     QTimer* splashTimer_;
     std::vector<QGraphicsPixmapItem*> rains_;

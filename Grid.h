@@ -24,6 +24,7 @@ class Node;
 class Grid{
 public:
     // constructor
+    Grid();
     Grid(int numXNodes, int numYNodes, int nodeWidth, int nodeHeight);
 
     // readers

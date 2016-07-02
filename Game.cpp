@@ -49,10 +49,6 @@ Game::Game(MapGrid *mapGrid, int xPosOfStartingMap, int yPosOfStartingMap){
     updateTimer_->start(0);
 
     setMouseMode(MouseMode::regular);
-
-//    weather_ = nullptr;
-//    RainWeather* rain = new RainWeather(this);
-//    setWeather(rain);
 }
 
 /// Launches the Game.
@@ -360,22 +356,6 @@ void Game::setPlayer(DynamicEntity *player){
 
 DynamicEntity *Game::player(){
     return player_;
-}
-
-/// Sets the weather effect of the game. If there is already a weather effect,
-/// stops it first. Pass in nullptr to set the weather to nothing.
-void Game::setWeather(Weather *weather)
-{
-
-    if (weather_){
-      weather_->stop();
-    }
-
-    weather_ = weather;
-
-    if (weather){
-        weather->start();
-    }
 }
 
 void Game::askEnemiesToMove()

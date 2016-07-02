@@ -249,9 +249,6 @@ std::vector<Node> PathGrid::row(int i) const{
 /// Returns a vector of Nodes enclosed by the rectangular region defined by a top
 /// left Node and a bottom right Node. Both Nodes are inclusive.
 std::vector<Node> PathGrid::nodes(const Node &topLeft, const Node &bottomRight) const{
-    // make sure the region is in the PathGrid
-    assert(contains(topLeft) && contains(bottomRight));
-
     std::vector<Node> nodesInRegion;
     for (int x = topLeft.x(), n = bottomRight.x(); x <= n; ++x){
         for (int y = topLeft.y(), p = bottomRight.y(); y <= p; ++y){

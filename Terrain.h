@@ -8,6 +8,8 @@
 #include "Grid.h"
 #include <QGraphicsPixmapItem>
 
+class Map;
+
 /// Represents a bunch of tiles arranged in a grid.
 ///
 /// To create a Terrain:
@@ -19,17 +21,13 @@
 /// To fill a certain cell with a certain tile:
 /// terrain->fill(const Node& cell, QPixmap pixmap);
 class Terrain{
+    friend class Map; // Map needs to access parentItem_
 public:
     // constructor
-    Terrain(int numXTiles, int numYTiles, int tileWidth, int tileHeight);
+    Terrain(int tileWidth, int tileHeight, int mapWidth, int mapHeight);
 
     void fill(const Node& cell, QPixmap pixmap);
     void fill(QPixmap pixmap);
-
-    // internal thing, needed by Map when terrain is changed. Terrain needs
-    // to add this parent item to it's scene.
-    QGraphicsPixmapItem* parentItem();
-
 private:
     // main attributes
     int numXTiles_;

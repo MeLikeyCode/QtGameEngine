@@ -3,6 +3,18 @@
 #include "Node.h"
 #include <cassert>
 
+/// Constructs an empty Grid.
+Grid::Grid():
+    numXNodes_(0),
+    numYNodes_(0),
+    nodeWidth_(0),
+    nodeHeight_(0),
+    width_(0),
+    height_(0)
+{
+
+}
+
 Grid::Grid(int numXNodes, int numYNodes, int nodeWidth, int nodeHeight):
     numXNodes_(numXNodes),
     numYNodes_(numYNodes),

@@ -60,6 +60,7 @@ public:
     Node pointToCell(const QPointF& point) const;
     QPointF cellToPoint(const Node& cell) const;
     bool canFit(const PathingMap& specifiedPathingMap, const QPointF& specifiedPos) const;
+    bool contains(const QPointF& pos) const;
 
     // modifiers ("setters")
     void fill(const Node& cell);
