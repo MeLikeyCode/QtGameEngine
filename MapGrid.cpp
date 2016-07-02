@@ -24,10 +24,14 @@ void MapGrid::insertMap(Map *map, int xPos, int yPos)
 }
 
 /// Returns the Map at the specified position in the MapGrid.
+/// If there is no Map at the specified position, returns null.
+/// If the position is outside the bounds of the MapGrid, will return null because
+/// there is no Map there!
 Map *MapGrid::mapAt(int xPos, int yPos)
 {
-    // make sure xPos and yPos are within bounds
-    assert(xPos < numMapsHorizontally_ && yPos < numMapsVertically_);
+    if (xPos < 0 || xPos >= numMapsHorizontally_ || yPos < 0 || yPos >= numMapsVertically_){
+        return nullptr;
+    }
 
     int posInArray = yPos * numMapsHorizontally_ + xPos;
     return maps_[posInArray];

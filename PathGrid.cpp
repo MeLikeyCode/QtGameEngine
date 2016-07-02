@@ -252,6 +252,7 @@ std::vector<Node> PathGrid::nodes(const Node &topLeft, const Node &bottomRight) 
     std::vector<Node> nodesInRegion;
     for (int x = topLeft.x(), n = bottomRight.x(); x <= n; ++x){
         for (int y = topLeft.y(), p = bottomRight.y(); y <= p; ++y){
+            if (contains(Node(x,y)))
             nodesInRegion.push_back(Node(x,y));
         }
     }

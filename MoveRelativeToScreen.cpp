@@ -63,7 +63,8 @@ void MoveRealtiveToScreen::moveStep()
 
         // MUSTDO: test, remove load next map if far up
         if (entity_->pointY() < 25 ){
-            Map* nextMap = entity_->map()->game()->mapGrid()->mapAt(0,0);
+            Node currentMapPos = entity_->map()->game()->mapGrid()->positionOf(entity_->map());
+            Map* nextMap = entity_->map()->game()->mapGrid()->mapAt(currentMapPos.x(),currentMapPos.y() - 1);
             if(nextMap){
                 entity_->map()->game()->setCurrentMap(nextMap);
                 entity_->setPointY(nextMap->height() - 200);
@@ -90,11 +91,12 @@ void MoveRealtiveToScreen::moveStep()
         }
 
         // MUSTDO: test, remove load next map if far up
-        if (entity_->pointY() > entity_->map()->height() - 100 ){
-            Map* nextMap = entity_->map()->game()->mapGrid()->mapAt(0,1);
+        if (entity_->pointY() > entity_->map()->height() - 150 ){
+            Node currentMapPos = entity_->map()->game()->mapGrid()->positionOf(entity_->map());
+            Map* nextMap = entity_->map()->game()->mapGrid()->mapAt(currentMapPos.x(),currentMapPos.y() + 1);
             if(nextMap){
                 entity_->map()->game()->setCurrentMap(nextMap);
-                entity_->setPointY(200);
+                entity_->setPointY(150);
                 nextMap->addEntity(entity_->map()->game()->player());
             }
         }
@@ -116,6 +118,17 @@ void MoveRealtiveToScreen::moveStep()
             }
         }
 
+        // MUSTDO: test, remove load next map if far enough
+        if (entity_->pointX() < 150 ){
+            Node currentMapPos = entity_->map()->game()->mapGrid()->positionOf(entity_->map());
+            Map* nextMap = entity_->map()->game()->mapGrid()->mapAt(currentMapPos.x() - 1,currentMapPos.y());
+            if(nextMap){
+                entity_->map()->game()->setCurrentMap(nextMap);
+                entity_->setPointX(nextMap->width() - 200);
+                nextMap->addEntity(entity_->map()->game()->player());
+            }
+        }
+
     }
 
     // move right if D is pressed
@@ -134,6 +147,16 @@ void MoveRealtiveToScreen::moveStep()
             }
         }
 
+        // MUSTDO: test, remove load next map if far up
+        if (entity_->pointX() > entity_->map()->width() - 200 ){
+            Node currentMapPos = entity_->map()->game()->mapGrid()->positionOf(entity_->map());
+            Map* nextMap = entity_->map()->game()->mapGrid()->mapAt(currentMapPos.x() + 1,currentMapPos.y());
+            if(nextMap){
+                entity_->map()->game()->setCurrentMap(nextMap);
+                entity_->setPointX(150);
+                nextMap->addEntity(entity_->map()->game()->player());
+            }
+        }
     }
 
     // if none of the keys are pressed, play stand animation
