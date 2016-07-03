@@ -4,6 +4,8 @@
 class Map;
 
 /// Interface that represents a weather effect.
+/// To add a Weather effect to a Map, first create the Weather, then use
+/// Map::setWeather(Weather*).
 /// @author Abdullah Aghazadah
 /// @date 6/26/16
 class Weather

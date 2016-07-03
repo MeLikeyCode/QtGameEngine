@@ -13,8 +13,6 @@ void MoveRealtiveToScreen::setEntity(DynamicEntity *entity)
 /// Moves the entity relative to the screen.
 void MoveRealtiveToScreen::moveStep()
 {
-    entity_->map()->drawPathingMap();
-
     // temporarly disable pathingmap (will be automatically reenabled when moved)
     QPointF entitysPos = entity_->map()->cellToPoint(entity_->cellPos());
 

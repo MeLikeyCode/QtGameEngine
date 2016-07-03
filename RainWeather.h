@@ -6,7 +6,7 @@
 
 class QTimer;
 
-/// Class that represents rain behavior in a Map;
+/// Class that represents rain weather in a Map;
 /// @author Abdullah Aghazadah
 /// @date 6/26/16
 class RainWeather : public QObject, public Weather
