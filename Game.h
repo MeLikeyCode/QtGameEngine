@@ -27,7 +27,6 @@ public:
     // constructor
     Game(MapGrid* mapGrid, int xPosOfStartingMap, int yPosOfStartingMap);
 
-
     void launch();
 
     MapGrid* mapGrid();

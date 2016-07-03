@@ -53,15 +53,17 @@ void RainWeather::start()
         return;
     }
 
-    // add rain graphics to scene
+    // add rain graphics to scene/set their opacities
     for (QGraphicsPixmapItem* rain:rains_){
         map_->scene()->addItem(rain);
+        rain->setOpacity(0.08);
     }
 
     rainTimer_->start(rainStepFreqMs_);
     splashTimer_->start(splashStepFreq_);
 
     started_ = true;
+    currentSplashOpacity_ = 0.08;
 }
 
 /// Stops raining. Does nothing if the rain is already stopped.
@@ -100,6 +102,9 @@ void RainWeather::rainStep_()
         // move down
         rain->moveBy(0,rainMoveAmountPerStep_);
 
+        // increase opacity
+        rain->setOpacity(rain->opacity() + 0.0005);
+
         // move back up if too far down
         if (rain->y() > screenBottomY){
             double yPos = rand() % 700 - 700; // b/w -700 and 0
@@ -124,8 +129,18 @@ void RainWeather::splashStep_()
         return;
     }
 
+    if (currentSplashOpacity_ < 0.5){
+        currentSplashOpacity_ += 0.002;
+    }
+    else {
+        int r = rand() % 5;
+        if (numSplashPerStep_ < 60 && r == 1)
+        numSplashPerStep_++;
+    }
+
     for (int i = 0, n = numSplashPerStep_; i < n; i++){
         Sprite* splash = new Sprite();
+        splash->setOpacity(currentSplashOpacity_);
         splash->addFrames(":/resources/graphics/effects/splash",4,"splash");
         double xPos = rand() % ((int)map_->game()->cam().width()); // 0 - camWidth
         double yPos = rand() % ((int)map_->game()->cam().height());  // 0 - camHeight

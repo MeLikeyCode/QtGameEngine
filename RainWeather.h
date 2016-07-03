@@ -15,7 +15,7 @@ class RainWeather : public QObject, public WeatherEffect
 {
     Q_OBJECT
 public:
-    RainWeather(int numOfRainGraphics=25, int rainStepFreqMs=10, int rainMoveAmountPerStep=100,
+    RainWeather(int numOfRainGraphics=45, int rainStepFreqMs=10, int rainMoveAmountPerStep=100,
                 int splashStepFreq=75, int numSplashPerStep=7);
     ~RainWeather();
 
@@ -30,6 +30,7 @@ private:
     QTimer* splashTimer_;
     std::vector<QGraphicsPixmapItem*> rains_;
     bool started_;
+    double currentSplashOpacity_;
 
     int numOfRainGraphics_ = 25;        // number of rain graphics
     int rainStepFreqMs_ = 10;           // how often to move the rain down in ms
