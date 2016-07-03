@@ -32,13 +32,14 @@ int main(int argc, char *argv[])
      qRegisterMetaType<std::vector<QPointF>>();
 
      Sound* s = new Sound("qrc:/resources/sounds/music2.mp3");
-     s->play(-1);
+     s->setVolume(20);
+     //s->play(-1);
 
     // create a Map and a Game
     MapGrid* mapGrid = new MapGrid(3,3);
 
     PathingMap map1PathingMap(20,20,64);
-    PathingMap map2PathingMap(20,20,64);
+    PathingMap map2PathingMap(100,100,64);
 
     Map* map1 = new Map(map1PathingMap);
     Map* map2 = new Map(map2PathingMap);
@@ -52,8 +53,8 @@ int main(int argc, char *argv[])
     terrain_->fill(QPixmap(":resources/graphics/terrain/grassstonedry.png"));
     map2->setTerrain(terrain_);
 
-    map1->setWeather(rain1);
-    map2->setWeather(snow1);
+    map1->setWeatherEffect(rain1);
+    map2->setWeatherEffect(snow1);
 
     mapGrid->insertMap(map1,0,1);
     mapGrid->insertMap(map2,0,0);

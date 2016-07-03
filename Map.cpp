@@ -5,7 +5,7 @@
 #include <QBrush>
 #include <QGraphicsScene>
 #include "Game.h"
-#include "Weather.h"
+#include "WeatherEffect.h"
 
 // TODO remove test
 #include <QDebug>
@@ -230,19 +230,17 @@ std::unordered_set<Entity *> Map::entities(const QPolygonF &inRegion)
 /// TODO: don't delete the sprite (create a copy, delete the copy, or something...)
 void Map::playOnce(Sprite *sprite, std::string animationName, int delaybwFramesMS, QPointF atPos)
 {
-    Entity* spritesEntity = new Entity();
-    spritesEntity->setSprite(sprite);
-    spritesEntity->setPointPos(atPos);
-    addEntity(spritesEntity);
+    sprite->setPos(atPos);
+    scene()->addItem(sprite);
 
-    QObject::connect(sprite,&Sprite::animationFinished,spritesEntity,&QObject::deleteLater);
+    QObject::connect(sprite,&Sprite::animationFinished,sprite,&Sprite::deleteLater);
 
     sprite->play(animationName,1,delaybwFramesMS);
 }
 
 /// Sets the weather effect for Map. Pass in nullptr for no weather.
 /// If there is already a weather effect, will stop it first.
-void Map::setWeather(Weather *weather)
+void Map::setWeatherEffect(WeatherEffect *weather)
 {
     if (weather_){
       weather_->stop();
@@ -254,6 +252,14 @@ void Map::setWeather(Weather *weather)
         weather->map_ = this;
         weather->start();
     }
+}
+
+/// Returns the WeatherEffect of the Map. Returns nullptr if the Map has no
+/// WeatherEffect. You can start and stop the returned WeatherEffect via
+/// WeatherEffect::start()/WeatherEffect::stop().
+WeatherEffect *Map::weatherEffect()
+{
+    return weather_;
 }
 
 /// Sets the Terrain of the Map.

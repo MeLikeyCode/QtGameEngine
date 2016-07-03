@@ -8,28 +8,31 @@
 #include <QDebug>
 
 SnowWeather::SnowWeather():
-    snowTimer_(new QTimer()),
-    snowTimerDuel_(new QTimer()),
+    globularSnowTimer_(new QTimer(this)),
+    linearSnowTimer_(new QTimer(this)),
     started_(false),
-    initial_(true),
-    initialDuel_(true)
+    initialGlobular_(true),
+    initialLinear_(true)
 {
     // connect timer
-    connect(snowTimer_,&QTimer::timeout,this,&SnowWeather::snowStepGlobular_);
-    connect(snowTimerDuel_,&QTimer::timeout,this,&SnowWeather::snowStepDuel_);
+    connect(globularSnowTimer_,&QTimer::timeout,this,&SnowWeather::snowStepGlobular_);
+    connect(linearSnowTimer_,&QTimer::timeout,this,&SnowWeather::snowStepLinear_);
 }
 
 SnowWeather::~SnowWeather()
 {
     // delete all snow graphics from the scene of the Map (if it has a Map)
     if (map_){
-        for (QGraphicsPixmapItem* snow:snows_){
+        for (QGraphicsPixmapItem* snow:globularSnows_){
             map_->scene()->removeItem(snow);
         }
     }
 
     map_->scene()->removeItem(snow1_);
     map_->scene()->removeItem(snow2_);
+
+    delete snow1_;
+    delete snow2_;
 }
 
 /// Starts snowing. Does nothing if the snow has already started.
@@ -43,24 +46,8 @@ void SnowWeather::start()
         return;
     }
 
-//    // create some snow graphics at the top of screen
-//    for (int i = 0, n = 15; i < n; i ++){
-//        QGraphicsPixmapItem* snow = new QGraphicsPixmapItem(QPixmap(":/resources/graphics/effects/snow/snow0.png"));
-//        snows_.push_back(snow);
-//        map_->scene()->addItem(snow);
-//        snow->setOpacity(0.05);
-//    }
-
-    // create snow1 and snow2 images
-    snow1_ = new QGraphicsPixmapItem(QPixmap(":/resources/graphics/effects/snow/snow1.png"));
-    snow2_ = new QGraphicsPixmapItem(QPixmap(":/resources/graphics/effects/snow/snow1.png"));
-    snow1_->setOpacity(0.05);
-    snow2_->setOpacity(0.05);
-    map_->scene()->addItem(snow1_);
-    map_->scene()->addItem(snow2_);
-
-    //snowTimer_->start(100);
-    snowTimerDuel_->start(100);
+    globularSnowTimer_->start(100);
+    linearSnowTimer_->start(100);
 
     started_ = true;
 }
@@ -68,16 +55,23 @@ void SnowWeather::start()
 /// Stops snowing. Does nothing if the snow has already stopped.
 void SnowWeather::stop()
 {
-    snowTimer_->stop();
+    globularSnowTimer_->stop();
 
     // clean graphics
-    for (QGraphicsPixmapItem* snow:snows_){
+    for (QGraphicsPixmapItem* snow:globularSnows_){
         map_->scene()->removeItem(snow);
     }
-    snows_.clear();
+    globularSnows_.clear();
 
     map_->scene()->removeItem(snow1_);
     map_->scene()->removeItem(snow2_);
+
+    globularSnowTimer_->stop();
+    linearSnowTimer_->stop();
+
+    initialGlobular_ = true;
+    initialLinear_ = true;
+    started_ = false;
 }
 
 void SnowWeather::snowStepGlobular_()
@@ -93,20 +87,28 @@ void SnowWeather::snowStepGlobular_()
         return;
     }
 
-    if (initial_){
+    if (initialGlobular_){
+        // create some globular snow
+        for (int i = 0, n = 10; i < n; i ++){
+            QGraphicsPixmapItem* snow = new QGraphicsPixmapItem(QPixmap(":/resources/graphics/effects/snow/snow0.png"));
+            globularSnows_.push_back(snow);
+            map_->scene()->addItem(snow);
+            snow->setOpacity(0.05);
+        }
+
         // position snows at top of camera
-        for (QGraphicsPixmapItem* snow:snows_){
+        for (QGraphicsPixmapItem* snow:globularSnows_){
             double randYOffset = rand() % ((int)(mapsGame->cam().height()*2)); // 0 - 2*height of cam
             double randXOffset = rand() % (int)(mapsGame->cam().width() + 300) - 300; // -300 -> right side of cam
             snow->setPos(mapsGame->cam().topLeft());
             snow->setY(snow->y() - snow->boundingRect().height() - randYOffset);
             snow->setX(snow->x() + randXOffset);
         }
-        initial_ = false;
+        initialGlobular_ = false;
     }
 
     double screenBottomY = map_->game()->centerCamPos().y() + map_->game()->sceneRect().height()/2;
-    for (QGraphicsPixmapItem* snow:snows_){
+    for (QGraphicsPixmapItem* snow:globularSnows_){
         // move down and left
         snow->moveBy(0,20);
         snow->setOpacity(snow->opacity() + 0.005);
@@ -122,7 +124,7 @@ void SnowWeather::snowStepGlobular_()
     }
 }
 
-void SnowWeather::snowStepDuel_()
+void SnowWeather::snowStepLinear_()
 {
     assert(map_ != nullptr);    // make sure we have a Map
 
@@ -135,14 +137,24 @@ void SnowWeather::snowStepDuel_()
         return;
     }
 
-    if (initialDuel_){
+    if (initialLinear_){
+        // create snow1 and snow2 images
+        QPixmap pm(":/resources/graphics/effects/snow/snow1.png");
+        pm = pm.scaled(mapsGame->cam().width(),pm.height());
+        snow1_ = new QGraphicsPixmapItem(pm);
+        snow2_ = new QGraphicsPixmapItem(pm);
+        snow1_->setOpacity(0.05);
+        snow2_->setOpacity(0.05);
+        map_->scene()->addItem(snow1_);
+        map_->scene()->addItem(snow2_);
+
         // set up snow1 and 2
         QPointF camPos = mapsGame->cam().topLeft();
         snow1_->setPos(camPos);
         snow2_->setPos(camPos);
         snow1_->setY(snow1_->y() - snow1_->boundingRect().height());
         snow2_->setY(snow2_->y() - 2 * snow2_->boundingRect().height());
-        initialDuel_ = false;
+        initialLinear_ = false;
     }
 
     // increase opacities

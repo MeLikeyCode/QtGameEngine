@@ -16,7 +16,7 @@
 #include "InventoryViewer.h"
 #include <cstdlib>
 #include <ctime>
-#include "Weather.h"
+#include "WeatherEffect.h"
 #include "RainWeather.h"
 #include "MapGrid.h"
 
@@ -287,6 +287,14 @@ void Game::keyPressEvent(QKeyEvent *event)
 
     if (!event->isAutoRepeat()){
         keysPressed_.insert(event->key());
+    }
+
+    // TODO: remove, test
+    if (event->key() == Qt::Key_E){
+        currentMap()->weatherEffect()->start();
+    }
+    if (event->key() == Qt::Key_R){
+        currentMap()->weatherEffect()->stop();
     }
 }
 

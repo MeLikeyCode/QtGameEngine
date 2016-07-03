@@ -65,10 +65,10 @@ SOURCES += main.cpp \
     ItemRainOfSpears.cpp \
     ItemTeleport.cpp \
     ItemPushback.cpp \
-    Weather.cpp \
     RainWeather.cpp \
     MapGrid.cpp \
-    SnowWeather.cpp
+    SnowWeather.cpp \
+    WeatherEffect.cpp
 
 HEADERS  += \
     Map.h \
@@ -123,10 +123,10 @@ HEADERS  += \
     ItemRainOfSpears.h \
     ItemTeleport.h \
     ItemPushback.h \
-    Weather.h \
     RainWeather.h \
     MapGrid.h \
-    SnowWeather.h
+    SnowWeather.h \
+    WeatherEffect.h
 
 RESOURCES += \
     res.qrc

@@ -18,6 +18,7 @@ public:
 
     void play(int numOfTimes);
     void stop();
+    void setVolume(int volume);
 
 public slots:
     void stateChanged();

@@ -6,12 +6,16 @@
 #include "DynamicEntity.h"
 #include "Inventory.h"
 #include "stdlib.h" // TODO: use C++ random number generatio instead
+#include "Sound.h"
 
 ItemRainOfSpears::ItemRainOfSpears()
 {
     // set sprite
     Sprite* sprite = new Sprite(QPixmap(":/resources/graphics/weapons/trippleSpear.png"));
     setSprite(sprite);
+
+    timer_ = new QTimer(this);
+    soundEffect_ = new Sound("qrc:/resources/sounds/specialMove.wav");
 }
 
 /// Executed when the ItemRainOfSpears is asked to be used. Will generate a
@@ -24,6 +28,18 @@ void ItemRainOfSpears::use()
     // make sure the inventory has an owner
     DynamicEntity* owner = inventory()->entity();
     assert(owner != nullptr);
+
+    connect(timer_,&QTimer::timeout,this,&ItemRainOfSpears::spearStep_);
+    timer_->start(500);
+    soundEffect_->play(1);
+
+    times_ = 0;
+}
+
+void ItemRainOfSpears::spearStep_()
+{
+    // make sure the inventory has an owner
+    DynamicEntity* owner = inventory()->entity();
 
     int NUM_SPEARS_TO_GENERATE = 10;
     int X_OFFSET_RANGE = 1000; // number of pixels around the owner's x position to spawn
@@ -52,5 +68,11 @@ void ItemRainOfSpears::use()
                                                                noDmgList,
                                                                owner->map());
         spearProjectile->startMoving();
+    }
+
+    times_++;
+
+    if (times_ > 15){
+        timer_->disconnect();
     }
 }

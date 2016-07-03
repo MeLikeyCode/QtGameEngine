@@ -11,7 +11,7 @@ class Terrain;
 class Game;
 class Entity;
 class Sprite;
-class Weather;
+class WeatherEffect;
 
 /// Represents a map which can contain a bunch of interacting Entities.
 ///
@@ -68,7 +68,8 @@ public:
 
     void playOnce(Sprite* sprite, std::string animation, int delaybwFramesMS, QPointF atPos);
 
-    void setWeather(Weather* weather);
+    void setWeatherEffect(WeatherEffect* weatherEffect);
+    WeatherEffect *weatherEffect();
 private:
     int width_;
     int height_;
@@ -79,7 +80,7 @@ private:
     std::unordered_set<Entity*> entities_;
     Terrain* terrain_;
     Game* game_;
-    Weather* weather_;
+    WeatherEffect* weather_;
 
     // for testing
     std::vector<QGraphicsItem*> drawings_;

@@ -1,15 +1,17 @@
 #ifndef RAINWEATHER_H
 #define RAINWEATHER_H
 
-#include "Weather.h"
-#include <QGraphicsPixmapItem>
+#include "WeatherEffect.h"
+#include <QObject>
 
 class QTimer;
+class QGraphicsPixmapItem;
 
-/// Class that represents rain weather in a Map;
+/// Class that represents a rain weather effect in a Map;
+/// @see WeatherEffect
 /// @author Abdullah Aghazadah
 /// @date 6/26/16
-class RainWeather : public QObject, public Weather
+class RainWeather : public QObject, public WeatherEffect
 {
     Q_OBJECT
 public:
@@ -29,11 +31,11 @@ private:
     std::vector<QGraphicsPixmapItem*> rains_;
     bool started_;
 
-    int numOfRainGraphics_ = 25;    // number of rain graphics
-    int rainStepFreqMs_ = 10;       // how often to move the rain down in ms
-    int splashStepFreq_ = 75;       // how often to create splashes
-    int rainMoveAmountPerStep_ = 100; // how much to move the rain down every step
-    int numSplashPerStep_ = 7;        // how many splash graphics to create per splash step
+    int numOfRainGraphics_ = 25;        // number of rain graphics
+    int rainStepFreqMs_ = 10;           // how often to move the rain down in ms
+    int rainMoveAmountPerStep_ = 100;   // how much to move the rain down every step
+    int splashStepFreq_ = 75;           // how often to create splashes
+    int numSplashPerStep_ = 7;          // how many splashes to create each time they are created
 };
 
 #endif // RAINWEATHER_H

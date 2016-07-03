@@ -37,6 +37,12 @@ void Sound::stop()
     mediaPlayer_->stop();
 }
 
+/// Sets the volume of the sound, from 0-100.
+void Sound::setVolume(int volume)
+{
+    mediaPlayer_->setVolume(volume);
+}
+
 /// Executed each time the state of the internal MediaPlayer changes.
 void Sound::stateChanged()
 {
