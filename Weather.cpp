@@ -2,8 +2,8 @@
 
 // empty
 
-Weather::Weather(Map &map):
-    map_(map)
+Weather::Weather():
+    map_(nullptr)
 {
 
 }

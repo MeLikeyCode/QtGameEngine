@@ -12,9 +12,9 @@ class QTimer;
 class RainWeather : public QObject, public Weather
 {
     Q_OBJECT
-    friend class Map;
 public:
-    RainWeather(Map& map);
+    RainWeather(int numOfRainGraphics=25, int rainStepFreqMs=10, int rainMoveAmountPerStep=100,
+                int splashStepFreq=75, int numSplashPerStep=7);
     ~RainWeather();
 
     virtual void start();
@@ -27,6 +27,13 @@ private:
     QTimer* rainTimer_;
     QTimer* splashTimer_;
     std::vector<QGraphicsPixmapItem*> rains_;
+    bool started_;
+
+    int numOfRainGraphics_ = 25;    // number of rain graphics
+    int rainStepFreqMs_ = 10;       // how often to move the rain down in ms
+    int splashStepFreq_ = 75;       // how often to create splashes
+    int rainMoveAmountPerStep_ = 100; // how much to move the rain down every step
+    int numSplashPerStep_ = 7;        // how many splash graphics to create per splash step
 };
 
 #endif // RAINWEATHER_H

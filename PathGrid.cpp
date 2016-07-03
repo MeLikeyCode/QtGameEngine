@@ -258,7 +258,6 @@ std::vector<Node> PathGrid::nodes(const Node &topLeft, const Node &bottomRight) 
     }
 
     return nodesInRegion;
-
 }
 
 /// Returns true if the PathGrid contains the specified Node.

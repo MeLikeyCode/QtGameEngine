@@ -251,6 +251,7 @@ void Map::setWeather(Weather *weather)
     weather_ = weather;
 
     if (weather){
+        weather->map_ = this;
         weather->start();
     }
 }

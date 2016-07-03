@@ -10,7 +10,7 @@ class Weather
 {
     friend class Map; // Map needs to set map_ during Map::setWeather(Weather*)
 public:
-    Weather(Map& map);
+    Weather();
 
     /// Starts the weather effect.
     virtual void start() = 0;
@@ -18,7 +18,7 @@ public:
     /// Stops the weather effect.
     virtual void stop() = 0;
 protected:
-    Map& map_;
+    Map* map_;
 };
 
 #endif // WEATHER_H

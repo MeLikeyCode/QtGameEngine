@@ -35,28 +35,34 @@ int main(int argc, char *argv[])
 
     // create a Map and a Game
     MapGrid* mapGrid = new MapGrid(3,3);
-    PathingMap mainMapPathingMap(20,20,64);
-    Map* mainMap = new Map(mainMapPathingMap);
-    RainWeather* rain = new RainWeather(*mainMap);
-    mapGrid->insertMap(mainMap,0,1);
 
-    PathingMap secondaryMapPathingMap(20,20,64);
-    Map* secondaryMap = new Map(secondaryMapPathingMap);
+    PathingMap map1PathingMap(20,20,64);
+    PathingMap map2PathingMap(32,32,32);
+
+    Map* map1 = new Map(map1PathingMap);
+    Map* map2 = new Map(map2PathingMap);
+
+    RainWeather* rain1 = new RainWeather();
+    RainWeather* rain2 = new RainWeather(40,10,120,50,20);
+
     int TILE_SIZE = 256;
     Terrain* terrain_ = new Terrain(TILE_SIZE,TILE_SIZE,
-                           secondaryMap->width(),secondaryMap->height());
+                           map2->width(),map2->height());
     terrain_->fill(QPixmap(":resources/graphics/terrain/grassstonedry.png"));
-    secondaryMap->setTerrain(terrain_);
+    map2->setTerrain(terrain_);
 
-    mapGrid->insertMap(secondaryMap,0,0);
+    map1->setWeather(rain1);
+    map2->setWeather(rain2);
+
+    mapGrid->insertMap(map1,0,1);
+    mapGrid->insertMap(map2,0,0);
 
     Game* game = new Game(mapGrid,0,1);
     game->launch();
-        mainMap->setWeather(rain);
 
     // create a DynamicEntity (an Entity that can move around)
     DynamicEntity* player = new DynamicEntity();
-    mainMap->addEntity(player);
+    map1->addEntity(player);
     player->setCellPos(Node(4,4));
     player->setPlayerControlled(true);
     player->setStepSize(10);
@@ -119,23 +125,23 @@ int main(int argc, char *argv[])
     // add some items to ground
     Spear* spear = new Spear();
     spear->setPointPos(QPointF(300,300));
-    mainMap->addEntity(spear);
+    map1->addEntity(spear);
 
     Axe* axe = new Axe();
     axe->setPointPos(QPointF(400,300));
-    mainMap->addEntity(axe);
+    map1->addEntity(axe);
 
     ItemRainOfSpears* ros = new ItemRainOfSpears();
     ros->setPointPos(QPointF(500,500));
-    mainMap->addEntity(ros);
+    map1->addEntity(ros);
 
     ItemTeleport* tel = new ItemTeleport();
     tel->setPointPos(QPointF(600,600));
-    mainMap->addEntity(tel);
+    map1->addEntity(tel);
 
     ItemPushback* pb = new ItemPushback();
     pb->setPointPos(QPointF(700,700));
-    mainMap->addEntity(pb);
+    map1->addEntity(pb);
 
     return a.exec();
 }
