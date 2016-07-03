@@ -50,6 +50,5 @@
         <file>sounds/blink.wav</file>
         <file>graphics/effects/snow/snow0.png</file>
         <file>graphics/effects/snow/snow1.png</file>
-        <file>graphics/effects/snow/snow2.png</file>
     </qresource>
 </RCC>

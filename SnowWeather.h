@@ -22,12 +22,17 @@ public:
     virtual void stop();
 
 public slots:
-    void snowStep_();
+    void snowStepGlobular_();
+    void snowStepDuel_();
 private:
     QTimer* snowTimer_;
+    QTimer* snowTimerDuel_;
     std::vector<QGraphicsPixmapItem*> snows_;
+    QGraphicsPixmapItem* snow1_;
+    QGraphicsPixmapItem* snow2_;
     bool started_;
     bool initial_;
+    bool initialDuel_;
 };
 
 #endif // SNOWWEATHER_H
