@@ -53,8 +53,8 @@ int main(int argc, char *argv[])
     terrain_->fill(QPixmap(":resources/graphics/terrain/grassstonedry.png"));
     map2->setTerrain(terrain_);
 
-    map1->setWeatherEffect(rain1);
-    map2->setWeatherEffect(snow1);
+//    map1->setWeatherEffect(rain1);
+//    map2->setWeatherEffect(snow1);
 
     mapGrid->insertMap(map1,0,1);
     mapGrid->insertMap(map2,0,0);

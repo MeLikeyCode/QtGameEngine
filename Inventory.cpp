@@ -59,7 +59,8 @@ void Inventory::addItem(Item *item)
 
 /// Removes the specified Item from the Inventory.
 /// If the Item is not in the Inventory, does nothing.
-/// If the Inventory belongs to an Entity who is in a map.
+/// If the Inventory belongs to an Entity who is in a map, drops the
+/// Item next to that Entity.
 void Inventory::removeItem(Item *item)
 {
     // item not in inventory
@@ -67,17 +68,17 @@ void Inventory::removeItem(Item *item)
         return;
     }
 
-    // = remove the item
-    // if there is a map, drop it on the ground (make it visible)
+    // inventory belongs to entity who is in map
     DynamicEntity* owner = entity();
     if (owner != nullptr){
         Map* theMap = owner->map();
         if ( theMap != nullptr){
+            theMap->addEntity(item);
             item->sprite()->setVisible(true);
             item->setInvulnerable(false);
-            QPointF offSetFromEnt = owner->pointPos();
-            offSetFromEnt.setY(offSetFromEnt.y() + 100);
-            item->setPointPos(offSetFromEnt);
+            QPointF closeToEntity = owner->pointPos();
+            closeToEntity.setY(closeToEntity.y() + 100);
+            item->setPointPos(closeToEntity);
         }
     }
 

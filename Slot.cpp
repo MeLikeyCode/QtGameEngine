@@ -3,6 +3,7 @@
 #include "Sprite.h"
 #include "DynamicEntity.h"
 #include <cassert>
+#include "Map.h"
 
 Slot::Slot():
     item_(nullptr),
@@ -50,13 +51,13 @@ bool Slot::isFilled()
     }
 }
 
-/// Equips the specified Item. Returns false if the Item can't be equiped in
-/// Slot.
+/// Attempts to equip the specified item. Returns true if the Item was
+/// succesfully equipped, otherwise false.
 bool Slot::equip(EquipableItem *item)
 {
-    // make sure the item is in in the owners inventory
-    DynamicEntity* o = owner();
-    assert(o->inventoryContains(item));
+    // make sure the item is in the owners inventory
+    DynamicEntity* theOwner = owner();
+    assert(theOwner->inventoryContains(item));
 
     // return false if the item cannot be equipped
     if (!canBeEquipped(item)){
@@ -65,8 +66,9 @@ bool Slot::equip(EquipableItem *item)
 
     // =equip item
     // make Item's sprite visible, make sure Item is located in proper location
+    theOwner->map()->addEntity(item);  // make sure the item is in the owners map
     item->sprite()->setVisible(true);
-    item->setParentEntity(owner());
+    item->setParentEntity(theOwner);
     item->setPointPos(item->attachmentPoint(),position());
     // update references for both Slot and Item
     item_ = item;

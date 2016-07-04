@@ -70,7 +70,7 @@ void Game::setCurrentMap(Map *map){
     Map* oldMap = currentMap_;
     currentMap_ = map;
     setScene(currentMap_->scene());
-    setSceneRect(0,0,width(),height());
+    setSceneRect(0,0,width(),height());  
     emit mapChanged(oldMap,map);
 }
 
@@ -308,7 +308,6 @@ void Game::keyReleaseEvent(QKeyEvent *event)
 void Game::addInventoryViewer(InventoryViewer *viewer)
 {
     inventoryViewers_.insert(viewer);
-    scene()->addItem(viewer->rectItem_);
 }
 
 /// Converts the specified point from Game coordinates to Map coordinates (
@@ -378,6 +377,7 @@ void Game::askEnemiesToMove()
 void Game::updatePosOverlays()
 {
     for (InventoryViewer* viewer:inventoryViewers_){
+        scene()->addItem(viewer->rectItem_);
         QPointF newPos = mapToScene(viewer->viewPos().toPoint());
         viewer->rectItem_->setPos(newPos);
     }
