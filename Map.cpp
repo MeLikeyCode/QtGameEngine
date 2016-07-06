@@ -293,6 +293,11 @@ void Map::addEntity(Entity *entity){
     // add its sprite to the interal QGraphicsScene
     scene_->addItem(entity->sprite());
 
+    // add its children's sprite's as a child of its sprites
+    for (Entity* childEntity:entity->children()){
+        childEntity->setParentEntity(entity);
+    }
+
     // update Entity's map_ ptr
     entity->map_ = this;
 
