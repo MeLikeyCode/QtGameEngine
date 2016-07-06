@@ -40,17 +40,11 @@ void Inventory::addItem(Item *item)
     items_.insert(item);
     item->inventory_ = this;
 
-    // make sprite of item invisible (no longer on ground)
-    item->sprite()->setVisible(false);
-
-    item->setInvulnerable(true);
-
-    // if the inventory belongs to an entity that is on a map, add item to map
     DynamicEntity* owner = entity();
     if (owner != nullptr){
         Map* theMap = owner->map();
         if (theMap != nullptr){
-            theMap->addEntity(item);
+            theMap->removeEntity(item);
         }
     }
 
@@ -63,6 +57,7 @@ void Inventory::addItem(Item *item)
 /// Item next to that Entity.
 void Inventory::removeItem(Item *item)
 {
+    assert (contains(item));
     // item not in inventory
     if (!contains(item)){
         return;
@@ -73,12 +68,10 @@ void Inventory::removeItem(Item *item)
     if (owner != nullptr){
         Map* theMap = owner->map();
         if ( theMap != nullptr){
-            theMap->addEntity(item);
-            item->sprite()->setVisible(true);
-            item->setInvulnerable(false);
             QPointF closeToEntity = owner->pointPos();
             closeToEntity.setY(closeToEntity.y() + 100);
             item->setPointPos(closeToEntity);
+            theMap->addEntity(item);
         }
     }
 

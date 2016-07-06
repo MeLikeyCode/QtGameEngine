@@ -53,10 +53,10 @@ Game::Game(MapGrid *mapGrid, int xPosOfStartingMap, int yPosOfStartingMap){
 
 /// Launches the Game.
 void Game::launch(){
-    //showNormal(); // TODO: eventually should showFullscreen() (or parametrize to
+    showNormal(); // TODO: eventually should showFullscreen() (or parametrize to
                   // allow launching normal or full screen
 
-    showFullScreen();
+    //showFullScreen();
     setSceneRect(0,0,width(),height());
 }
 
@@ -218,15 +218,15 @@ void Game::mousePressEvent(QMouseEvent *event){
 
 //    }
 
-    // create AIEntity (part of grp 1)
-    if (event->button() == Qt::RightButton){
-        // create enemy (will follow/attack its enemies)
-        AIEntity* e = new AIEntity();
-        e->setGroupID(1);
-        e->addEnemy(0);
-        e->setPointPos(mapToMap(event->pos()));
-        currentMap()->addEntity(e);
-    }
+//    // create AIEntity (part of grp 1)
+//    if (event->button() == Qt::RightButton){
+//        // create enemy (will follow/attack its enemies)
+//        AIEntity* e = new AIEntity();
+//        e->setGroupID(1);
+//        e->addEnemy(0);
+//        e->setPointPos(mapToMap(event->pos()));
+//        currentMap()->addEntity(e);
+//    }
 
 //    // create AIEntity (part of grp 2)
 //    if (event->button() == Qt::RightButton){

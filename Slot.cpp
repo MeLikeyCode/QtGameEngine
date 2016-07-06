@@ -44,20 +44,18 @@ std::string Slot::name()
 /// Returns true if the Slot is filled (i.e. taken by an Item).
 bool Slot::isFilled()
 {
-    if (item_ != nullptr){
-        return true;
-    } else {
-        return false;
-    }
+    return item_ != nullptr;
 }
 
 /// Attempts to equip the specified item. Returns true if the Item was
 /// succesfully equipped, otherwise false.
 bool Slot::equip(EquipableItem *item)
 {
-    // make sure the item is in the owners inventory
+    // assertions
     DynamicEntity* theOwner = owner();
-    assert(theOwner->inventoryContains(item));
+    assert(theOwner != nullptr);    // make sure has an owner
+    assert(theOwner->inventoryContains(item));  // make sure owner's inventory contains
+                                                // the item being equipped in this slot
 
     // return false if the item cannot be equipped
     if (!canBeEquipped(item)){
@@ -66,8 +64,8 @@ bool Slot::equip(EquipableItem *item)
 
     // =equip item
     // make Item's sprite visible, make sure Item is located in proper location
-    theOwner->map()->addEntity(item);  // make sure the item is in the owners map
-    item->sprite()->setVisible(true);
+    if (theOwner->map() != nullptr)
+        theOwner->map()->addEntity(item);  // make sure the item is in the owners map
     item->setParentEntity(theOwner);
     item->setPointPos(item->attachmentPoint(),position());
     // update references for both Slot and Item
@@ -86,7 +84,6 @@ void Slot::unequip()
     }
 
     // make the Item invisible/in proper place
-    item_->sprite()->setVisible(false);
     item_->setParentEntity(nullptr);
 
     // update references
