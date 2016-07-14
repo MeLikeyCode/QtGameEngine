@@ -6,6 +6,7 @@
 #include "Bow.h"
 #include "Spear.h"
 #include "Axe.h"
+#include "Inventory.h"
 
 AIEntity::AIEntity()
 {
@@ -55,7 +56,7 @@ AIEntity::AIEntity()
 //    equipItem(bow,cs);
 
     Spear* spear = new Spear();
-    addItemToInventory(spear);
+    inventory()->addItem(spear);
     equipItem(spear,rhs);
 
 //    Axe* axe = new Axe();

@@ -103,25 +103,6 @@ void DynamicEntity::equipItem(EquipableItem *item, Slot *slot)
     equipItem(item,slot->name());
 }
 
-/// Adds the specified Item to the Inventory of the DynamicEntity.
-void DynamicEntity::addItemToInventory(Item *item)
-{
-    inventory_->addItem(item);
-}
-
-/// Removes the specified Item from the Inventory of the DynamicEntity
-void DynamicEntity::removeItemFromInventory(Item *item)
-{
-    inventory_->removeItem(item);
-}
-
-/// Returns true if the Inventory of the DynamicEntity contains the specified
-/// Item.
-bool DynamicEntity::inventoryContains(Item *item)
-{
-    return inventory_->contains(item);
-}
-
 /// Returns the inventory of the Entity.
 Inventory *DynamicEntity::inventory()
 {
@@ -379,7 +360,7 @@ void DynamicEntity::onCollided(std::unordered_set<Entity *> entities)
         Item* asItem = dynamic_cast<Item*>(entity);
         if (asItem){
             if (asItem->inventory() == nullptr){
-                addItemToInventory(asItem);
+                inventory()->addItem(asItem);
             }
         }
     }

@@ -65,9 +65,6 @@ public:
     std::unordered_set<Slot*> getSlots();
     void equipItem(EquipableItem* item, std::string slot);
     void equipItem(EquipableItem* item, Slot* slot);
-    void addItemToInventory(Item* item);
-    void removeItemFromInventory(Item* item);
-    bool inventoryContains(Item* item);
     Inventory* inventory();
 
 signals:

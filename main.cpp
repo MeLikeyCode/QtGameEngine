@@ -122,7 +122,7 @@ int main(int argc, char *argv[])
     game->addInventoryViewer(v);
 
     Bow* bow = new Bow();
-    player->addItemToInventory(bow);
+    player->inventory()->addItem(bow);
 
     // add some items to ground
     Spear* spear = new Spear();
