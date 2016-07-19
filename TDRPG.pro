@@ -68,7 +68,10 @@ SOURCES += main.cpp \
     RainWeather.cpp \
     MapGrid.cpp \
     SnowWeather.cpp \
-    WeatherEffect.cpp
+    WeatherEffect.cpp \
+    Gui.cpp \
+    Panel.cpp \
+    Button.cpp
 
 HEADERS  += \
     Map.h \
@@ -126,7 +129,10 @@ HEADERS  += \
     RainWeather.h \
     MapGrid.h \
     SnowWeather.h \
-    WeatherEffect.h
+    WeatherEffect.h \
+    Gui.h \
+    Panel.h \
+    Button.h
 
 RESOURCES += \
     res.qrc

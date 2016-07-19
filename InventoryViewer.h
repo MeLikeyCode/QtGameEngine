@@ -3,6 +3,7 @@
 
 #include "QGraphicsRectItem"
 #include <QObject>
+#include "Gui.h"
 
 class Inventory;
 class QPointF;
@@ -12,7 +13,7 @@ class Game;
 
 /// Represents a GUI element that visualizes and allows interaction with
 /// an Inventory.
-class InventoryViewer : public QObject
+class InventoryViewer : public QObject, public Gui
 {
     Q_OBJECT
     // Game needs to access rectItem_ (rectItem_ needs to be added to Game's scene when
@@ -22,15 +23,11 @@ public:
     InventoryViewer(Game* game, int width, int height, Inventory* inventory=nullptr);
 
     void setInventory(Inventory* inventory);
-    void setViewPos(QPointF p);
-    QPointF viewPos();
 
 public slots:
     void onItemAddedOrRemovedFromInventory(Item* item);
 
 private:
-    QGraphicsRectItem* rectItem_;
-    QPointF pos_; // the position of the InventoryViewer in view coordinates
     int width_;
     int height_;
     Inventory* inventory_;

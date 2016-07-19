@@ -10,6 +10,7 @@ class MapGrid;
 class DynamicEntity;
 class InventoryViewer;
 class Entity;
+class Gui;
 
 /// Represents an instance of the game.
 /// @author Abdullah Aghazadah
@@ -48,7 +49,7 @@ public:
     void keyPressEvent(QKeyEvent* event);
     void keyReleaseEvent(QKeyEvent* event);
 
-    void addInventoryViewer(InventoryViewer *viewer);
+    void addGui(Gui *gui);
 
     std::set<int> keysPressed();
     QPoint getMousePos();
@@ -73,7 +74,7 @@ signals:
 
 public slots:
     void askEnemiesToMove(); // TODO delete test
-    void updatePosOverlays();
+    void updateGuiPositions();
 
 private:
     // main private attributes
@@ -84,7 +85,7 @@ private:
 
     QTimer* updateTimer_;
 
-    std::unordered_set<InventoryViewer*> inventoryViewers_;
+    std::unordered_set<Gui*> guis_;
 
     // TODO remove the following attributes, test attributes
     DynamicEntity* player_;

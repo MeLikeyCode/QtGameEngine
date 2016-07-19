@@ -15,8 +15,7 @@
 /// Creates a new InventoryViewer of the specified size and visualizing the
 /// specified Inventory.
 InventoryViewer::InventoryViewer(Game* game, int width, int height, Inventory *inventory):
-    rectItem_(new QGraphicsRectItem()),
-    pos_(QPointF(0,0)),
+    Gui(new QGraphicsRectItem()),
     width_(width),
     height_(height),
     inventory_(inventory),
@@ -24,13 +23,14 @@ InventoryViewer::InventoryViewer(Game* game, int width, int height, Inventory *i
     game_(game)
 {
     // make sure Inventory viewer is high on top
-    rectItem_->setZValue(100);
+    QGraphicsRectItem* asRI = dynamic_cast<QGraphicsRectItem*>(graphicsItem_);
+    asRI->setZValue(100);
 
     QBrush brush;
     brush.setColor(QColor(0,0,200,125));
     brush.setStyle(Qt::BrushStyle::SolidPattern);
-    rectItem_->setBrush(brush);
-    rectItem_->setRect(0,0,width,height);
+    asRI->setBrush(brush);
+    asRI->setRect(0,0,width,height);
 
     // visualize contents of inventory
     if (inventory != nullptr){
@@ -45,9 +45,9 @@ void InventoryViewer::setInventory(Inventory *inventory)
         disconnect(inventory_,&Inventory::itemAdded,this,&InventoryViewer::onItemAddedOrRemovedFromInventory);
         disconnect(inventory_,&Inventory::itemRemoved,this,&InventoryViewer::onItemAddedOrRemovedFromInventory);
         for (InventoryCell* cell:cells_){
-            QGraphicsScene* inScene = rectItem_->scene();
+            QGraphicsScene* inScene = graphicsItem_->scene();
             if (inScene != nullptr){
-                rectItem_->scene()->removeItem(cell);
+                graphicsItem_->scene()->removeItem(cell);
             }
         }
     }
@@ -65,7 +65,7 @@ void InventoryViewer::setInventory(Inventory *inventory)
         for (int col = 0; col < numCellsY; col++){
             if (itemIterator != theItems.end()){
                 // create cell
-                InventoryCell* cell = new InventoryCell(game_,CELL_WIDTH,CELL_HEIGHT,*itemIterator,rectItem_);
+                InventoryCell* cell = new InventoryCell(game_,CELL_WIDTH,CELL_HEIGHT,*itemIterator,graphicsItem_);
                 cell->setX(row * CELL_WIDTH);
                 cell->setY(col*CELL_HEIGHT);
                 cells_.push_back(cell);
@@ -83,18 +83,6 @@ void InventoryViewer::setInventory(Inventory *inventory)
     // listen for changes to this inventory
     connect(inventory,&Inventory::itemAdded,this,&InventoryViewer::onItemAddedOrRemovedFromInventory);
     connect(inventory,&Inventory::itemRemoved,this,&InventoryViewer::onItemAddedOrRemovedFromInventory);
-}
-
-/// Sets the position of the InventoryViewer in view coordinates.
-void InventoryViewer::setViewPos(QPointF p)
-{
-    pos_ = p;
-}
-
-/// Returns the pos of the InventoryViewer in view coordinates.
-QPointF InventoryViewer::viewPos()
-{
-    return pos_;
 }
 
 /// Executed when an Item is added to the InventoryViewer's Inventory.

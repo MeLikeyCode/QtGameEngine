@@ -19,6 +19,7 @@
 #include "WeatherEffect.h"
 #include "RainWeather.h"
 #include "MapGrid.h"
+#include "Gui.h"
 
 /// Creates an instance of the Game with some default options.
 ///
@@ -45,7 +46,7 @@ Game::Game(MapGrid *mapGrid, int xPosOfStartingMap, int yPosOfStartingMap){
     timer->start(4000);
 
     updateTimer_ = new QTimer(this);
-    connect(updateTimer_,&QTimer::timeout,this,&Game::updatePosOverlays);
+    connect(updateTimer_,&QTimer::timeout,this,&Game::updateGuiPositions);
     updateTimer_->start(0);
 
     setMouseMode(MouseMode::regular);
@@ -305,9 +306,9 @@ void Game::keyReleaseEvent(QKeyEvent *event)
     }
 }
 
-void Game::addInventoryViewer(InventoryViewer *viewer)
+void Game::addGui(Gui *gui)
 {
-    inventoryViewers_.insert(viewer);
+    guis_.insert(gui);
 }
 
 /// Converts the specified point from Game coordinates to Map coordinates (
@@ -374,11 +375,11 @@ void Game::askEnemiesToMove()
     }
 }
 
-void Game::updatePosOverlays()
+void Game::updateGuiPositions()
 {
-    for (InventoryViewer* viewer:inventoryViewers_){
-        scene()->addItem(viewer->rectItem_);
-        QPointF newPos = mapToScene(viewer->viewPos().toPoint());
-        viewer->rectItem_->setPos(newPos);
+    for (Gui* gui:guis_){
+        scene()->addItem(gui->graphicsItem_);
+        QPointF newPos = mapToScene(gui->viewPos().toPoint());
+        gui->graphicsItem_->setPos(newPos);
     }
 }

@@ -20,6 +20,7 @@
 #include "Terrain.h"
 #include "RainWeather.h"
 #include "SnowWeather.h"
+#include "Panel.h"
 
 #include <QMediaPlayer>
 
@@ -119,7 +120,11 @@ int main(int argc, char *argv[])
 
     // test inventoryviewoer
     InventoryViewer* v = new InventoryViewer(game,500,128,player->inventory());
-    game->addInventoryViewer(v);
+    game->addGui(v);
+
+    // test panel
+    Panel* p = new Panel();
+    game->addGui(p);
 
     Bow* bow = new Bow();
     player->inventory()->addItem(bow);
