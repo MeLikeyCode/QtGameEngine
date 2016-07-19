@@ -21,6 +21,7 @@
 #include "RainWeather.h"
 #include "SnowWeather.h"
 #include "Panel.h"
+#include "Button.h"
 
 #include <QMediaPlayer>
 
@@ -125,6 +126,16 @@ int main(int argc, char *argv[])
     // test panel
     Panel* p = new Panel();
     game->addGui(p);
+
+    // test button
+    Button* b = new Button();
+    b->setViewPos(QPointF(500,500));
+    game->addGui(b);
+
+    b->setFontSize(16);
+    b->setBorderPadding(30);
+    b->setText("hi there");
+
 
     Bow* bow = new Bow();
     player->inventory()->addItem(bow);

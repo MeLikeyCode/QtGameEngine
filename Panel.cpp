@@ -29,3 +29,17 @@ void Panel::setOpacity(double opacity)
     QGraphicsRectItem* asRI = dynamic_cast<QGraphicsRectItem*>(graphicsItem_);
     asRI->setOpacity(opacity);
 }
+
+void Panel::setWidth(double width)
+{
+    QGraphicsRectItem* asRI = dynamic_cast<QGraphicsRectItem*>(graphicsItem_);
+    double currentHeight = asRI->rect().height();
+    asRI->setRect(0,0,width,currentHeight);
+}
+
+void Panel::setHeight(double height)
+{
+    QGraphicsRectItem* asRI = dynamic_cast<QGraphicsRectItem*>(graphicsItem_);
+    double currentWidth = asRI->rect().width();
+    asRI->setRect(0,0,currentWidth,height);
+}

@@ -12,8 +12,12 @@ public:
 
     void setColor(const QColor& color);
     void setOpacity(double opacity);
-private:
 
+    void setWidth(double width);
+    void setHeight(double height);
+private:
+    double width_;
+    double height_;
 };
 
 #endif // PANEL_H
