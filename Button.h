@@ -3,12 +3,13 @@
 
 #include "Gui.h"
 #include <string>
+#include <QGraphicsRectItem>
 
-class QGraphicsRectItem;
 class QGraphicsTextItem;
 
-class Button : public Gui
+class Button : public QObject, public Gui, public QGraphicsRectItem
 {
+    Q_OBJECT
 public:
     Button();
 
@@ -16,8 +17,12 @@ public:
     void setFontSize(int size);
     void setText(const std::string& text);
 
+    void mousePressEvent(QGraphicsSceneMouseEvent* event);
+
+signals:
+    /// Emitted when the Button is clicked.
+    void clicked();
 private:
-    QGraphicsRectItem* backgroundRectItem_;
     QGraphicsTextItem* textItem_;
     double borderPadding_;
     int fontSize_;

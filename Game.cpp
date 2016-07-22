@@ -309,6 +309,7 @@ void Game::keyReleaseEvent(QKeyEvent *event)
 void Game::addGui(Gui *gui)
 {
     guis_.insert(gui);
+    scene()->addItem(gui->graphicsItem_);
 }
 
 /// Converts the specified point from Game coordinates to Map coordinates (
@@ -378,7 +379,6 @@ void Game::askEnemiesToMove()
 void Game::updateGuiPositions()
 {
     for (Gui* gui:guis_){
-        scene()->addItem(gui->graphicsItem_);
         QPointF newPos = mapToScene(gui->viewPos().toPoint());
         gui->graphicsItem_->setPos(newPos);
     }

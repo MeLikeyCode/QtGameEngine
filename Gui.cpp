@@ -1,7 +1,7 @@
 #include "Gui.h"
 
-Gui::Gui(QGraphicsItem *graphicsItem):
-    graphicsItem_(graphicsItem)
+Gui::Gui(QGraphicsItem *parent):
+    graphicsItem_(parent)
 {
 }
 
