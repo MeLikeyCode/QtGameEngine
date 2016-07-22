@@ -7,7 +7,9 @@
 Button::Button():
     Gui(this),
     borderPadding_(0),
-    text_("default text")
+    text_("default text"),
+    textIsBold_(false),
+    textIsItalic_(false)
 {
     // initialize
     setRect(0,0,200,50);
@@ -39,6 +41,24 @@ void Button::setText(const std::string &text)
     redraw_();
 }
 
+void Button::setTextColor(const QColor &color)
+{
+    textColor_ = color;
+    redraw_();
+}
+
+void Button::setTextBold(bool tf)
+{
+    textIsBold_ = tf;
+    redraw_();
+}
+
+void Button::setTextItalic(bool tf)
+{
+    textIsItalic_ = tf;
+    redraw_();
+}
+
 /// Executed when the user clicks on the Button. Will emit clicked() signal.
 void Button::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
@@ -51,7 +71,11 @@ void Button::redraw_()
     delete textItem_;
     textItem_ = new QGraphicsTextItem(QString::fromStdString(text_),this);
 
-    QFont font("Times", fontSize_, QFont::Bold);
+    textItem_->setDefaultTextColor(textColor_);
+
+    QFont font("Times", fontSize_);
+    font.setBold(textIsBold_);
+    font.setItalic(textIsItalic_);
     textItem_->setFont(font);
 
     // adjust positioning of background/text

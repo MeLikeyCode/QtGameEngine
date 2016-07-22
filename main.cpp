@@ -135,6 +135,9 @@ int main(int argc, char *argv[])
     b->setFontSize(16);
     b->setBorderPadding(30);
     b->setText("hi there");
+    b->setTextColor(Qt::red);
+    b->setTextItalic(true);
+    b->setTextBold(true);
 
 
     Bow* bow = new Bow();

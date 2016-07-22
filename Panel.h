@@ -4,7 +4,8 @@
 #include "Gui.h"
 #include <QColor>
 
-/// Represents a panel GUI element in a Game.
+/// Represents a panel GUI element that can be placed in a Game.
+/// You can modify various options such as the size, color, opacity, etc...
 class Panel : public Gui
 {
 public:
