@@ -310,6 +310,7 @@ void Game::addGui(Gui *gui)
 {
     guis_.insert(gui);
     scene()->addItem(gui->graphicsItem_);
+    gui->graphicsItem_->setZValue(100); // put Guis on top
 }
 
 /// Converts the specified point from Game coordinates to Map coordinates (
