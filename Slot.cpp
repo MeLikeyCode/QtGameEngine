@@ -63,12 +63,12 @@ bool Slot::equip(EquipableItem *item)
         return false;
     }
 
-    // =equip item
-    // make Item's sprite visible, make sure Item is located in proper location
+    // equip item
     if (theOwner->map() != nullptr)
         theOwner->map()->addEntity(item);  // make sure the item is in the owners map
     item->setParentEntity(theOwner);
     item->setPointPos(item->attachmentPoint(),position());
+
     // update references for both Slot and Item
     item_ = item;
     item->slotEquippedIn_ = this;
@@ -84,8 +84,9 @@ void Slot::unequip()
         return;
     }
 
-    // make the Item invisible/in proper place
+    // remove the item from the map (will be added back when its equipped)
     item_->setParentEntity(nullptr);
+    item_->map()->removeEntity(item_);
 
     // update references
     item_->slotEquippedIn_ = nullptr;
