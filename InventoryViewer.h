@@ -20,19 +20,37 @@ class InventoryViewer : public QObject, public Gui
     // the InventoryViewer is added to the Game)
     friend class Game;
 public:
-    InventoryViewer(Game* game, int width, int height, Inventory* inventory=nullptr);
+    InventoryViewer(Game* game, Inventory* inventory=nullptr);
 
     void setInventory(Inventory* inventory);
+
+    void setBorder(double amount);
+    void setPaddingBWCells(double amount);
+    void setBackgroundColor(const QColor& color);
+    void setNumCellsHorizontally(int numCellsH);
+    void setNumCellsVertically(int numCellsV);
+    void setCellWidth(double width);
+    void setCellHeight(double height);
 
 public slots:
     void onItemAddedOrRemovedFromInventory(Item* item);
 
 private:
-    int width_;
-    int height_;
+    double border_;
+    double paddingBWCells_;
+    QColor backgroundColor_;
+    int numCellsHorizontally_;
+    int numCellsVertically_;
+    double cellWidth_;
+    double cellHeight_;
+
+    QGraphicsRectItem* rectItem_;
     Inventory* inventory_;
     std::vector<InventoryCell*> cells_;
     Game* game_;
+
+    // helper functions
+    void draw_();
 };
 
 #endif // INVENTORYVIEWER_H

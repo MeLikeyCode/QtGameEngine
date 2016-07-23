@@ -120,12 +120,15 @@ int main(int argc, char *argv[])
 //    sound->play(10);
 
     // test inventoryviewoer
-    InventoryViewer* v = new InventoryViewer(game,500,128,player->inventory());
+    InventoryViewer* v = new InventoryViewer(game,player->inventory());
+    v->setBackgroundColor(Qt::red);
+    v->setNumCellsHorizontally(2);
+    v->setNumCellsVertically(4);
     game->addGui(v);
 
     // test panel
-    Panel* p = new Panel();
-    game->addGui(p);
+//    Panel* p = new Panel();
+//    game->addGui(p);
 
     // test button
     Button* b = new Button();

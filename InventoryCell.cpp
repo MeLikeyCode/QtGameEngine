@@ -61,13 +61,15 @@ void InventoryCell::setSize(int width, int height)
     setPixmap(item_->sprite()->currentFrame().scaled(width,height));
 }
 
+/// Executed when the InventoryCell is clicked. Will "use" the item clicked.
+/// See internal comment for more info.
 void InventoryCell::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     // logic:
-    // if item type is EquipableItem:
+    // if item is an EquipableItem:
     // - find out the specific type of the equipable item and see if inventory->entity has a slot for it
-    // - if so:
-    //  - unequip item in that slot, place in inv cell, equip clicked item in slot
+    //      - if so:
+    //          - unequip item in that slot, place it in inv cell, equip clicked item in slot
     // if item type is NoTargetItem -> call its use()
     // if item type is PointTargetItem, set games mouse mode to select position mode, set cursor, etc...
     //  -have a PositionSelectedWhileInPointTargetMode, that will then use(position)
@@ -75,7 +77,7 @@ void InventoryCell::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
     Item* theItem = item();
 
-    // if no item, don't do anything
+    // if there is no item in the InventoryCell, do nothing
     if (theItem == nullptr){
         return;
     }

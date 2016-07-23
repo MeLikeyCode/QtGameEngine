@@ -2,6 +2,8 @@
 #define ITEM_H
 
 #include "Entity.h"
+#include <vector>
+#include <string>
 
 class Inventory;
 

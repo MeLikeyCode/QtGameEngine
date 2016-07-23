@@ -4,6 +4,7 @@
 #include "DynamicEntity.h"
 #include <cassert>
 #include "Map.h"
+#include "Inventory.h"
 
 Slot::Slot():
     item_(nullptr),
@@ -54,8 +55,8 @@ bool Slot::equip(EquipableItem *item)
     // assertions
     DynamicEntity* theOwner = owner();
     assert(theOwner != nullptr);    // make sure has an owner
-    assert(theOwner->inventoryContains(item));  // make sure owner's inventory contains
-                                                // the item being equipped in this slot
+    assert(theOwner->inventory()->contains(item));  // make sure owner's inventory contains
+                                                    // the item being equipped in this slot
 
     // return false if the item cannot be equipped
     if (!canBeEquipped(item)){
