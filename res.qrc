@@ -51,5 +51,7 @@
         <file>graphics/effects/snow/snow0.png</file>
         <file>graphics/effects/snow/snow1.png</file>
         <file>sounds/specialMove.wav</file>
+        <file>graphics/misc/invbg.png</file>
+        <file>graphics/misc/invcellbg.png</file>
     </qresource>
 </RCC>

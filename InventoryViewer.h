@@ -1,13 +1,14 @@
 #ifndef INVENTORYVIEWER_H
 #define INVENTORYVIEWER_H
 
-#include "QGraphicsRectItem"
 #include <QObject>
 #include "Gui.h"
+#include <QPixmap>
 
 class Inventory;
 class QPointF;
 class InventoryCell;
+class QGraphicsPixmapItem;
 class Item;
 class Game;
 
@@ -27,6 +28,7 @@ public:
     void setBorder(double amount);
     void setPaddingBWCells(double amount);
     void setBackgroundColor(const QColor& color);
+    void setBackgroundPixmap(const QPixmap& pixmap);
     void setNumCellsHorizontally(int numCellsH);
     void setNumCellsVertically(int numCellsV);
     void setCellWidth(double width);
@@ -39,12 +41,14 @@ private:
     double border_;
     double paddingBWCells_;
     QColor backgroundColor_;
+    QPixmap backgroundPixmap_;
+    bool backgroundIsPixmap_;
     int numCellsHorizontally_;
     int numCellsVertically_;
     double cellWidth_;
     double cellHeight_;
 
-    QGraphicsRectItem* rectItem_;
+    QGraphicsPixmapItem* pixmapItem_;
     Inventory* inventory_;
     std::vector<InventoryCell*> cells_;
     Game* game_;

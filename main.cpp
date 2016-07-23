@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
     // create a Map and a Game
     MapGrid* mapGrid = new MapGrid(3,3);
 
-    PathingMap map1PathingMap(20,20,64);
+    PathingMap map1PathingMap(100,100,64);
     PathingMap map2PathingMap(100,100,64);
 
     Map* map1 = new Map(map1PathingMap);
@@ -55,8 +55,8 @@ int main(int argc, char *argv[])
     terrain_->fill(QPixmap(":resources/graphics/terrain/grassstonedry.png"));
     map2->setTerrain(terrain_);
 
-//    map1->setWeatherEffect(rain1);
-//    map2->setWeatherEffect(snow1);
+    map1->setWeatherEffect(rain1);
+    map2->setWeatherEffect(snow1);
 
     mapGrid->insertMap(map1,0,1);
     mapGrid->insertMap(map2,0,0);
@@ -121,26 +121,25 @@ int main(int argc, char *argv[])
 
     // test inventoryviewoer
     InventoryViewer* v = new InventoryViewer(game,player->inventory());
-    v->setBackgroundColor(Qt::red);
-    v->setNumCellsHorizontally(2);
-    v->setNumCellsVertically(4);
+    v->setNumCellsHorizontally(3);
+    v->setNumCellsVertically(6);
     game->addGui(v);
 
     // test panel
 //    Panel* p = new Panel();
 //    game->addGui(p);
 
-    // test button
-    Button* b = new Button();
-    b->setViewPos(QPointF(500,500));
-    game->addGui(b);
+//    // test button
+//    Button* b = new Button();
+//    b->setViewPos(QPointF(500,500));
+//    game->addGui(b);
 
-    b->setFontSize(16);
-    b->setBorderPadding(30);
-    b->setText("hi there");
-    b->setTextColor(Qt::red);
-    b->setTextItalic(true);
-    b->setTextBold(true);
+//    b->setFontSize(16);
+//    b->setBorderPadding(30);
+//    b->setText("hi there");
+//    b->setTextColor(Qt::red);
+//    b->setTextItalic(true);
+//    b->setTextBold(true);
 
 
     Bow* bow = new Bow();

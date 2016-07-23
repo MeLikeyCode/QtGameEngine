@@ -17,13 +17,15 @@
 #include "Game.h"
 
 InventoryCell::InventoryCell(Game* game, int width, int height, Item *item, QGraphicsItem *parent):
-    QGraphicsRectItem(parent),
+    QGraphicsPixmapItem(parent),
     backgroundColor_(Qt::gray),
+    backgroundPixmap_(QPixmap(":/resources/graphics/misc/invcellbg.png")),
+    backgroundIsPixmap_(true),
     width_(width),
     height_(height),
     item_(item),
     game_(game),
-    pixmapItem_(new QGraphicsPixmapItem(this))
+    picture_(new QGraphicsPixmapItem(this))
 {
     // empty ctor body
     draw_();
@@ -183,14 +185,18 @@ void InventoryCell::entitySelectedWhileUsingEntityTargetItem(Entity *ent)
 void InventoryCell::draw_()
 {
     // draw background
-    QBrush brush;
-    brush.setStyle(Qt::SolidPattern);
-    brush.setColor(backgroundColor_);
-    setBrush(brush);
-    setRect(0,0,width_,height_);
+    if (backgroundIsPixmap_){
+        backgroundPixmap_ = backgroundPixmap_.scaled(width_,height_);
+        setPixmap(backgroundPixmap_);
+    }else {
+        QImage img(QSize(width_,height_),QImage::Format_RGB32);
+        img.fill(backgroundColor_);
+        setPixmap(QPixmap::fromImage(img));
+    }
 
     // draw item
     if (item_ != nullptr){
-        pixmapItem_->setPixmap(item_->sprite()->currentFrame().scaled(width_,height_));
+        picture_->setPixmap(item_->sprite()->currentFrame().scaled(width_-20,height_-20));
+        picture_->setPos(10,10);
     }
 }

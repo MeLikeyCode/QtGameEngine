@@ -1,20 +1,20 @@
 #ifndef INVENTORYCELL_H
 #define INVENTORYCELL_H
 
-#include <QGraphicsRectItem>
+#include <QGraphicsPixmapItem>
 #include <QSize>
 #include <QObject>
 #include <QColor>
+#include <QPixmap>
 
 class QGraphicsSceneMouseEvent;
 class Item;
 class Game;
 class Entity;
-class QGraphicsPixmapItem;
 
 /// Represents a QGraphicsItem that visualizes and allows interaction with an Item.
 /// The Item must be in an Inventory in order to be used by InventoryCell.
-class InventoryCell: public QObject, public QGraphicsRectItem
+class InventoryCell: public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT
 public:
@@ -33,8 +33,10 @@ public slots:
     void entitySelectedWhileUsingEntityTargetItem(Entity* ent);
 
 private:
-    QGraphicsPixmapItem* pixmapItem_;
+    QGraphicsPixmapItem* picture_;
     QColor backgroundColor_;
+    bool backgroundIsPixmap_;
+    QPixmap backgroundPixmap_;
     int width_;
     int height_;
     Item* item_;

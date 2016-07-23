@@ -15,10 +15,12 @@
 /// Creates a new InventoryViewer of the specified size and visualizing the
 /// specified Inventory.
 InventoryViewer::InventoryViewer(Game* game, Inventory *inventory):
-    Gui(new QGraphicsRectItem()),
+    Gui(new QGraphicsPixmapItem()),
     border_(15),
     paddingBWCells_(5),
     backgroundColor_(Qt::blue),
+    backgroundPixmap_(QPixmap(":/resources/graphics/misc/invbg.png")),
+    backgroundIsPixmap_(true),
     numCellsHorizontally_(2),
     numCellsVertically_(3),
     cellWidth_(64),
@@ -26,10 +28,10 @@ InventoryViewer::InventoryViewer(Game* game, Inventory *inventory):
     inventory_(inventory),
     game_(game)
 {
-    rectItem_ = dynamic_cast<QGraphicsRectItem*>(graphicsItem_);
+    pixmapItem_ = dynamic_cast<QGraphicsPixmapItem*>(graphicsItem_);
 
     // make sure Inventory viewer is high on top
-    rectItem_->setZValue(100);
+    pixmapItem_->setZValue(100);
 
     // visualize
     setInventory(inventory);
@@ -84,9 +86,22 @@ void InventoryViewer::setPaddingBWCells(double amount)
 
 /// Sets the background color of the InventoryViewer.
 /// Remember that you can include opacity information in the color.
+/// Call this function last if you want the background of the InventoryViewer to
+/// simply be a color, otherwise call setBackgroundPixmap last.
 void InventoryViewer::setBackgroundColor(const QColor &color)
 {
     backgroundColor_ = color;
+    backgroundIsPixmap_ = false;
+    draw_();
+}
+
+/// Sets the background of the InventoryViewer to the specified QPixmap.
+/// @see InventoryViewer::setBackgroundColor(const QColor& color) for
+/// more info.
+void InventoryViewer::setBackgroundPixmap(const QPixmap &pixmap)
+{
+    backgroundPixmap_ = pixmap;
+    backgroundIsPixmap_ = true;
     draw_();
 }
 
@@ -130,12 +145,15 @@ void InventoryViewer::draw_()
     // draw background
     double bgWidth = numCellsHorizontally_ * (cellWidth_ + paddingBWCells_) - paddingBWCells_ + 2 * border_;
     double bgHeight = numCellsVertically_ * (cellHeight_ + paddingBWCells_) - paddingBWCells_ + 2 * border_;
-    rectItem_->setRect(0,0,bgWidth,bgHeight);
 
-    QBrush brush;
-    brush.setStyle(Qt::SolidPattern);
-    brush.setColor(backgroundColor_);
-    rectItem_->setBrush(brush);
+    if (backgroundIsPixmap_){
+        backgroundPixmap_ = backgroundPixmap_.scaled(bgWidth,bgHeight);
+        pixmapItem_->setPixmap(backgroundPixmap_);
+    } else{
+        QImage img(QSize(bgWidth,bgHeight),QImage::Format_RGB32);
+        img.fill(backgroundColor_);
+        pixmapItem_->setPixmap(QPixmap::fromImage(img));
+    }
 
     // clear all items
     for (InventoryCell* cell:cells_){
@@ -150,7 +168,7 @@ void InventoryViewer::draw_()
         double x = 0;
         double y = 0;
         for (Item* item:inventory_->getItems()){
-            InventoryCell* cell = new InventoryCell(game_,cellWidth_,cellHeight_,item,rectItem_);
+            InventoryCell* cell = new InventoryCell(game_,cellWidth_,cellHeight_,item,pixmapItem_);
             cell->setX(x*(cellWidth_+paddingBWCells_)+border_);
             cell->setY(y*(cellHeight_+paddingBWCells_)+border_);
             cells_.push_back(cell);
