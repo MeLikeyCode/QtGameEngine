@@ -17,20 +17,16 @@
 #include "Game.h"
 
 InventoryCell::InventoryCell(Game* game, int width, int height, Item *item, QGraphicsItem *parent):
-    QGraphicsPixmapItem(parent),
+    QGraphicsRectItem(parent),
+    backgroundColor_(Qt::gray),
     width_(width),
     height_(height),
     item_(item),
-    game_(game)
+    game_(game),
+    pixmapItem_(new QGraphicsPixmapItem(this))
 {
-    // fill background with blue
-    QImage img(QSize(width,height),QImage::Format_RGB32);
-    img.fill(Qt::darkBlue);
-    setPixmap(QPixmap::fromImage(img));
-
-    if (item != nullptr){
-        setItem(item);
-    }
+    // empty ctor body
+    draw_();
 }
 
 void InventoryCell::setItem(Item *item)
@@ -39,11 +35,7 @@ void InventoryCell::setItem(Item *item)
     assert(item->inventory() != nullptr);
 
     item_ = item;
-
-    // update graphics
-    QPixmap pixmap = item_->sprite()->currentFrame();
-    pixmap =  pixmap.scaled(width_,height_);
-    setPixmap(pixmap);
+    draw_();
 }
 
 Item *InventoryCell::item()
@@ -56,9 +48,15 @@ void InventoryCell::setSize(int width, int height)
 {
     width_ = width;
     height_ = height;
+    draw_();
+}
 
-    if (item_)
-    setPixmap(item_->sprite()->currentFrame().scaled(width,height));
+/// Sets the background color of the InventoryCell.
+/// Remember that opacity can be included in the color information.
+void InventoryCell::setBackgroundColor(const QColor &color)
+{
+    backgroundColor_ = color;
+    draw_();
 }
 
 /// Executed when the InventoryCell is clicked. Will "use" the item clicked.
@@ -180,4 +178,19 @@ void InventoryCell::entitySelectedWhileUsingEntityTargetItem(Entity *ent)
 
     // set regular mouse mode
     game_->setMouseMode(Game::MouseMode::regular);
+}
+
+void InventoryCell::draw_()
+{
+    // draw background
+    QBrush brush;
+    brush.setStyle(Qt::SolidPattern);
+    brush.setColor(backgroundColor_);
+    setBrush(brush);
+    setRect(0,0,width_,height_);
+
+    // draw item
+    if (item_ != nullptr){
+        pixmapItem_->setPixmap(item_->sprite()->currentFrame().scaled(width_,height_));
+    }
 }
