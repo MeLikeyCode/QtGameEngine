@@ -55,9 +55,22 @@ void InventoryCell::setSize(int width, int height)
 
 /// Sets the background color of the InventoryCell.
 /// Remember that opacity can be included in the color information.
+/// If this function is called last, the background of the InventoryCell will
+/// be a color, however, if setBackgroundPixmap(const QPixmap&) is called last,
+/// the background will be a pixmap.
 void InventoryCell::setBackgroundColor(const QColor &color)
 {
     backgroundColor_ = color;
+    backgroundIsPixmap_ = false;
+    draw_();
+}
+
+/// Sets the background of the InventoryCell to be a QPixmap.
+/// @see setBackgroundColor(const QColor&) for more info.
+void InventoryCell::setBackgroundPixmap(const QPixmap &pixmap)
+{
+    backgroundPixmap_ = pixmap;
+    backgroundIsPixmap_ = true;
     draw_();
 }
 

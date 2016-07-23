@@ -25,6 +25,7 @@ public:
 
     void setSize(int width, int height);
     void setBackgroundColor(const QColor& color);
+    void setBackgroundPixmap(const QPixmap& pixmap);
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
