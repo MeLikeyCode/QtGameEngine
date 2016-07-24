@@ -22,6 +22,7 @@
 #include "SnowWeather.h"
 #include "Panel.h"
 #include "Button.h"
+#include "Bar.h"
 
 #include <QMediaPlayer>
 
@@ -135,6 +136,10 @@ int main(int argc, char *argv[])
 //    b->setViewPos(QPointF(500,500));
 //    game->addGui(b);
 
+    // test bar
+    Bar* bar = new Bar();
+    bar->setViewPos(QPointF(500,200));
+    game->addGui(bar);
 
     Bow* bow = new Bow();
     player->inventory()->addItem(bow);

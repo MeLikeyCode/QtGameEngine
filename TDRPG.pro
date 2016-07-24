@@ -71,7 +71,8 @@ SOURCES += main.cpp \
     WeatherEffect.cpp \
     Gui.cpp \
     Panel.cpp \
-    Button.cpp
+    Button.cpp \
+    Bar.cpp
 
 HEADERS  += \
     Map.h \
@@ -132,7 +133,8 @@ HEADERS  += \
     WeatherEffect.h \
     Gui.h \
     Panel.h \
-    Button.h
+    Button.h \
+    Bar.h
 
 RESOURCES += \
     res.qrc

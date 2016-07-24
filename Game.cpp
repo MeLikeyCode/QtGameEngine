@@ -212,6 +212,8 @@ void Game::mousePressEvent(QMouseEvent *event){
         }
     }
 
+
+
 //    // weapon 2 attack
 //    if (event->button() == Qt::RightButton){
 //        player_->slot("rightHand")->use();
