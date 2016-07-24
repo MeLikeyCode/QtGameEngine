@@ -125,21 +125,15 @@ int main(int argc, char *argv[])
     v->setNumCellsVertically(6);
     game->addGui(v);
 
-    // test panel
+//    // test panel
 //    Panel* p = new Panel();
+//    p->setViewPos(QPointF(300,300));
 //    game->addGui(p);
 
 //    // test button
 //    Button* b = new Button();
 //    b->setViewPos(QPointF(500,500));
 //    game->addGui(b);
-
-//    b->setFontSize(16);
-//    b->setBorderPadding(30);
-//    b->setText("hi there");
-//    b->setTextColor(Qt::red);
-//    b->setTextItalic(true);
-//    b->setTextBold(true);
 
 
     Bow* bow = new Bow();

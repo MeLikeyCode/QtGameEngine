@@ -3,7 +3,7 @@
 
 #include "Gui.h"
 #include <string>
-#include <QGraphicsRectItem>
+#include <QGraphicsPixmapItem>
 #include <QColor>
 
 class QGraphicsTextItem;
@@ -12,7 +12,7 @@ class QGraphicsTextItem;
 /// options such as the text color, padding b/w the text and the button's edges,
 /// weather the text is bold/italic, etc...
 /// When the Button is clicked, it will emit a clicked() signal.
-class Button : public QObject, public Gui, public QGraphicsRectItem
+class Button : public QObject, public Gui, public QGraphicsPixmapItem
 {
     Q_OBJECT
 public:
@@ -24,6 +24,8 @@ public:
     void setTextColor(const QColor& color);
     void setTextBold(bool tf);
     void setTextItalic(bool tf);
+    void setBackgroundColor(const QColor& color);
+    void setBackgroundPixmap(const QPixmap& pixmap);
 
     void mousePressEvent(QGraphicsSceneMouseEvent* event);
 
@@ -34,13 +36,16 @@ private:
     QGraphicsTextItem* textItem_;
     double borderPadding_;
     QColor textColor_;
+    QColor backgroundColor_;
+    QPixmap backgroundPixmap_;
+    bool backgroundIsPixmap_;
     bool textIsBold_;
     bool textIsItalic_;
     int fontSize_;
     std::string text_;
 
     // helper functions
-    void redraw_();
+    void draw_();
 };
 
 #endif // BUTTON_H

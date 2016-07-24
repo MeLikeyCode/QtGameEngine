@@ -30,9 +30,6 @@ InventoryViewer::InventoryViewer(Game* game, Inventory *inventory):
 {
     pixmapItem_ = dynamic_cast<QGraphicsPixmapItem*>(graphicsItem_);
 
-    // make sure Inventory viewer is high on top
-    pixmapItem_->setZValue(100);
-
     // visualize
     setInventory(inventory);
 }

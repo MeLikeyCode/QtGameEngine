@@ -66,12 +66,18 @@ MapGrid *Game::mapGrid()
     return mapGrid_;
 }
 
-/// Sets the current Map.
+/// Sets the current Map that the Game is visualizing.
 void Game::setCurrentMap(Map *map){
     Map* oldMap = currentMap_;
     currentMap_ = map;
     setScene(currentMap_->scene());
     setSceneRect(0,0,width(),height());  
+
+    // move guis over
+    for (Gui* gui:guis_){
+        scene()->addItem(gui->graphicsItem_);
+    }
+
     emit mapChanged(oldMap,map);
 }
 

@@ -1,45 +1,61 @@
 #include "Panel.h"
-#include <QGraphicsRectItem>
+#include <QGraphicsPixmapItem>
 #include <QBrush>
 
 Panel::Panel():
-    Gui(new QGraphicsRectItem())
+    Gui(new QGraphicsPixmapItem()),
+    pixmap_(),
+    color_(Qt::gray),
+    isPixmap_(false),
+    width_(300),
+    height_(300)
 {
-    QGraphicsRectItem* asRI = dynamic_cast<QGraphicsRectItem*>(graphicsItem_);
-    asRI->setRect(0,0,300,300);
-
-    QBrush brush;
-    brush.setColor(QColor(0,0,200,125));
-    brush.setStyle(Qt::BrushStyle::SolidPattern);
-    asRI->setBrush(brush);
+    pixmapItem_ = dynamic_cast<QGraphicsPixmapItem*>(graphicsItem_);
+    draw_();
 }
 
+/// Sets the Color of the Panel. Remember you can put opacity information in the color.
+/// @see setPixmap(const QPixmap&) for more info.
 void Panel::setColor(const QColor &color)
 {
-    QGraphicsRectItem* asRI = dynamic_cast<QGraphicsRectItem*>(graphicsItem_);
-
-    QBrush brush;
-    brush.setColor(color);
-    brush.setStyle(Qt::BrushStyle::SolidPattern);
-    asRI->setBrush(brush);
+    color_ = color;
+    isPixmap_ = false;
+    draw_();
 }
 
-void Panel::setOpacity(double opacity)
+/// Sets the background to be a Pixmap instead of a Color.
+/// Between setColor() and setPixmap(), which ever is the last to be called
+/// is the one that will be chosen. So if setColor() is called last, then the
+/// background of the Panel will be a color. If setPixmap() is called last, the
+/// background will be a pixmap.
+void Panel::setPixmap(const QPixmap &pixmap)
 {
-    QGraphicsRectItem* asRI = dynamic_cast<QGraphicsRectItem*>(graphicsItem_);
-    asRI->setOpacity(opacity);
+    pixmap_ = pixmap;
+    isPixmap_ = true;
+    draw_();
 }
 
 void Panel::setWidth(double width)
 {
-    QGraphicsRectItem* asRI = dynamic_cast<QGraphicsRectItem*>(graphicsItem_);
-    double currentHeight = asRI->rect().height();
-    asRI->setRect(0,0,width,currentHeight);
+    width_ = width;
+    draw_();
 }
 
 void Panel::setHeight(double height)
 {
-    QGraphicsRectItem* asRI = dynamic_cast<QGraphicsRectItem*>(graphicsItem_);
-    double currentWidth = asRI->rect().width();
-    asRI->setRect(0,0,currentWidth,height);
+    height_ = height;
+    draw_();
+}
+
+/// Draws the Panel in its current state (color, size, etc...).
+void Panel::draw_()
+{
+    if (isPixmap_){
+        pixmap_ = pixmap_.scaled(width_,height_);
+        pixmapItem_->setPixmap(pixmap_);
+    }else{
+        QImage img(QSize(width_,height_),QImage::Format_RGB32);
+        img.fill(color_);
+        pixmapItem_->setPixmap(QPixmap::fromImage(img));
+    }
 }

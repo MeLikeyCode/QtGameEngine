@@ -9,54 +9,66 @@ Button::Button():
     borderPadding_(0),
     text_("default text"),
     textIsBold_(false),
-    textIsItalic_(false)
+    textIsItalic_(false),
+    textColor_(Qt::white),
+    backgroundColor_(Qt::darkGray),
+    backgroundPixmap_(":/resources/graphics/misc/invbg.png"),
+    backgroundIsPixmap_(true),
+    fontSize_(12),
+    textItem_(nullptr)
 {
-    // initialize
-    setRect(0,0,200,50);
-
-    textItem_ = new QGraphicsTextItem("default text",this);
-
-    QBrush brush;
-    brush.setColor(QColor(0,0,200,200));
-    brush.setStyle(Qt::BrushStyle::SolidPattern);
-    setBrush(brush);
+    draw_();
 }
 
 /// Sets the amount of padding between the text and the outter rectangle.
 void Button::setBorderPadding(double amount)
 {
     borderPadding_ = amount;
-    redraw_();
+    draw_();
 }
 
 void Button::setFontSize(int size)
 {
     fontSize_ = size;
-    redraw_();
+    draw_();
 }
 
 void Button::setText(const std::string &text)
 {
     text_ = text;
-    redraw_();
+    draw_();
 }
 
 void Button::setTextColor(const QColor &color)
 {
     textColor_ = color;
-    redraw_();
+    draw_();
 }
 
 void Button::setTextBold(bool tf)
 {
     textIsBold_ = tf;
-    redraw_();
+    draw_();
 }
 
 void Button::setTextItalic(bool tf)
 {
     textIsItalic_ = tf;
-    redraw_();
+    draw_();
+}
+
+void Button::setBackgroundColor(const QColor &color)
+{
+    backgroundColor_ = color;
+    backgroundIsPixmap_ = false;
+    draw_();
+}
+
+void Button::setBackgroundPixmap(const QPixmap &pixmap)
+{
+    backgroundPixmap_ = pixmap;
+    backgroundIsPixmap_ = true;
+    draw_();
 }
 
 /// Executed when the user clicks on the Button. Will emit clicked() signal.
@@ -66,23 +78,33 @@ void Button::mousePressEvent(QGraphicsSceneMouseEvent *event)
 }
 
 /// Redraws the background and the text using the font size and padding and such.
-void Button::redraw_()
+void Button::draw_()
 {
-    delete textItem_;
-    textItem_ = new QGraphicsTextItem(QString::fromStdString(text_),this);
+    // draw text
+    if (textItem_)
+        delete textItem_;
 
+    textItem_ = new QGraphicsTextItem(QString::fromStdString(text_),this);
     textItem_->setDefaultTextColor(textColor_);
+    textItem_->setPos(borderPadding_,borderPadding_);
 
     QFont font("Times", fontSize_);
     font.setBold(textIsBold_);
     font.setItalic(textIsItalic_);
     textItem_->setFont(font);
 
-    // adjust positioning of background/text
+    // draw background
     double fontWidth = textItem_->boundingRect().width();
     double fontHeight = textItem_->boundingRect().height();
+    double bgWidth = fontWidth + borderPadding_ * 2;
+    double bgHeight = fontHeight + borderPadding_ * 2;
 
-    textItem_->setPos(borderPadding_,borderPadding_);
-
-    setRect(0,0,fontWidth + borderPadding_*2,fontHeight + borderPadding_ * 2);
+    if (backgroundIsPixmap_){
+        backgroundPixmap_ = backgroundPixmap_.scaled(bgWidth,bgHeight);
+        setPixmap(backgroundPixmap_);
+    }else{
+        QImage img(QSize(bgWidth,bgHeight),QImage::Format_RGB32);
+        img.fill(backgroundColor_);
+        setPixmap(QPixmap::fromImage(img));
+    }
 }
