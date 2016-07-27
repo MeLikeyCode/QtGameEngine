@@ -10,7 +10,7 @@
 
 class Map;
 
-/// Represents a bunch of tiles arranged in a grid.
+/// Represents a bunch of tiles arranged in a grid. They get auto blended.
 ///
 /// To create a Terrain:
 /// Terrain* terrain = new Terrain(numXTiles,numYTiles,tileWidth,tileHeight);
@@ -28,6 +28,7 @@ public:
 
     void fill(const Node& cell, QPixmap pixmap);
     void fill(QPixmap pixmap);
+
 private:
     // main attributes
     int numXTiles_;
@@ -41,6 +42,20 @@ private:
     // helper
     Grid grid_;
     QGraphicsPixmapItem* parentItem_;
+
+    // helper functions
+    QGraphicsPixmapItem* pixmapAt_(int xPos, int yPos);
+    void updateFade_(int x, int y);
+    void fadeLeftOnly_(int x, int y);
+    void fadeRightOnly_(int x, int y);
+    void fadeTopOnly_(int x, int y);
+    void fadeBottomOnly_(int x, int y);
+    void fadeTopLeftOnly_(int x, int y);
+    void fadeTopRightOnly_(int x, int y);
+    void fadeBottomLeftOnly_(int x, int y);
+    void fadeBottomRightOnly_(int x, int y);
+
+    // TODO add other fades
 };
 
 #endif // TERRAIN_H

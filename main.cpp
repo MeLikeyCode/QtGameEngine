@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
     // create a Map and a Game
     MapGrid* mapGrid = new MapGrid(3,3);
 
-    PathingMap map1PathingMap(100,100,64);
+    PathingMap map1PathingMap(20,20,64);
     PathingMap map2PathingMap(100,100,64);
 
     Map* map1 = new Map(map1PathingMap);
@@ -136,10 +136,10 @@ int main(int argc, char *argv[])
 //    b->setViewPos(QPointF(500,500));
 //    game->addGui(b);
 
-    // test bar
-    Bar* bar = new Bar();
-    bar->setViewPos(QPointF(500,200));
-    game->addGui(bar);
+//    // test bar
+//    Bar* bar = new Bar();
+//    bar->setViewPos(QPointF(500,200));
+//    game->addGui(bar);
 
     Bow* bow = new Bow();
     player->inventory()->addItem(bow);

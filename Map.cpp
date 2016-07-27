@@ -31,6 +31,12 @@ Map::Map(PathingMap pathingMap):
                            width_,height_);
     terrain_->fill(QPixmap(":resources/graphics/terrain/grassstone.png"));
     setTerrain(terrain_);
+
+    // make background black
+    QBrush bb;
+    bb.setStyle(Qt::SolidPattern);
+    bb.setColor(Qt::black);
+    scene_->setBackgroundBrush(bb);
 }
 
 /// Returns true if the specified pos is in the Map.
