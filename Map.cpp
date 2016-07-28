@@ -1,5 +1,5 @@
 #include "Map.h"
-#include "Terrain.h"
+#include "TerrainLayer.h"
 #include "DynamicEntity.h"
 #include <cassert>
 #include <QBrush>
@@ -23,14 +23,19 @@ Map::Map(PathingMap pathingMap):
     width_ = pathingMap.width();
     height_ = pathingMap.height();
 
+    // calculate num tiles needed
+
+
     scene_->setSceneRect(0,0,width_,height_);
 
-    // set up a default terrain (grass.png)
-    int TILE_SIZE = 256;
-    terrain_ = new Terrain(TILE_SIZE,TILE_SIZE,
-                           width_,height_);
-    terrain_->fill(QPixmap(":resources/graphics/terrain/grassstone.png"));
-    setTerrain(terrain_);
+    // add a default TerrainLayer
+    TerrainLayer* defaultTerrain = new TerrainLayer(256,
+                                                    256,
+                                                    width_/256,
+                                                    height_/256,
+                                                    QPixmap(":resources/graphics/terrain/grassstone.png"));
+    defaultTerrain->fill();
+    addTerrainLayer(defaultTerrain);
 
     // make background black
     QBrush bb;
@@ -268,12 +273,13 @@ WeatherEffect *Map::weatherEffect()
     return weather_;
 }
 
-/// Sets the Terrain of the Map.
-void Map::setTerrain(Terrain *to){
-    terrain_ = to;
+/// Adds the specified TerrainLayer to the Map.
+/// TerrainLayers stack in the order added (the later added, the "topper").
+void Map::addTerrainLayer(TerrainLayer *terrainLayer){
+    terrainLayers_.push_back(terrainLayer);
 
     // add the parent terrain to the map's scene
-    scene()->addItem(to->parentItem_);
+    scene()->addItem(terrainLayer->parentItem_);
 
 }
 

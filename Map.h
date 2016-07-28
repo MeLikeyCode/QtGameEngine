@@ -7,7 +7,7 @@
 class QPolygonF;
 class QGraphicsItem;
 class QGraphicsScene;
-class Terrain;
+class TerrainLayer;
 class Game;
 class Entity;
 class Sprite;
@@ -49,7 +49,7 @@ public:
     void addEntity(Entity *entity);
     void removeEntity(Entity *entity);
 
-    void setTerrain(Terrain* to);
+    void addTerrainLayer(TerrainLayer* terrainLayer);
 
     QGraphicsScene* scene();
 
@@ -78,7 +78,7 @@ private:
     int cellSize_;
     PathingMap pathingMap_;
     std::unordered_set<Entity*> entities_;
-    Terrain* terrain_;
+    std::vector<TerrainLayer*> terrainLayers_;
     Game* game_;
     WeatherEffect* weather_;
 

@@ -18,7 +18,6 @@ SOURCES += main.cpp \
     Grid.cpp \
     Node.cpp \
     Sprite.cpp \
-    Terrain.cpp \
     Edge.cpp \
     Graph.cpp \
     PathGrid.cpp \
@@ -72,7 +71,8 @@ SOURCES += main.cpp \
     Gui.cpp \
     Panel.cpp \
     Button.cpp \
-    Bar.cpp
+    Bar.cpp \
+    TerrainLayer.cpp
 
 HEADERS  += \
     Map.h \
@@ -80,7 +80,6 @@ HEADERS  += \
     Grid.h \
     Node.h \
     Sprite.h \
-    Terrain.h \
     Edge.h \
     Graph.h \
     PathGrid.h \
@@ -134,7 +133,8 @@ HEADERS  += \
     Gui.h \
     Panel.h \
     Button.h \
-    Bar.h
+    Bar.h \
+    TerrainLayer.h
 
 RESOURCES += \
     res.qrc

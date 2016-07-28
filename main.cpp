@@ -17,7 +17,7 @@
 #include "ItemTeleport.h"
 #include "ItemPushback.h"
 #include "MapGrid.h"
-#include "Terrain.h"
+#include "TerrainLayer.h"
 #include "RainWeather.h"
 #include "SnowWeather.h"
 #include "Panel.h"
@@ -51,10 +51,21 @@ int main(int argc, char *argv[])
     SnowWeather* snow1 = new SnowWeather();
 
     int TILE_SIZE = 256;
-    Terrain* terrain_ = new Terrain(TILE_SIZE,TILE_SIZE,
-                           map2->width(),map2->height());
-    terrain_->fill(QPixmap(":resources/graphics/terrain/grassstonedry.png"));
-    map2->setTerrain(terrain_);
+    TerrainLayer* dryTerrain = new TerrainLayer(TILE_SIZE,TILE_SIZE,
+                           map2->width()/TILE_SIZE,map2->height()/TILE_SIZE,
+                                                QPixmap(":resources/graphics/terrain/grassstonedry.png"));
+
+    QImage img(128,128,QImage::Format_RGB32);
+    img.fill(Qt::red);
+    QPixmap pm = QPixmap::fromImage(img);
+    TerrainLayer* grassLayer = new TerrainLayer(128,128,5,5,
+                                                QPixmap(":resources/graphics/terrain/grass.png"));
+    grassLayer->setPos(QPointF(0,map2->height()-128*5));
+    grassLayer->fill();
+
+    dryTerrain->fill();
+    map2->addTerrainLayer(dryTerrain);
+    map2->addTerrainLayer(grassLayer);
 
     map1->setWeatherEffect(rain1);
     map2->setWeatherEffect(snow1);

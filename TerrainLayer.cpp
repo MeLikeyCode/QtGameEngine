@@ -1,113 +1,118 @@
-#include "Terrain.h"
+#include "TerrainLayer.h"
 #include <QRectF>
 #include <QPixmap>
 #include "Node.h"
 #include <QGraphicsScene>
 #include <QGraphicsOpacityEffect>
+#include <QGraphicsPixmapItem>
 
-Terrain::Terrain(int tileWidth, int tileHeight, int mapWidth, int mapHeight):
+
+TerrainLayer::TerrainLayer(int tileWidth, int tileHeight, int numXTiles, int numYTiles, QPixmap pixmap):
     tileWidth_(tileWidth),
     tileHeight_(tileHeight),
-    width_(mapWidth),
-    height_(mapHeight),
+    numXTiles_(numXTiles),
+    numYTiles_(numYTiles),
+    pixmap_(pixmap),
     parentItem_(new QGraphicsPixmapItem())
 {
-    numXTiles_ = mapWidth / tileWidth;
-    numYTiles_ = mapHeight / tileHeight;
-
     grid_ = Grid(numXTiles_,numYTiles_,tileWidth_,tileHeight_);
 
     // initialize all pixmaps to null
     for (int i = 0, n = numXTiles_* numYTiles_; i < n; i++){
         tiles_.push_back(nullptr);
     }
+
+    linearFadePercent_ = 0.2; // 20%
 }
 
-/// Fills the specified cell with the specified pixmap.
-void Terrain::fill(const Node &cell, QPixmap pixmap){
-    // TODO: if there is already a tile, remove it first
-    QGraphicsPixmapItem* oldTile = pixmapAt_(cell.x(),cell.y());
-    if (oldTile != nullptr){
-        QGraphicsScene* oldTileScene = oldTile->scene();
-        if (oldTileScene){
-            oldTileScene->removeItem(oldTile);
-        }
-        tiles_.erase(std::find(tiles_.begin(),tiles_.end(),oldTile));
+/// Sets the position of the TerrainLayer within a Map.
+/// This sets the position of the top left corner of the TerrainLayer to the
+/// specified pos in the Map.
+void TerrainLayer::setPos(const QPointF &pos)
+{
+    parentItem_->setPos(pos);
+}
+
+/// Returns the position of the TerrainLayer.
+/// See TerrainLayer::setPos(const QPointF&) for more info.
+QPointF TerrainLayer::pos()
+{
+    return pos_;
+}
+
+void TerrainLayer::setPixmap(QPixmap pixmap)
+{
+    pixmap_ = pixmap;
+    draw_();
+}
+
+void TerrainLayer::setTileWidth(double width)
+{
+    tileWidth_ = width;
+    grid_ = Grid(numXTiles_,numYTiles_,tileWidth_,tileHeight_); // update grid
+    draw_();
+}
+
+void TerrainLayer::setTileHeight(double height)
+{
+    grid_ = Grid(numXTiles_,numYTiles_,tileWidth_,tileHeight_); // update grid
+    tileHeight_ = height;
+    draw_();
+}
+
+/// Fills the specified cell.
+void TerrainLayer::fill(const Node &cell){
+    QGraphicsPixmapItem* pixmap = pixmapAt_(cell.x(),cell.y());
+
+    // do nothing if already filled
+    if (pixmap != nullptr){
+        return;
     }
 
-    // create the QGraphicsPixmapItem
-    QGraphicsPixmapItem* pItem = new QGraphicsPixmapItem(parentItem_);
-    tiles_.push_back(pItem);
-    pItem->setPixmap(pixmap);
-    pItem->setPos(grid_.nodeToPoint(cell));
-
-    // mark cell filled
+    // otherwise, mark cell filled
     int posInArray = cell.y() * numXTiles_ + cell.x();
-    tiles_[posInArray] = pItem;
+    tiles_[posInArray] = new QGraphicsPixmapItem(parentItem_);
 
-    // update
-    updateFade_(cell.x(),cell.y());
-
-    // update top
-    QGraphicsPixmapItem* top = pixmapAt_(cell.x(),cell.y() - 1);
-    if (top){
-        updateFade_(cell.x(),cell.y() - 1);
-    }
-
-    // update bottom
-    QGraphicsPixmapItem* bottom = pixmapAt_(cell.x(),cell.y() + 1);
-    if (bottom){
-        updateFade_(cell.x(),cell.y() + 1);
-    }
-
-    // update left
-    QGraphicsPixmapItem* left = pixmapAt_(cell.x()-1,cell.y());
-    if (left){
-        updateFade_(cell.x()-1,cell.y());
-    }
-
-    // update right
-    QGraphicsPixmapItem* right = pixmapAt_(cell.x()+1,cell.y());
-    if (right){
-        updateFade_(cell.x()+1,cell.y());
-    }
-
-    // update topleft
-    QGraphicsPixmapItem* topLeft = pixmapAt_(cell.x()-1,cell.y() - 1);
-    if (topLeft){
-        updateFade_(cell.x()-1,cell.y() -1);
-    }
-
-    // update topright
-    QGraphicsPixmapItem* topRight = pixmapAt_(cell.x()+1,cell.y() - 1);
-    if (topRight){
-        updateFade_(cell.x()+1,cell.y() -1);
-    }
-
-    // update bottomleft
-    QGraphicsPixmapItem* bottomLeft = pixmapAt_(cell.x()-1,cell.y() + 1);
-    if (bottomLeft){
-        updateFade_(cell.x()-1,cell.y() +1);
-    }
-
-    // update bottomright
-    QGraphicsPixmapItem* bottomRight = pixmapAt_(cell.x()+1,cell.y() + 1);
-    if (bottomRight){
-        updateFade_(cell.x()+1,cell.y() +1);
-    }
+    draw_();
 }
 
-/// Fills the entire terrain with the specified pixmap.
-void Terrain::fill(QPixmap pixmap){
+// Unfills the specified cell.
+void TerrainLayer::unfill(const Node &cell)
+{
+    int posInArray = cell.y() * numXTiles_ + cell.x();
+    QGraphicsPixmapItem* tile = tiles_[posInArray];
+
+    // do nothing if already unfilled
+    if (tile == nullptr){
+        return;
+    }
+
+    delete tile;
+    tiles_[posInArray] = nullptr;
+
+    draw_();
+}
+
+/// Returns true if the specified cell is filled.
+bool TerrainLayer::filled(const Node &cell)
+{
+    int posInArray = cell.y() * numXTiles_ + cell.x();
+    QGraphicsPixmapItem* tile = tiles_[posInArray];
+
+    return tile != nullptr;
+}
+
+/// Fills the entire TerrainLayer with its pixmap.
+void TerrainLayer::fill(){
     // for each cell (node) in the terrain
     for (Node cell:grid_.nodes()){
         // fill it with the specified pixmap
-        fill(cell,pixmap);
+        fill(cell);
     }
 }
 
 /// Returns the pixmap at the specified location. If there is none, returns nullptr.
-QGraphicsPixmapItem *Terrain::pixmapAt_(int xPos, int yPos)
+QGraphicsPixmapItem *TerrainLayer::pixmapAt_(int xPos, int yPos)
 {
     if (xPos < 0 || xPos >= numXTiles_ || yPos < 0 || yPos >= numYTiles_){
         return nullptr;
@@ -117,8 +122,24 @@ QGraphicsPixmapItem *Terrain::pixmapAt_(int xPos, int yPos)
     return tiles_[posInArray];
 }
 
+/// Returns the position (node) of the specified QGraphicsPixmapItem.
+Node TerrainLayer::positionOf_(QGraphicsPixmapItem *pixmapItem)
+{
+    int indexOfPixmap;
+    for (int i = 0, n = tiles_.size(); i < n; i++){
+        if (tiles_[i] == pixmapItem){
+            indexOfPixmap = i;
+            break;
+        }
+    }
+
+    int yPos = indexOfPixmap / numYTiles_;
+    int xPos = indexOfPixmap % numYTiles_;
+    return Node(xPos,yPos);
+}
+
 /// Executed whenver the specified cell needs to recalculate itsfade.
-void Terrain::updateFade_(int x, int y)
+void TerrainLayer::setCorrectFade_(int x, int y)
 {
     // find out if its top, left, middle, etc...
     bool isTopLeft = false;
@@ -187,13 +208,13 @@ void Terrain::updateFade_(int x, int y)
 }
 
 /// Fades only the left side of the specified cell.
-void Terrain::fadeLeftOnly_(int x, int y)
+void TerrainLayer::fadeLeftOnly_(int x, int y)
 {
     QGraphicsPixmapItem* pItem = pixmapAt_(x,y);
 
     QGraphicsOpacityEffect* opacity = new QGraphicsOpacityEffect();
     QLinearGradient lg;
-    lg.setStart(50,0);
+    lg.setStart(linearFadePercent_*pItem->boundingRect().width(),0);
     lg.setFinalStop(0,0);
     lg.setColorAt(0,Qt::black);
     lg.setColorAt(1,Qt::transparent);
@@ -203,13 +224,13 @@ void Terrain::fadeLeftOnly_(int x, int y)
     pItem->setGraphicsEffect(opacity);
 }
 
-void Terrain::fadeRightOnly_(int x, int y)
+void TerrainLayer::fadeRightOnly_(int x, int y)
 {
     QGraphicsPixmapItem* pItem = pixmapAt_(x,y);
 
     QGraphicsOpacityEffect* opacity = new QGraphicsOpacityEffect();
     QLinearGradient lg;
-    lg.setStart(pItem->boundingRect().width() - 50,0);
+    lg.setStart(pItem->boundingRect().width() - linearFadePercent_*pItem->boundingRect().width(),0);
     lg.setFinalStop(pItem->boundingRect().width(),0);
     lg.setColorAt(0,Qt::black);
     lg.setColorAt(1,Qt::transparent);
@@ -219,13 +240,13 @@ void Terrain::fadeRightOnly_(int x, int y)
     pItem->setGraphicsEffect(opacity);
 }
 
-void Terrain::fadeTopOnly_(int x, int y)
+void TerrainLayer::fadeTopOnly_(int x, int y)
 {
     QGraphicsPixmapItem* pItem = pixmapAt_(x,y);
 
     QGraphicsOpacityEffect* opacity = new QGraphicsOpacityEffect();
     QLinearGradient lg;
-    lg.setStart(0,50);
+    lg.setStart(0,linearFadePercent_*pItem->boundingRect().width());
     lg.setFinalStop(0,0);
     lg.setColorAt(0,Qt::black);
     lg.setColorAt(1,Qt::transparent);
@@ -235,13 +256,13 @@ void Terrain::fadeTopOnly_(int x, int y)
     pItem->setGraphicsEffect(opacity);
 }
 
-void Terrain::fadeBottomOnly_(int x, int y)
+void TerrainLayer::fadeBottomOnly_(int x, int y)
 {
     QGraphicsPixmapItem* pItem = pixmapAt_(x,y);
 
     QGraphicsOpacityEffect* opacity = new QGraphicsOpacityEffect();
     QLinearGradient lg;
-    lg.setStart(0,pItem->boundingRect().height()-50);
+    lg.setStart(0,pItem->boundingRect().height()-linearFadePercent_*pItem->boundingRect().width());
     lg.setFinalStop(0,pItem->boundingRect().height());
     lg.setColorAt(0,Qt::black);
     lg.setColorAt(1,Qt::transparent);
@@ -251,7 +272,7 @@ void Terrain::fadeBottomOnly_(int x, int y)
     pItem->setGraphicsEffect(opacity);
 }
 
-void Terrain::fadeTopLeftOnly_(int x, int y)
+void TerrainLayer::fadeTopLeftOnly_(int x, int y)
 {
     QGraphicsPixmapItem* pItem = pixmapAt_(x,y);
 
@@ -271,7 +292,7 @@ void Terrain::fadeTopLeftOnly_(int x, int y)
     pItem->setGraphicsEffect(opacity);
 }
 
-void Terrain::fadeTopRightOnly_(int x, int y)
+void TerrainLayer::fadeTopRightOnly_(int x, int y)
 {
     QGraphicsPixmapItem* pItem = pixmapAt_(x,y);
 
@@ -291,7 +312,7 @@ void Terrain::fadeTopRightOnly_(int x, int y)
     pItem->setGraphicsEffect(opacity);
 }
 
-void Terrain::fadeBottomLeftOnly_(int x, int y)
+void TerrainLayer::fadeBottomLeftOnly_(int x, int y)
 {
     QGraphicsPixmapItem* pItem = pixmapAt_(x,y);
 
@@ -311,7 +332,7 @@ void Terrain::fadeBottomLeftOnly_(int x, int y)
     pItem->setGraphicsEffect(opacity);
 }
 
-void Terrain::fadeBottomRightOnly_(int x, int y)
+void TerrainLayer::fadeBottomRightOnly_(int x, int y)
 {
     QGraphicsPixmapItem* pItem = pixmapAt_(x,y);
 
@@ -329,4 +350,25 @@ void Terrain::fadeBottomRightOnly_(int x, int y)
     opacity->setOpacity(1);
 
     pItem->setGraphicsEffect(opacity);
+}
+
+/// Looks at the tile size, current pixmap, and which tiles are filled, then
+/// draws everything with the correct fading.
+void TerrainLayer::draw_()
+{
+    // scale the pixmap
+    pixmap_ = pixmap_.scaled(tileWidth_,tileHeight_);
+
+    // for each filled cell
+    // - give the pixmapItem the correct pixmap
+    // - give the pixmapItem the correct location (using grid_)
+    // - set its fading
+    for (QGraphicsPixmapItem* pixmapItem:tiles_){
+        if (pixmapItem){
+            Node pos = positionOf_(pixmapItem);
+            pixmapItem->setPixmap(pixmap_);
+            pixmapItem->setPos(grid_.nodeToPoint(pos));
+            setCorrectFade_(pos.x(),pos.y());
+        }
+    }
 }

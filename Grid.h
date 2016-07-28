@@ -7,7 +7,9 @@ class Node;
 #include <vector>
 
 /// Represents a region of space that is divided into Nodes in a grid
-/// like fashion.
+/// like fashion. This class is useful for divinding a region of space
+/// into "cells" (called "Nodes") and then being able to map back and forth
+/// between Nodes and actual positions.
 /// @author Abdullah Aghazadah
 /// @date 5-15-15
 ///
