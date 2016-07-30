@@ -58,14 +58,14 @@ int main(int argc, char *argv[])
     QImage img(128,128,QImage::Format_RGB32);
     img.fill(Qt::red);
     QPixmap pm = QPixmap::fromImage(img);
-    TerrainLayer* grassLayer = new TerrainLayer(128,128,5,5,
+    TerrainLayer* grassLayer = new TerrainLayer(180,180,2,2,
                                                 QPixmap(":resources/graphics/terrain/grass.png"));
-    grassLayer->setPos(QPointF(0,map2->height()-128*5));
+    grassLayer->setPos(QPointF(300,300));
     grassLayer->fill();
 
     dryTerrain->fill();
     map2->addTerrainLayer(dryTerrain);
-    map2->addTerrainLayer(grassLayer);
+    map1->addTerrainLayer(grassLayer);
 
     map1->setWeatherEffect(rain1);
     map2->setWeatherEffect(snow1);

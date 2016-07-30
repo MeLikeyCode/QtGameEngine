@@ -19,6 +19,9 @@ class Map;
 class TerrainLayer{
     friend class Map; // Map needs to access parentItem_
 public:
+    // static functions
+    static void setAlphaChannel(QPixmap& pixmap, int const alpha);
+
     // constructor
     TerrainLayer(int tileWidth, int tileHeight, int numXTiles, int numYTiles, QPixmap pixmap);
 

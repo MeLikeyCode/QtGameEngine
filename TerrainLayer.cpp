@@ -6,6 +6,24 @@
 #include <QGraphicsOpacityEffect>
 #include <QGraphicsPixmapItem>
 
+void TerrainLayer::setAlphaChannel(QPixmap& pixmap, int const alpha)
+{
+  QImage image(pixmap.toImage().convertToFormat(QImage::Format_ARGB32));
+
+  for (int x(0); x != image.width(); ++x)
+  {
+    for (int y(0); y != image.height(); ++y)
+    {
+      QColor color(image.pixel(x,y));
+
+      color.setAlpha(alpha);
+
+      image.setPixel(x, y, color.rgba());
+    }
+  }
+
+  pixmap = QPixmap::fromImage(image);
+}
 
 TerrainLayer::TerrainLayer(int tileWidth, int tileHeight, int numXTiles, int numYTiles, QPixmap pixmap):
     tileWidth_(tileWidth),
@@ -216,7 +234,7 @@ void TerrainLayer::fadeLeftOnly_(int x, int y)
     QLinearGradient lg;
     lg.setStart(linearFadePercent_*pItem->boundingRect().width(),0);
     lg.setFinalStop(0,0);
-    lg.setColorAt(0,Qt::black);
+    lg.setColorAt(0,Qt::blue);
     lg.setColorAt(1,Qt::transparent);
     opacity->setOpacityMask(lg);
     opacity->setOpacity(1);
@@ -358,6 +376,9 @@ void TerrainLayer::draw_()
 {
     // scale the pixmap
     pixmap_ = pixmap_.scaled(tileWidth_,tileHeight_);
+
+    // set alpha
+    setAlphaChannel(pixmap_,254);
 
     // for each filled cell
     // - give the pixmapItem the correct pixmap
