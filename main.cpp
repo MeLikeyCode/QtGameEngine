@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
     // create a Map and a Game
     MapGrid* mapGrid = new MapGrid(3,3);
 
-    PathingMap map1PathingMap(20,20,64);
+    PathingMap map1PathingMap(12,12,64);
     PathingMap map2PathingMap(100,100,64);
 
     Map* map1 = new Map(map1PathingMap);
@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
 
     int TILE_SIZE = 256;
     TerrainLayer* dryTerrain = new TerrainLayer(TILE_SIZE,TILE_SIZE,
-                           map2->width()/TILE_SIZE,map2->height()/TILE_SIZE,
+                           map2->width()/TILE_SIZE+1,map2->height()/TILE_SIZE+1,
                                                 QPixmap(":resources/graphics/terrain/grassstonedry.png"));
 
     QImage img(128,128,QImage::Format_RGB32);

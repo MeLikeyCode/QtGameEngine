@@ -24,6 +24,13 @@ class WeatherEffect;
 /// so that the Map's PathingMap can be updated accordingly.
 class Map{
 public:
+    enum Z_VALUES {
+        GUI_Z_VALUE = 2,
+        BORDER_Z_VALUE = 1,
+        ENTITY_Z_VALUE = 0,
+        TERRAIN_Z_VALUE = -1
+    };
+
     // constructor
     Map(PathingMap pathingMap);
 
@@ -86,6 +93,9 @@ private:
     std::vector<QGraphicsItem*> drawings_;
 
     QGraphicsScene* scene_;
+
+    // helper functions
+    void setFadingBorder_();
 
 };
 

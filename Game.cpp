@@ -318,7 +318,7 @@ void Game::addGui(Gui *gui)
 {
     guis_.insert(gui);
     scene()->addItem(gui->graphicsItem_);
-    gui->graphicsItem_->setZValue(100); // put Guis on top
+    gui->graphicsItem_->setZValue(Map::Z_VALUES::GUI_Z_VALUE); // put Guis on top
 }
 
 /// Converts the specified point from Game coordinates to Map coordinates (

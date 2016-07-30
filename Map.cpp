@@ -6,6 +6,7 @@
 #include <QGraphicsScene>
 #include "Game.h"
 #include "WeatherEffect.h"
+#include <QGraphicsOpacityEffect>
 
 // TODO remove test
 #include <QDebug>
@@ -24,8 +25,8 @@ Map::Map(PathingMap pathingMap):
     // add a default TerrainLayer
     TerrainLayer* defaultTerrain = new TerrainLayer(256,
                                                     256,
-                                                    width()/256,
-                                                    height()/256,
+                                                    width()/256+1,
+                                                    height()/256+1,
                                                     QPixmap(":resources/graphics/terrain/grassstone.png"));
     defaultTerrain->fill();
     addTerrainLayer(defaultTerrain);
@@ -35,6 +36,9 @@ Map::Map(PathingMap pathingMap):
     bb.setStyle(Qt::SolidPattern);
     bb.setColor(Qt::black);
     scene_->setBackgroundBrush(bb);
+
+    // add fading rects
+    setFadingBorder_();
 }
 
 /// Returns true if the specified pos is in the Map.
@@ -266,12 +270,189 @@ WeatherEffect *Map::weatherEffect()
     return weather_;
 }
 
+/// Sets a fading border around the map.
+void Map::setFadingBorder_()
+{
+    const int EDGE = 0;
+    const int WIDTH = 100;
+    const int R_WIDTH = 500;
+
+    QBrush b;
+    b.setStyle(Qt::SolidPattern);
+    b.setColor(Qt::black);
+
+    // top
+    QLinearGradient topGradient;
+    topGradient.setStart(0,R_WIDTH);
+    topGradient.setFinalStop(0,R_WIDTH-WIDTH);
+    topGradient.setColorAt(0,Qt::transparent);
+    topGradient.setColorAt(1,Qt::black);
+
+    QGraphicsOpacityEffect* topOpacity = new QGraphicsOpacityEffect();
+    topOpacity->setOpacity(1);
+    topOpacity->setOpacityMask(topGradient);
+
+    QGraphicsRectItem* topRect = new QGraphicsRectItem();
+    topRect->setRect(0,0,width()-EDGE*2,R_WIDTH);
+    topRect->setPos(EDGE,0-R_WIDTH);
+    topRect->setBrush(b);
+    topRect->setGraphicsEffect(topOpacity);
+
+    topRect->setZValue(Z_VALUES::BORDER_Z_VALUE);
+    scene_->addItem(topRect);
+
+    // bottom
+    QLinearGradient bottomGradient;
+    bottomGradient.setStart(0,0);
+    bottomGradient.setFinalStop(0,WIDTH);
+    bottomGradient.setColorAt(0,Qt::transparent);
+    bottomGradient.setColorAt(1,Qt::black);
+
+    QGraphicsOpacityEffect* bottomOpacity = new QGraphicsOpacityEffect();
+    bottomOpacity->setOpacity(1);
+    bottomOpacity->setOpacityMask(bottomGradient);
+
+    QGraphicsRectItem* bottomRect = new QGraphicsRectItem();
+    bottomRect->setRect(0,0,width()-EDGE*2,R_WIDTH);
+    bottomRect->setPos(EDGE,height());
+    bottomRect->setBrush(b);
+    bottomRect->setGraphicsEffect(bottomOpacity);
+
+    bottomRect->setZValue(Z_VALUES::BORDER_Z_VALUE);
+    scene_->addItem(bottomRect);
+
+    // left
+    QLinearGradient leftGradient;
+    leftGradient.setStart(R_WIDTH,0);
+    leftGradient.setFinalStop(R_WIDTH-WIDTH,0);
+    leftGradient.setColorAt(0,Qt::transparent);
+    leftGradient.setColorAt(1,Qt::black);
+
+    QGraphicsOpacityEffect* leftOpacity = new QGraphicsOpacityEffect();
+    leftOpacity->setOpacity(1);
+    leftOpacity->setOpacityMask(leftGradient);
+
+    QGraphicsRectItem* leftRect = new QGraphicsRectItem();
+    leftRect->setRect(0,0,R_WIDTH,height()-EDGE*2);
+    leftRect->setPos(0-R_WIDTH,0+EDGE);
+    leftRect->setBrush(b);
+    leftRect->setGraphicsEffect(leftOpacity);
+
+    leftRect->setZValue(Z_VALUES::BORDER_Z_VALUE);
+    scene_->addItem(leftRect);
+
+    // right
+    QLinearGradient rightGradient;
+    rightGradient.setStart(0,0);
+    rightGradient.setFinalStop(WIDTH,0);
+    rightGradient.setColorAt(0,Qt::transparent);
+    rightGradient.setColorAt(1,Qt::black);
+
+    QGraphicsOpacityEffect* rightOpacity = new QGraphicsOpacityEffect();
+    rightOpacity->setOpacity(1);
+    rightOpacity->setOpacityMask(rightGradient);
+
+    QGraphicsRectItem* rightRect = new QGraphicsRectItem();
+    rightRect->setRect(0,0,R_WIDTH,height()-EDGE*2);
+    rightRect->setPos(width(),0+EDGE);
+    rightRect->setBrush(b);
+    rightRect->setGraphicsEffect(rightOpacity);
+
+    rightRect->setZValue(Z_VALUES::BORDER_Z_VALUE);
+    scene_->addItem(rightRect);
+
+    // top left
+    QRadialGradient tlGradient;
+    tlGradient.setCenter(R_WIDTH, R_WIDTH);
+    tlGradient.setFocalPoint(tlGradient.center());
+    tlGradient.setRadius(R_WIDTH);
+    tlGradient.setColorAt(0,Qt::transparent);
+    tlGradient.setColorAt(0.2,Qt::black);
+
+    QGraphicsOpacityEffect* tlOpacity = new QGraphicsOpacityEffect();
+    tlOpacity->setOpacity(1);
+    tlOpacity->setOpacityMask(tlGradient);
+
+    QGraphicsRectItem* tlRect = new QGraphicsRectItem();
+    tlRect->setRect(0,0,R_WIDTH,R_WIDTH);
+    tlRect->setPos(0-R_WIDTH,0-R_WIDTH);
+    tlRect->setBrush(b);
+    tlRect->setGraphicsEffect(tlOpacity);
+
+    tlRect->setZValue(Z_VALUES::BORDER_Z_VALUE);
+    scene_->addItem(tlRect);
+
+    // top right
+    QRadialGradient trGradient;
+    trGradient.setCenter(0, R_WIDTH);
+    trGradient.setFocalPoint(trGradient.center());
+    trGradient.setRadius(R_WIDTH);
+    trGradient.setColorAt(0,Qt::transparent);
+    trGradient.setColorAt(0.2,Qt::black);
+
+    QGraphicsOpacityEffect* trOpacity = new QGraphicsOpacityEffect();
+    trOpacity->setOpacity(1);
+    trOpacity->setOpacityMask(trGradient);
+
+    QGraphicsRectItem* trRect = new QGraphicsRectItem();
+    trRect->setRect(0,0,R_WIDTH,R_WIDTH);
+    trRect->setPos(width(),0-R_WIDTH);
+    trRect->setBrush(b);
+    trRect->setGraphicsEffect(trOpacity);
+
+    trRect->setZValue(Z_VALUES::BORDER_Z_VALUE);
+    scene_->addItem(trRect);
+
+    // bottom left
+    QRadialGradient blGradient;
+    blGradient.setCenter(R_WIDTH, 0);
+    blGradient.setFocalPoint(blGradient.center());
+    blGradient.setRadius(R_WIDTH);
+    blGradient.setColorAt(0,Qt::transparent);
+    blGradient.setColorAt(0.2,Qt::black);
+
+    QGraphicsOpacityEffect* blOpacity = new QGraphicsOpacityEffect();
+    blOpacity->setOpacity(1);
+    blOpacity->setOpacityMask(blGradient);
+
+    QGraphicsRectItem* blRect = new QGraphicsRectItem();
+    blRect->setRect(0,0,R_WIDTH,R_WIDTH);
+    blRect->setPos(0-R_WIDTH,height());
+    blRect->setBrush(b);
+    blRect->setGraphicsEffect(blOpacity);
+
+    blRect->setZValue(Z_VALUES::BORDER_Z_VALUE);
+    scene_->addItem(blRect);
+
+    // bottom right
+    QRadialGradient brGradient;
+    brGradient.setCenter(0, 0);
+    brGradient.setFocalPoint(brGradient.center());
+    brGradient.setRadius(R_WIDTH);
+    brGradient.setColorAt(0,Qt::transparent);
+    brGradient.setColorAt(0.2,Qt::black);
+
+    QGraphicsOpacityEffect* brOpacity = new QGraphicsOpacityEffect();
+    brOpacity->setOpacity(1);
+    brOpacity->setOpacityMask(brGradient);
+
+    QGraphicsRectItem* brRect = new QGraphicsRectItem();
+    brRect->setRect(0,0,R_WIDTH,R_WIDTH);
+    brRect->setPos(width(),height());
+    brRect->setBrush(b);
+    brRect->setGraphicsEffect(brOpacity);
+
+    brRect->setZValue(Z_VALUES::BORDER_Z_VALUE);
+    scene_->addItem(brRect);
+}
+
 /// Adds the specified TerrainLayer to the Map.
 /// TerrainLayers stack in the order added (the later added, the "topper").
 void Map::addTerrainLayer(TerrainLayer *terrainLayer){
     terrainLayers_.push_back(terrainLayer);
 
     // add the parent terrain to the map's scene
+    terrainLayer->parentItem_->setZValue(Z_VALUES::TERRAIN_Z_VALUE);
     scene()->addItem(terrainLayer->parentItem_);
 
 }
@@ -297,6 +478,9 @@ void Map::addEntity(Entity *entity){
 
     // add its sprite to the interal QGraphicsScene
     scene_->addItem(entity->sprite());
+
+    // set its z value
+    entity->sprite()->setZValue(Z_VALUES::ENTITY_Z_VALUE);
 
     // add its children's sprite's as a child of its sprites
     for (Entity* childEntity:entity->children()){
