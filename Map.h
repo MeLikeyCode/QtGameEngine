@@ -25,7 +25,8 @@ class WeatherEffect;
 class Map{
 public:
     enum Z_VALUES {
-        GUI_Z_VALUE = 2,
+        GUI_Z_VALUE = 3,
+        WEATHER_Z_VALUE = 2,
         BORDER_Z_VALUE = 1,
         ENTITY_Z_VALUE = 0,
         TERRAIN_Z_VALUE = -1

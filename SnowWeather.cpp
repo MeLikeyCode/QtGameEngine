@@ -94,6 +94,7 @@ void SnowWeather::snowStepGlobular_()
             globularSnows_.push_back(snow);
             map_->scene()->addItem(snow);
             snow->setOpacity(0.05);
+            snow->setZValue(Map::Z_VALUES::WEATHER_Z_VALUE);
         }
 
         // position snows at top of camera
@@ -143,6 +144,8 @@ void SnowWeather::snowStepLinear_()
         pm = pm.scaled(mapsGame->cam().width(),pm.height());
         snow1_ = new QGraphicsPixmapItem(pm);
         snow2_ = new QGraphicsPixmapItem(pm);
+        snow1_->setZValue(Map::Z_VALUES::WEATHER_Z_VALUE);
+        snow2_->setZValue(Map::Z_VALUES::WEATHER_Z_VALUE);
         snow1_->setOpacity(0.05);
         snow2_->setOpacity(0.05);
         map_->scene()->addItem(snow1_);

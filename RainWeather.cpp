@@ -57,6 +57,7 @@ void RainWeather::start()
     for (QGraphicsPixmapItem* rain:rains_){
         map_->scene()->addItem(rain);
         rain->setOpacity(0.08);
+        rain->setZValue(Map::Z_VALUES::WEATHER_Z_VALUE);
     }
 
     rainTimer_->start(rainStepFreqMs_);
@@ -140,6 +141,7 @@ void RainWeather::splashStep_()
 
     for (int i = 0, n = numSplashPerStep_; i < n; i++){
         Sprite* splash = new Sprite();
+        splash->setZValue(Map::Z_VALUES::WEATHER_Z_VALUE);
         splash->setOpacity(currentSplashOpacity_);
         splash->addFrames(":/resources/graphics/effects/splash",4,"splash");
         double xPos = rand() % ((int)map_->game()->cam().width()); // 0 - camWidth
