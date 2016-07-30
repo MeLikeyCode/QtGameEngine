@@ -19,20 +19,13 @@ Map::Map(PathingMap pathingMap):
     weather_(nullptr),
     game_(nullptr)
 {
-    // calculate width and height
-    width_ = pathingMap.width();
-    height_ = pathingMap.height();
-
-    // calculate num tiles needed
-
-
-    scene_->setSceneRect(0,0,width_,height_);
+    scene_->setSceneRect(0,0,width(),height());
 
     // add a default TerrainLayer
     TerrainLayer* defaultTerrain = new TerrainLayer(256,
                                                     256,
-                                                    width_/256,
-                                                    height_/256,
+                                                    width()/256,
+                                                    height()/256,
                                                     QPixmap(":resources/graphics/terrain/grassstone.png"));
     defaultTerrain->fill();
     addTerrainLayer(defaultTerrain);
@@ -86,11 +79,11 @@ void Map::updatePathingMap()
 }
 
 int Map::width() const{
-    return width_;
+    return pathingMap_.width();
 }
 
 int Map::height() const{
-    return height_;
+    return pathingMap_.height();
 }
 
 QSizeF Map::size() const{

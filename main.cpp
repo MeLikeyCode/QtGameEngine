@@ -67,8 +67,8 @@ int main(int argc, char *argv[])
     map2->addTerrainLayer(dryTerrain);
     map1->addTerrainLayer(grassLayer);
 
-    map1->setWeatherEffect(rain1);
-    map2->setWeatherEffect(snow1);
+    //map1->setWeatherEffect(rain1);
+    //map2->setWeatherEffect(snow1);
 
     mapGrid->insertMap(map1,0,1);
     mapGrid->insertMap(map2,0,0);
