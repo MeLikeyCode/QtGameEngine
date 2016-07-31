@@ -52,6 +52,7 @@ void Bow::attack(QPointF targetPoint)
     SpearProjectile* spearProjectile = new SpearProjectile(startPos, targetPoint, 300, 5,
                                                            noDamageList, map);
     spearProjectile->startMoving();
+    spearProjectile->setPointZ(owningEntity->pointZ() + owningEntity->height());
 
 //    // create projectile (using Projectile and instantiating all the behaviors, etc...)
 //    ProjectileMoveBehaviorSine* mb = new ProjectileMoveBehaviorSine(100,200,1000,targetPoint);

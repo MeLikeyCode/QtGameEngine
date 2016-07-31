@@ -227,15 +227,16 @@ void Game::mousePressEvent(QMouseEvent *event){
 
 //    }
 
-//    // create AIEntity (part of grp 1)
-//    if (event->button() == Qt::RightButton){
-//        // create enemy (will follow/attack its enemies)
-//        AIEntity* e = new AIEntity();
-//        e->setGroupID(1);
-//        e->addEnemy(0);
-//        e->setPointPos(mapToMap(event->pos()));
-//        currentMap()->addEntity(e);
-//    }
+    // create AIEntity (part of grp 1)
+    if (event->button() == Qt::RightButton){
+        // create enemy (will follow/attack its enemies)
+        AIEntity* e = new AIEntity();
+        e->setHeight(64);
+        e->setGroupID(1);
+        e->addEnemy(0);
+        e->setPointPos(mapToMap(event->pos()));
+        currentMap()->addEntity(e);
+    }
 
 //    // create AIEntity (part of grp 2)
 //    if (event->button() == Qt::RightButton){

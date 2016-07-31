@@ -69,10 +69,14 @@ public:
 
     double distance(Entity* e1, Entity* e2);
 
+    /// getting all entities at a certain point/region
     Entity* closest(const QPointF& point);
     std::unordered_set<Entity*> entities(const QRectF& inRegion);
     std::unordered_set<Entity *> entities(const QPointF& atPoint);
     std::unordered_set<Entity*> entities(const QPolygonF& inRegion);
+    std::unordered_set<Entity*> entities(const QRectF &inRegion,double zRangeMin, double zRangeMax);
+    std::unordered_set<Entity*> entities(const QPointF &atPoint, double zRangeMin, double zRangeMax);
+    std::unordered_set<Entity*> entities(const QPolygonF &inRegion, double zRangeMin, double zRangeMax);
 
     void playOnce(Sprite* sprite, std::string animation, int delaybwFramesMS, QPointF atPos);
 

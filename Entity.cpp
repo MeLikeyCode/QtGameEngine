@@ -27,7 +27,8 @@ Entity::Entity():
     groupID_(0),                     // default group id of 0
     isFollowedByCam_(false),
     invulnerable_(false),
-    zPos_(0)
+    zPos_(0),
+    height_(0)
 {
     // constructor body
     // = some defaults=
@@ -115,6 +116,12 @@ double Entity::pointZ() const
     return zPos_;
 }
 
+/// Returns the height of the Entity.
+double Entity::height() const
+{
+    return height_;
+}
+
 /// Sets the position of the Entity.
 ///
 /// The position is relative to the parent Entity. If there is no
@@ -187,6 +194,12 @@ void Entity::setPointZ(double z)
     if (sprite_ != nullptr){
         scaleSprite_();
     }
+}
+
+/// Sets the height of the Entity.
+void Entity::setHeight(double height)
+{
+    height_ = height;
 }
 
 /// Returns the cell that the Entity is in.

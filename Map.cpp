@@ -232,6 +232,64 @@ std::unordered_set<Entity *> Map::entities(const QPolygonF &inRegion)
     return ents;
 }
 
+/// Returns the Entities in the specified region and in the specified z range.
+std::unordered_set<Entity *> Map::entities(const QRectF &inRegion, double zRangeMin, double zRangeMax)
+{
+    // get all entities in this region
+    auto entitiesInRegion = entities(inRegion);
+
+    std::unordered_set<Entity*> entities;
+    for (Entity* entity:entitiesInRegion){
+        double entitysZ = entity->pointZ();
+        double entitysZPlusHeight = entitysZ + entity->height();
+        if ((entitysZ >= zRangeMin && entitysZ <= zRangeMax) ||
+                (entitysZPlusHeight >= zRangeMin && entitysZPlusHeight <= zRangeMax)){
+            entities.insert(entity);
+        }
+    }
+
+    return entities;
+}
+
+/// Returns the Entities at the specified point and in the specified z range.
+std::unordered_set<Entity *> Map::entities(const QPointF &atPoint, double zRangeMin, double zRangeMax)
+{
+    // get all entities in at this point
+    auto entitiesAtPoint = entities(atPoint);
+
+    // return only ones in valid z range
+    std::unordered_set<Entity*> entities;
+    for (Entity* entity:entitiesAtPoint){
+        double entitysZ = entity->pointZ();
+        double entitysZPlusHeight = entitysZ + entity->height();
+        if ((entitysZ >= zRangeMin && entitysZ <= zRangeMax) ||
+                (entitysZPlusHeight >= zRangeMin && entitysZPlusHeight <= zRangeMax)){
+            entities.insert(entity);
+        }
+    }
+
+    return entities;
+}
+
+/// Returns the Entities in the specified region and in the specified z range.
+std::unordered_set<Entity *> Map::entities(const QPolygonF &inRegion, double zRangeMin, double zRangeMax)
+{
+    // get all entities in this region
+    auto entitiesInRegion = entities(inRegion);
+
+    std::unordered_set<Entity*> entities;
+    for (Entity* entity:entitiesInRegion){
+        double entitysZ = entity->pointZ();
+        double entitysZPlusHeight = entitysZ + entity->height();
+        if ((entitysZ >= zRangeMin && entitysZ <= zRangeMax) ||
+                (entitysZPlusHeight >= zRangeMin && entitysZPlusHeight <= zRangeMax)){
+            entities.insert(entity);
+        }
+    }
+
+    return entities;
+}
+
 /// Plays the specified sprite's specified animation at the specified position
 /// on the map - once.
 /// @warning Deletes the sprite after it is finished playing.

@@ -72,7 +72,7 @@ bool Projectile::isInNoDamageList(Entity *entity)
 /// (at its current position).
 std::unordered_set<QPointer<Entity>> Projectile::collidingEntities()
 {
-    std::unordered_set<Entity*> entities = map()->entities(this->pointPos());
+    std::unordered_set<Entity*> entities = map()->entities(this->pointPos(),pointZ(),pointZ()+height());
     entities.erase(this);     // make sure the projectile itself is not in this list
 
     // return QPointer<Entity>s so that they can be checked for null

@@ -85,7 +85,8 @@ int main(int argc, char *argv[])
     game->setPlayer(player); // game knows about this entity (for testing)
     player->setFollowedByCam(true);
     player->setGroupID(0);
-    player->setPointZ(50);
+    //player->setPointZ(50);
+    player->setHeight(64);
 
     // give the entity a sprite (overrides default one)
     Sprite* spr = new Sprite();

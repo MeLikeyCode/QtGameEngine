@@ -12,6 +12,7 @@ SpearProjectile::SpearProjectile(QPointF start, QPointF target, double range, do
                noDamageList,
                map)
 {
+    setHeight(10);
     // make sure the projectile's rotation point is its center
     double rx = 0;
     double ry = sprite()->boundingRect().height()/2;
