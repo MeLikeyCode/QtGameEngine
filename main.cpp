@@ -67,8 +67,8 @@ int main(int argc, char *argv[])
     map2->addTerrainLayer(dryTerrain);
     map1->addTerrainLayer(grassLayer);
 
-    map1->setWeatherEffect(rain1);
-    map2->setWeatherEffect(snow1);
+    //map1->setWeatherEffect(rain1);
+    //map2->setWeatherEffect(snow1);
 
     mapGrid->insertMap(map1,0,1);
     mapGrid->insertMap(map2,0,0);
@@ -85,12 +85,13 @@ int main(int argc, char *argv[])
     game->setPlayer(player); // game knows about this entity (for testing)
     player->setFollowedByCam(true);
     player->setGroupID(0);
+    player->setPointZ(50);
 
     // give the entity a sprite (overrides default one)
     Sprite* spr = new Sprite();
-    player->setSprite(spr);
     spr->addFrames(":resources/graphics/human",1,"stand"); // stand anim
     spr->addFrames(":resources/graphics/human",6,"walk");  // walk anim
+    player->setSprite(spr);
     spr->play("stand",1,1); // play stand anim
 
     // add some attachment points for the player

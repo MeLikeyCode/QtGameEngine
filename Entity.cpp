@@ -26,7 +26,8 @@ Entity::Entity():
     canOnlyBeDamagedByMode_(false), // by default, can be damaged by all
     groupID_(0),                     // default group id of 0
     isFollowedByCam_(false),
-    invulnerable_(false)
+    invulnerable_(false),
+    zPos_(0)
 {
     // constructor body
     // = some defaults=
@@ -107,6 +108,13 @@ double Entity::pointY() const
     return pointPos().y();
 }
 
+/// Returns the z position of the Entity. The z position is the height
+/// above level ground that the Entity is at.
+double Entity::pointZ() const
+{
+    return zPos_;
+}
+
 /// Sets the position of the Entity.
 ///
 /// The position is relative to the parent Entity. If there is no
@@ -117,7 +125,7 @@ void Entity::setPointPos(const QPointF &pos){
     // if the Entity is in a Map, update the PathingMap
     Map* entitysMap = map();
     if (entitysMap){
-        entitysMap->updatePathingMap();
+        //entitysMap->updatePathingMap();
     }
 
     // if followed by the camear, tell game cam to move here
@@ -169,6 +177,18 @@ void Entity::setPointY(double y)
     setPointPos(newPoint);
 }
 
+/// Sets the z position of the Entity.
+/// See Entity:pointZ() for more info.
+void Entity::setPointZ(double z)
+{
+    zPos_ = z;
+
+    // scale according to z
+    if (sprite_ != nullptr){
+        scaleSprite_();
+    }
+}
+
 /// Returns the cell that the Entity is in.
 Node Entity::cellPos(){
     return map()->pathingMap().pointToCell(pointPos());
@@ -194,6 +214,8 @@ void Entity::setSprite(Sprite *sprite){
     // set internal sprite_ pointer to the new sprite
     sprite_ = sprite;
 
+    // set scaling of the new sprite
+    scaleSprite_();
 }
 
 /// Returns the Entity's Sprite. If the Entity does not have a sprite,
@@ -420,4 +442,14 @@ bool Entity::isFollowedByCam()
 void Entity::setFollowedByCam(bool tf)
 {
     isFollowedByCam_ = tf;
+}
+
+void Entity::scaleSprite_()
+{
+    assert(sprite_ != nullptr);
+
+    double scaleFactor = 1.0 + zPos_ / 100.0; // scale up by z%
+    int newWidth = sprite_->size().width() * (scaleFactor);
+    int newHeight = sprite_->size().height() * (scaleFactor);
+    sprite_->setSize(newWidth,newHeight);
 }

@@ -40,6 +40,7 @@ public:
     Sprite(QPixmap pixmap, QGraphicsItem* parent=nullptr);
 
     // readers
+    QSizeF size();
     virtual QRectF boundingRect() const;
     bool hasAnimation(std::string animation) const;
     std::string playingAnimation();
@@ -77,6 +78,8 @@ private:
     int currentFrame_;
     int timesPlayed_;
     int timesToPlay_;
+
+    QSizeF size_;
 
 };
 

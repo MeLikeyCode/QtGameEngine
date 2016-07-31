@@ -59,6 +59,12 @@ void Sprite::play(std::string animation, int timesToPlay, int delayBetweenFrames
     timer_->start(delayBetweenFrames);                         // next frames
 }
 
+/// Returns the size of the Sprite.
+QSizeF Sprite::size()
+{
+    return size_;
+}
+
 /// Sets the size (width and height) of the frames of the specified
 /// animation.
 void Sprite::setSize(std::string animation, int width, int height)
@@ -71,6 +77,9 @@ void Sprite::setSize(std::string animation, int width, int height)
         pixmap = pixmap.scaled(width,height);
     }
     animation_[animation] = frames;
+
+    // make sure origin is up to date
+    setTransformOriginPoint(width/2.0,height/2.0);
 }
 
 /// Sets the size of all the frames of all the animations.
@@ -128,6 +137,12 @@ void Sprite::addFrame(QPixmap frame, std::string toAnimation){
         animation_[toAnimation].push_back(frame);
     }
 
+    // make sure size is up to date
+    size_ = frame.size();
+
+    // make sure transform point is upto date
+    setTransformOriginPoint(frame.width()/2,
+                            frame.height()/2);
 }
 
 /// Adds the _.png_ images in the specified resource folder with the specified

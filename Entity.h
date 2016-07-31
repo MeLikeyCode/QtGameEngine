@@ -52,11 +52,13 @@ public:
     QPointF pointPos() const;
     double pointX() const;
     double pointY() const;
+    double pointZ() const;
     void setPointPos(const QPointF &pos);
     void setPointPos(std::string namedPos, const QPointF& pos);
     void setPointPos(const QPointF& moveThisPt, const QPointF& toThisPoint);
     void setPointX(double x);
     void setPointY(double y);
+    void setPointZ(double z);
     Node cellPos();
     void setCellPos(const Node& cell);
 
@@ -109,8 +111,12 @@ private:
     bool canOnlyBeDamagedByMode_;
     int groupID_;
     bool invulnerable_;
+    double zPos_;
 
     bool isFollowedByCam_;
+
+    // helper functions
+    void scaleSprite_();
 };
 
 // make QPointer<Entity> hashable
