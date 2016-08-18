@@ -21,3 +21,18 @@ void addRandomTrees(Map *mapToAddTreesTo, int numTreesToAdd)
         tree->setPointPos(QPointF(randXPos,randYPos));
     }
 }
+
+void addRandomRocks(Map *mapToAddRocksTo, int numRocksToAdd)
+{
+    for (int i = 0, n = numRocksToAdd; i < n; i++){
+        PathingMap pathingMap(1,1,32);
+        pathingMap.fill();
+
+        RandomImageEntity* rock = new RandomImageEntity(":/resources/graphics/rock","rock",3,pathingMap);
+        mapToAddRocksTo->addEntity(rock);
+
+        double randXPos = rand() % mapToAddRocksTo->width() - 100;
+        double randYPos = rand() % mapToAddRocksTo->height() - 100;
+        rock->setPointPos(QPointF(randXPos,randYPos));
+    }
+}

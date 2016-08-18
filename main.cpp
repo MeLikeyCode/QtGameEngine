@@ -180,8 +180,9 @@ int main(int argc, char *argv[])
     pb->setPointPos(QPointF(700,700));
     map1->addEntity(pb);
 
-    // add some trees
-    addRandomTrees(map1,5);
+    // add some trees/rocks
+    addRandomRocks(map1,3);
+    addRandomTrees(map1,10);
 
     return a.exec();
 }
