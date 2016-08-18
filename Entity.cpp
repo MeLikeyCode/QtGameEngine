@@ -69,8 +69,10 @@ PathingMap Entity::pathingMap() const{
 }
 
 /// Sets the PathingMap of the Entity.
-void Entity::setPathingMap(const PathingMap &pathingMap){
+/// The PathingMap is placed at the specified position relative to the Entity.
+void Entity::setPathingMap(const PathingMap &pathingMap, const QPointF& pos){
     pathingMap_ = pathingMap;
+    pathingMapPos_ = pos;
 }
 
 /// Returns a pointer to the Map that the Entity is in. If the Entity is not
@@ -93,6 +95,12 @@ void Entity::setMap(Map *toMap)
 /// parent Entitiy, it is returned relative to the Map.
 QPointF Entity::pointPos() const{
     return sprite()->pos();
+}
+
+/// Returns the position of the Entity's PathingMap relative to the Entity.
+QPointF Entity::pathingMapPos() const
+{
+    return pathingMapPos_;
 }
 
 /// Returns the x position of the Entity relative to the parent, relative to
@@ -132,7 +140,7 @@ void Entity::setPointPos(const QPointF &pos){
     // if the Entity is in a Map, update the PathingMap
     Map* entitysMap = map();
     if (entitysMap){
-        //entitysMap->updatePathingMap();
+        entitysMap->updatePathingMap();
     }
 
     // if followed by the camear, tell game cam to move here

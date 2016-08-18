@@ -43,13 +43,14 @@ public:
     virtual ~Entity();
 
     PathingMap pathingMap() const;
-    void setPathingMap(const PathingMap& pathingMap);
+    void setPathingMap(const PathingMap& pathingMap, const QPointF &pos=QPointF(0,0));
     bool canFit(const QPointF& atPos);
 
     Map* map() const;
     void setMap(Map* toMap);
 
     QPointF pointPos() const;
+    QPointF pathingMapPos() const;
     double pointX() const;
     double pointY() const;
     double pointZ() const;
@@ -102,6 +103,7 @@ public:
 private:
     // main attributes
     PathingMap pathingMap_;
+    QPointF pathingMapPos_;
     Map* map_;
     Sprite* sprite_;
     std::unordered_set<Entity*> children_;

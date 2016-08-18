@@ -78,8 +78,10 @@ void Map::updatePathingMap()
 
     // fill each Entity's pathing map
     for (Entity* entity:entities()){
-        pathingMap().addFilling(entity->pathingMap(),entity->pointPos());
+        pathingMap().addFilling(entity->pathingMap(),entity->pointPos() + entity->pathingMapPos());
     }
+
+    drawPathingMap(); // TODO: remove, test
 }
 
 int Map::width() const{

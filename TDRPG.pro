@@ -72,7 +72,8 @@ SOURCES += main.cpp \
     Panel.cpp \
     Button.cpp \
     Bar.cpp \
-    TerrainLayer.cpp
+    TerrainLayer.cpp \
+    RandomImageEntity.cpp
 
 HEADERS  += \
     Map.h \
@@ -134,7 +135,8 @@ HEADERS  += \
     Panel.h \
     Button.h \
     Bar.h \
-    TerrainLayer.h
+    TerrainLayer.h \
+    RandomImageEntity.h
 
 RESOURCES += \
     res.qrc

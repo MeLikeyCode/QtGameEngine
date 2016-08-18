@@ -53,5 +53,15 @@
         <file>sounds/specialMove.wav</file>
         <file>graphics/misc/invbg.png</file>
         <file>graphics/misc/invcellbg.png</file>
+        <file>graphics/bush/bush0.png</file>
+        <file>graphics/bush/bush1.png</file>
+        <file>graphics/bush/bush2.png</file>
+        <file>graphics/bush/bush3.png</file>
+        <file>graphics/rock/rock0.png</file>
+        <file>graphics/rock/rock1.png</file>
+        <file>graphics/rock/rock2.png</file>
+        <file>graphics/tree/tree0.png</file>
+        <file>graphics/tree/tree1.png</file>
+        <file>graphics/tree/tree2.png</file>
     </qresource>
 </RCC>

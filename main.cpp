@@ -23,6 +23,7 @@
 #include "Panel.h"
 #include "Button.h"
 #include "Bar.h"
+#include "RandomImageEntity.h"
 
 #include <QMediaPlayer>
 
@@ -42,7 +43,7 @@ int main(int argc, char *argv[])
     MapGrid* mapGrid = new MapGrid(3,3);
 
     PathingMap map1PathingMap(20,20,64);
-    PathingMap map2PathingMap(100,100,64);
+    PathingMap map2PathingMap(50,50,64);
 
     Map* map1 = new Map(map1PathingMap);
     Map* map2 = new Map(map2PathingMap);
@@ -129,9 +130,9 @@ int main(int argc, char *argv[])
     //player->equipItem(spear,rightHand);
     // player->equipItem(bow,leftHandRanged);
 
-//    // play a sound
-//    Sound* sound = new Sound("qrc:/resources/sounds/music.mp3");
-//    sound->play(10);
+    // play a sound
+    Sound* sound = new Sound("qrc:/resources/sounds/music.mp3");
+    sound->play(10);
 
     // test inventoryviewoer
     InventoryViewer* v = new InventoryViewer(game,player->inventory());
@@ -177,6 +178,21 @@ int main(int argc, char *argv[])
     ItemPushback* pb = new ItemPushback();
     pb->setPointPos(QPointF(700,700));
     map1->addEntity(pb);
+
+    // add some RandomImageEntities
+    PathingMap r1p(1,1,32);
+    r1p.fill();
+    RandomImageEntity* r1 = new RandomImageEntity(":resources/graphics/tree","tree",3,r1p);
+    r1->setPointPos(QPointF(100,100));
+    map1->addEntity(r1);
+
+    RandomImageEntity* r2 = new RandomImageEntity(":resources/graphics/tree","tree",3,r1p);
+    r2->setPointPos(QPointF(350,100));
+    map1->addEntity(r2);
+
+    RandomImageEntity* r3 = new RandomImageEntity(":resources/graphics/tree","tree",3,r1p);
+    r3->setPointPos(QPointF(800,800));
+    map1->addEntity(r3);
 
     return a.exec();
 }
