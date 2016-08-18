@@ -24,6 +24,7 @@
 #include "Button.h"
 #include "Bar.h"
 #include "RandomImageEntity.h"
+#include "Utilities.h"
 
 #include <QMediaPlayer>
 
@@ -179,20 +180,8 @@ int main(int argc, char *argv[])
     pb->setPointPos(QPointF(700,700));
     map1->addEntity(pb);
 
-    // add some RandomImageEntities
-    PathingMap r1p(1,1,32);
-    r1p.fill();
-    RandomImageEntity* r1 = new RandomImageEntity(":resources/graphics/tree","tree",3,r1p);
-    r1->setPointPos(QPointF(100,100));
-    map1->addEntity(r1);
-
-    RandomImageEntity* r2 = new RandomImageEntity(":resources/graphics/tree","tree",3,r1p);
-    r2->setPointPos(QPointF(350,100));
-    map1->addEntity(r2);
-
-    RandomImageEntity* r3 = new RandomImageEntity(":resources/graphics/tree","tree",3,r1p);
-    r3->setPointPos(QPointF(800,800));
-    map1->addEntity(r3);
+    // add some trees
+    addRandomTrees(map1,5);
 
     return a.exec();
 }
