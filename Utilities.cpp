@@ -7,8 +7,6 @@
 /// Adds the specified number of trees randomly scattered on the specified Map.
 void addRandomTrees(Map *mapToAddTreesTo, int numTreesToAdd)
 {
-    srand(time(nullptr));
-
     for (int i = 0, n = numTreesToAdd; i < n; i++){
         PathingMap pathingMap(1,1,32);
         pathingMap.fill();
@@ -33,6 +31,21 @@ void addRandomRocks(Map *mapToAddRocksTo, int numRocksToAdd)
 
         double randXPos = rand() % mapToAddRocksTo->width() - 100;
         double randYPos = rand() % mapToAddRocksTo->height() - 100;
+        rock->setPointPos(QPointF(randXPos,randYPos));
+    }
+}
+
+void addRandomBushes(Map *mapToAddBushesTo, int numBushesToAdd)
+{
+    for (int i = 0, n = numBushesToAdd; i < n; i++){
+        PathingMap pathingMap(1,1,32);
+        pathingMap.fill();
+
+        RandomImageEntity* rock = new RandomImageEntity(":/resources/graphics/bush","bush",4,pathingMap);
+        mapToAddBushesTo->addEntity(rock);
+
+        double randXPos = rand() % mapToAddBushesTo->width() - 100;
+        double randYPos = rand() % mapToAddBushesTo->height() - 100;
         rock->setPointPos(QPointF(randXPos,randYPos));
     }
 }

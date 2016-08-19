@@ -63,5 +63,8 @@
         <file>graphics/tree/tree0.png</file>
         <file>graphics/tree/tree1.png</file>
         <file>graphics/tree/tree2.png</file>
+        <file>graphics/terrain/flowers.png</file>
+        <file>graphics/terrain/flowersopacity.png</file>
+        <file>graphics/effects/fog.png</file>
     </qresource>
 </RCC>

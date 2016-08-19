@@ -25,6 +25,7 @@
 #include "Bar.h"
 #include "RandomImageEntity.h"
 #include "Utilities.h"
+#include "FogWeather.h"
 
 #include <QMediaPlayer>
 
@@ -43,7 +44,7 @@ int main(int argc, char *argv[])
     // create a Map and a Game
     MapGrid* mapGrid = new MapGrid(3,3);
 
-    PathingMap map1PathingMap(20,20,64);
+    PathingMap map1PathingMap(40,40,32);
     PathingMap map2PathingMap(50,50,64);
 
     Map* map1 = new Map(map1PathingMap);
@@ -51,25 +52,23 @@ int main(int argc, char *argv[])
 
     RainWeather* rain1 = new RainWeather();
     SnowWeather* snow1 = new SnowWeather();
+    FogWeather* fog1 = new FogWeather();
 
     int TILE_SIZE = 256;
     TerrainLayer* dryTerrain = new TerrainLayer(TILE_SIZE,TILE_SIZE,
                            map2->width()/TILE_SIZE+1,map2->height()/TILE_SIZE+1,
                                                 QPixmap(":resources/graphics/terrain/grassstonedry.png"));
 
-    QImage img(128,128,QImage::Format_RGB32);
-    img.fill(Qt::red);
-    QPixmap pm = QPixmap::fromImage(img);
-    TerrainLayer* grassLayer = new TerrainLayer(180,180,2,2,
-                                                QPixmap(":resources/graphics/terrain/grass.png"));
-    grassLayer->setPos(QPointF(300,300));
+    QPixmap pm = QPixmap(":resources/graphics/terrain/flowersopacity.png");
+    TerrainLayer* grassLayer = new TerrainLayer(512,512,3,3,pm);
+    grassLayer->setPos(QPointF(0,0));
     grassLayer->fill();
 
     dryTerrain->fill();
     map2->addTerrainLayer(dryTerrain);
     map1->addTerrainLayer(grassLayer);
 
-    //map1->setWeatherEffect(rain1);
+    map1->setWeatherEffect(snow1);
     //map2->setWeatherEffect(snow1);
 
     mapGrid->insertMap(map1,0,1);
@@ -181,8 +180,9 @@ int main(int argc, char *argv[])
     map1->addEntity(pb);
 
     // add some trees/rocks
-    addRandomRocks(map1,3);
-    addRandomTrees(map1,10);
+    addRandomRocks(map1,5);
+    addRandomBushes(map1,20);
+    addRandomTrees(map1,15);
 
     return a.exec();
 }

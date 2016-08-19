@@ -10,5 +10,6 @@ class Map;
 
 void addRandomTrees(Map* mapToAddTreesTo, int numTreesToAdd);
 void addRandomRocks(Map* mapToAddRocksTo, int numRocksToAdd);
+void addRandomBushes(Map* mapToAddBushesTo, int numBushesToAdd);
 
 #endif // UTILITIES_H

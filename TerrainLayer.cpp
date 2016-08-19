@@ -378,7 +378,7 @@ void TerrainLayer::draw_()
     pixmap_ = pixmap_.scaled(tileWidth_,tileHeight_);
 
     // set alpha
-    setAlphaChannel(pixmap_,254);
+    // setAlphaChannel(pixmap_,254); TODO: why was this here? why is it disabled now?
 
     // for each filled cell
     // - give the pixmapItem the correct pixmap

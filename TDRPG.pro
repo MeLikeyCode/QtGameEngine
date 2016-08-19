@@ -74,7 +74,8 @@ SOURCES += main.cpp \
     Bar.cpp \
     TerrainLayer.cpp \
     RandomImageEntity.cpp \
-    Utilities.cpp
+    Utilities.cpp \
+    FogWeather.cpp
 
 HEADERS  += \
     Map.h \
@@ -138,7 +139,8 @@ HEADERS  += \
     Bar.h \
     TerrainLayer.h \
     RandomImageEntity.h \
-    Utilities.h
+    Utilities.h \
+    FogWeather.h
 
 RESOURCES += \
     res.qrc

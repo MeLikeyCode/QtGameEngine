@@ -27,7 +27,7 @@ Map::Map(PathingMap pathingMap):
                                                     256,
                                                     width()/256+1,
                                                     height()/256+1,
-                                                    QPixmap(":resources/graphics/terrain/grassstone.png"));
+                                                    QPixmap(":resources/graphics/terrain/grass.png"));
     defaultTerrain->fill();
     addTerrainLayer(defaultTerrain);
 
