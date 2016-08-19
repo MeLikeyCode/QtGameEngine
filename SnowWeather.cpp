@@ -155,8 +155,7 @@ void SnowWeather::snowStepLinear_()
         QPointF camPos = mapsGame->cam().topLeft();
         snow1_->setPos(camPos);
         snow2_->setPos(camPos);
-        snow1_->setY(snow1_->y() - snow1_->boundingRect().height());
-        snow2_->setY(snow2_->y() - 2 * snow2_->boundingRect().height());
+        snow2_->setY(snow2_->y() - snow2_->boundingRect().height());
         initialLinear_ = false;
     }
 
