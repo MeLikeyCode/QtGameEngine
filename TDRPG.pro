@@ -76,7 +76,11 @@ SOURCES += main.cpp \
     TerrainLayer.cpp \
     RandomImageEntity.cpp \
     Utilities.cpp \
-    FogWeather.cpp
+    FogWeather.cpp \
+    Quest.cpp \
+    Quests.cpp \
+    QuestViewer.cpp \
+    Label.cpp
 
 HEADERS  += \
     Map.h \
@@ -141,7 +145,11 @@ HEADERS  += \
     TerrainLayer.h \
     RandomImageEntity.h \
     Utilities.h \
-    FogWeather.h
+    FogWeather.h \
+    Quest.h \
+    Quests.h \
+    QuestViewer.h \
+    Label.h
 
 RESOURCES += \
     res.qrc

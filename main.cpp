@@ -26,6 +26,7 @@
 #include "RandomImageEntity.h"
 #include "Utilities.h"
 #include "FogWeather.h"
+#include <Label.h>
 
 #include <QMediaPlayer>
 
@@ -134,11 +135,11 @@ int main(int argc, char *argv[])
     Sound* sound = new Sound("qrc:/resources/sounds/music.mp3");
     sound->play(10);
 
-    // test inventoryviewoer
-    InventoryViewer* v = new InventoryViewer(game,player->inventory());
-    v->setNumCellsHorizontally(3);
-    v->setNumCellsVertically(6);
-    game->addGui(v);
+//    // test inventoryviewoer
+//    InventoryViewer* v = new InventoryViewer(game,player->inventory());
+//    v->setNumCellsHorizontally(3);
+//    v->setNumCellsVertically(6);
+//    game->addGui(v);
 
 //    // test panel
 //    Panel* p = new Panel();
@@ -183,6 +184,10 @@ int main(int argc, char *argv[])
     addRandomRocks(map1,5);
     addRandomBushes(map1,20);
     addRandomTrees(map1,15);
+
+    Label* label = new Label();
+    label->setViewPos(QPointF(200,200));
+    game->addGui(label);
 
     return a.exec();
 }

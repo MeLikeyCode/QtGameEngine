@@ -16,10 +16,10 @@ class WeatherEffect;
 /// Represents a map which can contain a bunch of interacting Entities.
 ///
 /// The only thing that can be added to a map is an Entity (or one of its
-/// derivitives).
+/// sub classes).
 ///
 /// A Map has a PathingMap which keeps track of which cells are free and
-/// which are blocked. Each Entity can also contain its own PathingMap,
+/// which are blocked. Each Entity can also contain its own PathingMap
 /// therefore the Map is notified every time an Entity is added/moved
 /// so that the Map's PathingMap can be updated accordingly.
 class Map{
