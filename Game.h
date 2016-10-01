@@ -50,6 +50,7 @@ public:
     void keyReleaseEvent(QKeyEvent* event);
 
     void addGui(Gui *gui);
+    void removeGui(Gui *gui);
 
     std::set<int> keysPressed();
     QPoint getMousePos();

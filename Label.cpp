@@ -1,11 +1,13 @@
 #include "Label.h"
 #include <QFont>
+#include <QDebug>
 
 Label::Label():
+    disposableTextItem_(nullptr),
     Gui(this),
-    font_("Times"),
+    font_("Tahoma"),
     fontSize_(12),
-    width_(100),
+    width_(400),
     text_("some COOL text")
 {
     draw_();
@@ -58,14 +60,17 @@ void Label::mousePressEvent(QGraphicsSceneMouseEvent *event)
 /// Draws the Label in its current state (current font, width, etc...).
 void Label::draw_()
 {
+    // delete old disposable text item
+    if (disposableTextItem_)
+        delete disposableTextItem_;
+
+    disposableTextItem_ = new QGraphicsTextItem(QString::fromStdString(text_),this);
+
     // set the font (font, size, color)
-    QFont font(font_.c_str(),12);
-    setFont(font);
-    setDefaultTextColor(fontColor_);
+    QFont font(font_.c_str(),fontSize_);
+    disposableTextItem_->setFont(font);
+    disposableTextItem_->setDefaultTextColor(fontColor_);
 
     // set the width
-    setTextWidth(width_);
-
-    // set the text
-    setPlainText("OVER LOAD");
+    disposableTextItem_->setTextWidth(width_);
 }

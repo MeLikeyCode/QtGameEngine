@@ -1,15 +1,36 @@
 #ifndef QUESTVIEWER_H
 #define QUESTVIEWER_H
 
+#include <QObject>
 #include "Gui.h"
 
-/// Gui that can visualize Quests.
+class Quests;
+class Panel;
+class Button;
+
+/// Gui that can visualize a bunch of quests (Quests class).
+/// Click on a quest to view its description. Click close to close the Questviewer.
 /// @author Abdullah Aghazadah
 /// @date 9/5/16
-class QuestViewer
+class QuestViewer: public QObject, Gui
 {
 public:
-    QuestViewer();
+    QuestViewer(Quests* quests=nullptr);
+
+    void setQuests(Quests* quests);
+
+public slots:
+    void questsUpdated_();
+
+private:
+    Quests* quests_;
+
+    double totalWidth_;
+    double innerWidth_;
+    double topHeight_;
+    double bottomHeight_;
+
+    Panel* outterPanel_;
 };
 
 #endif // QUESTVIEWER_H

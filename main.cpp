@@ -148,7 +148,7 @@ int main(int argc, char *argv[])
 
 //    // test button
 //    Button* b = new Button();
-//    b->setViewPos(QPointF(500,500));
+//    b->setPos(QPointF(500,500));
 //    game->addGui(b);
 
 //    // test bar
@@ -185,9 +185,26 @@ int main(int argc, char *argv[])
     addRandomBushes(map1,20);
     addRandomTrees(map1,15);
 
+    // test panel
+    Panel* p = new Panel();
+    p->setGuiPos(QPointF(300,300));
+    game->addGui(p);
+
+    // test button
+    Button* b = new Button();
+    b->setGuiPos(QPointF(100,0));
+    b->setParentGui(p);
+
+    game->removeGui(p);
+
+
     Label* label = new Label();
-    label->setViewPos(QPointF(200,200));
+    label->setGuiPos(QPointF(200,200));
     game->addGui(label);
+    label->setFontSize(20);
+    label->setFontColor(Qt::red);
+    label->setWidth(100);
+    label->setText("Some more cool text");
 
     return a.exec();
 }

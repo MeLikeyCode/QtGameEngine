@@ -315,11 +315,19 @@ void Game::keyReleaseEvent(QKeyEvent *event)
     }
 }
 
+/// Adds the specified Gui to the game.
 void Game::addGui(Gui *gui)
 {
     guis_.insert(gui);
     scene()->addItem(gui->graphicsItem_);
     gui->graphicsItem_->setZValue(Map::Z_VALUES::GUI_Z_VALUE); // put Guis on top
+}
+
+/// Removes the specified Gui from the game.
+void Game::removeGui(Gui *gui)
+{
+    scene()->removeItem(gui->graphicsItem_);
+    guis_.erase(gui);
 }
 
 /// Converts the specified point from Game coordinates to Map coordinates (
@@ -389,7 +397,7 @@ void Game::askEnemiesToMove()
 void Game::updateGuiPositions()
 {
     for (Gui* gui:guis_){
-        QPointF newPos = mapToScene(gui->viewPos().toPoint());
+        QPointF newPos = mapToScene(gui->guiPos().toPoint());
         gui->graphicsItem_->setPos(newPos);
     }
 }
