@@ -58,7 +58,7 @@ void Label::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 
 void Label::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    emit clicked();
+    emit clicked(this);
 }
 
 /// Draws the Label in its current state (current font, width, etc...).

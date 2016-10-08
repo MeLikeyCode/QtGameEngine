@@ -20,6 +20,9 @@ public:
     void setPixmap(const QPixmap& pixmap);
     void setWidth(double width);
     void setHeight(double height);
+
+    int height();
+    int width();
 private:
     QGraphicsPixmapItem* pixmapItem_;
     QPixmap pixmap_;

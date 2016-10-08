@@ -28,6 +28,8 @@
 #include "FogWeather.h"
 #include <Label.h>
 #include <QuestViewer.h>
+#include <Quests.h>
+#include <Quest.h>
 
 #include <QMediaPlayer>
 
@@ -75,7 +77,7 @@ int main(int argc, char *argv[])
     map2->addTerrainLayer(dryTerrain);
     map1->addTerrainLayer(grassLayer);
 
-    map1->setWeatherEffect(fog1);
+    //map1->setWeatherEffect(fog1);
     //map2->setWeatherEffect(snow1);
 
     // put Maps in MapGrid
@@ -173,7 +175,13 @@ int main(int argc, char *argv[])
     addRandomTrees(map1,15);
 
     // test QuestViewer
-    QuestViewer* questViewer = new QuestViewer();
+    Quests* quests = new Quests();
+    Quest* q1 = new Quest("kill bears","please kill 10 bears");
+    Quest* q2 = new Quest("kill flies","please find 5 flies");
+    quests->addQuest(q1);
+    quests->addQuest(q2);
+
+    QuestViewer* questViewer = new QuestViewer(quests);
     game->addGui(questViewer);
 
     return a.exec();

@@ -34,7 +34,7 @@ signals:
     void hovered();
 
     /// Emitted when the Label is clicked.
-    void clicked();
+    void clicked(Label* label);
 
     /// Emitted when the mouse stops hovering over the Label (i.e. it "leaves" it).
     void unhovered();

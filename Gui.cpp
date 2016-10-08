@@ -17,6 +17,7 @@ void Gui::setGuiPos(const QPointF &pos)
 }
 
 /// Sets the Parent of this Gui to the specified Gui.
+/// If nullptr is passed in, removes current parent.
 void Gui::setParentGui(Gui *gui)
 {
     // approach:

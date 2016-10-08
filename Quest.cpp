@@ -31,3 +31,8 @@ std::string Quest::name()
 {
     return name_;
 }
+
+std::string Quest::description()
+{
+    return description_;
+}

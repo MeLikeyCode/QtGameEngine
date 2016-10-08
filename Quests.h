@@ -2,7 +2,7 @@
 #define QUESTS_H
 
 #include <QObject>
-#include <unordered_set>
+#include <vector>
 #include "Quest.h"
 
 /// Represents a collection of Quests. Will emit events whenever a quest
@@ -15,6 +15,9 @@ public:
 
     void addQuest(Quest* quest);
     void removeQuest(Quest* quest);
+    int numOfQuests();
+
+    Quest* quest(int i);
 
 signals:
     void questAdded(Quest* newQuest);
@@ -25,7 +28,7 @@ public slots:
     void emitQuestStatusChanged_(Quest *quest, QuestStatus newStatus);
 
 private:
-    std::unordered_set<Quest*> quests_;
+    std::vector<Quest*> quests_;
 };
 
 #endif // QUESTS_H

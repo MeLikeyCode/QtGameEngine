@@ -51,6 +51,16 @@ void Panel::setHeight(double height)
     draw_();
 }
 
+int Panel::height()
+{
+    return height_;
+}
+
+int Panel::width()
+{
+    return width_;
+}
+
 /// Draws the Panel in its current state (color, size, etc...).
 void Panel::draw_()
 {

@@ -23,9 +23,10 @@ public:
           QuestStatus initialStatus = QuestStatus::IN_PROGRESS);
 
     void setStatus(QuestStatus newStatus);
-    QuestStatus status();
 
+    QuestStatus status();
     std::string name();
+    std::string description();
 
 signals:
     /// Emitted whenver the status of the Quest *changes*.

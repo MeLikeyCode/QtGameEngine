@@ -1,5 +1,6 @@
 #include "Quests.h"
 #include <cassert>
+#include "algorithm"
 
 Quests::Quests()
 {
@@ -13,7 +14,7 @@ void Quests::addQuest(Quest *quest)
     assert(quest != nullptr);
 
     // add the quest
-    quests_.insert(quest);
+    quests_.push_back(quest);
 
     // listen to when the status of the added quest changes
     connect(quest,&Quest::questStatusChanged,this,&Quests::emitQuestStatusChanged_);
@@ -27,8 +28,23 @@ void Quests::removeQuest(Quest *quest)
 {
     assert(quest != nullptr);
 
-    quests_.erase(quest);
-    emit questRemoved(quest);
+    std::vector<Quest*>::iterator position = std::find(quests_.begin(), quests_.end(), quest);
+    if (position != quests_.end()){
+        quests_.erase(position);
+        emit questRemoved(quest);
+    }
+}
+
+/// Returns the number of Quest objects in this Quests.
+int Quests::numOfQuests()
+{
+    return quests_.size();
+}
+
+/// Returns the ith quest.
+Quest *Quests::quest(int i)
+{
+    return quests_[i];
 }
 
 /// Emits that a Quest's status has been changed.
