@@ -14,6 +14,8 @@ class Panel : public Gui
 public:
     Panel();
 
+    QGraphicsItem* getGraphicsItem();
+
     void setColor(const QColor& color);
     void setPixmap(const QPixmap& pixmap);
     void setWidth(double width);

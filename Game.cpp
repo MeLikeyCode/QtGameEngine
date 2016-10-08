@@ -319,7 +319,7 @@ void Game::keyReleaseEvent(QKeyEvent *event)
 void Game::addGui(Gui *gui)
 {
     guis_.insert(gui);
-    scene()->addItem(gui->graphicsItem_);
+    scene()->addItem(gui->getGraphicsItem());
     gui->graphicsItem_->setZValue(Map::Z_VALUES::GUI_Z_VALUE); // put Guis on top
 }
 

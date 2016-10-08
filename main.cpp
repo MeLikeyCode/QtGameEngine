@@ -27,6 +27,7 @@
 #include "Utilities.h"
 #include "FogWeather.h"
 #include <Label.h>
+#include <QuestViewer.h>
 
 #include <QMediaPlayer>
 
@@ -120,11 +121,11 @@ int main(int argc, char *argv[])
     leftHandRanged->setPosition(player->namedPoint("center"));
     player->addSlot(leftHandRanged);
 
-    // test inventoryviewoer
-    InventoryViewer* v = new InventoryViewer(game,player->inventory());
-    v->setNumCellsHorizontally(3);
-    v->setNumCellsVertically(6);
-    game->addGui(v);
+//    // test inventoryviewoer
+//    InventoryViewer* v = new InventoryViewer(game,player->inventory());
+//    v->setNumCellsHorizontally(3);
+//    v->setNumCellsVertically(6);
+//    game->addGui(v);
 
 //    // test panel
 //    Panel* p = new Panel();
@@ -170,6 +171,10 @@ int main(int argc, char *argv[])
     addRandomRocks(map1,5);
     addRandomBushes(map1,20);
     addRandomTrees(map1,15);
+
+    // test QuestViewer
+    QuestViewer* questViewer = new QuestViewer();
+    game->addGui(questViewer);
 
     return a.exec();
 }

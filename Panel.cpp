@@ -3,7 +3,6 @@
 #include <QBrush>
 
 Panel::Panel():
-    Gui(new QGraphicsPixmapItem()),
     pixmap_(),
     color_(Qt::gray),
     isPixmap_(false),
@@ -12,6 +11,11 @@ Panel::Panel():
 {
     pixmapItem_ = dynamic_cast<QGraphicsPixmapItem*>(graphicsItem_);
     draw_();
+}
+
+QGraphicsItem *Panel::getGraphicsItem()
+{
+    return pixmapItem_;
 }
 
 /// Sets the Color of the Panel. Remember you can put opacity information in the color.

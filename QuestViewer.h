@@ -12,7 +12,7 @@ class Button;
 /// Click on a quest to view its description. Click close to close the Questviewer.
 /// @author Abdullah Aghazadah
 /// @date 9/5/16
-class QuestViewer: public QObject, Gui
+class QuestViewer: public QObject, public Gui
 {
 public:
     QuestViewer(Quests* quests=nullptr);
@@ -20,7 +20,7 @@ public:
     void setQuests(Quests* quests);
 
 public slots:
-    void questsUpdated_();
+    void draw_();
 
 private:
     Quests* quests_;

@@ -1,11 +1,6 @@
 #include "Gui.h"
 #include <QGraphicsItem>
 
-Gui::Gui(QGraphicsItem *parent):
-    graphicsItem_(parent)
-{
-}
-
 /// Returns the position of the Gui relative to its parent (or relative to
 /// top left of screen if no parent).
 QPointF Gui::guiPos()
