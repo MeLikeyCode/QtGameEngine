@@ -129,17 +129,17 @@ int main(int argc, char *argv[])
 
 //    // test panel
 //    Panel* p = new Panel();
-//    p->setViewPos(QPointF(300,300));
+//    p->setGuiPos(QPointF(300,300));
 //    game->addGui(p);
 
 //    // test button
 //    Button* b = new Button();
-//    b->setPos(QPointF(500,500));
+//    b->setGuiPos(QPointF(500,500));
 //    game->addGui(b);
 
 //    // test bar
 //    Bar* bar = new Bar();
-//    bar->setViewPos(QPointF(500,200));
+//    bar->setGuiPos(QPointF(500,200));
 //    game->addGui(bar);
 
     // add bow to players inventory

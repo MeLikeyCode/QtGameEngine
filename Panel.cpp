@@ -9,7 +9,7 @@ Panel::Panel():
     width_(300),
     height_(300)
 {
-    pixmapItem_ = dynamic_cast<QGraphicsPixmapItem*>(graphicsItem_);
+    pixmapItem_ = new QGraphicsPixmapItem();
     draw_();
 }
 

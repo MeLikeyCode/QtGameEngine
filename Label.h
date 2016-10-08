@@ -12,11 +12,13 @@
 /// Oh and you can set the actual text, of course.
 /// The Label emits a signal when the mouse hovers over it, when it clicks it, and
 /// when it stops hovering over it.
-class Label : public QObject, public Gui, public QGraphicsTextItem
+class Label : public QGraphicsTextItem, public Gui
 {
     Q_OBJECT
 public:
     Label();
+
+    QGraphicsItem* getGraphicsItem();
 
     void setFontFamily(const std::string& fontFamily);
     void setFontSize(int fontSize);

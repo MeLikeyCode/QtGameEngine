@@ -19,6 +19,8 @@ public:
 
     void setQuests(Quests* quests);
 
+    QGraphicsItem* getGraphicsItem();
+
 public slots:
     void draw_();
 

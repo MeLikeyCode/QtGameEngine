@@ -4,10 +4,9 @@
 #include <QGraphicsRectItem>
 
 QuestViewer::QuestViewer(Quests *quests):
-    Gui(nullptr),
-    quests_(quests)
+    quests_(quests),
+    outterPanel_(new Panel())
 {
-    graphicsItem_ = outterPanel_->graphicsItem_
     draw_();
 }
 
@@ -24,6 +23,11 @@ void QuestViewer::setQuests(Quests *quests)
     connect(quests,&Quests::questStatusChanged,this,&QuestViewer::draw_);
 
     draw_();
+}
+
+QGraphicsItem *QuestViewer::getGraphicsItem()
+{
+    return outterPanel_->getGraphicsItem();
 }
 
 /// Executed whenever the QuestViewer's Quests changes (a quest added, removed,

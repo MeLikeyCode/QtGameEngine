@@ -2,7 +2,6 @@
 #include <QGraphicsPixmapItem>
 
 Bar::Bar():
-    Gui(new QGraphicsPixmapItem()),
     minValue_(0),
     maxValue_(100),
     currentValue_(40),
@@ -18,9 +17,14 @@ Bar::Bar():
     verticalPadding_(2),
     horizontalPadding_(2)
 {
-    backgroundPixmapItem_ = dynamic_cast<QGraphicsPixmapItem*>(graphicsItem_);
+    backgroundPixmapItem_ = new QGraphicsPixmapItem();
     foregroundPixmapItem_ = new QGraphicsPixmapItem(backgroundPixmapItem_);
     draw_();
+}
+
+QGraphicsItem *Bar::getGraphicsItem()
+{
+    return backgroundPixmapItem_;
 }
 
 void Bar::setMinValue(double minValue)

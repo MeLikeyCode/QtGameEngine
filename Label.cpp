@@ -4,13 +4,17 @@
 
 Label::Label():
     disposableTextItem_(nullptr),
-    Gui(this),
     font_("Tahoma"),
     fontSize_(12),
     width_(400),
     text_("some COOL text")
 {
     draw_();
+}
+
+QGraphicsItem *Label::getGraphicsItem()
+{
+    return this;
 }
 
 /// Set the font size of the Label.

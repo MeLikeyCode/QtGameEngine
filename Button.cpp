@@ -5,7 +5,6 @@
 #include <QFont>
 
 Button::Button():
-    Gui(this),
     borderPadding_(0),
     text_("default text"),
     textIsBold_(false),
@@ -18,6 +17,11 @@ Button::Button():
     textItem_(nullptr)
 {
     draw_();
+}
+
+QGraphicsItem *Button::getGraphicsItem()
+{
+    return this;
 }
 
 /// Sets the amount of padding between the text and the outter rectangle.

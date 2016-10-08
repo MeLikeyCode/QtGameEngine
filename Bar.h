@@ -14,6 +14,8 @@ class Bar : public QObject, public Gui
 public:
     Bar();
 
+    QGraphicsItem* getGraphicsItem();
+
     void setMinValue(double minValue);
     double minValue();
     void setMaxValue(double maxValue);

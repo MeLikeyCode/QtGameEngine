@@ -13,7 +13,7 @@ QPointF Gui::guiPos()
 void Gui::setGuiPos(const QPointF &pos)
 {
     pos_ = pos;
-    graphicsItem_->setPos(pos);
+    getGraphicsItem()->setPos(pos);
 }
 
 /// Sets the Parent of this Gui to the specified Gui.
@@ -23,6 +23,6 @@ void Gui::setParentGui(Gui *gui)
     // - set parent of internal graphics item and positioning/scene removal
     // is handled automatically
 
-    graphicsItem_->setParentItem(gui->graphicsItem_);
+    getGraphicsItem()->setParentItem(gui->getGraphicsItem());
     gui->children_.insert(this);
 }

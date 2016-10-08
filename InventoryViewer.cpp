@@ -15,7 +15,6 @@
 /// Creates a new InventoryViewer of the specified size and visualizing the
 /// specified Inventory.
 InventoryViewer::InventoryViewer(Game* game, Inventory *inventory):
-    Gui(new QGraphicsPixmapItem()),
     border_(15),
     paddingBWCells_(5),
     backgroundColor_(Qt::blue),
@@ -28,10 +27,15 @@ InventoryViewer::InventoryViewer(Game* game, Inventory *inventory):
     inventory_(inventory),
     game_(game)
 {
-    pixmapItem_ = dynamic_cast<QGraphicsPixmapItem*>(graphicsItem_);
+    pixmapItem_ = new QGraphicsPixmapItem();
 
     // visualize
     setInventory(inventory);
+}
+
+QGraphicsItem *InventoryViewer::getGraphicsItem()
+{
+    return pixmapItem_;
 }
 
 /// Sets the Inventory to be viewed by the InventoryViewer.
@@ -45,9 +49,9 @@ void InventoryViewer::setInventory(Inventory *inventory)
         disconnect(inventory_,&Inventory::itemAdded,this,&InventoryViewer::onItemAddedOrRemovedFromInventory);
         disconnect(inventory_,&Inventory::itemRemoved,this,&InventoryViewer::onItemAddedOrRemovedFromInventory);
         for (InventoryCell* cell:cells_){
-            QGraphicsScene* inScene = graphicsItem_->scene();
+            QGraphicsScene* inScene = pixmapItem_->scene();
             if (inScene != nullptr){
-                graphicsItem_->scene()->removeItem(cell);
+                pixmapItem_->scene()->removeItem(cell);
             }
         }
     }
@@ -154,9 +158,9 @@ void InventoryViewer::draw_()
 
     // clear all items
     for (InventoryCell* cell:cells_){
-        QGraphicsScene* inScene = graphicsItem_->scene();
+        QGraphicsScene* inScene = pixmapItem_->scene();
         if (inScene != nullptr){
-            graphicsItem_->scene()->removeItem(cell);
+            pixmapItem_->scene()->removeItem(cell);
         }
     }
 

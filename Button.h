@@ -18,6 +18,8 @@ class Button : public QObject, public Gui, public QGraphicsPixmapItem
 public:
     Button();
 
+    QGraphicsItem* getGraphicsItem();
+
     void setBorderPadding(double amount);
     void setFontSize(int size);
     void setText(const std::string& text);

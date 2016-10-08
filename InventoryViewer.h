@@ -17,11 +17,10 @@ class Game;
 class InventoryViewer : public QObject, public Gui
 {
     Q_OBJECT
-    // Game needs to access rectItem_ (rectItem_ needs to be added to Game's scene when
-    // the InventoryViewer is added to the Game)
-    friend class Game;
 public:
     InventoryViewer(Game* game, Inventory* inventory=nullptr);
+
+    QGraphicsItem* getGraphicsItem();
 
     void setInventory(Inventory* inventory);
 
