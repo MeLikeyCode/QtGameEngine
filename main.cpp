@@ -35,14 +35,15 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     // register types that needed to be used in cross thread signal-slot stuff
-     qRegisterMetaType<PathingMap>();
-     qRegisterMetaType<std::vector<QPointF>>();
+    qRegisterMetaType<PathingMap>();
+    qRegisterMetaType<std::vector<QPointF>>();
 
-     Sound* s = new Sound("qrc:/resources/sounds/music2.mp3");
-     s->setVolume(20);
-     //s->play(-1);
+    // play sound
+    Sound* s = new Sound("qrc:/resources/sounds/music2.mp3");
+    s->setVolume(20);
+    s->play(-1); // play an infinite number of times
 
-    // create a Map and a Game
+    // create MapGrid/Maps
     MapGrid* mapGrid = new MapGrid(3,3);
 
     PathingMap map1PathingMap(40,40,32);
@@ -51,30 +52,36 @@ int main(int argc, char *argv[])
     Map* map1 = new Map(map1PathingMap);
     Map* map2 = new Map(map2PathingMap);
 
+    // create some weathers
     RainWeather* rain1 = new RainWeather();
     SnowWeather* snow1 = new SnowWeather();
     FogWeather* fog1 = new FogWeather();
 
+    // create some Terrains (tiles)
     int TILE_SIZE = 256;
-    TerrainLayer* dryTerrain = new TerrainLayer(TILE_SIZE,TILE_SIZE,
-                           map2->width()/TILE_SIZE+1,map2->height()/TILE_SIZE+1,
+    TerrainLayer* dryTerrain = new TerrainLayer(256,256,
+                                                map2->width()/256+1,
+                                                map2->height()/256+1,
                                                 QPixmap(":resources/graphics/terrain/grassstonedry.png"));
+    dryTerrain->fill();
 
     QPixmap pm = QPixmap(":resources/graphics/terrain/flowersopacity.png");
     TerrainLayer* grassLayer = new TerrainLayer(512,512,3,3,pm);
     grassLayer->setPos(QPointF(0,0));
     grassLayer->fill();
 
-    dryTerrain->fill();
+    // set Terrain/Weather of Maps
     map2->addTerrainLayer(dryTerrain);
     map1->addTerrainLayer(grassLayer);
 
     map1->setWeatherEffect(fog1);
     //map2->setWeatherEffect(snow1);
 
+    // put Maps in MapGrid
     mapGrid->insertMap(map1,0,1);
     mapGrid->insertMap(map2,0,0);
 
+    // create a Game
     Game* game = new Game(mapGrid,0,1);
     game->launch();
 
@@ -102,44 +109,22 @@ int main(int argc, char *argv[])
     player->addNamedPoint(QPointF(24,58),"right shoulder");
     player->addNamedPoint(QPointF(50,30),"center");
 
-    // add some equipment slots for the player
+    // add some equipment slots for the player dynamic entity
     MeleeWeaponSlot* leftHand = new MeleeWeaponSlot();
     leftHand->setName("leftHand");
     leftHand->setPosition(player->namedPoint("left shoulder"));
     player->addSlot(leftHand);
-//    MeleeWeaponSlot* rightHand = new MeleeWeaponSlot();
-//    rightHand->setName("rightHand");
-//    rightHand->setPosition(player->namedPoint("right shoulder"));
-//    player->addSlot(rightHand);
+
     RangedWeaponSlot* leftHandRanged = new RangedWeaponSlot();
     leftHandRanged->setName("leftHandRanged");
     leftHandRanged->setPosition(player->namedPoint("center"));
     player->addSlot(leftHandRanged);
 
-//    // create some weapons (MeleeWeapons)
-//    Axe* axe = new Axe();
-//    player->addItemToInventory(axe);
-
-//    Spear* spear = new Spear();
-//    player->addItemToInventory(spear);
-
-//    Bow* bow = new Bow();
-//    player->addItemToInventory(bow);
-
-    // equip weapons to slots
-    // player->equipItem(axe,leftHand);
-    //player->equipItem(spear,rightHand);
-    // player->equipItem(bow,leftHandRanged);
-
-    // play a sound
-    Sound* sound = new Sound("qrc:/resources/sounds/music.mp3");
-    sound->play(10);
-
-//    // test inventoryviewoer
-//    InventoryViewer* v = new InventoryViewer(game,player->inventory());
-//    v->setNumCellsHorizontally(3);
-//    v->setNumCellsVertically(6);
-//    game->addGui(v);
+    // test inventoryviewoer
+    InventoryViewer* v = new InventoryViewer(game,player->inventory());
+    v->setNumCellsHorizontally(3);
+    v->setNumCellsVertically(6);
+    game->addGui(v);
 
 //    // test panel
 //    Panel* p = new Panel();
@@ -156,6 +141,7 @@ int main(int argc, char *argv[])
 //    bar->setViewPos(QPointF(500,200));
 //    game->addGui(bar);
 
+    // add bow to players inventory
     Bow* bow = new Bow();
     player->inventory()->addItem(bow);
 
@@ -184,27 +170,6 @@ int main(int argc, char *argv[])
     addRandomRocks(map1,5);
     addRandomBushes(map1,20);
     addRandomTrees(map1,15);
-
-    // test panel
-    Panel* p = new Panel();
-    p->setGuiPos(QPointF(300,300));
-    game->addGui(p);
-
-    // test button
-    Button* b = new Button();
-    b->setGuiPos(QPointF(100,0));
-    b->setParentGui(p);
-
-    game->removeGui(p);
-
-
-    Label* label = new Label();
-    label->setGuiPos(QPointF(200,200));
-    game->addGui(label);
-    label->setFontSize(20);
-    label->setFontColor(Qt::red);
-    label->setWidth(100);
-    label->setText("Some more cool text");
 
     return a.exec();
 }

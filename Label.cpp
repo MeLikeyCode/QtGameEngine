@@ -27,7 +27,7 @@ void Label::setFontColor(const QColor &fontColor)
     draw_();
 }
 
-/// Sets the width of the Label. Text that passes the width of the Label will
+/// Sets the width of the Label. Text that surpasses the width of the Label will
 /// go down one line.
 void Label::setWidth(double width)
 {

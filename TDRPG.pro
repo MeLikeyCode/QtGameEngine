@@ -6,6 +6,9 @@
 
 QT       += core gui multimedia
 
+INCLUDEPATH += "C:/Program Files (x86)/Windows Kits/10/Include/10.0.10240.0/ucrt"
+LIBS += -L"C:/Program Files (x86)/Windows Kits/10/Lib/10.0.10240.0/ucrt/x64"
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = TDRPG
