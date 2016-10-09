@@ -44,7 +44,6 @@ private:
     QColor fontColor_;
     double width_;
     std::string text_;
-    QGraphicsTextItem* disposableTextItem_;
 
     void draw_();
 };

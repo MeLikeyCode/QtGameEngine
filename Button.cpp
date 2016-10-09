@@ -78,6 +78,7 @@ void Button::setBackgroundPixmap(const QPixmap &pixmap)
 /// Executed when the user clicks on the Button. Will emit clicked() signal.
 void Button::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    setTextColor(Qt::blue);
     emit clicked();
 }
 

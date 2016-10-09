@@ -3,11 +3,11 @@
 #include <QDebug>
 
 Label::Label():
-    disposableTextItem_(nullptr),
     font_("Tahoma"),
     fontSize_(12),
     width_(400),
-    text_("some COOL text")
+    text_("some COOL text"),
+    fontColor_(Qt::blue)
 {
     draw_();
 }
@@ -64,17 +64,14 @@ void Label::mousePressEvent(QGraphicsSceneMouseEvent *event)
 /// Draws the Label in its current state (current font, width, etc...).
 void Label::draw_()
 {
-    // delete old disposable text item
-    if (disposableTextItem_)
-        delete disposableTextItem_;
-
-    disposableTextItem_ = new QGraphicsTextItem(QString::fromStdString(text_),this);
+    // set text
+    setPlainText(QString::fromStdString(text_));
 
     // set the font (font, size, color)
     QFont font(font_.c_str(),fontSize_);
-    disposableTextItem_->setFont(font);
-    disposableTextItem_->setDefaultTextColor(fontColor_);
+    setFont(font);
+    setDefaultTextColor(fontColor_);
 
     // set the width
-    disposableTextItem_->setTextWidth(width_);
+    setTextWidth(width_);
 }
