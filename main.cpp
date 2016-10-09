@@ -174,15 +174,15 @@ int main(int argc, char *argv[])
     addRandomBushes(map1,20);
     addRandomTrees(map1,15);
 
-//    // test QuestViewer
-//    Quests* quests = new Quests();
-//    Quest* q1 = new Quest("kill bears","please kill 10 bears");
-//    Quest* q2 = new Quest("kill flies","please find 5 flies");
-//    quests->addQuest(q1);
-//    quests->addQuest(q2);
+    // test QuestViewer
+    Quests* quests = new Quests();
+    Quest* q1 = new Quest("kill bears","please kill 10 bears");
+    Quest* q2 = new Quest("kill flies","please find 5 flies");
+    quests->addQuest(q1);
+    quests->addQuest(q2);
 
-//    QuestViewer* questViewer = new QuestViewer(quests);
-//    game->addGui(questViewer);
+    QuestViewer* questViewer = new QuestViewer(quests);
+    game->addGui(questViewer);
 
     return a.exec();
 }
