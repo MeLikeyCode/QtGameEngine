@@ -286,7 +286,7 @@ void Game::mousePressEvent(QMouseEvent *event){
 
 void Game::mouseMoveEvent(QMouseEvent *event)
 {
-
+    QGraphicsView::mouseMoveEvent(event);
 }
 
 void Game::keyPressEvent(QKeyEvent *event)

@@ -80,7 +80,8 @@ SOURCES += main.cpp \
     Quest.cpp \
     Quests.cpp \
     QuestViewer.cpp \
-    Label.cpp
+    Label.cpp \
+    ScrollWindow.cpp
 
 HEADERS  += \
     Map.h \
@@ -149,7 +150,8 @@ HEADERS  += \
     Quest.h \
     Quests.h \
     QuestViewer.h \
-    Label.h
+    Label.h \
+    ScrollWindow.h
 
 RESOURCES += \
     res.qrc

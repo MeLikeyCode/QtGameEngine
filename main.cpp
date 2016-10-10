@@ -30,6 +30,7 @@
 #include <QuestViewer.h>
 #include <Quests.h>
 #include <Quest.h>
+#include "ScrollWindow.h"
 
 #include <QMediaPlayer>
 
@@ -174,15 +175,29 @@ int main(int argc, char *argv[])
     addRandomBushes(map1,20);
     addRandomTrees(map1,15);
 
-    // test QuestViewer
-    Quests* quests = new Quests();
-    Quest* q1 = new Quest("kill bears","please kill 10 bears");
-    Quest* q2 = new Quest("kill flies","please find 5 flies");
-    quests->addQuest(q1);
-    quests->addQuest(q2);
+//    // test QuestViewer
+//    Quests* quests = new Quests();
+//    Quest* q1 = new Quest("kill bears","please kill 10 bears");
+//    Quest* q2 = new Quest("kill flies","please find 5 flies");
+//    quests->addQuest(q1);
+//    quests->addQuest(q2);
 
-    QuestViewer* questViewer = new QuestViewer(quests);
-    game->addGui(questViewer);
+//    QuestViewer* questViewer = new QuestViewer(quests);
+//    game->addGui(questViewer);
+
+    // test ScrollWindow
+    ScrollWindow* sw = new ScrollWindow();
+    for (int i = 0, n = 25; i < n; i++){
+        if (i % 2 == 0){
+            Button* b = new Button();
+            sw->add(b);
+        } else{
+            Label* l = new Label();
+            sw->add(l);
+        }
+    }
+
+    game->addGui(sw);
 
     return a.exec();
 }
