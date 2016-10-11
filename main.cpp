@@ -190,9 +190,11 @@ int main(int argc, char *argv[])
     for (int i = 0, n = 25; i < n; i++){
         if (i % 2 == 0){
             Button* b = new Button();
+            b->setText(std::to_string(i));
             sw->add(b);
         } else{
             Label* l = new Label();
+            l->setText(std::to_string(i));
             sw->add(l);
         }
     }

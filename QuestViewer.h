@@ -17,6 +17,7 @@ class Quest;
 /// @date 9/5/16
 class QuestViewer: public QObject, public Gui
 {
+    Q_OBJECT
 public:
     QuestViewer(Quests* quests=nullptr);
 

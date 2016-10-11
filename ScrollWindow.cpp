@@ -45,7 +45,6 @@ QGraphicsItem *ScrollWindow::getGraphicsItem()
 void ScrollWindow::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     scrollBarBeingDragged_ = true;
-    QGraphicsPixmapItem::mousePressEvent(event);
 }
 
 void ScrollWindow::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
