@@ -6,7 +6,7 @@
 #include <vector>
 
 /// Represents a Gui that can be used to visualized other Guis in a scroll like
-/// fashion. You can add Gui's to this Gui and then use the scroll bar to
+/// fashion. You can add Gui's to this Gui and then use the scroll bars to
 /// view the different Gui's as you scroll...I hope that makes sense :),
 /// if not, try it out :)
 /// @author Abdullah Aghazadah
@@ -20,6 +20,7 @@ public:
     void setHeight(double height);
     void setWidth(double width);
     double height();
+    double width();
 
     void add(Gui* gui);
 

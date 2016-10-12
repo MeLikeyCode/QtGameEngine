@@ -81,7 +81,9 @@ SOURCES += main.cpp \
     Quests.cpp \
     QuestViewer.cpp \
     Label.cpp \
-    ScrollWindow.cpp
+    ScrollWindow.cpp \
+    ScrollBar.cpp \
+    QtUtilities.cpp
 
 HEADERS  += \
     Map.h \
@@ -151,7 +153,9 @@ HEADERS  += \
     Quests.h \
     QuestViewer.h \
     Label.h \
-    ScrollWindow.h
+    ScrollWindow.h \
+    ScrollBar.h \
+    QtUtilities.h
 
 RESOURCES += \
     res.qrc

@@ -1,12 +1,12 @@
 #ifndef UTILITIES_H
 #define UTILITIES_H
 
-class Map;
-
-/// @file
-/// This file contains a bunch of utility functions
+/// This file contains a bunch of utility functions for the game engine.
 /// @author Abdullah Aghazadah
 /// @date 8-17-16
+/// @file
+
+class Map;
 
 void addRandomTrees(Map* mapToAddTreesTo, int numTreesToAdd);
 void addRandomRocks(Map* mapToAddRocksTo, int numRocksToAdd);

@@ -48,6 +48,12 @@ double ScrollWindow::height()
     return height_;
 }
 
+/// Returns the width of the ScrollWindow.
+double ScrollWindow::width()
+{
+    return width_;
+}
+
 QGraphicsItem *ScrollWindow::getGraphicsItem()
 {
     return this;
