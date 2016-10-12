@@ -175,31 +175,39 @@ int main(int argc, char *argv[])
     addRandomBushes(map1,20);
     addRandomTrees(map1,15);
 
-//    // test QuestViewer
-//    Quests* quests = new Quests();
-//    Quest* q1 = new Quest("kill bears","please kill 10 bears");
-//    Quest* q2 = new Quest("kill flies","please find 5 flies");
-//    quests->addQuest(q1);
-//    quests->addQuest(q2);
+    // test QuestViewer
+    Quests* quests = new Quests();
+    Quest* q1 = new Quest("kill bears","please kill 10 bears");
+    Quest* q2 = new Quest("kill flies","please find 5 flies");
+    Quest* q3 = new Quest("kill pencils","please find 5 pencils");
+    Quest* q4 = new Quest("kill papers","please find 5 papers");
+    Quest* q5 = new Quest("kill desks","please find 5 desks");
+    Quest* q6 = new Quest("kill mice","please find 5 mice");
+    quests->addQuest(q1);
+    quests->addQuest(q2);
+    quests->addQuest(q3);
+    quests->addQuest(q4);
+    quests->addQuest(q5);
+    quests->addQuest(q6);
 
-//    QuestViewer* questViewer = new QuestViewer(quests);
-//    game->addGui(questViewer);
+    QuestViewer* questViewer = new QuestViewer(quests);
+    questViewer->setGuiPos(QPointF(200,200));
+    game->addGui(questViewer);
 
-    // test ScrollWindow
-    ScrollWindow* sw = new ScrollWindow();
-    for (int i = 0, n = 25; i < n; i++){
-        if (i % 2 == 0){
-            Button* b = new Button();
-            b->setText(std::to_string(i));
-            sw->add(b);
-        } else{
-            Label* l = new Label();
-            l->setText(std::to_string(i));
-            sw->add(l);
-        }
-    }
-
-    game->addGui(sw);
+//    // test ScrollWindow
+//    ScrollWindow* sw = new ScrollWindow();
+//    for (int i = 0, n = 25; i < n; i++){
+//        if (i % 2 == 0){
+//            Button* b = new Button();
+//            b->setText(std::to_string(i));
+//            sw->add(b);
+//        } else{
+//            Label* l = new Label();
+//            l->setText(std::to_string(i));
+//            sw->add(l);
+//        }
+//    }
+//    game->addGui(sw);
 
     return a.exec();
 }

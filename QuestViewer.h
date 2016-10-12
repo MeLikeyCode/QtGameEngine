@@ -10,6 +10,7 @@ class Panel;
 class Button;
 class Label;
 class Quest;
+class ScrollWindow;
 
 /// Gui that can visualize a bunch of quests (Quests class).
 /// Click on a quest to view its description. Click close to close the Questviewer.
@@ -34,6 +35,7 @@ private:
 
     Panel* outterPanel_;
     std::vector<Label*> questLabels_;
+    ScrollWindow* scrollWindow_;
     Label* selectedQuestDescription_;
     Button* closeButton_;
 

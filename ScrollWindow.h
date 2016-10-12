@@ -15,9 +15,12 @@ class ScrollWindow : public QGraphicsPixmapItem, public Gui
 {
 public:
     ScrollWindow();
+    ScrollWindow(double width, double height);
 
     void setHeight(double height);
     void setWidth(double width);
+    double height();
+
     void add(Gui* gui);
 
     QGraphicsItem* getGraphicsItem();
@@ -35,7 +38,7 @@ private:
 
     QGraphicsPixmapItem* scrollBarFG_; // foreground of scrollbar (thing you drag)
 
-    void drawScrollBar_();
+    void draw_();
 };
 
 #endif // SCROLLWINDOW_H

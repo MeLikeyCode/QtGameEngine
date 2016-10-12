@@ -3,15 +3,20 @@
 #include <QImage>
 #include <QGraphicsSceneMouseEvent>
 
-ScrollWindow::ScrollWindow():
-    width_(500),
-    height_(400),
+ScrollWindow::ScrollWindow(): ScrollWindow(400,400)
+{
+
+}
+
+ScrollWindow::ScrollWindow(double width, double height):
+    width_(width),
+    height_(height),
     scrollBarFG_(new QGraphicsPixmapItem()),
     scrollBarPosition_(0),
     scrollBarBeingDragged_(false)
 {
     scrollBarFG_->setParentItem(this);
-    drawScrollBar_(); // draw the initial scrollbar
+    draw_(); // draw the initial scrollbar
 }
 
 /// Adds the specified gui to the ScrollWindow.
@@ -20,21 +25,27 @@ ScrollWindow::ScrollWindow():
 void ScrollWindow::add(Gui *gui)
 {
     guis_.push_back(gui);
-    drawScrollBar_(); // redraw the scroll bar
+    draw_(); // redraw the scroll bar
 }
 
 /// Sets the height of the window of the ScrollWindow.
 void ScrollWindow::setHeight(double height)
 {
     height_ = height;
-    drawScrollBar_();
+    draw_();
 }
 
 /// Sets the width of the window of the ScrollWindow.
 void ScrollWindow::setWidth(double width)
 {
     width_ = width;
-    drawScrollBar_();
+    draw_();
+}
+
+/// Returns the height of the ScrollWindow.
+double ScrollWindow::height()
+{
+    return height_;
 }
 
 QGraphicsItem *ScrollWindow::getGraphicsItem()
@@ -59,15 +70,16 @@ void ScrollWindow::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
         scrollBarPosition_ = event->pos().y() / height_;
         if (scrollBarPosition_ > 1)
             scrollBarPosition_ = 1;
-        drawScrollBar_();
+        draw_();
     }
 }
 
-/// Draws the scrollbar in its current state.
-void ScrollWindow::drawScrollBar_()
+/// Draws the ScrollWindow in its current state.
+void ScrollWindow::draw_()
 {
     // draw background scrol bar
-    QImage img(QSize(15,height_),QImage::Format_RGB32);
+    const double BAR_WIDTH = 15;
+    QImage img(QSize(BAR_WIDTH,height_),QImage::Format_RGB32);
     img.fill(Qt::blue);
     setPixmap(QPixmap::fromImage(img));
 
@@ -81,11 +93,19 @@ void ScrollWindow::drawScrollBar_()
         viewFraction = 1;
     double scrollBarHeight = viewFraction * height_;
 
-    QImage img2(QSize(15,scrollBarHeight),QImage::Format_RGB32);
+    QImage img2(QSize(BAR_WIDTH,scrollBarHeight),QImage::Format_RGB32);
     img2.fill(Qt::red);
     scrollBarFG_->setPixmap(QPixmap::fromImage(img2));
 
-    scrollBarFG_->setPos(0,scrollBarPosition_*height_);
+    // if position all the way on top
+    if (scrollBarPosition_ * height_  - scrollBarHeight / 2 <= 0)
+        scrollBarFG_->setPos(0,0);
+    // if position all the way on bot
+    else if (scrollBarPosition_ * height_ + scrollBarHeight / 2 >= height_)
+        scrollBarFG_->setPos(0,height_-scrollBarHeight);
+    // other wise, scroll bar is somewhere in the middle
+    else
+        scrollBarFG_->setPos(0,scrollBarPosition_*height_ - scrollBarHeight/2);
 
     // draw necessary guis
     // approach:

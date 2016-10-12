@@ -5,17 +5,19 @@
 #include "Label.h"
 #include "Button.h"
 #include "Quest.h"
+#include "ScrollWindow.h"
 
 QuestViewer::QuestViewer(Quests *quests):
     quests_(quests),
     outterPanel_(new Panel()),
     selectedQuestDescription_(new Label()),
-    closeButton_(new Button())
+    closeButton_(new Button()),
+    scrollWindow_(new ScrollWindow(100,100))
 {   
     // set parents
     selectedQuestDescription_->setParentGui(outterPanel_);
     closeButton_->setParentGui(outterPanel_);
-
+    scrollWindow_->setParentGui(outterPanel_);
     draw_();
 }
 
@@ -30,6 +32,8 @@ void QuestViewer::setQuests(Quests *quests)
     connect(quests,&Quests::questAdded,this,&QuestViewer::draw_);
     connect(quests,&Quests::questRemoved,this,&QuestViewer::draw_);
     connect(quests,&Quests::questStatusChanged,this,&QuestViewer::draw_);
+
+    quests_ = quests;
 
     draw_();
 }
@@ -62,20 +66,24 @@ void QuestViewer::draw_()
             questLabels_.push_back(label);
         }
 
-        // set height of outter panel based on number of quests
-        const int QUEST_HEIGHT = 15;
-        const int QUEST_DESCRIPTION_HEIGHT = 50;
-        outterPanel_->setHeight(QUEST_HEIGHT * quests_->numOfQuests() +
-                                QUEST_DESCRIPTION_HEIGHT);
+        // set height of outter panel based on height of scroll window
+        const double PAD_SPACE = 10;
+        const double DESCRIPTION_HEIGHT = 100;
+        outterPanel_->setHeight(scrollWindow_->height() + PAD_SPACE + DESCRIPTION_HEIGHT);
 
-        // place each quest label 15 down
+        // set width of outer panel
+        const double QUEST_VIEW_WIDTH = 400;
+        outterPanel_->setWidth(400);
+
+        // place each quest label in ScrollWindow
         for (int i = 0, n = questLabels_.size(); i < n; i++){
             Label* label = questLabels_[i];
-            label->setGuiPos(QPointF(10,i * QUEST_HEIGHT));
+            scrollWindow_->add(label);
         }
 
-        // place quest description label after all quests
-        selectedQuestDescription_->setGuiPos(QPointF(10,QUEST_HEIGHT * quests_->numOfQuests()));
+        // place quest description after scroll window
+        selectedQuestDescription_->setGuiPos(QPointF(0,scrollWindow_->height() + PAD_SPACE));
+        selectedQuestDescription_->setWidth(QUEST_VIEW_WIDTH);
     }
 
     // put close button on bottom of outter label
