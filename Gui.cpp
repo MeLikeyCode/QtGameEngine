@@ -16,6 +16,12 @@ void Gui::setGuiPos(const QPointF &pos)
     getGraphicsItem()->setPos(pos);
 }
 
+/// Sets the rotation of the Gui clockwise. 0 is not rotated.
+void Gui::setGuiRotation(double degrees)
+{
+    getGraphicsItem()->setRotation(degrees);
+}
+
 /// Sets the Parent of this Gui to the specified Gui.
 /// If nullptr is passed in, removes current parent.
 void Gui::setParentGui(Gui *gui)

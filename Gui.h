@@ -17,6 +17,8 @@ public:
     QPointF guiPos();
     void setGuiPos(const QPointF& guiPos);
 
+    void setGuiRotation(double degrees);
+
     void setParentGui(Gui* gui);
 
     /// Returns the root QGraphicsItem that has the drawings for the Gui.

@@ -212,9 +212,10 @@ int main(int argc, char *argv[])
 
     // test scroll bar
     ScrollBar* sb = new ScrollBar();
-    sb->setGuiPos(QPointF(100,100));
+    sb->setGuiPos(QPointF(400,400));
     sb->setFgBarLength(100);
     game->addGui(sb);
+    sb->setGuiRotation(90);
 
     return a.exec();
 }
