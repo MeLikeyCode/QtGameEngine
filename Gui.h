@@ -7,6 +7,7 @@
 class QGraphicsItem;
 class Game;
 class QGraphicsItem;
+class QRectF;
 
 /// Abstract class that Represents a GUI element in a Game. A Gui is placed
 /// relative to the to its parent Gui, if it does not have a prent Gui, its
@@ -16,7 +17,6 @@ class Gui
 public:
     QPointF guiPos();
     void setGuiPos(const QPointF& guiPos);
-
     void setGuiRotation(double degrees);
 
     void setParentGui(Gui* gui);
@@ -25,11 +25,17 @@ public:
     /// This is the QGraphicsItem that goes in the scene when Game::addGui() is called.
     virtual QGraphicsItem* getGraphicsItem() = 0;
 
+    /// Returns the bounding box for the Gui.
+    /// The bounding box encompasses all the art of the Gui.
+    virtual QRectF getGuiBoundingBox();
+
 protected:
     std::unordered_set<Gui*> children_;
     Gui* parent_;
 
     QPointF pos_;
+
+    std::vector<QRectF> getBoundingBoxesFor_(QGraphicsItem* gi, QGraphicsItem *mapTo);
 };
 
 #endif // GUI_H

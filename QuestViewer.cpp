@@ -78,7 +78,7 @@ void QuestViewer::draw_()
         // place each quest label in ScrollWindow
         for (int i = 0, n = questLabels_.size(); i < n; i++){
             Label* label = questLabels_[i];
-            scrollWindow_->add(label);
+            scrollWindow_->add(label,QPointF(0,i*40));
         }
 
         // place quest description after scroll window

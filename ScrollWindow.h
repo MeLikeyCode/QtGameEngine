@@ -1,9 +1,14 @@
+
 #ifndef SCROLLWINDOW_H
 #define SCROLLWINDOW_H
 
 #include "Gui.h"
-#include <QGraphicsPixmapItem>
 #include <vector>
+#include <QObject>
+#include <QPointF>
+#include <unordered_map>
+
+class ScrollBar;
 
 /// Represents a Gui that can be used to visualized other Guis in a scroll like
 /// fashion. You can add Gui's to this Gui and then use the scroll bars to
@@ -11,8 +16,9 @@
 /// if not, try it out :)
 /// @author Abdullah Aghazadah
 /// @date 10-9-16
-class ScrollWindow : public QGraphicsPixmapItem, public Gui
+class ScrollWindow : public QObject, public Gui
 {
+    Q_OBJECT
 public:
     ScrollWindow();
     ScrollWindow(double width, double height);
@@ -22,22 +28,21 @@ public:
     double height();
     double width();
 
-    void add(Gui* gui);
+    void add(Gui* gui, QPointF atPos);
 
     QGraphicsItem* getGraphicsItem();
 
-    void mousePressEvent(QGraphicsSceneMouseEvent *event);
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+public slots:
+    void verticalOrHorizontalScrollBarPositionChanged_(double pos);
 
 private:
     double width_;
     double height_;
-    std::vector<Gui*> guis_;
-    double scrollBarPosition_; // the position of the scrollbar from 0-1;
-    bool scrollBarBeingDragged_;
+    std::unordered_map<Gui*,QPointF> guiToPos_; // the guis added, and the position added to
+    std::unordered_map<Gui*,QPointF> guiInViewToShiftVector_; // the guis in viewport and their shift vectors
 
-    QGraphicsPixmapItem* scrollBarFG_; // foreground of scrollbar (thing you drag)
+    ScrollBar* verticalScrollBar_;
+    ScrollBar* horizontalScrollBar_;
 
     void draw_();
 };

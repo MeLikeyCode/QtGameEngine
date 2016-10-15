@@ -195,27 +195,28 @@ int main(int argc, char *argv[])
 //    questViewer->setGuiPos(QPointF(200,200));
 //    game->addGui(questViewer);
 
-//    // test ScrollWindow
-//    ScrollWindow* sw = new ScrollWindow();
-//    for (int i = 0, n = 25; i < n; i++){
-//        if (i % 2 == 0){
-//            Button* b = new Button();
-//            b->setText(std::to_string(i));
-//            sw->add(b);
-//        } else{
-//            Label* l = new Label();
-//            l->setText(std::to_string(i));
-//            sw->add(l);
-//        }
-//    }
-//    game->addGui(sw);
+//    // test scroll bar
+//    ScrollBar* sb = new ScrollBar();
+//    sb->setGuiPos(QPointF(400,400));
+//    sb->setFgBarLengthAsFractionOfBgBarLength(0.75);
+//    game->addGui(sb);
 
-    // test scroll bar
-    ScrollBar* sb = new ScrollBar();
-    sb->setGuiPos(QPointF(400,400));
-    sb->setFgBarLength(100);
-    game->addGui(sb);
-    sb->setGuiRotation(90);
+    // test new scroll window
+    ScrollWindow* sw = new ScrollWindow();
+    sw->setGuiPos(QPointF(200,200));
+
+    Button* b = new Button();
+    b->setText("(100,100)");
+    Button* b2 = new Button();
+    b2->setText("(200,200)");
+    Button* b3 = new Button();
+    b3->setText("(500,500)");
+
+    sw->add(b,QPointF(100,100));
+    sw->add(b2,QPointF(200,200));
+    //sw->add(b3,QPointF(500,500));
+
+    game->addGui(sw);
 
     return a.exec();
 }

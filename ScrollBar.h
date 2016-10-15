@@ -30,10 +30,16 @@ public:
     void setBgBarLength(double length);
     void setFgBarWidth(double width);
     void setFgBarLength(double length);
+    void setFgBarLengthAsFractionOfBgBarLength(double fraction);
     void setBgBarColor(const QColor& color);
     void setFgBarColor(const QColor& color);
     void setBgBarPixmap(const QPixmap& pixmap);
     void setFgBarPixmap(const QPixmap& pixmap);
+
+    // getters
+    double fgBarCenterPos();
+    double fgBarTopPos();
+    double fgBarBottomPos();
 
     void mousePressEvent(QGraphicsSceneMouseEvent* event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
@@ -57,13 +63,16 @@ private:
     QPixmap bgBarPixmap_;
     QPixmap fgBarPixmap_;
 
-    double fgBarPosition_;
+    double fgBarPosition_; // position of the center of the fgBar
 
     bool fgBarIsBeingDragged_;
 
     QGraphicsPixmapItem* fgBar_;
 
     void draw_();
+
+    bool fgBarIsTooHigh_();
+    bool fgBarIsTooLow_();
 };
 
 #endif // SCROLLBAR_H

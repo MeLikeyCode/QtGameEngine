@@ -1,7 +1,10 @@
 #include "ScrollBar.h"
 #include "QtUtilities.h"
 #include <QGraphicsSceneMouseEvent>
+#include <cassert>
+#include <QDebug> // TODO: remove
 
+/// Constructs a default sized ScrollBar.
 ScrollBar::ScrollBar():
     bgBarWidth_(20),
     bgBarLength_(250),
@@ -22,7 +25,7 @@ QGraphicsItem *ScrollBar::getGraphicsItem()
     return this;
 }
 
-/// Sets the width of the "background bar" in pixels.
+/// Sets the width (i.e. thickness) of the "background bar" in pixels.
 /// The "background bar" is the strip along which the little scroll bar ("foreground bar")
 /// moves about.
 void ScrollBar::setBgBarWidth(double width)
@@ -39,7 +42,7 @@ void ScrollBar::setBgBarLength(double length)
     draw_();
 }
 
-/// Sets the width of the "foreground bar" in pixels.
+/// Sets the width (i.e. thickness) of the "foreground bar" in pixels.
 /// The "foreground bar" is the little scroll bar that you can drag on the "bacground bar".
 /// See ScrollBar::setBgBarWidth(double) for more info.
 void ScrollBar::setFgBarWidth(double width)
@@ -53,6 +56,26 @@ void ScrollBar::setFgBarWidth(double width)
 void ScrollBar::setFgBarLength(double length)
 {
     fgBarLength_ = length;
+    draw_();
+}
+
+/// Sets the length of the "foreground bar" to be a certain fraction of
+/// the background bar length. The position of the bar may be moved in order
+/// to ensure the newly sized bar fits.
+void ScrollBar::setFgBarLengthAsFractionOfBgBarLength(double fraction)
+{
+    assert(fraction <= 1);
+
+    fgBarLength_ = fraction * bgBarLength_;
+
+    // clamp position if size too big
+    if (fgBarIsTooHigh_()){
+        fgBarPosition_ = (fgBarLength_ / 2) / bgBarLength_;
+    }
+    if (fgBarIsTooLow_()){
+        fgBarPosition_ = (bgBarLength_ - (fgBarLength_ / 2)) / bgBarLength_;
+    }
+
     draw_();
 }
 
@@ -88,6 +111,43 @@ void ScrollBar::setFgBarPixmap(const QPixmap &pixmap)
     draw_();
 }
 
+/// Returns the position of the center of the "foreground bar." The position
+/// is 0 to 1, 0 being the top of the background bar, 1 being the very bottom.
+/// Note that the position of the *center* of the foreground bar will not be
+/// exactly 0 or 1 unless the foreground bar's length is 0 (because if the
+/// foreground bar has any length, the *center* will never reach the very top
+/// or bottom of the background bar). I hope that makes sense! :)
+double ScrollBar::fgBarCenterPos()
+{
+    return fgBarPosition_;
+}
+
+/// Returns the position of the top of the "foreground bar." The position
+/// is 0 to 1, 0 being the top of the background bar, 1 being the very bottom.
+/// Note that the position of the *top* of the foreground bar can not be exactly
+/// 1 unless the length of the foreground bar is 0 (because the *top* of the
+/// foreground bar will never touch the very bottom of the background bar, unless
+/// the foreground bar's length is 0).
+double ScrollBar::fgBarTopPos()
+{
+    double fgAbsCenter = fgBarPosition_ * bgBarLength_;
+    double fgAbsTop = fgAbsCenter - fgBarLength_ / 2;
+    double fgFracTop = fgAbsTop / bgBarLength_;
+
+    return fgFracTop;
+}
+
+/// Returns the position of the bottom of the "foreground bar."
+/// See ScrollBar::fgBarCenterPos() and ScrollBar::fgBarTopPos() for more information.
+double ScrollBar::fgBarBottomPos()
+{
+    double fgAbsCenter = fgBarPosition_ * bgBarLength_;
+    double fgAbsBot = fgAbsCenter + fgBarLength_ / 2;
+    double fgFracBot = fgAbsBot / bgBarLength_;
+
+    return fgFracBot;
+}
+
 void ScrollBar::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     fgBarIsBeingDragged_ = true;
@@ -100,22 +160,22 @@ void ScrollBar::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 void ScrollBar::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
+    // approach:
+    // -get pos of mouse from 0 - 1
+    // -set that as bar position
+    // -clam according to size
+
     if (fgBarIsBeingDragged_){
-        double oldFgPos = fgBarPosition_;
         fgBarPosition_ = event->pos().y() / bgBarLength_;
 
-        // clamp fgBarPosition_ from 0 to 1
-        if (fgBarPosition_ > 1)
-            fgBarPosition_ = 1;
-        if (fgBarPosition_ < 0)
-            fgBarPosition_ = 0;
-
-        const double EPSILON = 0.0001;
-        if (qAbs(oldFgPos - fgBarPosition_) < EPSILON){
-            emit positionChanged(fgBarPosition_);
-        }
+        // clamp fgBarPosition_
+        if (fgBarIsTooHigh_())
+            fgBarPosition_ = (fgBarLength_ / 2) / bgBarLength_;
+        if (fgBarIsTooLow_())
+            fgBarPosition_ = (bgBarLength_ - (fgBarLength_ / 2)) / bgBarLength_;
 
         draw_();
+        emit positionChanged(fgBarPosition_);
     }
 }
 
@@ -141,10 +201,19 @@ void ScrollBar::draw_()
     // position foreground bar
     double fgBarX = (bgBarWidth_ - fgBarWidth_) / 2;
     double fgBarY = fgBarPosition_ * bgBarLength_ - fgBarLength_ / 2;
-    // clamp position vertically
-    if (fgBarPosition_ * bgBarLength_ - fgBarLength_ / 2 < 0)
-        fgBarY = 0;
-    if (fgBarPosition_ * bgBarLength_ + fgBarLength_ / 2 > bgBarLength_)
-        fgBarY = bgBarLength_ - fgBarLength_;
     fgBar_->setPos(fgBarX,fgBarY);
+}
+
+/// Returns true if according to the current fgBarPosition_ and fgBarLength_,
+/// the foreground bar is sticking out of the top.
+bool ScrollBar::fgBarIsTooHigh_()
+{
+    return fgBarPosition_ * bgBarLength_ - fgBarLength_ / 2 < 0;
+}
+
+/// Returns true if according to the current fgBarPosition_ and fgBarLength_,
+/// the foreground bar is sticking out of the bottom.
+bool ScrollBar::fgBarIsTooLow_()
+{
+    return fgBarPosition_ * bgBarLength_ + fgBarLength_ / 2 > bgBarLength_;
 }

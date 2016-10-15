@@ -1,7 +1,5 @@
 #include "ScrollWindow.h"
-#include <QGraphicsPixmapItem>
-#include <QImage>
-#include <QGraphicsSceneMouseEvent>
+#include "ScrollBar.h"
 
 ScrollWindow::ScrollWindow(): ScrollWindow(400,400)
 {
@@ -11,20 +9,28 @@ ScrollWindow::ScrollWindow(): ScrollWindow(400,400)
 ScrollWindow::ScrollWindow(double width, double height):
     width_(width),
     height_(height),
-    scrollBarFG_(new QGraphicsPixmapItem()),
-    scrollBarPosition_(0),
-    scrollBarBeingDragged_(false)
+    verticalScrollBar_(new ScrollBar()),
+    horizontalScrollBar_(new ScrollBar())
 {
-    scrollBarFG_->setParentItem(this);
+    // appropriately size vertical/horizontal scroll bars
+    verticalScrollBar_->setBgBarLength(height_);
+    horizontalScrollBar_->setBgBarLength(width_);
+    horizontalScrollBar_->setParentGui(verticalScrollBar_);
+    horizontalScrollBar_->setGuiPos(QPointF(20,height_));
+    horizontalScrollBar_->setRotation(-90);
+
+    // get notified whenever the scroll bar's position's change
+    connect(verticalScrollBar_,&ScrollBar::positionChanged,this,&ScrollWindow::verticalOrHorizontalScrollBarPositionChanged_);
+    connect(horizontalScrollBar_,&ScrollBar::positionChanged,this,&ScrollWindow::verticalOrHorizontalScrollBarPositionChanged_);
+
     draw_(); // draw the initial scrollbar
 }
 
-/// Adds the specified gui to the ScrollWindow.
-/// The first Gui added is on the very top, each subsequent Gui added goes
-/// under the previous Gui.
-void ScrollWindow::add(Gui *gui)
+/// Adds the specified gui to the ScrollWindow at the specified position.
+void ScrollWindow::add(Gui *gui, QPointF atPos)
 {
-    guis_.push_back(gui);
+    gui->setParentGui(this);
+    guiToPos_[gui] = atPos;
     draw_(); // redraw the scroll bar
 }
 
@@ -56,85 +62,94 @@ double ScrollWindow::width()
 
 QGraphicsItem *ScrollWindow::getGraphicsItem()
 {
-    return this;
+    return verticalScrollBar_;
 }
 
-void ScrollWindow::mousePressEvent(QGraphicsSceneMouseEvent *event)
+/// Executed whenever the positions' of one of the scroll bars changes.
+/// Will simply redraw the ScrollWindow.
+void ScrollWindow::verticalOrHorizontalScrollBarPositionChanged_(double pos)
 {
-    scrollBarBeingDragged_ = true;
-}
-
-void ScrollWindow::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
-{
-    scrollBarBeingDragged_ = false;
-}
-
-void ScrollWindow::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
-{
-    if (scrollBarBeingDragged_){
-        // set scroll bar position
-        scrollBarPosition_ = event->pos().y() / height_;
-        if (scrollBarPosition_ > 1)
-            scrollBarPosition_ = 1;
-        draw_();
-    }
+    draw_();
 }
 
 /// Draws the ScrollWindow in its current state.
 void ScrollWindow::draw_()
 {
-    // draw background scrol bar
-    const double BAR_WIDTH = 15;
-    QImage img(QSize(BAR_WIDTH,height_),QImage::Format_RGB32);
-    img.fill(Qt::blue);
-    setPixmap(QPixmap::fromImage(img));
-
-    // draw foreground bar
-    double totalStackHeight = 0;
-    for (Gui* gui:guis_){
-        totalStackHeight += gui->getGraphicsItem()->boundingRect().height();
-    }
-    double viewFraction = height_ / totalStackHeight;
-    if (viewFraction > 1)
-        viewFraction = 1;
-    double scrollBarHeight = viewFraction * height_;
-
-    QImage img2(QSize(BAR_WIDTH,scrollBarHeight),QImage::Format_RGB32);
-    img2.fill(Qt::red);
-    scrollBarFG_->setPixmap(QPixmap::fromImage(img2));
-
-    // if position all the way on top
-    if (scrollBarPosition_ * height_  - scrollBarHeight / 2 <= 0)
-        scrollBarFG_->setPos(0,0);
-    // if position all the way on bot
-    else if (scrollBarPosition_ * height_ + scrollBarHeight / 2 >= height_)
-        scrollBarFG_->setPos(0,height_-scrollBarHeight);
-    // other wise, scroll bar is somewhere in the middle
-    else
-        scrollBarFG_->setPos(0,scrollBarPosition_*height_ - scrollBarHeight/2);
-
-    // draw necessary guis
     // approach:
-    // - traverse through guis (list of guis)
-    // - if it needs to be drawn, draw it
-    double currentOffset = 0;
-    double nextAddOffset = 0;
-    double topThreshold = scrollBarFG_->pos().y() / height_;
-    double botThreshold = (scrollBarFG_->pos().y() + scrollBarHeight) / height_;
-    double topPosThreshold = topThreshold * totalStackHeight;
-    double botPosThreshold = botThreshold * totalStackHeight;
-    for (Gui* gui:guis_){
-        // remove all guis
-        gui->getGraphicsItem()->setVisible(false);
+    // - look at position of the vertical and horizontal scroll bar and
+    //  determine the "view bounding box"
+    // - traverse through guis, see which ones are in the view bounding box
+    // - for the ones in the view bounding box, remember their shift vector
+    // relative to top left
+    // - for the guis in view bounding box, set their visibility to true
+    //  (all others to false), and draw them relative to this gui, but
+    // with shift vector applied
 
-        // if gui is fully within top/bot box, show it
-        double guiHeight = gui->getGraphicsItem()->boundingRect().height();
-        if (currentOffset >= topPosThreshold && currentOffset+guiHeight <= botPosThreshold){
-            gui->setParentGui(this);
-            gui->setGuiPos(QPointF(15,0+nextAddOffset));
-            nextAddOffset += guiHeight;
-            gui->getGraphicsItem()->setVisible(true);
+    // if there are no guis, return
+    if (guiToPos_.size() == 0)
+        return;
+
+    // set all guis invisible
+    for (std::pair<Gui*,QPointF> guiPoint:guiToPos_){
+        Gui* gui = guiPoint.first;
+        gui->getGraphicsItem()->setVisible(false);
+    }
+
+    // calculate total height and width
+    std::pair<Gui*,QPointF> initialGuiPoint = *(guiToPos_.begin());
+    Gui* initialGui = initialGuiPoint.first;
+    QPointF initialGuiPos = initialGuiPoint.second;
+    double totalBot = initialGuiPos.y() + initialGui->getGuiBoundingBox().height();
+    double totalRight = initialGuiPos.x() + initialGui->getGuiBoundingBox().width();
+    for (std::pair<Gui*,QPointF> guiPoint: guiToPos_){
+        Gui* gui = guiPoint.first;
+        QPointF guiPos = guiPoint.second;
+        double bot = guiPos.y() + gui->getGuiBoundingBox().height();
+        double right = guiPos.x() + gui->getGuiBoundingBox().width();
+
+        if (bot > totalBot)
+            totalBot = bot;
+        if (right > totalRight)
+            totalRight = right;
+    }
+    double totalHeight = totalBot;
+    double totalWidth = totalRight;
+    if (totalHeight < height_)
+        totalHeight = height_ + 1;
+    if (totalWidth < width_)
+        totalWidth = width_ + 1;
+
+    // set length of scroll bars based on total height/total width and height/width (view)
+    double verticalFraction = height_/totalHeight;
+    double horizontalFraction = width_/totalWidth;
+    verticalScrollBar_->setFgBarLengthAsFractionOfBgBarLength(verticalFraction);
+    horizontalScrollBar_->setFgBarLengthAsFractionOfBgBarLength(horizontalFraction);
+
+    // find view bounding box
+    double bboxTop = verticalScrollBar_->fgBarTopPos() * totalHeight;
+    double bboxBot = verticalScrollBar_->fgBarBottomPos() * totalHeight;
+    double bboxLeft = horizontalScrollBar_->fgBarTopPos() * totalWidth;
+    double bboxRight = horizontalScrollBar_->fgBarBottomPos() * totalWidth;
+    QRectF viewBoundingBox(QPointF(bboxLeft,bboxTop),QPointF(bboxRight,bboxBot));
+
+    // find out which guis are in the view bounding box
+    guiInViewToShiftVector_.clear();
+    for (std::pair<Gui*,QPointF> guiPoint:guiToPos_){
+        Gui* gui = guiPoint.first;
+        QPointF guiPos = guiPoint.second;
+        QRectF guiBBox = gui->getGuiBoundingBox();
+        guiBBox.moveTopLeft(guiPos);
+
+        if (viewBoundingBox.contains(guiBBox)){
+            QPointF gP = guiPos;
+            QPointF shiftVector(gP.x() - viewBoundingBox.x(),gP.y() - viewBoundingBox.y());
+            guiInViewToShiftVector_[gui] = shiftVector;
         }
-        currentOffset += guiHeight;
+    }
+
+    for (std::pair<Gui*,QPointF> guiPoint:guiInViewToShiftVector_){
+        Gui* gui = guiPoint.first;
+        gui->getGraphicsItem()->setVisible(true);
+        gui->setGuiPos(guiInViewToShiftVector_[gui]);
     }
 }
