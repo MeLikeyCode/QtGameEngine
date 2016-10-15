@@ -5,7 +5,7 @@
 Label::Label():
     font_("Tahoma"),
     fontSize_(12),
-    width_(400),
+    width_(200),
     text_("some COOL text"),
     fontColor_(Qt::blue)
 {

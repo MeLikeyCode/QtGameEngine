@@ -15,7 +15,8 @@ ScrollBar::ScrollBar():
     bgBarColor_(Qt::blue),
     fgBarColor_(Qt::red),
     fgBarPosition_(0),
-    fgBar_(new QGraphicsPixmapItem(this))
+    fgBar_(new QGraphicsPixmapItem(this)),
+    showEvenIfFull_(false)
 {
     draw_();
 }
@@ -111,6 +112,16 @@ void ScrollBar::setFgBarPixmap(const QPixmap &pixmap)
     draw_();
 }
 
+/// If true is passed in, the ScrollBar will be drawn even if its full.
+/// If false is passed in, the ScrollBar will NOT be drawn if the bar is full.
+/// By the bar being full I mean when the length of the foreground and background
+/// bar are equivalent.
+void ScrollBar::showEvenIfFull(bool tf)
+{
+    showEvenIfFull_ = tf;
+    draw_();
+}
+
 /// Returns the position of the center of the "foreground bar." The position
 /// is 0 to 1, 0 being the top of the background bar, 1 being the very bottom.
 /// Note that the position of the *center* of the foreground bar will not be
@@ -146,6 +157,30 @@ double ScrollBar::fgBarBottomPos()
     double fgFracBot = fgAbsBot / bgBarLength_;
 
     return fgFracBot;
+}
+
+/// Returns the width (thickness) of the foreground bar.
+double ScrollBar::fgBarWidth()
+{
+    return fgBarWidth_;
+}
+
+/// Returns the length of the foreground bar.
+double ScrollBar::fgBarLength()
+{
+    return fgBarLength_;
+}
+
+/// Returns the width (thickness) of the background bar.
+double ScrollBar::bgBarWidth()
+{
+    return bgBarWidth_;
+}
+
+/// Returns the length of the background bar.
+double ScrollBar::bgBarLength()
+{
+    return bgBarLength_;
 }
 
 void ScrollBar::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -185,6 +220,16 @@ void ScrollBar::draw_()
     // approach:
     // - draw the background bar
     // - draw the foreground bar
+
+    // if the bar is full, make it 100% transparent (i.e. "don't show it")
+    // (if that flag is set)
+    const double EPSILON = 3;
+    if (qAbs(fgBarLength_ - bgBarLength_) < EPSILON && !showEvenIfFull_){
+        QColor transparent(Qt::transparent);
+        setPixmap(qPixmapFromColor(QSize(bgBarWidth_,bgBarLength_),transparent));
+        fgBar_->setPixmap(qPixmapFromColor(QSize(fgBarWidth_,fgBarLength_),transparent));
+        return;
+    }
 
     // draw the background bar
     if (bgBarIsColor_)

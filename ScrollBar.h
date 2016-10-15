@@ -11,10 +11,14 @@ class QGraphicsSceneMouseEvent;
 class QGraphicsItem;
 
 /// Represents a GUI that has a little dragable bar ( called a "foreground bar")
-/// that you can drag from one end to the other on a "background bar").
+/// that you can drag from one end to the other on a "background bar".
 /// The ScrollBar will emit a positionChanged event whenever the foreground bar
 /// is dragged. The position can be from 0 to 1, 0 being in the beggining and 1
 /// being all the way at the end.
+///
+/// Note: If the bar is full (i.e. length of background and foreground bars are the same),
+/// the ScrollBar will not show up by default. To have it show up anyways,
+/// call showEvenIfFull(true);
 /// @author Abdullah Aghazadah
 /// @date 10-11-16
 class ScrollBar : public QObject, public QGraphicsPixmapItem, public Gui
@@ -35,11 +39,16 @@ public:
     void setFgBarColor(const QColor& color);
     void setBgBarPixmap(const QPixmap& pixmap);
     void setFgBarPixmap(const QPixmap& pixmap);
+    void showEvenIfFull(bool tf);
 
     // getters
     double fgBarCenterPos();
     double fgBarTopPos();
     double fgBarBottomPos();
+    double fgBarWidth();
+    double fgBarLength();
+    double bgBarWidth();
+    double bgBarLength();
 
     void mousePressEvent(QGraphicsSceneMouseEvent* event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
@@ -62,6 +71,7 @@ private:
     QColor fgBarColor_;
     QPixmap bgBarPixmap_;
     QPixmap fgBarPixmap_;
+    bool showEvenIfFull_;
 
     double fgBarPosition_; // position of the center of the fgBar
 

@@ -6,7 +6,7 @@
 /// Creates a QPixmap of the specified size filled with the specified color
 QPixmap qPixmapFromColor(QSize size, QColor color)
 {
-    QImage img(size,QImage::Format_RGB32);
+    QImage img(size,QImage::Format_ARGB32);
     img.fill(color);
     return QPixmap::fromImage(img);
 }

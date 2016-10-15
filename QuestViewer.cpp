@@ -12,7 +12,7 @@ QuestViewer::QuestViewer(Quests *quests):
     outterPanel_(new Panel()),
     selectedQuestDescription_(new Label()),
     closeButton_(new Button()),
-    scrollWindow_(new ScrollWindow(100,100))
+    scrollWindow_(new ScrollWindow(380,200))
 {   
     // set parents
     selectedQuestDescription_->setParentGui(outterPanel_);
@@ -47,9 +47,9 @@ QGraphicsItem *QuestViewer::getGraphicsItem()
 /// or status changed). Will update the QuestViewer's visuals to reflect the change.
 void QuestViewer::draw_()
 {   
-    // remove old quest labels
+    // remove old quest labels from the scroll window
     for (Label* label:questLabels_){
-        label->setParentGui(nullptr);
+        scrollWindow_->remove(label);
     }
 
     selectedQuestDescription_->setText("select a quest to see its description");
@@ -57,7 +57,6 @@ void QuestViewer::draw_()
         // create a quest label for each quest in quests
         for (int i = 0, n = quests_->numOfQuests(); i < n; i++){
             Label* label = new Label();
-            label->setParentGui(outterPanel_);
 
             label->setText(quests_->quest(i)->name());
             labelToQuest_[label] = quests_->quest(i);
@@ -78,7 +77,7 @@ void QuestViewer::draw_()
         // place each quest label in ScrollWindow
         for (int i = 0, n = questLabels_.size(); i < n; i++){
             Label* label = questLabels_[i];
-            scrollWindow_->add(label,QPointF(0,i*40));
+            scrollWindow_->add(label,QPointF(25,i*40));
         }
 
         // place quest description after scroll window

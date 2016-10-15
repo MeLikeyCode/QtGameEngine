@@ -32,14 +32,13 @@ public slots:
 
 private:
     Quests* quests_;
+    std::vector<Label*> questLabels_;
+    std::unordered_map<Label*,Quest*> labelToQuest_;
 
     Panel* outterPanel_;
-    std::vector<Label*> questLabels_;
     ScrollWindow* scrollWindow_;
     Label* selectedQuestDescription_;
     Button* closeButton_;
-
-    std::unordered_map<Label*,Quest*> labelToQuest_;
 };
 
 #endif // QUESTVIEWER_H

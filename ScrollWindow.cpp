@@ -1,5 +1,6 @@
 #include "ScrollWindow.h"
 #include "ScrollBar.h"
+#include <cassert>
 
 ScrollWindow::ScrollWindow(): ScrollWindow(400,400)
 {
@@ -26,12 +27,34 @@ ScrollWindow::ScrollWindow(double width, double height):
     draw_(); // draw the initial scrollbar
 }
 
-/// Adds the specified gui to the ScrollWindow at the specified position.
+/// Adds the specified Gui to the ScrollWindow at the specified position.
+/// Does nothing if the Gui is already added.
 void ScrollWindow::add(Gui *gui, QPointF atPos)
 {
+    if (contains(gui)){
+        return;
+    }
+
     gui->setParentGui(this);
     guiToPos_[gui] = atPos;
     draw_(); // redraw the scroll bar
+}
+
+/// Removes the specified Gui from the ScrollWindow. If the Gui is not in
+/// the ScrollWindow in the first place, throws assertion error.
+void ScrollWindow::remove(Gui *gui)
+{
+    assert(contains(gui));
+
+    gui->setParentGui(nullptr);
+    guiToPos_.erase(gui);
+    draw_();
+}
+
+/// Returns true if the ScrollWindow contains the specified Gui.
+bool ScrollWindow::contains(Gui *gui)
+{
+    return guiToPos_.find(gui) != guiToPos_.end();
 }
 
 /// Sets the height of the window of the ScrollWindow.

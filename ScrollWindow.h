@@ -29,6 +29,8 @@ public:
     double width();
 
     void add(Gui* gui, QPointF atPos);
+    void remove(Gui* gui);
+    bool contains(Gui* gui);
 
     QGraphicsItem* getGraphicsItem();
 
