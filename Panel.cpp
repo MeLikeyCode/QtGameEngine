@@ -2,41 +2,49 @@
 #include <QGraphicsPixmapItem>
 #include <QBrush>
 #include "QtUtilities.h"
+#include <QGraphicsRectItem>
+#include <QPen>
 
 Panel::Panel():
-    pixmap_(),
-    color_(Qt::gray),
-    isPixmap_(false),
+    background_(new QGraphicsPixmapItem()),
+    border_(new QGraphicsRectItem()),
+    backgroundPixmap_(),
+    backgroundColor_(Qt::gray),
+    backgroundIsPixmap_(false),
+    showBackground_(true),
+    borderThickness_(3),
+    borderColor_(Qt::black),
+    showBorder_(true),
     width_(300),
     height_(300)
 {
-    pixmapItem_ = new QGraphicsPixmapItem();
+    border_->setParentItem(background_);
     draw_();
 }
 
 QGraphicsItem *Panel::getGraphicsItem()
 {
-    return pixmapItem_;
+    return background_;
 }
 
-/// Sets the Color of the Panel. Remember you can put opacity information in the color.
-/// @see setPixmap(const QPixmap&) for more info.
-void Panel::setColor(const QColor &color)
+/// Sets the background color of the Panel. Remember you can put opacity information in the color.
+/// @see setBackgroundPixmap(const QPixmap&) for more info.
+void Panel::setBackgroundColor(const QColor &color)
 {
-    color_ = color;
-    isPixmap_ = false;
+    backgroundColor_ = color;
+    backgroundIsPixmap_ = false;
     draw_();
 }
 
 /// Sets the background to be a Pixmap instead of a Color.
-/// Between setColor() and setPixmap(), which ever is the last to be called
-/// is the one that will be chosen. So if setColor() is called last, then the
-/// background of the Panel will be a color. If setPixmap() is called last, the
+/// Between setBackgroundColor() and setBackgroundPixmap(), which ever is the last to be called
+/// is the one that will be chosen. So if setBackgroundColor() is called last, then the
+/// background of the Panel will be a color. If setBackgroundPixmap() is called last, the
 /// background will be a pixmap.
-void Panel::setPixmap(const QPixmap &pixmap)
+void Panel::setBackgroundPixmap(const QPixmap &pixmap)
 {
-    pixmap_ = pixmap;
-    isPixmap_ = true;
+    backgroundPixmap_ = pixmap;
+    backgroundIsPixmap_ = true;
     draw_();
 }
 
@@ -49,6 +57,30 @@ void Panel::setWidth(double width)
 void Panel::setHeight(double height)
 {
     height_ = height;
+    draw_();
+}
+
+void Panel::showBorder(bool tf)
+{
+    showBorder_ = tf;
+    draw_();
+}
+
+void Panel::setBorderThickness(double thickness)
+{
+    borderThickness_ = thickness;
+    draw_();
+}
+
+void Panel::setBorderColor(const QColor &color)
+{
+    borderColor_ = color;
+    draw_();
+}
+
+void Panel::showBackground(bool tf)
+{
+    showBackground_ = tf;
     draw_();
 }
 
@@ -65,10 +97,25 @@ int Panel::width()
 /// Draws the Panel in its current state (color, size, etc...).
 void Panel::draw_()
 {
-    if (isPixmap_){
-        pixmap_ = pixmap_.scaled(width_,height_);
-        pixmapItem_->setPixmap(pixmap_);
+    // draw border if showBorder_
+    border_->setRect(0,0,width_,height_);
+    QPen borderPen;
+    borderPen.setWidth(borderThickness_);
+    borderPen.setColor(borderColor_);
+    border_->setPen(borderPen);
+    if (showBorder_)
+        border_->setVisible(true);
+    else
+        border_->setVisible(false);
+
+    // draw background if show background
+    background_->setPixmap(qPixmapFromColor(QSize(width_,height_),Qt::transparent));
+    if (!showBackground_)
+        return;
+    if (backgroundIsPixmap_){
+        backgroundPixmap_ = backgroundPixmap_.scaled(width_,height_);
+        background_->setPixmap(backgroundPixmap_);
     }else{   
-        pixmapItem_->setPixmap(qPixmapFromColor(QSize(width_,height_),color_));
+        background_->setPixmap(qPixmapFromColor(QSize(width_,height_),backgroundColor_));
     }
 }

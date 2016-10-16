@@ -11,7 +11,6 @@
 #include <QPixmap>
 
 class ScrollBar;
-class QGraphicsRectItem;
 class Panel;
 
 /// Represents a Gui that can be used to visualized other Guis in a scroll like
@@ -52,21 +51,12 @@ public slots:
 private:
     double width_;
     double height_;
-    bool showBorder_;
-    QColor borderColor_;
-    QPixmap borderPixmap_;
-    double borderThickness_;
-    bool showBackground_;
-    bool backgroundIsColor_;
-    QColor backgroundColor_;
-    QPixmap backgroundPixmap_;
 
     std::unordered_map<Gui*,QPointF> guiToPos_; // the guis added, and the position added to
     std::unordered_map<Gui*,QPointF> guiInViewToShiftVector_; // the guis in viewport and their shift vectors
 
     ScrollBar* verticalScrollBar_;
     ScrollBar* horizontalScrollBar_;
-    QGraphicsRectItem* border_;
     Panel* background_;
 
     void draw_();

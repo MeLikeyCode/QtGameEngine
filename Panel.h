@@ -6,6 +6,7 @@
 #include <QPixmap>
 
 class QGraphicsPixmapItem;
+class QGraphicsRectItem;
 
 /// Represents a panel GUI element that can be placed in a Game.
 /// You can modify various options such as the size, color, background image, etc...
@@ -14,22 +15,34 @@ class Panel : public Gui
 public:
     Panel();
 
-    QGraphicsItem* getGraphicsItem();
-
-    void setColor(const QColor& color);
-    void setPixmap(const QPixmap& pixmap);
+    // setters
     void setWidth(double width);
     void setHeight(double height);
+    void showBackground(bool tf);
+    void setBackgroundColor(const QColor& color);
+    void setBackgroundPixmap(const QPixmap& pixmap);
+    void showBorder(bool tf);
+    void setBorderThickness(double thickness);
+    void setBorderColor(const QColor& color);
 
+    // getters
     int height();
     int width();
+
+    QGraphicsItem* getGraphicsItem();
 private:
-    QGraphicsPixmapItem* pixmapItem_;
-    QPixmap pixmap_;
-    QColor color_;
-    bool isPixmap_;
+    QGraphicsPixmapItem* background_; // background
+    QGraphicsRectItem* border_; // border
+    QPixmap backgroundPixmap_;
+    QColor backgroundColor_;
+    bool backgroundIsPixmap_;
+    bool showBackground_;
+    bool showBorder_;
+    double borderThickness_;
+    QColor borderColor_;
     double width_;
     double height_;
+
 
     void draw_();
 };
