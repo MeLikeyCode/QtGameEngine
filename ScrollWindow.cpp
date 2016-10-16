@@ -1,6 +1,9 @@
 #include "ScrollWindow.h"
 #include "ScrollBar.h"
 #include <cassert>
+#include <QGraphicsRectItem>
+#include "Panel.h"
+#include <QPen>
 
 ScrollWindow::ScrollWindow(): ScrollWindow(400,400)
 {
@@ -10,8 +13,16 @@ ScrollWindow::ScrollWindow(): ScrollWindow(400,400)
 ScrollWindow::ScrollWindow(double width, double height):
     width_(width),
     height_(height),
+    showBorder_(true),
+    borderColor_(Qt::black),
+    borderThickness_(3.0),
+    showBackground_(true),
+    backgroundIsColor_(true),
+    backgroundColor_(Qt::gray),
     verticalScrollBar_(new ScrollBar()),
-    horizontalScrollBar_(new ScrollBar())
+    horizontalScrollBar_(new ScrollBar()),
+    border_(new QGraphicsRectItem),
+    background_(new Panel())
 {
     // appropriately size vertical/horizontal scroll bars
     verticalScrollBar_->setBgBarLength(height_);
@@ -19,6 +30,9 @@ ScrollWindow::ScrollWindow(double width, double height):
     horizontalScrollBar_->setParentGui(verticalScrollBar_);
     horizontalScrollBar_->setGuiPos(QPointF(20,height_));
     horizontalScrollBar_->setRotation(-90);
+
+    border_->setParentItem(verticalScrollBar_->getGraphicsItem());
+    background_->setParentGui(verticalScrollBar_);
 
     // get notified whenever the scroll bar's position's change
     connect(verticalScrollBar_,&ScrollBar::positionChanged,this,&ScrollWindow::verticalOrHorizontalScrollBarPositionChanged_);
@@ -83,6 +97,53 @@ double ScrollWindow::width()
     return width_;
 }
 
+/// Determines weather a border is shown around the ScrollWindow.
+/// You can control the thickness of the border via ScrollWindow::setBorderThickness(double).
+void ScrollWindow::showBorder(bool tf)
+{
+    showBorder_ = true;
+    draw_();
+}
+
+/// Sets the border to be of the specified Color.
+void ScrollWindow::setBorderColor(const QColor &color)
+{
+    borderColor_ = color;
+    draw_();
+}
+
+/// Sets the thickness of the border of the ScrollWindow in pixels.
+void ScrollWindow::setBorderThickness(double thickness)
+{
+    borderThickness_ = thickness;
+    draw_();
+}
+
+/// Determines weather the background of the ScrollWindow is shown or not.
+void ScrollWindow::showBackground(bool tf)
+{
+    showBackground_ = tf;
+    draw_();
+}
+
+/// Sets the background of the ScrollWindow to be the specified color.
+/// If you want a picture instead, use ScrollWindow::setBackgroundPixmap(QPixmap).
+void ScrollWindow::setBackgroundColor(const QColor &color)
+{
+    backgroundIsColor_ = true;
+    backgroundColor_ = color;
+    draw_();
+}
+
+/// Sets the background of the ScrollWindow to be the specified pixmap.
+/// If you want a color instead, use ScrollWindow::setBackgroundColor(QColor).
+void ScrollWindow::setBackgroundPixmap(const QPixmap &pixmap)
+{
+    backgroundIsColor_ = false;
+    backgroundPixmap_ = pixmap;
+    draw_();
+}
+
 QGraphicsItem *ScrollWindow::getGraphicsItem()
 {
     return verticalScrollBar_;
@@ -103,12 +164,38 @@ void ScrollWindow::draw_()
     //  determine the "view bounding box"
     // - traverse through guis, see which ones are in the view bounding box
     // - for the ones in the view bounding box, remember their shift vector
-    // relative to top left
+    // relative to top left of view bounding box
     // - for the guis in view bounding box, set their visibility to true
-    //  (all others to false), and draw them relative to this gui, but
+    //  (all others to false initially), and draw them relative to this gui, but
     // with shift vector applied
 
-    // if there are no guis, return
+    // draw the view border/background
+    // border
+    QPointF borderBGPos(verticalScrollBar_->bgBarWidth(),0);
+    double borderBGHeightWidth = height_ - verticalScrollBar_->bgBarWidth();
+    border_->setRect(borderBGPos.x(),borderBGPos.y(),borderBGHeightWidth,borderBGHeightWidth);
+    QPen borderPen;
+    borderPen.setWidth(borderThickness_);
+    borderPen.setColor(borderColor_);
+    border_->setPen(borderPen);
+    if (showBorder_)
+        border_->setVisible(true);
+    else
+        border_->setVisible(false);
+    //background
+    background_->setGuiPos(borderBGPos);
+    background_->setWidth(borderBGHeightWidth);
+    background_->setHeight(borderBGHeightWidth);
+    if (backgroundIsColor_)
+        background_->setColor(backgroundColor_);
+    else
+        background_->setPixmap(backgroundPixmap_);
+    if (showBackground_)
+        background_->getGraphicsItem()->setVisible(true);
+    else
+        background_->getGraphicsItem()->setVisible(false);
+
+    // if there are no guis, stop there
     if (guiToPos_.size() == 0)
         return;
 

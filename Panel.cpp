@@ -1,6 +1,7 @@
 #include "Panel.h"
 #include <QGraphicsPixmapItem>
 #include <QBrush>
+#include "QtUtilities.h"
 
 Panel::Panel():
     pixmap_(),
@@ -67,9 +68,7 @@ void Panel::draw_()
     if (isPixmap_){
         pixmap_ = pixmap_.scaled(width_,height_);
         pixmapItem_->setPixmap(pixmap_);
-    }else{
-        QImage img(QSize(width_,height_),QImage::Format_RGB32);
-        img.fill(color_);
-        pixmapItem_->setPixmap(QPixmap::fromImage(img));
+    }else{   
+        pixmapItem_->setPixmap(qPixmapFromColor(QSize(width_,height_),color_));
     }
 }

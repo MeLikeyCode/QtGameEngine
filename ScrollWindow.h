@@ -7,8 +7,12 @@
 #include <QObject>
 #include <QPointF>
 #include <unordered_map>
+#include <QColor>
+#include <QPixmap>
 
 class ScrollBar;
+class QGraphicsRectItem;
+class Panel;
 
 /// Represents a Gui that can be used to visualized other Guis in a scroll like
 /// fashion. You can add Gui's to this Gui and then use the scroll bars to
@@ -23,11 +27,19 @@ public:
     ScrollWindow();
     ScrollWindow(double width, double height);
 
+    // options
     void setHeight(double height);
     void setWidth(double width);
     double height();
     double width();
+    void showBorder(bool tf);
+    void setBorderColor(const QColor& color);
+    void setBorderThickness(double thickness);
+    void showBackground(bool tf);
+    void setBackgroundColor(const QColor& color);
+    void setBackgroundPixmap(const QPixmap& pixmap);
 
+    // add/remove/check for gui containment
     void add(Gui* gui, QPointF atPos);
     void remove(Gui* gui);
     bool contains(Gui* gui);
@@ -40,11 +52,22 @@ public slots:
 private:
     double width_;
     double height_;
+    bool showBorder_;
+    QColor borderColor_;
+    QPixmap borderPixmap_;
+    double borderThickness_;
+    bool showBackground_;
+    bool backgroundIsColor_;
+    QColor backgroundColor_;
+    QPixmap backgroundPixmap_;
+
     std::unordered_map<Gui*,QPointF> guiToPos_; // the guis added, and the position added to
     std::unordered_map<Gui*,QPointF> guiInViewToShiftVector_; // the guis in viewport and their shift vectors
 
     ScrollBar* verticalScrollBar_;
     ScrollBar* horizontalScrollBar_;
+    QGraphicsRectItem* border_;
+    Panel* background_;
 
     void draw_();
 };
