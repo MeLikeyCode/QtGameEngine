@@ -4,14 +4,20 @@
 #include "Gui.h"
 #include <QColor>
 #include <QPixmap>
+#include <QObject>
+#include <QGraphicsPixmapItem>
 
-class QGraphicsPixmapItem;
 class QGraphicsRectItem;
+class QGraphicsSceneMouseEvent;
+class QGraphicsSceneHoverEvent;
 
 /// Represents a panel GUI element that can be placed in a Game.
 /// You can modify various options such as the size, color, background image, etc...
-class Panel : public Gui
+/// The panel will emit events when the mouse hovers/unhovers over it and when
+/// the mouse clicks it.
+class Panel : public QObject, public QGraphicsPixmapItem, public Gui
 {
+    Q_OBJECT
 public:
     Panel();
 
@@ -29,9 +35,20 @@ public:
     int height();
     int width();
 
+    // mouse event handlers
+    void mousePressEvent(QGraphicsSceneMouseEvent* event);
+    void hoverEnterEvent(QGraphicsSceneHoverEvent* event);
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent* event);
+    void hoverMoveEvent(QGraphicsSceneHoverEvent* event);
+
     QGraphicsItem* getGraphicsItem();
+signals:
+    void clicked(Panel* panel, QPointF pos);
+    void mouseHoverStarted(Panel* panel, QPointF pos);
+    void mouseHoverEnded(Panel* panel, QPointF pos);
+    void mouseHoverMoved(Panel* panel, QPointF pos);
+
 private:
-    QGraphicsPixmapItem* background_; // background
     QGraphicsRectItem* border_; // border
     QPixmap backgroundPixmap_;
     QColor backgroundColor_;
@@ -42,7 +59,6 @@ private:
     QColor borderColor_;
     double width_;
     double height_;
-
 
     void draw_();
 };

@@ -131,11 +131,11 @@ int main(int argc, char *argv[])
 //    v->setNumCellsVertically(6);
 //    game->addGui(v);
 
-//    // test panel
-//    Panel* p = new Panel();
-//    p->setGuiPos(QPointF(300,300));
-//    game->addGui(p);
-//    p->showBackground(false);
+    // test panel
+    Panel* p = new Panel();
+    p->setGuiPos(QPointF(300,300));
+    game->addGui(p);
+    //p->showBackground(false);
 
 //    // test button
 //    Button* b = new Button();
@@ -205,22 +205,22 @@ int main(int argc, char *argv[])
 //    //sb->setFgBarLengthAsFractionOfBgBarLength(0.75);
 //    game->addGui(sb);
 
-    // test scroll window
-    ScrollWindow* sw = new ScrollWindow();
-    sw->setGuiPos(QPointF(200,200));
+//    // test scroll window
+//    ScrollWindow* sw = new ScrollWindow();
+//    sw->setGuiPos(QPointF(200,200));
 
-    Button* b = new Button();
-    b->setText("(100,100)");
-    Button* b2 = new Button();
-    b2->setText("(200,200)");
-    Button* b3 = new Button();
-    b3->setText("(500,500)");
+//    Button* b = new Button();
+//    b->setText("(100,100)");
+//    Button* b2 = new Button();
+//    b2->setText("(200,200)");
+//    Button* b3 = new Button();
+//    b3->setText("(500,500)");
 
-    sw->add(b,QPointF(100,100));
-    sw->add(b2,QPointF(200,200));
-    sw->add(b3,QPointF(500,500));
+//    sw->add(b,QPointF(100,100));
+//    sw->add(b2,QPointF(200,200));
+//    sw->add(b3,QPointF(500,500));
 
-    game->addGui(sw);
+//    game->addGui(sw);
 
     Label* laby = new Label();
     qDebug() << laby->getGuiBoundingBox().width();

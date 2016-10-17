@@ -11,8 +11,9 @@ class QGraphicsSceneMouseEvent;
 class Item;
 class Game;
 class Entity;
+class QGraphicsItem;
 
-/// Represents a QGraphicsItem that visualizes and allows interaction with an Item.
+/// Represents a Gui that visualizes and allows interaction with an Item.
 /// The Item must be in an Inventory in order to be used by InventoryCell.
 class InventoryCell: public QObject, public QGraphicsPixmapItem
 {
