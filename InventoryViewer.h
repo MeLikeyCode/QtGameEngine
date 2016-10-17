@@ -8,9 +8,9 @@
 class Inventory;
 class QPointF;
 class InventoryCell;
-class QGraphicsPixmapItem;
 class Item;
 class Game;
+class ScrollWindow;
 
 /// Represents a GUI element that visualizes and allows interaction with
 /// an Inventory.
@@ -39,15 +39,12 @@ public slots:
 private:
     double border_;
     double paddingBWCells_;
-    QColor backgroundColor_;
-    QPixmap backgroundPixmap_;
-    bool backgroundIsPixmap_;
     int numCellsHorizontally_;
     int numCellsVertically_;
     double cellWidth_;
     double cellHeight_;
 
-    QGraphicsPixmapItem* pixmapItem_;
+    ScrollWindow* scrollWindow_;
     Inventory* inventory_;
     std::vector<InventoryCell*> cells_;
     Game* game_;

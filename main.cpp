@@ -128,8 +128,8 @@ int main(int argc, char *argv[])
 
     // test inventoryviewoer
     InventoryViewer* v = new InventoryViewer(game,player->inventory());
-    v->setNumCellsHorizontally(3);
-    v->setNumCellsVertically(6);
+    v->setNumCellsHorizontally(2);
+    v->setNumCellsVertically(2);
     game->addGui(v);
 
 //    // test panel
@@ -224,6 +224,9 @@ int main(int argc, char *argv[])
 //    sw->add(b,QPointF(100,100));
 //    sw->add(b2,QPointF(200,200));
 //    sw->add(b3,QPointF(500,500));
+
+//    sw->setWidth(200);
+//    sw->setHeight(200);
 
 //    game->addGui(sw);
 

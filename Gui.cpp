@@ -35,18 +35,24 @@ void Gui::setParentGui(Gui *gui)
     // - set parent of internal graphics item and positioning/scene removal
     // is handled automatically
 
-    // set parent to no one
-    if (gui == nullptr){
-        if (parent_ != nullptr){
-            parent_->children_.erase(this);
-            getGraphicsItem()->setParentItem(nullptr);
-        }
+    // if gui is null but parent is already null, don't do anything
+    if (gui == nullptr && parent_ == nullptr)
+        return;
+
+    // if gui is null but it has a parent, remove the parent
+    if (gui == nullptr && parent_ != nullptr){
+        parent_->children_.erase(this);
+        getGraphicsItem()->setParentItem(nullptr);
+        getGraphicsItem()->setVisible(false);
+        parent_ = nullptr;
         return;
     }
 
-    // set parent to someone
+    // set parent to an actual gui
     getGraphicsItem()->setParentItem(gui->getGraphicsItem());
+    getGraphicsItem()->setVisible(true);
     gui->children_.insert(this);
+    parent_ = gui;
 }
 
 QRectF Gui::getGuiBoundingBox()

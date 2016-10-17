@@ -15,13 +15,7 @@ ScrollWindow::ScrollWindow(double width, double height):
     horizontalScrollBar_(new ScrollBar()),
     background_(new Panel())
 {
-    // appropriately size vertical/horizontal scroll bars
-    verticalScrollBar_->setBgBarLength(height_);
-    horizontalScrollBar_->setBgBarLength(width_);
     horizontalScrollBar_->setParentGui(verticalScrollBar_);
-    horizontalScrollBar_->setGuiPos(QPointF(20,height_));
-    horizontalScrollBar_->setRotation(-90);
-
     background_->setParentGui(verticalScrollBar_);
 
     // get notified whenever the scroll bar's position's change
@@ -194,7 +188,11 @@ void ScrollWindow::draw_()
     if (totalWidth < width_)
         totalWidth = width_ + 1;
 
-    // set length of scroll bars based on total height/total width and height/width (view)
+    // draw scroll bars properly
+    verticalScrollBar_->setBgBarLength(height_);
+    horizontalScrollBar_->setBgBarLength(width_);
+    horizontalScrollBar_->setGuiPos(QPointF(20,height_));
+    horizontalScrollBar_->setRotation(-90);
     double verticalFraction = height_/totalHeight;
     double horizontalFraction = width_/totalWidth;
     verticalScrollBar_->setFgBarLengthAsFractionOfBgBarLength(verticalFraction);

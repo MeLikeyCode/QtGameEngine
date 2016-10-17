@@ -10,52 +10,37 @@
 #include "Inventory.h"
 #include "InventoryCell.h"
 #include "Item.h"
-
+#include "ScrollWindow.h"
 
 /// Creates a new InventoryViewer of the specified size and visualizing the
 /// specified Inventory.
 InventoryViewer::InventoryViewer(Game* game, Inventory *inventory):
     border_(15),
     paddingBWCells_(5),
-    backgroundColor_(Qt::blue),
-    backgroundPixmap_(QPixmap(":/resources/graphics/misc/invbg.png")),
-    backgroundIsPixmap_(true),
     numCellsHorizontally_(2),
     numCellsVertically_(3),
     cellWidth_(64),
     cellHeight_(64),
     inventory_(inventory),
-    game_(game)
+    game_(game),
+    scrollWindow_(new ScrollWindow())
 {
-    pixmapItem_ = new QGraphicsPixmapItem();
-
     // visualize
     setInventory(inventory);
 }
 
 QGraphicsItem *InventoryViewer::getGraphicsItem()
 {
-    return pixmapItem_;
+    return scrollWindow_->getGraphicsItem();
 }
 
 /// Sets the Inventory to be viewed by the InventoryViewer.
-/// Throws an exception if the inventory is too big (i.e. has too many items) for
-/// the specified size of the InventoryViwer. You can always increase the size
-/// of the InventoryViwer if you need to view a bigger Inventory.
 void InventoryViewer::setInventory(Inventory *inventory)
 {
     // if currently viewing an inventory, stop viewing it
     if (inventory_ != nullptr){
         disconnect(inventory_,&Inventory::itemAdded,this,&InventoryViewer::onItemAddedOrRemovedFromInventory);
         disconnect(inventory_,&Inventory::itemRemoved,this,&InventoryViewer::onItemAddedOrRemovedFromInventory);
-        for (InventoryCell* cell:cells_){
-            cell->setParentGui(nullptr);
-        }
-    }
-
-    // throw an exception if inventory is too big
-    if (inventory!= nullptr && inventory->getItems().size() > numCellsHorizontally_ * numCellsVertically_){
-        throw std::invalid_argument("inventory is too big to be visualized by this InventoryViewer. Resize the InventoryViwer first.");
     }
 
     // listen for changes to this inventory
@@ -88,9 +73,7 @@ void InventoryViewer::setPaddingBWCells(double amount)
 /// simply be a color, otherwise call setBackgroundPixmap last.
 void InventoryViewer::setBackgroundColor(const QColor &color)
 {
-    backgroundColor_ = color;
-    backgroundIsPixmap_ = false;
-    draw_();
+    scrollWindow_->setBackgroundColor(color);
 }
 
 /// Sets the background of the InventoryViewer to the specified QPixmap.
@@ -98,9 +81,7 @@ void InventoryViewer::setBackgroundColor(const QColor &color)
 /// more info.
 void InventoryViewer::setBackgroundPixmap(const QPixmap &pixmap)
 {
-    backgroundPixmap_ = pixmap;
-    backgroundIsPixmap_ = true;
-    draw_();
+    scrollWindow_->setBackgroundPixmap(pixmap);
 }
 
 /// Sets the number of cells that the InventoryViewer has horizontally.
@@ -144,21 +125,16 @@ void InventoryViewer::draw_()
     double bgWidth = numCellsHorizontally_ * (cellWidth_ + paddingBWCells_) - paddingBWCells_ + 2 * border_;
     double bgHeight = numCellsVertically_ * (cellHeight_ + paddingBWCells_) - paddingBWCells_ + 2 * border_;
 
-    if (backgroundIsPixmap_){
-        backgroundPixmap_ = backgroundPixmap_.scaled(bgWidth,bgHeight);
-        pixmapItem_->setPixmap(backgroundPixmap_);
-    } else{
-        QImage img(QSize(bgWidth,bgHeight),QImage::Format_RGB32);
-        img.fill(backgroundColor_);
-        pixmapItem_->setPixmap(QPixmap::fromImage(img));
-    }
+    scrollWindow_->setWidth(bgWidth);
+    scrollWindow_->setHeight(bgHeight);
 
-    // clear all items
+    // clear all previously drawn inventory cells
     for (InventoryCell* cell:cells_){
-        cell->setParentGui(nullptr);
+        scrollWindow_->remove(cell);
     }
+    cells_.clear();
 
-    // draw all items
+    // draw all items in new inventory cells
     if (inventory_ != nullptr){
         double x = 0;
         double y = 0;
@@ -168,7 +144,7 @@ void InventoryViewer::draw_()
             double cellY = y*(cellHeight_+paddingBWCells_)+border_;
             cell->setGuiPos(QPointF(cellX,cellY));
             cells_.push_back(cell);
-            cell->setParentGui(this);
+            scrollWindow_->add(cell,QPointF(cellX,cellY));
 
             x++;
             if (x == numCellsHorizontally_){
