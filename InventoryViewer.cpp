@@ -168,6 +168,7 @@ void InventoryViewer::draw_()
             double cellY = y*(cellHeight_+paddingBWCells_)+border_;
             cell->setGuiPos(QPointF(cellX,cellY));
             cells_.push_back(cell);
+            cell->setParentGui(this);
 
             x++;
             if (x == numCellsHorizontally_){

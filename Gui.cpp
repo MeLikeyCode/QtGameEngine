@@ -3,6 +3,11 @@
 
 /// Returns the position of the Gui relative to its parent (or relative to
 /// top left of screen if no parent).
+Gui::Gui(): parent_(nullptr)
+{
+
+}
+
 QPointF Gui::guiPos()
 {
     return pos_;
@@ -30,6 +35,16 @@ void Gui::setParentGui(Gui *gui)
     // - set parent of internal graphics item and positioning/scene removal
     // is handled automatically
 
+    // set parent to no one
+    if (gui == nullptr){
+        if (parent_ != nullptr){
+            parent_->children_.erase(this);
+            getGraphicsItem()->setParentItem(nullptr);
+        }
+        return;
+    }
+
+    // set parent to someone
     getGraphicsItem()->setParentItem(gui->getGraphicsItem());
     gui->children_.insert(this);
 }

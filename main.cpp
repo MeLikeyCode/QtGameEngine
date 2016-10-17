@@ -126,11 +126,11 @@ int main(int argc, char *argv[])
     leftHandRanged->setPosition(player->namedPoint("center"));
     player->addSlot(leftHandRanged);
 
-//    // test inventoryviewoer
-//    InventoryViewer* v = new InventoryViewer(game,player->inventory());
-//    v->setNumCellsHorizontally(3);
-//    v->setNumCellsVertically(6);
-//    game->addGui(v);
+    // test inventoryviewoer
+    InventoryViewer* v = new InventoryViewer(game,player->inventory());
+    v->setNumCellsHorizontally(3);
+    v->setNumCellsVertically(6);
+    game->addGui(v);
 
 //    // test panel
 //    Panel* p = new Panel();
@@ -178,10 +178,9 @@ int main(int argc, char *argv[])
     addRandomBushes(map1,20);
     addRandomTrees(map1,15);
 
-    // test inventory cell
-    InventoryCell* cell = new InventoryCell(game,100,100);
-    game->addGui(cell);
-    cell->setItem(axe);
+//    // test inventory cell
+//    InventoryCell* cell = new InventoryCell(game,100,100);
+//    game->addGui(cell);
 
 //    // test QuestViewer
 //    Quests* quests = new Quests();

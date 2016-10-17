@@ -15,6 +15,8 @@ class QRectF;
 class Gui
 {
 public:
+    Gui();
+
     QPointF guiPos();
     void setGuiPos(const QPointF& guiPos);
     void setGuiRotation(double degrees);
