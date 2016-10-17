@@ -58,6 +58,7 @@ private:
     ScrollBar* verticalScrollBar_;
     ScrollBar* horizontalScrollBar_;
     Panel* background_;
+    Panel* scrollFiller_;
 
     void draw_();
 };

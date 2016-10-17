@@ -13,7 +13,8 @@ ScrollWindow::ScrollWindow(double width, double height):
     height_(height),
     verticalScrollBar_(new ScrollBar()),
     horizontalScrollBar_(new ScrollBar()),
-    background_(new Panel())
+    background_(new Panel()),
+    scrollFiller_(new Panel())
 {
     horizontalScrollBar_->setParentGui(verticalScrollBar_);
     background_->setParentGui(verticalScrollBar_);
@@ -33,7 +34,7 @@ void ScrollWindow::add(Gui *gui, QPointF atPos)
         return;
     }
 
-    gui->setParentGui(this);
+    gui->setParentGui(background_);
     guiToPos_[gui] = atPos;
     draw_(); // redraw the scroll bar
 }
@@ -146,13 +147,11 @@ void ScrollWindow::draw_()
     // with shift vector applied
 
     // draw the view border/background
-    double borderBGx = verticalScrollBar_->bgBarWidth();
-    double borderBGy = 0;
-    double borderBGwidth = width_;
-    double borderBGheight = height_ - horizontalScrollBar_->bgBarWidth();
-    background_->setGuiPos(QPointF(borderBGx,borderBGy));
-    background_->setWidth(borderBGwidth);
-    background_->setHeight(borderBGheight);
+    double windowX = verticalScrollBar_->bgBarWidth();
+    double windowY = 0;
+    background_->setGuiPos(QPointF(windowX,windowY));
+    background_->setWidth(width_);
+    background_->setHeight(height_);
 
     // if there are no guis, stop there
     if (guiToPos_.size() == 0)
@@ -165,9 +164,9 @@ void ScrollWindow::draw_()
     }
 
     // calculate total height and width
-    std::pair<Gui*,QPointF> initialGuiPoint = *(guiToPos_.begin());
-    Gui* initialGui = initialGuiPoint.first;
-    QPointF initialGuiPos = initialGuiPoint.second;
+    std::pair<Gui*,QPointF> initialGuiPointPair = *(guiToPos_.begin());
+    Gui* initialGui = initialGuiPointPair.first;
+    QPointF initialGuiPos = initialGuiPointPair.second;
     double totalBot = initialGuiPos.y() + initialGui->getGuiBoundingBox().height();
     double totalRight = initialGuiPos.x() + initialGui->getGuiBoundingBox().width();
     for (std::pair<Gui*,QPointF> guiPoint: guiToPos_){
@@ -191,7 +190,7 @@ void ScrollWindow::draw_()
     // draw scroll bars properly
     verticalScrollBar_->setBgBarLength(height_);
     horizontalScrollBar_->setBgBarLength(width_);
-    horizontalScrollBar_->setGuiPos(QPointF(20,height_));
+    horizontalScrollBar_->setGuiPos(QPointF(20,height_+20));
     horizontalScrollBar_->setRotation(-90);
     double verticalFraction = height_/totalHeight;
     double horizontalFraction = width_/totalWidth;

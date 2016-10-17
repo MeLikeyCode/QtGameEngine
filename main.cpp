@@ -214,6 +214,8 @@ int main(int argc, char *argv[])
 //    ScrollWindow* sw = new ScrollWindow();
 //    sw->setGuiPos(QPointF(200,200));
 
+//    Button* bNeg1 = new Button();
+//    bNeg1->setText("0,0");
 //    Button* b = new Button();
 //    b->setText("(100,100)");
 //    Button* b2 = new Button();
@@ -221,12 +223,10 @@ int main(int argc, char *argv[])
 //    Button* b3 = new Button();
 //    b3->setText("(500,500)");
 
+//    sw->add(bNeg1,QPointF(0,0));
 //    sw->add(b,QPointF(100,100));
 //    sw->add(b2,QPointF(200,200));
 //    sw->add(b3,QPointF(500,500));
-
-//    sw->setWidth(200);
-//    sw->setHeight(200);
 
 //    game->addGui(sw);
 
