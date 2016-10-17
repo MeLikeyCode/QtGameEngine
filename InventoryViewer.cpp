@@ -49,10 +49,7 @@ void InventoryViewer::setInventory(Inventory *inventory)
         disconnect(inventory_,&Inventory::itemAdded,this,&InventoryViewer::onItemAddedOrRemovedFromInventory);
         disconnect(inventory_,&Inventory::itemRemoved,this,&InventoryViewer::onItemAddedOrRemovedFromInventory);
         for (InventoryCell* cell:cells_){
-            QGraphicsScene* inScene = pixmapItem_->scene();
-            if (inScene != nullptr){
-                pixmapItem_->scene()->removeItem(cell);
-            }
+            cell->setParentGui(nullptr);
         }
     }
 
@@ -158,10 +155,7 @@ void InventoryViewer::draw_()
 
     // clear all items
     for (InventoryCell* cell:cells_){
-        QGraphicsScene* inScene = pixmapItem_->scene();
-        if (inScene != nullptr){
-            pixmapItem_->scene()->removeItem(cell);
-        }
+        cell->setParentGui(nullptr);
     }
 
     // draw all items
@@ -169,9 +163,10 @@ void InventoryViewer::draw_()
         double x = 0;
         double y = 0;
         for (Item* item:inventory_->getItems()){
-            InventoryCell* cell = new InventoryCell(game_,cellWidth_,cellHeight_,item,pixmapItem_);
-            cell->setX(x*(cellWidth_+paddingBWCells_)+border_);
-            cell->setY(y*(cellHeight_+paddingBWCells_)+border_);
+            InventoryCell* cell = new InventoryCell(game_,cellWidth_,cellHeight_,item);
+            double cellX = x*(cellWidth_+paddingBWCells_)+border_;
+            double cellY = y*(cellHeight_+paddingBWCells_)+border_;
+            cell->setGuiPos(QPointF(cellX,cellY));
             cells_.push_back(cell);
 
             x++;

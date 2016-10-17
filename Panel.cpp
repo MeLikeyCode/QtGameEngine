@@ -98,7 +98,7 @@ int Panel::width()
 /// Executed when the Panel is clicked, will simply emit a signal.
 void Panel::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    emit clicked(this, event->pos());
+    emit clicked(this, event->pos(), event->button());
 }
 
 /// Executed when the mouse *first* hovers over the Panel, will simply

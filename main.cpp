@@ -32,6 +32,7 @@
 #include <Quest.h>
 #include "ScrollWindow.h"
 #include "ScrollBar.h"
+#include "InventoryCell.h"
 
 #include <QMediaPlayer>
 
@@ -131,11 +132,11 @@ int main(int argc, char *argv[])
 //    v->setNumCellsVertically(6);
 //    game->addGui(v);
 
-    // test panel
-    Panel* p = new Panel();
-    p->setGuiPos(QPointF(300,300));
-    game->addGui(p);
-    //p->showBackground(false);
+//    // test panel
+//    Panel* p = new Panel();
+//    p->setGuiPos(QPointF(300,300));
+//    game->addGui(p);
+//    //p->showBackground(false);
 
 //    // test button
 //    Button* b = new Button();
@@ -176,6 +177,11 @@ int main(int argc, char *argv[])
     addRandomRocks(map1,5);
     addRandomBushes(map1,20);
     addRandomTrees(map1,15);
+
+    // test inventory cell
+    InventoryCell* cell = new InventoryCell(game,100,100);
+    game->addGui(cell);
+    cell->setItem(axe);
 
 //    // test QuestViewer
 //    Quests* quests = new Quests();

@@ -43,7 +43,7 @@ public:
 
     QGraphicsItem* getGraphicsItem();
 signals:
-    void clicked(Panel* panel, QPointF pos);
+    void clicked(Panel* panel, QPointF pos, int button);
     void mouseHoverStarted(Panel* panel, QPointF pos);
     void mouseHoverEnded(Panel* panel, QPointF pos);
     void mouseHoverMoved(Panel* panel, QPointF pos);

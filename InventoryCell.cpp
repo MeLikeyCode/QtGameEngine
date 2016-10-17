@@ -15,19 +15,17 @@
 #include <QImage>
 #include <QGraphicsSceneMouseEvent>
 #include "Game.h"
+#include "Panel.h"
 
-InventoryCell::InventoryCell(Game* game, int width, int height, Item *item, QGraphicsItem *parent):
-    QGraphicsPixmapItem(parent),
-    backgroundColor_(Qt::gray),
-    backgroundPixmap_(QPixmap(":/resources/graphics/misc/invcellbg.png")),
-    backgroundIsPixmap_(true),
-    width_(width),
-    height_(height),
+InventoryCell::InventoryCell(Game* game, int width, int height, Item *item):
+    background_(new Panel()),
     item_(item),
     game_(game),
-    picture_(new QGraphicsPixmapItem(this))
+    picture_(new QGraphicsPixmapItem())
 {
-    // empty ctor body
+    picture_->setParentItem(background_->getGraphicsItem());
+    background_->setWidth(width);
+    background_->setHeight(height);
     draw_();
 }
 
@@ -48,9 +46,8 @@ Item *InventoryCell::item()
 /// Sets the width and height of the InventoryCell.
 void InventoryCell::setSize(int width, int height)
 {
-    width_ = width;
-    height_ = height;
-    draw_();
+    background_->setWidth(width);
+    background_->setHeight(height);
 }
 
 /// Sets the background color of the InventoryCell.
@@ -60,23 +57,24 @@ void InventoryCell::setSize(int width, int height)
 /// the background will be a pixmap.
 void InventoryCell::setBackgroundColor(const QColor &color)
 {
-    backgroundColor_ = color;
-    backgroundIsPixmap_ = false;
-    draw_();
+    background_->setBackgroundColor(color);
 }
 
 /// Sets the background of the InventoryCell to be a QPixmap.
 /// @see setBackgroundColor(const QColor&) for more info.
 void InventoryCell::setBackgroundPixmap(const QPixmap &pixmap)
 {
-    backgroundPixmap_ = pixmap;
-    backgroundIsPixmap_ = true;
-    draw_();
+    background_->setBackgroundPixmap(pixmap);
+}
+
+QGraphicsItem *InventoryCell::getGraphicsItem()
+{
+    return background_->getGraphicsItem();
 }
 
 /// Executed when the InventoryCell is clicked. Will "use" the item clicked.
 /// See internal comment for more info.
-void InventoryCell::mousePressEvent(QGraphicsSceneMouseEvent *event)
+void InventoryCell::onClicked_(Panel* panel, QPointF pos, int button)
 {
     // logic:
     // if item is an EquipableItem:
@@ -96,7 +94,7 @@ void InventoryCell::mousePressEvent(QGraphicsSceneMouseEvent *event)
     }
 
     // if right mouse button, drop the item clicked on the ground
-    if (event->button() == Qt::RightButton){
+    if (button == Qt::RightButton){
         // if its an equipeable item that is equiped, unequip it
         EquipableItem* asEqupiableItem = dynamic_cast<EquipableItem*>(theItem);
         if (asEqupiableItem){
@@ -110,7 +108,7 @@ void InventoryCell::mousePressEvent(QGraphicsSceneMouseEvent *event)
     }
 
     // if left mouse button, do something depending on the type of the Item
-    if (event->button() == Qt::LeftButton){
+    if (button == Qt::LeftButton){
 
         // NoTargetItem, use it
         NoTargetItem* asNoTargetItem = dynamic_cast<NoTargetItem*>(theItem);
@@ -146,8 +144,8 @@ void InventoryCell::mousePressEvent(QGraphicsSceneMouseEvent *event)
         PointTargetItem* asPointTargetItem = dynamic_cast<PointTargetItem*>(theItem);
         if (asPointTargetItem){
             game_->setMouseMode(Game::MouseMode::selectPosition);
-            QObject::disconnect(game_,&Game::positionSelected,this,&InventoryCell::positionSelectedWhileUsingPointTargetItem);
-            QObject::connect(game_,&Game::positionSelected,this,&InventoryCell::positionSelectedWhileUsingPointTargetItem);
+            QObject::disconnect(game_,&Game::positionSelected,this,&InventoryCell::onPositionSelectedWhileUsingPointTargetItem);
+            QObject::connect(game_,&Game::positionSelected,this,&InventoryCell::onPositionSelectedWhileUsingPointTargetItem);
             return;
         }
 
@@ -157,15 +155,15 @@ void InventoryCell::mousePressEvent(QGraphicsSceneMouseEvent *event)
         EntityTargetItem* asEntityTargetItem = dynamic_cast<EntityTargetItem*>(theItem);
         if (asEntityTargetItem){
             game_->setMouseMode(Game::MouseMode::selectEntity);
-            QObject::disconnect(game_,&Game::entitySelected,this,&InventoryCell::entitySelectedWhileUsingEntityTargetItem);
-            QObject::connect(game_,&Game::entitySelected,this,&InventoryCell::entitySelectedWhileUsingEntityTargetItem);
+            QObject::disconnect(game_,&Game::entitySelected,this,&InventoryCell::onEntitySelectedWhileUsingEntityTargetItem);
+            QObject::connect(game_,&Game::entitySelected,this,&InventoryCell::onEntitySelectedWhileUsingEntityTargetItem);
             return;
         }
     }
 }
 
 /// Executed when a position has been selected, while using a PointTargetItem.
-void InventoryCell::positionSelectedWhileUsingPointTargetItem(QPointF pos)
+void InventoryCell::onPositionSelectedWhileUsingPointTargetItem(QPointF pos)
 {
     // make sure the Item is PointTargetItem
     PointTargetItem* asPointTargetItem = dynamic_cast<PointTargetItem*>(item());
@@ -175,21 +173,21 @@ void InventoryCell::positionSelectedWhileUsingPointTargetItem(QPointF pos)
     asPointTargetItem->use(pos);
 
     // disconnect
-    QObject::disconnect(game_,&Game::positionSelected,this,&InventoryCell::positionSelectedWhileUsingPointTargetItem);
+    QObject::disconnect(game_,&Game::positionSelected,this,&InventoryCell::onPositionSelectedWhileUsingPointTargetItem);
 
     // set regular mouse mode
     game_->setMouseMode(Game::MouseMode::regular);
 }
 
 /// Executed when an entity has been selected, while using a EntitySelectItem.
-void InventoryCell::entitySelectedWhileUsingEntityTargetItem(Entity *ent)
+void InventoryCell::onEntitySelectedWhileUsingEntityTargetItem(Entity *ent)
 {
     // use the item at the entity
     EntityTargetItem* asEntityTargetItem = dynamic_cast<EntityTargetItem*>(item());
     asEntityTargetItem->use(ent);
 
     // disconnect
-    QObject::disconnect(game_,&Game::entitySelected,this,&InventoryCell::entitySelectedWhileUsingEntityTargetItem);
+    QObject::disconnect(game_,&Game::entitySelected,this,&InventoryCell::onEntitySelectedWhileUsingEntityTargetItem);
 
     // set regular mouse mode
     game_->setMouseMode(Game::MouseMode::regular);
@@ -197,19 +195,11 @@ void InventoryCell::entitySelectedWhileUsingEntityTargetItem(Entity *ent)
 
 void InventoryCell::draw_()
 {
-    // draw background
-    if (backgroundIsPixmap_){
-        backgroundPixmap_ = backgroundPixmap_.scaled(width_,height_);
-        setPixmap(backgroundPixmap_);
-    }else {
-        QImage img(QSize(width_,height_),QImage::Format_RGB32);
-        img.fill(backgroundColor_);
-        setPixmap(QPixmap::fromImage(img));
-    }
-
-    // draw item
+    // draw item's picture
     if (item_ != nullptr){
-        picture_->setPixmap(item_->sprite()->currentFrame().scaled(width_-20,height_-20));
+        double width = background_->width();
+        double height = background_->height();
+        picture_->setPixmap(item_->sprite()->currentFrame().scaled(width-20,height-20));
         picture_->setPos(10,10);
     }
 }

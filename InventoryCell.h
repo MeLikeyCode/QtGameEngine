@@ -6,7 +6,9 @@
 #include <QObject>
 #include <QColor>
 #include <QPixmap>
+#include "Gui.h"
 
+class Panel;
 class QGraphicsSceneMouseEvent;
 class Item;
 class Game;
@@ -15,11 +17,11 @@ class QGraphicsItem;
 
 /// Represents a Gui that visualizes and allows interaction with an Item.
 /// The Item must be in an Inventory in order to be used by InventoryCell.
-class InventoryCell: public QObject, public QGraphicsPixmapItem
+class InventoryCell: public QObject, public Gui
 {
     Q_OBJECT
 public:
-    InventoryCell(Game* game, int width, int height, Item* item = nullptr, QGraphicsItem*parent=nullptr);
+    InventoryCell(Game* game, int width, int height, Item* item = nullptr);
 
     void setItem(Item* item);
     Item* item();
@@ -28,19 +30,16 @@ public:
     void setBackgroundColor(const QColor& color);
     void setBackgroundPixmap(const QPixmap& pixmap);
 
-    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    QGraphicsItem* getGraphicsItem();
 
 public slots:
-    void positionSelectedWhileUsingPointTargetItem(QPointF pos);
-    void entitySelectedWhileUsingEntityTargetItem(Entity* ent);
+    void onClicked_(Panel *panel, QPointF pos, int button);
+    void onPositionSelectedWhileUsingPointTargetItem(QPointF pos);
+    void onEntitySelectedWhileUsingEntityTargetItem(Entity* ent);
 
 private:
     QGraphicsPixmapItem* picture_;
-    QColor backgroundColor_;
-    bool backgroundIsPixmap_;
-    QPixmap backgroundPixmap_;
-    int width_;
-    int height_;
+    Panel* background_;
     Item* item_;
     Game* game_;
 
