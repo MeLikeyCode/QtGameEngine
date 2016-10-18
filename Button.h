@@ -20,6 +20,7 @@ public:
 
     QGraphicsItem* getGraphicsItem();
 
+    // setters
     void setBorderPadding(double amount);
     void setFontSize(int size);
     void setText(const std::string& text);
@@ -36,7 +37,7 @@ signals:
     void clicked();
 private:
     QGraphicsTextItem* textItem_;
-    double borderPadding_;
+    double borderPadding_; // amount of padding b/w text and outter rect
     QColor textColor_;
     QColor backgroundColor_;
     QPixmap backgroundPixmap_;

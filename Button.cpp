@@ -5,13 +5,13 @@
 #include <QFont>
 
 Button::Button():
-    borderPadding_(0),
+    borderPadding_(4),
     text_("default text"),
     textIsBold_(false),
     textIsItalic_(false),
-    textColor_(Qt::white),
+    textColor_(Qt::cyan),
     backgroundColor_(Qt::darkGray),
-    backgroundPixmap_(":/resources/graphics/misc/invbg.png"),
+    backgroundPixmap_(":/resources/graphics/misc/buttonbg.png"),
     backgroundIsPixmap_(true),
     fontSize_(12),
     textItem_(nullptr)
@@ -78,7 +78,6 @@ void Button::setBackgroundPixmap(const QPixmap &pixmap)
 /// Executed when the user clicks on the Button. Will emit clicked() signal.
 void Button::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    setTextColor(Qt::blue);
     emit clicked();
 }
 

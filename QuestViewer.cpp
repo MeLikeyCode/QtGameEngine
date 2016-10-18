@@ -93,7 +93,9 @@ void QuestViewer::draw_()
     }
 
     // put close button on bottom of outter label
-    closeButton_->setGuiPos(QPointF(200,outterPanel_->height()));
+    closeButton_->setText("   close   ");
+    closeButton_->setGuiPos(QPointF(outterPanel_->width() - 97,outterPanel_->height()));
+
 }
 
 /// Executed whenever a quest label is clicked.
