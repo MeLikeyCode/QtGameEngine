@@ -88,8 +88,8 @@ void QuestViewer::draw_()
         }
 
         // place quest description after scroll window
-        selectedQuestDescription_->setGuiPos(QPointF(0,scrollWindow_->height() + PAD_SPACE));
-        selectedQuestDescription_->setWidth(QUEST_VIEW_WIDTH);
+        selectedQuestDescription_->setGuiPos(QPointF(22,scrollWindow_->height() + PAD_SPACE));
+        selectedQuestDescription_->setWidth(QUEST_VIEW_WIDTH-50);
     }
 
     // put close button on bottom of outter label
