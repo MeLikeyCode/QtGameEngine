@@ -12,8 +12,8 @@ ScrollBar::ScrollBar():
     fgBarLength_(35),
     bgBarIsColor_(true),
     fgBarIsColor_(true),
-    bgBarColor_(Qt::blue),
-    fgBarColor_(Qt::red),
+    bgBarColor_(Qt::darkGray),
+    fgBarColor_(Qt::lightGray),
     fgBarPosition_(0),
     fgBar_(new QGraphicsPixmapItem(this)),
     showEvenIfFull_(false)

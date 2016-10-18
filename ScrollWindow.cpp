@@ -3,7 +3,7 @@
 #include <cassert>
 #include "Panel.h"
 
-ScrollWindow::ScrollWindow(): ScrollWindow(400,400)
+ScrollWindow::ScrollWindow(): ScrollWindow(300,300)
 {
 
 }
