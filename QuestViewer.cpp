@@ -21,7 +21,6 @@ QuestViewer::QuestViewer(Quests *quests):
 
     // defaults
     outterPanel_->setBackgroundPixmap(QPixmap(":/resources/graphics/misc/paper.png"));
-    outterPanel_->showBorder(false);
     scrollWindow_->showBackground(false);
     scrollWindow_->showBorder(false);
 
