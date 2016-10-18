@@ -18,6 +18,13 @@ QuestViewer::QuestViewer(Quests *quests):
     selectedQuestDescription_->setParentGui(outterPanel_);
     closeButton_->setParentGui(outterPanel_);
     scrollWindow_->setParentGui(outterPanel_);
+
+    // defaults
+    outterPanel_->setBackgroundPixmap(QPixmap(":/resources/graphics/misc/paper.png"));
+    outterPanel_->showBorder(false);
+    scrollWindow_->showBackground(false);
+    scrollWindow_->showBorder(false);
+
     draw_();
 }
 

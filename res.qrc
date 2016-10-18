@@ -66,5 +66,6 @@
         <file>graphics/terrain/flowers.png</file>
         <file>graphics/terrain/flowersopacity.png</file>
         <file>graphics/effects/fog.png</file>
+        <file>graphics/misc/paper.png</file>
     </qresource>
 </RCC>

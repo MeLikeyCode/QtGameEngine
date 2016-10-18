@@ -4,6 +4,7 @@
 #include <QObject>
 #include "Gui.h"
 #include <QPixmap>
+#include <QColor>
 
 class Inventory;
 class QPointF;
@@ -28,6 +29,8 @@ public:
     void setPaddingBWCells(double amount);
     void setBackgroundColor(const QColor& color);
     void setBackgroundPixmap(const QPixmap& pixmap);
+    void setCellBackgroundColor(const QColor& color);
+    void setCellBackgroundPixmap(const QPixmap& pixmap);
     void setNumCellsHorizontally(int numCellsH);
     void setNumCellsVertically(int numCellsV);
     void setCellWidth(double width);
@@ -43,6 +46,11 @@ private:
     int numCellsVertically_;
     double cellWidth_;
     double cellHeight_;
+
+    // cell options
+    bool cellBackgroundIsColor_;
+    QColor cellBackgroundColor_;
+    QPixmap cellBackgroundPixmap_;
 
     ScrollWindow* scrollWindow_;
     Inventory* inventory_;

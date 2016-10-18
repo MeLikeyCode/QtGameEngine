@@ -17,16 +17,21 @@
 InventoryViewer::InventoryViewer(Game* game, Inventory *inventory):
     border_(15),
     paddingBWCells_(5),
-    numCellsHorizontally_(2),
+    numCellsHorizontally_(3),
     numCellsVertically_(3),
     cellWidth_(64),
     cellHeight_(64),
+    cellBackgroundIsColor_(false),
+    cellBackgroundPixmap_(QPixmap(":/resources/graphics/misc/invcellbg.png")),
     inventory_(inventory),
     game_(game),
     scrollWindow_(new ScrollWindow())
 {
     // visualize
     setInventory(inventory);
+
+    // defaults
+    scrollWindow_->setBackgroundPixmap(QPixmap(":/resources/graphics/misc/invbg.png"));
 }
 
 QGraphicsItem *InventoryViewer::getGraphicsItem()
@@ -82,6 +87,22 @@ void InventoryViewer::setBackgroundColor(const QColor &color)
 void InventoryViewer::setBackgroundPixmap(const QPixmap &pixmap)
 {
     scrollWindow_->setBackgroundPixmap(pixmap);
+}
+
+/// Sets the background of each cell of the InventoryViewer to be the specified color.
+void InventoryViewer::setCellBackgroundColor(const QColor &color)
+{
+    cellBackgroundIsColor_ = true;
+    cellBackgroundColor_ = color;
+    draw_();
+}
+
+/// Sets the background of each cell of the InventoryViewer to be the specified pixmap.
+void InventoryViewer::setCellBackgroundPixmap(const QPixmap &pixmap)
+{
+    cellBackgroundIsColor_ = false;
+    cellBackgroundPixmap_ = pixmap;
+    draw_();
 }
 
 /// Sets the number of cells that the InventoryViewer has horizontally.
@@ -140,6 +161,10 @@ void InventoryViewer::draw_()
         double y = 0;
         for (Item* item:inventory_->getItems()){
             InventoryCell* cell = new InventoryCell(game_,cellWidth_,cellHeight_,item);
+            if (cellBackgroundIsColor_)
+                cell->setBackgroundColor(cellBackgroundColor_);
+            else
+                cell->setBackgroundPixmap(cellBackgroundPixmap_);
             double cellX = x*(cellWidth_+paddingBWCells_)+border_;
             double cellY = y*(cellHeight_+paddingBWCells_)+border_;
             cell->setGuiPos(QPointF(cellX,cellY));
