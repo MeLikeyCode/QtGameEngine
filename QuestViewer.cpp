@@ -9,21 +9,32 @@
 
 QuestViewer::QuestViewer(Quests *quests):
     quests_(quests),
+    questLabels_(),
+    labelToQuest_(),
+    width_(360),
+    height_(360),
+    swWidth_(340),
+    swHeight_(170),
+    swX_(20),
+    swY_(20),
+    descWidth_(320),
+    descLabelX_(30),
+    descOffsetY_(20),
     outterPanel_(new Panel()),
+    scrollWindow_(new ScrollWindow()),
     selectedQuestDescription_(new Label()),
-    closeButton_(new Button()),
-    scrollWindow_(new ScrollWindow(380,170))
+    closeButton_(new Button())
 {   
     // set parents
+    scrollWindow_->setParentGui(outterPanel_);
     selectedQuestDescription_->setParentGui(outterPanel_);
     closeButton_->setParentGui(outterPanel_);
-    scrollWindow_->setParentGui(outterPanel_);
 
     // defaults
     outterPanel_->setBackgroundPixmap(QPixmap(":/resources/graphics/misc/paper.png"));
-    scrollWindow_->setGuiPos(QPointF(0,25));
     scrollWindow_->showBackground(false);
     scrollWindow_->showBorder(false);
+    selectedQuestDescription_->setText("select a quest to see its description");
 
     draw_();
 }
@@ -55,13 +66,31 @@ QGraphicsItem *QuestViewer::getGraphicsItem()
 void QuestViewer::draw_()
 {   
     // remove old quest labels from the scroll window
+    // (in case there are any new quests - we want to create labels for all quests
+    // from scratch)
     for (Label* label:questLabels_){
         scrollWindow_->remove(label);
     }
 
-    selectedQuestDescription_->setText("select a quest to see its description");
+    // size outter panel
+    outterPanel_->setWidth(width_);
+    outterPanel_->setHeight(height_);
+
+    // position/size scroll window
+    scrollWindow_->setGuiPos(QPointF(swX_,swY_));
+    scrollWindow_->setWidth(swWidth_);
+    scrollWindow_->setHeight(swHeight_);
+
+    // position/size description label properly
+    selectedQuestDescription_->setGuiPos(QPointF(descLabelX_,swY_+swHeight_+descOffsetY_));
+    selectedQuestDescription_->setWidth(descWidth_);
+
+    // place close button
+    closeButton_->setText("   close   ");
+    closeButton_->setGuiPos(QPointF(outterPanel_->width() - 97,outterPanel_->height()));
+
+    // create a quest label for each quest
     if (quests_ != nullptr){
-        // create a quest label for each quest in quests
         for (int i = 0, n = quests_->numOfQuests(); i < n; i++){
             Label* label = new Label();
 
@@ -71,31 +100,13 @@ void QuestViewer::draw_()
 
             questLabels_.push_back(label);
         }
-
-        // set height of outter panel based on height of scroll window
-        const double PAD_SPACE = 10;
-        const double DESCRIPTION_HEIGHT = 150;
-        outterPanel_->setHeight(scrollWindow_->height() + PAD_SPACE + DESCRIPTION_HEIGHT);
-
-        // set width of outer panel
-        const double QUEST_VIEW_WIDTH = 400;
-        outterPanel_->setWidth(400);
-
-        // place each quest label in ScrollWindow
-        for (int i = 0, n = questLabels_.size(); i < n; i++){
-            Label* label = questLabels_[i];
-            scrollWindow_->add(label,QPointF(25,i*40));
-        }
-
-        // place quest description after scroll window
-        selectedQuestDescription_->setGuiPos(QPointF(22,scrollWindow_->height() + PAD_SPACE + 20));
-        selectedQuestDescription_->setWidth(QUEST_VIEW_WIDTH-50);
     }
 
-    // put close button on bottom of outter label
-    closeButton_->setText("   close   ");
-    closeButton_->setGuiPos(QPointF(outterPanel_->width() - 97,outterPanel_->height()));
-
+    // place quest labels in scroll window
+    for (int i = 0, n = questLabels_.size(); i < n; i++){
+        Label* label = questLabels_[i];
+        scrollWindow_->add(label,QPointF(25,i*40));
+    }
 }
 
 /// Executed whenever a quest label is clicked.

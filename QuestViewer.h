@@ -35,6 +35,18 @@ private:
     std::vector<Label*> questLabels_;
     std::unordered_map<Label*,Quest*> labelToQuest_;
 
+    double width_;      // width of the entire QuestViewer
+    double height_;     // height " "
+    double swWidth_;    // width of the ScrollWindow
+    double swHeight_;   // height " "
+    double swX_;        // x position of the scroll window relative to outterPanel_
+    double swY_;        // y position " "
+    double descWidth_;  // width of the description label
+    double descLabelX_; // x position of the description label relative to outterPanel_
+    double descOffsetY_;// distance between the bottom of the scrollWindow and the start of description label
+    double closeBtnX_;  // the x position of the close button relative to outterPanel_
+    double closeBtnY_;  // the y position of the close button relative to outterPanel_
+
     Panel* outterPanel_;
     ScrollWindow* scrollWindow_;
     Label* selectedQuestDescription_;

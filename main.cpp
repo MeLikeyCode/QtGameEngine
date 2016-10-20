@@ -209,7 +209,7 @@ int main(int argc, char *argv[])
 //    game->addGui(sb);
 
     // test scroll window
-    ScrollWindow* sw = new ScrollWindow();
+    ScrollWindow* sw = new ScrollWindow(200,200);
     sw->setGuiPos(QPointF(400,0));
 
     Button* bNeg1 = new Button();
