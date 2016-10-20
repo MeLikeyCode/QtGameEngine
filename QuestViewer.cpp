@@ -12,7 +12,7 @@ QuestViewer::QuestViewer(Quests *quests):
     outterPanel_(new Panel()),
     selectedQuestDescription_(new Label()),
     closeButton_(new Button()),
-    scrollWindow_(new ScrollWindow(380,200))
+    scrollWindow_(new ScrollWindow(380,170))
 {   
     // set parents
     selectedQuestDescription_->setParentGui(outterPanel_);
@@ -21,6 +21,7 @@ QuestViewer::QuestViewer(Quests *quests):
 
     // defaults
     outterPanel_->setBackgroundPixmap(QPixmap(":/resources/graphics/misc/paper.png"));
+    scrollWindow_->setGuiPos(QPointF(0,25));
     scrollWindow_->showBackground(false);
     scrollWindow_->showBorder(false);
 
@@ -73,7 +74,7 @@ void QuestViewer::draw_()
 
         // set height of outter panel based on height of scroll window
         const double PAD_SPACE = 10;
-        const double DESCRIPTION_HEIGHT = 100;
+        const double DESCRIPTION_HEIGHT = 150;
         outterPanel_->setHeight(scrollWindow_->height() + PAD_SPACE + DESCRIPTION_HEIGHT);
 
         // set width of outer panel
@@ -87,7 +88,7 @@ void QuestViewer::draw_()
         }
 
         // place quest description after scroll window
-        selectedQuestDescription_->setGuiPos(QPointF(22,scrollWindow_->height() + PAD_SPACE));
+        selectedQuestDescription_->setGuiPos(QPointF(22,scrollWindow_->height() + PAD_SPACE + 20));
         selectedQuestDescription_->setWidth(QUEST_VIEW_WIDTH-50);
     }
 
