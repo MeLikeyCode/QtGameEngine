@@ -5,6 +5,7 @@
 #include "Gui.h"
 #include <unordered_map>
 
+class Quest;
 class Quests;
 class Panel;
 class Button;
@@ -13,7 +14,7 @@ class Quest;
 class ScrollWindow;
 
 /// Gui that can visualize a bunch of quests (Quests class).
-/// Click on a quest to view its description. Click close to close the Questviewer.
+/// Click on a quest to view its description.
 /// @author Abdullah Aghazadah
 /// @date 9/5/16
 class QuestViewer: public QObject, public Gui
@@ -23,6 +24,7 @@ public:
     QuestViewer(Quests* quests=nullptr);
 
     void setQuests(Quests* quests);
+    Quest* selectedQuest();
 
     QGraphicsItem* getGraphicsItem();
 
@@ -32,6 +34,7 @@ public slots:
 
 private:
     Quests* quests_;
+    Quest* selectedQuest_;
     std::vector<Label*> questLabels_;
     std::unordered_map<Label*,Quest*> labelToQuest_;
 

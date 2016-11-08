@@ -50,6 +50,22 @@ void ScrollWindow::remove(Gui *gui)
     draw_();
 }
 
+/// Removes all Guis that have been added to the ScrollWindow.
+void ScrollWindow::removeAll()
+{
+    // set parent of all guis to nullptr
+    for (std::pair<Gui*,QPointF> guiPoint:guiToPos_){
+        Gui* gui = guiPoint.first;
+        gui->setParentGui(nullptr);
+    }
+
+    // clear guis
+    guiToPos_.clear();
+
+    // redraw
+    draw_();
+}
+
 /// Returns true if the ScrollWindow contains the specified Gui.
 bool ScrollWindow::contains(Gui *gui)
 {
@@ -153,10 +169,6 @@ void ScrollWindow::draw_()
     background_->setWidth(width_);
     background_->setHeight(height_);
 
-    // if there are no guis, stop there
-    if (guiToPos_.size() == 0)
-        return;
-
     // set all guis invisible
     for (std::pair<Gui*,QPointF> guiPoint:guiToPos_){
         Gui* gui = guiPoint.first;
@@ -164,11 +176,8 @@ void ScrollWindow::draw_()
     }
 
     // calculate total height and width
-    std::pair<Gui*,QPointF> initialGuiPointPair = *(guiToPos_.begin());
-    Gui* initialGui = initialGuiPointPair.first;
-    QPointF initialGuiPos = initialGuiPointPair.second;
-    double totalBot = initialGuiPos.y() + initialGui->getGuiBoundingBox().height();
-    double totalRight = initialGuiPos.x() + initialGui->getGuiBoundingBox().width();
+    double totalBot = 0;
+    double totalRight = 0;
     for (std::pair<Gui*,QPointF> guiPoint: guiToPos_){
         Gui* gui = guiPoint.first;
         QPointF guiPos = guiPoint.second;

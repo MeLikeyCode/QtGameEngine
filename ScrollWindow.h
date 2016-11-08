@@ -41,7 +41,10 @@ public:
     // add/remove/check for gui containment
     void add(Gui* gui, QPointF atPos);
     void remove(Gui* gui);
+    void removeAll();
     bool contains(Gui* gui);
+    std::unordered_set<Gui*> addedGuis();
+
 
     QGraphicsItem* getGraphicsItem();
 

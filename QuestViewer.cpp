@@ -9,6 +9,7 @@
 
 QuestViewer::QuestViewer(Quests *quests):
     quests_(quests),
+    selectedQuest_(nullptr),
     questLabels_(),
     labelToQuest_(),
     width_(360),
@@ -54,6 +55,12 @@ void QuestViewer::setQuests(Quests *quests)
     quests_ = quests;
 
     draw_();
+}
+
+/// Returns the currently selected quest in the quest viewer.
+Quest *QuestViewer::selectedQuest()
+{
+    return selectedQuest_;
 }
 
 QGraphicsItem *QuestViewer::getGraphicsItem()
@@ -110,9 +117,11 @@ void QuestViewer::draw_()
 }
 
 /// Executed whenever a quest label is clicked.
-/// Will find corrisponding quest and set its text in description.
+/// Will find corrisponding quest and show its text in the description area.
+/// Will also marked the quest as the currently selected one.
 void QuestViewer::labelClicked_(Label *label)
 {
     Quest* quest = labelToQuest_[label];
+    selectedQuest_ = quest;
     selectedQuestDescription_->setText(quest->description());
 }

@@ -83,7 +83,8 @@ SOURCES += main.cpp \
     Label.cpp \
     ScrollWindow.cpp \
     ScrollBar.cpp \
-    QtUtilities.cpp
+    QtUtilities.cpp \
+    DialogGui.cpp
 
 HEADERS  += \
     Map.h \
@@ -155,7 +156,8 @@ HEADERS  += \
     Label.h \
     ScrollWindow.h \
     ScrollBar.h \
-    QtUtilities.h
+    QtUtilities.h \
+    DialogGui.h
 
 RESOURCES += \
     res.qrc

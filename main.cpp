@@ -33,6 +33,7 @@
 #include "ScrollWindow.h"
 #include "ScrollBar.h"
 #include "InventoryCell.h"
+#include "DialogGui.h"
 
 #include <QMediaPlayer>
 
@@ -126,9 +127,9 @@ int main(int argc, char *argv[])
     leftHandRanged->setPosition(player->namedPoint("center"));
     player->addSlot(leftHandRanged);
 
-    // test inventoryviewoer
-    InventoryViewer* v = new InventoryViewer(game,player->inventory());
-    game->addGui(v);
+//    // test inventoryviewoer
+//    InventoryViewer* v = new InventoryViewer(game,player->inventory());
+//    game->addGui(v);
 
 //    // test panel
 //    Panel* p = new Panel();
@@ -180,56 +181,79 @@ int main(int argc, char *argv[])
 //    InventoryCell* cell = new InventoryCell(game,100,100);
 //    game->addGui(cell);
 
-    // test QuestViewer
-    Quests* quests = new Quests();
-    Quest* q1 = new Quest("kill bears","please kill 10 bears");
-    Quest* q2 = new Quest("kill flies","please find 5 flies");
-    Quest* q3 = new Quest("kill pencils","please find 5 pencils");
-    Quest* q4 = new Quest("kill papers","please find 5 papers");
-    Quest* q5 = new Quest("kill desks","please find 5 desks");
-    Quest* q6 = new Quest("kill mice","please find 5 mice");
-    quests->addQuest(q1);
-    quests->addQuest(q2);
-    quests->addQuest(q3);
-    quests->addQuest(q4);
-    quests->addQuest(q5);
-    quests->addQuest(q6);
+//    // test QuestViewer
+//    Quests* quests = new Quests();
+//    Quest* q1 = new Quest("kill bears","please kill 10 bears");
+//    Quest* q2 = new Quest("kill flies","please find 5 flies");
+//    Quest* q3 = new Quest("kill pencils","please find 5 pencils");
+//    Quest* q4 = new Quest("kill papers","please find 5 papers");
+//    Quest* q5 = new Quest("kill desks","please find 5 desks");
+//    Quest* q6 = new Quest("kill mice","please find 5 mice");
+//    quests->addQuest(q1);
+//    quests->addQuest(q2);
+//    quests->addQuest(q3);
+//    quests->addQuest(q4);
+//    quests->addQuest(q5);
+//    quests->addQuest(q6);
 
-    QuestViewer* questViewer = new QuestViewer(quests);
-    questViewer->setGuiPos(QPointF(0,300));
-    game->addGui(questViewer);
+//    QuestViewer* questViewer = new QuestViewer(quests);
+//    questViewer->setGuiPos(QPointF(0,300));
+//    game->addGui(questViewer);
 
 //    // test scroll bar
 //    ScrollBar* sb = new ScrollBar();
-//    sb->setGuiPos(QPointF(400,400));
+//    sb->setGuiPos(QPointF(400,0));
 //    sb->setBgBarLength(100);
 //    sb->setFgBarLength(97.1);
 //    //sb->showEvenIfFull(true);
-//    //sb->setFgBarLengthAsFractionOfBgBarLength(0.75);
+//    sb->setFgBarLengthAsFractionOfBgBarLength(0.75);
 //    game->addGui(sb);
 
-    // test scroll window
-    ScrollWindow* sw = new ScrollWindow(200,200);
-    sw->setGuiPos(QPointF(400,0));
+//    // test scroll window
+//    ScrollWindow* sw = new ScrollWindow(200,200);
+//    sw->setGuiPos(QPointF(0,0));
 
-    Button* bNeg1 = new Button();
-    bNeg1->setText("0,0");
-    Button* b = new Button();
-    b->setText("(100,100)");
-    Button* b2 = new Button();
-    b2->setText("(200,200)");
-    Button* b3 = new Button();
-    b3->setText("(500,500)");
+//    Button* bNeg1 = new Button();
+//    bNeg1->setText("0,0");
+//    Button* b = new Button();
+//    b->setText("(100,100)");
+//    Button* b2 = new Button();
+//    b2->setText("(200,200)");
+//    Button* b3 = new Button();
+//    b3->setText("(500,500)");
 
-    sw->add(bNeg1,QPointF(0,0));
-    sw->add(b,QPointF(100,100));
-    sw->add(b2,QPointF(200,200));
-    sw->add(b3,QPointF(500,500));
+//    sw->add(bNeg1,QPointF(0,0));
+//    sw->add(b,QPointF(100,100));
+//    sw->add(b2,QPointF(200,200));
+//    sw->add(b3,QPointF(500,500));
 
-    game->addGui(sw);
+//    game->addGui(sw);
 
-    Label* laby = new Label();
-    qDebug() << laby->getGuiBoundingBox().width();
+    // test dialog gui
+    DialogGui* dialog = new DialogGui();
+
+    Response* initialResponse = new Response("Who are you?");
+
+    Choice* abdullah = new Choice("I'm Abdullah");
+    Choice* creep = new Choice("El Creepo");
+
+    // initial response/choices for it
+    dialog->addResponse(initialResponse);
+    dialog->addChoice(initialResponse,abdullah);
+    dialog->addChoice(initialResponse,creep);
+
+    // response for each choice
+    Response* howRude = new Response("how rude!");
+    dialog->addResponse(howRude);
+    dialog->setResponseForChoice(howRude,creep);
+    Response* nice = new Response("nice to meet ya");
+    dialog->addResponse(nice);
+    dialog->setResponseForChoice(nice,abdullah);
+
+    dialog->setResponse(initialResponse);
+
+    game->addGui(dialog);
+    dialog->setGuiPos(QPointF(450,25));
 
     return a.exec();
 }
