@@ -10,8 +10,9 @@ class QGraphicsItem;
 class QRectF;
 
 /// Abstract class that Represents a GUI element in a Game. A Gui is placed
-/// relative to the to its parent Gui, if it does not have a prent Gui, its
+/// relative to its parent Gui, if it does not have a prent Gui, its
 /// place relative to the top left hand corner of the screen.
+/// Most GUIs offer functions for customizing their look.
 class Gui
 {
 public:

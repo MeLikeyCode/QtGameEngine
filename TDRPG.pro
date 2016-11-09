@@ -84,7 +84,8 @@ SOURCES += main.cpp \
     ScrollBar.cpp \
     QtUtilities.cpp \
     DialogGui.cpp \
-    ItemCell.cpp
+    ItemCell.cpp \
+    InventoryUser.cpp
 
 HEADERS  += \
     Map.h \
@@ -157,7 +158,8 @@ HEADERS  += \
     ScrollBar.h \
     QtUtilities.h \
     DialogGui.h \
-    ItemCell.h
+    ItemCell.h \
+    InventoryUser.h
 
 RESOURCES += \
     res.qrc
