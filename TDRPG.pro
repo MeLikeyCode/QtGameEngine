@@ -60,7 +60,6 @@ SOURCES += main.cpp \
     SpearProjectile.cpp \
     ProjectileMoveBehaviorSine.cpp \
     ProjectileMoveBehaviorSpinning.cpp \
-    InventoryCell.cpp \
     InventoryViewer.cpp \
     ItemRainOfSpears.cpp \
     ItemTeleport.cpp \
@@ -84,7 +83,8 @@ SOURCES += main.cpp \
     ScrollWindow.cpp \
     ScrollBar.cpp \
     QtUtilities.cpp \
-    DialogGui.cpp
+    DialogGui.cpp \
+    ItemCell.cpp
 
 HEADERS  += \
     Map.h \
@@ -133,7 +133,6 @@ HEADERS  += \
     SpearProjectile.h \
     ProjectileMoveBehaviorSine.h \
     ProjectileMoveBehaviorSpinning.h \
-    InventoryCell.h \
     InventoryViewer.h \
     ItemRainOfSpears.h \
     ItemTeleport.h \
@@ -157,7 +156,8 @@ HEADERS  += \
     ScrollWindow.h \
     ScrollBar.h \
     QtUtilities.h \
-    DialogGui.h
+    DialogGui.h \
+    ItemCell.h
 
 RESOURCES += \
     res.qrc

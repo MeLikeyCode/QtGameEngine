@@ -11,17 +11,18 @@
 class Panel;
 class QGraphicsSceneMouseEvent;
 class Item;
-class Game;
-class Entity;
 class QGraphicsItem;
 
-/// Represents a Gui that visualizes and allows interaction with an Item.
-/// The Item must be in an Inventory in order to be used by InventoryCell.
-class InventoryCell: public QObject, public Gui
+/// Represents a Gui that visualizes and allows mouse interaction with an Item.
+/// When the Item in the ItemCell is clicked, ItemCell will emit a signal.
+/// You can set the Item of the ItemCell via setItem(Item*) or by passing the Item
+/// in the ItemCell constructor. There are several member functions provied
+/// which allow you to modify the look/size of the ItemCell.
+class ItemCell: public QObject, public Gui
 {
     Q_OBJECT
 public:
-    InventoryCell(Game* game, int width, int height, Item* item = nullptr);
+    ItemCell(Game* game, int width, int height, Item* item = nullptr);
 
     void setItem(Item* item);
     Item* item();
@@ -34,14 +35,14 @@ public:
 
 public slots:
     void onClicked_(Panel *panel, QPointF pos, int button);
-    void onPositionSelectedWhileUsingPointTargetItem(QPointF pos);
-    void onEntitySelectedWhileUsingEntityTargetItem(Entity* ent);
+
+signals:
+    void clicked(ItemCell* inventoryCell, int button);
 
 private:
     QGraphicsPixmapItem* picture_;
     Panel* background_;
     Item* item_;
-    Game* game_;
 
     void draw_();
 };

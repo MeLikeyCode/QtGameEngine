@@ -8,13 +8,12 @@
 
 #include "InventoryViewer.h"
 #include "Inventory.h"
-#include "InventoryCell.h"
+#include "ItemCell.h"
 #include "Item.h"
 #include "ScrollWindow.h"
 
-/// Creates a new InventoryViewer of the specified size and visualizing the
-/// specified Inventory.
-InventoryViewer::InventoryViewer(Game* game, Inventory *inventory):
+/// Creates a default InventoryViewer which visualizes the specified Inventory.
+InventoryViewer::InventoryViewer(Inventory *inventory):
     border_(15),
     paddingBWCells_(5),
     numCellsHorizontally_(3),
@@ -24,7 +23,6 @@ InventoryViewer::InventoryViewer(Game* game, Inventory *inventory):
     cellBackgroundIsColor_(false),
     cellBackgroundPixmap_(QPixmap(":/resources/graphics/misc/invcellbg.png")),
     inventory_(inventory),
-    game_(game),
     scrollWindow_(new ScrollWindow())
 {
     // visualize
@@ -150,7 +148,7 @@ void InventoryViewer::draw_()
     scrollWindow_->setHeight(bgHeight);
 
     // clear all previously drawn inventory cells
-    for (InventoryCell* cell:cells_){
+    for (ItemCell* cell:cells_){
         scrollWindow_->remove(cell);
     }
     cells_.clear();
@@ -160,7 +158,7 @@ void InventoryViewer::draw_()
         double x = 0;
         double y = 0;
         for (Item* item:inventory_->getItems()){
-            InventoryCell* cell = new InventoryCell(game_,cellWidth_,cellHeight_,item);
+            ItemCell* cell = new ItemCell(game_,cellWidth_,cellHeight_,item);
             if (cellBackgroundIsColor_)
                 cell->setBackgroundColor(cellBackgroundColor_);
             else

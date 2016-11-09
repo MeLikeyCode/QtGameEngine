@@ -32,7 +32,7 @@
 #include <Quest.h>
 #include "ScrollWindow.h"
 #include "ScrollBar.h"
-#include "InventoryCell.h"
+#include "ItemCell.h"
 #include "DialogGui.h"
 
 #include <QMediaPlayer>
@@ -127,9 +127,9 @@ int main(int argc, char *argv[])
     leftHandRanged->setPosition(player->namedPoint("center"));
     player->addSlot(leftHandRanged);
 
-//    // test inventoryviewoer
-//    InventoryViewer* v = new InventoryViewer(game,player->inventory());
-//    game->addGui(v);
+    // test inventoryviewoer
+    InventoryViewer* v = new InventoryViewer(player->inventory());
+    game->addGui(v);
 
 //    // test panel
 //    Panel* p = new Panel();
@@ -229,31 +229,31 @@ int main(int argc, char *argv[])
 
 //    game->addGui(sw);
 
-    // test dialog gui
-    DialogGui* dialog = new DialogGui();
+//    // test dialog gui
+//    DialogGui* dialog = new DialogGui();
 
-    Response* initialResponse = new Response("Who are you?");
+//    Response* initialResponse = new Response("Who are you?");
 
-    Choice* abdullah = new Choice("I'm Abdullah");
-    Choice* creep = new Choice("El Creepo");
+//    Choice* abdullah = new Choice("I'm Abdullah");
+//    Choice* creep = new Choice("El Creepo");
 
-    // initial response/choices for it
-    dialog->addResponse(initialResponse);
-    dialog->addChoice(initialResponse,abdullah);
-    dialog->addChoice(initialResponse,creep);
+//    // initial response/choices for it
+//    dialog->addResponse(initialResponse);
+//    dialog->addChoice(initialResponse,abdullah);
+//    dialog->addChoice(initialResponse,creep);
 
-    // response for each choice
-    Response* howRude = new Response("how rude!");
-    dialog->addResponse(howRude);
-    dialog->setResponseForChoice(howRude,creep);
-    Response* nice = new Response("nice to meet ya");
-    dialog->addResponse(nice);
-    dialog->setResponseForChoice(nice,abdullah);
+//    // response for each choice
+//    Response* howRude = new Response("how rude!");
+//    dialog->addResponse(howRude);
+//    dialog->setResponseForChoice(howRude,creep);
+//    Response* nice = new Response("nice to meet ya");
+//    dialog->addResponse(nice);
+//    dialog->setResponseForChoice(nice,abdullah);
 
-    dialog->setResponse(initialResponse);
+//    dialog->setResponse(initialResponse);
 
-    game->addGui(dialog);
-    dialog->setGuiPos(QPointF(450,25));
+//    game->addGui(dialog);
+//    dialog->setGuiPos(QPointF(450,25));
 
     return a.exec();
 }

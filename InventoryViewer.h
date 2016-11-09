@@ -8,18 +8,18 @@
 
 class Inventory;
 class QPointF;
-class InventoryCell;
+class ItemCell;
 class Item;
-class Game;
 class ScrollWindow;
 
-/// Represents a GUI element that visualizes and allows interaction with
-/// an Inventory.
+/// Represents a GUI element that visualizes and allows mouse interaction with
+/// an Inventory. When an item in the inventory viewer is clicked, the
+/// InventoryViewer emits a signal.
 class InventoryViewer : public QObject, public Gui
 {
     Q_OBJECT
 public:
-    InventoryViewer(Game* game, Inventory* inventory=nullptr);
+    InventoryViewer(Inventory* inventory=nullptr);
 
     QGraphicsItem* getGraphicsItem();
 
@@ -54,7 +54,7 @@ private:
 
     ScrollWindow* scrollWindow_;
     Inventory* inventory_;
-    std::vector<InventoryCell*> cells_;
+    std::vector<ItemCell*> cells_;
     Game* game_;
 
     // helper functions

@@ -47,12 +47,25 @@ private:
 ///
 /// You can add a response via addResponse(Response* response).
 /// You can add a choices for a response via addChoice(Response* forResponse, Choice* choice).
+/// Please note that you must add a Response via addResponse() first before adding a choice for the response.
 /// You can set the associated response that will be shown when a certain
 /// choice is clicked by calling setResponseForChoice(Response* response, Choice* forChoice).
+/// Please note that you must add a Choice via addChoice() before setting the response for the Choice.
 /// You can set the currently displayed response via setResponse(Response* response).
 /// You should only call setResponse(Response*) to set the initially displayed
 /// Response. After that, the responses will change depending on the choices clicked.
 /// DialogGui will emit a signal whenever a certain choice is clicked.
+///
+/// The way to use DialogGui would be:
+/// - create a few Responses
+/// - add the responses via addResponse()
+/// - create Choices for the Responses
+/// - add the choices for their respective response via addChoice()
+/// - set the initial Response to be displayed via setResponse()
+///
+/// That's it! The initial response and all of its choices will be displayed.
+/// When the user clicks on a choice, the response for that choice (along with the Response's
+/// choices) will be displayed. By clicking the various Choices, the user can "talk" wit the dialog.
 class DialogGui : public QObject, public Gui
 {
     Q_OBJECT

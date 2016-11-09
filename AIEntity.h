@@ -8,6 +8,8 @@ class Weapon;
 
 /// Represents an Entity that can move and think on its own. AIEntities will
 /// attack any enemies in their field of view.
+/// TODO: later, they will be able to do things such as take cover if near obsticles,
+/// use any nearby health sources if low on health, etc...
 /// @author Abdullah Aghazadah
 /// @date 4/18/16
 class AIEntity: public DynamicEntity

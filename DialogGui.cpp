@@ -3,6 +3,7 @@
 #include "ScrollWindow.h"
 #include <cassert>
 
+/// Constructs a default DialogGui, which shows no Response/Choices.
 DialogGui::DialogGui():
     currentResponse_(nullptr),
     topScrollWindow_(new ScrollWindow()),
