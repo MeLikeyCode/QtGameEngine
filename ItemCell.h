@@ -37,7 +37,7 @@ public slots:
     void onClicked_(Panel *panel, QPointF pos, int button);
 
 signals:
-    void clicked(ItemCell* inventoryCell, int button);
+    void clicked(ItemCell* itemCell, int button);
 
 private:
     QGraphicsPixmapItem* picture_;

@@ -38,6 +38,10 @@ public:
 
 public slots:
     void onItemAddedOrRemovedFromInventory(Item* item);
+    void onItemCellClicked(ItemCell* itemCell, int button);
+
+signals:
+    void itemClicked(Item* item, int button);
 
 private:
     double border_;

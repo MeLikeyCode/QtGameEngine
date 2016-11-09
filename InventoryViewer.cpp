@@ -137,6 +137,16 @@ void InventoryViewer::onItemAddedOrRemovedFromInventory(Item *item)
     setInventory(inventory_);
 }
 
+/// Executed when one of the ItemCells of the InventoryViewer are clicked.
+/// Will emit a signal telling which item was just clicked.
+void InventoryViewer::onItemCellClicked(ItemCell *itemCell, int button)
+{
+    Item* item = itemCell->item();
+    if (item != nullptr){
+        emit itemClicked(item,button);
+    }
+}
+
 /// Draws the Inventory based on its current states.
 void InventoryViewer::draw_()
 {
@@ -147,8 +157,9 @@ void InventoryViewer::draw_()
     scrollWindow_->setWidth(bgWidth);
     scrollWindow_->setHeight(bgHeight);
 
-    // clear all previously drawn inventory cells
+    // clear/stop listening to all previously drawn inventory cells
     for (ItemCell* cell:cells_){
+        disconnect(cell,&ItemCell::clicked,this,&InventoryViewer::onItemCellClicked);
         scrollWindow_->remove(cell);
     }
     cells_.clear();
@@ -168,6 +179,8 @@ void InventoryViewer::draw_()
             cell->setGuiPos(QPointF(cellX,cellY));
             cells_.push_back(cell);
             scrollWindow_->add(cell,QPointF(cellX,cellY));
+
+            connect(cell,&ItemCell::clicked,this,&InventoryViewer::onItemCellClicked);
 
             x++;
             if (x == numCellsHorizontally_){
