@@ -23,13 +23,11 @@ QuestViewer::QuestViewer(Quests *quests):
     descOffsetY_(20),
     outterPanel_(new Panel()),
     scrollWindow_(new ScrollWindow()),
-    selectedQuestDescription_(new Label()),
-    closeButton_(new Button())
+    selectedQuestDescription_(new Label())
 {   
     // set parents
     scrollWindow_->setParentGui(outterPanel_);
     selectedQuestDescription_->setParentGui(outterPanel_);
-    closeButton_->setParentGui(outterPanel_);
 
     // defaults
     outterPanel_->setBackgroundPixmap(QPixmap(":/resources/graphics/misc/paper.png"));
@@ -91,10 +89,6 @@ void QuestViewer::draw_()
     // position/size description label properly
     selectedQuestDescription_->setGuiPos(QPointF(descLabelX_,swY_+swHeight_+descOffsetY_));
     selectedQuestDescription_->setWidth(descWidth_);
-
-    // place close button
-    closeButton_->setText("   close   ");
-    closeButton_->setGuiPos(QPointF(outterPanel_->width() - 97,outterPanel_->height()));
 
     // create a quest label for each quest
     if (quests_ != nullptr){

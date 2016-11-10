@@ -66,6 +66,8 @@ private:
 /// That's it! The initial response and all of its choices will be displayed.
 /// When the user clicks on a choice, the response for that choice (along with the Response's
 /// choices) will be displayed. By clicking the various Choices, the user can "talk" wit the dialog.
+/// @author Abdullah Aghazadah
+/// @date 11/2/16
 class DialogGui : public QObject, public Gui
 {
     Q_OBJECT

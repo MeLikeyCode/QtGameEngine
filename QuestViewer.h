@@ -53,7 +53,6 @@ private:
     Panel* outterPanel_;
     ScrollWindow* scrollWindow_;
     Label* selectedQuestDescription_;
-    Button* closeButton_;
 };
 
 #endif // QUESTVIEWER_H
