@@ -23,7 +23,6 @@ class Game: public QGraphicsView{
 public:
     // enums
     enum class MouseMode { regular, selectPosition, selectEntity };
-    enum class Direction { up, down, left, right };
 
     // constructor
     Game(MapGrid* mapGrid, int xPosOfStartingMap, int yPosOfStartingMap);
