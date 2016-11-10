@@ -58,7 +58,7 @@ void Game::launch(){
                   // allow launching normal or full screen
 
      //showFullScreen();
-     setSceneRect(0,0,width(),height());
+    setSceneRect(0,0,width(),height());
 }
 
 MapGrid *Game::mapGrid()
