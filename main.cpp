@@ -133,9 +133,9 @@ int main(int argc, char *argv[])
 //    InventoryViewer* v = new InventoryViewer(player->inventory());
 //    game->addGui(v);
 
-//    // test inventory user
-//    InventoryUser* iu = new InventoryUser(game,player->inventory());
-//    game->addGui(iu);
+    // test inventory user
+    InventoryUser* iu = new InventoryUser(game,player->inventory());
+    game->addGui(iu);
 
 //    // test panel
 //    Panel* p = new Panel();
@@ -187,29 +187,29 @@ int main(int argc, char *argv[])
 //    InventoryCell* cell = new InventoryCell(game,100,100);
 //    game->addGui(cell);
 
-//    // test QuestViewer
-    Quests* quests = new Quests();
-    Quest* q1 = new Quest("kill bears","please kill 10 bears");
-    Quest* q2 = new Quest("kill flies","please find 5 flies");
-    Quest* q3 = new Quest("kill pencils","please find 5 pencils");
-    Quest* q4 = new Quest("kill papers","please find 5 papers");
-    Quest* q5 = new Quest("kill desks","please find 5 desks");
-    Quest* q6 = new Quest("kill mice","please find 5 mice");
-    quests->addQuest(q1);
-    quests->addQuest(q2);
-    quests->addQuest(q3);
-    quests->addQuest(q4);
-    quests->addQuest(q5);
-    quests->addQuest(q6);
+////    // test QuestViewer
+//    Quests* quests = new Quests();
+//    Quest* q1 = new Quest("kill bears","please kill 10 bears");
+//    Quest* q2 = new Quest("kill flies","please find 5 flies");
+//    Quest* q3 = new Quest("kill pencils","please find 5 pencils");
+//    Quest* q4 = new Quest("kill papers","please find 5 papers");
+//    Quest* q5 = new Quest("kill desks","please find 5 desks");
+//    Quest* q6 = new Quest("kill mice","please find 5 mice");
+//    quests->addQuest(q1);
+//    quests->addQuest(q2);
+//    quests->addQuest(q3);
+//    quests->addQuest(q4);
+//    quests->addQuest(q5);
+//    quests->addQuest(q6);
 
 //    QuestViewer* questViewer = new QuestViewer(quests);
 //    questViewer->setGuiPos(QPointF(0,300));
 //    game->addGui(questViewer);
 
-    // test QuestAcceptor
-    QuestAcceptor* questAcceptor = new QuestAcceptor(game);
-    questAcceptor->setQuests(quests);
-    game->addGui(questAcceptor);
+//    // test QuestAcceptor
+//    QuestAcceptor* questAcceptor = new QuestAcceptor(game);
+//    questAcceptor->setQuests(quests);
+//    game->addGui(questAcceptor);
 
 //    // test scroll bar
 //    ScrollBar* sb = new ScrollBar();
