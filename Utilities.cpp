@@ -1,8 +1,17 @@
+/// This file defines Utilities.h
+/// @author Abdullah Aghazadah
+/// @date 8-17-16
+/// @file
+
+#include <stdlib.h>
+#include <time.h>
+
 #include "Map.h"
 #include "RandomImageEntity.h"
 #include "PathingMap.h"
-#include <stdlib.h>
-#include <time.h>
+#include "AIEntity.h"
+#include <QtMath>
+
 
 /// Adds the specified number of trees randomly scattered on the specified Map.
 void addRandomTrees(Map *mapToAddTreesTo, int numTreesToAdd)
@@ -20,6 +29,7 @@ void addRandomTrees(Map *mapToAddTreesTo, int numTreesToAdd)
     }
 }
 
+/// Adds the specified number of rocks randomly scattered on the specified Map.
 void addRandomRocks(Map *mapToAddRocksTo, int numRocksToAdd)
 {
     for (int i = 0, n = numRocksToAdd; i < n; i++){
@@ -35,6 +45,7 @@ void addRandomRocks(Map *mapToAddRocksTo, int numRocksToAdd)
     }
 }
 
+/// Adds the specified number of bushes randomly scattered on the specified Map.
 void addRandomBushes(Map *mapToAddBushesTo, int numBushesToAdd)
 {
     for (int i = 0, n = numBushesToAdd; i < n; i++){
@@ -48,4 +59,26 @@ void addRandomBushes(Map *mapToAddBushesTo, int numBushesToAdd)
         double randYPos = rand() % mapToAddBushesTo->height() - 100;
         rock->setPointPos(QPointF(randXPos,randYPos));
     }
+}
+
+/// Adds an AIEntity on the specified Map at the specified position and on the
+/// specified team.
+/// @return a pointer to the added entity.
+AIEntity* addAIEntity(Map *mapToAddTo, const QPointF &posToAddTo, int teamToAddTo)
+{
+    // create enemy (will follow/attack its enemies)
+    AIEntity* e = new AIEntity();
+    e->setGroupID(teamToAddTo);
+    // e->addEnemy(0);
+    e->setPointPos(posToAddTo);
+    mapToAddTo->addEntity(e);
+    return e;
+}
+
+/// Returns the distance between the two points.
+double distance(QPointF p1, QPointF p2)
+{
+    double deltaX = p2.x() - p1.x();
+    double deltaY = p2.y() - p1.y();
+    return qAbs(qSqrt(qPow(deltaX,2) + qPow(deltaY,2)));
 }

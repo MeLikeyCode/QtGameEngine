@@ -62,6 +62,15 @@ public:
 
     std::vector<DynamicEntity*> enemies_; // TODO delete test
 
+    void addWatchedEntity(Entity* watched, Entity* watching, double range);
+    bool watchedWatchingPairExists(Entity* watched, Entity* watching);
+    void removeWatchedEntity(Entity* watched, Entity* watching);
+    void removeWatchedEntity(Entity* watched);
+    std::set<Entity*> watchedEntities();
+    std::set<Entity*> watchingEntities(Entity *of);
+    double watchedWatchingRange(Entity* watched, Entity* watching);
+    void setWatchedWatchingRange(Entity* watched, Entity* watching, double range);
+
 signals:
     /// Emitted Whenever a position is selected while Game is in selectPosition mode.
     void positionSelected(QPointF pos);
@@ -72,9 +81,27 @@ signals:
     /// Emitted when the current Map of the game is changed.
     void mapChanged(Map* oldMap, Map* newMap);
 
+    /// Emitted when a watched Entity enters within range of one of its watching entities.
+    /// Game allows you to keep track of some Entities that are being watched by some other Entities.
+    /// Whenever a "watched" entity moves, game will determine if its within range of any of the
+    /// entities that are watching it (i.e. the "watching" entities), if so, a signal will be
+    /// emitted.
+    ///
+    /// For example, suppose you have entityA and entityB. You want entityA to be notified
+    /// whenever entityB enters within 100 pixels of it. You can do this by calling
+    /// addWatchedEntity(entityB, entityA, 100);
+    /// @param range the range of the watching entity that the watched entity just entered.
+    void watchedEntityEntersRange(Entity* watched, Entity* watching, double range);
+
+    /// Emitted when a watched Entity leaves range of one of its watching entities.
+    /// @see watchedEntityEntersRange()
+    /// @param range the range of the wathing entity that the watched entity just left.
+    void watchedEntityLeavesRange(Entity* watched, Entity* watching, double range);
+
 public slots:
     void askEnemiesToMove(); // TODO delete test
     void updateGuiPositions();
+    void onEntityMoved(Entity* entity);
 
 private:
     // main private attributes
@@ -83,9 +110,14 @@ private:
     std::set<int> keysPressed_;
     MouseMode mouseMode_;
 
-    QTimer* updateTimer_;
-
+    QTimer* guiUpdateTimer_;
     std::unordered_set<Gui*> guis_;
+
+    // watched/watching entities
+    std::map<Entity*, std::set<Entity*>> watchedToWatching_; // each Entity that is watched to the Entities that are watching it
+    std::map<std::pair<Entity*,Entity*>,double> watchedWatchingPairToRange_; // for each watched/watching pair, what is the range?
+    std::map<std::pair<Entity*,Entity*>,bool> watchedWatchingPairToEnterRangeEmitted_; // has the enters range event been emitted yet for a pair of watched watching entities?
+
 
     // TODO remove the following attributes, test attributes
     DynamicEntity* player_;

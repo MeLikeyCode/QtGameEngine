@@ -36,6 +36,7 @@
 #include "DialogGui.h"
 #include "InventoryUser.h"
 #include "QuestAcceptor.h"
+#include "AIEntity.h"
 
 #include <QMediaPlayer>
 

@@ -141,6 +141,12 @@ void Entity::setPointPos(const QPointF &pos){
     Map* entitysMap = map();
     if (entitysMap){
         entitysMap->updatePathingMap();
+
+        //if the map is in a game, let map know entity moved (watched-watching pair)
+        Game* entitysGame = entitysMap->game();
+        if (entitysGame){
+            entitysGame->onEntityMoved(this);
+        }
     }
 
     // if followed by the camear, tell game cam to move here
