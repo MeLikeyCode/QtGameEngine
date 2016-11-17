@@ -5,7 +5,8 @@
 
 Item::Item():
     inventory_(nullptr),
-    numOfCharges_(1)
+    numOfCharges_(1),
+    description_("Item has no description")
 {
     // empty constructor body
 }
@@ -46,4 +47,18 @@ int Item::numOfCharges()
 void Item::setNumOfCharges(int n)
 {
     numOfCharges_ = n;
+}
+
+/// Sets the description text of the Item.
+/// The description text is shown in places like shops, etc...
+void Item::setDescription(std::string description)
+{
+    description_ = description;
+}
+
+/// Returns the description text of the Item.
+/// @see setDescription()
+std::string Item::description()
+{
+    return description_;
 }

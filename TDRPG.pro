@@ -86,7 +86,8 @@ SOURCES += main.cpp \
     DialogGui.cpp \
     ItemCell.cpp \
     InventoryUser.cpp \
-    QuestAcceptor.cpp
+    QuestAcceptor.cpp \
+    ShopGui.cpp
 
 HEADERS  += \
     Map.h \
@@ -161,7 +162,8 @@ HEADERS  += \
     DialogGui.h \
     ItemCell.h \
     InventoryUser.h \
-    QuestAcceptor.h
+    QuestAcceptor.h \
+    ShopGui.h
 
 RESOURCES += \
     res.qrc

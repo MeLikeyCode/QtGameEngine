@@ -50,10 +50,17 @@ void InventoryViewer::setInventory(Inventory *inventory)
     if (inventory != nullptr){
         connect(inventory,&Inventory::itemAdded,this,&InventoryViewer::onItemAddedOrRemovedFromInventory);
         connect(inventory,&Inventory::itemRemoved,this,&InventoryViewer::onItemAddedOrRemovedFromInventory);
+        inventory_ = inventory;
     }
 
     // draw
     draw_();
+}
+
+/// Returns the Inventory that the InventoryViewer is visualizing.
+Inventory *InventoryViewer::inventory()
+{
+    return inventory_;
 }
 
 /// Sets the distance between the outter edge of the InventoryViewer and the actual cells.
@@ -131,6 +138,20 @@ void InventoryViewer::setCellHeight(double height)
     draw_();
 }
 
+/// Returns the height of the InventoryViewer.
+double InventoryViewer::height()
+{
+    double bgHeight = numCellsVertically_ * (cellHeight_ + paddingBWCells_) - paddingBWCells_ + 2 * border_;
+    return bgHeight;
+}
+
+/// Returns the width of the InventoryViewer.
+double InventoryViewer::width()
+{
+    double bgWidth = numCellsHorizontally_ * (cellWidth_ + paddingBWCells_) - paddingBWCells_ + 2 * border_;
+    return bgWidth;
+}
+
 /// Executed when an Item is added to the InventoryViewer's Inventory.
 void InventoryViewer::onItemAddedOrRemovedFromInventory(Item *item)
 {
@@ -151,8 +172,8 @@ void InventoryViewer::onItemCellClicked(ItemCell *itemCell, int button)
 void InventoryViewer::draw_()
 {
     // draw background
-    double bgWidth = numCellsHorizontally_ * (cellWidth_ + paddingBWCells_) - paddingBWCells_ + 2 * border_;
-    double bgHeight = numCellsVertically_ * (cellHeight_ + paddingBWCells_) - paddingBWCells_ + 2 * border_;
+    double bgWidth = width();
+    double bgHeight = height();
 
     scrollWindow_->setWidth(bgWidth);
     scrollWindow_->setHeight(bgHeight);

@@ -1,8 +1,8 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
-#include "DynamicEntity.h"
 #include <set>
+#include "DynamicEntity.h"
 
 class Weapon;
 
@@ -17,10 +17,10 @@ class AIEntity: public DynamicEntity
     Q_OBJECT
 public:
     // constants
-    static const int CHECK_FOV_FREQUENCY_MS = 500; // how often (in ms) the AIEntity should check its field
-                                                // of view
-    static const int ATTACK_FREQUENCY_MS = 1500;   // how often (in ms) the AIEntity should be told to attack (swing)
-                                                // when it is within strikin range of an enemy
+    static const int CHECK_FOV_FREQUENCY_MS = 500;  // how often (in ms) the AIEntity should check its field
+                                                    // of view
+    static const int ATTACK_FREQUENCY_MS = 1500;    // how often (in ms) the AIEntity should be told to attack (swing)
+                                                    // when it is within strikin range of an enemy
 
     AIEntity();
     ~AIEntity();

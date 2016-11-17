@@ -37,6 +37,7 @@
 #include "InventoryUser.h"
 #include "QuestAcceptor.h"
 #include "AIEntity.h"
+#include "ShopGui.h"
 
 #include <QMediaPlayer>
 
@@ -130,13 +131,13 @@ int main(int argc, char *argv[])
     leftHandRanged->setPosition(player->namedPoint("center"));
     player->addSlot(leftHandRanged);
 
-//    // test inventoryviewoer
-//    InventoryViewer* v = new InventoryViewer(player->inventory());
-//    game->addGui(v);
+    // test inventoryviewoer
+    InventoryViewer* v = new InventoryViewer(player->inventory());
+    game->addGui(v);
 
-    // test inventory user
-    InventoryUser* iu = new InventoryUser(game,player->inventory());
-    game->addGui(iu);
+//    // test inventory user
+//    InventoryUser* iu = new InventoryUser(game,player->inventory());
+//    game->addGui(iu);
 
 //    // test panel
 //    Panel* p = new Panel();
@@ -267,6 +268,23 @@ int main(int argc, char *argv[])
 //    game->addGui(dialog);
 //    dialog->setGuiPos(QPointF(450,25));
 
+    ShopGui* shopGui = new ShopGui(game);
+    shopGui->setGuiPos(QPointF(400,0));
+
+    Inventory* seller = new Inventory();
+
+    Bow* sBow = new Bow();
+    Spear* sSpear = new Spear();
+    Axe* sAxe = new Axe();
+
+    seller->addItem(sBow);
+    seller->addItem(sSpear);
+    seller->addItem(sAxe);
+
+    shopGui->setSeller(seller);
+    shopGui->setBuyer(player->inventory());
+
+    game->addGui(shopGui);
 
     return a.exec();
 }

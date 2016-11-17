@@ -75,6 +75,18 @@ void Button::setBackgroundPixmap(const QPixmap &pixmap)
     draw_();
 }
 
+/// Returns the height of the Button.
+double Button::height()
+{
+    return backgroundPixmap_.height();
+}
+
+/// Returns the width of the Button.
+double Button::width()
+{
+    return backgroundPixmap_.width();
+}
+
 /// Executed when the user clicks on the Button. Will emit clicked() signal.
 void Button::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {

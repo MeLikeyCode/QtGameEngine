@@ -22,7 +22,7 @@ DynamicEntity *Inventory::entity()
 
 /// Adds the specified item to the Inventory.
 /// If the Item is already in the Inventory, does nothing.
-/// If the Item is in another Inventory, it will be removed from there first.
+/// Throws if the Item is in another Inventory.
 void Inventory::addItem(Item *item)
 {
     // if item is already in this inventory, do nothing
@@ -30,16 +30,17 @@ void Inventory::addItem(Item *item)
         return;
     }
 
-    // if item is in another inventory, remove it first
+    // if item is already in another inventory, throw
     Inventory* itemsInventory = item->inventory();
     if (itemsInventory != nullptr && itemsInventory != this){
-        itemsInventory->removeItem(item);
+        assert(false);
     }
 
     // add to this inventory
     items_.insert(item);
     item->inventory_ = this;
 
+    // remove item from ground
     DynamicEntity* owner = entity();
     if (owner != nullptr){
         Map* theMap = owner->map();
@@ -52,16 +53,12 @@ void Inventory::addItem(Item *item)
 }
 
 /// Removes the specified Item from the Inventory.
-/// If the Item is not in the Inventory, does nothing.
+/// Throws if the Item is not in the Inventory.
 /// If the Inventory belongs to an Entity who is in a map, drops the
 /// Item next to that Entity.
 void Inventory::removeItem(Item *item)
 {
     assert (contains(item));
-    // item not in inventory
-    if (!contains(item)){
-        return;
-    }
 
     // inventory belongs to entity who is in map
     DynamicEntity* owner = entity();

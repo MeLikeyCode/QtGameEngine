@@ -24,6 +24,8 @@ public:
     void setInventory(Inventory* inv);
     int numOfCharges();
     void setNumOfCharges(int n);
+    void setDescription(std::string description);
+    std::string description();
 
 protected:
     Item(); // constructor protected so that objects cannot be instantiated, but subclasses
@@ -31,6 +33,7 @@ protected:
 
 private:
     Inventory* inventory_; // the Inventory, nullptr means on ground
+    std::string description_;
     int numOfCharges_;
 };
 

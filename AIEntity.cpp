@@ -52,7 +52,7 @@ AIEntity::AIEntity()
 
 //    // a weapon
 //    Bow* bow = new Bow();
-//    addItemToInventory(bow);
+//    inventory()->addItem(bow);
 //    equipItem(bow,cs);
 
     Spear* spear = new Spear();
@@ -60,8 +60,8 @@ AIEntity::AIEntity()
     equipItem(spear,rhs);
 
 //    Axe* axe = new Axe();
-//    addItemToInventory(axe);
-//    equipItem(axe,lhs);
+//    inventory()->addItem(axe);
+//    equipItem(axe,rhs);
 
     // default weapon
     setDefaultWeapon(spear);

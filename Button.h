@@ -8,6 +8,8 @@
 
 class QGraphicsTextItem;
 
+// TODO: reimplement using Panel as background (reduces duplicate code)
+
 /// Represents a button Gui that can be added to a Game. You can set various
 /// options such as the text color, padding b/w the text and the button's edges,
 /// weather the text is bold/italic, etc...
@@ -29,6 +31,9 @@ public:
     void setTextItalic(bool tf);
     void setBackgroundColor(const QColor& color);
     void setBackgroundPixmap(const QPixmap& pixmap);
+
+    double height();
+    double width();
 
     void mousePressEvent(QGraphicsSceneMouseEvent* event);
 

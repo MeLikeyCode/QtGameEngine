@@ -24,6 +24,7 @@ public:
     QGraphicsItem* getGraphicsItem();
 
     void setInventory(Inventory* inventory);
+    Inventory* inventory();
 
     void setBorder(double amount);
     void setPaddingBWCells(double amount);
@@ -35,6 +36,9 @@ public:
     void setNumCellsVertically(int numCellsV);
     void setCellWidth(double width);
     void setCellHeight(double height);
+
+    double height();
+    double width();
 
 public slots:
     void onItemAddedOrRemovedFromInventory(Item* item);
