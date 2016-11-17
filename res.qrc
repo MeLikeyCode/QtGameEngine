@@ -68,5 +68,6 @@
         <file>graphics/effects/fog.png</file>
         <file>graphics/misc/paper.png</file>
         <file>graphics/misc/buttonbg.png</file>
+        <file>graphics/misc/gold.png</file>
     </qresource>
 </RCC>

@@ -41,7 +41,7 @@ void ItemRainOfSpears::spearStep_()
     // make sure the inventory has an owner
     DynamicEntity* owner = inventory()->entity();
 
-    int NUM_SPEARS_TO_GENERATE = 10;
+    int NUM_SPEARS_TO_GENERATE = 5;
     int X_OFFSET_RANGE = 1000; // number of pixels around the owner's x position to spawn
                                // projectiles at
     int Y_OFFSET = 1000; // number of pixels ABOVE the owner to spawn projectiles

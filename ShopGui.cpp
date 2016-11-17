@@ -24,10 +24,12 @@ ShopGui::ShopGui(Game *game):
     buyButton_->setParentGui(panel_);
     closeButton_->setParentGui(panel_);
 
-    // position/size/apperence sub guis
+    // position/size/apperence
+    inventoryViewer_->setNumCellsHorizontally(5);
     double inventoryViewerWidth = inventoryViewer_->width();
-    panel_->setGuiPos(QPointF(0,inventoryViewer_->height()));
+    panel_->setGuiPos(QPointF(20,inventoryViewer_->height()));
     panel_->setWidth(inventoryViewerWidth);
+    panel_->setHeight(150);
     descriptionLabel_->setWidth(inventoryViewerWidth);
     descriptionLabel_->setGuiPos(QPointF(10,10)); // a little inside the panel
     priceLabel_->setWidth(inventoryViewerWidth);
