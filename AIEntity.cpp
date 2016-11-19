@@ -82,8 +82,7 @@ Weapon *AIEntity::defaultWeapon()
 
 void AIEntity::setDefaultWeapon(Weapon *weapon)
 {
-    // make sure the weapon is in the inventory of the Enemy
-    // assert(inventoryContains(weapon)); TODO: find out why this line gives error
+
 
     defaultWeapon_ = weapon;
 

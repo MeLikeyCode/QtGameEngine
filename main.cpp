@@ -39,6 +39,7 @@
 #include "AIEntity.h"
 #include "ShopGui.h"
 #include "ItemGold.h"
+#include "BodyThrust.h"
 
 #include <QMediaPlayer>
 
@@ -111,8 +112,10 @@ int main(int argc, char *argv[])
 
     // give the entity a sprite (overrides default one)
     Sprite* spr = new Sprite();
-    spr->addFrames(":resources/graphics/human",1,"stand"); // stand anim
-    spr->addFrames(":resources/graphics/human",6,"walk");  // walk anim
+//    spr->addFrames(":resources/graphics/human",1,"stand"); // stand anim
+//    spr->addFrames(":resources/graphics/human",6,"walk");  // walk anim
+    spr->addFrames(":/resources/graphics/spider",7,"walk");
+    spr->addFrames(":/resources/graphics/spider",1,"stand");
     player->setSprite(spr);
     spr->play("stand",1,1); // play stand anim
 
@@ -269,26 +272,45 @@ int main(int argc, char *argv[])
 //    game->addGui(dialog);
 //    dialog->setGuiPos(QPointF(450,25));
 
-    ShopGui* shopGui = new ShopGui(game);
-    shopGui->setGuiPos(QPointF(400,0));
+//    ShopGui* shopGui = new ShopGui(game);
+//    shopGui->setGuiPos(QPointF(400,0));
 
-    Inventory* seller = new Inventory();
+//    Inventory* seller = new Inventory();
 
-    Bow* sBow = new Bow();
-    Spear* sSpear = new Spear();
-    Axe* sAxe = new Axe();
+//    Bow* sBow = new Bow();
+//    Spear* sSpear = new Spear();
+//    Axe* sAxe = new Axe();
 
-    seller->addItem(sBow);
-    seller->addItem(sSpear);
-    seller->addItem(sAxe);
+//    seller->addItem(sBow);
+//    seller->addItem(sSpear);
+//    seller->addItem(sAxe);
 
-    shopGui->setSeller(seller);
-    shopGui->setBuyer(player->inventory());
+//    shopGui->setSeller(seller);
+//    shopGui->setBuyer(player->inventory());
 
-    // game->addGui(shopGui);
-    ItemGold* gold = new ItemGold();
-    gold->setPointPos(QPointF(10,300));
-    map1->addEntity(gold);
+//    // game->addGui(shopGui);
+//    ItemGold* gold = new ItemGold();
+//    gold->setPointPos(QPointF(10,300));
+//    map1->addEntity(gold);
+
+
+    // create an entity that will thrust at me
+    AIEntity* thruster = new AIEntity();
+
+    Sprite* thrusterSprite = new Sprite();
+    thrusterSprite->addFrames(":resources/graphics/spider",7,"walk");
+    thrusterSprite->addFrames(":resources/graphics/spider",1,"stand");
+
+    thruster->setSprite(thrusterSprite);
+
+    BodyThrust* bodyThrust = new BodyThrust();
+    thruster->setDefaultWeapon(bodyThrust);
+
+    thruster->addEnemy(0);
+
+    thruster->setPointPos(QPointF(0,300));
+    map1->addEntity(thruster);
+
 
     return a.exec();
 }

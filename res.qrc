@@ -69,5 +69,13 @@
         <file>graphics/misc/paper.png</file>
         <file>graphics/misc/buttonbg.png</file>
         <file>graphics/misc/gold.png</file>
+        <file>graphics/spider/stand0.png</file>
+        <file>graphics/spider/walk0.png</file>
+        <file>graphics/spider/walk1.png</file>
+        <file>graphics/spider/walk2.png</file>
+        <file>graphics/spider/walk3.png</file>
+        <file>graphics/spider/walk4.png</file>
+        <file>graphics/spider/walk5.png</file>
+        <file>graphics/spider/walk6.png</file>
     </qresource>
 </RCC>
