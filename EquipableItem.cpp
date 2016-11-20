@@ -6,7 +6,8 @@
 #include "DynamicEntity.h"
 
 EquipableItem::EquipableItem():
-    slotEquippedIn_(nullptr)
+    slotEquippedIn_(nullptr),
+    attachmentPoint_()
 {
 
 }

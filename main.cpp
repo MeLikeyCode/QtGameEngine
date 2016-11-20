@@ -294,22 +294,25 @@ int main(int argc, char *argv[])
 //    map1->addEntity(gold);
 
 
-    // create an entity that will thrust at me
-    AIEntity* thruster = new AIEntity();
+//    // create an entity that will thrust at me
+//    AIEntity* thruster = new AIEntity();
 
-    Sprite* thrusterSprite = new Sprite();
-    thrusterSprite->addFrames(":resources/graphics/spider",7,"walk");
-    thrusterSprite->addFrames(":resources/graphics/spider",1,"stand");
+//    Sprite* thrusterSprite = new Sprite();
+//    thrusterSprite->addFrames(":resources/graphics/spider",7,"walk");
+//    thrusterSprite->addFrames(":resources/graphics/spider",1,"stand");
 
-    thruster->setSprite(thrusterSprite);
+//    thruster->setSprite(thrusterSprite);
 
-    BodyThrust* bodyThrust = new BodyThrust();
-    thruster->setDefaultWeapon(bodyThrust);
+//    BodyThrust* bodyThrust = new BodyThrust();
+//    thruster->setDefaultWeapon(bodyThrust);
 
-    thruster->addEnemy(0);
+//    thruster->addEnemy(0);
 
-    thruster->setPointPos(QPointF(0,300));
-    map1->addEntity(thruster);
+//    thruster->setPointPos(QPointF(0,300));
+//    map1->addEntity(thruster);
+
+    BodyThrust* bt = new BodyThrust(player);
+    player->bodyThrust = bt;
 
 
     return a.exec();

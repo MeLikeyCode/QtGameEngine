@@ -17,6 +17,8 @@ class Item;
 class Sprite;
 class QPointF;
 
+class NoTargetAbility; // TODO: remove, test only
+
 /// An Entity is the base class for anything that can go inside a Map.
 /// @author Abdullah Aghazadah
 /// @date 5-20-15
@@ -99,6 +101,8 @@ public:
 
     bool isFollowedByCam();
     void setFollowedByCam(bool tf);
+
+    NoTargetAbility* bodyThrust; // TODO: remove, test only
 
 private:
     // main attributes

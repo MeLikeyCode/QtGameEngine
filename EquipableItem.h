@@ -24,8 +24,8 @@ public:
     Slot* slotEquippedIn();
 
 private:
-    QPointF attachmentPoint_;
     Slot* slotEquippedIn_;
+    QPointF attachmentPoint_;
 };
 
 #endif // EQUIPABLEITEM_H

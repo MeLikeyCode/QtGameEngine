@@ -392,8 +392,6 @@ void Entity::damage(Entity *entity, double amount)
 
     // can be damaged
     entity->setHealth(entity->health() - amount);
-
-
 }
 
 /// True sets is so that the entity can only be damaged by entites specified

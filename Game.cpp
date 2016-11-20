@@ -21,6 +21,7 @@
 #include "Gui.h"
 #include <cassert>
 #include "Utilities.h"
+#include "BodyThrust.h" // TODO: remove, test only
 
 /// Creates an instance of the Game with some default options.
 ///
@@ -205,12 +206,17 @@ void Game::mousePressEvent(QMouseEvent *event){
 //        map_->drawPathingMap();
 //    }
 
-    // weapon 1 attack
+//    // weapon 1 attack
+//    if (event->button() == Qt::MiddleButton){
+//        for (Slot* slot:player_->getSlots()){
+//            if (slot->isFilled())
+//            slot->use();
+//        }
+//    }
+
+    // use ability
     if (event->button() == Qt::MiddleButton){
-        for (Slot* slot:player_->getSlots()){
-            if (slot->isFilled())
-            slot->use();
-        }
+        player_->bodyThrust->use();
     }
 
 

@@ -89,7 +89,11 @@ SOURCES += main.cpp \
     QuestAcceptor.cpp \
     ShopGui.cpp \
     ItemGold.cpp \
-    BodyThrust.cpp
+    BodyThrust.cpp \
+    Ability.cpp \
+    NoTargetAbility.cpp \
+    PointTargetAbility.cpp \
+    EntityTargetAbility.cpp
 
 HEADERS  += \
     Map.h \
@@ -167,7 +171,11 @@ HEADERS  += \
     QuestAcceptor.h \
     ShopGui.h \
     ItemGold.h \
-    BodyThrust.h
+    BodyThrust.h \
+    Ability.h \
+    NoTargetAbility.h \
+    PointTargetAbility.h \
+    EntityTargetAbility.h
 
 RESOURCES += \
     res.qrc
