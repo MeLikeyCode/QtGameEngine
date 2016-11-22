@@ -42,7 +42,7 @@ public:
     // destructor
     virtual ~Entity();
 
-    PathingMap pathingMap() const;
+    PathingMap pathingMap() const;  // TODO do not return by value, too expensive to copy
     void setPathingMap(const PathingMap& pathingMap, const QPointF &pos=QPointF(0,0));
     bool canFit(const QPointF& atPos);
 

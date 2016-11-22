@@ -83,6 +83,7 @@ Map *Entity::map() const{
 
 /// Sets the Map that the Entity should be in.
 /// Simply delegates to Map::addEntity(Entity*);
+/// // TODO: get rid of this function, map->addEntity() is enough
 /// @see Map::addEntity(Entity*)
 void Entity::setMap(Map *toMap)
 {
@@ -285,6 +286,7 @@ void Entity::setCellPos(const Node &cell){
 }
 
 /// Returns true if the Entity can fit at the specified point.
+/// // TODO: move out into a non member utility function
 /// @see PathingMap::canFit(PathingMap,QPointF).
 bool Entity::canFit(const QPointF &atPos)
 {
