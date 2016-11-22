@@ -21,7 +21,7 @@
 #include "Gui.h"
 #include <cassert>
 #include "Utilities.h"
-#include "BodyThrust.h" // TODO: remove, test only
+#include "BodyThrustEntity.h"
 
 /// Creates an instance of the Game with some default options.
 ///
@@ -214,13 +214,6 @@ void Game::mousePressEvent(QMouseEvent *event){
 //        }
 //    }
 
-    // use ability
-    if (event->button() == Qt::MiddleButton){
-        player_->bodyThrust->use();
-    }
-
-
-
 //    // weapon 2 attack
 //    if (event->button() == Qt::RightButton){
 //        player_->slot("rightHand")->use();
@@ -234,10 +227,10 @@ void Game::mousePressEvent(QMouseEvent *event){
 
 //    }
 
-    // create AIEntity (part of grp 1)
+    // create BodyThrust entity
     if (event->button() == Qt::RightButton){
         // create enemy (will follow/attack its enemies)
-        AIEntity* e = new AIEntity();
+        BodyThrustEntity* e = new BodyThrustEntity();
         e->setHeight(64);
         e->setGroupID(1);
         e->addEnemy(0);

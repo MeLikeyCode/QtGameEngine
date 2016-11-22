@@ -93,7 +93,8 @@ SOURCES += main.cpp \
     Ability.cpp \
     NoTargetAbility.cpp \
     PointTargetAbility.cpp \
-    EntityTargetAbility.cpp
+    EntityTargetAbility.cpp \
+    BodyThrustEntity.cpp
 
 HEADERS  += \
     Map.h \
@@ -175,7 +176,8 @@ HEADERS  += \
     Ability.h \
     NoTargetAbility.h \
     PointTargetAbility.h \
-    EntityTargetAbility.h
+    EntityTargetAbility.h \
+    BodyThrustEntity.h
 
 RESOURCES += \
     res.qrc
