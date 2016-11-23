@@ -15,11 +15,17 @@ ECRotateToMouse::ECRotateToMouse(Entity *entity):
     assert(entity != nullptr);
 
     connect(rotateTimer_,&QTimer::timeout,this,&ECRotateToMouse::rotateStep_);
+    rotateTimer_->start(rotateFrequency_);
 }
 
 /// Executed whenever the entity_ needs to rotate.
 /// Will rotate it closer to the mouse.
 void ECRotateToMouse::rotateStep_()
 {
-    rotater_->rotateTowards(entity_->map()->getMousePosition());
+    // do nothing if entity is not in a map
+    Map* entitysMap = entity_->map();
+    if (entitysMap == nullptr)
+        return;
+
+    rotater_->rotateTowards(entitysMap->getMousePosition());
 }

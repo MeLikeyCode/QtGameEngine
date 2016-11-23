@@ -15,8 +15,11 @@ class QTimer;
 ///
 /// Example usage:
 /// ECRotater* c = new ECRotater(entity);
+/// c.setRotationSpeed(someSpeed);
 /// c.rotateTowards(someAngle);
 /// c.rotateTowards(somePoint);
+/// c.rotateLeft(100); // rotate left by 100 degrees
+/// c.stopRotating(); // stops the entity from rotating
 ///
 /// After calling the rotateTowards() method, the entity will begin to rotate
 /// towards the specified angle/point. The rate at which the entity rotates

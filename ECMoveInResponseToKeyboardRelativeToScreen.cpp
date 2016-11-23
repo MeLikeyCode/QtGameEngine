@@ -17,6 +17,7 @@ ECMoveInResponseToKeyboardRelativeToScreen::ECMoveInResponseToKeyboardRelativeTo
 
     // connect timer to move step
     connect(moveTimer_,&QTimer::timeout,this,&ECMoveInResponseToKeyboardRelativeToScreen::moveStep_);
+    moveTimer_->start(stepFrequency_);
 }
 
 void ECMoveInResponseToKeyboardRelativeToScreen::moveStep_()
@@ -33,7 +34,7 @@ void ECMoveInResponseToKeyboardRelativeToScreen::moveStep_()
         return;
 
     // if entitysMap is not in a Game, do noting
-    Game* entitysGame = entitysGame;
+    Game* entitysGame = entitysMap->game();
     if (entitysGame == nullptr)
         return;
 
@@ -74,10 +75,10 @@ void ECMoveInResponseToKeyboardRelativeToScreen::moveStep_()
         if (entity_->canFit(newPt)){
             entity_->setPointPos(newPt);
 
-            // if the walk animation isn't playing already, play it.
-            if (entity_->sprite()->playingAnimation() != std::string("walk")){
-                entity_->sprite()->play("walk",-1,100);
-            }
+//            // if the walk animation isn't playing already, play it.
+//            if (entity_->sprite()->playingAnimation() != std::string("walk")){
+//                entity_->sprite()->play("walk",-1,100);
+//            }
         }
     }
 
@@ -91,10 +92,10 @@ void ECMoveInResponseToKeyboardRelativeToScreen::moveStep_()
         if (entity_->canFit(newPt)){
             entity_->setPointPos(newPt);
 
-            // if the walk animation isn't playing already, play it.
-            if (entity_->sprite()->playingAnimation() != std::string("walk")){
-                entity_->sprite()->play("walk",-1,100);
-            }
+//            // if the walk animation isn't playing already, play it.
+//            if (entity_->sprite()->playingAnimation() != std::string("walk")){
+//                entity_->sprite()->play("walk",-1,100);
+//            }
         }
     }
 
@@ -108,10 +109,10 @@ void ECMoveInResponseToKeyboardRelativeToScreen::moveStep_()
         if (entity_->canFit(newPt)){
             entity_->setPointPos(newPt);
 
-            // if the walk animation isn't playing already, play it.
-            if (entity_->sprite()->playingAnimation() != std::string("walk")){
-                entity_->sprite()->play("walk",-1,100);
-            }
+//            // if the walk animation isn't playing already, play it.
+//            if (entity_->sprite()->playingAnimation() != std::string("walk")){
+//                entity_->sprite()->play("walk",-1,100);
+//            }
         }
     }
 
@@ -125,18 +126,18 @@ void ECMoveInResponseToKeyboardRelativeToScreen::moveStep_()
         if (entity_->canFit(newPt)){
             entity_->setPointPos(newPt);
 
-            // if the walk animation isn't playing already, play it.
-            if (entity_->sprite()->playingAnimation() != std::string("walk")){
-                entity_->sprite()->play("walk",-1,100);
-            }
+//            // if the walk animation isn't playing already, play it.
+//            if (entity_->sprite()->playingAnimation() != std::string("walk")){
+//                entity_->sprite()->play("walk",-1,100);
+//            }
         }
     }
 
     // if none of the keys are pressed, play stand animation
     if (!wPressed && !aPressed && !sPressed && !dPressed){
         // only play if it isn't already playing
-        if (entity_->sprite()->playingAnimation() != std::string("stand")){
-            entity_->sprite()->play("stand",-1,100);
-        }
+//        if (entity_->sprite()->playingAnimation() != std::string("stand")){
+//            entity_->sprite()->play("stand",-1,100);
+//        }
     }
 }

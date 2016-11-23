@@ -7,7 +7,7 @@
 
 ECRotater::ECRotater(Entity *entity):
     entity_(entity),
-    rotationFrequency_(20),
+    rotationFrequency_(10),
     rotationTimer_(new QTimer(this)),
     rotateRight_(false),
     targetAngle_(0)

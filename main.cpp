@@ -40,6 +40,8 @@
 #include "ShopGui.h"
 #include "ItemGold.h"
 #include "BodyThrust.h"
+#include "ECMoveInResponseToKeyboardRelativeToScreen.h"
+#include "ECRotateToMouse.h"
 
 #include <QMediaPlayer>
 
@@ -289,6 +291,22 @@ int main(int argc, char *argv[])
 //    shopGui->setBuyer(player->inventory());
 
 //    // game->addGui(shopGui);
+
+    // create an entity that rotates towards the mouse
+    Entity* eee = new Entity();
+
+    Sprite* eeeSpr = new Sprite(QPixmap(":/resources/graphics/human/walk2.png"));
+
+    eee->setSprite(eeeSpr);
+
+    ECRotateToMouse* c = new ECRotateToMouse(eee);
+
+    eee->setPointPos(QPointF(10,200));
+    map1->addEntity(eee);
+
+    ECMoveInResponseToKeyboardRelativeToScreen* c2 = new ECMoveInResponseToKeyboardRelativeToScreen(eee);
+
+
 
     return a.exec();
 }
