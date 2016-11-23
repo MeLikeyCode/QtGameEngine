@@ -1,8 +1,10 @@
-#include "EBMoveInResponseToKeyboardRelativeToScreen.h"
+#include "ECMoveInResponseToKeyboardRelativeToScreen.h"
 #include "Entity.h"
 #include "Map.h"
 #include <QTimer>
 #include <cassert>
+#include "Game.h"
+#include "Sprite.h"
 
 ECMoveInResponseToKeyboardRelativeToScreen::ECMoveInResponseToKeyboardRelativeToScreen(Entity *entity):
     entity_(entity),
@@ -28,7 +30,7 @@ void ECMoveInResponseToKeyboardRelativeToScreen::moveStep_()
     // if currently not in a Map, do nothing
     Map* entitysMap = entity_->map();
     if (entitysMap == nullptr)
-        retur;
+        return;
 
     // if entitysMap is not in a Game, do noting
     Game* entitysGame = entitysGame;

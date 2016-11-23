@@ -2,15 +2,16 @@
 #define EBMOVEINRESPONSETOKEYBOARDRELATIVETOSCREEN_H
 
 #include <QObject>
+#include <QPointer>
+#include "Entity.h"
 
-class Entity;
 class QTimer;
 
 /// An entity controller (TODO: link to documentation) that
 /// moves an Entity relative to the screen in response to keyboard keys.
 ///
 /// Example usage:
-/// ECMoveInResponseToKeyboardRelativeToScreen* = new ECMoveInResponseToKeyboardRelativeToScreen(entity);
+/// ECMoveInResponseToKeyboardRelativeToScreen* c = new ECMoveInResponseToKeyboardRelativeToScreen(entity);
 ///
 /// That is all that is needed. Once constructed, the Entity passed into the constructor will move
 /// in response to the keyboard. The WASD keys are used to move the entity up, left, down, and right
