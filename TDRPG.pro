@@ -94,7 +94,8 @@ SOURCES += main.cpp \
     NoTargetAbility.cpp \
     PointTargetAbility.cpp \
     EntityTargetAbility.cpp \
-    BodyThrustEntity.cpp
+    BodyThrustEntity.cpp \
+    EBMoveInResponseToKeyboardRelativeToScreen.cpp
 
 HEADERS  += \
     Map.h \
@@ -177,7 +178,8 @@ HEADERS  += \
     NoTargetAbility.h \
     PointTargetAbility.h \
     EntityTargetAbility.h \
-    BodyThrustEntity.h
+    BodyThrustEntity.h \
+    EBMoveInResponseToKeyboardRelativeToScreen.h
 
 RESOURCES += \
     res.qrc
