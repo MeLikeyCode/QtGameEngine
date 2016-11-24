@@ -22,6 +22,12 @@ ECRotateToMouse::ECRotateToMouse(Entity *entity):
 /// Will rotate it closer to the mouse.
 void ECRotateToMouse::rotateStep_()
 {
+    // if the entity has been destroyed, stop rotating
+    if (entity_.isNull()){
+        rotateTimer_->disconnect();
+        return;
+    }
+
     // do nothing if entity is not in a map
     Map* entitysMap = entity_->map();
     if (entitysMap == nullptr)

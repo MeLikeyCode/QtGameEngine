@@ -7,7 +7,7 @@
 
 ECRotater::ECRotater(Entity *entity):
     entity_(entity),
-    rotationFrequency_(10),
+    rotationFrequency_(5),
     rotationTimer_(new QTimer(this)),
     rotateRight_(false),
     targetAngle_(0)
@@ -106,6 +106,10 @@ double ECRotater::rotationSpeed()
 
 void ECRotater::rotateStep_()
 {
+    // if the entity has been destroyed, do nothing
+    if (entity_.isNull())
+        stopRotating();
+
     // if it has reached its targetAngle, stop rotating
     if (abs(entity_->facingAngle() - targetAngle_) == 0 ){
         rotationTimer_->disconnect();

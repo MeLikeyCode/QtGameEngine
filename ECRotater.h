@@ -3,8 +3,9 @@
 
 #include <QObject>
 #include <QPointF>
+#include <QPointer>
+#include "Entity.h"
 
-class Entity;
 class QTimer;
 
 /// An entity controller (TODO: add doc link) that allows you to rotate
@@ -41,7 +42,7 @@ public:
 public slots:
     void rotateStep_();
 private:
-    Entity* entity_;
+    QPointer<Entity> entity_;
     double rotationFrequency_;
 
     QTimer* rotationTimer_;
