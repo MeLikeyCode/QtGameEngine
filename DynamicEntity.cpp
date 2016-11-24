@@ -41,8 +41,6 @@ DynamicEntity::DynamicEntity():
     inventory_ = new Inventory();
     inventory_->entity_ = this;
 
-    timeStuck_ = 0;
-
     pf_ = new AsyncShortestPathFinder();
     connect(pf_,SIGNAL(pathFound(std::vector<QPointF>)),this,SLOT(followPath_(std::vector<QPointF>)));
 

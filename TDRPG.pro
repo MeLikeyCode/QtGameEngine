@@ -97,7 +97,9 @@ SOURCES += main.cpp \
     BodyThrustEntity.cpp \
     ECRotateToMouse.cpp \
     ECMoveInResponseToKeyboardRelativeToScreen.cpp \
-    ECRotater.cpp
+    ECRotater.cpp \
+    ECChaseEnemies.cpp \
+    ECFieldOfViewEmitter.cpp
 
 HEADERS  += \
     Map.h \
@@ -183,7 +185,9 @@ HEADERS  += \
     BodyThrustEntity.h \
     ECRotateToMouse.h \
     ECMoveInResponseToKeyboardRelativeToScreen.h \
-    ECRotater.h
+    ECRotater.h \
+    ECChaseEnemies.h \
+    ECFieldOfViewEmitter.h
 
 RESOURCES += \
     res.qrc

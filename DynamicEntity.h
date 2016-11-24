@@ -95,7 +95,6 @@ private:
     void rotateTowardsTargetAngle();
     bool isPlayerControlled_;
     PlayerControlledMoveBehavior* moveBehavior_;
-    double timeStuck_;
 
     // field of view
     double fieldOfViewDistance_;
