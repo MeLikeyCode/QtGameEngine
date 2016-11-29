@@ -20,6 +20,12 @@ ECMoveInResponseToKeyboardRelativeToScreen::ECMoveInResponseToKeyboardRelativeTo
     moveTimer_->start(stepFrequency_);
 }
 
+ECMoveInResponseToKeyboardRelativeToScreen::~ECMoveInResponseToKeyboardRelativeToScreen()
+{
+    // make sure timer disconnects
+    // - it will (since its a child of this qobject)
+}
+
 void ECMoveInResponseToKeyboardRelativeToScreen::moveStep_()
 {
     // if the entity has been destroyed, stop

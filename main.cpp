@@ -42,6 +42,7 @@
 #include "BodyThrust.h"
 #include "ECMoveInResponseToKeyboardRelativeToScreen.h"
 #include "ECRotateToMouse.h"
+#include "ECChaseEnemies.h"
 
 #include <QMediaPlayer>
 
@@ -187,9 +188,9 @@ int main(int argc, char *argv[])
     map1->addEntity(pb);
 
     // add some trees/rocks
-    addRandomRocks(map1,5);
-    addRandomBushes(map1,20);
-    addRandomTrees(map1,15);
+//    addRandomRocks(map1,5);
+//    addRandomBushes(map1,20);
+//    addRandomTrees(map1,15);
 
 //    // test inventory cell
 //    InventoryCell* cell = new InventoryCell(game,100,100);
@@ -292,21 +293,35 @@ int main(int argc, char *argv[])
 
 //    // game->addGui(shopGui);
 
-    // create an entity that rotates towards the mouse
-    Entity* eee = new Entity();
+//    // create an entity that rotates towards the mouse
+//    Entity* eee = new Entity();
 
-    Sprite* eeeSpr = new Sprite(QPixmap(":/resources/graphics/human/walk2.png"));
+//    Sprite* eeeSpr = new Sprite(QPixmap(":/resources/graphics/human/walk2.png"));
+
+//    eee->setSprite(eeeSpr);
+
+//    ECRotateToMouse* c = new ECRotateToMouse(eee);
+
+//    eee->setPointPos(QPointF(10,200));
+//    map1->addEntity(eee);
+
+//    ECMoveInResponseToKeyboardRelativeToScreen* c2 = new ECMoveInResponseToKeyboardRelativeToScreen(eee);
+
+    // create an entity that chases enemies
+    Entity* eee = new Entity();
+    eee->setPointPos(QPointF(10,200));
+    eee->setGroupID(0);
+
+    Sprite* eeeSpr = new Sprite();
+    //spr->addFrames(":resources/graphics/human",1,"stand"); // stand anim
+    //spr->addFrames(":resources/graphics/human",6,"walk");  // walk anim
 
     eee->setSprite(eeeSpr);
 
-    ECRotateToMouse* c = new ECRotateToMouse(eee);
+    ECChaseEnemies* ecce = new ECChaseEnemies(eee);
+    ecce->addEnemyGroup(1);
 
-    eee->setPointPos(QPointF(10,200));
     map1->addEntity(eee);
-
-    ECMoveInResponseToKeyboardRelativeToScreen* c2 = new ECMoveInResponseToKeyboardRelativeToScreen(eee);
-
-
 
     return a.exec();
 }

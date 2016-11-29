@@ -99,7 +99,8 @@ SOURCES += main.cpp \
     ECMoveInResponseToKeyboardRelativeToScreen.cpp \
     ECRotater.cpp \
     ECChaseEnemies.cpp \
-    ECFieldOfViewEmitter.cpp
+    ECFieldOfViewEmitter.cpp \
+    ECPathMover.cpp
 
 HEADERS  += \
     Map.h \
@@ -187,7 +188,8 @@ HEADERS  += \
     ECMoveInResponseToKeyboardRelativeToScreen.h \
     ECRotater.h \
     ECChaseEnemies.h \
-    ECFieldOfViewEmitter.h
+    ECFieldOfViewEmitter.h \
+    ECPathMover.h
 
 RESOURCES += \
     res.qrc

@@ -4,7 +4,7 @@
 #include "Map.h"
 #include <QObject>
 #include <QTimer>
-
+#include <QLineF>
 #include <QPointF>
 #include <QPolygonF>
 
@@ -21,6 +21,12 @@ ECFieldOfViewEmitter::ECFieldOfViewEmitter(Entity *entity):
     // connect timer to keep checking fov
     connect(timerCheckFov_,&QTimer::timeout,this,&ECFieldOfViewEmitter::checkFov_);
     timerCheckFov_->start(fieldOfViewCheckFrequency_);
+}
+
+ECFieldOfViewEmitter::~ECFieldOfViewEmitter()
+{
+    // make sure timer disconnects
+    // - timer will disconnect (since its a child of this qobject)
 }
 
 /// Executed periodically for the entity controller to check the field of view
@@ -78,13 +84,13 @@ std::unordered_set<Entity *> ECFieldOfViewEmitter::entitiesInView_()
 
     QPointF p1(entity_->mapToMap(QPointF(0,0)));
     QLineF adjacent(p1,QPointF(-5,-5));
-    adjacent.setAngle(-1 * entity->facingAngle());
-    adjacent.setLength(entity_->fieldOfViewDistance_);
+    adjacent.setAngle(-1 * entity_->facingAngle());
+    adjacent.setLength(fieldOfViewDistance_);
     QLineF topL(adjacent);
-    topL.setAngle(topL.angle() + entity_->fieldOfViewAngle_/2);
+    topL.setAngle(topL.angle() + fieldOfViewAngle_/2);
     QPointF p2(topL.p2());
     QLineF bottomL(adjacent);
-    bottomL.setAngle(bottomL.angle() - entity_->fieldOfViewAngle_/2);
+    bottomL.setAngle(bottomL.angle() - fieldOfViewAngle_/2);
     QPointF p3(bottomL.p2());
 
     QVector<QPointF> points;

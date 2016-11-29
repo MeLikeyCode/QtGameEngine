@@ -24,6 +24,7 @@ class ECMoveInResponseToKeyboardRelativeToScreen: public QObject
 public:
     // TODO factor out constructor for behaviors into a base EntityBehavior class
     ECMoveInResponseToKeyboardRelativeToScreen(Entity* entity);
+    ~ECMoveInResponseToKeyboardRelativeToScreen();
 public slots:
     void moveStep_();
 private:
