@@ -7,7 +7,7 @@ class Entity;
 
 class EntityTargetAbility : public Ability {
 public:
-    EntityTargetAbility(DynamicEntity* owner, Sprite* icon);
+    EntityTargetAbility(Entity* owner, Sprite* icon);
 
     virtual void use(Entity* onEntity) = 0;
 };

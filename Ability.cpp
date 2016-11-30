@@ -1,18 +1,18 @@
 #include "Ability.h"
 
-Ability::Ability(DynamicEntity* owner, Sprite* icon):
+Ability::Ability(Entity* owner, Sprite* icon):
     owner_(owner),
     icon_(icon)
 {
     // empty ctor body
 }
 
-DynamicEntity *Ability::owner()
+Entity *Ability::owner()
 {
     return owner_;
 }
 
-void Ability::setOwner(DynamicEntity *owner)
+void Ability::setOwner(Entity *owner)
 {
     owner_ = owner;
 }

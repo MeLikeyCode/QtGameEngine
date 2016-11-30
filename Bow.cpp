@@ -8,7 +8,7 @@
 #include "ProjectileMoveBehaviorSpinning.h" // TODO: remove, unused
 #include "SpearProjectile.h"
 #include "Sprite.h"
-#include "DynamicEntity.h"
+#include "Entity.h"
 #include "Sound.h"
 
 Bow::Bow()
@@ -39,7 +39,7 @@ void Bow::attack(QPointF targetPoint)
 {   
     soundEffect_->play(1);
 
-    DynamicEntity* owningEntity = inventory()->entity();     // Entity that owns this bow
+    Entity* owningEntity = inventory()->entity();     // Entity that owns this bow
     Map* map = owningEntity->map();                          // Map that the owner is in
 
     // create a spear projectile

@@ -1,8 +1,8 @@
 #include "NoTargetAbility.h"
 #include <cassert>
-#include "DynamicEntity.h"
+#include "Entity.h"
 
-NoTargetAbility::NoTargetAbility(DynamicEntity *owner, Sprite *icon):
+NoTargetAbility::NoTargetAbility(Entity *owner, Sprite *icon):
     Ability(owner,icon)
 {
     // empty

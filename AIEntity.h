@@ -2,7 +2,7 @@
 #define ENEMY_H
 
 #include <set>
-#include "DynamicEntity.h"
+#include "Entity.h"
 
 class Weapon;
 
@@ -12,7 +12,7 @@ class Weapon;
 /// use any nearby health sources if low on health, etc...
 /// @author Abdullah Aghazadah
 /// @date 4/18/16
-class AIEntity: public DynamicEntity
+class AIEntity: public Entity
 {
     Q_OBJECT
 public:

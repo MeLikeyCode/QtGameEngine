@@ -3,7 +3,7 @@
 #include <cassert>
 #include "Inventory.h"
 #include "Slot.h"
-#include "DynamicEntity.h"
+#include "Entity.h"
 
 EquipableItem::EquipableItem():
     slotEquippedIn_(nullptr),
@@ -30,7 +30,7 @@ Slot *EquipableItem::slotEquippedIn()
 }
 
 /// Returns the EquipableItem's attachment point. The attachment point is the
-/// position of the EquipableItem that is to be attached to the DynamicEntity.
+/// position of the EquipableItem that is to be attached to the Entity.
 QPointF EquipableItem::attachmentPoint()
 {
     return attachmentPoint_;

@@ -1,8 +1,8 @@
 #include "Game.h"
+
 #include "Map.h"
 #include <QMouseEvent>
 #include "Spear.h" // TODO remove, test
-#include "DynamicEntity.h"
 #include "Entity.h"
 #include "Slot.h"
 #include "ProjectileMoveBehaviorHoming.h"
@@ -22,6 +22,7 @@
 #include <cassert>
 #include "Utilities.h"
 #include "BodyThrustEntity.h"
+#include <QGraphicsItem>
 
 /// Creates an instance of the Game with some default options.
 ///
@@ -174,14 +175,14 @@ void Game::mousePressEvent(QMouseEvent *event){
 
 //    // move test entities to target pos
 //    if (event->button() == Qt::LeftButton){
-//        for (DynamicEntity* entity:testEntities_){
+//        for (Entity* entity:testEntities_){
 //            entity->moveTo(event->pos());
 //        }
 //    }
 
 //    // create a test entity and add it
 //    if (event->button() == Qt::RightButton){
-//        DynamicEntity* testE = new DynamicEntity();
+//        Entity* testE = new Entity();
 //        map_->addEntity(testE);
 //        testE->setPointPos(event->pos());
 //        testEntities_.push_back(testE);
@@ -378,11 +379,11 @@ void Game::setMouseMode(Game::MouseMode mode)
 }
 
 /// Sets the Entity controlled by the Player via keyboard and mouse.
-void Game::setPlayer(DynamicEntity *player){
+void Game::setPlayer(Entity *player){
     player_ = player;
 }
 
-DynamicEntity *Game::player(){
+Entity *Game::player(){
     return player_;
 }
 
@@ -546,7 +547,7 @@ void Game::setWatchedWatchingRange(Entity *watched, Entity *watching, double ran
 
 void Game::askEnemiesToMove()
 {
-    for (DynamicEntity* e:enemies_){
+    for (Entity* e:enemies_){
         if (e){
             e->moveTo(player_->pointPos());
         }

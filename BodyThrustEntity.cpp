@@ -2,6 +2,7 @@
 #include <QTimer>
 #include <cassert>
 #include "BodyThrust.h"
+#include "Sprite.h"
 
 BodyThrustEntity::BodyThrustEntity()
 {

@@ -4,7 +4,7 @@
 #include <QGraphicsScene>
 #include <QDebug> // TODO: remove
 #include "Inventory.h"
-#include "DynamicEntity.h"
+#include "Entity.h"
 #include "Sound.h"
 
 Axe::Axe()
@@ -124,7 +124,7 @@ void Axe::swingStep()
         currentForwardStep_++;
 
         // if hit something
-        DynamicEntity* theOwner = inventory()->entity();
+        Entity* theOwner = inventory()->entity();
         std::unordered_set<Entity*> collidingEntities = map()->entities(mapToMap(tip()));
         for (Entity* e: collidingEntities){
             if (e != this && e != theOwner && e->parent() != theOwner){

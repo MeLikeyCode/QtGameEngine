@@ -5,16 +5,16 @@
 #include <string>
 
 class EquipableItem;
-class DynamicEntity;
+class Entity;
 
 /// An abstract class that represents an equipment slot.
 /// @author Abdullah Aghazadah
 /// @date 2/17/16
 class Slot
 {
-    // DynamicEntity has an addSlot(Slot* s) function, that needs to update the Slot's owner_
+    // Entity has an addSlot(Slot* s) function, that needs to update the Slot's owner_
     // attribute
-    friend class DynamicEntity;
+    friend class Entity;
 public:
     Slot();
 
@@ -31,7 +31,7 @@ public:
 
     EquipableItem* item();
 
-    DynamicEntity* owner();
+    Entity* owner();
 
     /// Returns true if the specified Item can be equipped in this Slot.
     virtual bool canBeEquipped(EquipableItem* item) = 0;
@@ -44,7 +44,7 @@ protected:
     QPointF position_; // pos (relative to Entity that owns the Slot) that the item should go in
     std::string name_; // a string name for the slot, i.e. "rightHand", "chest", etc...
     EquipableItem* item_; // item this slot houses
-    DynamicEntity* owner_; // who this slot belongs to
+    Entity* owner_; // who this slot belongs to
 };
 
 #endif // SLOT_H

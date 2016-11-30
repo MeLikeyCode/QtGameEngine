@@ -5,7 +5,7 @@
 
 class NoTargetAbility : public Ability {
 public:
-    NoTargetAbility(DynamicEntity* owner, Sprite* icon = nullptr);
+    NoTargetAbility(Entity* owner, Sprite* icon = nullptr);
 
     virtual void use() = 0;
 };

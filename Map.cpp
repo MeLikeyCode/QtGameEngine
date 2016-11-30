@@ -1,12 +1,14 @@
 #include "Map.h"
+
 #include "TerrainLayer.h"
-#include "DynamicEntity.h"
+#include "Entity.h"
 #include <cassert>
 #include <QBrush>
 #include <QGraphicsScene>
 #include "Game.h"
 #include "WeatherEffect.h"
 #include <QGraphicsOpacityEffect>
+#include "Sprite.h"
 
 // TODO remove test
 #include <QDebug>

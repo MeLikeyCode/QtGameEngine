@@ -1,7 +1,7 @@
 #ifndef ABILITY_H
 #define ABILITY_H
 
-class DynamicEntity;
+class Entity;
 class Sprite;
 
 /// An abstract class that represents an ability.
@@ -10,8 +10,8 @@ class Sprite;
 class Ability
 {
 public:
-    DynamicEntity* owner();
-    void setOwner(DynamicEntity* owner);
+    Entity* owner();
+    void setOwner(Entity* owner);
 
     Sprite* icon();
     void setIcon(Sprite* sprite);
@@ -19,9 +19,9 @@ public:
 protected:
     // ctor protected so that abstract class cannot be constructed
     // yet derived classes can still call ctor
-    Ability(DynamicEntity* owner, Sprite *icon = nullptr);
+    Ability(Entity* owner, Sprite *icon = nullptr);
 private:
-    DynamicEntity* owner_;
+    Entity* owner_;
     Sprite* icon_;          // nullptr = no icon
 };
 

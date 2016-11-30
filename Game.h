@@ -7,7 +7,7 @@
 
 class Map;
 class MapGrid;
-class DynamicEntity;
+class Entity;
 class InventoryViewer;
 class Entity;
 class Gui;
@@ -57,10 +57,10 @@ public:
     void setMouseMode(MouseMode mode);
 
 
-    void setPlayer(DynamicEntity* player);
-    DynamicEntity* player();
+    void setPlayer(Entity* player);
+    Entity* player();
 
-    std::vector<DynamicEntity*> enemies_; // TODO delete test
+    std::vector<Entity*> enemies_; // TODO delete test
 
     void addWatchedEntity(Entity* watched, Entity* watching, double range);
     bool watchedWatchingPairExists(Entity* watched, Entity* watching);
@@ -120,8 +120,8 @@ private:
 
 
     // TODO remove the following attributes, test attributes
-    DynamicEntity* player_;
-    std::vector<DynamicEntity*> testEntities_;
+    Entity* player_;
+    std::vector<Entity*> testEntities_;
     std::vector<QGraphicsPixmapItem*> rains_;
 
 

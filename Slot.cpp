@@ -1,7 +1,7 @@
 #include "Slot.h"
 #include "EquipableItem.h"
 #include "Sprite.h"
-#include "DynamicEntity.h"
+#include "Entity.h"
 #include <cassert>
 #include "Map.h"
 #include "Inventory.h"
@@ -15,7 +15,7 @@ Slot::Slot():
 
 /// Sets the position of the Slot.
 /// The position determines where any EquipableItems equipped in the Slot appear
-/// relative to the owning DynamicEntity.
+/// relative to the owning Entity.
 void Slot::setPosition(const QPointF &pos)
 {
     position_ = pos;
@@ -53,7 +53,7 @@ bool Slot::isFilled()
 bool Slot::equip(EquipableItem *item)
 {
     // assertions
-    DynamicEntity* theOwner = owner();
+    Entity* theOwner = owner();
     assert(theOwner != nullptr);    // make sure has an owner
     assert(theOwner->inventory()->contains(item));  // make sure owner's inventory contains
                                                     // the item being equipped in this slot
@@ -100,7 +100,7 @@ EquipableItem *Slot::item()
 }
 
 /// Returns the Entity that this slot belongs to.
-DynamicEntity *Slot::owner()
+Entity *Slot::owner()
 {
     return owner_;
 }

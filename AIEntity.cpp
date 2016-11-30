@@ -7,6 +7,7 @@
 #include "Spear.h"
 #include "Axe.h"
 #include "Inventory.h"
+#include "Sprite.h"
 
 AIEntity::AIEntity()
 {

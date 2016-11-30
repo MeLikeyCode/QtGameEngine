@@ -7,7 +7,7 @@
 #include "NoTargetItem.h"
 #include "PointTargetItem.h"
 #include "EntityTargetItem.h"
-#include "DynamicEntity.h"
+#include "Entity.h"
 #include <cassert>
 
 /// Constructs an InventoryViewer.
@@ -92,7 +92,7 @@ void InventoryUser::onItemClicked(Item *item, int button)
             // traverse through all slots of entity looking for a slot that can equip this type of EquipableItem
             // if there is already an item in that slot, swap em
             EquipableItem* asEquipableItem = dynamic_cast<EquipableItem*>(theItem);
-            DynamicEntity* owner = theItem->inventory()->entity();
+            Entity* owner = theItem->inventory()->entity();
             Slot* viableSlot = nullptr;
             for (Slot* slot:owner->getSlots()){
                 if (slot->canBeEquipped(asEquipableItem)){

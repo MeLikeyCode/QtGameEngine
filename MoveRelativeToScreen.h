@@ -5,14 +5,14 @@
 #include "PlayerControlledMoveBehavior.h"
 
 // knows of:
-class DynamicEntity;
+class Entity;
 
 class MoveRealtiveToScreen: public PlayerControlledMoveBehavior{
 public:
-    void setEntity(DynamicEntity* entity);
+    void setEntity(Entity* entity);
     void moveStep();
 private:
-    DynamicEntity* entity_;
+    Entity* entity_;
 };
 
 #endif // MOVERELATIVETOSCREEN_H

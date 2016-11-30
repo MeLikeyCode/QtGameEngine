@@ -4,7 +4,6 @@
 #include "Sprite.h"
 #include "Spear.h"
 #include "Axe.h"
-#include "DynamicEntity.h"
 #include "Sound.h"
 #include "MeleeWeaponSlot.h"
 #include "Bow.h"
@@ -101,8 +100,8 @@ int main(int argc, char *argv[])
     Game* game = new Game(mapGrid,0,1);
     game->launch();
 
-    // create a DynamicEntity (an Entity that can move around)
-    DynamicEntity* player = new DynamicEntity();
+    // create a Entity (an Entity that can move around)
+    Entity* player = new Entity();
     map1->addEntity(player);
     player->setCellPos(Node(4,4));
     player->setPlayerControlled(true);

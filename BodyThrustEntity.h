@@ -2,7 +2,7 @@
 #define BODYTHRUSTENTITY_H
 
 #include <set>
-#include "DynamicEntity.h"
+#include "Entity.h"
 
 class Weapon;
 class BodyThrust;
@@ -10,7 +10,7 @@ class BodyThrust;
 /// An Entity that will attack nearby enemmies with the BodyThrust ability.
 /// @author Abdullah
 /// @date 11/21/16
-class BodyThrustEntity: public DynamicEntity
+class BodyThrustEntity: public Entity
 {
     Q_OBJECT
 public:

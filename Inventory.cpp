@@ -5,7 +5,7 @@
 #include "PointTargetItem.h"
 #include <cassert>
 #include "Sprite.h"
-#include "DynamicEntity.h"
+#include "Entity.h"
 #include "Map.h"
 
 Inventory::Inventory():
@@ -15,7 +15,7 @@ Inventory::Inventory():
 
 /// Returns the Entity that owns this Inventory. Returns nullptr if no Entity
 /// owns this inventory.
-DynamicEntity *Inventory::entity()
+Entity *Inventory::entity()
 {
     return entity_;
 }
@@ -41,7 +41,7 @@ void Inventory::addItem(Item *item)
     item->inventory_ = this;
 
     // remove item from ground
-    DynamicEntity* owner = entity();
+    Entity* owner = entity();
     if (owner != nullptr){
         Map* theMap = owner->map();
         if (theMap != nullptr){
@@ -61,7 +61,7 @@ void Inventory::removeItem(Item *item)
     assert (contains(item));
 
     // inventory belongs to entity who is in map
-    DynamicEntity* owner = entity();
+    Entity* owner = entity();
     if (owner != nullptr){
         Map* theMap = owner->map();
         if ( theMap != nullptr){

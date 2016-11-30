@@ -32,7 +32,6 @@ SOURCES += main.cpp \
     PlayerControlledMoveBehavior.cpp \
     MoveRelativeToSelf.cpp \
     MoveRelativeToScreen.cpp \
-    DynamicEntity.cpp \
     Entity.cpp \
     Axe.cpp \
     Sound.cpp \
@@ -121,7 +120,6 @@ HEADERS  += \
     PlayerControlledMoveBehavior.h \
     MoveRelativeToSelf.h \
     MoveRelativeToScreen.h \
-    DynamicEntity.h \
     Entity.h \
     Axe.h \
     Sound.h \

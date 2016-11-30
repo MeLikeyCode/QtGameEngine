@@ -15,7 +15,7 @@ class BodyThrust: public QObject, public NoTargetAbility {
     Q_OBJECT
 public:
     // constructor
-    BodyThrust(DynamicEntity* owner);
+    BodyThrust(Entity* owner);
 
     virtual void use();
 

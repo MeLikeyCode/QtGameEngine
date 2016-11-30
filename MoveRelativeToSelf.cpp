@@ -1,11 +1,12 @@
 #include "MoveRelativeToSelf.h"
-#include "DynamicEntity.h"
+#include "Entity.h"
 #include "Map.h"
 #include "Game.h"
 #include "MapGrid.h"
+#include "Sprite.h"
 
 /// Sets the entity to move.
-void MoveRelativeToSelf::setEntity(DynamicEntity *entity)
+void MoveRelativeToSelf::setEntity(Entity *entity)
 {
     entity_ = entity;
 }

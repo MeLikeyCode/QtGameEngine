@@ -16,6 +16,11 @@ class EquipableItem;
 class Item;
 class Sprite;
 class QPointF;
+class Slot;
+class Inventory;
+class AsyncShortestPathFinder;
+class PlayerControlledMoveBehavior;
+class QTimer;
 
 /// An Entity is the base class for anything that can go inside a Map.
 /// @author Abdullah Aghazadah
@@ -29,6 +34,8 @@ class QPointF;
 /// Entities support parent/child relationships. When a parent Entity moves or
 /// rotates, so do all of its children. When a parent Entity is deleted, so
 /// are all of its children.
+///
+/// Entities can be controlled by entity controllers (TODO: link to doc).
 class Entity: public QObject
 {
     Q_OBJECT
@@ -100,6 +107,18 @@ public:
     bool isFollowedByCam();
     void setFollowedByCam(bool tf);
 
+    // slot
+    void addSlot(Slot* slot);
+    Slot* slot(std::string name);
+    std::unordered_set<Slot*> getSlots();
+    bool equipItem(EquipableItem* item, std::string slot);
+    bool equipItem(EquipableItem* item, Slot* slot);
+    Inventory* inventory();
+
+signals:
+    /// Emitted whenever the Entity collides with another Entity.
+    void collided(std::unordered_set<Entity*>);
+
 private:
     // main attributes
     PathingMap pathingMap_;
@@ -118,13 +137,17 @@ private:
     double zPos_;
     double height_;
 
-    bool isFollowedByCam_;
+    bool isFollowedByCam_; // TODO: remove and encapsulate into a GameController (GCFollowEntity)
+
+    // inventory/items
+    Inventory* inventory_;
+    std::unordered_map<std::string,Slot*> stringToSlot_;
 
     // helper functions
     void scaleSprite_();
 };
 
-// make QPointer<Entity> hashable
+// make QPointer<Entity> hashable (simply "delegate" to hasing a regular Entity*)
 namespace std {
 template <> struct hash<QPointer<Entity>>
 {

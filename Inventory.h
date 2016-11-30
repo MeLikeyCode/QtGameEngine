@@ -5,25 +5,25 @@
 #include <QObject>
 
 class Item;
-class DynamicEntity;
+class Entity;
 class EquipableItem;
 class NoTargetItem;
 class EntityTargetItem;
 class PointTargetItem;
 
-/// Represents a collection of Items that can belong to a DynamicEntity.
+/// Represents a collection of Items that can belong to a Entity.
 class Inventory: public QObject
 {
     Q_OBJECT
 
-    // DynamicEntity and Inventory reference each other. The association set up
+    // Entity and Inventory reference each other. The association set up
     // code is in the Dynamic Entity, which needs private access to set the
     // pointer in Inventory.
-    friend class DynamicEntity;
+    friend class Entity;
 public:
     Inventory();
 
-    DynamicEntity* entity();
+    Entity* entity();
 
     void addItem(Item* item);
     void removeItem(Item* item);
@@ -40,7 +40,7 @@ signals:
     void itemRemoved(Item* item);
 
 private:
-    DynamicEntity* entity_;
+    Entity* entity_;
     std::unordered_set<Item*> items_;
 };
 

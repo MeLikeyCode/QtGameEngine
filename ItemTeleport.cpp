@@ -1,6 +1,6 @@
 #include "ItemTeleport.h"
 #include "Sprite.h"
-#include "DynamicEntity.h"
+#include "Entity.h"
 #include <cassert>
 #include "Inventory.h"
 #include "Map.h"
@@ -21,7 +21,7 @@ void ItemTeleport::use(const QPointF &point)
     assert(inventory() != nullptr);
 
     // make sure the inventory has an owner
-    DynamicEntity* owner = inventory()->entity();
+    Entity* owner = inventory()->entity();
     assert(owner != nullptr);
 
     // play sound effect

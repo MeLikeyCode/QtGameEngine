@@ -7,7 +7,7 @@ class QPointF;
 
 class PointTargetAbility: public Ability {
 public:
-    PointTargetAbility(DynamicEntity* owner, Sprite* icon = nullptr);
+    PointTargetAbility(Entity* owner, Sprite* icon = nullptr);
 
     virtual void use(QPointF atPoint) = 0;
 };

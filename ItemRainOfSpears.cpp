@@ -3,7 +3,7 @@
 #include <QPixmap>
 #include "SpearProjectile.h"
 #include <cassert>
-#include "DynamicEntity.h"
+#include "Entity.h"
 #include "Inventory.h"
 #include "stdlib.h" // TODO: use C++ random number generatio instead
 #include "Sound.h"
@@ -26,7 +26,7 @@ void ItemRainOfSpears::use()
     assert(inventory() != nullptr);
 
     // make sure the inventory has an owner
-    DynamicEntity* owner = inventory()->entity();
+    Entity* owner = inventory()->entity();
     assert(owner != nullptr);
 
     connect(timer_,&QTimer::timeout,this,&ItemRainOfSpears::spearStep_);
@@ -39,7 +39,7 @@ void ItemRainOfSpears::use()
 void ItemRainOfSpears::spearStep_()
 {
     // make sure the inventory has an owner
-    DynamicEntity* owner = inventory()->entity();
+    Entity* owner = inventory()->entity();
 
     int NUM_SPEARS_TO_GENERATE = 5;
     int X_OFFSET_RANGE = 1000; // number of pixels around the owner's x position to spawn

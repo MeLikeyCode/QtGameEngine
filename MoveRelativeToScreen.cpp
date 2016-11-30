@@ -1,11 +1,12 @@
 #include "MoveRelativeToScreen.h"
-#include "DynamicEntity.h"
+#include "Entity.h"
 #include "Map.h"
 #include "Game.h"
 #include "MapGrid.h"
+#include "Sprite.h"
 
 /// Sets the entity to be moved.
-void MoveRealtiveToScreen::setEntity(DynamicEntity *entity)
+void MoveRealtiveToScreen::setEntity(Entity *entity)
 {
     entity_ = entity;
 }

@@ -4,12 +4,12 @@
 #include <QGraphicsScene>
 #include <QDebug> // TODO: remove
 #include "Inventory.h"
-#include "DynamicEntity.h"
+#include "Entity.h"
 #include "Sound.h"
 #include <cassert>
 #include "QTimer"
 
-BodyThrust::BodyThrust(DynamicEntity *owner):
+BodyThrust::BodyThrust(Entity *owner):
     NoTargetAbility(owner,nullptr)
 {
     // default thrust parameters
@@ -31,7 +31,7 @@ void BodyThrust::use()
 {
     // assert pre conditions
     // before using the ability, make sure owner of ability is in a map
-    DynamicEntity* theOwner = owner();
+    Entity* theOwner = owner();
     assert(theOwner->map() != nullptr);  // make sure owner is in a map
 
     // set point that will be checked for collision
@@ -102,7 +102,7 @@ void BodyThrust::thrustStep_()
         return;
     }
 
-    DynamicEntity* theOwner = owner();
+    Entity* theOwner = owner();
 
     // if still moving forward, kill things with tip, then move backward
     // due to collision
