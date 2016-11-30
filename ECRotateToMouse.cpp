@@ -7,7 +7,7 @@
 ECRotateToMouse::ECRotateToMouse(Entity *entity):
     entity_(entity),
     rotateStepSize_(5),
-    rotateFrequency_(45),
+    rotateFrequency_(30),
     rotateTimer_(new QTimer(this)),
     rotater_(new ECRotater(entity))
 {

@@ -33,7 +33,8 @@ class QTimer;
 ///
 /// Entities support parent/child relationships. When a parent Entity moves or
 /// rotates, so do all of its children. When a parent Entity is deleted, so
-/// are all of its children.
+/// are all of its children. When a parent Entity is removed from a Map,
+/// so are all of its children.
 ///
 /// Entities can be controlled by entity controllers (TODO: link to doc).
 class Entity: public QObject
@@ -49,13 +50,16 @@ public:
     // destructor
     virtual ~Entity();
 
+    // pathing map
     PathingMap pathingMap() const;  // TODO do not return by value, too expensive to copy
     void setPathingMap(const PathingMap& pathingMap, const QPointF &pos=QPointF(0,0));
-    bool canFit(const QPointF& atPos);
 
+    // map
     Map* map() const;
     void setMap(Map* toMap);
+    QPointF mapToMap(const QPointF& point) const;
 
+    // pos/height/facing angle
     QPointF pointPos() const;
     QPointF pathingMapPos() const;
     double pointX() const;
@@ -71,24 +75,21 @@ public:
     void setHeight(double height);
     Node cellPos();
     void setCellPos(const Node& cell);
-
-    void setSprite(Sprite* sprite);
-    Sprite* sprite() const;
-    QRectF boundingRect();
-
     int facingAngle();
     void setFacingAngle(double angle);
 
+    // sprite
+    void setSprite(Sprite* sprite);
+    Sprite* sprite() const;
+    void setRotationPoint(QPointF point);
+
+    // parent/child relationship
     std::unordered_set<Entity*> children();
     void setParentEntity(Entity* parent);
     Entity* parent();
 
-    QPointF mapToMap(const QPointF& point) const;
-
     void addNamedPoint(const QPointF& point, std::string name);
     QPointF namedPoint(std::string name);
-
-    void setRotationPoint(QPointF point);
 
     void setHealth(double health);
     double health();
@@ -104,10 +105,7 @@ public:
     void setGroupID(int id);
     int groupID();
 
-    bool isFollowedByCam();
-    void setFollowedByCam(bool tf);
-
-    // slot
+    // slot/equipment/inventory
     void addSlot(Slot* slot);
     Slot* slot(std::string name);
     std::unordered_set<Slot*> getSlots();
@@ -115,14 +113,20 @@ public:
     bool equipItem(EquipableItem* item, Slot* slot);
     Inventory* inventory();
 
+    // misc
+    bool canFit(const QPointF& atPos);
+    QRectF boundingRect();
+
 signals:
-    /// Emitted whenever the Entity collides with another Entity.
-    void collided(std::unordered_set<Entity*>);
+    /// Emitted whenever the Entity moves from a certain position to another
+    /// position.
+    void moved(Entity* entity, QPointF fromPos, QPointF toPos);
 
 private:
     // main attributes
     PathingMap pathingMap_;
     QPointF pathingMapPos_;
+    QPointF lastPos_;
     Map* map_;
     Sprite* sprite_;
     std::unordered_set<Entity*> children_;
@@ -136,10 +140,6 @@ private:
     bool invulnerable_;
     double zPos_;
     double height_;
-
-    bool isFollowedByCam_; // TODO: remove and encapsulate into a GameController (GCFollowEntity)
-
-    // inventory/items
     Inventory* inventory_;
     std::unordered_map<std::string,Slot*> stringToSlot_;
 

@@ -9,7 +9,6 @@
 #include "Map.h"
 #include "RandomImageEntity.h"
 #include "PathingMap.h"
-#include "AIEntity.h"
 #include <QtMath>
 
 
@@ -59,20 +58,6 @@ void addRandomBushes(Map *mapToAddBushesTo, int numBushesToAdd)
         double randYPos = rand() % mapToAddBushesTo->height() - 100;
         rock->setPointPos(QPointF(randXPos,randYPos));
     }
-}
-
-/// Adds an AIEntity on the specified Map at the specified position and on the
-/// specified team.
-/// @return a pointer to the added entity.
-AIEntity* addAIEntity(Map *mapToAddTo, const QPointF &posToAddTo, int teamToAddTo)
-{
-    // create enemy (will follow/attack its enemies)
-    AIEntity* e = new AIEntity();
-    e->setGroupID(teamToAddTo);
-    // e->addEnemy(0);
-    e->setPointPos(posToAddTo);
-    mapToAddTo->addEntity(e);
-    return e;
 }
 
 /// Returns the distance between the two points.

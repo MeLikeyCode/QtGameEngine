@@ -1,21 +1,18 @@
 #include "Entity.h"
+
 #include <string>
 #include <cassert>
 #include "Map.h"
 #include "Sprite.h"
-#include <QDebug> // TODO: remove, test
 #include <QGraphicsScene>
-#include "CountExpiringTimer.h"
 #include <QLineF>
 #include "Game.h"
-#include "MoveRelativeToScreen.h"
 #include "EquipableItem.h"
 #include "Inventory.h"
 #include "Slot.h"
 #include <algorithm>
-#include "AsyncShortestPathFinder.h"
 
-/// Default constructor.
+/// Constructs a default entity.
 Entity::Entity():
     pathingMap_(1,1,64),            // default 1x1 unfilled (in body) PathingMap
     map_(nullptr),
@@ -26,26 +23,20 @@ Entity::Entity():
     canBeDamagedByAllExcept_(),
     canOnlyBeDamagedByMode_(false), // by default, can be damaged by all
     groupID_(0),                     // default group id of 0
-    isFollowedByCam_(false),
     invulnerable_(false),
     zPos_(0),
-    height_(0)
+    height_(0),
+    sprite_(new Sprite()),
+    inventory_(new Inventory())
 {
-    // constructor body
-    // = some defaults=
-    // default sprite
-    Sprite* spr = new Sprite();
-    setSprite(spr);
-
-    inventory_ = new Inventory();
     inventory_->entity_ = this;
-
 }
 
-/// When an Entity is deleted, it will delete all of its children, and then remove
-/// itself from the Map. As each child is deleted, it will delete its own children and then
-/// remove itself from the Map.
-/// You can kinda see how the "flow" of deletion happens :).
+/// When an Entity is deleted, it will delete all of its children, and then
+/// remove itself from the Map (if in one). As each child is deleted, it will
+/// delete its own children and then remove itself from the Map. You can kinda
+/// see how the "flow" of deletion happens :). The "deepest" child is deleted
+/// and removed from the Map first.
 Entity::~Entity()
 {
     // recursively delete child Entities
@@ -141,6 +132,7 @@ double Entity::height() const
 /// The position is relative to the parent Entity. If there is no
 /// parent Entitiy, it is relative to the Map.
 void Entity::setPointPos(const QPointF &pos){
+    // set position of sprite
     sprite()->setPos(pos);
 
     // if the Entity is in a Map, update the PathingMap
@@ -149,15 +141,19 @@ void Entity::setPointPos(const QPointF &pos){
         entitysMap->updatePathingMap();
 
         //if the map is in a game, let map know entity moved (watched-watching pair)
+        // TODO: remove this, instead have game listen to when entites move
         Game* entitysGame = entitysMap->game();
         if (entitysGame){
             entitysGame->onEntityMoved(this);
         }
     }
 
-    // if followed by the camear, tell game cam to move here
-    if (isFollowedByCam()){
-        entitysMap->game()->setCenterCamPos(this->pointPos());
+    // if actually moved (i.e. last position is different than current pos),
+    // emit signal
+    if (lastPos_ != pointPos()){
+        QPointF lastPosCpy = lastPos_;
+        lastPos_ = pointPos(); // update last position
+        emit moved(this,lastPosCpy,pointPos());
     }
 }
 
@@ -459,403 +455,6 @@ void Entity::setGroupID(int id)
 int Entity::groupID()
 {
     return groupID_;
-}
-
-/// Returns true if the Entity is followed by the camera.
-/// If an Entity is followed by the camera, then every time that Entity's
-/// position is changed, the camera goes to that new position.
-bool Entity::isFollowedByCam()
-{
-    return isFollowedByCam_;
-}
-
-/// Sets weather the Entity should be followed by the camera or not.
-/// @see Entity::isFollowedByCam()
-void Entity::setFollowedByCam(bool tf)
-{
-    isFollowedByCam_ = tf;
-}
-
-void Entity::setStepSize(int stepSize){
-    stepSize_ = stepSize;
-}
-
-int Entity::stepSize(){
-    return stepSize_;
-}
-
-void Entity::setStepFrequency(int to){
-    stepFrequency_ = to;
-}
-
-int Entity::stepFrequency(){
-    return stepFrequency_;
-}
-
-int Entity::rotationFrequency() const
-{
-    return rotationFrequency_;
-}
-
-void Entity::setRotationFrequency(int freq)
-{
-    rotationFrequency_ = freq;
-}
-
-/// Rotates the Entity 1 degrees clockwise.
-void Entity::rotateRight()
-{
-    sprite()->setRotation(sprite()->rotation()+1);
-}
-
-/// Rotates the Entity 1 degrees counter clockwise.
-void Entity::rotateLeft()
-{
-    sprite()->setRotation(sprite()->rotation()-1);
-}
-
-/// Rotates the Entity clockwise by the specified number of degrees.
-void Entity::rotateRight(int degrees)
-{
-    // stop previous rotations
-    stopRotating();
-
-    // set targetAngle and direction
-    targetAngle_ = facingAngle() + degrees;
-    rotateRight_ = true;
-
-    // start the timer
-    connect(rotationTimer_,SIGNAL(timeout()),this,SLOT(rotateStep()));
-    rotationTimer_->start(rotationFrequency());
-
-}
-
-/// @see Entity:rotateRight(int)
-void Entity::rotateLeft(int degrees)
-{
-    // stop previous rotations
-    stopRotating();
-
-    // set targetAngle and direction
-    targetAngle_ = facingAngle() - degrees;
-    rotateRight_ = false;
-
-    // start the timer
-    connect(rotationTimer_,SIGNAL(timeout()),this,SLOT(rotateStep()));
-    rotationTimer_->start(rotationFrequency_);
-}
-
-/// Rotates the Entity until it faces the specified angle. The Entity will
-/// rotate in the direction that is the fastest to the specified angle. A
-/// specified angle of 0 degrees is right, 90 degrees is down and so on. The
-/// specified angle must be between 0-360 degrees.
-void Entity::rotateTo(int angle)
-{
-    // make sure angle is between 0-360
-    assert(angle >= 0);
-    assert(angle <= 360);
-
-    QLineF line(QPointF(0,0),QPointF(1,1));
-    line.setAngle(-facingAngle());
-
-    QLineF line2(QPointF(0,0),QPointF(1,1));
-    line2.setAngle(-angle);
-
-    double angleBWLines = line.angleTo(line2);
-
-    if (angleBWLines < 180){
-        // rotate left
-        rotateLeft(angleBWLines);
-    }
-    else {
-        // rotate right
-        rotateRight(360-angleBWLines);
-    }
-
-
-}
-
-/// Rotates the Entity until it faces the specified point. The Entity will
-/// rotate in whatever direction is the fastest.
-void Entity::rotateTo(QPointF point)
-{
-    QLineF line(pointPos(),point);
-    int r = 360-line.angle();
-    rotateTo(r);
-}
-
-/// Stops the Entity's rotating.
-void Entity::stopRotating()
-{
-    rotationTimer_->disconnect();
-}
-
-/// Makes the Entity follow the specified list of points ("path").
-void Entity::followPath_(std::vector<QPointF> path){
-    // stop following previous list of points (if any)
-    stopAutomaticMovement();
-
-    // follow this list of pts
-    pointsToFollow_ = path;
-    targetPointIndex_ = 0;
-    connect(moveTimer_,SIGNAL(timeout()),this,SLOT(moveStepAIControlled_()));
-    moveTimer_->start(stepFrequency());
-
-    // play walk animation
-    sprite()->play("walk",-1,100);
-}
-
-/// Executed in response to the the Entity colliding with something.
-void Entity::onCollided(std::unordered_set<Entity *> entities)
-{
-    for (Entity* entity:entities){
-        // item that is on the ground
-        Item* asItem = dynamic_cast<Item*>(entity);
-        if (asItem){
-            if (asItem->inventory() == nullptr){
-                inventory()->addItem(asItem);
-            }
-        }
-    }
-}
-
-/// Tells the Entity to move to the specified position.
-///
-/// Please ensure that the Entity has a "walk" animation.
-void Entity::moveTo(QPointF pos){
-    // temporarly disable entities own footing so a path can be retrieved
-    // disablePathingMap();
-
-    // get list of points from map (in a diff thread)
-    pf_->findPath(map()->pathingMap(),pointPos(),pos);
-}
-
-/// Tells the Entity to move to the specified cell.
-///
-/// @see Entity::moveTo(const QPointF&)
-void Entity::moveTo(const Node &cell)
-{
-    moveTo(map()->cellToPoint(cell));
-}
-
-/// Tells the Entity to stop moving.
-void Entity::stopAutomaticMovement(){
-    moveTimer_->disconnect();
-    pointsToFollow_.clear();
-    targetPointIndex_ = 0;
-
-    // play stand animation
-    sprite()->play("stand",-1,100);
-}
-
-/// Sets the movement behavior of the Entity when being controlled by a player.
-void Entity::setPlayerControlledMoveBehavior(PlayerControlledMoveBehavior *behavior)
-{
-    moveBehavior_ = behavior;
-}
-
-/// Returns true if the Entity is currently moving.
-bool Entity::isMoving()
-{
-    return pointsToFollow_.size() > 0;
-}
-
-/// Returns true if the Entity is controlled by a player.
-bool Entity::isPlayerControlled()
-{
-    return isPlayerControlled_;
-}
-
-/// Sets whether the Entity is controlled by the player or not.
-///
-/// If the Entity is controlled by a player, it will move in response to
-/// keyboard/mouse input. If the Entity is not controlled by a player, it will
-/// move in response to its own thinking.
-void Entity::setPlayerControlled(bool tf)
-{
-    isPlayerControlled_ = tf;
-
-    // if player controlled
-    if (tf == true){
-        // connect moveTimer_ with movePlayerControlled()
-        moveTimer_->disconnect();
-        connect(moveTimer_,SIGNAL(timeout()),this,SLOT(moveStepPlayerControlled()));
-        moveTimer_->start(stepFrequency());
-    }
-    else{
-        // connect moveTimer_ with moveAIControlled()
-        moveTimer_->disconnect();
-    }
-}
-
-/// Returns the Entities that are in the field of view of this Entity.
-std::unordered_set<Entity *> Entity::entitiesInView()
-{
-    // - create QPolygon triangel w/ distance and angle
-    // - pass this triangle to map to get entities in their
-
-    QPointF p1(mapToMap(QPointF(0,0)));
-    QLineF adjacent(p1,QPointF(-5,-5));
-    adjacent.setAngle(-1 * this->facingAngle());
-    adjacent.setLength(this->fieldOfViewDistance_);
-    QLineF topL(adjacent);
-    topL.setAngle(topL.angle() + this->fieldOfViewAngle_/2);
-    QPointF p2(topL.p2());
-    QLineF bottomL(adjacent);
-    bottomL.setAngle(bottomL.angle() - this->fieldOfViewAngle_/2);
-    QPointF p3(bottomL.p2());
-
-    QVector<QPointF> points;
-    points.append(p1);
-    points.append(p2);
-    points.append(p3);
-
-    QPolygonF poly(points);
-
-    std::unordered_set<Entity*> entities = map()->entities(poly);
-    entities.erase(this);
-
-    return entities;
-
-//    // visualize line of site
-//    QGraphicsLineItem* line = new QGraphicsLineItem();
-//    line->setLine(topL);
-//    QGraphicsLineItem* line2 = new QGraphicsLineItem();
-//    line2->setLine(bottomL);
-//    QGraphicsLineItem* line3 = new QGraphicsLineItem();
-//    line3->setLine(QLineF(p2,p3));
-//    map()->scene()->addItem(line);
-//    map()->scene()->addItem(line2);
-//    map()->scene()->addItem(line3);
-}
-
-
-/// Moves the Entity 1 step closer to its movement in response to keys.
-void Entity::moveStepPlayerControlled()
-{
-    // delegate to moveBehavior
-    moveBehavior_->moveStep();
-
-    // check collisions and emit
-    QRectF entityRect = sprite()->boundingRect();
-    entityRect.moveTopLeft(pointPos());
-    std::unordered_set<Entity*> collidingEntities = map()->entities(entityRect);
-    emit collided(collidingEntities);
-}
-
-/// Causes the Entity to take 1 step closer to moving to its target point.
-void Entity::moveStepAIControlled_(){
-    // if there are no points to follow, don't do anything
-    if (pointsToFollow_.size() == 0){
-        stopAutomaticMovement();
-        return;
-    }
-
-    // if there are no more points to follow and entity has reached its target
-    // - stop moving
-    if (targetPointIndex_ >= pointsToFollow_.size() - 1 && targetPointReached()){
-        // snap
-        QPointF snapPt = pointsToFollow_[targetPointIndex_];
-        setCellPos(map()->pathingMap().pointToCell(snapPt));
-
-        stopAutomaticMovement();
-
-        return;
-    }
-
-//    // if the entity has been stuck for long enough, recalculate
-//    if (timeStuck_ > 1500){
-//        // recalculate path (in case pathingmap changed)
-//        moveTo(pointsToFollow_.back());
-
-//        timeStuck_ = 0;
-//    }
-
-    // if there are more points to follow and entity has reached its target
-    // - snap to current target
-    // - set next point as target
-    // - face that point
-    if (targetPointIndex_ < pointsToFollow_.size() - 1 && targetPointReached()){
-        // snap
-        QPointF snapPt = pointsToFollow_[targetPointIndex_];
-        setCellPos(map()->pathingMap().pointToCell(snapPt));
-
-        // set next point as target
-        ++targetPointIndex_;
-
-        // face target
-        rotateTo(pointsToFollow_[targetPointIndex_]);
-    }
-
-    // take a step closer towards the target
-    stepTowardsTarget();
-
-    // check collisions and emit
-    QRectF entityRect = sprite()->boundingRect();
-    entityRect.moveTopLeft(pointPos());
-    std::unordered_set<Entity*> collidingEntities = map()->entities(entityRect);
-    emit collided(collidingEntities);
-}
-
-/// Causes the Entity to take 1 step towards completing it's rotation.
-void Entity::rotateStep()
-{
-    // if it has reached its targetAngle, stop rotating
-    if (abs(facingAngle() - targetAngle_) == 0 ){
-        rotationTimer_->disconnect();
-    }
-    // other wise, rotate once towards targetAngle
-    else {
-        rotateTowardsTargetAngle();
-    }
-}
-
-/// Returns true if the Entity is close enough to its targetPoint_.
-bool Entity::targetPointReached(){
-    // get a line b/w entity's pos and the targetPos
-    QLineF ln(pointPos(),pointsToFollow_[targetPointIndex_]);
-
-    // if the length of this line is less than a step size, return true
-    return ln.length() < stepSize_;
-}
-
-/// Rotates 1 degrees towards the target angle
-void Entity::rotateTowardsTargetAngle()
-{
-    // rotate right if rotateRight
-    if (rotateRight_){
-        rotateRight();
-    }
-
-    // other wise rotate left
-    else {
-        rotateLeft();
-    }
-}
-
-
-/// Causes the DynamicEntity to attempt to takes a step towards the targetPoint.
-/// If the Entity cannot take a step, timeStuck_ will be incremented.
-void Entity::stepTowardsTarget(){
-    // get a line b/w the entity's pos and the target pos
-    QLineF ln(pointPos(),pointsToFollow_[targetPointIndex_]);
-
-    // set the length of this line to be the same as stepSize
-    ln.setLength(stepSize_);
-
-    // find new pos
-    double newX = pointPos().x() + ln.dx();
-    double newY = pointPos().y() + ln.dy();
-    QPointF newPt(newX,newY);
-
-//    // move if the new pos is free, otherwise increment timeStuck_
-//    if (canFit(newPt)){
-//        setPointPos(newPt);
-//    } else{
-//        timeStuck_ += stepFrequency_;
-//    }
-    setPointPos(newPt);
-
 }
 
 /// Add the specified Slot to the Entity.

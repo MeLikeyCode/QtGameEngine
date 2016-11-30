@@ -99,7 +99,6 @@ signals:
     void watchedEntityLeavesRange(Entity* watched, Entity* watching, double range);
 
 public slots:
-    void askEnemiesToMove(); // TODO delete test
     void updateGuiPositions();
     void onEntityMoved(Entity* entity);
 

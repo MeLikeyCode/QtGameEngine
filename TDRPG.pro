@@ -30,8 +30,6 @@ SOURCES += main.cpp \
     MeleeWeapon.cpp \
     Spear.cpp \
     PlayerControlledMoveBehavior.cpp \
-    MoveRelativeToSelf.cpp \
-    MoveRelativeToScreen.cpp \
     Entity.cpp \
     Axe.cpp \
     Sound.cpp \
@@ -55,7 +53,6 @@ SOURCES += main.cpp \
     Weapon.cpp \
     WeaponSlot.cpp \
     AsyncShortestPathFinder.cpp \
-    AIEntity.cpp \
     SpearProjectile.cpp \
     ProjectileMoveBehaviorSine.cpp \
     ProjectileMoveBehaviorSpinning.cpp \
@@ -93,13 +90,14 @@ SOURCES += main.cpp \
     NoTargetAbility.cpp \
     PointTargetAbility.cpp \
     EntityTargetAbility.cpp \
-    BodyThrustEntity.cpp \
     ECRotateToMouse.cpp \
     ECMoveInResponseToKeyboardRelativeToScreen.cpp \
     ECRotater.cpp \
     ECChaseEnemies.cpp \
     ECFieldOfViewEmitter.cpp \
-    ECPathMover.cpp
+    ECPathMover.cpp \
+    ECMoveInResponseToKeyboardRelativeToSelf.cpp \
+    ECGrabCam.cpp
 
 HEADERS  += \
     Map.h \
@@ -118,8 +116,6 @@ HEADERS  += \
     MeleeWeapon.h \
     Spear.h \
     PlayerControlledMoveBehavior.h \
-    MoveRelativeToSelf.h \
-    MoveRelativeToScreen.h \
     Entity.h \
     Axe.h \
     Sound.h \
@@ -143,7 +139,6 @@ HEADERS  += \
     Weapon.h \
     WeaponSlot.h \
     AsyncShortestPathFinder.h \
-    AIEntity.h \
     SpearProjectile.h \
     ProjectileMoveBehaviorSine.h \
     ProjectileMoveBehaviorSpinning.h \
@@ -181,13 +176,14 @@ HEADERS  += \
     NoTargetAbility.h \
     PointTargetAbility.h \
     EntityTargetAbility.h \
-    BodyThrustEntity.h \
     ECRotateToMouse.h \
     ECMoveInResponseToKeyboardRelativeToScreen.h \
     ECRotater.h \
     ECChaseEnemies.h \
     ECFieldOfViewEmitter.h \
-    ECPathMover.h
+    ECPathMover.h \
+    ECMoveInResponseToKeyboardRelativeToSelf.h \
+    ECGrabCam.h
 
 RESOURCES += \
     res.qrc

@@ -35,13 +35,13 @@
 #include "DialogGui.h"
 #include "InventoryUser.h"
 #include "QuestAcceptor.h"
-#include "AIEntity.h"
 #include "ShopGui.h"
 #include "ItemGold.h"
 #include "BodyThrust.h"
 #include "ECMoveInResponseToKeyboardRelativeToScreen.h"
 #include "ECRotateToMouse.h"
 #include "ECChaseEnemies.h"
+#include "ECGrabCam.h"
 
 #include <QMediaPlayer>
 
@@ -104,10 +104,7 @@ int main(int argc, char *argv[])
     Entity* player = new Entity();
     map1->addEntity(player);
     player->setCellPos(Node(4,4));
-    player->setPlayerControlled(true);
-    player->setStepSize(10);
     game->setPlayer(player); // game knows about this entity (for testing)
-    player->setFollowedByCam(true);
     player->setGroupID(0);
     //player->setPointZ(50);
     player->setHeight(64);
@@ -292,35 +289,37 @@ int main(int argc, char *argv[])
 
 //    // game->addGui(shopGui);
 
-//    // create an entity that rotates towards the mouse
-//    Entity* eee = new Entity();
-
-//    Sprite* eeeSpr = new Sprite(QPixmap(":/resources/graphics/human/walk2.png"));
-
-//    eee->setSprite(eeeSpr);
-
-//    ECRotateToMouse* c = new ECRotateToMouse(eee);
-
-//    eee->setPointPos(QPointF(10,200));
-//    map1->addEntity(eee);
-
-//    ECMoveInResponseToKeyboardRelativeToScreen* c2 = new ECMoveInResponseToKeyboardRelativeToScreen(eee);
-
-    // create an entity that chases enemies
+    // create an entity that rotates towards the mouse
     Entity* eee = new Entity();
-    eee->setPointPos(QPointF(10,200));
-    eee->setGroupID(0);
 
-    Sprite* eeeSpr = new Sprite();
-    //spr->addFrames(":resources/graphics/human",1,"stand"); // stand anim
-    //spr->addFrames(":resources/graphics/human",6,"walk");  // walk anim
+    Sprite* eeeSpr = new Sprite(QPixmap(":/resources/graphics/human/walk2.png"));
 
     eee->setSprite(eeeSpr);
 
-    ECChaseEnemies* ecce = new ECChaseEnemies(eee);
-    ecce->addEnemyGroup(1);
+    ECRotateToMouse* c = new ECRotateToMouse(eee);
 
+    eee->setPointPos(QPointF(10,200));
     map1->addEntity(eee);
+
+    ECMoveInResponseToKeyboardRelativeToScreen* c2 = new ECMoveInResponseToKeyboardRelativeToScreen(eee);
+
+    ECGrabCam* grabCamContr = new ECGrabCam(eee);
+
+//    // create an entity that chases enemies
+//    Entity* eee = new Entity();
+//    eee->setPointPos(QPointF(10,200));
+//    eee->setGroupID(0);
+
+//    Sprite* eeeSpr = new Sprite();
+//    //spr->addFrames(":resources/graphics/human",1,"stand"); // stand anim
+//    //spr->addFrames(":resources/graphics/human",6,"walk");  // walk anim
+
+//    eee->setSprite(eeeSpr);
+
+//    ECChaseEnemies* ecce = new ECChaseEnemies(eee);
+//    ecce->addEnemyGroup(1);
+
+//    map1->addEntity(eee);
 
     return a.exec();
 }

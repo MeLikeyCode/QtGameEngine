@@ -1,33 +1,53 @@
-#include "MoveRelativeToSelf.h"
-#include "Entity.h"
+#include "ECMoveInResponseToKeyboardRelativeToSelf.h"
 #include "Map.h"
-#include "Game.h"
-#include "MapGrid.h"
+#include "QTimer"
 #include "Sprite.h"
+#include "Game.h"
+#include <cassert>
 
-/// Sets the entity to move.
-void MoveRelativeToSelf::setEntity(Entity *entity)
+ECMoveInResponseToKeyboardRelativeToSelf::ECMoveInResponseToKeyboardRelativeToSelf(Entity* entity):
+    entity_(entity),
+    stepSize_(15),
+    stepFrequency_(40),
+    moveTimer_(new QTimer(this))
 {
-    entity_ = entity;
+    // make sure passed in Entity is not nullptr
+    assert(entity != nullptr);
+
+    // connect timer to move step
+    connect(moveTimer_,&QTimer::timeout,this,&ECMoveInResponseToKeyboardRelativeToSelf::moveStep_);
+    moveTimer_->start(stepFrequency_);
 }
 
-/// Moves the entity one step closer relative to itself.
-void MoveRelativeToSelf::moveStep()
+void ECMoveInResponseToKeyboardRelativeToSelf::moveStep_()
 {
-    // rotate towards mouse pos
-    entity_->rotateTo(entity_->map()->getMousePosition());
+    // if the entity has been destroyed, stop
+    if (entity_.isNull()){
+        moveTimer_->disconnect();
+        return;
+    }
 
-    bool wPressed = entity_->map()->game()->keysPressed().count(Qt::Key_W);
-    bool sPressed = entity_->map()->game()->keysPressed().count(Qt::Key_S);
-    bool aPressed = entity_->map()->game()->keysPressed().count(Qt::Key_A);
-    bool dPressed = entity_->map()->game()->keysPressed().count(Qt::Key_D);
+    // if currently not in a Map, do nothing
+    Map* entitysMap = entity_->map();
+    if (entitysMap == nullptr)
+        return;
+
+    // if entitysMap is not in a Game, do noting
+    Game* entitysGame = entitysMap->game();
+    if (entitysGame == nullptr)
+        return;
+
+    bool wPressed = entitysGame->keysPressed().count(Qt::Key_W);
+    bool sPressed = entitysGame->keysPressed().count(Qt::Key_S);
+    bool aPressed = entitysGame->keysPressed().count(Qt::Key_A);
+    bool dPressed = entitysGame->keysPressed().count(Qt::Key_D);
 
     // move up if W is pressed
     if (wPressed){
         // find newPt to move to
         QLineF line(entity_->pointPos(),QPoint(0,0));
         line.setAngle(360-entity_->facingAngle());
-        line.setLength(entity_->stepSize());
+        line.setLength(stepSize_);
         double newX = entity_->pointPos().x() + line.dx();
         double newY = entity_->pointPos().y() + line.dy();
         QPointF newPt(newX,newY);
@@ -47,7 +67,7 @@ void MoveRelativeToSelf::moveStep()
     if (sPressed){
         QLineF line(entity_->pointPos(),QPoint(0,0));
         line.setAngle(360-entity_->facingAngle());
-        line.setLength(entity_->stepSize());
+        line.setLength(stepSize_);
         line.setAngle(line.angle()+180);
         double newX = entity_->pointPos().x() + line.dx();
         double newY = entity_->pointPos().y() + line.dy();
@@ -68,7 +88,7 @@ void MoveRelativeToSelf::moveStep()
     if (aPressed){
         QLineF line(entity_->pointPos(),QPoint(0,0));
         line.setAngle(360-entity_->facingAngle());
-        line.setLength(entity_->stepSize());
+        line.setLength(stepSize_);
         line.setAngle(line.angle()+90);
         double newX = entity_->pointPos().x() + line.dx();
         double newY = entity_->pointPos().y() + line.dy();
@@ -90,7 +110,7 @@ void MoveRelativeToSelf::moveStep()
     if (dPressed){
         QLineF line(entity_->pointPos(),QPoint(0,0));
         line.setAngle(360-entity_->facingAngle());
-        line.setLength(entity_->stepSize());
+        line.setLength(stepSize_);
         line.setAngle(line.angle()-90);
         double newX = entity_->pointPos().x() + line.dx();
         double newY = entity_->pointPos().y() + line.dy();

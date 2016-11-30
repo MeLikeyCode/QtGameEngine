@@ -8,7 +8,6 @@
 #include "ProjectileMoveBehaviorHoming.h"
 #include "ProjectileCollisionBehaviorDamage.h"
 #include "Projectile.h"
-#include "AIEntity.h"
 #include "WeaponSlot.h"
 #include "Axe.h"
 #include "Bow.h"
@@ -21,7 +20,6 @@
 #include "Gui.h"
 #include <cassert>
 #include "Utilities.h"
-#include "BodyThrustEntity.h"
 #include <QGraphicsItem>
 
 /// Creates an instance of the Game with some default options.
@@ -228,16 +226,6 @@ void Game::mousePressEvent(QMouseEvent *event){
 
 //    }
 
-    // create BodyThrust entity
-    if (event->button() == Qt::RightButton){
-        // create enemy (will follow/attack its enemies)
-        BodyThrustEntity* e = new BodyThrustEntity();
-        e->setHeight(64);
-        e->setGroupID(1);
-        e->addEnemy(0);
-        e->setPointPos(mapToMap(event->pos()));
-        currentMap()->addEntity(e);
-    }
 
 //    // create AIEntity (part of grp 2)
 //    if (event->button() == Qt::RightButton){
@@ -543,15 +531,6 @@ void Game::setWatchedWatchingRange(Entity *watched, Entity *watching, double ran
     // init variables
     std::pair<Entity*,Entity*> watchedWatchingPair = std::make_pair(watched,watching);
     watchedWatchingPairToRange_[watchedWatchingPair] = range;
-}
-
-void Game::askEnemiesToMove()
-{
-    for (Entity* e:enemies_){
-        if (e){
-            e->moveTo(player_->pointPos());
-        }
-    }
 }
 
 void Game::updateGuiPositions()

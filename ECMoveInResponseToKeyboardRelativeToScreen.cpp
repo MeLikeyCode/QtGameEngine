@@ -1,5 +1,4 @@
 #include "ECMoveInResponseToKeyboardRelativeToScreen.h"
-#include "Entity.h"
 #include "Map.h"
 #include <QTimer>
 #include <cassert>
