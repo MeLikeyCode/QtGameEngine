@@ -6,7 +6,7 @@ class Sprite;
 
 /// An abstract class that represents an ability.
 /// An Ability has an owner and an optional icon.
-/// Before any Ability can be used, the owner has to be in a Map.
+/// Most abilities require the owner to be in a Map before being used.
 class Ability
 {
 public:

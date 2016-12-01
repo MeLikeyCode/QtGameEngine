@@ -8,7 +8,8 @@
 class QTimer;
 class Sound;
 
-/// An Ability that causes the owner to thrust their body forward.
+/// An Ability that causes the using entity to thrust its body forward at its current
+/// facing angle and then back.
 /// @author Abdullah Aghazadah
 /// @date 11/18/16
 class BodyThrust: public QObject, public NoTargetAbility {

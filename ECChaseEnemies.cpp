@@ -4,10 +4,10 @@
 #include <cassert>
 #include <QTimer>
 #include "Map.h"
+#include "Utilities.h"
 
 ECChaseEnemies::ECChaseEnemies(Entity *entity):
     entity_(entity),
-    enemyGroups_(),
     fovEmitter_(new ECFieldOfViewEmitter(entity)),
     pathMover_(new ECPathMover(entity)),
     chaseTimer_(new QTimer(this)),
@@ -25,16 +25,11 @@ ECChaseEnemies::ECChaseEnemies(Entity *entity):
     connect(pathMover_,&ECPathMover::moved,this,&ECChaseEnemies::onEntityMoved_);
 }
 
-/// Add a group number that the controlled entity should consider as enemies.
-/// The controlled entity will chase enemy entities.
-void ECChaseEnemies::addEnemyGroup(int groupNumber)
+ECChaseEnemies::~ECChaseEnemies()
 {
-    enemyGroups_.insert(groupNumber);
-}
-
-std::unordered_set<int> ECChaseEnemies::enemyGroups()
-{
-    return enemyGroups_;
+    delete fovEmitter_;
+    delete pathMover_;
+    // chaseTimer_ automatically deleted since child QObject of this QObject
 }
 
 /// Makes it so the controlled entity stops chasing enemy entities.
@@ -42,7 +37,7 @@ std::unordered_set<int> ECChaseEnemies::enemyGroups()
 /// its field of view.
 /// If the controlled entity is currently chasing, it will stop.
 void ECChaseEnemies::stopChasing()
-{
+{    
     // if currently chasing stop
     if (entityBeingChased_ != nullptr){
         entityBeingChased_ = nullptr;
@@ -59,30 +54,23 @@ void ECChaseEnemies::startChasing()
     shouldChase_ = true;
 }
 
-/// Returns true if the specified group number is an enemy.
-bool ECChaseEnemies::isAnEnemyGroup(int groupNumber)
-{
-    return enemyGroups_.find(groupNumber) != enemyGroups_.end();
-}
-
 /// Executed whenever an entity enters the fov of the controlled entity.
 /// Will see if that entity is an enemy and if the controlled entity should
 /// start chasing it.
 void ECChaseEnemies::onEntityEntersFOV_(Entity *entity)
 {
-
     // if
     // - the controlled entity should be chasing right now
     // - the controlled entity is not currently chasing anyone
     // - the entity is an enemy
     // then
     // - chase it
-    if (entityBeingChased_.isNull() && shouldChase_ && isAnEnemyGroup(entity->groupID())){
+    if (entityBeingChased_.isNull() && shouldChase_ && entity_->isAnEnemyGroup(entity->group())){
         entityBeingChased_ = entity;
         connect(chaseTimer_,&QTimer::timeout,this,&ECChaseEnemies::chaseStep_);
         chaseTimer_->start(1000); // TODO: store in a (modifiable) variable somewhere
-        emit entityChaseStarted(entity,300); // TODO: replace 300 with the actual distance b/w
-                                             // controlled entity and entity being chased
+        double distBW = distance(entity_->pointPos(),entity->pointPos());
+        emit entityChaseStarted(entity, distBW);
     }
 }
 
@@ -102,8 +90,8 @@ void ECChaseEnemies::onEntityMoved_()
 {
     // if there is an entity being chased, emit updated distance
     if (!entityBeingChased_.isNull()){
-        emit entityChaseContinued(entityBeingChased_,300); // TODO: replace 300 w/ actual distance
-                                                           // b/w controlled entity and the one being chased
+        double distBW = distance(entity_->pointPos(),entityBeingChased_->pointPos());
+        emit entityChaseContinued(entityBeingChased_,distBW);
     }
 }
 
@@ -121,6 +109,6 @@ void ECChaseEnemies::chaseStep_()
     // make sure is supposed to be chasing right now
     assert(shouldChase_);
 
-    // order to move towards chase victim
+    // order to move towards chase victim :P
     pathMover_->moveEntityTo(entityBeingChased_->pointPos());
 }

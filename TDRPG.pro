@@ -97,7 +97,9 @@ SOURCES += main.cpp \
     ECFieldOfViewEmitter.cpp \
     ECPathMover.cpp \
     ECMoveInResponseToKeyboardRelativeToSelf.cpp \
-    ECGrabCam.cpp
+    ECGrabCam.cpp \
+    ECBodyThruster.cpp \
+    ECPickUpItem.cpp
 
 HEADERS  += \
     Map.h \
@@ -183,7 +185,9 @@ HEADERS  += \
     ECFieldOfViewEmitter.h \
     ECPathMover.h \
     ECMoveInResponseToKeyboardRelativeToSelf.h \
-    ECGrabCam.h
+    ECGrabCam.h \
+    ECBodyThruster.h \
+    ECPickUpItem.h
 
 RESOURCES += \
     res.qrc

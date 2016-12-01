@@ -236,6 +236,18 @@ std::unordered_set<Entity *> Map::entities(const QPolygonF &inRegion)
     return ents;
 }
 
+/// Returns all the Entities that are colliding with the specified entity.
+std::unordered_set<Entity *> Map::entities(Entity *collidingWith)
+{
+    // approach:
+    // - get bbox of colliding entity, move it to location of entity
+    // - return entites colliding with that rect
+
+    QRectF bbox = collidingWith->boundingRect();
+    bbox.moveTopLeft(collidingWith->pointPos());
+    return entities(bbox);
+}
+
 /// Returns the Entities in the specified region and in the specified z range.
 std::unordered_set<Entity *> Map::entities(const QRectF &inRegion, double zRangeMin, double zRangeMax)
 {

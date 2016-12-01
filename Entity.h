@@ -102,8 +102,12 @@ public:
     bool isInvulnerable();
     void setInvulnerable(bool tf);
 
-    void setGroupID(int id);
-    int groupID();
+    // group/enemy groups
+    void setGroup(int groupNumber_);
+    int group();
+    void addEnemyGroup(int groupNumber);
+    std::unordered_set<int> enemyGroups();
+    bool isAnEnemyGroup(int groupNumber);
 
     // slot/equipment/inventory
     void addSlot(Slot* slot);
@@ -122,6 +126,9 @@ signals:
     /// position.
     void moved(Entity* entity, QPointF fromPos, QPointF toPos);
 
+    /// Emitted whenever the Entity collides with another Entity.
+    void collided(Entity* sender, Entity* collidedWith);
+
 private:
     // main attributes
     PathingMap pathingMap_;
@@ -136,7 +143,8 @@ private:
     std::set<std::type_index> canOnlyBeDamagedBy_;
     std::set<std::type_index> canBeDamagedByAllExcept_;
     bool canOnlyBeDamagedByMode_;
-    int groupID_;
+    int groupNumber_;
+    std::unordered_set<int> enemyGroups_;
     bool invulnerable_;
     double zPos_;
     double height_;

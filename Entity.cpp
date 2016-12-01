@@ -22,7 +22,7 @@ Entity::Entity():
     canOnlyBeDamagedBy_(),
     canBeDamagedByAllExcept_(),
     canOnlyBeDamagedByMode_(false), // by default, can be damaged by all
-    groupID_(0),                     // default group id of 0
+    groupNumber_(0),                     // default group id of 0
     invulnerable_(false),
     zPos_(0),
     height_(0),
@@ -145,6 +145,12 @@ void Entity::setPointPos(const QPointF &pos){
         Game* entitysGame = entitysMap->game();
         if (entitysGame){
             entitysGame->onEntityMoved(this);
+        }
+
+        // if collided with something, emit
+        std::unordered_set<Entity*> collidingEntities = entitysMap->entities(this);
+        for (Entity* entity: collidingEntities){
+            emit collided(this,entity);
         }
     }
 
@@ -447,14 +453,41 @@ void Entity::setInvulnerable(bool tf)
     invulnerable_ = tf;
 }
 
-void Entity::setGroupID(int id)
+/// Set the group that the Entity is a part of.
+/// An entity's group is used for a lot of things.
+/// A lot of entity controllers cause controlled entities to "attack" (in some way)
+/// enemy entities. By giving each entity a group, and a list of enemy groups,
+/// entity controllers can easily figure out which entities should attack which
+/// other entities. Similarly, certain entity controllers may want the controlled
+/// entity to "heal" or "support" nearby friendly entities.
+void Entity::setGroup(int groupNumber)
 {
-    groupID_ = id;
+    groupNumber_ = groupNumber;
 }
 
-int Entity::groupID()
+/// Returns the group of the Entity. See setGroup() for more information on some of
+/// the kind of things groups are used for.
+int Entity::group()
 {
-    return groupID_;
+    return groupNumber_;
+}
+
+/// Adds a group number that this entity should consider enemy.
+void Entity::addEnemyGroup(int groupNumber)
+{
+    enemyGroups_.insert(groupNumber);
+}
+
+/// Returns the group numbers that this entity considers enemies.
+std::unordered_set<int> Entity::enemyGroups()
+{
+    return enemyGroups_;
+}
+
+/// Returns true if the specified group number is an enemy.
+bool Entity::isAnEnemyGroup(int groupNumber)
+{
+    return enemyGroups_.find(groupNumber) != enemyGroups_.end();
 }
 
 /// Add the specified Slot to the Entity.

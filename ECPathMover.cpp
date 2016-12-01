@@ -12,7 +12,7 @@ ECPathMover::ECPathMover(Entity *entity):
     moveTimer_(new QTimer(this)),
     pf_(new AsyncShortestPathFinder()),
     rotater_(new ECRotater(entity)),
-    stepSize_(50),
+    stepSize_(15),
     stepFrequency_(50),
     pointsToFollow_(),
     targetPointIndex_(0),

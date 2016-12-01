@@ -74,6 +74,7 @@ public:
     std::unordered_set<Entity*> entities(const QRectF& inRegion);
     std::unordered_set<Entity *> entities(const QPointF& atPoint);
     std::unordered_set<Entity*> entities(const QPolygonF& inRegion);
+    std::unordered_set<Entity*> entities(Entity* collidingWith);
     std::unordered_set<Entity*> entities(const QRectF &inRegion,double zRangeMin, double zRangeMax);
     std::unordered_set<Entity*> entities(const QPointF &atPoint, double zRangeMin, double zRangeMax);
     std::unordered_set<Entity*> entities(const QPolygonF &inRegion, double zRangeMin, double zRangeMax);
