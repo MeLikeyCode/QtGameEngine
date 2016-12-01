@@ -50,7 +50,8 @@ void ECPathMover::stopMoving()
     targetPointIndex_ = 0;
 
     // play stand animation
-    entity_->sprite()->play("stand",-1,100); // TODO: onlyl play animation if controlled entity has "stand" anim
+    if (entity_->sprite()->hasAnimation("stand"))
+        entity_->sprite()->play("stand",-1,100);
 
     // set moving flag
     currentlyMoving_ = false;
@@ -76,8 +77,8 @@ void ECPathMover::onPathCalculated_(std::vector<QPointF> path)
     moveTimer_->start(stepFrequency_);
 
     // play walk animation
-    entity_->sprite()->play("walk",-1,100); // TODO: only play walk animation if
-                                            // the controlled entity has a walk anim
+    if (entity_->sprite()->hasAnimation("walk"))
+        entity_->sprite()->play("walk",-1,100);
 }
 
 /// Executed periodically to take the controlled entity one step along its path.

@@ -63,7 +63,8 @@ void ECFieldOfViewEmitter::checkFov_()
     }
 
     // emit entityLeavesFOV if any entities just left the fov
-    for (Entity* entity:entitiesInViewLastTime_){
+    std::unordered_set<Entity*> copy = entitiesInViewLastTime_;
+    for (Entity* entity:copy){
         // if the entiy is no longer in view, remove from list and emit
         if (entitiesInView.count(entity) == 0){
             entitiesInViewLastTime_.erase(entity);

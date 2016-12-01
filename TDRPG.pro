@@ -99,7 +99,8 @@ SOURCES += main.cpp \
     ECMoveInResponseToKeyboardRelativeToSelf.cpp \
     ECGrabCam.cpp \
     ECBodyThruster.cpp \
-    ECPickUpItem.cpp
+    ECPickUpItem.cpp \
+    ECAttackEnemiesWithWeapon.cpp
 
 HEADERS  += \
     Map.h \
@@ -187,7 +188,8 @@ HEADERS  += \
     ECMoveInResponseToKeyboardRelativeToSelf.h \
     ECGrabCam.h \
     ECBodyThruster.h \
-    ECPickUpItem.h
+    ECPickUpItem.h \
+    ECAttackEnemiesWithWeapon.h
 
 RESOURCES += \
     res.qrc

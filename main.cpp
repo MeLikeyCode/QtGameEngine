@@ -327,10 +327,10 @@ int main(int argc, char *argv[])
 
     // create an entity that body thrusts entities
     Entity* eBT = new Entity();
-    ECBodyThruster* bodyTContr = new ECBodyThruster(eBT);
     eBT->setPointPos(QPointF(300,20));
     map1->addEntity(eBT);
     eBT->addEnemyGroup(1);
+    ECBodyThruster* bodyTContr = new ECBodyThruster(eBT);
 
     return a.exec();
 }
