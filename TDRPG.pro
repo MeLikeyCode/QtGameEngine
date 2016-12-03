@@ -13,6 +13,9 @@ TEMPLATE = app
 
 CONFIG += c++11
 
+INCLUDEPATH += "C:/Program Files (x86)/Windows Kits/10/Include/10.0.10240.0/ucrt"
+LIBS += -L"C:/Program Files (x86)/Windows Kits/10/Lib/10.0.10240.0/ucrt/x64"
+
 SOURCES += main.cpp \
     Map.cpp \
     Game.cpp \
