@@ -72,7 +72,7 @@ void ECPathMover::onPathCalculated_(std::vector<QPointF> path)
 
     // set up variables for new path
     pointsToFollow_ = path;
-    targetPointIndex_ = 0;
+    targetPointIndex_ = 1; // start following the 1-eth point (0-eth causes initial backward movement)
     connect(moveTimer_,SIGNAL(timeout()),this,SLOT(moveStep_()));
     moveTimer_->start(stepFrequency_);
 

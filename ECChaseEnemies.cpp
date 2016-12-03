@@ -68,7 +68,8 @@ void ECChaseEnemies::onEntityEntersFOV_(Entity *entity)
     if (entityBeingChased_.isNull() && shouldChase_ && entity_->isAnEnemyGroup(entity->group())){
         entityBeingChased_ = entity;
         connect(chaseTimer_,&QTimer::timeout,this,&ECChaseEnemies::chaseStep_);
-        chaseTimer_->start(1000); // TODO: store in a (modifiable) variable somewhere
+        chaseStep_();
+        chaseTimer_->start(2000); // TODO: store in a (modifiable) variable somewhere
         double distBW = distance(entity_->pointPos(),entity->pointPos());
         emit entityChaseStarted(entity, distBW);
     }

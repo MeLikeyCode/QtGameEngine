@@ -45,6 +45,7 @@
 #include "ECPickUpItem.h"
 #include "ECBodyThruster.h"
 #include "ECPathMover.h"
+#include "ECFieldOfViewEmitter.h"
 
 #include <QMediaPlayer>
 
@@ -319,17 +320,17 @@ int main(int argc, char *argv[])
 
 //    pathMoveCont->moveEntityTo(QPointF(600,600));
 
-    // create an entity that body chases enemies
+//    // create an entity that checks out his fov
+//    Entity* fovEntity = new Entity();
+//    map1->addEntity(fovEntity);
+
+//    ECFieldOfViewEmitter* fovCont = new ECFieldOfViewEmitter(fovEntity);
+
+//    fovEntity->setPointPos(QPointF(500,300));
+
+    // create an entity that  chases enemies
     Entity* chaseEnemiesEntity = new Entity();
-    chaseEnemiesEntity->setPointPos(QPointF(200,200));
-
-
-    Sprite* sprChaseEnemiesEntity = new Sprite();
-    sprChaseEnemiesEntity->addFrames(":resources/graphics/spider",1,"stand");
-    sprChaseEnemiesEntity->addFrames(":resources/graphics/spider",7,"walk");
-    chaseEnemiesEntity->setSprite(sprChaseEnemiesEntity);
-
-    //sprChaseEnemiesEntity->play("stand",-1,1000);
+    chaseEnemiesEntity->setPointPos(QPointF(200,100));
 
     ECChaseEnemies* chaseEntitiesCont = new ECChaseEnemies(chaseEnemiesEntity);
 
