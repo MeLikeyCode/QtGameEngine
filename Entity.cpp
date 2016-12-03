@@ -91,7 +91,7 @@ void Entity::setMap(Map *toMap)
 /// The position is returned relative to the parent Entity. If there is no
 /// parent Entitiy, it is returned relative to the Map.
 QPointF Entity::pointPos() const{
-    return sprite()->pos();
+    return currentPos_;
 }
 
 /// Returns the position of the Entity's PathingMap relative to the Entity.
@@ -132,8 +132,13 @@ double Entity::height() const
 /// The position is relative to the parent Entity. If there is no
 /// parent Entitiy, it is relative to the Map.
 void Entity::setPointPos(const QPointF &pos){
-    // set position of sprite
-    sprite()->setPos(pos);
+    // set internal variable
+    currentPos_ = pos;
+
+    // if has a sprite, set position of sprite
+    Sprite* entitysSprite = sprite();
+    if (entitysSprite != nullptr)
+        entitysSprite->setPos(pos);
 
     // if the Entity is in a Map, update the PathingMap
     Map* entitysMap = map();
@@ -229,18 +234,19 @@ Node Entity::cellPos(){
     return map()->pathingMap().pointToCell(pointPos());
 }
 
-/// Sets the Sprite of the Entity. Removes (but does not delete) the old Sprite.
+/// Sets the Sprite of the Entity. This does not *delete* the old sprite, it simply
+/// sets the current art to the specified sprite.
 void Entity::setSprite(Sprite *sprite){
     // set all children's sprite's parent to new sprite
     for (Entity* child: children()){
         child->sprite()->setParentItem(sprite);
     }
 
+    // make sure the new sprite is positioned correctly
+    sprite->setPos(currentPos_);
+
     // if the Entity is already in a map
     if (map_){
-        // set the position of the new sprite to the pos of the old sprite
-        sprite->setPos(sprite_->pos());
-
         // remove old sprite/add new sprite
         map()->scene()->removeItem(sprite_);
         map()->scene()->addItem(sprite);
@@ -280,9 +286,6 @@ void Entity::setFacingAngle(double angle)
 void Entity::setCellPos(const Node &cell){
     // make sure the entity has a Map
     assert(map_);
-
-    // clear pathing map
-    // disablePathingMap(); // only static entities have pathing maps
 
     // move to new region
     QPointF newPos = map()->pathingMap().cellToPoint(cell);
@@ -546,6 +549,8 @@ Inventory *Entity::inventory()
     return inventory_;
 }
 
+/// Sets the width and height of the Entity's sprite based on the z value of the Entity.
+/// This makes it so that Entities higher up are shown bigger.
 void Entity::scaleSprite_()
 {
     assert(sprite_ != nullptr);

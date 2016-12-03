@@ -133,6 +133,7 @@ private:
     // main attributes
     PathingMap pathingMap_;
     QPointF pathingMapPos_;
+    QPointF currentPos_;
     QPointF lastPos_;
     Map* map_;
     Sprite* sprite_;

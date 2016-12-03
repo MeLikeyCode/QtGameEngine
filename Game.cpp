@@ -22,6 +22,8 @@
 #include "Utilities.h"
 #include <QGraphicsItem>
 
+#include "ECPathMover.h" // TODO: delete, test only
+
 /// Creates an instance of the Game with some default options.
 ///
 /// Creates a default Map, Camera, etc...
