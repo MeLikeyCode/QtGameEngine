@@ -19,6 +19,7 @@ class QTimer;
 ///
 /// Example usage:
 /// ECChaseEnemies* c = new ECChaseEnemies(entity);
+/// c->setStopDistance(50);
 /// connect(c,&ECChaseEnemies::entityChaseStarted,this,myCallback);
 /// connect(c,&ECChaseEnemies::entityChaseContinued,this,myCallback);
 class ECChaseEnemies: public QObject
@@ -30,6 +31,8 @@ public:
 
     void stopChasing();
     void startChasing();
+    void setStopDistance(double distance);
+    double stopDistance();
 
 signals:
     /// Emitted whenever the controlled entity *starts* chasing an enemy entity.
@@ -50,6 +53,9 @@ public slots:
     void chaseStep_();
 
 private:
+    // options
+    double stopDistance_;
+
     QPointer<Entity> entity_;
     ECFieldOfViewEmitter* fovEmitter_; // helper controller that emits events whenever
                                        // anothe entity enters/leaves the controlled entity's fov

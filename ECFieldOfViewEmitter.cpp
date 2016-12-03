@@ -10,8 +10,8 @@
 
 ECFieldOfViewEmitter::ECFieldOfViewEmitter(Entity *entity):
     entity_(entity),
-    fieldOfViewAngle_(45),
-    fieldOfViewDistance_(500),
+    fieldOfViewAngle_(90),
+    fieldOfViewDistance_(600),
     fieldOfViewCheckFrequency_(50),
     timerCheckFov_(new QTimer(this))
 {

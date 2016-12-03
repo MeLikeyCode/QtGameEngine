@@ -72,7 +72,8 @@ void ECPathMover::onPathCalculated_(std::vector<QPointF> path)
 
     // set up variables for new path
     pointsToFollow_ = path;
-    targetPointIndex_ = 1; // start following the 1-eth point (0-eth causes initial backward movement)
+    if (pointsToFollow_.size() > 1)
+        targetPointIndex_ = 1; // start following the 1-eth point (0-eth causes initial backward movement)
     connect(moveTimer_,SIGNAL(timeout()),this,SLOT(moveStep_()));
     moveTimer_->start(stepFrequency_);
 
@@ -111,7 +112,10 @@ void ECPathMover::moveStep_()
     // - snap to current target
     // - set next point as target
     // - face that point
-    if (targetPointIndex_ < pointsToFollow_.size() - 1 && targetPointReached_()){
+
+    int pointsSize = pointsToFollow_.size() - 1;
+    bool morePoints = targetPointIndex_ < pointsSize;
+    if (morePoints && targetPointReached_()){
         // snap
         QPointF snapPt = pointsToFollow_[targetPointIndex_];
         entity_->setCellPos(entitysMap->pathingMap().pointToCell(snapPt));
@@ -123,14 +127,19 @@ void ECPathMover::moveStep_()
         rotater_->rotateTowards(pointsToFollow_[targetPointIndex_]);
     }
 
-    // take a step closer towards the target
-    stepTowardsTarget_();
+    // take a step closer towards the target (if there is a target)
+    if (pointsToFollow_.size() > 0)
+        stepTowardsTarget_();
 }
 
 /// Internal helper function that returns true if the controlled entity has reached
 /// its current target point.
 bool ECPathMover::targetPointReached_()
 {
+    // if there are no target points, return true
+    if (pointsToFollow_.size() == 0)
+        return true;
+
     // get a line b/w entity's pos and the targetPos
     QLineF ln(entity_->pointPos(),pointsToFollow_[targetPointIndex_]);
 
@@ -153,11 +162,6 @@ void ECPathMover::stepTowardsTarget_()
     double newY = entity_->pointPos().y() + ln.dy();
     QPointF newPt(newX,newY);
 
-//    // move if the new pos is free, otherwise increment timeStuck_
-//    if (canFit(newPt)){
-//        setPointPos(newPt);
-//    } else{
-//        timeStuck_ += stepFrequency_;
-//    }
     entity_->setPointPos(newPt);
+    emit moved(newPt);
 }

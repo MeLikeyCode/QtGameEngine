@@ -318,7 +318,7 @@ int main(int argc, char *argv[])
 
 //    ECPathMover* pathMoveCont = new ECPathMover(pathMovingEntity);
 
-//    pathMoveCont->moveEntityTo(QPointF(600,600));
+//    pathMoveCont->moveEntityTo(QPointF(300,300));
 
 //    // create an entity that checks out his fov
 //    Entity* fovEntity = new Entity();
@@ -328,32 +328,35 @@ int main(int argc, char *argv[])
 
 //    fovEntity->setPointPos(QPointF(500,300));
 
-    // create an entity that  chases enemies
-    Entity* chaseEnemiesEntity = new Entity();
-    chaseEnemiesEntity->setPointPos(QPointF(200,100));
+//    // create an entity that  chases enemies
+//    Entity* chaseEnemiesEntity = new Entity();
+//    chaseEnemiesEntity->setPointPos(QPointF(200,100));
 
-    ECChaseEnemies* chaseEntitiesCont = new ECChaseEnemies(chaseEnemiesEntity);
+//    ECChaseEnemies* chaseEntitiesCont = new ECChaseEnemies(chaseEnemiesEntity);
+
+//    keyMouseEntity->setGroup(1);
+//    chaseEnemiesEntity->setGroup(3);
+//    chaseEnemiesEntity->addEnemyGroup(1);
+
+//    map1->addEntity(chaseEnemiesEntity);
+
+    // create an entity that body thrusts enemies
+    Entity* bodyThrustEntity = new Entity();
+    bodyThrustEntity->setPointPos(QPointF(300,300));
+
+    Sprite* sprBT = new Sprite();
+    sprBT->addFrames(":/resources/graphics/spider",7,"walk");
+    sprBT->addFrames(":/resources/graphics/spider",1,"stand");
+    bodyThrustEntity->setSprite(sprBT);
+
+    sprBT->play("stand",-1,10000);
+
+    ECBodyThruster* bodyThrustCont = new ECBodyThruster(bodyThrustEntity);
+
+    map1->addEntity(bodyThrustEntity);
 
     keyMouseEntity->setGroup(1);
-    chaseEnemiesEntity->setGroup(3);
-    chaseEnemiesEntity->addEnemyGroup(1);
-
-    map1->addEntity(chaseEnemiesEntity);
-
-//    // create an entity that body thrusts enemies
-//    Entity* bodyThrustEntity = new Entity();
-//    bodyThrustEntity->setPointPos(QPointF(300,300));
-
-//    Sprite* sprBodyThrustEntity = new Sprite();
-//    sprBodyThrustEntity->addFrames(":resources/graphics/spider",1,"stand");
-//    sprBodyThrustEntity->addFrames(":resources/graphics/spider",7,"walk");
-//    bodyThrustEntity->setSprite(sprBodyThrustEntity);
-
-//    sprBodyThrustEntity->play("stand",-1,1000);
-
-//    ECBodyThruster* bodyThrustCont = new ECBodyThruster(bodyThrustEntity);
-
-//    map1->addEntity(bodyThrustEntity);
+    bodyThrustEntity->addEnemyGroup(1);
 
     return a.exec();
 }

@@ -7,6 +7,7 @@
 #include "Utilities.h"
 
 ECChaseEnemies::ECChaseEnemies(Entity *entity):
+    stopDistance_(250),
     entity_(entity),
     fovEmitter_(new ECFieldOfViewEmitter(entity)),
     pathMover_(new ECPathMover(entity)),
@@ -23,6 +24,9 @@ ECChaseEnemies::ECChaseEnemies(Entity *entity):
 
     // listen to path mover
     connect(pathMover_,&ECPathMover::moved,this,&ECChaseEnemies::onEntityMoved_);
+
+    // connect timer
+    connect(chaseTimer_,&QTimer::timeout,this,&ECChaseEnemies::chaseStep_);
 }
 
 ECChaseEnemies::~ECChaseEnemies()
@@ -54,6 +58,20 @@ void ECChaseEnemies::startChasing()
     shouldChase_ = true;
 }
 
+/// Sets the stop distance.
+/// See stopDistance() for more info.
+void ECChaseEnemies::setStopDistance(double distance)
+{
+    stopDistance_ = distance;
+}
+
+/// Returns the distance that the controlled Entity will stop before the
+/// positions of the chased entity.
+double ECChaseEnemies::stopDistance()
+{
+    return stopDistance_;
+}
+
 /// Executed whenever an entity enters the fov of the controlled entity.
 /// Will see if that entity is an enemy and if the controlled entity should
 /// start chasing it.
@@ -67,7 +85,6 @@ void ECChaseEnemies::onEntityEntersFOV_(Entity *entity)
     // - chase it
     if (entityBeingChased_.isNull() && shouldChase_ && entity_->isAnEnemyGroup(entity->group())){
         entityBeingChased_ = entity;
-        connect(chaseTimer_,&QTimer::timeout,this,&ECChaseEnemies::chaseStep_);
         chaseStep_();
         chaseTimer_->start(2000); // TODO: store in a (modifiable) variable somewhere
         double distBW = distance(entity_->pointPos(),entity->pointPos());
@@ -86,13 +103,19 @@ void ECChaseEnemies::onEntityLeavesFOV_(Entity *entity)
 }
 
 /// Executed whenever the controlled entity moves towards its chase target.
-/// Will simply emit a signal.
 void ECChaseEnemies::onEntityMoved_()
 {
-    // if there is an entity being chased, emit updated distance
-    if (!entityBeingChased_.isNull()){
-        double distBW = distance(entity_->pointPos(),entityBeingChased_->pointPos());
-        emit entityChaseContinued(entityBeingChased_,distBW);
+    // do nothing if nothing being chased
+    if (entityBeingChased_.isNull())
+        return;
+
+    double distBW = distance(entity_->pointPos(),entityBeingChased_->pointPos());
+    emit entityChaseContinued(entityBeingChased_,distBW);
+
+    // if close enough to chased entity, stop
+    if (distBW < stopDistance_){
+        pathMover_->stopMoving();
+        chaseTimer_->disconnect();
     }
 }
 
