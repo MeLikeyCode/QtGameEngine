@@ -351,9 +351,9 @@ int main(int argc, char *argv[])
 
     sprBT->play("stand",-1,10000);
 
-    ECBodyThruster* bodyThrustCont = new ECBodyThruster(bodyThrustEntity);
 
     map1->addEntity(bodyThrustEntity);
+    ECBodyThruster* bodyThrustCont = new ECBodyThruster(bodyThrustEntity);
 
     keyMouseEntity->setGroup(1);
     bodyThrustEntity->addEnemyGroup(1);

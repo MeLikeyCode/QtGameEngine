@@ -16,10 +16,13 @@ class QTimer;
 /// emitted. As long as the controlled entity *continues* to chase that entity, a
 /// signal will continue to periodically be emitted in order to tell you the
 /// updated distance between the controlled entity and the entity being chased.
+/// You can set how close the controlled entity will get to the chased entity. When
+/// the controlled entity gets to within the specified distance, it won't get any closer
+/// unless the chased entity moves far again.
 ///
 /// Example usage:
 /// ECChaseEnemies* c = new ECChaseEnemies(entity);
-/// c->setStopDistance(50);
+/// c->setStopDistance(50); // set how close you want the controlled entity to get to the chased entity
 /// connect(c,&ECChaseEnemies::entityChaseStarted,this,myCallback);
 /// connect(c,&ECChaseEnemies::entityChaseContinued,this,myCallback);
 class ECChaseEnemies: public QObject
@@ -49,6 +52,8 @@ public slots:
     void onEntityEntersFOV_(Entity* entity);
     void onEntityLeavesFOV_(Entity* entity);
     void onEntityMoved_();
+    void onEntityEntersRange_(Entity* watched, Entity* watching, double range);
+    void onEntityLeavesRange_(Entity* watched, Entity* watching, double range);
 
     void chaseStep_();
 
@@ -56,14 +61,15 @@ private:
     // options
     double stopDistance_;
 
-    QPointer<Entity> entity_;
+    QPointer<Entity> controlledEntity_;
     ECFieldOfViewEmitter* fovEmitter_; // helper controller that emits events whenever
                                        // anothe entity enters/leaves the controlled entity's fov
     ECPathMover* pathMover_;
     QTimer* chaseTimer_;
 
     bool shouldChase_;
-    QPointer<Entity> entityBeingChased_;
+    bool paused_;   // controlled entity is w/i stop distance of chased entity
+    QPointer<Entity> targetEntity_;
 };
 
 #endif // ECCHASEENEMIES_H

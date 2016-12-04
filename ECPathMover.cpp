@@ -8,6 +8,7 @@
 #include <QLineF>
 
 ECPathMover::ECPathMover(Entity *entity):
+    alwaysFaceTargetPosition_(false),
     entity_(entity),
     moveTimer_(new QTimer(this)),
     pf_(new AsyncShortestPathFinder()),
@@ -63,6 +64,22 @@ bool ECPathMover::entityIsCurrentlyMoving()
     return currentlyMoving_;
 }
 
+/// Returns true if the controlled entity will always face the target position while moving along
+/// path.
+/// See setAlwaysFaceTargetPosition() for more info.
+bool ECPathMover::alwaysFaceTargetPosition()
+{
+    return alwaysFaceTargetPosition_;
+}
+
+/// If true is passed in, makes it so that as the controlled entity is moving, it will contineuosly
+/// face it's target position. If false is passed in, the controlled entity will face the current
+/// direction its heading in.
+void ECPathMover::setAlwaysFaceTargetPosition(bool tf)
+{
+    alwaysFaceTargetPosition_ = tf;
+}
+
 /// Executed when the async path finder has succesfully calculated a requested path.
 /// Will start the timer to make the entity move on the path.
 void ECPathMover::onPathCalculated_(std::vector<QPointF> path)
@@ -112,7 +129,6 @@ void ECPathMover::moveStep_()
     // - snap to current target
     // - set next point as target
     // - face that point
-
     int pointsSize = pointsToFollow_.size() - 1;
     bool morePoints = targetPointIndex_ < pointsSize;
     if (morePoints && targetPointReached_()){
@@ -124,7 +140,8 @@ void ECPathMover::moveStep_()
         ++targetPointIndex_;
 
         // face target
-        rotater_->rotateTowards(pointsToFollow_[targetPointIndex_]);
+        if (!alwaysFaceTargetPosition_)
+            rotater_->rotateTowards(pointsToFollow_[targetPointIndex_]);
     }
 
     // take a step closer towards the target (if there is a target)
@@ -151,6 +168,9 @@ bool ECPathMover::targetPointReached_()
 /// step closer to its target point.
 void ECPathMover::stepTowardsTarget_()
 {
+    // make sure points to follow is not empty
+    assert(pointsToFollow_.size() != 0);
+
     // get a line b/w the entity's pos and the target pos
     QLineF ln(entity_->pointPos(),pointsToFollow_[targetPointIndex_]);
 
@@ -161,6 +181,9 @@ void ECPathMover::stepTowardsTarget_()
     double newX = entity_->pointPos().x() + ln.dx();
     double newY = entity_->pointPos().y() + ln.dy();
     QPointF newPt(newX,newY);
+
+    if (alwaysFaceTargetPosition_)
+        rotater_->rotateTowards(pointsToFollow_.back());
 
     entity_->setPointPos(newPt);
     emit moved(newPt);

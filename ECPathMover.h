@@ -14,9 +14,12 @@ class ECRotater;
 
 /// An entity controller (TODO: add doc link) that can move an entity to a specified
 /// pos on its map. The controlled entity will move using a path finding algorithm.
+/// You can specifiy if the controlled entity should continue to face its target
+/// position or if it should face the direction its heading into.
 ///
 /// Example usage:
 /// ECPathMover* pm = new ECPathMover(entity);
+/// pm->setAlwaysFaceTargetPosition(); // make entity always face the position he's heading to
 /// pm->moveEntityTo(pos);
 /// pm->entityIsCurrentlyMoving(); // is the entity currently moving?
 /// pm->stopMoving();
@@ -34,6 +37,9 @@ public:
     void stopMoving();
     bool entityIsCurrentlyMoving();
 
+    bool alwaysFaceTargetPosition();
+    void setAlwaysFaceTargetPosition(bool tf);
+
 public slots:
     void onPathCalculated_(std::vector<QPointF> path);
     void moveStep_();
@@ -42,6 +48,9 @@ signals:
     void moved(const QPointF& toPos);
 
 private:
+    // options
+    bool alwaysFaceTargetPosition_;
+
     QPointer<Entity> entity_;
 
     QTimer* moveTimer_;
