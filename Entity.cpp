@@ -543,6 +543,12 @@ bool Entity::equipItem(EquipableItem *item, Slot *slot)
     return equipItem(item,slot->name());
 }
 
+/// Sets the Inventory of the Entity to the specified inventory.
+void Entity::setInventory(Inventory *inv)
+{
+    inventory_ = inv;
+}
+
 /// Returns the inventory of the Entity.
 Inventory *Entity::inventory()
 {

@@ -115,6 +115,7 @@ public:
     std::unordered_set<Slot*> getSlots();
     bool equipItem(EquipableItem* item, std::string slot);
     bool equipItem(EquipableItem* item, Slot* slot);
+    void setInventory(Inventory* inv);
     Inventory* inventory();
 
     // misc

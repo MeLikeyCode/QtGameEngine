@@ -46,6 +46,8 @@
 #include "ECBodyThruster.h"
 #include "ECPathMover.h"
 #include "ECFieldOfViewEmitter.h"
+#include "WeaponSlot.h"
+#include "ECAttackEnemiesWithWeapon.h"
 
 #include <QMediaPlayer>
 
@@ -340,23 +342,45 @@ int main(int argc, char *argv[])
 
 //    map1->addEntity(chaseEnemiesEntity);
 
-    // create an entity that body thrusts enemies
-    Entity* bodyThrustEntity = new Entity();
-    bodyThrustEntity->setPointPos(QPointF(300,300));
+//    // create an entity that body thrusts enemies
+//    Entity* bodyThrustEntity = new Entity();
+//    bodyThrustEntity->setPointPos(QPointF(300,300));
 
-    Sprite* sprBT = new Sprite();
-    sprBT->addFrames(":/resources/graphics/spider",7,"walk");
-    sprBT->addFrames(":/resources/graphics/spider",1,"stand");
-    bodyThrustEntity->setSprite(sprBT);
+//    Sprite* sprBT = new Sprite();
+//    sprBT->addFrames(":/resources/graphics/spider",7,"walk");
+//    sprBT->addFrames(":/resources/graphics/spider",1,"stand");
+//    bodyThrustEntity->setSprite(sprBT);
 
-    sprBT->play("stand",-1,10000);
+//    sprBT->play("stand",-1,10000);
 
 
-    map1->addEntity(bodyThrustEntity);
-    ECBodyThruster* bodyThrustCont = new ECBodyThruster(bodyThrustEntity);
+//    map1->addEntity(bodyThrustEntity);
+//    ECBodyThruster* bodyThrustCont = new ECBodyThruster(bodyThrustEntity);
+
+//    keyMouseEntity->setGroup(1);
+//    bodyThrustEntity->addEnemyGroup(1);
+
+    // create an Entity that will attack enemies with a weapon
+    Entity* weaponEntity = new Entity();
+    map1->addEntity(weaponEntity);
+
+    WeaponSlot* wSlot = new WeaponSlot();
+    wSlot->setPosition(QPointF(0,0));
+    wSlot->setName("main weapon");
+
+    weaponEntity->addSlot(wSlot);
+
+    Spear* wSpear = new Spear();
+    Inventory* weInv = new Inventory();
+    weaponEntity->setInventory(weInv);
+    weInv->addItem(wSpear);
+    wSlot->equip(wSpear);
+
+    ECAttackEnemiesWithWeapon* weaponAttackCont = new ECAttackEnemiesWithWeapon(weaponEntity);
 
     keyMouseEntity->setGroup(1);
-    bodyThrustEntity->addEnemyGroup(1);
+    weaponEntity->addEnemyGroup(1);
+
 
     return a.exec();
 }

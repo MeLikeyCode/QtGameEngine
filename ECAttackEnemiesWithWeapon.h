@@ -8,7 +8,15 @@
 class ECChaseEnemies;
 
 /// An entity controller that makes the controlled entity attack enemies
-/// within its field of view with its weapon.
+/// within its field of view with its weapon. The controlled Entity will use
+/// the Weapon in its first WeaponSlot. If the controlled entity does not have
+/// any WeaponSlots with a Weapon, it will simply not attack.
+///
+/// Example usage:
+/// ECAttackEnemiesWithWeapon* c = new ECAttackEnemiesWithWeapon(entity);
+///
+/// That is all. From then on, the controlled entity will use its first viable
+/// weapon to attack any enemies in its field of view.
 class ECAttackEnemiesWithWeapon: public QObject
 {
     Q_OBJECT

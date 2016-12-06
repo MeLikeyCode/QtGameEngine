@@ -21,6 +21,7 @@ ECAttackEnemiesWithWeapon::ECAttackEnemiesWithWeapon(Entity *entity):
 /// Will see if close enough to use weapon. If so, will use it.
 void ECAttackEnemiesWithWeapon::onEnemyChaseContinued(Entity *entityChased, double distance)
 {
+    // TODO only attack if close to range of weapon
     // pick first weapon in controlled enities slots and use it to attack chased entity
     for (Slot* slot: entity_->getSlots()){
         WeaponSlot* asWS = dynamic_cast<WeaponSlot*>(slot);
