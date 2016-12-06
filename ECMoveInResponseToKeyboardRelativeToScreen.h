@@ -25,6 +25,9 @@ public:
     // TODO factor out constructor for behaviors into a base EntityBehavior class
     ECMoveInResponseToKeyboardRelativeToScreen(Entity* entity);
     ~ECMoveInResponseToKeyboardRelativeToScreen();
+
+    void setStepSize(double stepSize);
+    double stepSize();
 public slots:
     void moveStep_();
 private:
@@ -32,7 +35,6 @@ private:
                                 // this is a QPointer because we wanna know when the Entity is deleted
                                 // so that we can stop moving it (dangling pointer!)
     double stepSize_;
-    double stepFrequency_;
 
     QTimer* moveTimer_;
 };

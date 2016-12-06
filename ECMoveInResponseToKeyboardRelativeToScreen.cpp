@@ -4,11 +4,11 @@
 #include <cassert>
 #include "Game.h"
 #include "Sprite.h"
+#include "Utilities.h"
 
 ECMoveInResponseToKeyboardRelativeToScreen::ECMoveInResponseToKeyboardRelativeToScreen(Entity *entity):
     entity_(entity),
     stepSize_(15),
-    stepFrequency_(40),
     moveTimer_(new QTimer(this))
 {
     // make sure passed in Entity is not nullptr
@@ -16,13 +16,25 @@ ECMoveInResponseToKeyboardRelativeToScreen::ECMoveInResponseToKeyboardRelativeTo
 
     // connect timer to move step
     connect(moveTimer_,&QTimer::timeout,this,&ECMoveInResponseToKeyboardRelativeToScreen::moveStep_);
-    moveTimer_->start(stepFrequency_);
+    moveTimer_->start(secondsToMs(frequency(stepSize_,entity_->speed())));
 }
 
 ECMoveInResponseToKeyboardRelativeToScreen::~ECMoveInResponseToKeyboardRelativeToScreen()
 {
     // make sure timer disconnects
     // - it will (since its a child of this qobject)
+}
+
+/// See ECPathMover::setStepSize().
+void ECMoveInResponseToKeyboardRelativeToScreen::setStepSize(double stepSize)
+{
+    stepSize_ = stepSize;
+}
+
+/// See ECPathMover::stepSize().
+double ECMoveInResponseToKeyboardRelativeToScreen::stepSize()
+{
+    return stepSize_;
 }
 
 void ECMoveInResponseToKeyboardRelativeToScreen::moveStep_()

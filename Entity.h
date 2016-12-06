@@ -91,6 +91,11 @@ public:
     void addNamedPoint(const QPointF& point, std::string name);
     QPointF namedPoint(std::string name);
 
+    void setSpeed(double speed);
+    double speed();
+    void setRotationSpeed(double rotationSpeed);
+    double rotationSpeed();
+
     void setHealth(double health);
     double health();
     void damage(Entity* entity, double amount);
@@ -152,6 +157,8 @@ private:
     double height_;
     Inventory* inventory_;
     std::unordered_map<std::string,Slot*> stringToSlot_;
+    double speed_; // pixels per second
+    double rotationSpeed_; // degrees per second
 
     // helper functions
     void scaleSprite_();

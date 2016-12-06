@@ -18,12 +18,14 @@ class ECMoveInResponseToKeyboardRelativeToSelf: public QObject
     Q_OBJECT
 public:
     ECMoveInResponseToKeyboardRelativeToSelf(Entity* entity);
+
+    void setStepSize(double stepSize);
+    double stepSize();
 public slots:
     void moveStep_();
 private:
     QPointer<Entity> entity_;
     double stepSize_;
-    double stepFrequency_;
 
     QTimer* moveTimer_;
 };

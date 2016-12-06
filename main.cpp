@@ -305,6 +305,9 @@ int main(int argc, char *argv[])
     sprKeyMouseEntity->addFrames(":/resources/graphics/human",1,"stand");
     keyMouseEntity->setSprite(sprKeyMouseEntity);
 
+
+    keyMouseEntity->setSpeed(300);
+
     keyMouseEntity->setPointPos(QPointF(10,200));
     map1->addEntity(keyMouseEntity);
 

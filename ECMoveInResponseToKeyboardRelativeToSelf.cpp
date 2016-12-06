@@ -4,11 +4,11 @@
 #include "Sprite.h"
 #include "Game.h"
 #include <cassert>
+#include "Utilities.h"
 
 ECMoveInResponseToKeyboardRelativeToSelf::ECMoveInResponseToKeyboardRelativeToSelf(Entity* entity):
     entity_(entity),
     stepSize_(15),
-    stepFrequency_(40),
     moveTimer_(new QTimer(this))
 {
     // make sure passed in Entity is not nullptr
@@ -16,7 +16,19 @@ ECMoveInResponseToKeyboardRelativeToSelf::ECMoveInResponseToKeyboardRelativeToSe
 
     // connect timer to move step
     connect(moveTimer_,&QTimer::timeout,this,&ECMoveInResponseToKeyboardRelativeToSelf::moveStep_);
-    moveTimer_->start(stepFrequency_);
+    moveTimer_->start(secondsToMs(frequency(stepSize_,entity_->speed())));
+}
+
+/// See ECPathMover::setStepSize().
+void ECMoveInResponseToKeyboardRelativeToSelf::setStepSize(double stepSize)
+{
+    stepSize_ = stepSize;
+}
+
+/// See ECPathMover::stepSize().
+double ECMoveInResponseToKeyboardRelativeToSelf::stepSize()
+{
+    return stepSize_;
 }
 
 void ECMoveInResponseToKeyboardRelativeToSelf::moveStep_()

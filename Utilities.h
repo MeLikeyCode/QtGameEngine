@@ -10,11 +10,14 @@ class Map;
 class QPointF;
 class AIEntity;
 
+// convenience functions
 void addRandomTrees(Map* mapToAddTreesTo, int numTreesToAdd);
 void addRandomRocks(Map* mapToAddRocksTo, int numRocksToAdd);
 void addRandomBushes(Map* mapToAddBushesTo, int numBushesToAdd);
-AIEntity* addAIEntity(Map* mapToAddTo, const QPointF& posToAddTo, int teamToAddTo);
 
+// mathmatical
 double distance(QPointF p1, QPointF p2);
+double frequency(double stepSize, double rate);
+double secondsToMs(double seconds);
 
 #endif // UTILITIES_H

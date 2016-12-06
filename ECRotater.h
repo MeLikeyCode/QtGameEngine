@@ -16,7 +16,6 @@ class QTimer;
 ///
 /// Example usage:
 /// ECRotater* c = new ECRotater(entity);
-/// c.setRotationSpeed(someSpeed);
 /// c.rotateTowards(someAngle);
 /// c.rotateTowards(somePoint);
 /// c.rotateLeft(100); // rotate left by 100 degrees
@@ -31,19 +30,23 @@ class ECRotater : public QObject
 public:
     ECRotater(Entity* entity);
 
+    // actions
     void rotateTowards(int angle);
     void rotateTowards(const QPointF& point);
     void rotateLeft(int numDegrees);
     void rotateRight(int numDegrees);
     void stopRotating();
-    void setRotationSpeed(double degreesPerSecond);
-    double rotationSpeed();
+
+    // options
+    void setStepSize(double degrees);
+    double stepSize();
 
 public slots:
     void rotateStep_();
 private:
+    double stepSize_;
+
     QPointer<Entity> entity_;
-    double rotationFrequency_;
 
     QTimer* rotationTimer_;
 
@@ -52,7 +55,6 @@ private:
     void rotateTowardsTargetAngle_();
     void rotate1Right_();
     void rotate1Left_();
-
 };
 
 #endif // ECROTATE_H

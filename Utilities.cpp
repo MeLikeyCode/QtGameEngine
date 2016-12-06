@@ -67,3 +67,27 @@ double distance(QPointF p1, QPointF p2)
     double deltaY = p2.y() - p1.y();
     return qAbs(qSqrt(qPow(deltaX,2) + qPow(deltaY,2)));
 }
+
+/// Given a step size and a target rate, will tell you the frequency needed to get the
+/// target rate.
+/// I.e. if my character moves 10 pixels at a time (stepSize) and I want him to move
+/// 50 pixels per second (targetRate), how often (in seconds) should I move him?
+/// I.e. if my character rotates 10 degrees at a time (stepSize) and I want him to
+/// rotate at 50 degrees per second, how often (in seconds) should I move him?
+/// Obviously, you need to make sure you are consistent in your units.
+double frequency(double stepSize, double targetRate)
+{
+    // stepFrequency = stepSize / targetRate
+
+    double stepFrequency = stepSize / targetRate;
+    return stepFrequency;
+}
+
+/// Converts seconds to milliseconds.
+double secondsToMs(double seconds)
+{
+    static const int MS_IN_S = 1000;
+
+    double ms = seconds * MS_IN_S;
+    return ms;
+}

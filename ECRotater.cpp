@@ -4,10 +4,11 @@
 #include <cassert>
 #include <QLineF>
 #include <QTimer>
+#include "Utilities.h"
 
 ECRotater::ECRotater(Entity *entity):
+    stepSize_(1),
     entity_(entity),
-    rotationFrequency_(5),
     rotationTimer_(new QTimer(this)),
     rotateRight_(false),
     targetAngle_(0)
@@ -64,7 +65,7 @@ void ECRotater::rotateLeft(int numDegrees)
 
     // start the timer
     connect(rotationTimer_,SIGNAL(timeout()),this,SLOT(rotateStep_()));
-    rotationTimer_->start(rotationFrequency_);
+    rotationTimer_->start(secondsToMs(frequency(stepSize_,entity_->rotationSpeed())));
 }
 
 /// Rotates the entity the specified number of degrees to the right.
@@ -79,7 +80,7 @@ void ECRotater::rotateRight(int numDegrees)
 
     // start the timer
     connect(rotationTimer_,SIGNAL(timeout()),this,SLOT(rotateStep_()));
-    rotationTimer_->start(rotationFrequency_);
+    rotationTimer_->start(secondsToMs(frequency(stepSize_,entity_->rotationSpeed())));
 }
 
 /// Stop the entity's rotating.
@@ -88,20 +89,18 @@ void ECRotater::stopRotating()
     rotationTimer_->disconnect();
 }
 
-/// Sets how fast the entity should be rotated.
-/// The actual rotation will be close but not exactly what you pass in.
-void ECRotater::setRotationSpeed(double degreesPerSecond)
+/// Sets how many degrees the controlled entity will rotate each time it rotates.
+/// In other words, sets the "granularity" of rotation.
+/// @see ECPathMover::setStepSize()
+void ECRotater::setStepSize(double degrees)
 {
-    double degPerMS = degreesPerSecond / 1000.0;
-    rotationFrequency_ = 1.0 / degPerMS;
-    // TODO: double check and test this math
+    stepSize_ = degrees;
 }
 
-/// Returns the entity's rotation speed in degrees per second.
-double ECRotater::rotationSpeed()
+/// Returns how many degrees the controlled entity rotates each time it rotates.
+double ECRotater::stepSize()
 {
-    return 1000.0 / rotationFrequency_;
-    // TODO: double check and test this math
+    return stepSize_;
 }
 
 void ECRotater::rotateStep_()

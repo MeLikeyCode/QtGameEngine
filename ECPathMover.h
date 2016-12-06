@@ -33,12 +33,16 @@ class ECPathMover: public QObject
 public:
     ECPathMover(Entity* entity);
 
+    // action
     void moveEntityTo(const QPointF& pos);
     void stopMoving();
     bool entityIsCurrentlyMoving();
 
+    // option setters/getters
     bool alwaysFaceTargetPosition();
     void setAlwaysFaceTargetPosition(bool tf);
+    void setStepSize(double stepSize);
+    double stepSize();
 
 public slots:
     void onPathCalculated_(std::vector<QPointF> path);
@@ -49,17 +53,15 @@ signals:
 
 private:
     // options
-    bool alwaysFaceTargetPosition_;
+    bool alwaysFaceTargetPosition_; // controlled entity should continueously face last pos in
+                                    // path (instead of facing forward in each segment of path)
+    int stepSize_;  // how "granular" the movement should be
 
     QPointer<Entity> entity_;
 
     QTimer* moveTimer_;
     AsyncShortestPathFinder* pf_;
     ECRotater* rotater_;
-
-    // moving parameters
-    int stepSize_;
-    int stepFrequency_;
 
     // moving helper attributes
     std::vector<QPointF> pointsToFollow_;

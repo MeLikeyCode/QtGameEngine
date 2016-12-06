@@ -6,6 +6,7 @@
 #include "Map.h"
 #include "ECRotater.h"
 #include <QLineF>
+#include "Utilities.h"
 
 ECPathMover::ECPathMover(Entity *entity):
     alwaysFaceTargetPosition_(false),
@@ -13,8 +14,7 @@ ECPathMover::ECPathMover(Entity *entity):
     moveTimer_(new QTimer(this)),
     pf_(new AsyncShortestPathFinder()),
     rotater_(new ECRotater(entity)),
-    stepSize_(15),
-    stepFrequency_(50),
+    stepSize_(5),
     pointsToFollow_(),
     targetPointIndex_(0),
     currentlyMoving_(false)
@@ -80,6 +80,24 @@ void ECPathMover::setAlwaysFaceTargetPosition(bool tf)
     alwaysFaceTargetPosition_ = tf;
 }
 
+/// Sets how many pixels the controlled entity should move every time he moves.
+/// This in effect controlls the "granularity" of the movement.
+/// Higher values means the controlled entity takes bigger steps but infrequently.
+/// Lower values means the controlled entity takes frequent small steps.
+/// Note that this does not effect the speed of the controlled entity, just the
+/// movement "granularity"!
+void ECPathMover::setStepSize(double stepSize)
+{
+    stepSize_ = stepSize;
+}
+
+/// Returns how many pixels the controlled entity should move every time he moves.
+/// @see setStepSize()
+double ECPathMover::stepSize()
+{
+    return stepSize_;
+}
+
 /// Executed when the async path finder has succesfully calculated a requested path.
 /// Will start the timer to make the entity move on the path.
 void ECPathMover::onPathCalculated_(std::vector<QPointF> path)
@@ -92,7 +110,7 @@ void ECPathMover::onPathCalculated_(std::vector<QPointF> path)
     if (pointsToFollow_.size() > 1)
         targetPointIndex_ = 1; // start following the 1-eth point (0-eth causes initial backward movement)
     connect(moveTimer_,SIGNAL(timeout()),this,SLOT(moveStep_()));
-    moveTimer_->start(stepFrequency_);
+    moveTimer_->start(secondsToMs(frequency(stepSize_,entity_->speed())));
 
     // play walk animation
     if (entity_->sprite()->hasAnimation("walk"))

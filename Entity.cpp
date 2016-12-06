@@ -27,7 +27,9 @@ Entity::Entity():
     zPos_(0),
     height_(0),
     sprite_(new Sprite()),
-    inventory_(new Inventory())
+    inventory_(new Inventory()),
+    speed_(100),
+    rotationSpeed_(360)
 {
     inventory_->entity_ = this;
 }
@@ -368,6 +370,39 @@ QPointF Entity::namedPoint(std::string name)
     assert(namedPoints_.count(name));
 
     return namedPoints_[name];
+}
+
+/// Sets the speed that the entity should generally travel at (in pixels per second).
+/// Note that entity controllers often use this variable to determine how to move the
+/// entity, so this speed may not be EXACTLY what the actual movement speed of the
+/// entity ends up being.
+void Entity::setSpeed(double speed)
+{
+    speed_ = speed;
+}
+
+/// Returns the speed of the Entity.
+/// @see setSpeed()
+double Entity::speed()
+{
+    return speed_;
+}
+
+/// Sets the speed at which this entity should in general rotate at, in degrees
+/// per second.
+/// Note that entity controllers often use this variable to determine how to rotate
+/// the entity, so this rotation speed may not be exactly what the actual ends up being.
+/// (that is up to the entity controllers).
+void Entity::setRotationSpeed(double rotationSpeed)
+{
+    rotationSpeed_ = rotationSpeed;
+}
+
+/// Returns the rotation speed of the entity.
+/// @see setRotationSpeed()
+double Entity::rotationSpeed()
+{
+    return rotationSpeed_;
 }
 
 // Sets the point the Entity should rotate about.
