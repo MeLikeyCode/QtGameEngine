@@ -25,6 +25,8 @@ BodyThrust::BodyThrust(Entity *owner):
     damage_ = 5;
 
     soundEffect_ = new Sound("qrc:/resources/sounds/spear.wav");
+
+    setIcon(new Sprite());
 }
 
 void BodyThrust::use()

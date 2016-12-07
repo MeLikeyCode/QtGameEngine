@@ -20,6 +20,7 @@ AbilityCell::AbilityCell(int width, int height, Ability *ability):
 void AbilityCell::setAbility(Ability *ability)
 {
     ability_ = ability;
+    draw_();
 }
 
 /// Returns the Ability of the AbilityCell.
@@ -46,7 +47,7 @@ void AbilityCell::setBackgroundColor(const QColor &color)
 /// @see setBackgroundColor()
 void AbilityCell::setBackgroundPixmap(const QPixmap &pixmap)
 {
-
+    background_->setBackgroundPixmap(pixmap);
 }
 
 QGraphicsItem *AbilityCell::getGraphicsItem()

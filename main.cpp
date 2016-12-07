@@ -48,6 +48,7 @@
 #include "ECFieldOfViewEmitter.h"
 #include "WeaponSlot.h"
 #include "ECAttackEnemiesWithWeapon.h"
+#include "AbilityCell.h"
 
 #include <QMediaPlayer>
 
@@ -296,6 +297,15 @@ int main(int argc, char *argv[])
 //    shopGui->setBuyer(player->inventory());
 
 //    // game->addGui(shopGui);
+
+    // test ability cell
+    AbilityCell* abilityCell = new AbilityCell(100,100);
+    BodyThrust* bodThrustAb = new BodyThrust(player);
+    abilityCell->setAbility(bodThrustAb);
+    abilityCell->setGuiPos(QPointF(300,400));
+    game->addGui(abilityCell);
+
+    // == new test
 
     // create an entity that is controlled via keyboard/mouse and picks up items
     Entity* keyMouseEntity = new Entity();
