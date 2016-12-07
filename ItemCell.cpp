@@ -9,7 +9,7 @@
 #include "Sprite.h"
 
 /// Constructs an ItemCell with the given width, height, and Item.
-ItemCell::ItemCell(Game* game, int width, int height, Item *item):
+ItemCell::ItemCell(int width, int height, Item *item):
     background_(new Panel()),
     item_(item),
     picture_(new QGraphicsPixmapItem())

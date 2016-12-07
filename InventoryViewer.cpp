@@ -190,7 +190,7 @@ void InventoryViewer::draw_()
         double x = 0;
         double y = 0;
         for (Item* item:inventory_->getItems()){
-            ItemCell* cell = new ItemCell(game_,cellWidth_,cellHeight_,item);
+            ItemCell* cell = new ItemCell(cellWidth_,cellHeight_,item);
             if (cellBackgroundIsColor_)
                 cell->setBackgroundColor(cellBackgroundColor_);
             else

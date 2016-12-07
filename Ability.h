@@ -6,7 +6,13 @@ class Sprite;
 
 /// An abstract class that represents an ability.
 /// An Ability has an owner and an optional icon.
+/// The owner may be effected in some way when the ability is used, depending
+/// on the ability. The Icon is used by GUI purposes (i.e.by AbilityCell).
+///
 /// Most abilities require the owner to be in a Map before being used.
+/// The main difference between Abilities and Items is the fact that Items are
+/// Entities, therefore they can be on the ground where as Abilities cannot.
+/// @author Abdullah Aghazadah
 class Ability
 {
 public:

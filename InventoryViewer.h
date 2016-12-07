@@ -63,7 +63,6 @@ private:
     ScrollWindow* scrollWindow_;
     Inventory* inventory_;
     std::vector<ItemCell*> cells_;
-    Game* game_;
 
     // helper functions
     void draw_();

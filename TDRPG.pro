@@ -103,7 +103,8 @@ SOURCES += main.cpp \
     ECGrabCam.cpp \
     ECBodyThruster.cpp \
     ECPickUpItem.cpp \
-    ECAttackEnemiesWithWeapon.cpp
+    ECAttackEnemiesWithWeapon.cpp \
+    AbilityCell.cpp
 
 HEADERS  += \
     Map.h \
@@ -192,7 +193,8 @@ HEADERS  += \
     ECGrabCam.h \
     ECBodyThruster.h \
     ECPickUpItem.h \
-    ECAttackEnemiesWithWeapon.h
+    ECAttackEnemiesWithWeapon.h \
+    AbilityCell.h
 
 RESOURCES += \
     res.qrc
