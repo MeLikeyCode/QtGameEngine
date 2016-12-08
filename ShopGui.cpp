@@ -6,10 +6,12 @@
 #include "Inventory.h"
 #include "Item.h"
 #include "Game.h"
+#include "ShopBehaviorNoCost.h"
 
 ShopGui::ShopGui(Game *game):
     inventoryViewer_(new InventoryViewer()),
     selecteditem_(nullptr),
+    shopBehavior_(new ShopBehaviorNoCost()),
     panel_(new Panel()),
     descriptionLabel_(new Label()),
     priceLabel_(new Label()),
@@ -87,13 +89,19 @@ void ShopGui::onItemClicked(Item *clickedItem, int mouseButton)
 }
 
 /// Executed when the buy button is clicked.
-/// Will transfer the item from the buyer to the seller.
+/// Will transfer the item from the buyer to the seller if behavior says
+/// buy was succesfull.
 void ShopGui::onBuyButtonClicked()
 {
     Inventory* b = buyer();
     Inventory* s = seller();
-    s->removeItem(selecteditem_);
-    b->addItem(selecteditem_);
+
+    bool succesfullyBought = shopBehavior_->buy(selecteditem_, s, b);
+
+    if (succesfullyBought){
+        s->removeItem(selecteditem_);
+        b->addItem(selecteditem_);
+    }
 }
 
 /// Executed when the close button is clicked.

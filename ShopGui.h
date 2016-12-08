@@ -11,14 +11,15 @@ class Label;
 class Button;
 class Item;
 class QGraphicsItem;
+class ShopGuiBehavior;
 
 /// A Gui that allows you to transfer Items visually from a "seller" Inventory
 /// to a "buyer" Inventory.
 /// To set the seller, call setSeller(Inventory*);
 /// To set the buyer, call setBuyer(Inventory*);
 /// The seller Inventory will be displayed. Clicking on items results in the item's
-/// description and price being displayed. Clicking on buy will result in the selected
-/// item being transfered from the seller to the buyer.
+/// description being displayed. Clicking on "buy" will result in the selected
+/// item being transfered from the seller to the buyer, if the behavior approves.
 class ShopGui : public QObject, public Gui
 {
     Q_OBJECT
@@ -40,6 +41,7 @@ public slots:
 private:
     Inventory* buyer_;  // the Inventory that is buying
     Item* selecteditem_;
+    ShopGuiBehavior* shopBehavior_; // the rules of purchasing
 
     // sub guis
     InventoryViewer* inventoryViewer_;

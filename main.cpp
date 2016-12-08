@@ -147,10 +147,6 @@ int main(int argc, char *argv[])
 //    InventoryViewer* v = new InventoryViewer(player->inventory());
 //    game->addGui(v);
 
-    // test inventory user
-    InventoryUser* iu = new InventoryUser(game,player->inventory());
-    game->addGui(iu);
-
 //    // test panel
 //    Panel* p = new Panel();
 //    p->setGuiPos(QPointF(300,300));
@@ -393,7 +389,6 @@ int main(int argc, char *argv[])
 
     keyMouseEntity->setGroup(1);
     weaponEntity->addEnemyGroup(1);
-
 
     return a.exec();
 }

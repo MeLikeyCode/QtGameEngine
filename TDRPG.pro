@@ -104,7 +104,9 @@ SOURCES += main.cpp \
     ECBodyThruster.cpp \
     ECPickUpItem.cpp \
     ECAttackEnemiesWithWeapon.cpp \
-    AbilityCell.cpp
+    AbilityCell.cpp \
+    ShopGuiBehavior.cpp \
+    ShopBehaviorNoCost.cpp
 
 HEADERS  += \
     Map.h \
@@ -194,7 +196,9 @@ HEADERS  += \
     ECBodyThruster.h \
     ECPickUpItem.h \
     ECAttackEnemiesWithWeapon.h \
-    AbilityCell.h
+    AbilityCell.h \
+    ShopGuiBehavior.h \
+    ShopBehaviorNoCost.h
 
 RESOURCES += \
     res.qrc
