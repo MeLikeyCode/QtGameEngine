@@ -130,10 +130,15 @@ public:
 signals:
     /// Emitted whenever the Entity moves from a certain position to another
     /// position.
-    void moved(Entity* entity, QPointF fromPos, QPointF toPos);
+    void moved(Entity* sender, QPointF fromPos, QPointF toPos);
 
     /// Emitted whenever the Entity collides with another Entity.
     void collided(Entity* sender, Entity* collidedWith);
+
+    /// Emitted whenever the Entity enters a Map.
+    /// If the Entity was in another map prior to entering this new map,
+    /// "oldMap" parameter will point to that map, otherwise it will be nullptr.
+    void mapEntered(Entity* sender, Map* mapJustEntered, Map* oldMap);
 
 private:
     // main attributes

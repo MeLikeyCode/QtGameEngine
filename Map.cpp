@@ -571,6 +571,9 @@ void Map::addEntity(Entity *entity){
     for (Entity* childEntity:entity->children()){
         addEntity(childEntity);
     }
+
+    // notify that this entity (and all of its child entities) have been added to the map.
+    emit entity->mapEntered(entity,this,entitysMap);
 }
 
 /// Removes the specified entity (and all of its children) from the map. If the

@@ -536,6 +536,15 @@ Make InventoryViewer use ScrollWindow
 Come up with stuff to do
 -finish quest viewer -- done
     - finish label -- done
+    
+===TASK===-------------DONE
+Create entity controller that causes entity to go to another map when in edge.
+
+===TASK===-------DON
+When an entity enters a map, it should emit an event
+
+===TASK===-----DONE
+Create an entity controller that will switch game's current map to whatever map the controlled entity is in
 
 =============================================================================
 =============================================================================
@@ -553,6 +562,21 @@ Create youtube tutorial that creates a basic game
 -there is a small "town" with some npcs (shop and quest giver)
 -shop entity can sell you weapons in exchange for GoldItem
 -quest giver has a few quests such as "kill 10 x", when completed, you get bonus gold
+
+
+
+
+
+===TASK===
+I have to determine how entity controller clean up will happen.
+-once the controlled entity is destroyed, the controller should automatically be destroyed? <---leaning towards this
+-the controller should still live even when controlled entity is no longer alive
+    - when the controlled entity dies, it should simply stop doing what its doing and wait till a new controlled entity is set
+
+===TASK===
+Refactor Map-Game-MapGrid relationship a little bit. Map should have reference to MapGrid, MapGrid should have reference to Game.
+Game should have a MapGrid, MapGrid should have a bunch of Maps.
+Game should have a currentMap. This currentMap must always be one of the maps in its MapGrid
 
 ===TASKS===
 Go back through code and add const & to all parameters by default
@@ -580,9 +604,6 @@ Write documentation for:
 -item/slot system
 -weapon system
 -gui system
-
-===TASK===
-Create entity controller that causes entity to go to another map when in edge. (an entity with this and grap cam controller can cause cam to jump from map to map :)
 
 ===TASK===
 For ShopGui, have a settable shopBehavior attribute that determines what happens when an item is attempted to be bought (i.e. subtract something from buyer?), this thing should return true if the buy is approved, false other wise.

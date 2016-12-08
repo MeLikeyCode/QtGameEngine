@@ -106,7 +106,9 @@ SOURCES += main.cpp \
     ECAttackEnemiesWithWeapon.cpp \
     AbilityCell.cpp \
     ShopGuiBehavior.cpp \
-    ShopBehaviorNoCost.cpp
+    ShopBehaviorNoCost.cpp \
+    ECMoveToNextMap.cpp \
+    ECGrabCurrentMap.cpp
 
 HEADERS  += \
     Map.h \
@@ -198,7 +200,9 @@ HEADERS  += \
     ECAttackEnemiesWithWeapon.h \
     AbilityCell.h \
     ShopGuiBehavior.h \
-    ShopBehaviorNoCost.h
+    ShopBehaviorNoCost.h \
+    ECMoveToNextMap.h \
+    ECGrabCurrentMap.h
 
 RESOURCES += \
     res.qrc
