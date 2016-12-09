@@ -4,7 +4,8 @@
 #include "EquipableItem.h"
 
 /// An abstract class that represents an EquipableItem that can
-/// attack.
+/// attack towards a position.
+/// @author Abdullah Aghazadah
 class Weapon : public EquipableItem
 {
 public:

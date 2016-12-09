@@ -108,7 +108,9 @@ SOURCES += main.cpp \
     ShopGuiBehavior.cpp \
     ShopBehaviorNoCost.cpp \
     ECMoveToNextMap.cpp \
-    ECGrabCurrentMap.cpp
+    ECGrabCurrentMap.cpp \
+    CollisionBehavior.cpp \
+    CBDamage.cpp
 
 HEADERS  += \
     Map.h \
@@ -202,7 +204,9 @@ HEADERS  += \
     ShopGuiBehavior.h \
     ShopBehaviorNoCost.h \
     ECMoveToNextMap.h \
-    ECGrabCurrentMap.h
+    ECGrabCurrentMap.h \
+    CollisionBehavior.h \
+    CBDamage.h
 
 RESOURCES += \
     res.qrc

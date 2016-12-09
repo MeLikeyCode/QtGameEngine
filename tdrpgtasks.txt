@@ -546,6 +546,9 @@ When an entity enters a map, it should emit an event
 ===TASK===-----DONE
 Create an entity controller that will switch game's current map to whatever map the controlled entity is in
 
+===TASK===------DONE
+For ShopGui, have a settable shopBehavior attribute that determines what happens when an item is attempted to be bought (i.e. subtract something from buyer?), this thing should return true if the buy is approved, false other wise.
+
 =============================================================================
 =============================================================================
 =========================UNFINISHED TASKS====================================
@@ -556,7 +559,7 @@ Create an entity controller that will switch game's current map to whatever map 
 Create youtube tutorial that creates a basic game
 -player controlled entity (grabs cam and can go to other maps)
 -creep entities
--creeps drop items (health, GoldItem, Weapons, NoTargetItem, TargetItem, etc...)
+-creeps drop items (health, GoldItem, Weapons, NoTargetItem, TargetItem, etc...) 
 -creeps respawn
 -player keeps killing creeps, thus keeps getting new items
 -there is a small "town" with some npcs (shop and quest giver)
@@ -564,15 +567,22 @@ Create youtube tutorial that creates a basic game
 -quest giver has a few quests such as "kill 10 x", when completed, you get bonus gold
 
 
-
-
+===TASK===
+Entities will have a health attribute
+-when health reaches 0, the entity destructs itself
 
 ===TASK===
-I have to determine how entity controller clean up will happen.
+I have to eventually determine how entity controller clean up will happen.
 -once the controlled entity is destroyed, the controller should automatically be destroyed? <---leaning towards this
 -the controller should still live even when controlled entity is no longer alive
     - when the controlled entity dies, it should simply stop doing what its doing and wait till a new controlled entity is set
-
+*solution i'v decided to go with
+-rename entity controllers (EC) to entity behavior (EB)
+-state in the entity behavior documentation that entity behavior are automatically cleaned up when the entity dies
+    - if a client is referencing an entity behavior, he should use a QPointer to point to it so that he'll know when its dead (no dangling pointer)
+    *upon construction, EBs should listen to entitiy's destroyed event and in response should destroy themselves
+    *problem solved
+    
 ===TASK===
 Refactor Map-Game-MapGrid relationship a little bit. Map should have reference to MapGrid, MapGrid should have reference to Game.
 Game should have a MapGrid, MapGrid should have a bunch of Maps.
@@ -605,8 +615,7 @@ Write documentation for:
 -weapon system
 -gui system
 
-===TASK===
-For ShopGui, have a settable shopBehavior attribute that determines what happens when an item is attempted to be bought (i.e. subtract something from buyer?), this thing should return true if the buy is approved, false other wise.
+
 
 
 ===TASK===

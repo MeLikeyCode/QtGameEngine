@@ -20,6 +20,8 @@ class ProjectileCollisionBehavior;
 /// The ProjectileMoveBehavior determines how the projectile moves. It has a
 /// function that is executed each time the projectile is asked to move. This
 /// function moves the projectile in its own way (straight, squiggily, etc...).
+/// To set how often the projectile is asked to move (and therefore how often the
+/// ProjectileMoveBehavior is called) use set setStepFrequency().
 ///
 /// The ProjectileCollisionBehavior determines how the projectile responds when
 /// it collides with Entities. It has a function that recieves what it has collided
@@ -29,11 +31,13 @@ class ProjectileCollisionBehavior;
 /// behaviors to create your own behaviors. Then simply construct a projectile and
 /// give them your own behaviors :).
 ///
-/// Note that several prebuilt behaviors are included.
+/// Note that several prebuilt behaviors are included as well as several concrete
+/// Projectile subclasses that come with standard move and collisions behaviors
+/// (see SpearProjectile).
 ///
-/// Every projectile maintains a list of entities that it should not damage.
-/// The Entity that spawns a projectile should be added to this list to prevent
-/// the projectile from damaging him (addToNoDamageList(Entity*)).
+/// Every projectile maintains a collection of entities that it should not damage.
+/// The Entity that spawns a projectile should probably be added to this list to prevent
+/// the projectile from damaging him (unless that is the intended effect).
 ///
 /// To make the projectile start moving call its startMoving() function.
 ///
