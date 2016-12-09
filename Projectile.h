@@ -5,17 +5,16 @@
 #include <QPointF>
 #include <unordered_set>
 #include <QTimer>
-#include <QPointer>
 #include "Entity.h"
 
 class ProjectileMoveBehavior;
-class ProjectileCollisionBehavior;
+class CollisionBehavior;
 
 /// Represents a projectile that moves a certain way and collides with things
 /// along the way. Strategy pattern is used to determine the behaviors of the projectile.
 /// Projectiles have 2 behaviors:
 /// -ProjectileMoveBehavior
-/// -ProjectileCollisionBehavior
+/// -CollisionBehavior
 ///
 /// The ProjectileMoveBehavior determines how the projectile moves. It has a
 /// function that is executed each time the projectile is asked to move. This
@@ -23,7 +22,7 @@ class ProjectileCollisionBehavior;
 /// To set how often the projectile is asked to move (and therefore how often the
 /// ProjectileMoveBehavior is called) use set setStepFrequency().
 ///
-/// The ProjectileCollisionBehavior determines how the projectile responds when
+/// The CollisionBehavior determines how the projectile responds when
 /// it collides with Entities. It has a function that recieves what it has collided
 /// with, the function responds accordingly (weather it damages, heals, etc..).
 ///
@@ -49,7 +48,7 @@ class Projectile: public Entity
 public:
     Projectile(QPointF start,
                ProjectileMoveBehavior *moveBehavior,
-               ProjectileCollisionBehavior *collisionBehavior,
+               CollisionBehavior *collisionBehavior,
                Sprite *spr,
                std::unordered_set<Entity*> noDamageList,
                Map* map);
@@ -70,13 +69,13 @@ public:
     void addToNoDamageList(Entity* entity);
     bool isInNoDamageList(Entity* entity);
 
-    std::unordered_set<QPointer<Entity>> collidingEntities();
+    std::unordered_set<Entity*> collidingEntities();
 
     ProjectileMoveBehavior* moveBehavior();
     void setMoveBehavior(ProjectileMoveBehavior* moveBehavior);
 
-    ProjectileCollisionBehavior* collisionBehavior();
-    void setCollisionBehavior(ProjectileCollisionBehavior* collisionBehavior);
+    CollisionBehavior *collisionBehavior();
+    void setCollisionBehavior(CollisionBehavior *collisionBehavior);
 
     void startMoving();
 public slots:
@@ -91,7 +90,7 @@ private:
 
     // behaviors
     ProjectileMoveBehavior* moveBehavior_;
-    ProjectileCollisionBehavior* collisionBehavior_;
+    CollisionBehavior* collisionBehavior_;
 };
 
 #endif // PROJECTILE_H

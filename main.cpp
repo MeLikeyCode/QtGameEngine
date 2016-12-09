@@ -49,6 +49,7 @@
 #include "WeaponSlot.h"
 #include "ECAttackEnemiesWithWeapon.h"
 #include "AbilityCell.h"
+#include "SpearProjectile.h"
 
 #include <QMediaPlayer>
 
@@ -389,6 +390,14 @@ int main(int argc, char *argv[])
 
     keyMouseEntity->setGroup(1);
     weaponEntity->addEnemyGroup(1);
+
+    SpearProjectile* spearProjectile = new SpearProjectile(QPointF(5,5),
+                                                           QPointF(500,30),
+                                                           500,
+                                                           5,
+                                                           std::unordered_set<Entity*>(),
+                                                           map1);
+    spearProjectile->startMoving();
 
     return a.exec();
 }

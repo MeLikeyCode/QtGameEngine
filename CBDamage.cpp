@@ -2,9 +2,8 @@
 #include "Entity.h"
 
 CBDamage::CBDamage(double amountToDamageEntityOne, double amountToDamageEntityTwo):
-    damageAmount_(amountToDamageEntityOne),
-    damageEntityOne_(amountToDamageEntityTwo),
-    damageEntityTwo_(damageEntityTwo)
+    amountToDamageEntityOne_(amountToDamageEntityOne),
+    amountToDamageEntityTwo_(amountToDamageEntityTwo)
 {
 
 }

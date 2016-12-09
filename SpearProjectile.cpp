@@ -1,13 +1,13 @@
 #include "SpearProjectile.h"
 #include "ProjectileMoveBehaviorStraight.h"
-#include "ProjectileCollisionBehaviorDamage.h"
+#include "CBDamage.h"
 #include <QPixmap>
 #include "Sprite.h"
 
 SpearProjectile::SpearProjectile(QPointF start, QPointF target, double range, double damage, std::unordered_set<Entity *> noDamageList, Map *map):
     Projectile(start,
                new ProjectileMoveBehaviorStraight(range,target),
-               new ProjectileCollisionBehaviorDamage(damage),
+               new CBDamage(0,damage),
                new Sprite(QPixmap(":resources/graphics/weapons/spear.png")),
                noDamageList,
                map)

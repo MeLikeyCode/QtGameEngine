@@ -1,13 +1,13 @@
 #include "Projectile.h"
 #include "Map.h"
 #include "ProjectileMoveBehavior.h"
-#include "ProjectileCollisionBehavior.h"
+#include "CollisionBehavior.h"
 #include "Sprite.h"
 #include <QDebug> // TODO: remove, test
 
 Projectile::Projectile(QPointF start,
                        ProjectileMoveBehavior* moveBehavior,
-                       ProjectileCollisionBehavior* collisionBehavior,
+                       CollisionBehavior *collisionBehavior,
                        Sprite* spr,
                        std::unordered_set<Entity *> noDamageList, Map *map):
     start_(start),
@@ -18,7 +18,6 @@ Projectile::Projectile(QPointF start,
 {
     // make sure behaviors act on this projectile
     moveBehavior->projectile_ = this;
-    collisionBehavior->projectile_ = this;
 
     setSprite(spr);     // set the sprite
 
@@ -70,19 +69,12 @@ bool Projectile::isInNoDamageList(Entity *entity)
 
 /// Returns a list of entities that the projectile is currently colliding with
 /// (at its current position).
-std::unordered_set<QPointer<Entity>> Projectile::collidingEntities()
+std::unordered_set<Entity*> Projectile::collidingEntities()
 {
     std::unordered_set<Entity*> entities = map()->entities(this->pointPos(),pointZ(),pointZ()+height());
     entities.erase(this);     // make sure the projectile itself is not in this list
 
-    // return QPointer<Entity>s so that they can be checked for null
-    std::unordered_set<QPointer<Entity>> ePointers;
-    for (Entity* e:entities){
-        QPointer<Entity> p = e;
-        ePointers.insert(p);
-    }
-
-    return ePointers;
+    return entities;
 }
 
 /// Returns the ProjectileMoveBehavior of the Projectile.
@@ -98,17 +90,16 @@ void Projectile::setMoveBehavior(ProjectileMoveBehavior *moveBehavior)
     moveBehavior_->projectile_ = this;
 }
 
-/// Returns the ProjectileCollisionsBehvaior of the Projectile.
-ProjectileCollisionBehavior *Projectile::collisionBehavior()
+/// Returns the CollisionsBehvaior of the Projectile.
+CollisionBehavior *Projectile::collisionBehavior()
 {
     return collisionBehavior_;
 }
 
-/// Sets the ProjectileCollisionBehavior of the Projectile.
-void Projectile::setCollisionBehavior(ProjectileCollisionBehavior *collisionBehavior)
+/// Sets the CollisionBehavior of the Projectile.
+void Projectile::setCollisionBehavior(CollisionBehavior *collisionBehavior)
 {
     collisionBehavior_ = collisionBehavior;
-    collisionBehavior_->projectile_ = this;
 }
 
 void Projectile::startMoving()
@@ -138,21 +129,19 @@ void Projectile::setNoDamageList(std::unordered_set<Entity *> noDamageList)
 }
 
 /// Executed every "step" the projectile needs to take.
-/// First the moveBehavior is called which determines how it should move.
-/// (we keep track of how much it has moved in order to be able to tell when
-/// it has reached its range).
+/// First the MoveBehavior is called which determines how it should move.
 /// After moving, a collision check is done, if the projectile collides with
-/// any Entities, the collisionBehavior will be notified.
-/// Third, if the Projectile has reached its range, the rangeReachedBehavior
-/// will be notified.
+/// any Entities, the CollisionBehavior will be notified.
+/// The projectile is passed in as "entityOne" for the CollisionBehavior
+/// while the colliding entities are passed in as "entityTwo."
 void Projectile::step_()
 {
     // call move behavior
     moveBehavior_->onMoveStep();
 
     // call collision behavior (passing all collided entities)
-    std::unordered_set<QPointer<Entity>> cEntities = collidingEntities();
-    if (cEntities.size() > 0){
-        this->collisionBehavior_->onCollisionWith(cEntities);
+    std::unordered_set<Entity*> cEntities = collidingEntities();
+    for (Entity* entity:cEntities){
+        collisionBehavior_->onCollided(this,entity);
     }
 }
