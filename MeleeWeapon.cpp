@@ -28,3 +28,16 @@ QPointF MeleeWeapon::tip()
 {
     return tip_;
 }
+
+
+/// Sets the CollisionBehavior of the MeleeWeapon.
+void MeleeWeapon::setCollisionBehavior(CollisionBehavior *collisionBehavior)
+{
+    collisionBehavior_ = collisionBehavior;
+}
+
+/// Returns the CollisionBehavior of the MeleeWeapon.
+CollisionBehavior *MeleeWeapon::collisionBehavior()
+{
+    return collisionBehavior_;
+}

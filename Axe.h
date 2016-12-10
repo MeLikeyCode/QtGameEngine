@@ -21,7 +21,6 @@ public slots:
     void swingStep();
 private:
     QTimer* timer_;
-    double damage_;
 
     bool alreadySwinging_; // has the weapon already begun swinging?
     double swingAngleEachStep_;

@@ -4,6 +4,7 @@
 #include "Weapon.h"
 
 class QPointF;
+class CollisionBehavior;
 
 /// An abstract class that represents a melee weapon.
 /// @author Abdullah Aghazadah
@@ -14,8 +15,12 @@ public:
     void resetTip();
     QPointF tip();
 
+    void setCollisionBehavior(CollisionBehavior* collisionBehavior);
+    CollisionBehavior* collisionBehavior();
+
 private:
     QPointF tip_;
+    CollisionBehavior* collisionBehavior_;
 
 };
 

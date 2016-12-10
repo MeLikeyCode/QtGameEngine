@@ -6,6 +6,7 @@
 #include "Inventory.h"
 #include "Entity.h"
 #include "Sound.h"
+#include "CollisionBehavior.h"
 
 Axe::Axe()
 {
@@ -33,9 +34,6 @@ Axe::Axe()
 
     // default cast range
     setCastRange(100);
-
-    // default damge
-    damage_ = 5;
 
     timer_ = new QTimer(this);
 
@@ -110,7 +108,7 @@ void Axe::swingStep()
         std::unordered_set<Entity*> collidingEntities = map()->entities(mapToMap(tip()));
         for (Entity* e: collidingEntities){
             if (e != this && e != theOwner && e->parent() != theOwner){
-                damage(e,damage_);
+                collisionBehavior()->onCollided(this,e);
                 hitSomethingComingBackFromDraw_ = true;
                 return;
             }
@@ -128,7 +126,7 @@ void Axe::swingStep()
         std::unordered_set<Entity*> collidingEntities = map()->entities(mapToMap(tip()));
         for (Entity* e: collidingEntities){
             if (e != this && e != theOwner && e->parent() != theOwner){
-                damage(e,damage_);
+                collisionBehavior()->onCollided(this,e);
                 hitSomethingDuringForwardStep_ = true;
                 stepsToGoBackwardToNeutral_ = currentForwardStep_;
                 return;

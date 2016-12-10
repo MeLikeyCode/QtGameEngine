@@ -16,9 +16,11 @@ void Spear::resetVariables()
     alreadyThrusting_ = false;
 }
 
-Spear::Spear():
-    collisionBehavior_(new CBDamage(0,10))
+Spear::Spear()
 {
+    // set collision behavior
+    setCollisionBehavior(new CBDamage(0,10));
+
     // default thrust parameters
     currentThrustStep_ = 0;
     thrustLengthEachStep_ = 5;
@@ -94,18 +96,6 @@ void Spear::setThrustDistance(double distance)
     setCastRange(thrustDistance_);
 }
 
-/// Sets the CollisionBehavior of the Spear.
-void Spear::setCollisionBehavior(CollisionBehavior *collisionBehavior)
-{
-    collisionBehavior_ = collisionBehavior;
-}
-
-/// Returns the CollisionBehavior of the Spear.
-CollisionBehavior *Spear::collisionBehavior()
-{
-    return collisionBehavior_;
-}
-
 void Spear::thrustStep()
 {
     // if moved backward enough, stop moving
@@ -130,7 +120,7 @@ void Spear::thrustStep()
     Entity* theOwner = inventory()->entity();
     for (Entity* e: collidingEntities){
         if (e != this && e!= theOwner && e->parent() != theOwner && headingForward_){
-            collisionBehavior_->onCollided(this,e); // let collision behavior handle collision
+            collisionBehavior()->onCollided(this,e); // let collision behavior handle collision
             headingBackwardDueToCollision_ = true;
             headingBackward_ = false;
             headingForward_ = false;
