@@ -53,6 +53,8 @@
 
 #include <QMediaPlayer>
 
+Spear* wSpear; // TODO: delete, test
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -323,6 +325,17 @@ int main(int argc, char *argv[])
     ECGrabCam* grabCamContr = new ECGrabCam(keyMouseEntity);
     ECPickUpItem* pickUpItemContr = new ECPickUpItem(keyMouseEntity);
 
+    // give keyboard entity a weapon slot
+    WeaponSlot* wSlot = new WeaponSlot();
+    wSlot->setPosition(QPointF(50,50));
+
+    keyMouseEntity->addSlot(wSlot);
+
+    // give a weapon
+    wSpear = new Spear();
+    keyMouseEntity->inventory()->addItem(wSpear);
+    wSlot->equip(wSpear);
+
 //    // create an entity that moves via pathfinding
 //    Entity* pathMovingEntity = new Entity();
 //    pathMovingEntity->setPointPos(QPointF(300,300));
@@ -370,26 +383,26 @@ int main(int argc, char *argv[])
 //    keyMouseEntity->setGroup(1);
 //    bodyThrustEntity->addEnemyGroup(1);
 
-    // create an Entity that will attack enemies with a weapon
-    Entity* weaponEntity = new Entity();
-    map1->addEntity(weaponEntity);
+//    // create an Entity that will attack enemies with a weapon
+//    Entity* weaponEntity = new Entity();
+//    map1->addEntity(weaponEntity);
 
-    WeaponSlot* wSlot = new WeaponSlot();
-    wSlot->setPosition(QPointF(0,0));
-    wSlot->setName("main weapon");
+//    WeaponSlot* wwSlot = new WeaponSlot();
+//    wwSlot->setPosition(QPointF(0,0));
+//    wwSlot->setName("main weapon");
 
-    weaponEntity->addSlot(wSlot);
+//    weaponEntity->addSlot(wwSlot);
 
-    Spear* wSpear = new Spear();
-    Inventory* weInv = new Inventory();
-    weaponEntity->setInventory(weInv);
-    weInv->addItem(wSpear);
-    wSlot->equip(wSpear);
+//    wSpear = new Spear();
+//    Inventory* weInv = new Inventory();
+//    weaponEntity->setInventory(weInv);
+//    weInv->addItem(wSpear);
+//    wwSlot->equip(wSpear);
 
-    ECAttackEnemiesWithWeapon* weaponAttackCont = new ECAttackEnemiesWithWeapon(weaponEntity);
+//    ECAttackEnemiesWithWeapon* weaponAttackCont = new ECAttackEnemiesWithWeapon(weaponEntity);
 
-    keyMouseEntity->setGroup(1);
-    weaponEntity->addEnemyGroup(1);
+//    keyMouseEntity->setGroup(1);
+//    weaponEntity->addEnemyGroup(1);
 
     SpearProjectile* spearProjectile = new SpearProjectile(QPointF(5,5),
                                                            QPointF(500,30),

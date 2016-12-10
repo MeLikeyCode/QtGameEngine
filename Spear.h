@@ -8,6 +8,7 @@
 #include <QTimer>
 
 class Sound;
+class CollisionBehavior;
 
 /// Represents a spear.
 /// @author Abdullah Aghazadah
@@ -25,10 +26,15 @@ public:
     void setThrustSpeed(double speed);
     void setThrustDistance(double distance);
 
+    void setCollisionBehavior(CollisionBehavior* collisionBehavior);
+    CollisionBehavior* collisionBehavior();
+
 public slots:
     void thrustStep();
 private:
     QTimer* timer_;
+    CollisionBehavior* collisionBehavior_;
+
     int thrustStepFrequency_;
     int maxThrustSteps_;
     int currentThrustStep_;
@@ -39,9 +45,8 @@ private:
     bool headingBackward_;
     bool headingBackwardDueToCollision_;
     bool alreadyThrusting_;
-    void resetVariables();
 
-    double damage_;
+    void resetVariables();
 
     Sound* soundEffect_;
 };

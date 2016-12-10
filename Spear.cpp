@@ -6,6 +6,7 @@
 #include "Inventory.h"
 #include "Entity.h"
 #include "Sound.h"
+#include "CBDamage.h"
 
 void Spear::resetVariables()
 {
@@ -15,7 +16,8 @@ void Spear::resetVariables()
     alreadyThrusting_ = false;
 }
 
-Spear::Spear()
+Spear::Spear():
+    collisionBehavior_(new CBDamage(0,10))
 {
     // default thrust parameters
     currentThrustStep_ = 0;
@@ -38,12 +40,6 @@ Spear::Spear()
 
     timer_ = new QTimer(this);
     resetVariables();
-
-//    setThrustDistance(200);
-//    setThrustSpeed(500);
-
-    // default damage
-    damage_ = 5;
 
     soundEffect_ = new Sound("qrc:/resources/sounds/spear.wav");
 }
@@ -98,6 +94,18 @@ void Spear::setThrustDistance(double distance)
     setCastRange(thrustDistance_);
 }
 
+/// Sets the CollisionBehavior of the Spear.
+void Spear::setCollisionBehavior(CollisionBehavior *collisionBehavior)
+{
+    collisionBehavior_ = collisionBehavior;
+}
+
+/// Returns the CollisionBehavior of the Spear.
+CollisionBehavior *Spear::collisionBehavior()
+{
+    return collisionBehavior_;
+}
+
 void Spear::thrustStep()
 {
     // if moved backward enough, stop moving
@@ -122,7 +130,7 @@ void Spear::thrustStep()
     Entity* theOwner = inventory()->entity();
     for (Entity* e: collidingEntities){
         if (e != this && e!= theOwner && e->parent() != theOwner && headingForward_){
-            damage(e,damage_);
+            collisionBehavior_->onCollided(this,e); // let collision behavior handle collision
             headingBackwardDueToCollision_ = true;
             headingBackward_ = false;
             headingForward_ = false;

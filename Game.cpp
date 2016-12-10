@@ -24,6 +24,8 @@
 
 #include "ECPathMover.h" // TODO: delete, test only
 
+extern Spear* wSpear; // TODO: del, test
+
 /// Creates an instance of the Game with some default options.
 ///
 /// Creates a default Map, Camera, etc...
@@ -165,6 +167,8 @@ void Game::mousePressEvent(QMouseEvent *event){
             return;
         }
     }
+
+    wSpear->attack(mapToMap(event->pos()));
 
     // if control reaches here, we are in regular MouseMode, just let the event
     // propogate to the correct QGraphicsItem, which will handle it

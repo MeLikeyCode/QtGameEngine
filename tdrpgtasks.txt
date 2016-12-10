@@ -572,12 +572,25 @@ Entities will have a health attribute
 -when health reaches 0, the entity destructs itself
 
 ===TASK===
+Melee weapons should have a CollisionBehavior that determines what happens when it has collided with an entity (just like how Projectiles have a collision behavior)
+
+===GREAT IDEA===
+Put things in namespaces according to system, especially things that use strategy patter
+i.e. behavior::collision::PushEntityOneBack
+i.e. behavior::collision::PushEntityTwoBack
+i.e. behavior::collision::PushBothEntitiesBack
+i.e. behavior::entity::MoveInResponseToKeysRelativeToSelf
+i.e. behavior::entity::MoveInResponseToKeysRelativeToScreen
+i.e. behavior::entity::RotateToFaceMouse
+i.e. behavior::entity::
+*it doesn't have to be exact namespace above...just figure out a way to "catagorize" and sub catagorize your 
+
+===TASK===
 I have to eventually determine how entity controller clean up will happen.
 -once the controlled entity is destroyed, the controller should automatically be destroyed? <---leaning towards this
 -the controller should still live even when controlled entity is no longer alive
     - when the controlled entity dies, it should simply stop doing what its doing and wait till a new controlled entity is set
 *solution i'v decided to go with
--rename entity controllers (EC) to entity behavior (EB)
 -state in the entity behavior documentation that entity behavior are automatically cleaned up when the entity dies
     - if a client is referencing an entity behavior, he should use a QPointer to point to it so that he'll know when its dead (no dangling pointer)
     *upon construction, EBs should listen to entitiy's destroyed event and in response should destroy themselves
