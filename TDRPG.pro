@@ -49,9 +49,7 @@ SOURCES += main.cpp \
     Bow.cpp \
     RangedWeaponSlot.cpp \
     ProjectileMoveBehavior.cpp \
-    ProjectileCollisionBehavior.cpp \
     ProjectileMoveBehaviorStraight.cpp \
-    ProjectileCollisionBehaviorDamage.cpp \
     ProjectileMoveBehaviorHoming.cpp \
     Weapon.cpp \
     WeaponSlot.cpp \
@@ -145,9 +143,7 @@ HEADERS  += \
     Bow.h \
     RangedWeaponSlot.h \
     ProjectileMoveBehavior.h \
-    ProjectileCollisionBehavior.h \
     ProjectileMoveBehaviorStraight.h \
-    ProjectileCollisionBehaviorDamage.h \
     ProjectileMoveBehaviorHoming.h \
     Weapon.h \
     WeaponSlot.h \
