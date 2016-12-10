@@ -116,14 +116,6 @@ private:
     std::map<Entity*, std::set<Entity*>> watchedToWatching_; // each Entity that is watched to the Entities that are watching it
     std::map<std::pair<Entity*,Entity*>,double> watchedWatchingPairToRange_; // for each watched/watching pair, what is the range?
     std::map<std::pair<Entity*,Entity*>,bool> watchedWatchingPairToEnterRangeEmitted_; // has the enters range event been emitted yet for a pair of watched watching entities?
-
-
-    // TODO remove the following attributes, test attributes
-    Entity* player_;
-    std::vector<Entity*> testEntities_;
-    std::vector<QGraphicsPixmapItem*> rains_;
-
-
 };
 
 #endif // GAME_H

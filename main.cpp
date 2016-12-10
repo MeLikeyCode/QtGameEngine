@@ -65,7 +65,6 @@ int main(int argc, char *argv[])
 
     // play sound
     Sound* s = new Sound("qrc:/resources/sounds/music2.mp3");
-    s->setVolume(20);
     s->play(-1); // play an infinite number of times
 
     // create a MapGrid to put some Maps inside
@@ -112,44 +111,6 @@ int main(int argc, char *argv[])
     Game* game = new Game(mapGrid,0,1);
     game->launch();
 
-    // create an Entity
-    Entity* player = new Entity();
-    // map1->addEntity(player);
-    //player->setCellPos(Node(4,4));
-    game->setPlayer(player); // game knows about this entity (for testing)
-    player->setGroup(0);
-    //player->setPointZ(50);
-    player->setHeight(64);
-
-    // give the entity a sprite (overrides default one)
-    Sprite* spr = new Sprite();
-//    spr->addFrames(":resources/graphics/human",1,"stand"); // stand anim
-//    spr->addFrames(":resources/graphics/human",6,"walk");  // walk anim
-    spr->addFrames(":/resources/graphics/spider",7,"walk");
-    spr->addFrames(":/resources/graphics/spider",1,"stand");
-    player->setSprite(spr);
-    spr->play("stand",1,1); // play stand anim
-
-    // add some attachment points for the player
-    player->addNamedPoint(QPointF(24,5),"left shoulder");
-    player->addNamedPoint(QPointF(24,58),"right shoulder");
-    player->addNamedPoint(QPointF(50,30),"center");
-
-    // add some equipment slots for the player dynamic entity
-    MeleeWeaponSlot* leftHand = new MeleeWeaponSlot();
-    leftHand->setName("leftHand");
-    leftHand->setPosition(player->namedPoint("left shoulder"));
-    player->addSlot(leftHand);
-
-    RangedWeaponSlot* leftHandRanged = new RangedWeaponSlot();
-    leftHandRanged->setName("leftHandRanged");
-    leftHandRanged->setPosition(player->namedPoint("center"));
-    player->addSlot(leftHandRanged);
-
-//    // test inventoryviewoer
-//    InventoryViewer* v = new InventoryViewer(player->inventory());
-//    game->addGui(v);
-
 //    // test panel
 //    Panel* p = new Panel();
 //    p->setGuiPos(QPointF(300,300));
@@ -165,10 +126,6 @@ int main(int argc, char *argv[])
 //    Bar* bar = new Bar();
 //    bar->setGuiPos(QPointF(500,200));
 //    game->addGui(bar);
-
-    // add bow to players inventory
-    Bow* bow = new Bow();
-    player->inventory()->addItem(bow);
 
     // add some items to ground
     Spear* spear = new Spear();
@@ -297,12 +254,12 @@ int main(int argc, char *argv[])
 
 //    // game->addGui(shopGui);
 
-    // test ability cell
-    AbilityCell* abilityCell = new AbilityCell(100,100);
-    BodyThrust* bodThrustAb = new BodyThrust(player);
-    abilityCell->setAbility(bodThrustAb);
-    abilityCell->setGuiPos(QPointF(300,400));
-    game->addGui(abilityCell);
+//    // test ability cell
+//    AbilityCell* abilityCell = new AbilityCell(100,100);
+//    BodyThrust* bodThrustAb = new BodyThrust(player);
+//    abilityCell->setAbility(bodThrustAb);
+//    abilityCell->setGuiPos(QPointF(300,400));
+//    game->addGui(abilityCell);
 
     // == new test
 
@@ -331,7 +288,7 @@ int main(int argc, char *argv[])
 
     keyMouseEntity->addSlot(wSlot);
 
-    // give a weapon
+    // give a weapon (for now game has global reference to this weapon)
     wSpear = new Spear();
     keyMouseEntity->inventory()->addItem(wSpear);
     wSlot->equip(wSpear);
@@ -403,14 +360,6 @@ int main(int argc, char *argv[])
 
 //    keyMouseEntity->setGroup(1);
 //    weaponEntity->addEnemyGroup(1);
-
-    SpearProjectile* spearProjectile = new SpearProjectile(QPointF(5,5),
-                                                           QPointF(500,30),
-                                                           500,
-                                                           5,
-                                                           std::unordered_set<Entity*>(),
-                                                           map1);
-    spearProjectile->startMoving();
 
     return a.exec();
 }

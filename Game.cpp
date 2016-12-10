@@ -6,7 +6,6 @@
 #include "Entity.h"
 #include "Slot.h"
 #include "ProjectileMoveBehaviorHoming.h"
-#include "ProjectileCollisionBehaviorDamage.h"
 #include "Projectile.h"
 #include "WeaponSlot.h"
 #include "Axe.h"
@@ -27,12 +26,9 @@
 extern Spear* wSpear; // TODO: del, test
 
 /// Creates an instance of the Game with some default options.
-///
-/// Creates a default Map, Camera, etc...
-Game::Game(MapGrid *mapGrid, int xPosOfStartingMap, int yPosOfStartingMap){
-    mapGrid_ = mapGrid;
-    player_ = nullptr;
-
+Game::Game(MapGrid *mapGrid, int xPosOfStartingMap, int yPosOfStartingMap):
+    mapGrid_(mapGrid)
+{
     for (Map* map:mapGrid_->maps()){
         map->setGame(this);
     }
@@ -44,11 +40,6 @@ Game::Game(MapGrid *mapGrid, int xPosOfStartingMap, int yPosOfStartingMap){
     // disable QGraphicsView's scroll bars
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
-    // TODO delete, test
-    QTimer* timer = new QTimer(this);
-    connect(timer,SIGNAL(timeout()),this,SLOT(askEnemiesToMove()));
-    timer->start(4000);
 
     guiUpdateTimer_ = new QTimer(this);
     connect(guiUpdateTimer_,&QTimer::timeout,this,&Game::updateGuiPositions);
@@ -168,8 +159,6 @@ void Game::mousePressEvent(QMouseEvent *event){
         }
     }
 
-    wSpear->attack(mapToMap(event->pos()));
-
     // if control reaches here, we are in regular MouseMode, just let the event
     // propogate to the correct QGraphicsItem, which will handle it
     // TODO: someday, set up your own event propogation system at the Entity level
@@ -177,29 +166,11 @@ void Game::mousePressEvent(QMouseEvent *event){
 
     // =TODO test code, remove=
 
-//    // move test entities to target pos
-//    if (event->button() == Qt::LeftButton){
-//        for (Entity* entity:testEntities_){
-//            entity->moveTo(event->pos());
-//        }
-//    }
+    // attack with spear
+    wSpear->attack(mapToMap(event->pos()));
 
-//    // create a test entity and add it
-//    if (event->button() == Qt::RightButton){
-//        Entity* testE = new Entity();
-//        map_->addEntity(testE);
-//        testE->setPointPos(event->pos());
-//        testEntities_.push_back(testE);
 
-//        // give the entity a sprite (overrides default one)
-//        Sprite* spr = new Sprite();
-//        testE->setSprite(spr);
-//        spr->addFrames(":resources/graphics/human",1,"stand"); // stand anim
-//        spr->addFrames(":resources/graphics/human",6,"walk");  // walk anim
-//        spr->play("stand",1,1); // play stand anim
-//    }
-
-//    // add rock (block cells at position)
+//    // add rock drawing and fill clicked cell
 //    if (event->button() == Qt::MiddleButton){
 //        // add rock
 ////        QPixmap pic(":resources/graphics/terrain/rock.png");
@@ -209,71 +180,6 @@ void Game::mousePressEvent(QMouseEvent *event){
 
 //        map_->pathingMap().fill(mapToMap(event->pos()));
 //        map_->drawPathingMap();
-//    }
-
-//    // weapon 1 attack
-//    if (event->button() == Qt::MiddleButton){
-//        for (Slot* slot:player_->getSlots()){
-//            if (slot->isFilled())
-//            slot->use();
-//        }
-//    }
-
-//    // weapon 2 attack
-//    if (event->button() == Qt::RightButton){
-//        player_->slot("rightHand")->use();
-//    }
-
-//    // shoot straight projectile
-//    if (event->button() == Qt::RightButton){
-
-//        Slot* slot = player_->slot("leftHandRanged");
-//        slot->use();
-
-//    }
-
-
-//    // create AIEntity (part of grp 2)
-//    if (event->button() == Qt::RightButton){
-//        // create enemy (will follow/attack its enemies)
-//        AIEntity* e = new AIEntity();
-//        e->setGroupID(2);
-//        e->addEnemy(1);
-//        e->setPointPos(event->pos());
-//        map()->addEntity(e);
-//    }
-
-//    // add default entity
-//    if (event->button() == Qt::LeftButton){
-//        Entity* e = new Entity();
-//        map()->addEntity(e);
-//        e->setPointPos(event->pos());
-//    }
-
-      // display number of entities in view
-//    if (event->button() == Qt::RightButton){
-//        qDebug() << player_->entitiesInView().size();
-//    }
-
-//    // spawn homing projectile towards player_
-//    if (event->button() == Qt::LeftButton){
-//        ProjectileMoveBehaviorHoming* mb = new ProjectileMoveBehaviorHoming(player_);
-//        ProjectileCollisionBehaviorDamage* cb = new ProjectileCollisionBehaviorDamage();
-//        ProjectileRangeReachedBehaviorDestroy* rc = new ProjectileRangeReachedBehaviorDestroy();
-
-//        Projectile* p = new Projectile(mb,cb,rc);
-//        map()->addEntity(p);
-//        p->go(QPointF(0,0),QPointF(400,400),1000);
-//    }
-
-//    // mvoe player to target pos
-//    if (event->button() == Qt::LeftButton){
-//        player_->moveTo(event->pos());
-//    }
-
-//    // thrust right spear
-//    if (event->button() == Qt::RightButton){
-//        player_->spear2_->attackThrust();
 //    }
 
     QGraphicsView::mousePressEvent(event);
@@ -370,15 +276,6 @@ void Game::setMouseMode(Game::MouseMode mode)
         QCursor cur(QPixmap(":/resources/graphics/misc/targetMouseCursor.png"));
         setCursor(cur);
     }
-}
-
-/// Sets the Entity controlled by the Player via keyboard and mouse.
-void Game::setPlayer(Entity *player){
-    player_ = player;
-}
-
-Entity *Game::player(){
-    return player_;
 }
 
 /// Adds a watched-watching pair.
