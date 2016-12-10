@@ -50,6 +50,8 @@
 #include "ECAttackEnemiesWithWeapon.h"
 #include "AbilityCell.h"
 #include "SpearProjectile.h"
+#include "ECMoveToNextMap.h"
+#include "ECGrabCurrentMap.h"
 
 #include <QMediaPlayer>
 

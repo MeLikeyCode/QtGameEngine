@@ -140,6 +140,10 @@ signals:
     /// "oldMap" parameter will point to that map, otherwise it will be nullptr.
     void mapEntered(Entity* sender, Map* mapJustEntered, Map* oldMap);
 
+    /// Emitted when the entitys health reaches 0.
+    /// Right after emitting this signal, the entity's destructor gets called.
+    void dying(Entity* sender);
+
 private:
     // main attributes
     PathingMap pathingMap_;
