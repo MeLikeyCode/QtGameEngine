@@ -9,7 +9,10 @@ class PointTargetAbility: public Ability {
 public:
     PointTargetAbility(Entity& owner, Sprite* icon = nullptr);
 
-    virtual void use(QPointF atPoint) = 0;
+    void use(const QPointF& atPoint);
+
+protected:
+    virtual void useImplementation(const QPointF& atPoint) = 0;
 };
 
 #endif // POINTTARGETABILITY_H

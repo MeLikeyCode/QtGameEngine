@@ -5,3 +5,13 @@ PointTargetAbility::PointTargetAbility(Entity &owner, Sprite *icon):
 {
     // empty
 }
+
+/// Uses the PointTargetAbility at the specified point.
+void PointTargetAbility::use(const QPointF &atPoint)
+{
+    // make sure owner is still alive
+    assertOwnerIsAlive_();
+
+    // delegate to implementation
+    useImplementation(atPoint);
+}

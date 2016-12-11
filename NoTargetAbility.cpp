@@ -7,3 +7,13 @@ NoTargetAbility::NoTargetAbility(Entity &owner, Sprite *icon):
 {
     // empty
 }
+
+/// Uses the NoTargetAbility.
+void NoTargetAbility::use()
+{
+    // make sure *owner* has not died yet
+    assertOwnerIsAlive_();
+
+    // delgate to implementation
+    useImplementation();
+}

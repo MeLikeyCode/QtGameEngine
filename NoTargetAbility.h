@@ -3,11 +3,18 @@
 
 #include "Ability.h"
 
+/// An Ability that can simply be used with no target.
+/// @author Abdullah Aghazadah
 class NoTargetAbility : public Ability {
 public:
     NoTargetAbility(Entity& owner, Sprite* icon = nullptr);
 
-    virtual void use() = 0;
+    void use();
+
+protected:
+    // uses template method pattern (use does some common work, then delgates
+    // to virtual function)
+    virtual void useImplementation() = 0;
 };
 
 #endif // NOTARGETABILITY_H

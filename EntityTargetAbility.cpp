@@ -5,3 +5,13 @@ EntityTargetAbility::EntityTargetAbility(Entity& owner, Sprite *icon):
 {
     // empty
 }
+
+/// Uses the EntityTargetAbility on the specified Entity.
+void EntityTargetAbility::use(Entity &onEntity)
+{
+    // ensure *owner* has not died yet
+    assertOwnerIsAlive_();
+
+    // delgate to actual class
+    useImplementation(onEntity);
+}

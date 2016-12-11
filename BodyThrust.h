@@ -18,7 +18,7 @@ public:
     // constructor
     BodyThrust(Entity& owner);
 
-    virtual void use();
+    virtual void useImplementation();
 
     double thrustDistance();
     double thrustSpeed();

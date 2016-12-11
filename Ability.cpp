@@ -1,4 +1,5 @@
 #include "Ability.h"
+#include "assert.h"
 
 /// Returns the owner of the Ability.
 Entity *Ability::owner()
@@ -31,4 +32,12 @@ Ability::Ability(Entity &owner, Sprite* icon):
     icon_(icon)
 {
     // empty ctor body
+}
+
+/// Asserts that the owner of the Ability is still alive.
+/// This function should be called by sub classes before actually
+/// executing the use code.
+void Ability::assertOwnerIsAlive_()
+{
+    assert(owner_ != nullptr);
 }

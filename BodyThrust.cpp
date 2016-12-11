@@ -29,7 +29,7 @@ BodyThrust::BodyThrust(Entity &owner):
     setIcon(new Sprite());
 }
 
-void BodyThrust::use()
+void BodyThrust::useImplementation()
 {
     // assert pre conditions
     // before using the ability, make sure owner of ability is in a map
