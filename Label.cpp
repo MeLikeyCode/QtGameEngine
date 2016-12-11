@@ -1,6 +1,7 @@
 #include "Label.h"
 #include <QFont>
 #include <QDebug>
+#include <QBrush>
 
 Label::Label():
     font_("Tahoma"),
@@ -65,13 +66,15 @@ void Label::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void Label::draw_()
 {
     // set text
-    setPlainText(QString::fromStdString(text_));
+    // TODO: add new lines according to width (simple text item doesn't
+    // do it automatically, and i can't use complex text item here for
+    // a very good reason (b/c double included from qobject if u must know...))
+    QGraphicsSimpleTextItem::setText(QString::fromStdString(text_));
 
     // set the font (font, size, color)
     QFont font(font_.c_str(),fontSize_);
     setFont(font);
-    setDefaultTextColor(fontColor_);
-
-    // set the width
-    setTextWidth(width_);
+    QBrush brush;
+    brush.setColor(fontColor_);
+    setBrush(brush);
 }

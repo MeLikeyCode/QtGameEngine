@@ -1,21 +1,21 @@
 #ifndef ABILITYCELL_H
 #define ABILITYCELL_H
 
-#include <QObject>
 #include "Gui.h"
+#include "Ability.h"
+#include <QPointer>
+#include <memory>
 
-class Ability;
 class QGraphicsItem;
 class QGraphicsPixmapItem;
 class Panel;
 class QPointF;
+class Panel;
 
 /// Represents a Gui that visualizes and allows mouse interaction with an Ability.
 /// When the Ability in the AbilityCell is clicked, AbilityCell will emit a signal.
-/// You can set the Ability of the AbilityCell by passing it into the constructor or
-/// via its setter. There are several member functions provided which allow you to
-/// modify the look/size of the AbilityCell.
-class AbilityCell: public QObject, public Gui
+/// @author Abdullah Aghazadah
+class AbilityCell: public Gui
 {
     Q_OBJECT
 public:
@@ -37,9 +37,9 @@ signals:
     void clicked(AbilityCell* abilityCell, int button);
 
 private:
-    QGraphicsPixmapItem* picture_;
-    Panel* background_;
-    Ability* ability_;
+    std::unique_ptr<QGraphicsPixmapItem> picture_;
+    std::unique_ptr<Panel> background_;
+    QPointer<Ability> ability_;
 
     void draw_();
 };

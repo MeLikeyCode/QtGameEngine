@@ -2,6 +2,7 @@
 #define GUI_H
 
 #include <QPointF>
+#include <QObject>
 #include <unordered_set>
 
 class QGraphicsItem;
@@ -9,14 +10,20 @@ class Game;
 class QGraphicsItem;
 class QRectF;
 
-/// Abstract class that Represents a GUI element in a Game. A Gui is placed
-/// relative to its parent Gui, if it does not have a prent Gui, its
-/// place relative to the top left hand corner of the screen.
-/// Most GUIs offer functions for customizing their look.
-class Gui
+/// Abstract class that Represents a GUI element in a Game.
+///
+/// A Gui is placed relative to its parent Gui, if it does not have a parent
+/// Gui, its place relative to the top left hand corner of the screen.
+///
+/// Most Guis offer functions for customizing their look in some way.
+/// Most Guis emit signals when they are interacted with.
+///@author Abdullah Aghazadah
+class Gui: public QObject   // inherits QObject for memory management
 {
+    Q_OBJECT
 public:
     Gui();
+    ~Gui();
 
     QPointF guiPos();
     void setGuiPos(const QPointF& guiPos);

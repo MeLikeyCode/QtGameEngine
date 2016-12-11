@@ -11,14 +11,15 @@
 /// on the ability. The Icon is used by GUI purposes (i.e.by AbilityCell).
 ///
 /// All Abilities will throw assertion errors if they are used after the owner is dead
-/// (this is handled by NoTargetAbility, PointTargetAbility, and EntityTargetAbility).
+/// (this is automatically handled by NoTargetAbility, PointTargetAbility, and EntityTargetAbility).
 /// Most abilities require the owner to be in a Map before being used, but not all, so
 /// this is something that each Ability subclass should handle on its own.
 /// The main difference between Abilities and Items is the fact that Items are
 /// Entities, therefore they can be on the ground where as Abilities cannot.
 /// @author Abdullah Aghazadah
-class Ability
+class Ability : public QObject // need QPointers to Ability
 {
+    Q_OBJECT
 public:
     // owner
     Entity* owner();

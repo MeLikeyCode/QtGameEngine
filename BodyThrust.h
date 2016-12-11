@@ -12,7 +12,7 @@ class Sound;
 /// facing angle and then back.
 /// @author Abdullah Aghazadah
 /// @date 11/18/16
-class BodyThrust: public QObject, public NoTargetAbility {
+class BodyThrust: public NoTargetAbility {
     Q_OBJECT
 public:
     // constructor

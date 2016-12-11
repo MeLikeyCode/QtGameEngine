@@ -1,7 +1,6 @@
 #ifndef QUESTVIEWER_H
 #define QUESTVIEWER_H
 
-#include <QObject>
 #include "Gui.h"
 #include <unordered_map>
 
@@ -17,7 +16,7 @@ class ScrollWindow;
 /// Click on a quest to view its description.
 /// @author Abdullah Aghazadah
 /// @date 9/5/16
-class QuestViewer: public QObject, public Gui
+class QuestViewer: public Gui
 {
     Q_OBJECT
 public:

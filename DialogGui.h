@@ -3,7 +3,6 @@
 
 #include <unordered_map>
 #include <unordered_set>
-#include <QObject>
 
 #include "Gui.h"
 
@@ -68,7 +67,7 @@ private:
 /// choices) will be displayed. By clicking the various Choices, the user can "talk" wit the dialog.
 /// @author Abdullah Aghazadah
 /// @date 11/2/16
-class DialogGui : public QObject, public Gui
+class DialogGui : public Gui
 {
     Q_OBJECT
 public:

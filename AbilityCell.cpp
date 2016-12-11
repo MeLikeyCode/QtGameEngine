@@ -12,7 +12,7 @@ AbilityCell::AbilityCell(int width, int height, Ability *ability):
     picture_->setParentItem(background_->getGraphicsItem());
     background_->setWidth(width);
     background_->setHeight(height);
-    connect(background_,&Panel::clicked,this,&AbilityCell::onClicked_);
+    connect(background_.get(),&Panel::clicked,this,&AbilityCell::onClicked_);
     draw_();
 }
 
@@ -65,11 +65,14 @@ void AbilityCell::onClicked_(Panel *panel, QPointF pos, int button)
 /// Draws the AbilityCell in its current state.
 void AbilityCell::draw_()
 {
-    // draw ability's icon
+    // draw default icon
+    double width = background_->width();
+    double height = background_->height();
+    picture_->setPixmap(QPixmap(":/resources/graphics/misc/defaultEntity.png").scaled(width-20,height-20));
+    picture_->setPos(10,10);
+
+    // overwrite with ability's icon if has ability
     if (ability_ != nullptr){
-        double width = background_->width();
-        double height = background_->height();
         picture_->setPixmap(ability_->icon()->currentFrame().scaled(width-20,height-20));
-        picture_->setPos(10,10);
     }
 }

@@ -1,5 +1,5 @@
 #include "Ability.h"
-#include "assert.h"
+#include <cassert>
 
 /// Returns the owner of the Ability.
 Entity *Ability::owner()

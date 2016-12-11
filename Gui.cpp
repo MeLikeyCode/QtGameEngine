@@ -5,7 +5,14 @@
 /// top left of screen if no parent).
 Gui::Gui(): parent_(nullptr)
 {
+}
 
+Gui::~Gui()
+{
+    // destroy children
+    for (Gui* gui:children_){
+        delete gui;
+    }
 }
 
 QPointF Gui::guiPos()
@@ -34,6 +41,8 @@ void Gui::setParentGui(Gui *gui)
     // approach:
     // - set parent of internal graphics item and positioning/scene removal
     // is handled automatically
+
+    setParent(gui); // set QObjectParent
 
     // if gui is null but parent is already null, don't do anything
     if (gui == nullptr && parent_ == nullptr)

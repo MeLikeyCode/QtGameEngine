@@ -1,7 +1,6 @@
 #ifndef INVENTORYCELL_H
 #define INVENTORYCELL_H
 
-#include <QObject>
 #include "Gui.h"
 
 class Panel;
@@ -16,7 +15,7 @@ class QPixmap;
 /// You can set the Item of the ItemCell via setItem(Item*) or by passing the Item
 /// in the ItemCell constructor. There are several member functions provided
 /// which allow you to modify the look/size of the ItemCell.
-class ItemCell: public QObject, public Gui
+class ItemCell: public Gui
 {
     Q_OBJECT
 public:

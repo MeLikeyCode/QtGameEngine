@@ -2,7 +2,6 @@
 #define INVENTORYUSER_H
 
 #include "Gui.h"
-#include <QObject>
 
 class InventoryViewer;
 class Inventory;
@@ -10,7 +9,7 @@ class Item;
 class QGraphicsItem;
 class Entity;
 
-class InventoryUser : public QObject, public Gui
+class InventoryUser : public Gui
 {
     Q_OBJECT
 public:

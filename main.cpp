@@ -113,11 +113,11 @@ int main(int argc, char *argv[])
     Game* game = new Game(mapGrid,0,1);
     game->launch();
 
-//    // test panel
-//    Panel* p = new Panel();
-//    p->setGuiPos(QPointF(300,300));
-//    game->addGui(p);
-//    //p->showBackground(false);
+    // test panel
+    Panel* p = new Panel();
+    p->setGuiPos(QPointF(300,300));
+    game->addGui(p);
+    //p->showBackground(false);
 
 //    // test button
 //    Button* b = new Button();

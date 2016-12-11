@@ -2,7 +2,6 @@
 #define QUESTACCEPTOR_H
 
 #include "Gui.h"
-#include <QObject>
 
 class QuestViewer;
 class Button;
@@ -23,7 +22,7 @@ class Quests;
 /// - listen to the quest accept signals to be notified of which quests the user accepts
 /// @author Abdullah Aghazadah
 /// @date 11/9/16
-class QuestAcceptor : public QObject, public Gui
+class QuestAcceptor : public Gui
 {
     Q_OBJECT
 public:
