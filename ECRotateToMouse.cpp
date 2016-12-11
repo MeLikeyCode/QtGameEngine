@@ -4,16 +4,13 @@
 #include "ECRotater.h"
 #include "Map.h"
 
-ECRotateToMouse::ECRotateToMouse(Entity *entity):
-    entity_(entity),
+ECRotateToMouse::ECRotateToMouse(Entity& entity):
+    entity_(&entity),
     rotateStepSize_(5),
     rotateFrequency_(30),
     rotateTimer_(new QTimer(this)),
     rotater_(new ECRotater(entity))
 {
-    // make sure passed in entity is not nullptr
-    assert(entity != nullptr);
-
     rotater_->setParent(this);
 
     connect(rotateTimer_,&QTimer::timeout,this,&ECRotateToMouse::rotateStep_);

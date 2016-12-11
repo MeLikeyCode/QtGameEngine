@@ -279,7 +279,7 @@ int main(int argc, char *argv[])
     keyMouseEntity->setPointPos(QPointF(10,200));
     map1->addEntity(keyMouseEntity);
 
-    ECRotateToMouse* rotContr = new ECRotateToMouse(keyMouseEntity);
+    ECRotateToMouse* rotContr = new ECRotateToMouse(*keyMouseEntity);
     ECMoveInResponseToKeyboardRelativeToScreen* moveContr = new ECMoveInResponseToKeyboardRelativeToScreen(keyMouseEntity);
     ECGrabCam* grabCamContr = new ECGrabCam(keyMouseEntity);
     ECPickUpItem* pickUpItemContr = new ECPickUpItem(keyMouseEntity);

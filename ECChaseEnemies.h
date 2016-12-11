@@ -29,7 +29,7 @@ class ECChaseEnemies: public QObject
 {
     Q_OBJECT
 public:
-    ECChaseEnemies(Entity* entity);
+    ECChaseEnemies(Entity& entity);
     ~ECChaseEnemies();
 
     void stopChasing();

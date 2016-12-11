@@ -7,9 +7,9 @@
 #include "Utilities.h"
 #include "Game.h"
 
-ECChaseEnemies::ECChaseEnemies(Entity *entity):
+ECChaseEnemies::ECChaseEnemies(Entity &entity):
     stopDistance_(250),
-    controlledEntity_(entity),
+    controlledEntity_(&entity),
     fovEmitter_(new ECFieldOfViewEmitter(entity)),
     pathMover_(new ECPathMover(entity)),
     chaseTimer_(new QTimer(this)),
@@ -17,11 +17,8 @@ ECChaseEnemies::ECChaseEnemies(Entity *entity):
     paused_(false),
     targetEntity_(nullptr)
 {
-    // make sure the entity is not nullptr
-    assert(entity != nullptr);
-
     // make sure entity is in a map
-    Map* entitysMap = entity->map();
+    Map* entitysMap = entity.map();
     assert(entitysMap != nullptr);
 
     // make sure entity's map is in a game

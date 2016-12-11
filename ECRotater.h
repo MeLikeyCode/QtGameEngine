@@ -28,7 +28,7 @@ class ECRotater : public QObject
 {
     Q_OBJECT
 public:
-    ECRotater(Entity* entity);
+    ECRotater(Entity& entity);
 
     // actions
     void rotateTowards(int angle);

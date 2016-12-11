@@ -21,7 +21,7 @@ class ECAttackEnemiesWithWeapon: public QObject
 {
     Q_OBJECT
 public:
-    ECAttackEnemiesWithWeapon(Entity* entity);
+    ECAttackEnemiesWithWeapon(Entity &entity);
 public slots:
     void onEnemyChaseContinued(Entity* entityChased, double distance);
 signals:

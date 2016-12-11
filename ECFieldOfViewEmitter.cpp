@@ -8,16 +8,13 @@
 #include <QPointF>
 #include <QPolygonF>
 
-ECFieldOfViewEmitter::ECFieldOfViewEmitter(Entity *entity):
-    entity_(entity),
+ECFieldOfViewEmitter::ECFieldOfViewEmitter(Entity &entity):
+    entity_(&entity),
     fieldOfViewAngle_(90),
     fieldOfViewDistance_(600),
     fieldOfViewCheckFrequency_(50),
     timerCheckFov_(new QTimer(this))
 {
-    // make sure passed in entity isn't null
-    assert(entity != nullptr);
-
     // connect timer to keep checking fov
     connect(timerCheckFov_,&QTimer::timeout,this,&ECFieldOfViewEmitter::checkFov_);
     timerCheckFov_->start(fieldOfViewCheckFrequency_);

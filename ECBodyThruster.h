@@ -17,7 +17,7 @@ class ECBodyThruster: public QObject
 {
     Q_OBJECT
 public:
-    ECBodyThruster(Entity* entity);
+    ECBodyThruster(Entity &entity);
     ~ECBodyThruster();
 
 public slots:

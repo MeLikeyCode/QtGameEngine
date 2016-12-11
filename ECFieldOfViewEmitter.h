@@ -22,7 +22,7 @@ class ECFieldOfViewEmitter: public QObject
 {
     Q_OBJECT
 public:
-    ECFieldOfViewEmitter(Entity* entity);
+    ECFieldOfViewEmitter(Entity& entity);
     ~ECFieldOfViewEmitter();
 
 public slots:

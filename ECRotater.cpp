@@ -6,15 +6,14 @@
 #include <QTimer>
 #include "Utilities.h"
 
-ECRotater::ECRotater(Entity *entity):
+ECRotater::ECRotater(Entity &entity):
     stepSize_(1),
-    entity_(entity),
+    entity_(&entity),
     rotationTimer_(new QTimer(this)),
     rotateRight_(false),
     targetAngle_(0)
 {
-    // make sure passed in entity is not nullptr
-    assert(entity != nullptr);
+    // empty
 }
 
 /// Rotate the entity until it faces the specified angle.

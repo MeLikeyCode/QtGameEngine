@@ -31,7 +31,7 @@ class ECPathMover: public QObject
 {
     Q_OBJECT
 public:
-    ECPathMover(Entity* entity);
+    ECPathMover(Entity& entity);
 
     // action
     void moveEntityTo(const QPointF& pos);

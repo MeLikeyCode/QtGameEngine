@@ -3,7 +3,6 @@
 #include "Inventory.h"
 #include "Map.h"
 #include "ProjectileMoveBehaviorStraight.h" // TODO: remove, unused
-#include "ProjectileCollisionBehaviorDamage.h" // TODO: remove, unused
 #include "ProjectileMoveBehaviorSine.h" // TODO: remove, unused
 #include "ProjectileMoveBehaviorSpinning.h" // TODO: remove, unused
 #include "SpearProjectile.h"

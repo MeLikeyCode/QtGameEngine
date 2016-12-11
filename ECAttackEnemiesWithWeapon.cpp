@@ -6,12 +6,10 @@
 #include "Weapon.h"
 #include "WeaponSlot.h"
 
-ECAttackEnemiesWithWeapon::ECAttackEnemiesWithWeapon(Entity *entity):
-    entity_(entity),
+ECAttackEnemiesWithWeapon::ECAttackEnemiesWithWeapon(Entity& entity):
+    entity_(&entity),
     controllerChaseEnemies_(new ECChaseEnemies(entity))
 {
-    assert(entity != nullptr);
-
     // listen to chaser
     connect(controllerChaseEnemies_,&ECChaseEnemies::entityChaseContinued,this,&ECAttackEnemiesWithWeapon::onEnemyChaseContinued);
     connect(controllerChaseEnemies_,&ECChaseEnemies::entityChaseStarted,this,&ECAttackEnemiesWithWeapon::onEnemyChaseContinued);

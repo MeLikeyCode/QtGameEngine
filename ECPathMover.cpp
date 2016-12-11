@@ -8,9 +8,9 @@
 #include <QLineF>
 #include "Utilities.h"
 
-ECPathMover::ECPathMover(Entity *entity):
+ECPathMover::ECPathMover(Entity &entity):
     alwaysFaceTargetPosition_(false),
-    entity_(entity),
+    entity_(&entity),
     moveTimer_(new QTimer(this)),
     pf_(new AsyncShortestPathFinder()),
     rotater_(new ECRotater(entity)),
@@ -19,9 +19,6 @@ ECPathMover::ECPathMover(Entity *entity):
     targetPointIndex_(0),
     currentlyMoving_(false)
 {
-    // make sure passed in entity is not nullptr
-    assert(entity != nullptr);
-
     // listen to when a path is calculated
     connect(pf_,SIGNAL(pathFound(std::vector<QPointF>)),this,SLOT(onPathCalculated_(std::vector<QPointF>)));
 }

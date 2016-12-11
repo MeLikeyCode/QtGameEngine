@@ -1,28 +1,34 @@
 #include "Ability.h"
 
-Ability::Ability(Entity* owner, Sprite* icon):
-    owner_(owner),
-    icon_(icon)
-{
-    // empty ctor body
-}
-
+/// Returns the owner of the Ability.
 Entity *Ability::owner()
 {
     return owner_;
 }
 
-void Ability::setOwner(Entity *owner)
+/// Sets the owner of the Ability.
+void Ability::setOwner(Entity &owner)
 {
-    owner_ = owner;
+    owner_ = &owner;
 }
 
+/// Returns the icon of the Ability. If the Ability has no icon, returns nullptr.
 Sprite *Ability::icon()
 {
     return icon_;
 }
 
+/// Sets the icon of the Ability to the specified Sprite.
+/// Pass in nullptr to give the Ability no icon.
 void Ability::setIcon(Sprite *sprite)
 {
     icon_ = sprite;
+}
+
+/// Constructs an Ability with the specified owner and icon.
+Ability::Ability(Entity &owner, Sprite* icon):
+    owner_(&owner),
+    icon_(icon)
+{
+    // empty ctor body
 }

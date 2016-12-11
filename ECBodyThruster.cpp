@@ -4,14 +4,11 @@
 #include "BodyThrust.h"
 #include <cassert>
 
-ECBodyThruster::ECBodyThruster(Entity *entity):
-    entity_(entity),
+ECBodyThruster::ECBodyThruster(Entity& entity):
+    entity_(&entity),
     controllerChaseEnemies_(new ECChaseEnemies(entity)),
     bodyThrustAbility_(new BodyThrust(entity))
 {
-    // make sure passed in entity is not null
-    assert(entity != nullptr);
-
     // listen to chase controller
     connect(controllerChaseEnemies_,&ECChaseEnemies::entityChaseContinued,this,&ECBodyThruster::onEnemyChaseContinued);
     connect(controllerChaseEnemies_,&ECChaseEnemies::entityChaseStarted,this,&ECBodyThruster::onEnemyChaseContinued);
