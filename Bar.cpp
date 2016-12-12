@@ -17,14 +17,9 @@ Bar::Bar():
     verticalPadding_(2),
     horizontalPadding_(2)
 {
-    backgroundPixmapItem_ = new QGraphicsPixmapItem();
+    backgroundPixmapItem_ = new QGraphicsPixmapItem(this);
     foregroundPixmapItem_ = new QGraphicsPixmapItem(backgroundPixmapItem_);
     draw_();
-}
-
-QGraphicsItem *Bar::getGraphicsItem()
-{
-    return backgroundPixmapItem_;
 }
 
 void Bar::setMinValue(double minValue)

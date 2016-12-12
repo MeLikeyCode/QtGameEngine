@@ -68,11 +68,6 @@ Inventory *ShopGui::seller()
     return inventoryViewer_->inventory();
 }
 
-QGraphicsItem *ShopGui::getGraphicsItem()
-{
-    return inventoryViewer_->getGraphicsItem();
-}
-
 /// Executed when a sellers item has been clicked.
 /// Will display its description/price.
 void ShopGui::onItemClicked(Item *clickedItem, int mouseButton)

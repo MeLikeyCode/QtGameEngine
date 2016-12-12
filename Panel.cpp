@@ -7,7 +7,8 @@
 #include <QGraphicsSceneMouseEvent>
 
 Panel::Panel():
-    border_(new QGraphicsRectItem()),
+    background_(new QGraphicsPixmapItem(this)),
+    border_(new QGraphicsRectItem(this)),
     backgroundPixmap_(),
     backgroundColor_(Qt::gray),
     backgroundIsPixmap_(false),
@@ -18,14 +19,8 @@ Panel::Panel():
     width_(300),
     height_(300)
 {
-    setAcceptHoverEvents(true);
-    border_->setParentItem(this);
+    background_->setAcceptHoverEvents(true);
     draw_();
-}
-
-QGraphicsItem *Panel::getGraphicsItem()
-{
-    return this;
 }
 
 /// Sets the background color of the Panel. Remember you can put opacity information in the color.
@@ -142,14 +137,14 @@ void Panel::draw_()
     else
         border_->setVisible(false);
 
-    // draw background if show background
-    setPixmap(qPixmapFromColor(QSize(width_,height_),Qt::transparent));
+    // draw background if showBackground_
+    background_->setPixmap(qPixmapFromColor(QSize(width_,height_),Qt::transparent));
     if (!showBackground_)
         return;
     if (backgroundIsPixmap_){
         backgroundPixmap_ = backgroundPixmap_.scaled(width_,height_);
-        setPixmap(backgroundPixmap_);
+        background_->setPixmap(backgroundPixmap_);
     }else{   
-        setPixmap(qPixmapFromColor(QSize(width_,height_),backgroundColor_));
+        background_->setPixmap(qPixmapFromColor(QSize(width_,height_),backgroundColor_));
     }
 }

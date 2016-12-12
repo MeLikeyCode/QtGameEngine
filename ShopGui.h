@@ -30,8 +30,6 @@ public:
     Inventory* buyer();
     Inventory* seller();
 
-    QGraphicsItem* getGraphicsItem();
-
 public slots:
     void onItemClicked(Item* clickedItem, int mouseButton);
     void onBuyButtonClicked();

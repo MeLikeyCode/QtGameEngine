@@ -4,9 +4,8 @@
 #include "Gui.h"
 #include <QColor>
 #include <QPixmap>
-#include <QObject>
-#include <QGraphicsPixmapItem>
 
+class QGraphicsPixmapItem;
 class QGraphicsRectItem;
 class QGraphicsSceneMouseEvent;
 class QGraphicsSceneHoverEvent;
@@ -15,7 +14,7 @@ class QGraphicsSceneHoverEvent;
 /// You can modify various options such as the size, color, background image, etc...
 /// The panel will emit events when the mouse hovers/unhovers over it and when
 /// the mouse clicks it.
-class Panel : public QObject, public QGraphicsPixmapItem, public Gui
+class Panel : public Gui
 {
     Q_OBJECT
 public:
@@ -41,7 +40,6 @@ public:
     void hoverLeaveEvent(QGraphicsSceneHoverEvent* event);
     void hoverMoveEvent(QGraphicsSceneHoverEvent* event);
 
-    QGraphicsItem* getGraphicsItem();
 signals:
     void clicked(Panel* panel, QPointF pos, int button);
     void mouseHoverStarted(Panel* panel, QPointF pos);
@@ -49,7 +47,8 @@ signals:
     void mouseHoverMoved(Panel* panel, QPointF pos);
 
 private:
-    QGraphicsRectItem* border_; // border
+    QGraphicsPixmapItem* background_;
+    QGraphicsRectItem* border_;
     QPixmap backgroundPixmap_;
     QColor backgroundColor_;
     bool backgroundIsPixmap_;

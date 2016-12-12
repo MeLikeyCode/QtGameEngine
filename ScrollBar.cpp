@@ -15,15 +15,11 @@ ScrollBar::ScrollBar():
     bgBarColor_(Qt::darkGray),
     fgBarColor_(Qt::lightGray),
     fgBarPosition_(0),
-    fgBar_(new QGraphicsPixmapItem(this)),
+    bgBar_(new QGraphicsPixmapItem(this)),
+    fgBar_(new QGraphicsPixmapItem(bgBar_)),
     showEvenIfFull_(false)
 {
     draw_();
-}
-
-QGraphicsItem *ScrollBar::getGraphicsItem()
-{
-    return this;
 }
 
 /// Sets the width (i.e. thickness) of the "background bar" in pixels.
@@ -226,16 +222,16 @@ void ScrollBar::draw_()
     const double EPSILON = 3;
     if (qAbs(fgBarLength_ - bgBarLength_) < EPSILON && !showEvenIfFull_){
         QColor transparent(Qt::transparent);
-        setPixmap(qPixmapFromColor(QSize(bgBarWidth_,bgBarLength_),transparent));
+        bgBar_->setPixmap(qPixmapFromColor(QSize(bgBarWidth_,bgBarLength_),transparent));
         fgBar_->setPixmap(qPixmapFromColor(QSize(fgBarWidth_,fgBarLength_),transparent));
         return;
     }
 
     // draw the background bar
     if (bgBarIsColor_)
-        setPixmap(qPixmapFromColor(QSize(bgBarWidth_,bgBarLength_),bgBarColor_));
+        bgBar_->setPixmap(qPixmapFromColor(QSize(bgBarWidth_,bgBarLength_),bgBarColor_));
     else
-        setPixmap(bgBarPixmap_);
+        bgBar_->setPixmap(bgBarPixmap_);
 
     // draw the foreground bar
     // size/color

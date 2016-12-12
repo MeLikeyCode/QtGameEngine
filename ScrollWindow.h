@@ -44,9 +44,6 @@ public:
     bool contains(Gui* gui);
     std::unordered_set<Gui*> addedGuis();
 
-
-    QGraphicsItem* getGraphicsItem();
-
 public slots:
     void verticalOrHorizontalScrollBarPositionChanged_(double pos);
 

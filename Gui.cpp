@@ -7,14 +7,6 @@ Gui::Gui(): parent_(nullptr)
 {
 }
 
-Gui::~Gui()
-{
-    // destroy children
-    for (Gui* gui:children_){
-        delete gui;
-    }
-}
-
 QPointF Gui::guiPos()
 {
     return pos_;
@@ -25,13 +17,13 @@ QPointF Gui::guiPos()
 void Gui::setGuiPos(const QPointF &pos)
 {
     pos_ = pos;
-    getGraphicsItem()->setPos(pos);
+    setPos(pos);
 }
 
 /// Sets the rotation of the Gui clockwise. 0 is not rotated.
 void Gui::setGuiRotation(double degrees)
 {
-    getGraphicsItem()->setRotation(degrees);
+    setRotation(degrees);
 }
 
 /// Sets the Parent of this Gui to the specified Gui.
@@ -39,10 +31,10 @@ void Gui::setGuiRotation(double degrees)
 void Gui::setParentGui(Gui *gui)
 {
     // approach:
-    // - set parent of internal graphics item and positioning/scene removal
-    // is handled automatically
+    // -book keep at gui level
+    // -deletgate everything else to QGraphicsView
 
-    setParent(gui); // set QObjectParent
+    // book keep
 
     // if gui is null but parent is already null, don't do anything
     if (gui == nullptr && parent_ == nullptr)
@@ -51,28 +43,34 @@ void Gui::setParentGui(Gui *gui)
     // if gui is null but it has a parent, remove the parent
     if (gui == nullptr && parent_ != nullptr){
         parent_->children_.erase(this);
-        getGraphicsItem()->setParentItem(nullptr);
-        getGraphicsItem()->setVisible(false);
+        setParentItem(nullptr);
         parent_ = nullptr;
         return;
     }
 
     // set parent to an actual gui
-    getGraphicsItem()->setParentItem(gui->getGraphicsItem());
-    getGraphicsItem()->setVisible(true);
+    setParentItem(gui);
     gui->children_.insert(this);
     parent_ = gui;
 }
 
-QRectF Gui::getGuiBoundingBox()
+/// Returns the bounding rect of the Gui.
+/// The bounding rect of a Gui is the rect that encompasses all of its children.
+QRectF Gui::boundingRect() const
 {
     // approach:
     // - get graphics item, then recursively find all bboxes
     // - find an encompassing bounding box
 
-    std::vector<QRectF> bboxes = getBoundingBoxesFor_(getGraphicsItem(),
-                                                      getGraphicsItem());
+    // get encompassing bounding box for each child
+    std::vector<QRectF> bboxes;
+    for (QGraphicsItem* child:childItems()){
+        std::vector<QRectF> childBBoxes = getBoundingBoxesFor_(child,
+                                                          child);
+        bboxes.insert(std::end(bboxes),std::begin(childBBoxes),std::end(childBBoxes));
+    }
 
+    // get total encompassing bounding box
     QRectF initialRect = bboxes[0];
     double lowestY = initialRect.top();
     double highestY = initialRect.bottom();
@@ -96,7 +94,12 @@ QRectF Gui::getGuiBoundingBox()
     return totalBox;
 }
 
-std::vector<QRectF> Gui::getBoundingBoxesFor_(QGraphicsItem* gi, QGraphicsItem* mapTo)
+void Gui::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    // does nothing, because concrete classes use concrete QGraphicsItem that will paint themselves
+}
+
+std::vector<QRectF> Gui::getBoundingBoxesFor_(QGraphicsItem* gi, QGraphicsItem* mapTo) const
 {
     // push gi bounding rect
     std::vector<QRectF> boxes;

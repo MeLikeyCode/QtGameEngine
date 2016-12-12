@@ -9,10 +9,10 @@ AbilityCell::AbilityCell(int width, int height, Ability *ability):
     background_(new Panel()),
     ability_(ability)
 {
-    picture_->setParentItem(background_->getGraphicsItem());
+    picture_->setParentItem(background_);
     background_->setWidth(width);
     background_->setHeight(height);
-    connect(background_.get(),&Panel::clicked,this,&AbilityCell::onClicked_);
+    connect(background_,&Panel::clicked,this,&AbilityCell::onClicked_);
     draw_();
 }
 
@@ -48,11 +48,6 @@ void AbilityCell::setBackgroundColor(const QColor &color)
 void AbilityCell::setBackgroundPixmap(const QPixmap &pixmap)
 {
     background_->setBackgroundPixmap(pixmap);
-}
-
-QGraphicsItem *AbilityCell::getGraphicsItem()
-{
-    return background_->getGraphicsItem();
 }
 
 /// Executed when the AbilityCell is clicked.

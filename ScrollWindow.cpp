@@ -137,11 +137,6 @@ void ScrollWindow::setBackgroundPixmap(const QPixmap &pixmap)
     background_->setBackgroundPixmap(pixmap);
 }
 
-QGraphicsItem *ScrollWindow::getGraphicsItem()
-{
-    return verticalScrollBar_;
-}
-
 /// Executed whenever the positions' of one of the scroll bars changes.
 /// Will simply redraw the ScrollWindow.
 void ScrollWindow::verticalOrHorizontalScrollBarPositionChanged_(double pos)
@@ -172,7 +167,7 @@ void ScrollWindow::draw_()
     // set all guis invisible
     for (std::pair<Gui*,QPointF> guiPoint:guiToPos_){
         Gui* gui = guiPoint.first;
-        gui->getGraphicsItem()->setVisible(false);
+        gui->setVisible(false);
     }
 
     // calculate total height and width
@@ -181,8 +176,8 @@ void ScrollWindow::draw_()
     for (std::pair<Gui*,QPointF> guiPoint: guiToPos_){
         Gui* gui = guiPoint.first;
         QPointF guiPos = guiPoint.second;
-        double bot = guiPos.y() + gui->getGuiBoundingBox().height();
-        double right = guiPos.x() + gui->getGuiBoundingBox().width();
+        double bot = guiPos.y() + gui->boundingRect().height();
+        double right = guiPos.x() + gui->boundingRect().width();
 
         if (bot > totalBot)
             totalBot = bot;
@@ -218,7 +213,7 @@ void ScrollWindow::draw_()
     for (std::pair<Gui*,QPointF> guiPoint:guiToPos_){
         Gui* gui = guiPoint.first;
         QPointF guiPos = guiPoint.second;
-        QRectF guiBBox = gui->getGuiBoundingBox();
+        QRectF guiBBox = gui->boundingRect();
         guiBBox.moveTopLeft(guiPos);
 
         if (viewBoundingBox.contains(guiBBox)){
@@ -230,7 +225,7 @@ void ScrollWindow::draw_()
 
     for (std::pair<Gui*,QPointF> guiPoint:guiInViewToShiftVector_){
         Gui* gui = guiPoint.first;
-        gui->getGraphicsItem()->setVisible(true);
+        gui->setVisible(true);
         gui->setGuiPos(guiInViewToShiftVector_[gui]);
     }
 }

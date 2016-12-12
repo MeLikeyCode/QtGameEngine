@@ -13,11 +13,6 @@ Label::Label():
     draw_();
 }
 
-QGraphicsItem *Label::getGraphicsItem()
-{
-    return this;
-}
-
 /// Set the font size of the Label.
 void Label::setFontSize(int fontSize)
 {

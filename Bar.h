@@ -8,13 +8,14 @@
 
 class QGraphicsPixmapItem;
 
-class Bar : public QObject, public Gui
+/// Represents a Gui that can show progress in terms of a progress bar.
+/// This can be used to show health, mana, etc...
+/// @author Abdullah Aghazadah
+class Bar : public Gui
 {
     Q_OBJECT
 public:
     Bar();
-
-    QGraphicsItem* getGraphicsItem();
 
     void setMinValue(double minValue);
     double minValue();

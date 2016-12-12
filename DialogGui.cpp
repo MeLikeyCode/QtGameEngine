@@ -65,11 +65,6 @@ void DialogGui::setResponseForChoice(Response *response, Choice *forChoice)
     draw_();
 }
 
-QGraphicsItem *DialogGui::getGraphicsItem()
-{
-    return topScrollWindow_->getGraphicsItem();
-}
-
 /// Executed whenever the label of a choice has been clicked.
 /// Will find the response for the choice and set it as the current response.
 /// Will also emit a signal notifying any listeners that the choice has been clicked.

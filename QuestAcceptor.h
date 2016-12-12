@@ -32,7 +32,6 @@ public:
 
     // TODO: create delegetory veneer functions
 
-    QGraphicsItem* getGraphicsItem();
 public slots:
     void onAcceptButtonClicked_();
     void onCloseButtonClicked_();

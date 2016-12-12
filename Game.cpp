@@ -71,7 +71,7 @@ void Game::setCurrentMap(Map *map){
 
     // move guis over
     for (Gui* gui:guis_){
-        scene()->addItem(gui->getGraphicsItem());
+        scene()->addItem(gui);
     }
 
     emit mapChanged(oldMap,map);
@@ -220,15 +220,15 @@ void Game::keyReleaseEvent(QKeyEvent *event)
 void Game::addGui(Gui *gui)
 {
     guis_.insert(gui);
-    scene()->addItem(gui->getGraphicsItem());
-    gui->getGraphicsItem()->setZValue(Map::Z_VALUES::GUI_Z_VALUE); // put Guis on top
-    gui->getGraphicsItem()->setVisible(true); // when a gui is added to a game, it's always visible
+    scene()->addItem(gui);
+    gui->setZValue(Map::Z_VALUES::GUI_Z_VALUE); // put Guis on top
+    gui->setVisible(true); // when a gui is added to a game, it's always visible // TODO: why is this line needed?
 }
 
 /// Removes the specified Gui from the game.
 void Game::removeGui(Gui *gui)
 {
-    scene()->removeItem(gui->getGraphicsItem());
+    scene()->removeItem(gui);
     guis_.erase(gui);
 }
 
@@ -440,7 +440,7 @@ void Game::updateGuiPositions()
 {
     for (Gui* gui:guis_){
         QPointF newPos = mapToScene(gui->guiPos().toPoint());
-        gui->getGraphicsItem()->setPos(newPos);
+        gui->setPos(newPos);
     }
 }
 

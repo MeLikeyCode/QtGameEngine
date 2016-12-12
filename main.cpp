@@ -115,7 +115,7 @@ int main(int argc, char *argv[])
 
     // test panel
     Panel* p = new Panel();
-    p->setGuiPos(QPointF(300,300));
+    // p->setGuiPos(QPointF(300,300));
     game->addGui(p);
     //p->showBackground(false);
 

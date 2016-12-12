@@ -18,8 +18,6 @@ class Label : public Gui, public QGraphicsSimpleTextItem
 public:
     Label();
 
-    QGraphicsItem* getGraphicsItem();
-
     void setFontFamily(const std::string& fontFamily);
     void setFontSize(int fontSize);
     void setFontColor(const QColor& fontColor);

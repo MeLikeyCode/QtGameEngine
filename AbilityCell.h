@@ -4,7 +4,6 @@
 #include "Gui.h"
 #include "Ability.h"
 #include <QPointer>
-#include <memory>
 
 class QGraphicsItem;
 class QGraphicsPixmapItem;
@@ -28,8 +27,6 @@ public:
     void setBackgroundColor(const QColor& color);
     void setBackgroundPixmap(const QPixmap& pixmap);
 
-    QGraphicsItem* getGraphicsItem();
-
 public slots:
     void onClicked_(Panel* panel, QPointF pos, int button);
 
@@ -37,8 +34,8 @@ signals:
     void clicked(AbilityCell* abilityCell, int button);
 
 private:
-    std::unique_ptr<QGraphicsPixmapItem> picture_;
-    std::unique_ptr<Panel> background_;
+    QGraphicsPixmapItem* picture_;
+    Panel* background_;
     QPointer<Ability> ability_;
 
     void draw_();

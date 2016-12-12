@@ -20,8 +20,6 @@ class InventoryViewer : public Gui
 public:
     InventoryViewer(Inventory* inventory=nullptr);
 
-    QGraphicsItem* getGraphicsItem();
-
     void setInventory(Inventory* inventory);
     Inventory* inventory();
 

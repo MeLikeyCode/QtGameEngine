@@ -2,13 +2,12 @@
 #define SCROLLBAR_H
 
 #include "Gui.h"
-#include <QGraphicsPixmapItem>
 #include <QColor>
 #include <QPixmap>
-#include <QObject>
 
 class QGraphicsSceneMouseEvent;
 class QGraphicsItem;
+class QGraphicsPixmapItem;
 
 /// Represents a GUI that has a little dragable bar ( called a "foreground bar")
 /// that you can drag from one end to the other on a "background bar".
@@ -21,13 +20,11 @@ class QGraphicsItem;
 /// call showEvenIfFull(true);
 /// @author Abdullah Aghazadah
 /// @date 10-11-16
-class ScrollBar : public QObject, public QGraphicsPixmapItem, public Gui
+class ScrollBar : public Gui
 {
     Q_OBJECT
 public:
     ScrollBar();
-
-    QGraphicsItem* getGraphicsItem();
 
     // setters
     void setBgBarWidth(double width);
@@ -77,6 +74,7 @@ private:
 
     bool fgBarIsBeingDragged_;
 
+    QGraphicsPixmapItem* bgBar_;
     QGraphicsPixmapItem* fgBar_;
 
     void draw_();

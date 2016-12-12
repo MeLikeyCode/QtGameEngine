@@ -18,8 +18,6 @@ public:
     // TODO: define/implement veineer functions for modifying look ("veineer" b/c
     // they will simply delegate to inventoryViewer_)
 
-    QGraphicsItem* getGraphicsItem();
-
 public slots:
     void onItemClicked(Item* item, int button);
     void onPositionSelectedWhileUsingPointTargetItem(QPointF pos);

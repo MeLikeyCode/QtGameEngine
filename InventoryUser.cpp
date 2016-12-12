@@ -22,11 +22,6 @@ InventoryUser::InventoryUser(Game *game, Inventory *inventory):
     connect(inventoryViewer_,&InventoryViewer::itemClicked,this,&InventoryUser::onItemClicked);
 }
 
-QGraphicsItem *InventoryUser::getGraphicsItem()
-{
-    return inventoryViewer_->getGraphicsItem();
-}
-
 /// Executed when an Item of the InventoryUser has been clicked.
 /// Will "use" the item if right clicked.
 /// Will drop the item if left clicked.
