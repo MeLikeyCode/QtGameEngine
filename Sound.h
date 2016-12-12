@@ -14,7 +14,7 @@ class Sound: public QObject
 {
     Q_OBJECT
 public:
-    Sound(std::string filePath);
+    Sound(std::string filePath, QObject* parent = nullptr);
 
     void play(int numOfTimes);
     void stop();

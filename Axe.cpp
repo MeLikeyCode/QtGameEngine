@@ -37,7 +37,7 @@ Axe::Axe()
 
     timer_ = new QTimer(this);
 
-    soundEffect_ = new Sound("qrc:/resources/sounds/axe.wav");
+    soundEffect_ = new Sound("qrc:/resources/sounds/axe.wav",this);
 }
 
 /// The axe will start swinging. The "position" argument is ignored.

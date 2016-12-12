@@ -2,10 +2,11 @@
 
 #include <QDebug> // TODO: remove
 
-Sound::Sound(std::string filePath)
+Sound::Sound(std::string filePath, QObject *parent):
+    QObject(parent)
 {
     // initialize
-    mediaPlayer_ = new QMediaPlayer();
+    mediaPlayer_ = new QMediaPlayer(this);
     mediaPlayer_->setMedia(QUrl(filePath.c_str()));
 
     numTimesPlayed_ = 0;

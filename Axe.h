@@ -7,6 +7,8 @@ class QTimer;
 class Sound;
 
 /// Represents an Axe.
+/// An Axe is a MeleeWeapon that swings and executes its CollisionBehavior
+/// when it hits stuff.
 /// @author Abdullah Aghazadah
 /// @date 1-9-16
 class Axe: public MeleeWeapon{
