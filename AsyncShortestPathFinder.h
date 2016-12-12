@@ -2,8 +2,8 @@
 #define ASYNCSHORTESTPATHFINDER_H
 
 #include <QObject>
-#include "PathingMap.h"
 #include <QThread>
+#include "PathingMap.h"
 
 // private helper class
 class Worker : public QObject
@@ -18,7 +18,8 @@ signals:
 
 /// Represents an object that can asynchronously find the shortest path between
 /// two points.
-/// @code
+///
+/// Example usage:
 /// // create an instance
 /// AsyncShortestPathFinder* pathFinder = new AsyncShortestPathFinder(/*...args...*/);
 ///
