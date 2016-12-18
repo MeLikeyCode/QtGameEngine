@@ -9,7 +9,7 @@
 class Game;
 class QRectF;
 
-/// Abstract class that Represents a GUI element in a Game. 
+/// A QGraphicsItem that represents a GUI.
 ///
 /// A Gui is placed relative to its parent Gui, if it does not have a parent
 /// Gui, its place relative to the top left hand corner of the screen.
@@ -22,7 +22,7 @@ class Gui: public QObject, public QGraphicsItem // inherits from QObject b/c mos
 {
     Q_OBJECT
 public:
-    Gui();
+    Gui(QGraphicsItem* parent = nullptr);
 
     QPointF guiPos();
     void setGuiPos(const QPointF& guiPos);

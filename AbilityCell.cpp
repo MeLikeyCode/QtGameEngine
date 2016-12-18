@@ -5,11 +5,11 @@
 #include "Sprite.h"
 
 AbilityCell::AbilityCell(int width, int height, Ability *ability):
-    picture_(new QGraphicsPixmapItem()),
+    picture_(new QGraphicsPixmapItem(this)),
     background_(new Panel()),
     ability_(ability)
 {
-    picture_->setParentItem(background_);
+    //picture_->setParentItem(background_);
     background_->setWidth(width);
     background_->setHeight(height);
     connect(background_,&Panel::clicked,this,&AbilityCell::onClicked_);

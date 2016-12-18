@@ -3,8 +3,9 @@
 
 /// Returns the position of the Gui relative to its parent (or relative to
 /// top left of screen if no parent).
-Gui::Gui(): parent_(nullptr)
+Gui::Gui(QGraphicsItem *parent): parent_(nullptr)
 {
+    setParentGui(parent);
 }
 
 QPointF Gui::guiPos()
