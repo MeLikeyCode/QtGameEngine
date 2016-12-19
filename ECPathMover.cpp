@@ -20,7 +20,7 @@ ECPathMover::ECPathMover(Entity &entity):
     currentlyMoving_(false)
 {
     // listen to when a path is calculated
-    connect(pf_,SIGNAL(pathFound(std::vector<QPointF>)),this,SLOT(onPathCalculated_(std::vector<QPointF>)));
+    connect(pf_.get(),SIGNAL(pathFound(std::vector<QPointF>)),this,SLOT(onPathCalculated_(std::vector<QPointF>)));
 }
 
 /// Moves the controlled entity to the specified pos on his map.

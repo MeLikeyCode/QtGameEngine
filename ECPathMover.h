@@ -7,6 +7,7 @@
 #include <QPointF>
 #include <QObject>
 #include "Entity.h"
+#include <memory>
 
 class QTimer;
 class AsyncShortestPathFinder;
@@ -60,8 +61,8 @@ private:
     QPointer<Entity> entity_;
 
     QTimer* moveTimer_;
-    AsyncShortestPathFinder* pf_;
-    ECRotater* rotater_;
+    std::unique_ptr<AsyncShortestPathFinder> pf_;
+    std::unique_ptr<ECRotater> rotater_;
 
     // moving helper attributes
     std::vector<QPointF> pointsToFollow_;
