@@ -30,24 +30,17 @@ ECChaseEnemies::ECChaseEnemies(Entity &entity):
     connect(entitysGame, &Game::watchedEntityLeavesRange, this, &ECChaseEnemies::onEntityLeavesRange_);
 
     // listen to fov emitter
-    connect(fovEmitter_,&ECFieldOfViewEmitter::entityEntersFOV,this,&ECChaseEnemies::onEntityEntersFOV_);
-    connect(fovEmitter_,&ECFieldOfViewEmitter::entityLeavesFOV,this,&ECChaseEnemies::onEntityLeavesFOV_);
+    connect(fovEmitter_.get(),&ECFieldOfViewEmitter::entityEntersFOV,this,&ECChaseEnemies::onEntityEntersFOV_);
+    connect(fovEmitter_.get(),&ECFieldOfViewEmitter::entityLeavesFOV,this,&ECChaseEnemies::onEntityLeavesFOV_);
 
     // listen to path mover
-    connect(pathMover_,&ECPathMover::moved,this,&ECChaseEnemies::onEntityMoved_);
+    connect(pathMover_.get(),&ECPathMover::moved,this,&ECChaseEnemies::onEntityMoved_);
 
     // connect timer
     connect(chaseTimer_,&QTimer::timeout,this,&ECChaseEnemies::chaseStep_);
 
     // make controlled entity always face target position
     pathMover_->setAlwaysFaceTargetPosition(true);
-}
-
-ECChaseEnemies::~ECChaseEnemies()
-{
-    delete fovEmitter_;
-    delete pathMover_;
-    // chaseTimer_ automatically deleted since child QObject of this QObject
 }
 
 /// Makes it so the controlled entity stops chasing enemy entities.

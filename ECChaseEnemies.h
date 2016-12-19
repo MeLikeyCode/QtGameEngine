@@ -5,6 +5,7 @@
 #include <QPointer>
 #include <unordered_set>
 #include "Entity.h"
+#include <memory>
 
 class ECPathMover;
 class ECFieldOfViewEmitter;
@@ -30,7 +31,6 @@ class ECChaseEnemies: public QObject
     Q_OBJECT
 public:
     ECChaseEnemies(Entity& entity);
-    ~ECChaseEnemies();
 
     void stopChasing();
     void startChasing();
@@ -62,9 +62,9 @@ private:
     double stopDistance_;
 
     QPointer<Entity> controlledEntity_;
-    ECFieldOfViewEmitter* fovEmitter_; // helper controller that emits events whenever
-                                       // anothe entity enters/leaves the controlled entity's fov
-    ECPathMover* pathMover_;
+    std::unique_ptr<ECFieldOfViewEmitter> fovEmitter_; // helper controller that emits events whenever
+                                                       // anothe entity enters/leaves the controlled entity's fov
+    std::unique_ptr<ECPathMover> pathMover_;
     QTimer* chaseTimer_;
 
     bool shouldChase_;
