@@ -25,6 +25,8 @@ public:
     void setQuests(Quests* quests);
     Quest* selectedQuest();
 
+    QGraphicsItem* getGraphicsItem();
+
 public slots:
     void draw_();
     void labelClicked_(Label* label);

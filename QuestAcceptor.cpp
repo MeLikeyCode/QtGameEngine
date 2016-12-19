@@ -30,6 +30,11 @@ void QuestAcceptor::setQuests(Quests *quests)
     questViewer_->setQuests(quests);
 }
 
+QGraphicsItem *QuestAcceptor::getGraphicsItem()
+{
+    return questViewer_->getGraphicsItem();
+}
+
 /// Executed when the "Accept Selected Quest" button has been clicked.
 /// Will emit a questAccepted signal.
 void QuestAcceptor::onAcceptButtonClicked_()

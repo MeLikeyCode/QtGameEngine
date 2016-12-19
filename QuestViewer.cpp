@@ -61,6 +61,11 @@ Quest *QuestViewer::selectedQuest()
     return selectedQuest_;
 }
 
+QGraphicsItem *QuestViewer::getGraphicsItem()
+{
+    return outterPanel_->getGraphicsItem();
+}
+
 /// Executed whenever the QuestViewer's Quests changes (a quest added, removed,
 /// or status changed). Will update the QuestViewer's visuals to reflect the change.
 void QuestViewer::draw_()

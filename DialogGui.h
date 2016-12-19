@@ -79,6 +79,8 @@ public:
     void addChoice(Response* forResponse, Choice* choice);
     void setResponseForChoice(Response* response, Choice* forChoice);
 
+    QGraphicsItem* getGraphicsItem();
+
 public slots:
     void choiceLabelClicked_(Label* label);
 

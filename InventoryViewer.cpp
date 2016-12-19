@@ -32,6 +32,11 @@ InventoryViewer::InventoryViewer(Inventory *inventory):
     scrollWindow_->setBackgroundPixmap(QPixmap(":/resources/graphics/misc/invbg.png"));
 }
 
+QGraphicsItem *InventoryViewer::getGraphicsItem()
+{
+    return scrollWindow_->getGraphicsItem();
+}
+
 /// Sets the Inventory to be viewed by the InventoryViewer.
 void InventoryViewer::setInventory(Inventory *inventory)
 {

@@ -5,17 +5,19 @@
 #include "Gui.h"
 #include <QColor>
 #include <QPixmap>
+#include <memory>
 
 class QGraphicsPixmapItem;
 
-/// Represents a Gui that can show progress in terms of a progress bar.
-/// This can be used to show health, mana, etc...
+/// A Gui that represents a progress bar of some sorts.
 /// @author Abdullah Aghazadah
-class Bar : public Gui
+class Bar : public QObject, public Gui
 {
     Q_OBJECT
 public:
     Bar();
+
+    QGraphicsItem* getGraphicsItem();
 
     void setMinValue(double minValue);
     double minValue();
@@ -35,8 +37,8 @@ public:
     void setHorizontalPadding(double horizontalPadding);
 
 private:
-    QGraphicsPixmapItem* backgroundPixmapItem_;
-    QGraphicsPixmapItem* foregroundPixmapItem_;
+    std::unique_ptr<QGraphicsPixmapItem> backgroundPixmapItem_;
+    std::unique_ptr<QGraphicsPixmapItem> foregroundPixmapItem_;
 
     double minValue_;
     double maxValue_;

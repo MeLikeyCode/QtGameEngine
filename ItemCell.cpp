@@ -14,7 +14,7 @@ ItemCell::ItemCell(int width, int height, Item *item):
     item_(item),
     picture_(new QGraphicsPixmapItem())
 {
-    picture_->setParentItem(background_);
+    picture_->setParentItem(background_->getGraphicsItem());
     background_->setWidth(width);
     background_->setHeight(height);
     connect(background_,&Panel::clicked,this,&ItemCell::onClicked_);
@@ -56,6 +56,11 @@ void ItemCell::setBackgroundColor(const QColor &color)
 void ItemCell::setBackgroundPixmap(const QPixmap &pixmap)
 {
     background_->setBackgroundPixmap(pixmap);
+}
+
+QGraphicsItem *ItemCell::getGraphicsItem()
+{
+    return background_->getGraphicsItem();
 }
 
 /// Executed when the ItemCell is clicked.

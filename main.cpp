@@ -113,11 +113,11 @@ int main(int argc, char *argv[])
     Game* game = new Game(mapGrid,0,1);
     game->launch();
 
-//    // test panel
-//    Panel* p = new Panel();
-//    p->setGuiPos(QPointF(300,300));
-//    game->addGui(p);
-//    //p->showBackground(false);
+    // test panel
+    Panel* p = new Panel();
+    p->setGuiPos(QPointF(300,300));
+    game->addGui(p);
+    //p->showBackground(false);
 
 //    // test button
 //    Button* b = new Button();
@@ -256,6 +256,12 @@ int main(int argc, char *argv[])
 
 //    // game->addGui(shopGui);
 
+//    // test ability cell
+//    AbilityCell* abilityCell = new AbilityCell(100,100);
+//    BodyThrust* bodThrustAb = new BodyThrust(player);
+//    abilityCell->setAbility(bodThrustAb);
+//    abilityCell->setGuiPos(QPointF(300,400));
+//    game->addGui(abilityCell);
 
     // == new test
 
@@ -356,13 +362,6 @@ int main(int argc, char *argv[])
 
 //    keyMouseEntity->setGroup(1);
 //    weaponEntity->addEnemyGroup(1);
-
-    // test ability cell
-    AbilityCell* abilityCell = new AbilityCell(100,100);
-    BodyThrust* bodThrustAb = new BodyThrust(*keyMouseEntity);
-    abilityCell->setAbility(bodThrustAb);
-    abilityCell->setGuiPos(QPointF(100,100));
-    game->addGui(abilityCell);
 
     return a.exec();
 }

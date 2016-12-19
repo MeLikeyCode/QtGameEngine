@@ -28,6 +28,8 @@ public:
     void setBackgroundColor(const QColor& color);
     void setBackgroundPixmap(const QPixmap& pixmap);
 
+    QGraphicsItem* getGraphicsItem();
+
 public slots:
     void onClicked_(Panel *panel, QPointF pos, int button);
 

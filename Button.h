@@ -3,10 +3,10 @@
 
 #include "Gui.h"
 #include <string>
+#include <QGraphicsPixmapItem>
 #include <QColor>
 
 class QGraphicsTextItem;
-class QGraphicsPixmapItem;
 
 // TODO: reimplement using Panel as background (reduces duplicate code)
 
@@ -14,11 +14,13 @@ class QGraphicsPixmapItem;
 /// options such as the text color, padding b/w the text and the button's edges,
 /// weather the text is bold/italic, etc...
 /// When the Button is clicked, it will emit a clicked() signal.
-class Button : public Gui
+class Button : public QObject, public Gui, public QGraphicsPixmapItem
 {
     Q_OBJECT
 public:
     Button();
+
+    QGraphicsItem* getGraphicsItem();
 
     // setters
     void setBorderPadding(double amount);
@@ -39,7 +41,6 @@ signals:
     /// Emitted when the Button is clicked.
     void clicked();
 private:
-    QGraphicsPixmapItem* background_;
     QGraphicsTextItem* textItem_;
     double borderPadding_; // amount of padding b/w text and outter rect
     QColor textColor_;

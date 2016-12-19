@@ -1,12 +1,10 @@
 #include "Button.h"
 #include <QGraphicsRectItem>
 #include <QGraphicsTextItem>
-#include <QGraphicsPixmapItem>
 #include <QBrush>
 #include <QFont>
 
 Button::Button():
-    background_(new QGraphicsPixmapItem(this)),
     borderPadding_(4),
     text_("default text"),
     textIsBold_(false),
@@ -19,6 +17,11 @@ Button::Button():
     textItem_(nullptr)
 {
     draw_();
+}
+
+QGraphicsItem *Button::getGraphicsItem()
+{
+    return this;
 }
 
 /// Sets the amount of padding between the text and the outter rectangle.
@@ -114,10 +117,10 @@ void Button::draw_()
 
     if (backgroundIsPixmap_){
         backgroundPixmap_ = backgroundPixmap_.scaled(bgWidth,bgHeight);
-        background_->setPixmap(backgroundPixmap_);
+        setPixmap(backgroundPixmap_);
     }else{
         QImage img(QSize(bgWidth,bgHeight),QImage::Format_RGB32);
         img.fill(backgroundColor_);
-        background_->setPixmap(QPixmap::fromImage(img));
+        setPixmap(QPixmap::fromImage(img));
     }
 }
