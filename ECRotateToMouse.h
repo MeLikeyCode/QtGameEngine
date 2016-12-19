@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QPointer>
 #include "Entity.h"
+#include <memory>
 
 class QTimer;
 class ECRotater;
@@ -33,7 +34,7 @@ private:
 
     QTimer* rotateTimer_;
 
-    ECRotater* rotater_;
+    std::unique_ptr<ECRotater> rotater_;
 };
 
 #endif // ECROTATETOMOUSE_H
