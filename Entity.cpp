@@ -59,6 +59,7 @@ Entity::~Entity()
     }
 
     delete sprite_;
+    delete inventory_;
 }
 
 /// Returns the PathingMap of the Entity.
