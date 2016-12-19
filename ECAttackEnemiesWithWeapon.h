@@ -4,6 +4,7 @@
 #include <QPointer>
 #include <QObject>
 #include "Entity.h"
+#include <memory>
 
 class ECChaseEnemies;
 
@@ -31,7 +32,7 @@ signals:
     void attacked(Entity* entityAttacked);
 private:
     QPointer<Entity> entity_;
-    ECChaseEnemies* controllerChaseEnemies_;
+    std::unique_ptr<ECChaseEnemies> controllerChaseEnemies_;
 };
 
 #endif // ECATTACKENEMIESWITHWEAPON_H

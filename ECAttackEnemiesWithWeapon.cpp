@@ -11,8 +11,8 @@ ECAttackEnemiesWithWeapon::ECAttackEnemiesWithWeapon(Entity& entity):
     controllerChaseEnemies_(new ECChaseEnemies(entity))
 {
     // listen to chaser
-    connect(controllerChaseEnemies_,&ECChaseEnemies::entityChaseContinued,this,&ECAttackEnemiesWithWeapon::onEnemyChaseContinued);
-    connect(controllerChaseEnemies_,&ECChaseEnemies::entityChaseStarted,this,&ECAttackEnemiesWithWeapon::onEnemyChaseContinued);
+    connect(controllerChaseEnemies_.get(),&ECChaseEnemies::entityChaseContinued,this,&ECAttackEnemiesWithWeapon::onEnemyChaseContinued);
+    connect(controllerChaseEnemies_.get(),&ECChaseEnemies::entityChaseStarted,this,&ECAttackEnemiesWithWeapon::onEnemyChaseContinued);
 }
 
 /// Executed whenever the controlled entity takes one step closer to chased entity.
