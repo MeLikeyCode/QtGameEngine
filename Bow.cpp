@@ -26,7 +26,7 @@ Bow::Bow()
     setAttachmentPoint(pt);
 
     // default sound effect
-    soundEffect_ = new Sound("qrc:/resources/sounds/bow.wav");
+    soundEffect_ = new Sound("qrc:/resources/sounds/bow.wav",this);
 
     // range
     setCastRange(400);
