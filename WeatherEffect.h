@@ -9,10 +9,7 @@ class Map;
 ///
 /// To create your own weather effect, extend this class and define what
 /// happens to the Map when the weather effect is started (virtual void
-/// start()) and stopped (virtual void stop()). Make sure your implementations
-/// of start() and stop() first call WeatherEffect::start() and
-/// WeatherEffect::stop() respectively. These functions will assert some pre
-/// conditions (such as a Map being set).
+/// start()) and stopped (virtual void stop()).
 ///
 /// @author Abdullah Aghazadah
 /// @date 6/26/16

@@ -19,7 +19,7 @@ InventoryUser::InventoryUser(Game *game, Inventory *inventory):
     lastItemUsed_(nullptr)
 {
     // listen to InventoryViewer click signals
-    connect(inventoryViewer_,&InventoryViewer::itemClicked,this,&InventoryUser::onItemClicked);
+    connect(inventoryViewer_.get(),&InventoryViewer::itemClicked,this,&InventoryUser::onItemClicked);
 }
 
 QGraphicsItem *InventoryUser::getGraphicsItem()

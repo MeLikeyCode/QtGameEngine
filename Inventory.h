@@ -11,7 +11,8 @@ class NoTargetItem;
 class EntityTargetItem;
 class PointTargetItem;
 
-/// Represents a collection of Items that can belong to a Entity.
+/// Represents a collection of Items.
+/// @author Abdullah Aghazadah
 class Inventory: public QObject
 {
     Q_OBJECT

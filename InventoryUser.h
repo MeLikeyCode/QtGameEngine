@@ -2,6 +2,7 @@
 #define INVENTORYUSER_H
 
 #include "Gui.h"
+#include <memory>
 
 class InventoryViewer;
 class Inventory;
@@ -9,6 +10,8 @@ class Item;
 class QGraphicsItem;
 class Entity;
 
+/// A Gui that allows "using" the Items in an Inventory.
+/// @author Abdullah Aghazadah
 class InventoryUser : public Gui
 {
     Q_OBJECT
@@ -25,7 +28,7 @@ public slots:
     void onPositionSelectedWhileUsingPointTargetItem(QPointF pos);
     void onEntitySelectedWhileUsingEntityTargetItem(Entity* entity);
 private:
-    InventoryViewer* inventoryViewer_;
+    std::unique_ptr<InventoryViewer> inventoryViewer_;
     Game* game_;
     Item* lastItemUsed_;
 };
