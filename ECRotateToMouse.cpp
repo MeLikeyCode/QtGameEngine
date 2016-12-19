@@ -17,15 +17,6 @@ ECRotateToMouse::ECRotateToMouse(Entity& entity):
     rotateTimer_->start(rotateFrequency_);
 }
 
-ECRotateToMouse::~ECRotateToMouse()
-{
-    // make sure rotateTimer_ gets delete
-    // - it will (child of this qobject)
-
-    // make sure rotater_ gets deleted
-    // - it will since its a child qobject
-}
-
 /// Executed whenever the entity_ needs to rotate.
 /// Will rotate it closer to the mouse.
 void ECRotateToMouse::rotateStep_()

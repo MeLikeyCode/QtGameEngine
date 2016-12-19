@@ -20,12 +20,6 @@ ECFieldOfViewEmitter::ECFieldOfViewEmitter(Entity &entity):
     timerCheckFov_->start(fieldOfViewCheckFrequency_);
 }
 
-ECFieldOfViewEmitter::~ECFieldOfViewEmitter()
-{
-    // make sure timer disconnects
-    // - timer will disconnect (since its a child of this qobject)
-}
-
 /// Executed periodically for the entity controller to check the field of view
 /// of the controlled entity. Will emit a signal for each entity that
 void ECFieldOfViewEmitter::checkFov_()

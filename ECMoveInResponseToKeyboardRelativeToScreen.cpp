@@ -19,12 +19,6 @@ ECMoveInResponseToKeyboardRelativeToScreen::ECMoveInResponseToKeyboardRelativeTo
     moveTimer_->start(secondsToMs(frequency(stepSize_,entity_->speed())));
 }
 
-ECMoveInResponseToKeyboardRelativeToScreen::~ECMoveInResponseToKeyboardRelativeToScreen()
-{
-    // make sure timer disconnects
-    // - it will (since its a child of this qobject)
-}
-
 /// See ECPathMover::setStepSize().
 void ECMoveInResponseToKeyboardRelativeToScreen::setStepSize(double stepSize)
 {

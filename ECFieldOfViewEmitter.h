@@ -23,7 +23,6 @@ class ECFieldOfViewEmitter: public QObject
     Q_OBJECT
 public:
     ECFieldOfViewEmitter(Entity& entity);
-    ~ECFieldOfViewEmitter();
 
 public slots:
     void checkFov_();

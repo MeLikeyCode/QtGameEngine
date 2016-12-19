@@ -23,7 +23,6 @@ class ECRotateToMouse: public QObject
     Q_OBJECT
 public:
     ECRotateToMouse(Entity &entity);
-    ~ECRotateToMouse();
 
 public slots:
     void rotateStep_();
