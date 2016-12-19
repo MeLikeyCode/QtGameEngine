@@ -4,6 +4,7 @@
 #include <QPointer>
 #include <QObject>
 #include "Entity.h"
+#include <memory>
 
 class ECChaseEnemies;
 class BodyThrust;
@@ -18,7 +19,6 @@ class ECBodyThruster: public QObject
     Q_OBJECT
 public:
     ECBodyThruster(Entity &entity);
-    ~ECBodyThruster();
 
 public slots:
     void onEnemyChaseContinued(Entity* entityChased, double distance);
@@ -29,8 +29,8 @@ signals:
 
 private:
     QPointer<Entity> entity_;
-    ECChaseEnemies* controllerChaseEnemies_;
-    BodyThrust* bodyThrustAbility_;
+    std::unique_ptr<ECChaseEnemies> controllerChaseEnemies_;
+    std::unique_ptr<BodyThrust> bodyThrustAbility_;
 };
 
 #endif // ECBODYTHRUSTER_H
