@@ -11,8 +11,8 @@ DialogGui::DialogGui():
     responseLabel_(new Label())
 {
     // set parent/child relationship up
-    bottomScrollWindow_->setParentGui(topScrollWindow_);
-    responseLabel_->setParentGui(topScrollWindow_);
+    bottomScrollWindow_->setParentGui(topScrollWindow_.get());
+    responseLabel_->setParentGui(topScrollWindow_.get());
 
     // set positions //TODO: temp, move to draw function, and parametrize to allow
     // user customization such as width, offset, etc..

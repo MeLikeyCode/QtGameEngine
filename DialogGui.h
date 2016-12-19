@@ -3,7 +3,7 @@
 
 #include <unordered_map>
 #include <unordered_set>
-
+#include <memory>
 #include "Gui.h"
 
 class Response;
@@ -102,7 +102,7 @@ private:
     Response* currentResponse_;
 
     // guis
-    ScrollWindow* topScrollWindow_;
+    std::unique_ptr<ScrollWindow> topScrollWindow_;
     ScrollWindow* bottomScrollWindow_;
     Label* responseLabel_;
 
