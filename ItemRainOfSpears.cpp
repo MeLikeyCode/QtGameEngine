@@ -15,7 +15,7 @@ ItemRainOfSpears::ItemRainOfSpears()
     setSprite(sprite);
 
     timer_ = new QTimer(this);
-    soundEffect_ = new Sound("qrc:/resources/sounds/specialMove.wav");
+    soundEffect_ = new Sound("qrc:/resources/sounds/specialMove.wav",this);
 }
 
 /// Executed when the ItemRainOfSpears is asked to be used. Will generate a
