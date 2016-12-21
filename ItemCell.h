@@ -2,9 +2,11 @@
 #define INVENTORYCELL_H
 
 #include "Gui.h"
+#include <QPointer>
+#include "Item.h"
+#include <memory>
 
 class Panel;
-class Item;
 class QGraphicsItem;
 class QGraphicsPixmapItem;
 class QColor;
@@ -37,9 +39,9 @@ signals:
     void clicked(ItemCell* itemCell, int button);
 
 private:
-    QGraphicsPixmapItem* picture_;
-    Panel* background_;
-    Item* item_;
+    std::unique_ptr<QGraphicsPixmapItem> picture_;
+    std::unique_ptr<Panel> background_;
+    QPointer<Item> item_;
 
     void draw_();
 };

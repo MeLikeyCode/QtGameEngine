@@ -17,7 +17,7 @@ ItemCell::ItemCell(int width, int height, Item *item):
     picture_->setParentItem(background_->getGraphicsItem());
     background_->setWidth(width);
     background_->setHeight(height);
-    connect(background_,&Panel::clicked,this,&ItemCell::onClicked_);
+    connect(background_.get(),&Panel::clicked,this,&ItemCell::onClicked_);
     draw_();
 }
 
