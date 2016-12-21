@@ -2,8 +2,9 @@
 #define MAPGRID_H
 
 #include <vector>
+#include <QPointer>
+#include "Map.h"
 
-class Map;
 class Node;
 
 class MapGrid
@@ -18,7 +19,7 @@ public:
     std::vector<Map*> maps();
 
 private:
-    std::vector<Map*> maps_;
+    std::vector<QPointer<Map>> maps_;
     int numMapsHorizontally_;
     int numMapsVertically_;
 };
