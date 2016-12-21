@@ -3,12 +3,14 @@
 
 #include <vector>
 #include "PathingMap.h"
+#include <QPointer>
+#include "Game.h"
+#include <QObject>
 
 class QPolygonF;
 class QGraphicsItem;
 class QGraphicsScene;
 class TerrainLayer;
-class Game;
 class Entity;
 class Sprite;
 class WeatherEffect;
@@ -22,7 +24,9 @@ class WeatherEffect;
 /// which are blocked. Each Entity can also contain its own PathingMap
 /// therefore the Map is notified every time an Entity is added/moved
 /// so that the Map's PathingMap can be updated accordingly.
-class Map{
+class Map: public QObject // so we can use QPointer<Map>
+{
+    Q_OBJECT
 public:
     enum Z_VALUES {
         GUI_Z_VALUE = 3,
@@ -92,8 +96,8 @@ private:
     PathingMap pathingMap_;
     std::unordered_set<Entity*> entities_;
     std::vector<TerrainLayer*> terrainLayers_;
-    Game* game_;
-    WeatherEffect* weather_;
+    QPointer<Game> game_;
+    QPointer<WeatherEffect> weather_;
 
     // for testing
     std::vector<QGraphicsItem*> drawings_;

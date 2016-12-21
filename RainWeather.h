@@ -11,7 +11,7 @@ class QGraphicsPixmapItem;
 /// @see WeatherEffect
 /// @author Abdullah Aghazadah
 /// @date 6/26/16
-class RainWeather : public QObject, public WeatherEffect
+class RainWeather : public WeatherEffect
 {
     Q_OBJECT
 public:

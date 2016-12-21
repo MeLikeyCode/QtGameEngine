@@ -11,7 +11,7 @@ class QTimer;
 /// Class that represents snow weather in a Map.
 /// @author Abdullah Aghazadah
 /// @date 7/2/16
-class SnowWeather : public QObject, public WeatherEffect
+class SnowWeather : public WeatherEffect
 {
     Q_OBJECT
 public:

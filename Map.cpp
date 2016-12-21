@@ -18,7 +18,7 @@ Map::Map(PathingMap pathingMap):
     numCellsLong_(pathingMap.numCellsLong()),
     cellSize_(pathingMap.cellSize()),
     pathingMap_(pathingMap),
-    scene_(new QGraphicsScene()),
+    scene_(new QGraphicsScene(this)),
     weather_(nullptr),
     game_(nullptr)
 {
@@ -614,9 +614,6 @@ QGraphicsScene *Map::scene(){
 
 Game *Map::game()
 {
-    // make sure map has a game
-    assert(game_);
-
     return game_;
 }
 

@@ -7,7 +7,7 @@
 class QTimer;
 class QGraphicsPixmapItem;
 
-class FogWeather : public QObject, public WeatherEffect
+class FogWeather : public WeatherEffect
 {
     Q_OBJECT
 public:

@@ -1,6 +1,8 @@
 #ifndef WEATHER_H
 #define WEATHER_H
 
+#include <QObject>
+
 class Map;
 
 /// Abstract class that represents a weather effect for a Map. To add a
@@ -13,8 +15,9 @@ class Map;
 ///
 /// @author Abdullah Aghazadah
 /// @date 6/26/16
-class WeatherEffect
+class WeatherEffect: public QObject // so that we can use QPointer<WeatherEffect>
 {
+    Q_OBJECT
     friend class Map; // Map needs to set map_ during Map::setWeather(Weather*)
                       // (because a WeatherEffect operates on a Map)
 public:
