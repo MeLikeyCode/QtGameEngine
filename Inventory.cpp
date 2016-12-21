@@ -13,6 +13,14 @@ Inventory::Inventory():
 {
 }
 
+Inventory::~Inventory()
+{
+    // drop all items on the ground
+    for (Item* item: items_){
+        item->setInventory(nullptr);
+    }
+}
+
 /// Returns the Entity that owns this Inventory. Returns nullptr if no Entity
 /// owns this inventory.
 Entity *Inventory::entity()

@@ -23,6 +23,7 @@ class Inventory: public QObject
     friend class Entity;
 public:
     Inventory();
+    ~Inventory();
 
     Entity* entity();
 
