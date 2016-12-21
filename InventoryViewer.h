@@ -4,8 +4,10 @@
 #include "Gui.h"
 #include <QPixmap>
 #include <QColor>
+#include <memory>
+#include <QPointer>
+#include "Inventory.h"
 
-class Inventory;
 class QPointF;
 class ItemCell;
 class Item;
@@ -42,6 +44,7 @@ public:
 public slots:
     void onItemAddedOrRemovedFromInventory(Item* item);
     void onItemCellClicked(ItemCell* itemCell, int button);
+    void onInventoryDestroyed();
 
 signals:
     void itemClicked(Item* item, int button);
@@ -59,9 +62,9 @@ private:
     QColor cellBackgroundColor_;
     QPixmap cellBackgroundPixmap_;
 
-    ScrollWindow* scrollWindow_;
-    Inventory* inventory_;
-    std::vector<ItemCell*> cells_;
+    std::unique_ptr<ScrollWindow> scrollWindow_;
+    QPointer<Inventory> inventory_;
+    std::vector<std::unique_ptr<ItemCell>> cells_;
 
     // helper functions
     void draw_();

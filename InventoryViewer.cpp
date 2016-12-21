@@ -44,12 +44,14 @@ void InventoryViewer::setInventory(Inventory *inventory)
     if (inventory_ != nullptr){
         disconnect(inventory_,&Inventory::itemAdded,this,&InventoryViewer::onItemAddedOrRemovedFromInventory);
         disconnect(inventory_,&Inventory::itemRemoved,this,&InventoryViewer::onItemAddedOrRemovedFromInventory);
+        disconnect(inventory_,&Inventory::destroyed,this,&InventoryViewer::onInventoryDestroyed);
     }
 
     // listen for changes to this inventory
     if (inventory != nullptr){
         connect(inventory,&Inventory::itemAdded,this,&InventoryViewer::onItemAddedOrRemovedFromInventory);
         connect(inventory,&Inventory::itemRemoved,this,&InventoryViewer::onItemAddedOrRemovedFromInventory);
+        connect(inventory_,&Inventory::destroyed,this,&InventoryViewer::onInventoryDestroyed);
         inventory_ = inventory;
     }
 
@@ -168,6 +170,14 @@ void InventoryViewer::onItemCellClicked(ItemCell *itemCell, int button)
     }
 }
 
+/// Executed when the Inventory of the InventoryViewer is destroyed.
+/// Will simply redraw the InventoryViewer to reflect the fact that it does
+/// not have an Inventory to view.
+void InventoryViewer::onInventoryDestroyed()
+{
+    draw_();
+}
+
 /// Draws the Inventory based on its current states.
 void InventoryViewer::draw_()
 {
@@ -179,9 +189,9 @@ void InventoryViewer::draw_()
     scrollWindow_->setHeight(bgHeight);
 
     // clear/stop listening to all previously drawn inventory cells
-    for (ItemCell* cell:cells_){
-        disconnect(cell,&ItemCell::clicked,this,&InventoryViewer::onItemCellClicked);
-        scrollWindow_->remove(cell);
+    for (std::unique_ptr<ItemCell>& cell:cells_){
+        disconnect(cell.get(),&ItemCell::clicked,this,&InventoryViewer::onItemCellClicked);
+        scrollWindow_->remove(cell.get());
     }
     cells_.clear();
 
@@ -198,7 +208,7 @@ void InventoryViewer::draw_()
             double cellX = x*(cellWidth_+paddingBWCells_)+border_;
             double cellY = y*(cellHeight_+paddingBWCells_)+border_;
             cell->setGuiPos(QPointF(cellX,cellY));
-            cells_.push_back(cell);
+            cells_.push_back(std::unique_ptr<ItemCell>(cell));
             scrollWindow_->add(cell,QPointF(cellX,cellY));
 
             connect(cell,&ItemCell::clicked,this,&InventoryViewer::onItemCellClicked);
