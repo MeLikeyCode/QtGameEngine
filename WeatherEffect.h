@@ -2,8 +2,8 @@
 #define WEATHER_H
 
 #include <QObject>
-
-class Map;
+#include "Map.h"
+#include <QPointer>
 
 /// Abstract class that represents a weather effect for a Map. To add a
 /// WeatherEffect effect to a Map, first create an instance of the
@@ -31,7 +31,7 @@ public:
     /// is already stopped.
     virtual void stop() = 0;
 protected:
-    Map* map_;
+    QPointer<Map> map_;
 };
 
 #endif // WEATHER_H
