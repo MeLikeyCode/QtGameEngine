@@ -6,9 +6,9 @@
 #include <unordered_set>
 #include <QTimer>
 #include "Entity.h"
-
-class ProjectileMoveBehavior;
-class CollisionBehavior;
+#include "ProjectileMoveBehavior.h"
+#include "CollisionBehavior.h"
+#include <memory>
 
 /// Represents a projectile that moves a certain way and collides with things
 /// along the way. Strategy pattern is used to determine the behaviors of the projectile.
@@ -53,8 +53,6 @@ public:
                std::unordered_set<Entity*> noDamageList,
                Map* map);
 
-    ~Projectile();
-
     QPointF start();
     void setStart(QPointF start);
 
@@ -89,8 +87,8 @@ private:
     QTimer* timer_;
 
     // behaviors
-    ProjectileMoveBehavior* moveBehavior_;
-    CollisionBehavior* collisionBehavior_;
+    std::unique_ptr<ProjectileMoveBehavior> moveBehavior_;
+    std::unique_ptr<CollisionBehavior> collisionBehavior_;
 };
 
 #endif // PROJECTILE_H

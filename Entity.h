@@ -19,7 +19,6 @@ class QPointF;
 class Slot;
 class Inventory;
 class AsyncShortestPathFinder;
-class PlayerControlledMoveBehavior;
 class QTimer;
 
 /// An Entity is the base class for anything that can go inside a Map.

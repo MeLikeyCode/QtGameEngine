@@ -30,13 +30,6 @@ Projectile::Projectile(QPointF start,
     map->addEntity(this); // add the projectile to the map (could alternatively use setMap(map));
 }
 
-Projectile::~Projectile()
-{
-    delete timer_;
-    delete moveBehavior_;
-    delete collisionBehavior_;
-}
-
 QPointF Projectile::start()
 {
     return start_;
@@ -80,26 +73,34 @@ std::unordered_set<Entity*> Projectile::collidingEntities()
 /// Returns the ProjectileMoveBehavior of the Projectile.
 ProjectileMoveBehavior *Projectile::moveBehavior()
 {
-    return moveBehavior_;
+    return moveBehavior_.get();
 }
 
 /// Sets the ProjectileMoveBehavior of the Projectile.
 void Projectile::setMoveBehavior(ProjectileMoveBehavior *moveBehavior)
 {
-    moveBehavior_ = moveBehavior;
+    // release old move behavior
+    moveBehavior_.release();
+
+    // grab new one
+    moveBehavior_ .reset(moveBehavior);
     moveBehavior_->projectile_ = this;
 }
 
 /// Returns the CollisionsBehvaior of the Projectile.
 CollisionBehavior *Projectile::collisionBehavior()
 {
-    return collisionBehavior_;
+    return collisionBehavior_.get();
 }
 
 /// Sets the CollisionBehavior of the Projectile.
 void Projectile::setCollisionBehavior(CollisionBehavior *collisionBehavior)
 {
-    collisionBehavior_ = collisionBehavior;
+    // remove old collision behavior
+    collisionBehavior_.release();
+
+    // grab new one
+    collisionBehavior_.reset(collisionBehavior);
 }
 
 void Projectile::startMoving()
