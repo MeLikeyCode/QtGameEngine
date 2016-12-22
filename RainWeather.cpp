@@ -29,10 +29,6 @@ RainWeather::RainWeather(int numOfRainGraphics, int rainStepFreqMs, int rainMove
 
 RainWeather::~RainWeather()
 {
-    // disconnect timers
-    rainTimer_->disconnect();
-    splashTimer_->disconnect();
-
     // clean up rain graphics
     if (map_){
         for (QGraphicsPixmapItem* rain:rains_){
