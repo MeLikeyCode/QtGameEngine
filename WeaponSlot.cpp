@@ -2,11 +2,6 @@
 
 #include "Weapon.h"
 
-WeaponSlot::WeaponSlot()
-{
-    // empty constructor body
-}
-
 bool WeaponSlot::canBeEquipped(EquipableItem *item)
 {
     // WeaponSlot can only equip Weapons
