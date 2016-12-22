@@ -2,9 +2,10 @@
 #define MELEEWEAPON_H
 
 #include "Weapon.h"
+#include <memory>
+#include "CollisionBehavior.h"
 
 class QPointF;
-class CollisionBehavior;
 
 /// An abstract class that represents a melee weapon.
 /// @author Abdullah Aghazadah
@@ -20,8 +21,7 @@ public:
 
 private:
     QPointF tip_;
-    CollisionBehavior* collisionBehavior_;
-
+    std::unique_ptr<CollisionBehavior> collisionBehavior_;
 };
 
 #endif // MELEEWEAPON_H
