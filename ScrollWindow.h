@@ -8,8 +8,9 @@
 #include <unordered_map>
 #include <QColor>
 #include <QPixmap>
+#include "ScrollBar.h"
+#include <memory>
 
-class ScrollBar;
 class Panel;
 
 /// Represents a Gui that can be used to visualized other Guis in a scroll like
@@ -57,10 +58,9 @@ private:
     std::unordered_map<Gui*,QPointF> guiToPos_; // the guis added, and the position added to
     std::unordered_map<Gui*,QPointF> guiInViewToShiftVector_; // the guis in viewport and their shift vectors
 
-    ScrollBar* verticalScrollBar_;
+    std::unique_ptr<ScrollBar> verticalScrollBar_;
     ScrollBar* horizontalScrollBar_;
     Panel* background_;
-    Panel* scrollFiller_;
 
     void draw_();
 };

@@ -13,14 +13,13 @@ ScrollWindow::ScrollWindow(double width, double height):
     height_(height),
     verticalScrollBar_(new ScrollBar()),
     horizontalScrollBar_(new ScrollBar()),
-    background_(new Panel()),
-    scrollFiller_(new Panel())
+    background_(new Panel())
 {
-    horizontalScrollBar_->setParentGui(verticalScrollBar_);
-    background_->setParentGui(verticalScrollBar_);
+    horizontalScrollBar_->setParentGui(verticalScrollBar_.get());
+    background_->setParentGui(verticalScrollBar_.get());
 
     // get notified whenever the scroll bar's position's change
-    connect(verticalScrollBar_,&ScrollBar::positionChanged,this,&ScrollWindow::verticalOrHorizontalScrollBarPositionChanged_);
+    connect(verticalScrollBar_.get(),&ScrollBar::positionChanged,this,&ScrollWindow::verticalOrHorizontalScrollBarPositionChanged_);
     connect(horizontalScrollBar_,&ScrollBar::positionChanged,this,&ScrollWindow::verticalOrHorizontalScrollBarPositionChanged_);
 
     draw_(); // draw the initial scrollbar
@@ -141,7 +140,7 @@ void ScrollWindow::setBackgroundPixmap(const QPixmap &pixmap)
 
 QGraphicsItem *ScrollWindow::getGraphicsItem()
 {
-    return verticalScrollBar_;
+    return verticalScrollBar_.get();
 }
 
 /// Executed whenever the positions' of one of the scroll bars changes.
