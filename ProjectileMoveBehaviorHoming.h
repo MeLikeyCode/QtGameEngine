@@ -2,8 +2,8 @@
 #define PROJECTILEMOVEBEHAVIORHOMING_H
 
 #include "ProjectileMoveBehavior.h"
-
-class Entity;
+#include "Entity.h"
+#include <QPointer>
 
 class ProjectileMoveBehaviorHoming: public ProjectileMoveBehavior
 {
@@ -11,7 +11,7 @@ public:
     ProjectileMoveBehaviorHoming(Entity* entityToFollow);
     virtual void onMoveStep();
 private:
-    Entity* entityToFollow_;
+    QPointer<Entity> entityToFollow_;
 };
 
 #endif // PROJECTILEMOVEBEHAVIORHOMING_H
