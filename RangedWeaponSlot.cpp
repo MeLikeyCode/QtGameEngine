@@ -5,11 +5,6 @@
 #include "Entity.h"
 #include "QPointF"
 
-RangedWeaponSlot::RangedWeaponSlot()
-{
-    // empty constructor body
-}
-
 /// Returns weather the RangedWeaponSlot can equip the specified item.
 bool RangedWeaponSlot::canBeEquipped(EquipableItem *item)
 {

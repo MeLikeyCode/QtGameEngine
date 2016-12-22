@@ -8,8 +8,6 @@ class EquipableItem;
 class RangedWeaponSlot : public Slot
 {
 public:
-    RangedWeaponSlot();
-
     bool canBeEquipped(EquipableItem *item);
     void use();
 };
