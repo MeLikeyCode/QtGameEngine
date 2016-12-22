@@ -20,12 +20,21 @@ public:
     Quest* quest(int i);
 
 signals:
+    /// Emitted whenever a Quest is added to the Quests.
     void questAdded(Quest* newQuest);
+
+    /// Emitted whenever a Quest is removed from the Quests.
+    /// This can happen via removeQuest() or if one the quest gets
+    /// deconstructed.
     void questRemoved(Quest* removedQuest);
+
+    /// Emitted whenever the status of one of the quests in the collection
+    /// changes.
     void questStatusChanged(Quest* forQuest, QuestStatus newStatus);
 
 public slots:
     void emitQuestStatusChanged_(Quest *quest, QuestStatus newStatus);
+    void onQuestDestructed(QObject* quest);
 
 private:
     std::vector<Quest*> quests_;
