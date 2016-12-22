@@ -27,6 +27,8 @@ ScrollWindow::ScrollWindow(double width, double height):
 }
 
 /// Adds the specified Gui to the ScrollWindow at the specified position.
+/// The ScrollWindow takes ownership of the added gui (i.e. when the ScrollWindow is
+/// deleted, so are the added Guis).
 /// Does nothing if the Gui is already added.
 void ScrollWindow::add(Gui *gui, QPointF atPos)
 {

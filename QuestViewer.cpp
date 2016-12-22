@@ -26,8 +26,8 @@ QuestViewer::QuestViewer(Quests *quests):
     selectedQuestDescription_(new Label())
 {   
     // set parents
-    scrollWindow_->setParentGui(outterPanel_);
-    selectedQuestDescription_->setParentGui(outterPanel_);
+    scrollWindow_->setParentGui(outterPanel_.get());
+    selectedQuestDescription_->setParentGui(outterPanel_.get());
 
     // defaults
     outterPanel_->setBackgroundPixmap(QPixmap(":/resources/graphics/misc/paper.png"));

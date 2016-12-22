@@ -3,10 +3,11 @@
 
 #include "Gui.h"
 #include <unordered_map>
+#include "Panel.h"
+#include <memory>
 
 class Quest;
 class Quests;
-class Panel;
 class Button;
 class Label;
 class Quest;
@@ -49,7 +50,7 @@ private:
     double closeBtnX_;  // the x position of the close button relative to outterPanel_
     double closeBtnY_;  // the y position of the close button relative to outterPanel_
 
-    Panel* outterPanel_;
+    std::unique_ptr<Panel> outterPanel_;
     ScrollWindow* scrollWindow_;
     Label* selectedQuestDescription_;
 };
