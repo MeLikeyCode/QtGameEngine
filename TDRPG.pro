@@ -32,7 +32,6 @@ SOURCES += main.cpp \
     CountExpiringTimer.cpp \
     MeleeWeapon.cpp \
     Spear.cpp \
-    PlayerControlledMoveBehavior.cpp \
     Entity.cpp \
     Axe.cpp \
     Sound.cpp \
@@ -126,7 +125,6 @@ HEADERS  += \
     CountExpiringTimer.h \
     MeleeWeapon.h \
     Spear.h \
-    PlayerControlledMoveBehavior.h \
     Entity.h \
     Axe.h \
     Sound.h \
