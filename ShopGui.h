@@ -2,9 +2,10 @@
 #define SHOPGUI_H
 
 #include "Gui.h"
+#include "InventoryViewer.h"
+#include <QPointer>
 
 class Inventory;
-class InventoryViewer;
 class Panel;
 class Label;
 class Button;
@@ -43,7 +44,7 @@ private:
     ShopGuiBehavior* shopBehavior_; // the rules of purchasing
 
     // sub guis
-    InventoryViewer* inventoryViewer_;
+    std::unique_ptr<InventoryViewer> inventoryViewer_;
     Panel* panel_;  // houses the descriptionLabel_ and priceLabel_
     Label* descriptionLabel_;
     Label* priceLabel_;

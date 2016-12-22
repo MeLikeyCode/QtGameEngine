@@ -20,7 +20,7 @@ ShopGui::ShopGui(Game *game):
     game_(game)
 {
     // set up parent/child relationship b/w sub guis
-    panel_->setParentGui(inventoryViewer_);
+    panel_->setParentGui(inventoryViewer_.get());
     descriptionLabel_->setParentGui(panel_);
     priceLabel_->setParentGui(panel_);
     buyButton_->setParentGui(panel_);
@@ -42,7 +42,7 @@ ShopGui::ShopGui(Game *game):
     closeButton_->setGuiPos(QPointF(inventoryViewerWidth - closeButton_->width(), panel_->height()));
 
     // connect
-    connect(inventoryViewer_,&InventoryViewer::itemClicked,this,&ShopGui::onItemClicked);
+    connect(inventoryViewer_.get(),&InventoryViewer::itemClicked,this,&ShopGui::onItemClicked);
     connect(buyButton_,&Button::clicked,this,&ShopGui::onBuyButtonClicked);
     connect(closeButton_,&Button::clicked,this,&ShopGui::onCloseButtonClicked);
 
