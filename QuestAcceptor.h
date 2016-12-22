@@ -2,8 +2,9 @@
 #define QUESTACCEPTOR_H
 
 #include "Gui.h"
+#include "QuestViewer.h"
+#include <memory>
 
-class QuestViewer;
 class Button;
 class Quest;
 class Quests;
@@ -42,7 +43,7 @@ signals:
     void questAccepted(Quest* quest);
 
 private:
-    QuestViewer* questViewer_;
+    std::unique_ptr<QuestViewer> questViewer_;
     Button* closeButton_;
     Button* acceptButton_;
     Game* game_; // needed for close button to remove the GUI

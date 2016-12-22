@@ -10,8 +10,8 @@ QuestAcceptor::QuestAcceptor(Game *game):
     game_(game)
 {
     // set parent/child relationships
-    closeButton_->setParentGui(questViewer_);
-    acceptButton_->setParentGui(questViewer_);
+    closeButton_->setParentGui(questViewer_.get());
+    acceptButton_->setParentGui(questViewer_.get());
 
     // set initial look
     closeButton_->setGuiPos(QPointF(0,360));
