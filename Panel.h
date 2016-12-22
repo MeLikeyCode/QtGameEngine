@@ -6,8 +6,9 @@
 #include <QPixmap>
 #include <QObject>
 #include <QGraphicsPixmapItem>
+#include <QGraphicsRectItem>
+#include <memory>
 
-class QGraphicsRectItem;
 class QGraphicsSceneMouseEvent;
 class QGraphicsSceneHoverEvent;
 
@@ -49,7 +50,7 @@ signals:
     void mouseHoverMoved(Panel* panel, QPointF pos);
 
 private:
-    QGraphicsRectItem* border_; // border
+    std::unique_ptr<QGraphicsRectItem> border_; // border
     QPixmap backgroundPixmap_;
     QColor backgroundColor_;
     bool backgroundIsPixmap_;
