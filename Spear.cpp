@@ -43,7 +43,7 @@ Spear::Spear()
     timer_ = new QTimer(this);
     resetVariables();
 
-    soundEffect_ = new Sound("qrc:/resources/sounds/spear.wav");
+    soundEffect_ = new Sound("qrc:/resources/sounds/spear.wav", this);
 }
 
 /// Will thrust the spear forward. The "position" argument is ignored.
