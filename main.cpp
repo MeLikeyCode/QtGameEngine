@@ -129,9 +129,9 @@ int main(int argc, char *argv[])
 //    bar->setGuiPos(QPointF(500,200));
 //    game->addGui(bar);
 
-    // test label
-    Label* label = new Label();
-    game->addGui(label);
+//    // test label
+//    Label* label = new Label();
+//    game->addGui(label);
 
     // add some items to ground
     Spear* spear = new Spear();
@@ -297,10 +297,10 @@ int main(int argc, char *argv[])
 
 //    // create an entity that moves via pathfinding
 //    Entity* pathMovingEntity = new Entity();
-//    pathMovingEntity->setPointPos(QPointF(300,300));
+//    pathMovingEntity->setPointPos(QPointF(0,0));
 //    map1->addEntity(pathMovingEntity);
 
-//    ECPathMover* pathMoveCont = new ECPathMover(pathMovingEntity);
+//    ECPathMover* pathMoveCont = new ECPathMover(*pathMovingEntity);
 
 //    pathMoveCont->moveEntityTo(QPointF(300,300));
 
@@ -358,7 +358,7 @@ int main(int argc, char *argv[])
 //    weInv->addItem(wSpear);
 //    wwSlot->equip(wSpear);
 
-//    ECAttackEnemiesWithWeapon* weaponAttackCont = new ECAttackEnemiesWithWeapon(weaponEntity);
+//    ECAttackEnemiesWithWeapon* weaponAttackCont = new ECAttackEnemiesWithWeapon(*weaponEntity);
 
 //    keyMouseEntity->setGroup(1);
 //    weaponEntity->addEnemyGroup(1);
