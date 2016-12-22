@@ -5,6 +5,7 @@
 #include <unordered_set>
 #include <memory>
 #include "Gui.h"
+#include <QObject>
 
 class Response;
 class Label;
@@ -67,7 +68,7 @@ private:
 /// choices) will be displayed. By clicking the various Choices, the user can "talk" wit the dialog.
 /// @author Abdullah Aghazadah
 /// @date 11/2/16
-class DialogGui : public Gui
+class DialogGui : public QObject, public Gui
 {
     Q_OBJECT
 public:

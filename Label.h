@@ -5,14 +5,14 @@
 #include "Gui.h"
 #include <string>
 #include <QColor>
-#include <QGraphicsSimpleTextItem>
+#include <QGraphicsTextItem>
 
 /// Represents a label Gui that can be added to a Game.
 /// You can set various options such as the font, font size, font color, and width.
 /// Oh and you can set the actual text, of course.
 /// The Label emits a signal when the mouse hovers over it, when it clicks it, and
 /// when it stops hovering over it.
-class Label : public Gui, public QGraphicsSimpleTextItem
+class Label : public QGraphicsTextItem, public Gui
 {
     Q_OBJECT
 public:

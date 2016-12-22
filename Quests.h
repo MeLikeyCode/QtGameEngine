@@ -34,7 +34,7 @@ signals:
 
 public slots:
     void emitQuestStatusChanged_(Quest *quest, QuestStatus newStatus);
-    void onQuestDestructed(QObject* quest);
+    void onQuestDestructed_(QObject* quest);
 
 private:
     std::vector<Quest*> quests_;

@@ -3,6 +3,7 @@
 
 #include "Gui.h"
 #include <memory>
+#include <QObject>
 
 class InventoryViewer;
 class Inventory;
@@ -12,7 +13,7 @@ class Entity;
 
 /// A Gui that allows "using" the Items in an Inventory.
 /// @author Abdullah Aghazadah
-class InventoryUser : public Gui
+class InventoryUser : public QObject, public Gui
 {
     Q_OBJECT
 public:

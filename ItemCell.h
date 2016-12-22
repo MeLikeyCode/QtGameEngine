@@ -5,6 +5,7 @@
 #include <QPointer>
 #include "Item.h"
 #include <memory>
+#include <QObject>
 
 class Panel;
 class QGraphicsItem;
@@ -17,7 +18,7 @@ class QPixmap;
 /// You can set the Item of the ItemCell via setItem(Item*) or by passing the Item
 /// in the ItemCell constructor. There are several member functions provided
 /// which allow you to modify the look/size of the ItemCell.
-class ItemCell: public Gui
+class ItemCell: public QObject, public Gui
 {
     Q_OBJECT
 public:

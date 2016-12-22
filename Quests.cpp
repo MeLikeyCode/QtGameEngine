@@ -20,7 +20,7 @@ void Quests::addQuest(Quest *quest)
     connect(quest,&Quest::questStatusChanged,this,&Quests::emitQuestStatusChanged_);
 
     // listen to when the quest is destructed
-    connect(quest, &Quest::destroyed, this, &Quests::onQuestDestructed);
+    connect(quest, &Quest::destroyed, this, &Quests::onQuestDestructed_);
 
     emit questAdded(quest);
 }
@@ -37,7 +37,7 @@ void Quests::removeQuest(Quest *quest)
 
         // stop listening to quest events
         disconnect(quest,&Quest::questStatusChanged,this,&Quests::emitQuestStatusChanged_);
-        disconnect(quest, &Quest::destroyed, this, &Quests::onQuestDestructed);
+        disconnect(quest, &Quest::destroyed, this, &Quests::onQuestDestructed_);
 
         emit questRemoved(quest);
     }
@@ -63,7 +63,7 @@ void Quests::emitQuestStatusChanged_(Quest* quest, QuestStatus newStatus)
 
 /// Executed when one of the quests in the collection has been deconstructd.
 /// Will remove it and emit removed signal.
-void Quests::onQuestDestructed(QObject *quest)
+void Quests::onQuestDestructed_(QObject *quest)
 {
     Quest* asQuest = dynamic_cast<Quest*>(quest);
     assert(asQuest);

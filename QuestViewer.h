@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include "Panel.h"
 #include <memory>
+#include <QObject>
 
 class Quest;
 class Quests;
@@ -17,7 +18,7 @@ class ScrollWindow;
 /// Click on a quest to view its description.
 /// @author Abdullah Aghazadah
 /// @date 9/5/16
-class QuestViewer: public Gui
+class QuestViewer: public QObject, public Gui
 {
     Q_OBJECT
 public:

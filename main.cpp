@@ -113,11 +113,11 @@ int main(int argc, char *argv[])
     Game* game = new Game(mapGrid,0,1);
     game->launch();
 
-    // test panel
-    Panel* p = new Panel();
-    p->setGuiPos(QPointF(300,300));
-    game->addGui(p);
-    //p->showBackground(false);
+//    // test panel
+//    Panel* p = new Panel();
+//    p->setGuiPos(QPointF(300,300));
+//    game->addGui(p);
+//    //p->showBackground(false);
 
 //    // test button
 //    Button* b = new Button();
@@ -128,6 +128,10 @@ int main(int argc, char *argv[])
 //    Bar* bar = new Bar();
 //    bar->setGuiPos(QPointF(500,200));
 //    game->addGui(bar);
+
+    // test label
+    Label* label = new Label();
+    game->addGui(label);
 
     // add some items to ground
     Spear* spear = new Spear();
@@ -154,10 +158,6 @@ int main(int argc, char *argv[])
 //    addRandomRocks(map1,5);
 //    addRandomBushes(map1,20);
 //    addRandomTrees(map1,15);
-
-//    // test inventory cell
-//    InventoryCell* cell = new InventoryCell(game,100,100);
-//    game->addGui(cell);
 
 ////    // test QuestViewer
 //    Quests* quests = new Quests();

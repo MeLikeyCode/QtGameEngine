@@ -5,6 +5,7 @@
 #include <QGraphicsPixmapItem>
 #include <QColor>
 #include <QPixmap>
+#include <QObject>
 
 class QGraphicsSceneMouseEvent;
 class QGraphicsItem;
@@ -20,7 +21,7 @@ class QGraphicsItem;
 /// call showEvenIfFull(true);
 /// @author Abdullah Aghazadah
 /// @date 10-11-16
-class ScrollBar : public Gui, public QGraphicsPixmapItem
+class ScrollBar : public QObject, public Gui, public QGraphicsPixmapItem
 {
     Q_OBJECT
 public:
