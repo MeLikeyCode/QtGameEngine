@@ -572,6 +572,13 @@ Come up with a list of every thing that needs to be done in order for the first 
     
     ===SUB TASK===
 
+===TASK===----DONE
+Go back through one file at a time and
+-check to make sure class documentation is *clear* and informative
+-method arguments are taken by const ref whenever possible
+-constructors use field initializer list whenever possible
+-destructor properly cleans up
+	
 =============================================================================
 =============================================================================
 =========================UNFINISHED TASKS====================================
@@ -579,14 +586,28 @@ Come up with a list of every thing that needs to be done in order for the first 
 =============================================================================
 
 ===TASK===
-Go back through one file at a time and
--check to make sure class documentation is *clear* and informative
--method arguments are taken by const ref whenever possible
--constructors use field initializer list whenever possible
--destructor properly cleans up
+Watched-watching system is really confusing to use for the client. I know because i was just the client.
+Make it simple. The api should just allow you to be notifie whenever the distance b/w two entities of interest are less than a treshold:
+map->watchDistanceBW(Entity* one, Entity*, double distThrehold); // whenever one or two moves, map will see if they are w/i threshold dist, if so, will emit an event
 
 ===TASK==
 Improve collision detection algorithm (use kd tree)
+
+===TASK===
+Still need to handle resource ownership for these classes:
+Entity
+Slot
+
+===TASK===
+Split EC into entity watcher and entity controller
+-EntityWatchers watch an entity for a specific event (i.e. when it has moved 15 pixels, when something enters its fov, etc...)
+-EntityControllers actually control the entity (i.e. move it towards something, etc...)
+
+===TASK===
+TerrainLayer, by default use size of qpixmap as size (instead of forcing it to be passed in ctor)
+
+===TASK===
+
 
 ===TASK===
 Create youtube tutorial that creates a basic game
@@ -663,11 +684,39 @@ Implement faster collision detection algorithm for Map
 ===TASK===
 Go back through API doc of each class, review it and include an EXAMPLE usage:
                                                             
-                                                            
-                                                            
-                                                            
+===TASK===
+What do all games need?
 
+-timing
+-sprites
+-motion
+-path finding
+-collision detection
 
+Timing:
+We need to provide classes that will help with timing.
+-we need to be able to create an object that will execute a user defined function periodically a certain number of times or for a certain length of times and then destroy itself
+
+Sprites:
+-we need to create a robust Sprite class that represents a series of animations
+	- we need to be able to construct it from a bunch of images
+	- we also need to be able to construct it from a sprite sheet
+
+Motion:
+-we need classes that we tell about some motion that we want and they periodically emit a point that follows this motion
+	- a class that will periodically spit out random position within a region
+	- a class that will periodically spit out points along a polyline
+	- a class that will periodically spit out points along a polygon (in a loop)
+	- a class that given a direction, amplitude, and wavelength, will periodically spit out sine/cose positions
+
+Path Finding:
+-we need need classes to represent a tree and a graph
+-we need classes to represent a grid of cells
+-we need to be able to find shortest path between grid of cells
+
+Collision Detection:
+-we need a class that has a key-value pair (key is some objectID, value is its polygon), that keeps track of polygons and can efficiently hit test em
+ 
 
 
 

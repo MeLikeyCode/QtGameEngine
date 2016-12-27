@@ -342,26 +342,26 @@ int main(int argc, char *argv[])
 //    keyMouseEntity->setGroup(1);
 //    bodyThrustEntity->addEnemyGroup(1);
 
-//    // create an Entity that will attack enemies with a weapon
-//    Entity* weaponEntity = new Entity();
-//    map1->addEntity(weaponEntity);
+    // create an Entity that will attack enemies with a weapon
+    Entity* weaponEntity = new Entity();
+    map1->addEntity(weaponEntity);
 
-//    WeaponSlot* wwSlot = new WeaponSlot();
-//    wwSlot->setPosition(QPointF(0,0));
-//    wwSlot->setName("main weapon");
+    WeaponSlot* wwSlot = new WeaponSlot();
+    wwSlot->setPosition(QPointF(0,0));
+    wwSlot->setName("main weapon");
 
-//    weaponEntity->addSlot(wwSlot);
+    weaponEntity->addSlot(wwSlot);
 
-//    wSpear = new Spear();
-//    Inventory* weInv = new Inventory();
-//    weaponEntity->setInventory(weInv);
-//    weInv->addItem(wSpear);
-//    wwSlot->equip(wSpear);
+    wSpear = new Spear();
+    Inventory* weInv = new Inventory();
+    weaponEntity->setInventory(weInv);
+    weInv->addItem(wSpear);
+    wwSlot->equip(wSpear);
 
-//    ECAttackEnemiesWithWeapon* weaponAttackCont = new ECAttackEnemiesWithWeapon(*weaponEntity);
+    ECAttackEnemiesWithWeapon* weaponAttackCont = new ECAttackEnemiesWithWeapon(*weaponEntity);
 
-//    keyMouseEntity->setGroup(1);
-//    weaponEntity->addEnemyGroup(1);
+    keyMouseEntity->setGroup(1);
+    weaponEntity->addEnemyGroup(1);
 
     return a.exec();
 }

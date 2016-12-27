@@ -289,7 +289,9 @@ void Game::addWatchedEntity(Entity *watched, Entity *watching, double range)
 
     // init variables
     std::pair<Entity*, Entity*> watchedWatchingPair = std::make_pair(watched,watching);
-    auto watchingSet = watchedToWatching_.find(watched); // set of watching entities for the entity
+    auto watchingSet = watchedToWatching_.find(watched); // 1 watched entity to * watching entities
+    auto watchedSet = watchingToWatched_.find(watching); // 1 watching entit to * watched entities
+
 
     // simply update range if this watched-watching pair already exists
     if (watchedWatchingPairExists(watched,watching)){
@@ -297,13 +299,18 @@ void Game::addWatchedEntity(Entity *watched, Entity *watching, double range)
             return;
     }
 
-    // if watched has never been added, add it
+    // if this is the first time the "watched" entity is being watched, add a set for it
     if (watchingSet == watchedToWatching_.end()){
         watchedToWatching_[watched] = std::set<Entity*>();
     }
 
-    // add watching to watchingset
+    // if this is the first time the watching entity is watching anything, add a set for it
+    if (watchedSet == watchingToWatched_.end()){
+        watchingToWatched_[watching] = std::set<Entity*>();
+    }
+
     watchedToWatching_[watched].insert(watching);
+    watchingToWatched_[watching].insert(watched);
 
     // add range data
     watchedWatchingPairToRange_[watchedWatchingPair] = range;
@@ -346,16 +353,22 @@ void Game::removeWatchedEntity(Entity *watched, Entity *watching)
     // init variables
     std::pair<Entity*,Entity*> watchedWatchingPair = std::make_pair(watched,watching);
     auto watchingSet = watchedToWatching_.find(watched)->second;
+    auto watchedSet = watchingToWatched_.find(watching)->second;
     auto watcher = watchingSet.find(watching);
+    auto watchee = watchedSet.find(watched);
 
     // earase
     watchingSet.erase(watcher);
+    watchedSet.erase(watchee);
     watchedWatchingPairToRange_.erase(watchedWatchingPair);
     watchedWatchingPairToEnterRangeEmitted_.erase(watchedWatchingPair);
 
     // if this was the last watching, erase the watched
     if (watchingSet.size() == 0)
         watchedToWatching_.erase(watched);
+
+    if (watchedSet.size() == 0)
+        watchingToWatched_.erase(watching);
 }
 
 /// Completely removes the specified entity from the watched list.
@@ -382,6 +395,29 @@ std::set<Entity *> Game::watchedEntities()
 {
     std::set<Entity*> results;
     for (auto pair:watchedToWatching_){
+        results.insert(pair.first);
+    }
+    return results;
+}
+
+/// Returns all entities that are being watched by the specified entity.
+std::set<Entity *> Game::watchedEntities(Entity *of)
+{
+    assert(of != nullptr);
+
+    auto theSet = watchingToWatched_.find(of);
+    if (theSet == watchingToWatched_.end())
+        return std::set<Entity*>(); // return empty set
+    else
+        return theSet->second;
+}
+
+/// Returns all entities that are watching some other entities.
+/// @see watchedEntityEntersRange()
+std::set<Entity *> Game::watchingEntities()
+{
+    std::set<Entity*> results;
+    for (auto pair:watchingToWatched_){
         results.insert(pair.first);
     }
     return results;
@@ -458,6 +494,9 @@ void Game::onEntityMoved(Entity *entity)
     // if any watchedEntityEntersRange or watchedEntityLeavesRange signals should
     // be emitted
 
+    // if the entity that just moved is being watched,
+    // get all entites that are watching him,
+    // and see if he just entered or left within range of em
     for (Entity* watching:watchingEntities(entity)){
         // entity - watching variables
         std::pair<Entity*,Entity*> watchedWatchingPair = std::make_pair(entity,watching);
@@ -468,29 +507,36 @@ void Game::onEntityMoved(Entity *entity)
         if (dist < range && !alreadyInRange){
             emit watchedEntityEntersRange(entity,watching,range);
             watchedWatchingPairToEnterRangeEmitted_[watchedWatchingPair] = true;
+            return;
         }
 
         if (dist > range && alreadyInRange){
             emit watchedEntityLeavesRange(entity,watching,range);
             watchedWatchingPairToEnterRangeEmitted_[watchedWatchingPair] = false;
-        }
-
-        if (watchedWatchingPairExists(watching,entity)){
-            // watching - entity variables
-            std::pair<Entity*,Entity*> watchedWatchingPair2 = std::make_pair(watching,entity);
-            double distance2 = dist;
-            double range2 = watchedWatchingRange(watching,entity);
-            double alreadyInRange2 = watchedWatchingPairToEnterRangeEmitted_[watchedWatchingPair2];
-
-            if (distance2 < range2 && !alreadyInRange2){
-                emit watchedEntityEntersRange(watching,entity,range);
-                watchedWatchingPairToEnterRangeEmitted_[watchedWatchingPair2] = true;
-            }
-
-            if (distance2 > range2 && alreadyInRange2){
-                emit watchedEntityLeavesRange(watching,entity,range);
-                watchedWatchingPairToEnterRangeEmitted_[watchedWatchingPair2] = false;
-            }
+            return;
         }
     }
+
+    // if the entity that just moved is watching some other entities,
+    // get these entities, and see if he entered/left range of any of em
+    for (Entity* watched:watchedEntities(entity)){
+        // entity - watching variables
+        std::pair<Entity*,Entity*> watchedWatchingPair = std::make_pair(watched,entity);
+        double dist = distance(entity->pointPos(),watched->pointPos());
+        double range = watchedWatchingRange(watched,entity);
+        bool alreadyInRange = watchedWatchingPairToEnterRangeEmitted_[watchedWatchingPair];
+
+        if (dist < range && !alreadyInRange){
+            emit watchedEntityEntersRange(watched,entity,range);
+            watchedWatchingPairToEnterRangeEmitted_[watchedWatchingPair] = true;
+            return;
+        }
+
+        if (dist > range && alreadyInRange){
+            emit watchedEntityLeavesRange(watched,entity,range);
+            watchedWatchingPairToEnterRangeEmitted_[watchedWatchingPair] = false;
+            return;
+        }
+    }
+
 }

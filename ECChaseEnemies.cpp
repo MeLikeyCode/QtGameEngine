@@ -8,7 +8,7 @@
 #include "Game.h"
 
 ECChaseEnemies::ECChaseEnemies(Entity &entity):
-    stopDistance_(250),
+    stopDistance_(100),
     controlledEntity_(&entity),
     fovEmitter_(new ECFieldOfViewEmitter(entity)),
     pathMover_(new ECPathMover(entity)),

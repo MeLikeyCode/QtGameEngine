@@ -67,6 +67,8 @@ public:
     void removeWatchedEntity(Entity* watched, Entity* watching);
     void removeWatchedEntity(Entity* watched);
     std::set<Entity*> watchedEntities();
+    std::set<Entity*> watchedEntities(Entity* of);
+    std::set<Entity*> watchingEntities();
     std::set<Entity*> watchingEntities(Entity *of);
     double watchedWatchingRange(Entity* watched, Entity* watching);
     void setWatchedWatchingRange(Entity* watched, Entity* watching, double range);
@@ -114,6 +116,7 @@ private:
 
     // watched/watching entities
     std::map<Entity*, std::set<Entity*>> watchedToWatching_; // each Entity that is watched to the Entities that are watching it
+    std::map<Entity*, std::set<Entity*>> watchingToWatched_; // each Entity that is watching to the Entities that its watching
     std::map<std::pair<Entity*,Entity*>,double> watchedWatchingPairToRange_; // for each watched/watching pair, what is the range?
     std::map<std::pair<Entity*,Entity*>,bool> watchedWatchingPairToEnterRangeEmitted_; // has the enters range event been emitted yet for a pair of watched watching entities?
 };
