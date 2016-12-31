@@ -23,12 +23,14 @@
 
 #include "ECPathMover.h" // TODO: delete, test only
 
-extern Spear* wSpear; // TODO: del, test
-
 /// Creates an instance of the Game with some default options.
 Game::Game(MapGrid *mapGrid, int xPosOfStartingMap, int yPosOfStartingMap):
     mapGrid_(mapGrid)
 {
+    // register types that needed to be used in cross thread signal-slot stuff
+    qRegisterMetaType<PathingMap>();
+    qRegisterMetaType<std::vector<QPointF>>();
+
     for (Map* map:mapGrid_->maps()){
         map->setGame(this);
     }
@@ -165,10 +167,6 @@ void Game::mousePressEvent(QMouseEvent *event){
     // as opposed to at the QGraphicsItem level
 
     // =TODO test code, remove=
-
-    // attack with spear
-    wSpear->attack(mapToMap(event->pos()));
-
 
 //    // add rock drawing and fill clicked cell
 //    if (event->button() == Qt::MiddleButton){

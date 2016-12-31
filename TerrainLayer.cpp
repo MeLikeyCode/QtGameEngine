@@ -25,14 +25,15 @@ void TerrainLayer::setAlphaChannel(QPixmap& pixmap, int const alpha)
   pixmap = QPixmap::fromImage(image);
 }
 
-TerrainLayer::TerrainLayer(int tileWidth, int tileHeight, int numXTiles, int numYTiles, QPixmap pixmap):
-    tileWidth_(tileWidth),
-    tileHeight_(tileHeight),
+TerrainLayer::TerrainLayer(int numXTiles, int numYTiles, QPixmap pixmap):
     numXTiles_(numXTiles),
     numYTiles_(numYTiles),
     pixmap_(pixmap),
     parentItem_(new QGraphicsPixmapItem())
 {
+    tileWidth_ = pixmap.width();
+    tileHeight_ = pixmap.height();
+
     grid_ = Grid(numXTiles_,numYTiles_,tileWidth_,tileHeight_);
 
     // initialize all pixmaps to null
