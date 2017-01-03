@@ -6,9 +6,14 @@
 #include "ECMoveInResponseToKeyboardRelativeToScreen.h"
 #include "ECRotateToMouse.h"
 #include "ECGrabCam.h"
-#include "ECPickUpItem.h"
 #include "TerrainLayer.h"
 #include "Sprite.h"
+#include "WeaponSlot.h"
+#include "Spear.h"
+#include "Inventory.h"
+#include "ECBodyThruster.h"
+
+Entity* player;
 
 int main(int argc, char *argv[])
 {
@@ -46,22 +51,40 @@ int main(int argc, char *argv[])
     Game* game = new Game(mapGrid,0,1);
     game->launch();
 
-    // create an entity that is controlled via keyboard/mouse and picks up items
-    Entity* keyMouseEntity = new Entity();
+    // create an entity that is controlled via keyboard/mouse
+    player = new Entity();
 
-    Sprite* sprKeyMouseEntity = new Sprite();
-    sprKeyMouseEntity->addFrames(":/resources/graphics/human",6,"walk");
-    sprKeyMouseEntity->addFrames(":/resources/graphics/human",1,"stand");
-    keyMouseEntity->setSprite(sprKeyMouseEntity);
+    // create a sprite for the entity
+    Sprite* sprplayer = new Sprite();
+    sprplayer->addFrames(":/resources/graphics/human",6,"walk");
+    sprplayer->addFrames(":/resources/graphics/human",1,"stand");
+    player->setSprite(sprplayer);
 
-    map1->addEntity(keyMouseEntity);
+    map1->addEntity(player);
 
-    ECRotateToMouse* rotContr = new ECRotateToMouse(*keyMouseEntity);
-    ECMoveInResponseToKeyboardRelativeToScreen* moveContr = new ECMoveInResponseToKeyboardRelativeToScreen(keyMouseEntity);
-    ECGrabCam* grabCamContr = new ECGrabCam(keyMouseEntity);
-    ECPickUpItem* pickUpItemContr = new ECPickUpItem(keyMouseEntity);
+    // add controllers to control the entity
+    ECRotateToMouse* rotContr = new ECRotateToMouse(*player);
+    ECMoveInResponseToKeyboardRelativeToScreen* moveContr = new ECMoveInResponseToKeyboardRelativeToScreen(player);
+    ECGrabCam* grabCamContr = new ECGrabCam(player);
 
-    keyMouseEntity->setPointPos(QPointF(200,200));
+    player->setPointPos(QPointF(200,200));
+
+    // create a weapon for the player
+    WeaponSlot* rightHandMelee = new WeaponSlot();
+    rightHandMelee->setName("right hand melee");
+    rightHandMelee->setPosition(QPointF(25,50));
+    player->addSlot(rightHandMelee);
+
+    Spear* spear = new Spear();
+    player->inventory()->addItem(spear);
+    rightHandMelee->equip(spear);
+
+    // create an enemy for the player
+    Entity* enemy = new Entity();
+    map1->addEntity(enemy);
+    ECBodyThruster* bodyThrustContr = new ECBodyThruster(*enemy);
+    enemy->addEnemyGroup(0);
+
 
     return a.exec();
 }

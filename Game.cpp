@@ -23,6 +23,8 @@
 
 #include "ECPathMover.h" // TODO: delete, test only
 
+extern Entity* player;
+
 /// Creates an instance of the Game with some default options.
 Game::Game(MapGrid *mapGrid, int xPosOfStartingMap, int yPosOfStartingMap):
     mapGrid_(mapGrid)
@@ -160,6 +162,8 @@ void Game::mousePressEvent(QMouseEvent *event){
             return;
         }
     }
+
+    player->slot("right hand melee")->use();
 
     // if control reaches here, we are in regular MouseMode, just let the event
     // propogate to the correct QGraphicsItem, which will handle it

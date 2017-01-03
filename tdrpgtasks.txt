@@ -578,17 +578,21 @@ Go back through one file at a time and
 -method arguments are taken by const ref whenever possible
 -constructors use field initializer list whenever possible
 -destructor properly cleans up
+
+===TASK===--------DONE
+TerrainLayer, by default use size of qpixmap as size (instead of forcing it to be passed in ctor)
+
+===TASK===----DONE
+Go back through code and add QPointer/smart pointers where necessary
+-if a class needs to reference something it doesn't own (shared) that its track ("following" somehow), QPointer so we can tell when what we are tracking is dead
+-if class creates (owns) something, consider using unique_ptr so memory is automatically cleaned up
+-fuctions should still take by raw pointer unless they will participate in ownership somehow (i.e. either own it, or be one of the owners (shared))
 	
 =============================================================================
 =============================================================================
 =========================UNFINISHED TASKS====================================
 =============================================================================
 =============================================================================
-
-===TASK===
-Watched-watching system is really confusing to use for the client. I know because i was just the client.
-Make it simple. The api should just allow you to be notifie whenever the distance b/w two entities of interest are less than a treshold:
-map->watchDistanceBW(Entity* one, Entity*, double distThrehold); // whenever one or two moves, map will see if they are w/i threshold dist, if so, will emit an event
 
 ===TASK==
 Improve collision detection algorithm (use kd tree)
@@ -597,17 +601,6 @@ Improve collision detection algorithm (use kd tree)
 Still need to handle resource ownership for these classes:
 Entity
 Slot
-
-===TASK===
-Split EC into entity watcher and entity controller
--EntityWatchers watch an entity for a specific event (i.e. when it has moved 15 pixels, when something enters its fov, etc...)
--EntityControllers actually control the entity (i.e. move it towards something, etc...)
-
-===TASK===
-TerrainLayer, by default use size of qpixmap as size (instead of forcing it to be passed in ctor)
-
-===TASK===
-
 
 ===TASK===
 Create youtube tutorial that creates a basic game
@@ -647,16 +640,6 @@ Refactor Map-Game-MapGrid relationship a little bit. Map should have reference t
 Game should have a MapGrid, MapGrid should have a bunch of Maps.
 Game should have a currentMap. This currentMap must always be one of the maps in its MapGrid
 
-===TASKS===
-Go back through code and add const & to all parameters by default
--secondary but not as critical/easy, add const to functions that don't modify
-
-===TASK===
-Go back through code and add QPointer/smart pointers where necessary
--if a class needs to reference something it doesn't own (shared) that its track ("following" somehow), QPointer so we can tell when what we are tracking is dead
--if class creates (owns) something, consider using unique_ptr so memory is automatically cleaned up
--fuctions should still take by raw pointer unless they will participate in ownership somehow (i.e. either own it, or be one of the owners (shared))
-
 ===TASK===
 Write documentation for:
 -entity (sprite, setters, getters, signals)
@@ -681,9 +664,6 @@ Implement faster collision detection algorithm for Map
 -rain and snow (rain even more than snow) is confirmed to be too slow, try to make them faster
 *if you don't believe old Abdullah and want to see for yourself that their slow (or you want to see if you've made them faster), simply try facing the mouse w/ and w/o them in the map and see how much faster it is without                                                                                                
 
-===TASK===
-Go back through API doc of each class, review it and include an EXAMPLE usage:
-                                                            
 ===TASK===
 What do all games need?
 

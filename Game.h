@@ -56,10 +56,6 @@ public:
     MouseMode mouseMode();
     void setMouseMode(MouseMode mode);
 
-
-    void setPlayer(Entity* player);
-    Entity* player();
-
     std::vector<Entity*> enemies_; // TODO delete test
 
     void addWatchedEntity(Entity* watched, Entity* watching, double range);
