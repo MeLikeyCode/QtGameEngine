@@ -12,6 +12,7 @@
 #include "Spear.h"
 #include "Inventory.h"
 #include "ECBodyThruster.h"
+#include "ECAttackEnemiesWithWeapon.h"
 
 Entity* player;
 
@@ -80,11 +81,23 @@ int main(int argc, char *argv[])
     rightHandMelee->equip(spear);
 
     // create an enemy for the player
-    Entity* enemy = new Entity();
-    map1->addEntity(enemy);
-    ECBodyThruster* bodyThrustContr = new ECBodyThruster(*enemy);
-    enemy->addEnemyGroup(0);
+//    Entity* enemy = new Entity();
+//    map1->addEntity(enemy);
+//    ECBodyThruster* bodyThrustContr = new ECBodyThruster(*enemy);
+//    enemy->addEnemyGroup(0);
 
+    // create an enemy that attacks with weapon (as a bonus)
+    Entity* enemy2 = new Entity();
+    map1->addEntity(enemy2);
+
+    Spear* enemySpear = new Spear();
+    enemy2->inventory()->addItem(enemySpear);
+    WeaponSlot* enemyWS = new WeaponSlot();
+    enemy2->addSlot(enemyWS);
+    enemyWS->equip(enemySpear);
+    enemy2->addEnemyGroup(0);
+
+    ECAttackEnemiesWithWeapon* attackContr = new ECAttackEnemiesWithWeapon(*enemy2);
 
     return a.exec();
 }

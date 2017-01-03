@@ -5,6 +5,7 @@
 #include "Slot.h"
 #include "Weapon.h"
 #include "WeaponSlot.h"
+#include "Utilities.h"
 
 ECAttackEnemiesWithWeapon::ECAttackEnemiesWithWeapon(Entity& entity):
     entity_(&entity),
@@ -27,7 +28,8 @@ void ECAttackEnemiesWithWeapon::onEnemyChaseContinued(Entity *entityChased, doub
             if (asWS->isFilled()){
                 Weapon* weapon = dynamic_cast<Weapon*>(asWS->item());
                 if (weapon){
-                    weapon->attack(entityChased->pointPos());
+                    if (distance < weapon->castRange())
+                        weapon->attack(entityChased->pointPos());
                 }
             }
         }
