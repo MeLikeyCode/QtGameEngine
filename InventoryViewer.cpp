@@ -189,9 +189,9 @@ void InventoryViewer::draw_()
     scrollWindow_->setHeight(bgHeight);
 
     // clear/stop listening to all previously drawn inventory cells
-    for (std::unique_ptr<ItemCell>& cell:cells_){
-        disconnect(cell.get(),&ItemCell::clicked,this,&InventoryViewer::onItemCellClicked);
-        scrollWindow_->remove(cell.get());
+    for (ItemCell* cell:cells_){
+        disconnect(cell,&ItemCell::clicked,this,&InventoryViewer::onItemCellClicked);
+        scrollWindow_->remove(cell);
     }
     cells_.clear();
 
@@ -208,7 +208,7 @@ void InventoryViewer::draw_()
             double cellX = x*(cellWidth_+paddingBWCells_)+border_;
             double cellY = y*(cellHeight_+paddingBWCells_)+border_;
             cell->setGuiPos(QPointF(cellX,cellY));
-            cells_.push_back(std::unique_ptr<ItemCell>(cell));
+            cells_.push_back(cell);
             scrollWindow_->add(cell,QPointF(cellX,cellY));
 
             connect(cell,&ItemCell::clicked,this,&InventoryViewer::onItemCellClicked);

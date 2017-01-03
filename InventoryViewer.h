@@ -65,7 +65,7 @@ private:
 
     std::unique_ptr<ScrollWindow> scrollWindow_;
     QPointer<Inventory> inventory_;
-    std::vector<std::unique_ptr<ItemCell>> cells_;
+    std::vector<ItemCell*> cells_;
 
     // helper functions
     void draw_();

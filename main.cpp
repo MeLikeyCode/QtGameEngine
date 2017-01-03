@@ -13,6 +13,11 @@
 #include "Inventory.h"
 #include "ECBodyThruster.h"
 #include "ECAttackEnemiesWithWeapon.h"
+#include "Axe.h"
+#include "ItemRainOfSpears.h"
+#include "ItemPushback.h"
+#include "ECPickUpItem.h"
+#include "InventoryViewer.h"
 
 Entity* player;
 
@@ -80,24 +85,43 @@ int main(int argc, char *argv[])
     player->inventory()->addItem(spear);
     rightHandMelee->equip(spear);
 
-    // create an enemy for the player
+//    // create an enemy for the player
 //    Entity* enemy = new Entity();
 //    map1->addEntity(enemy);
 //    ECBodyThruster* bodyThrustContr = new ECBodyThruster(*enemy);
 //    enemy->addEnemyGroup(0);
 
-    // create an enemy that attacks with weapon (as a bonus)
-    Entity* enemy2 = new Entity();
-    map1->addEntity(enemy2);
+//    // create an enemy that attacks with weapon (as a bonus)
+//    Entity* enemy2 = new Entity();
+//    map1->addEntity(enemy2);
 
-    Spear* enemySpear = new Spear();
-    enemy2->inventory()->addItem(enemySpear);
-    WeaponSlot* enemyWS = new WeaponSlot();
-    enemy2->addSlot(enemyWS);
-    enemyWS->equip(enemySpear);
-    enemy2->addEnemyGroup(0);
+//    Spear* enemySpear = new Spear();
+//    enemy2->inventory()->addItem(enemySpear);
+//    WeaponSlot* enemyWS = new WeaponSlot();
+//    enemy2->addSlot(enemyWS);
+//    enemyWS->equip(enemySpear);
+//    enemy2->addEnemyGroup(0);
 
-    ECAttackEnemiesWithWeapon* attackContr = new ECAttackEnemiesWithWeapon(*enemy2);
+//    ECAttackEnemiesWithWeapon* attackContr = new ECAttackEnemiesWithWeapon(*enemy2);
+
+    // drop some items on the ground
+    Axe* axeItem = new Axe();
+    ItemRainOfSpears* ros = new ItemRainOfSpears();
+    ItemPushback* pushBackItem = new ItemPushback();
+    axeItem->setPointPos(QPointF(100,300));
+    ros->setPointPos(QPointF(200,200));
+    pushBackItem->setPointPos(QPointF(300,300));
+    map1->addEntity(axeItem);
+    map1->addEntity(ros);
+    map1->addEntity(pushBackItem);
+
+    ECPickUpItem* pickUpItemContr = new ECPickUpItem(player);
+
+    // create an inventory viewer to visuallize the inventory of player
+    InventoryViewer* invViewer = new InventoryViewer();
+    invViewer->setInventory(player->inventory());
+    game->addGui(invViewer);
+
 
     return a.exec();
 }
