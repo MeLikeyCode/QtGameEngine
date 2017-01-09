@@ -67,6 +67,7 @@ void ItemRainOfSpears::spearStep_()
                                                                5,
                                                                noDmgList,
                                                                owner->map());
+        spearProjectile->addToNoDamageList(owner);
         spearProjectile->startMoving();
     }
 

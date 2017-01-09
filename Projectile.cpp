@@ -140,9 +140,12 @@ void Projectile::step_()
     // call move behavior
     moveBehavior_->onMoveStep();
 
-    // call collision behavior (passing all collided entities)
+    // call collision behavior (passing all collided entities that are not in
+    // the no damage list)
     std::unordered_set<Entity*> cEntities = collidingEntities();
     for (Entity* entity:cEntities){
-        collisionBehavior_->onCollided(this,entity);
+        if (noDamageList_.find(entity) == noDamageList_.end())
+            if (noDamageList_.find(entity->parent()) == noDamageList_.end())
+                collisionBehavior_->onCollided(this,entity);
     }
 }

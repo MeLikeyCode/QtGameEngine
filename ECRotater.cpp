@@ -105,8 +105,10 @@ double ECRotater::stepSize()
 void ECRotater::rotateStep_()
 {
     // if the entity has been destroyed, do nothing
-    if (entity_.isNull())
+    if (entity_.isNull()){
         stopRotating();
+        return;
+    }
 
     // if it has reached its targetAngle, stop rotating
     if (abs(entity_->facingAngle() - targetAngle_) == 0 ){

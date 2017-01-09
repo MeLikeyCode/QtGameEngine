@@ -43,9 +43,6 @@ int main(int argc, char *argv[])
     Map* map1 = new Map(map1PathingMap);
     Map* map2 = new Map(map2PathingMap);
 
-    addRandomTrees(map1,20);
-    addRandomRocks(map1,15);
-
     // create some Terrains (tiles) for the Maps
     TerrainLayer* dryTerrain = new TerrainLayer(map2->width()/256+1,
                                                 map2->height()/256+1,
@@ -135,6 +132,10 @@ int main(int argc, char *argv[])
     // create a gui that allows visualizing/using of inventory of player
     InventoryUser* invUser = new InventoryUser(game,player->inventory());
     game->addGui(invUser);
+
+    addRandomRocks(map1,5);
+    addRandomTrees(map1,20);
+
 
     return a.exec();
 }
