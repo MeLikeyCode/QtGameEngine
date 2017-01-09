@@ -76,6 +76,8 @@ public:
     void setCellPos(const Node& cell);
     int facingAngle();
     void setFacingAngle(double angle);
+    void setZValue(double zValue);
+    double zValue();
 
     // sprite
     void setSprite(Sprite* sprite);
@@ -167,6 +169,7 @@ private:
     std::unordered_map<std::string,Slot*> stringToSlot_;
     double speed_; // pixels per second
     double rotationSpeed_; // degrees per second
+    double zValue_;
 
     // helper functions
     void scaleSprite_();

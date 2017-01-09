@@ -29,7 +29,8 @@ Entity::Entity():
     sprite_(new Sprite()),
     inventory_(new Inventory()),
     speed_(200),
-    rotationSpeed_(360)
+    rotationSpeed_(360),
+    zValue_(0)
 {
     inventory_->entity_ = this;
 }
@@ -260,6 +261,9 @@ void Entity::setSprite(Sprite *sprite){
 
     // set scaling of the new sprite
     scaleSprite_();
+
+    // set the zvalue of the new sprite
+    sprite->setZValue(zValue());
 }
 
 /// Returns the Entity's Sprite. If the Entity does not have a sprite,
@@ -283,6 +287,23 @@ int Entity::facingAngle()
 void Entity::setFacingAngle(double angle)
 {
     sprite()->setRotation(angle);
+}
+
+/// Sets the z value of the Entity. Entities with a higher z value are drawn ontop of entities with a lower z value.
+void Entity::setZValue(double zValue)
+{
+    zValue_ = zValue; // update internal variable
+
+    // if has a sprite, update sprites z value
+    if (sprite() != nullptr){
+        sprite()->setZValue(zValue);
+    }
+}
+
+/// Returns the z value of the Entity. See setZValue() for more info.
+double Entity::zValue()
+{
+    return zValue_;
 }
 
 /// Instantly moves the Entity to the specified cell in the Map.

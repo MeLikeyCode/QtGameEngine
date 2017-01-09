@@ -20,6 +20,7 @@
 #include "InventoryViewer.h"
 #include "InventoryUser.h"
 #include "Sound.h"
+#include "Utilities.h"
 
 Entity* player;
 
@@ -41,6 +42,9 @@ int main(int argc, char *argv[])
     // create the Maps
     Map* map1 = new Map(map1PathingMap);
     Map* map2 = new Map(map2PathingMap);
+
+    addRandomTrees(map1,20);
+    addRandomRocks(map1,15);
 
     // create some Terrains (tiles) for the Maps
     TerrainLayer* dryTerrain = new TerrainLayer(map2->width()/256+1,
