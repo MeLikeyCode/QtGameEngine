@@ -18,12 +18,18 @@
 #include "ItemPushback.h"
 #include "ECPickUpItem.h"
 #include "InventoryViewer.h"
+#include "InventoryUser.h"
+#include "Sound.h"
 
 Entity* player;
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+    // play music
+    Sound* bgMusic = new Sound("qrc:/resources/sounds/music.mp3");
+    bgMusic->play(-1);
 
     // create a MapGrid to put some Maps inside
     MapGrid* mapGrid = new MapGrid(3,3);
@@ -117,11 +123,14 @@ int main(int argc, char *argv[])
 
     ECPickUpItem* pickUpItemContr = new ECPickUpItem(player);
 
-    // create an inventory viewer to visuallize the inventory of player
-    InventoryViewer* invViewer = new InventoryViewer();
-    invViewer->setInventory(player->inventory());
-    game->addGui(invViewer);
+//    // create an inventory viewer to visuallize the inventory of player
+//    InventoryViewer* invViewer = new InventoryViewer();
+//    invViewer->setInventory(player->inventory());
+//    game->addGui(invViewer);
 
+    // create a gui that allows visualizing/using of inventory of player
+    InventoryUser* invUser = new InventoryUser(game,player->inventory());
+    game->addGui(invUser);
 
     return a.exec();
 }

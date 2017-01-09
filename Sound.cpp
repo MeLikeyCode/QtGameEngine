@@ -12,7 +12,7 @@ Sound::Sound(std::string filePath, QObject *parent):
     numTimesPlayed_ = 0;
     numTimesToPlay_ = 0;
 
-    connect(mediaPlayer_,&QMediaPlayer::stateChanged,this,&Sound::stateChanged);
+    connect(mediaPlayer_,&QMediaPlayer::stateChanged,this,&Sound::stateChanged_);
 }
 
 /// Plays the sound the specified number of times. Pass -1 to play an infinite
@@ -45,7 +45,7 @@ void Sound::setVolume(int volume)
 }
 
 /// Executed each time the state of the internal MediaPlayer changes.
-void Sound::stateChanged()
+void Sound::stateChanged_()
 {
     // approach:
     // - check if it stopped
