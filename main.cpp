@@ -20,7 +20,6 @@
 #include "InventoryViewer.h"
 #include "InventoryUser.h"
 #include "Sound.h"
-#include "Utilities.h"
 
 Entity* player;
 
@@ -132,10 +131,6 @@ int main(int argc, char *argv[])
     // create a gui that allows visualizing/using of inventory of player
     InventoryUser* invUser = new InventoryUser(game,player->inventory());
     game->addGui(invUser);
-
-    addRandomRocks(map1,5);
-    addRandomTrees(map1,20);
-
 
     return a.exec();
 }

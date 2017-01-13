@@ -2,6 +2,7 @@
 #include <cassert>
 #include <QDebug>
 #include <QGraphicsScene>
+#include <QTimer>
 
 /// Constructs a Sprite with no animations and no current frame.
 Sprite::Sprite(QGraphicsItem *parent):

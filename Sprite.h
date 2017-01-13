@@ -1,19 +1,16 @@
 #ifndef SPRITE_H
 #define SPRITE_H
 
-// uses:
 #include <string>
-
-// inherits:
 #include <QGraphicsItem>
 #include <QObject>
 
-// members:
 #include <unordered_map>
 #include <vector>
 #include <QPixmap>
-#include <QGraphicsPixmapItem>
-#include <QTimer>
+
+class QGraphicsPixmapItem;
+class QTimer;
 
 /// A QGraphicsItem that represents a sprite with named animations that can
 /// be played.
