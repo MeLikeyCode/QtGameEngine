@@ -38,7 +38,9 @@
 /// The Entity that spawns a projectile should probably be added to this list to prevent
 /// the projectile from damaging him (unless that is the intended effect).
 ///
-/// To make the projectile start moving call its startMoving() function.
+/// A projectile will not start moving until its startMoving() function is called.
+/// This is to give sub classes a chance to initialize the projectile before it starts being
+/// asked to move.
 ///
 /// @author Abdullah Aghazadah
 /// @date 2/21/16
@@ -58,9 +60,6 @@ public:
 
     int stepFrequency();
     void setStepFrequency(int f);
-
-    void setStepSize(int size);
-    int stepSize();
 
     std::unordered_set<Entity*> noDamageList();
     void setNoDamageList(std::unordered_set<Entity*> noDamageList);
@@ -83,7 +82,6 @@ private:
     QPointF start_;
     std::unordered_set<Entity*> noDamageList_;
     int stepFrequency_;
-    int stepSize_;
     QTimer* timer_;
 
     // behaviors
