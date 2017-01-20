@@ -107,7 +107,8 @@ SOURCES += main.cpp \
     ECMoveToNextMap.cpp \
     ECGrabCurrentMap.cpp \
     CollisionBehavior.cpp \
-    CBDamage.cpp
+    CBDamage.cpp \
+    ECMoveStraight.cpp
 
 HEADERS  += \
     Map.h \
@@ -200,7 +201,8 @@ HEADERS  += \
     ECMoveToNextMap.h \
     ECGrabCurrentMap.h \
     CollisionBehavior.h \
-    CBDamage.h
+    CBDamage.h \
+    ECMoveStraight.h
 
 RESOURCES += \
     res.qrc

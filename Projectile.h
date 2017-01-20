@@ -61,6 +61,9 @@ public:
     int stepFrequency();
     void setStepFrequency(int f);
 
+    int stepSize();
+    void setStepSize(int size);
+
     std::unordered_set<Entity*> noDamageList();
     void setNoDamageList(std::unordered_set<Entity*> noDamageList);
     void addToNoDamageList(Entity* entity);
@@ -83,6 +86,7 @@ private:
     std::unordered_set<Entity*> noDamageList_;
     int stepFrequency_;
     QTimer* timer_;
+    int stepSize_;
 
     // behaviors
     std::unique_ptr<ProjectileMoveBehavior> moveBehavior_;
