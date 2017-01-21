@@ -11,6 +11,8 @@ class QTimer;
 /// An entity controller that makes the controlled entity move straight towards
 /// some point. By default, the entity will move at a speed determined by its Entity::speed() function,
 /// but you can force it to move at a specified speed by calling setSpeed();
+/// By default the controlled entity will not face the target position, but you can toggle this
+/// by calling setFaceTarget();
 ///
 /// Example usage:
 /// ECMoveStraight* c = new ECMoveStraight(entity);

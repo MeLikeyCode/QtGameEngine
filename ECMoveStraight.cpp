@@ -33,6 +33,7 @@ void ECMoveStraight::setStepSize(int stepSize)
     stepSize_ = stepSize;
 }
 
+/// See setStepSize().
 int ECMoveStraight::stepSize()
 {
     return stepSize_;
@@ -74,7 +75,7 @@ void ECMoveStraight::stopMoving()
     isMoving_ = false;
 }
 
-/// If true i passed in, makes the controlled entity face the target position before
+/// If true is passed in, makes the controlled entity face the target position before
 /// proceeding to move towards it. If false is passed in, the controlled entity
 /// will move without changing its facing angle.
 void ECMoveStraight::setFaceTarget(bool tf)
