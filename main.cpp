@@ -119,13 +119,14 @@ int main(int argc, char *argv[])
     axeItem->setPointPos(QPointF(100,300));
     ros->setPointPos(QPointF(200,200));
     pushBackItem->setPointPos(QPointF(300,300));
-    //map1->addEntity(axeItem);
+    map1->addEntity(axeItem);
     map1->addEntity(ros);
     map1->addEntity(pushBackItem);
 
-//    ECMoveStraight* movStraightC = new ECMoveStraight(*axeItem);
-//    movStraightC->setSpeed(200);
-//    movStraightC->moveTowards(QPointF(800,0));
+    ECMoveStraight* movStraightC = new ECMoveStraight(*axeItem);
+    movStraightC->setFaceTarget(true);
+    movStraightC->setSpeed(400);
+    movStraightC->moveTowards(QPointF(800,0));
 
     ECPickUpItem* pickUpItemContr = new ECPickUpItem(player);
 

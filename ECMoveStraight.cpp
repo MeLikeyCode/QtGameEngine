@@ -46,17 +46,25 @@ void ECMoveStraight::moveTowards(QPointF pos)
     Map* entitysMap = entity_->map();
     assert(entitysMap != nullptr); // make sure entity is in a map
 
-    stopMoving(); // stop moving if already moving
+    // stop moving if already moving
+    stopMoving();
 
-    // set up some stuff
+    // update internal variables
     isMoving_ = true;
     targetPos_ = pos;
+
+    // store initial angle (so we know when the entity has past its target point)
     QLineF line(entity_->pointPos(),pos);
     initialAngle_ = line.angle();
 
+    // face target position (if option enabled)
+    if (faceTarget()){
+        entity_->setFacingAngle(-1 * line.angle());
+    }
+
     // start moving
     connect(moveTimer_,&QTimer::timeout,this,&ECMoveStraight::moveStep_);
-    moveTimer_->start(frequency(stepSize_,speed_));
+    moveTimer_->start(secondsToMs(frequency(stepSize_,speed_)));
 }
 
 /// Stops the controlled entity right where its at.
@@ -64,6 +72,22 @@ void ECMoveStraight::stopMoving()
 {
     moveTimer_->disconnect();
     isMoving_ = false;
+}
+
+/// If true i passed in, makes the controlled entity face the target position before
+/// proceeding to move towards it. If false is passed in, the controlled entity
+/// will move without changing its facing angle.
+void ECMoveStraight::setFaceTarget(bool tf)
+{
+    faceTarget_ = tf;
+}
+
+/// Returns true if the controlled entity will face the target position before moving
+/// towards it.
+/// @see setFaceTarget()
+bool ECMoveStraight::faceTarget()
+{
+    return faceTarget_;
 }
 
 /// Returns true if the controlled entity is currently being moved.
