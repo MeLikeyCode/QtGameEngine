@@ -7,12 +7,12 @@
 ECMoveSine::ECMoveSine(Entity &entity):
     entity_(&entity),
     moveTimer_(new QTimer(this)),
-    amplitude_(10),
+    amplitude_(20),
     wavelength_(100),
     targetPos_(),
     startPos_(),
     stepSize_(1),
-    speed_(15),
+    speed_(200),
     range_(0),
     faceTarget_(true),
     isMoving_(false),
@@ -83,13 +83,16 @@ void ECMoveSine::onMoveStep_()
     else
         vComponent.setAngle(vComponent.angle()-90);
 
-    // move by horizontal component
-    entity_->setPointX(entity_->pointX()+hComponent.dx());
-    entity_->setPointY(entity_->pointY()+hComponent.dy());
+    // move to final location
+    entity_->setPointPos(vComponent.p2());
 
-    // move by vertical component
-    entity_->setPointX(entity_->pointX()+vComponent.dx());
-    entity_->setPointY(entity_->pointY()+vComponent.dy());
+//    // move by horizontal component
+//    entity_->setPointX(entity_->pointX()+hComponent.dx());
+//    entity_->setPointY(entity_->pointY()+hComponent.dy());
+
+//    // move by vertical component
+//    entity_->setPointX(entity_->pointX()+vComponent.dx());
+//    entity_->setPointY(entity_->pointY()+vComponent.dy());
 
     // if moved far enough
     if (distanceMoved_ > range_){
