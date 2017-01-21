@@ -594,8 +594,14 @@ Go back through code and add QPointer/smart pointers where necessary
 =============================================================================
 =============================================================================
 
+===TASK===
+Add rain and rain/thunder sound in the bg of map for tutorials...looks nice af!
+
+===TASK===
+Organize files into folders (i.e. one for projectile system, one for guis, etc...)
+
 ===TASK==
-Improve collision detection algorithm (use kd tree)
+Improve collision detection algorithm (use kd tree) (or delegate to scene (which uses binary search space)
 
 ===TASK===
 Still need to handle resource ownership for these classes:

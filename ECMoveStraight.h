@@ -21,6 +21,7 @@ class QTimer;
 /// c->isMoving(); // find it weather the controlled entity is currently being moved
 class ECMoveStraight: public QObject
 {
+    Q_OBJECT
 public:
     ECMoveStraight(Entity& entity);
 
