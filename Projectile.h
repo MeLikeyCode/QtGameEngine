@@ -51,7 +51,6 @@ public:
     Projectile(QPointF start,
                ProjectileMoveBehavior *moveBehavior,
                CollisionBehavior *collisionBehavior,
-               Sprite *spr,
                std::unordered_set<Entity*> noDamageList,
                Map* map);
 

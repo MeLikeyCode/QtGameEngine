@@ -8,7 +8,6 @@
 Projectile::Projectile(QPointF start,
                        ProjectileMoveBehavior* moveBehavior,
                        CollisionBehavior *collisionBehavior,
-                       Sprite* spr,
                        std::unordered_set<Entity *> noDamageList, Map *map):
     start_(start),
     moveBehavior_(moveBehavior),
@@ -18,8 +17,6 @@ Projectile::Projectile(QPointF start,
 {
     // make sure behaviors act on this projectile
     moveBehavior->projectile_ = this;
-
-    setSprite(spr);     // set the sprite
 
     // default step frequency and size
     stepFrequency_ = 50;

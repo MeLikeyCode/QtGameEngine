@@ -8,10 +8,10 @@ SpearProjectile::SpearProjectile(QPointF start, QPointF target, double range, do
     Projectile(start,
                new ProjectileMoveBehaviorStraight(range,target),
                new CBDamage(0,damage),
-               new Sprite(QPixmap(":resources/graphics/weapons/spear.png")),
                noDamageList,
                map)
 {
+    setSprite(new Sprite(QPixmap(":resources/graphics/weapons/spear.png")));
     setHeight(10);
     // make sure the projectile's rotation point is its center
     double rx = 0;

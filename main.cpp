@@ -21,7 +21,7 @@
 #include "InventoryUser.h"
 #include "Sound.h"
 
-#include "ECMoveSine.h" // TODO: remove, test
+#include "ECMoveSine.h"
 
 Entity* player;
 
