@@ -226,6 +226,12 @@ void Entity::setPointZ(double z)
     }
 }
 
+/// Moves the entity by the specified dx,dy.
+void Entity::moveBy(double dx, double dy)
+{
+    setPointPos(pointX() + dx, pointY() + dy);
+}
+
 /// Sets the height of the Entity.
 void Entity::setHeight(double height)
 {

@@ -124,7 +124,7 @@ int main(int argc, char *argv[])
     map1->addEntity(pushBackItem);
 
     ECMoveSine* movSineC = new ECMoveSine(*axeItem);
-    movSineC->moveTowards(QPointF(800,300));
+    movSineC->moveTowards(QPointF(600,300));
 
     ECPickUpItem* pickUpItemContr = new ECPickUpItem(player);
 

@@ -71,6 +71,7 @@ public:
     void setPointX(double x);
     void setPointY(double y);
     void setPointZ(double z);
+    void moveBy(double dx, double dy);
     void setHeight(double height);
     Node cellPos();
     void setCellPos(const Node& cell);
