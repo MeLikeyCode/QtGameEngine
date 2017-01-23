@@ -12,8 +12,8 @@ class QTimer;
 /// A MoveBehavior that moves the Entity in a straight line.
 /// By default, the entity will move at a speed determined by its Entity::speed() function,
 /// but you can force it to move at a specified speed by calling setSpeed();
-/// By default the entity will not face the target position, but you can toggle this
-/// by calling setFaceTarget();
+/// By default the entity will face the target position, but you can set this behavior for
+/// yourself by using setFaceTarget().
 ///
 /// Example usage:
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.cpp

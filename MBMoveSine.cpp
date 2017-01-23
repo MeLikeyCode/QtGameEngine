@@ -1,11 +1,11 @@
-#include "ECMoveSine.h"
+#include "MBMoveSine.h"
 #include <QTimer>
 #include "Utilities.h"
 #include <cassert>
 #include <QtMath>
 
-ECMoveSine::ECMoveSine(Entity &entity):
-    entity_(&entity),
+MBMoveSine::MBMoveSine(Entity *entity):
+    MoveBehavior(entity),
     moveTimer_(new QTimer(this)),
     amplitude_(20),
     wavelength_(100),
@@ -15,51 +15,78 @@ ECMoveSine::ECMoveSine(Entity &entity):
     speed_(200),
     range_(0),
     faceTarget_(true),
-    isMoving_(false),
     distanceMoved_(0)
 {
     // empty
 }
 
-void ECMoveSine::moveTowards(QPointF pos)
+void MBMoveSine::moveTo(const QPointF& pos)
 {
-    // guards
-    assert(!entity_.isNull()); // make sure entity isn't dead
-    Map* entitysMap = entity_->map();
-    assert(entitysMap != nullptr); // make sure entity is in a map
+    Entity* theEntity = entity();
 
-    // stop moving if already moving
-    stopMoving();
+    assert(theEntity != nullptr); // guard: make sure entity isn't dead
+
+    stopMoving();  // stop moving (just in case already moving)
 
     // update internal variables
-    isMoving_ = true;
     targetPos_ = pos;
-    startPos_ = entity_->pointPos();
+    startPos_ = theEntity->pointPos();
 
     // calculate range (so we know when we have gone past the target)
-    QLineF line(entity_->pointPos(),pos);
+    QLineF line(theEntity->pointPos(),pos);
     range_ = line.length();
 
     // face target position (if option enabled)
     if (faceTarget_){
-        entity_->setFacingAngle(-1 * line.angle());
+        theEntity->setFacingAngle(-1 * line.angle());
     }
 
     // start moving
-    connect(moveTimer_,&QTimer::timeout,this,&ECMoveSine::onMoveStep_);
+    connect(moveTimer_,&QTimer::timeout,this,&MBMoveSine::onMoveStep_);
     moveTimer_->start(secondsToMs(frequency(stepSize_,speed_)));
 }
 
-void ECMoveSine::stopMoving()
+bool MBMoveSine::faceTarget()
 {
-    moveTimer_->disconnect();
-    isMoving_ = false;
-    distanceMoved_ = 0;
+    return faceTarget_;
+}
+
+void MBMoveSine::setSpeed(int speed)
+{
+    speed_ = speed;
+}
+
+int MBMoveSine::speed()
+{
+    return speed_;
+}
+
+void MBMoveSine::setStepSize(int stepSize)
+{
+    stepSize_ = stepSize;
+}
+
+int MBMoveSine::stepSize()
+{
+    return stepSize_;
+}
+
+void MBMoveSine::setFaceTarget(bool tf)
+{
+    faceTarget_ = tf;
 }
 
 /// Executed periodically to move the controlled entity to the next step of its movement.
-void ECMoveSine::onMoveStep_()
+void MBMoveSine::onMoveStep_()
 {
+    Entity* theEntity = entity();
+
+    // if entity has died, stop moving
+    if (theEntity == nullptr){
+        stopMoving();
+        return;
+    }
+
     distanceMoved_ += stepSize_;
 
     QLineF startToTargetLine(startPos_,targetPos_);
@@ -84,18 +111,17 @@ void ECMoveSine::onMoveStep_()
         vComponent.setAngle(vComponent.angle()-90);
 
     // move to final location
-    entity_->setPointPos(vComponent.p2());
-
-//    // move by horizontal component
-//    entity_->setPointX(entity_->pointX()+hComponent.dx());
-//    entity_->setPointY(entity_->pointY()+hComponent.dy());
-
-//    // move by vertical component
-//    entity_->setPointX(entity_->pointX()+vComponent.dx());
-//    entity_->setPointY(entity_->pointY()+vComponent.dy());
+    theEntity->setPointPos(vComponent.p2());
 
     // if moved far enough
     if (distanceMoved_ > range_){
         stopMoving();
     }
+}
+
+/// Executed whenever the MoveBehavior is asked to stop moving the Entity.
+void MBMoveSine::onStopMoving_()
+{
+    moveTimer_->disconnect();
+    distanceMoved_ = 0;
 }

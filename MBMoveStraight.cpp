@@ -7,18 +7,20 @@
 MBMoveStraight::MBMoveStraight(Entity *entity):
     MoveBehavior(entity),
     speed_(entity->speed()),
-    faceTarget_(false),
+    faceTarget_(true),
     moveTimer_(new QTimer(this)),
     stepSize_(25)
 {
     // empty
 }
 
+/// Sets the speed at which the Entity should be moved at.
 void MBMoveStraight::setSpeed(int speed)
 {
     speed_ = speed;
 }
 
+/// Returns the speed at which the Entity is moved at.
 int MBMoveStraight::speed()
 {
     return speed_;
@@ -85,7 +87,7 @@ void MBMoveStraight::moveStep_()
 {
     Entity* theEntity = entity();
 
-    // if controlled entity has died, stop moving
+    // if entity has died, stop moving
     if (theEntity == nullptr){
         stopMoving();
         return;
@@ -114,7 +116,6 @@ void MBMoveStraight::moveStep_()
 }
 
 /// This function is executed when the MoveBehavior is asked to stop moving the entity.
-/// Will disconnect moveTimer_.
 void MBMoveStraight::onStopMoving_()
 {
     moveTimer_->disconnect();
