@@ -21,7 +21,7 @@
 #include "InventoryUser.h"
 #include "Sound.h"
 
-#include "ECMoveSine.h"
+#include "MBMoveStraight.h"  // TODO: remove, test
 
 Entity* player;
 
@@ -123,8 +123,9 @@ int main(int argc, char *argv[])
     map1->addEntity(ros);
     map1->addEntity(pushBackItem);
 
-    ECMoveSine* movSineC = new ECMoveSine(*axeItem);
-    movSineC->moveTowards(QPointF(600,300));
+    MBMoveStraight* mb = new MBMoveStraight(axeItem);
+    mb->setFaceTarget(true);
+    mb->moveTo(QPointF(600,600));
 
     ECPickUpItem* pickUpItemContr = new ECPickUpItem(player);
 
