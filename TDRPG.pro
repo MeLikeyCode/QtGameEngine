@@ -109,7 +109,8 @@ SOURCES += main.cpp \
     CollisionBehavior.cpp \
     CBDamage.cpp \
     ECMoveStraight.cpp \
-    ECMoveSine.cpp
+    ECMoveSine.cpp \
+    MoveBehavior.cpp
 
 HEADERS  += \
     Map.h \
@@ -204,7 +205,8 @@ HEADERS  += \
     CollisionBehavior.h \
     CBDamage.h \
     ECMoveStraight.h \
-    ECMoveSine.h
+    ECMoveSine.h \
+    MoveBehavior.h
 
 RESOURCES += \
     res.qrc

@@ -11,7 +11,7 @@ class CollisionBehavior
 {
 public:
     /// This function will be called on the CollisionBehavior whenever two entities
-    /// of interest have collided. Some behviors will damage one or both entity,
+    /// of interest have collided. Some concrete CollisionBehaviors will damage one or both entity,
     /// some will heal, some will push one of the entities back, etc...
     virtual void onCollided(Entity* entityOne, Entity* entityTwo) = 0;
 };
