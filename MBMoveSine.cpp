@@ -5,7 +5,7 @@
 #include <QtMath>
 
 MBMoveSine::MBMoveSine(Entity *entity):
-    MoveBehavior(entity),
+    Mover(entity),
     moveTimer_(new QTimer(this)),
     amplitude_(20),
     wavelength_(100),
@@ -20,13 +20,13 @@ MBMoveSine::MBMoveSine(Entity *entity):
     // empty
 }
 
-void MBMoveSine::moveTo(const QPointF& pos)
+void MBMoveSine::moveEntity(const QPointF& pos)
 {
     Entity* theEntity = entity();
 
     assert(theEntity != nullptr); // guard: make sure entity isn't dead
 
-    stopMoving();  // stop moving (just in case already moving)
+    stopMovingEntity();  // stop moving (just in case already moving)
 
     // update internal variables
     targetPos_ = pos;
@@ -83,7 +83,7 @@ void MBMoveSine::onMoveStep_()
 
     // if entity has died, stop moving
     if (theEntity == nullptr){
-        stopMoving();
+        stopMovingEntity();
         return;
     }
 
@@ -115,12 +115,12 @@ void MBMoveSine::onMoveStep_()
 
     // if moved far enough
     if (distanceMoved_ > range_){
-        stopMoving();
+        stopMovingEntity();
     }
 }
 
 /// Executed whenever the MoveBehavior is asked to stop moving the Entity.
-void MBMoveSine::onStopMoving_()
+void MBMoveSine::stopMovingEntity_()
 {
     moveTimer_->disconnect();
     distanceMoved_ = 0;

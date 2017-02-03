@@ -5,7 +5,7 @@
 #include <QLineF>
 
 MBMoveStraight::MBMoveStraight(Entity *entity):
-    MoveBehavior(entity),
+    Mover(entity),
     speed_(entity->speed()),
     faceTarget_(true),
     moveTimer_(new QTimer(this)),
@@ -41,13 +41,13 @@ int MBMoveStraight::stepSize()
 }
 
 /// Starts moving the controlle entity towards the specified position.
-void MBMoveStraight::moveTo(const QPointF& pos)
+void MBMoveStraight::moveEntity(const QPointF& pos)
 {
     Entity* theEntity = entity();
 
     assert(theEntity != nullptr); // guard: make sure entity isn't dead
 
-    stopMoving(); // stop moving (just in case already moving)
+    stopMovingEntity(); // stop moving (just in case already moving)
 
     targetPos_ = pos;
 
@@ -89,7 +89,7 @@ void MBMoveStraight::moveStep_()
 
     // if entity has died, stop moving
     if (theEntity == nullptr){
-        stopMoving();
+        stopMovingEntity();
         return;
     }
 
@@ -103,20 +103,20 @@ void MBMoveStraight::moveStep_()
     // if close enough, stop moving
     const double EPSILON = 50;
     if (distance(theEntity->pointPos(),targetPos_) < EPSILON){
-        stopMoving();
+        stopMovingEntity();
         return;
     }
 
     // if past (due to large step size) stop moving
     if (qAbs(line.angle() - initialAngle_) > 100){ // if we haven't passed, diff in angles should be tiny, surely under 100
-        stopMoving();
+        stopMovingEntity();
         return;
     }
 
 }
 
 /// This function is executed when the MoveBehavior is asked to stop moving the entity.
-void MBMoveStraight::onStopMoving_()
+void MBMoveStraight::stopMovingEntity_()
 {
     moveTimer_->disconnect();
 }

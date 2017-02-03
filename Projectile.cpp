@@ -2,49 +2,21 @@
 #include "Map.h"
 #include "ProjectileMoveBehavior.h"
 #include "CollisionBehavior.h"
-#include "Sprite.h"
+#include <QTimer>
 #include <QDebug> // TODO: remove, test
 
-Projectile::Projectile(QPointF start,
-                       ProjectileMoveBehavior* moveBehavior,
+Projectile::Projectile(Mover *moveBehavior,
                        CollisionBehavior *collisionBehavior,
-                       std::unordered_set<Entity *> noDamageList, Map *map):
-    start_(start),
+                       std::unordered_set<Entity *> noDamageList):
     moveBehavior_(moveBehavior),
     collisionBehavior_(collisionBehavior),
-    noDamageList_(noDamageList),
-    timer_(new QTimer(this))
+    noDamageList_(noDamageList)
 {
-    // make sure behaviors act on this projectile
-    moveBehavior->projectile_ = this;
+    // make sure behaviors act on the projectile
+    moveBehavior_->setEntity(this);
 
-    // default step frequency and size
-    stepFrequency_ = 50;
-    stepSize_ = 15;
-
-    setPointPos(start);    // set the position of the Projectile to the start
-
-    map->addEntity(this); // add the projectile to the map (could alternatively use setMap(map));
-}
-
-QPointF Projectile::start()
-{
-    return start_;
-}
-
-void Projectile::setStart(QPointF start)
-{
-    start_ = start;
-}
-
-int Projectile::stepFrequency()
-{
-    return stepFrequency_;
-}
-
-void Projectile::setStepFrequency(int f)
-{
-    stepFrequency_ = f;
+    // listen to when projectile collides with anything
+    connect(this, &Entity::collided,this,&Projectile::onCollided_);
 }
 
 void Projectile::addToNoDamageList(Entity *entity)
@@ -57,24 +29,14 @@ bool Projectile::isInNoDamageList(Entity *entity)
     return noDamageList_.count(entity) > 0;
 }
 
-/// Returns a list of entities that the projectile is currently colliding with
-/// (at its current position).
-std::unordered_set<Entity*> Projectile::collidingEntities()
-{
-    std::unordered_set<Entity*> entities = map()->entities(this->pointPos(),pointZ(),pointZ()+height());
-    entities.erase(this);     // make sure the projectile itself is not in this list
-
-    return entities;
-}
-
-/// Returns the ProjectileMoveBehavior of the Projectile.
-ProjectileMoveBehavior *Projectile::moveBehavior()
+/// Returns the MoveBehavior of the Projectile.
+Mover *Projectile::moveBehavior()
 {
     return moveBehavior_.get();
 }
 
-/// Sets the ProjectileMoveBehavior of the Projectile.
-void Projectile::setMoveBehavior(ProjectileMoveBehavior *moveBehavior)
+/// Sets the MoveBehavior of the Projectile.
+void Projectile::setMoveBehavior(Mover *moveBehavior)
 {
     // release old move behavior
     moveBehavior_.release();
@@ -100,20 +62,35 @@ void Projectile::setCollisionBehavior(CollisionBehavior *collisionBehavior)
     collisionBehavior_.reset(collisionBehavior);
 }
 
-void Projectile::startMoving()
+/// Executed when the Projectile collides with something.
+/// Will delegate what happens to the CollisionBehavior.
+void Projectile::onCollided_(Entity *self, Entity *collidedWith)
 {
-    connect(timer_,&QTimer::timeout,this,&Projectile::step_);
-    timer_->start(stepFrequency());
+    collisionBehavior_->onCollided(this, collidedWith);
 }
 
-void Projectile::setStepSize(int size)
+/// Executed whenever the Projectile is asked to home in on an Entity.
+/// Will simply shoot towards the Entity.
+void Projectile::onHomeStep_()
 {
-    stepSize_ = size;
+    shootTowards(homeTo_->pointPos());
 }
 
-int Projectile::stepSize()
+/// Shoots the Projectile towards the specified position.
+void Projectile::shootTowards(const QPointF &pos)
 {
-    return stepSize_;
+    moveBehavior_->moveTo(pos);
+}
+
+/// Homes the projectile towards the specified Entity.
+/// This makes it so that the projectile "follows" the Entity (i.e. won't miss it).
+void Projectile::homeTowards(Entity *entity)
+{
+    homeTo_ = entity;
+    homeTimer_.disconnect();
+    connect(homeTimer_,&QTimer::timeout,this,&Projectile::onHomeStep_);
+    const int HOME_FREQ = 50; // how often to keep changing direction to follow player
+    homeTimer_->start(HOME_FREQ);
 }
 
 std::unordered_set<Entity *> Projectile::noDamageList()
@@ -124,25 +101,4 @@ std::unordered_set<Entity *> Projectile::noDamageList()
 void Projectile::setNoDamageList(std::unordered_set<Entity *> noDamageList)
 {
     noDamageList_ = noDamageList;
-}
-
-/// Executed every "step" the projectile needs to take.
-/// First the MoveBehavior is called which determines how it should move.
-/// After moving, a collision check is done, if the projectile collides with
-/// any Entities, the CollisionBehavior will be notified.
-/// The projectile is passed in as "entityOne" for the CollisionBehavior
-/// while the colliding entities are passed in as "entityTwo."
-void Projectile::step_()
-{
-    // call move behavior
-    moveBehavior_->onMoveStep();
-
-    // call collision behavior (passing all collided entities that are not in
-    // the no damage list)
-    std::unordered_set<Entity*> cEntities = collidingEntities();
-    for (Entity* entity:cEntities){
-        if (noDamageList_.find(entity) == noDamageList_.end())
-            if (noDamageList_.find(entity->parent()) == noDamageList_.end())
-                collisionBehavior_->onCollided(this,entity);
-    }
 }

@@ -5,7 +5,7 @@
 #include <QObject>
 #include "Entity.h"
 #include <QPointF>
-#include "MoveBehavior.h"
+#include "Mover.h"
 
 class QTimer;
 
@@ -22,7 +22,7 @@ class QTimer;
 /// mb->setStepSize(5); // sets the size of each movement step (lower = smoother movement but more less effecient)
 /// mb->moveTo(somePoint); // tell entity to start moving towards some point
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-class MBMoveStraight: public QObject, public MoveBehavior
+class MBMoveStraight: public QObject, public Mover
 {
     Q_OBJECT
 public:
@@ -37,13 +37,13 @@ public:
     void setFaceTarget(bool tf);
     bool faceTarget();
 
-    virtual void moveTo(const QPointF& pos);
+    virtual void moveEntity(const QPointF& pos);
 
 public slots:
     void moveStep_();
 
 protected:
-    virtual void onStopMoving_();
+    virtual void stopMovingEntity_();
 
 private:
     int speed_;

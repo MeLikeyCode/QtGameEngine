@@ -5,7 +5,7 @@
 #include <QPointer>
 #include "Entity.h"
 #include <QLineF>
-#include "MoveBehavior.h"
+#include "Mover.h"
 
 class QTimer;
 
@@ -20,13 +20,13 @@ class QTimer;
 /// mb->setWavelength(60);
 /// mb->moveTo(somePos);
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-class MBMoveSine : public QObject, MoveBehavior
+class MBMoveSine : public QObject, Mover
 {
     Q_OBJECT
 public:
     MBMoveSine(Entity* entity);
 
-    void moveTo(const QPointF& pos);
+    void moveEntity(const QPointF& pos);
 
     void setFaceTarget(bool tf);
     bool faceTarget();
@@ -41,7 +41,7 @@ public slots:
     void onMoveStep_();
 
 protected:
-    virtual void onStopMoving_();
+    virtual void stopMovingEntity_();
 
 private:
     QTimer* moveTimer_;

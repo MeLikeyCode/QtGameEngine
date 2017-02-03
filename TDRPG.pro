@@ -47,7 +47,6 @@ SOURCES += main.cpp \
     RangedWeapon.cpp \
     Bow.cpp \
     RangedWeaponSlot.cpp \
-    ProjectileMoveBehavior.cpp \
     ProjectileMoveBehaviorStraight.cpp \
     ProjectileMoveBehaviorHoming.cpp \
     Weapon.cpp \
@@ -108,9 +107,9 @@ SOURCES += main.cpp \
     ECGrabCurrentMap.cpp \
     CollisionBehavior.cpp \
     CBDamage.cpp \
-    MoveBehavior.cpp \
     MBMoveStraight.cpp \
-    MBMoveSine.cpp
+    MBMoveSine.cpp \
+    Mover.cpp
 
 HEADERS  += \
     Map.h \
@@ -143,7 +142,6 @@ HEADERS  += \
     RangedWeapon.h \
     Bow.h \
     RangedWeaponSlot.h \
-    ProjectileMoveBehavior.h \
     ProjectileMoveBehaviorStraight.h \
     ProjectileMoveBehaviorHoming.h \
     Weapon.h \
@@ -204,9 +202,9 @@ HEADERS  += \
     ECGrabCurrentMap.h \
     CollisionBehavior.h \
     CBDamage.h \
-    MoveBehavior.h \
     MBMoveStraight.h \
-    MBMoveSine.h
+    MBMoveSine.h \
+    Mover.h
 
 RESOURCES += \
     res.qrc

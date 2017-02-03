@@ -1,30 +1,25 @@
 #ifndef PROJECTILE_H
 #define PROJECTILE_H
 
-#include <QObject>
-#include <QPointF>
 #include <unordered_set>
-#include <QTimer>
 #include "Entity.h"
-#include "ProjectileMoveBehavior.h"
+#include "Mover.h"
 #include "CollisionBehavior.h"
 #include <memory>
+#include <QPointer>
+
+class QTimer;
 
 /// Represents a projectile that moves a certain way and collides with things
 /// along the way. Strategy pattern is used to determine the behaviors of the projectile.
 /// Projectiles have 2 behaviors:
-/// -ProjectileMoveBehavior
-/// -CollisionBehavior
+/// - MoveBehavior
+/// - CollisionBehavior
 ///
-/// The ProjectileMoveBehavior determines how the projectile moves. It has a
-/// function that is executed each time the projectile is asked to move. This
-/// function moves the projectile in its own way (straight, squiggily, etc...).
-/// To set how often the projectile is asked to move (and therefore how often the
-/// ProjectileMoveBehavior is called) use set setStepFrequency().
+/// The MoveBehavior determines how the projectile moves.
 ///
 /// The CollisionBehavior determines how the projectile responds when
-/// it collides with Entities. It has a function that recieves what it has collided
-/// with, the function responds accordingly (weather it damages, heals, etc..).
+/// it collides with Entities.
 ///
 /// In order to create your own Projectiles, you should sublcass one or more of the
 /// behaviors to create your own behaviors. Then simply construct a projectile and
@@ -38,9 +33,17 @@
 /// The Entity that spawns a projectile should probably be added to this list to prevent
 /// the projectile from damaging him (unless that is the intended effect).
 ///
-/// A projectile will not start moving until its startMoving() function is called.
-/// This is to give sub classes a chance to initialize the projectile before it starts being
-/// asked to move.
+/// To move shoot a projectile towards a certain pos use shootTowards(). To have the
+/// projectile "home" to an Entity (i.e. follow the Entity while traveling), use
+/// homeTowards(). homeTowards() simply periodically calls shootTowards() passing in
+/// the new position of the Entity.
+///
+/// Example usage:
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.cpp
+/// Projectile* p = new SomeConcreteProjectileClass(aMoveBehavior, aCollisionBehavior, listOfEntitiesToNotDmg);
+/// p->setPointPos(somePos); // set the position of the projectile
+/// p->shootTowards(someOtherPos); // shoot the projectile towards the specified pos
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ///
 /// @author Abdullah Aghazadah
 /// @date 2/21/16
@@ -48,48 +51,37 @@ class Projectile: public Entity
 {
     Q_OBJECT
 public:
-    Projectile(QPointF start,
-               ProjectileMoveBehavior *moveBehavior,
+    Projectile(Mover *moveBehavior,
                CollisionBehavior *collisionBehavior,
-               std::unordered_set<Entity*> noDamageList,
-               Map* map);
+               std::unordered_set<Entity*> noDamageList);
 
-    QPointF start();
-    void setStart(QPointF start);
-
-    int stepFrequency();
-    void setStepFrequency(int f);
-
-    int stepSize();
-    void setStepSize(int size);
+    void shootTowards(const QPointF& pos);
+    void homeTowards(Entity* entity);
 
     std::unordered_set<Entity*> noDamageList();
     void setNoDamageList(std::unordered_set<Entity*> noDamageList);
     void addToNoDamageList(Entity* entity);
     bool isInNoDamageList(Entity* entity);
 
-    std::unordered_set<Entity*> collidingEntities();
-
-    ProjectileMoveBehavior* moveBehavior();
-    void setMoveBehavior(ProjectileMoveBehavior* moveBehavior);
+    Mover* moveBehavior();
+    void setMoveBehavior(Mover* moveBehavior);
 
     CollisionBehavior *collisionBehavior();
     void setCollisionBehavior(CollisionBehavior *collisionBehavior);
 
-    void startMoving();
 public slots:
-    void step_();
+    void onCollided_(Entity* self, Entity* collidedWith);
+    void onHomeStep_();
 
 private:
-    QPointF start_;
     std::unordered_set<Entity*> noDamageList_;
-    int stepFrequency_;
-    QTimer* timer_;
-    int stepSize_;
 
     // behaviors
-    std::unique_ptr<ProjectileMoveBehavior> moveBehavior_;
+    std::unique_ptr<Mover> moveBehavior_;
     std::unique_ptr<CollisionBehavior> collisionBehavior_;
+
+    QPointer<Entity> homeTo_;
+    QTimer* homeTimer_;
 };
 
 #endif // PROJECTILE_H
