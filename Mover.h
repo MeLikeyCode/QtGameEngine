@@ -39,7 +39,6 @@ class QPointF;
 ///
 /// Note
 /// ====
-///
 /// You cannot call setEntity() while the Mover is already busy moving an
 /// Entity. If you do so, an assertion will be thrown. You can use
 /// isMovingEntity() to determine if the Mover is currently moving its Entity.
@@ -68,23 +67,24 @@ class QPointF;
 class Mover
 {
 public:
-    Mover(Entity *entity);
+    Mover(Entity *entity = nullptr);
 
     virtual Entity* entity();
     virtual void setEntity(Entity* entity);
 
+    virtual void moveEntity(const QPointF& toPos);
     virtual bool isMovingEntity();
     virtual void stopMovingEntity();
-
-    /// Moves the entity to the specified position. Some concrete Movers
-    /// may move the entity straight, some may move it in a sine motion, some
-    /// may move it while spinning it, etc...
-    virtual void moveEntity(const QPointF& toPos) = 0;
 
 protected:
     // Executed when the Mover is asked to stop moving the Entity (via stopMovingEntity()).
     // Concrete implementations of this function should actually stop moving the Entity...
     virtual void stopMovingEntity_() = 0;
+
+    // Executed when the Mover is asked to move the Entity to the specified
+    // position. Concrete implementations of this function should somehow start
+    // moving the Entity towards the specified position.
+    virtual void moveEntity_(const QPointF& toPos) = 0;
 
 private:
     QPointer<Entity> entity_;

@@ -107,9 +107,9 @@ SOURCES += main.cpp \
     ECGrabCurrentMap.cpp \
     CollisionBehavior.cpp \
     CBDamage.cpp \
-    MBMoveStraight.cpp \
-    MBMoveSine.cpp \
-    Mover.cpp
+    Mover.cpp \
+    StraightMover.cpp \
+    SineMover.cpp
 
 HEADERS  += \
     Map.h \
@@ -202,9 +202,9 @@ HEADERS  += \
     ECGrabCurrentMap.h \
     CollisionBehavior.h \
     CBDamage.h \
-    MBMoveStraight.h \
-    MBMoveSine.h \
-    Mover.h
+    Mover.h \
+    StraightMover.h \
+    SineMover.h
 
 RESOURCES += \
     res.qrc

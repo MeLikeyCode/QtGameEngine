@@ -1,5 +1,5 @@
-#ifndef MBMOVESINE_H
-#define MBMOVESINE_H
+#ifndef SINEMOVER_H
+#define SINEMOVER_H
 
 #include <QObject>
 #include <QPointer>
@@ -9,24 +9,22 @@
 
 class QTimer;
 
-/// A MoveBehavior that moves the Entity at a sine looking pattern.
-/// By default the entity will face its target pos before moving, but you can change this
-/// by using setFaceTarget().
+/// A Mover that moves the Entity at a sine looking pattern. By default the
+/// entity will face its target pos before moving, but you can change this by
+/// using setFaceTarget().
 ///
 /// Example usage:
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.cpp
-/// MBMoveSine* mb = new MBMoveSine(entity);
-/// mb->setAmplitude(30);
-/// mb->setWavelength(60);
-/// mb->moveTo(somePos);
+/// SineMover* sm = new SineMover(entity);
+/// sm->setAmplitude(30);
+/// sm->setWavelength(60);
+/// sm->moveEntity(toSomePoint);
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-class MBMoveSine : public QObject, Mover
+class SineMover : public QObject, Mover
 {
     Q_OBJECT
 public:
-    MBMoveSine(Entity* entity);
-
-    void moveEntity(const QPointF& pos);
+    SineMover(Entity* entity=nullptr);
 
     void setFaceTarget(bool tf);
     bool faceTarget();
@@ -41,6 +39,7 @@ public slots:
     void onMoveStep_();
 
 protected:
+    virtual void moveEntity_(const QPointF& pos);
     virtual void stopMovingEntity_();
 
 private:
@@ -60,4 +59,4 @@ private:
     double distanceMoved_;
 };
 
-#endif // MBMOVESINE_H
+#endif // SINEMOVER_H

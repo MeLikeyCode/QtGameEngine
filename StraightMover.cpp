@@ -1,10 +1,10 @@
-#include "MBMoveStraight.h"
+#include "StraightMover.h"
 #include <QTimer>
 #include "Utilities.h"
 #include <cassert>
 #include <QLineF>
 
-MBMoveStraight::MBMoveStraight(Entity *entity):
+StraightMover::StraightMover(Entity *entity):
     Mover(entity),
     speed_(entity->speed()),
     faceTarget_(true),
@@ -15,13 +15,13 @@ MBMoveStraight::MBMoveStraight(Entity *entity):
 }
 
 /// Sets the speed at which the Entity should be moved at.
-void MBMoveStraight::setSpeed(int speed)
+void StraightMover::setSpeed(int speed)
 {
     speed_ = speed;
 }
 
 /// Returns the speed at which the Entity is moved at.
-int MBMoveStraight::speed()
+int StraightMover::speed()
 {
     return speed_;
 }
@@ -29,23 +29,21 @@ int MBMoveStraight::speed()
 /// Sets how big each step of the controlled entity will be.
 /// The larger the stepSize value, the more "jumpy" the movement will appear (but it
 /// should be faster to execute).
-void MBMoveStraight::setStepSize(int stepSize)
+void StraightMover::setStepSize(int stepSize)
 {
     stepSize_ = stepSize;
 }
 
 /// See setStepSize().
-int MBMoveStraight::stepSize()
+int StraightMover::stepSize()
 {
     return stepSize_;
 }
 
-/// Starts moving the controlle entity towards the specified position.
-void MBMoveStraight::moveEntity(const QPointF& pos)
+/// Starts moving the controlled entity towards the specified position.
+void StraightMover::moveEntity_(const QPointF& pos)
 {
     Entity* theEntity = entity();
-
-    assert(theEntity != nullptr); // guard: make sure entity isn't dead
 
     stopMovingEntity(); // stop moving (just in case already moving)
 
@@ -61,14 +59,14 @@ void MBMoveStraight::moveEntity(const QPointF& pos)
     }
 
     // start moving
-    connect(moveTimer_,&QTimer::timeout,this,&MBMoveStraight::moveStep_);
+    connect(moveTimer_,&QTimer::timeout,this,&StraightMover::moveStep_);
     moveTimer_->start(secondsToMs(frequency(stepSize_,speed_)));
 }
 
 /// If true is passed in, makes the controlled entity face the target position before
 /// proceeding to move towards it. If false is passed in, the controlled entity
 /// will move without changing its facing angle.
-void MBMoveStraight::setFaceTarget(bool tf)
+void StraightMover::setFaceTarget(bool tf)
 {
     faceTarget_ = tf;
 }
@@ -76,14 +74,14 @@ void MBMoveStraight::setFaceTarget(bool tf)
 /// Returns true if the controlled entity will face the target position before moving
 /// towards it.
 /// @see setFaceTarget()
-bool MBMoveStraight::faceTarget()
+bool StraightMover::faceTarget()
 {
     return faceTarget_;
 }
 
 /// Executed periodically to move the controlled entity one step closer towards its target
 /// position.
-void MBMoveStraight::moveStep_()
+void StraightMover::moveStep_()
 {
     Entity* theEntity = entity();
 
@@ -116,7 +114,7 @@ void MBMoveStraight::moveStep_()
 }
 
 /// This function is executed when the MoveBehavior is asked to stop moving the entity.
-void MBMoveStraight::stopMovingEntity_()
+void StraightMover::stopMovingEntity_()
 {
     moveTimer_->disconnect();
 }

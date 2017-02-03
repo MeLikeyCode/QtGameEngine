@@ -1,10 +1,10 @@
-#include "MBMoveSine.h"
+#include "SineMover.h"
 #include <QTimer>
 #include "Utilities.h"
 #include <cassert>
 #include <QtMath>
 
-MBMoveSine::MBMoveSine(Entity *entity):
+SineMover::SineMover(Entity *entity):
     Mover(entity),
     moveTimer_(new QTimer(this)),
     amplitude_(20),
@@ -20,7 +20,9 @@ MBMoveSine::MBMoveSine(Entity *entity):
     // empty
 }
 
-void MBMoveSine::moveEntity(const QPointF& pos)
+/// Moves the Entity in a sine like fashion from its current position to the
+/// specified position.
+void SineMover::moveEntity_(const QPointF& pos)
 {
     Entity* theEntity = entity();
 
@@ -42,42 +44,42 @@ void MBMoveSine::moveEntity(const QPointF& pos)
     }
 
     // start moving
-    connect(moveTimer_,&QTimer::timeout,this,&MBMoveSine::onMoveStep_);
+    connect(moveTimer_,&QTimer::timeout,this,&SineMover::onMoveStep_);
     moveTimer_->start(secondsToMs(frequency(stepSize_,speed_)));
 }
 
-bool MBMoveSine::faceTarget()
+bool SineMover::faceTarget()
 {
     return faceTarget_;
 }
 
-void MBMoveSine::setSpeed(int speed)
+void SineMover::setSpeed(int speed)
 {
     speed_ = speed;
 }
 
-int MBMoveSine::speed()
+int SineMover::speed()
 {
     return speed_;
 }
 
-void MBMoveSine::setStepSize(int stepSize)
+void SineMover::setStepSize(int stepSize)
 {
     stepSize_ = stepSize;
 }
 
-int MBMoveSine::stepSize()
+int SineMover::stepSize()
 {
     return stepSize_;
 }
 
-void MBMoveSine::setFaceTarget(bool tf)
+void SineMover::setFaceTarget(bool tf)
 {
     faceTarget_ = tf;
 }
 
 /// Executed periodically to move the controlled entity to the next step of its movement.
-void MBMoveSine::onMoveStep_()
+void SineMover::onMoveStep_()
 {
     Entity* theEntity = entity();
 
@@ -120,7 +122,7 @@ void MBMoveSine::onMoveStep_()
 }
 
 /// Executed whenever the MoveBehavior is asked to stop moving the Entity.
-void MBMoveSine::stopMovingEntity_()
+void SineMover::stopMovingEntity_()
 {
     moveTimer_->disconnect();
     distanceMoved_ = 0;
