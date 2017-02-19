@@ -47,14 +47,10 @@ SOURCES += main.cpp \
     RangedWeapon.cpp \
     Bow.cpp \
     RangedWeaponSlot.cpp \
-    ProjectileMoveBehaviorStraight.cpp \
-    ProjectileMoveBehaviorHoming.cpp \
     Weapon.cpp \
     WeaponSlot.cpp \
     AsyncShortestPathFinder.cpp \
     SpearProjectile.cpp \
-    ProjectileMoveBehaviorSine.cpp \
-    ProjectileMoveBehaviorSpinning.cpp \
     InventoryViewer.cpp \
     ItemRainOfSpears.cpp \
     ItemTeleport.cpp \
@@ -109,7 +105,9 @@ SOURCES += main.cpp \
     CBDamage.cpp \
     Mover.cpp \
     StraightMover.cpp \
-    SineMover.cpp
+    SineMover.cpp \
+    DestReachedBehavior.cpp \
+    DRBDestroyProjectile.cpp
 
 HEADERS  += \
     Map.h \
@@ -142,14 +140,10 @@ HEADERS  += \
     RangedWeapon.h \
     Bow.h \
     RangedWeaponSlot.h \
-    ProjectileMoveBehaviorStraight.h \
-    ProjectileMoveBehaviorHoming.h \
     Weapon.h \
     WeaponSlot.h \
     AsyncShortestPathFinder.h \
     SpearProjectile.h \
-    ProjectileMoveBehaviorSine.h \
-    ProjectileMoveBehaviorSpinning.h \
     InventoryViewer.h \
     ItemRainOfSpears.h \
     ItemTeleport.h \
@@ -204,7 +198,9 @@ HEADERS  += \
     CBDamage.h \
     Mover.h \
     StraightMover.h \
-    SineMover.h
+    SineMover.h \
+    DestReachedBehavior.h \
+    DRBDestroyProjectile.h
 
 RESOURCES += \
     res.qrc

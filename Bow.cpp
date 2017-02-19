@@ -2,9 +2,6 @@
 #include "Projectile.h"
 #include "Inventory.h"
 #include "Map.h"
-#include "ProjectileMoveBehaviorStraight.h" // TODO: remove, unused
-#include "ProjectileMoveBehaviorSine.h" // TODO: remove, unused
-#include "ProjectileMoveBehaviorSpinning.h" // TODO: remove, unused
 #include "SpearProjectile.h"
 #include "Sprite.h"
 #include "Entity.h"
@@ -48,9 +45,10 @@ void Bow::attack(QPointF targetPoint)
     noDamageList.insert(owningEntity);
     noDamageList.insert(this);
 
-    SpearProjectile* spearProjectile = new SpearProjectile(startPos, targetPoint, 300, 5,
-                                                           noDamageList, map);
-    spearProjectile->startMoving();
+    SpearProjectile* spearProjectile = new SpearProjectile(600,5,noDamageList);
+    map->addEntity(spearProjectile);
+    spearProjectile->setPointPos(startPos);
+    spearProjectile->shootTowards(targetPoint);
     spearProjectile->setPointZ(owningEntity->pointZ() + owningEntity->height());
 
 //    // create projectile (using Projectile and instantiating all the behaviors, etc...)

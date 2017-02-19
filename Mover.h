@@ -3,6 +3,7 @@
 
 #include <QPointer>
 #include "Entity.h"
+#include <QObject>
 
 class QPointF;
 
@@ -37,35 +38,30 @@ class QPointF;
 /// `mover->stopMovingEntity();`
 /// Tells the Mover to stop moving the Entity.
 ///
-/// Note
-/// ====
+///
+/// @warning
 /// You cannot call setEntity() while the Mover is already busy moving an
 /// Entity. If you do so, an assertion will be thrown. You can use
 /// isMovingEntity() to determine if the Mover is currently moving its Entity.
 ///
 /// How to implement your own concrete Mover class
 /// ==============================================
-/// This is an abstract class, not just a pure interface, thus it both defines
-/// an interface and provides some default implementations. But all the default
-/// implementations can be overrided if they don't suite you (in other words,
-/// they are non-pure virtual functions).
+/// 1. Implement the pure virtual function moveEntity_(). This function should
+/// start moving the Entity in some way.
 ///
-/// The pure virtual function moveEntity() obviously MUST be implemented in
-/// your sub class, as that is the function that is supposed to do the actual
-/// moving of the entity. I suggest you use a QTimer to periodically move the
-/// Entity in the manner of your choosing.
+/// 2. When you have determined that the entity has succesfully been moved,
+/// emit the entitySuccesfullyMoved() signal.
 ///
-/// The protected pure virtual function stopMovingEntity_() must obviously also
-/// be implemented. When someone calls stopMovingEntity_() on a Mover, it will
-/// update the isMovingEntity_ flag and then simply call stopMovingEntity_().
-/// This pattern is often called "template method pattern". It allows the base
-/// class to do some initial work, and then delegate the real work to the
-/// derived class. You will see this pattern often in this code base, so get a
-/// little familar with it.
+/// 3. Implement the pure virtual function stopMovingEntity_(). This function
+/// should stop moving the Entity.
+///
+/// See some of the provided concrete Movers for examples of how to create your
+/// own Movers.
 ///
 /// @author Abdullah Aghazadah
-class Mover
+class Mover: public QObject
 {
+    Q_OBJECT
 public:
     Mover(Entity *entity = nullptr);
 
@@ -76,15 +72,22 @@ public:
     virtual bool isMovingEntity();
     virtual void stopMovingEntity();
 
-protected:
-    // Executed when the Mover is asked to stop moving the Entity (via stopMovingEntity()).
-    // Concrete implementations of this function should actually stop moving the Entity...
-    virtual void stopMovingEntity_() = 0;
+signals:
+    /// Emitted when the Mover has succesfully moved its Entity to the target
+    /// position. Note: It is the responsiblity of concrete Movers to emit this
+    /// function when they have determined that the entity has been succesfully
+    /// moved.
+    void entitySuccesfullyMoved(Mover* byMover);
 
+protected:
     // Executed when the Mover is asked to move the Entity to the specified
     // position. Concrete implementations of this function should somehow start
     // moving the Entity towards the specified position.
     virtual void moveEntity_(const QPointF& toPos) = 0;
+
+    // Executed when the Mover is asked to stop moving the Entity (via stopMovingEntity()).
+    // Concrete implementations of this function should actually stop moving the Entity...
+    virtual void stopMovingEntity_() = 0;
 
 private:
     QPointer<Entity> entity_;

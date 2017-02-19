@@ -23,10 +23,10 @@ void Mover::setEntity(Entity *entity)
     entity_ = entity;
 }
 
-/// Moves the entity to the specified position. Make sure the entity is set
-/// before calling this funtion or an assertion will be thrown. Some
-/// concrete Movers may move the entity straight, some may move it in a
-/// sine motion, some may move it while spinning it, etc...
+/// Moves the entity from its current position to the specified position. Make
+/// sure the entity is set before calling this funtion or an assertion will be
+/// thrown. Some concrete Movers may move the entity straight, some may move it
+/// in a sine motion, some may move it while spinning it, etc...
 void Mover::moveEntity(const QPointF &toPos)
 {
     assert(!entity_.isNull());  // assert

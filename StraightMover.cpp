@@ -59,7 +59,7 @@ void StraightMover::moveEntity_(const QPointF& pos)
     }
 
     // start moving
-    connect(moveTimer_,&QTimer::timeout,this,&StraightMover::moveStep_);
+    connect(moveTimer_,&QTimer::timeout,this,&StraightMover::onMoveStep_);
     moveTimer_->start(secondsToMs(frequency(stepSize_,speed_)));
 }
 
@@ -81,7 +81,7 @@ bool StraightMover::faceTarget()
 
 /// Executed periodically to move the controlled entity one step closer towards its target
 /// position.
-void StraightMover::moveStep_()
+void StraightMover::onMoveStep_()
 {
     Entity* theEntity = entity();
 
@@ -101,6 +101,7 @@ void StraightMover::moveStep_()
     // if close enough, stop moving
     const double EPSILON = 50;
     if (distance(theEntity->pointPos(),targetPos_) < EPSILON){
+        emit entitySuccesfullyMoved(this);
         stopMovingEntity();
         return;
     }

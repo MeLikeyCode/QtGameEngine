@@ -7,6 +7,7 @@
 #include "Inventory.h"
 #include "stdlib.h" // TODO: use C++ random number generatio instead
 #include "Sound.h"
+#include "Map.h"
 
 ItemRainOfSpears::ItemRainOfSpears()
 {
@@ -36,10 +37,12 @@ void ItemRainOfSpears::use()
     times_ = 0;
 }
 
+/// Executed every time ItemRainOfSpears is asked to generate a wave of spears.
 void ItemRainOfSpears::spearStep_()
 {
     // make sure the inventory has an owner
     Entity* owner = inventory()->entity();
+    assert(owner != nullptr);
 
     int NUM_SPEARS_TO_GENERATE = 5;
     int X_OFFSET_RANGE = 1000; // number of pixels around the owner's x position to spawn
@@ -61,14 +64,11 @@ void ItemRainOfSpears::spearStep_()
         std::unordered_set<Entity*> noDmgList;
         noDmgList.insert(owner);
         noDmgList.insert(this);
-        SpearProjectile* spearProjectile = new SpearProjectile(randomPos,
-                                                               targetPos,
-                                                               2000,
-                                                               5,
-                                                               noDmgList,
-                                                               owner->map());
+        SpearProjectile* spearProjectile = new SpearProjectile(800,5,noDmgList);
+        owner->map()->addEntity(spearProjectile);
+        spearProjectile->setPointPos(randomPos);
         spearProjectile->addToNoDamageList(owner);
-        spearProjectile->startMoving();
+        spearProjectile->shootTowards(targetPos);
     }
 
     times_++;

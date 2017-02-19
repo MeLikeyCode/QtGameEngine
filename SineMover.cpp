@@ -44,7 +44,7 @@ void SineMover::moveEntity_(const QPointF& pos)
     }
 
     // start moving
-    connect(moveTimer_,&QTimer::timeout,this,&SineMover::onMoveStep_);
+    //connect(moveTimer_,&QTimer::timeout,this,&SineMover::onMoveStep_);
     moveTimer_->start(secondsToMs(frequency(stepSize_,speed_)));
 }
 
@@ -117,6 +117,7 @@ void SineMover::onMoveStep_()
 
     // if moved far enough
     if (distanceMoved_ > range_){
+        emit entitySuccesfullyMoved(this);
         stopMovingEntity();
     }
 }

@@ -20,7 +20,7 @@ class QTimer;
 /// sm->setWavelength(60);
 /// sm->moveEntity(toSomePoint);
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-class SineMover : public QObject, Mover
+class SineMover : Mover
 {
     Q_OBJECT
 public:

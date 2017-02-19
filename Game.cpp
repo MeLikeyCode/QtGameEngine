@@ -5,7 +5,6 @@
 #include "Spear.h" // TODO remove, test
 #include "Entity.h"
 #include "Slot.h"
-#include "ProjectileMoveBehaviorHoming.h"
 #include "Projectile.h"
 #include "WeaponSlot.h"
 #include "Axe.h"

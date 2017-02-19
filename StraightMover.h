@@ -12,7 +12,7 @@ class QTimer;
 /// A Mover that moves the Entity in a straight line. By default, the entity
 /// will move at a speed determined by its Entity::speed() function, but you
 /// can force it to move at a specified speed by calling setSpeed(); By default
-/// the entity will face the target position prior to moving, but you can set
+/// the entity will face the target position prior to moving, but you can
 /// alter this behavior by using setFaceTarget(bool yesNo).
 ///
 /// Example usage:
@@ -22,7 +22,7 @@ class QTimer;
 /// sm->setStepSize(5); // sets the size of each movement step
 /// sm->moveEntity(toSomePoint); // tell entity to start moving towards some point
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-class StraightMover: public QObject, public Mover
+class StraightMover: public Mover
 {
     Q_OBJECT
 public:
@@ -38,7 +38,7 @@ public:
     bool faceTarget();
 
 public slots:
-    void moveStep_();
+    void onMoveStep_();
 
 protected:
     virtual void moveEntity_(const QPointF& pos);
