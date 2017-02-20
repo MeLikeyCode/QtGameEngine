@@ -21,6 +21,8 @@
 #include <QGraphicsItem>
 
 #include "ECPathMover.h" // TODO: delete, test only
+#include "ECBodyThruster.h" // TODO: delete, test only
+#include "Sprite.h" // TODO: delete, test only
 
 extern Entity* player;
 
@@ -162,26 +164,33 @@ void Game::mousePressEvent(QMouseEvent *event){
         }
     }
 
-    player->slot("right hand melee")->use();
+    // TODO: everything until end of this todo is test code, remove it
+
+    if (event->button() == Qt::LeftButton)
+        player->slot("right hand melee")->use();
+
+    if (event->button() == Qt::RightButton){
+        // create an enemy for the player
+        Entity* enemy = new Entity();
+
+        Sprite* spr = new Sprite();
+        spr->addFrames(":/resources/graphics/spider",7,"walk");
+        spr->addFrames(":/resources/graphics/spider",1,"stand");
+        spr->play("stand",-1,1000);
+        enemy->setSprite(spr);
+
+        player->map()->addEntity(enemy);
+        enemy->setPointPos(mapToMap(event->pos()));
+        ECBodyThruster* bodyThrustContr = new ECBodyThruster(*enemy);
+        enemy->addEnemyGroup(0);
+    }
+
+    // end of TODO
 
     // if control reaches here, we are in regular MouseMode, just let the event
     // propogate to the correct QGraphicsItem, which will handle it
     // TODO: someday, set up your own event propogation system at the Entity level
     // as opposed to at the QGraphicsItem level
-
-    // =TODO test code, remove=
-
-//    // add rock drawing and fill clicked cell
-//    if (event->button() == Qt::MiddleButton){
-//        // add rock
-////        QPixmap pic(":resources/graphics/terrain/rock.png");
-////        QGraphicsPixmapItem* picI = new QGraphicsPixmapItem(pic);
-////        picI->setPos(event->pos().x()/64 * 64,event->pos().y()/64 * 64);
-////        map_->scene()->addItem(picI);
-
-//        map_->pathingMap().fill(mapToMap(event->pos()));
-//        map_->drawPathingMap();
-//    }
 
     QGraphicsView::mousePressEvent(event);
 }
