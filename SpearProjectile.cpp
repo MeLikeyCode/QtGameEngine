@@ -11,6 +11,9 @@ SpearProjectile::SpearProjectile(double range, double damage, std::unordered_set
     range_(range),
     distTravelledSoFar_(0)
 {
+    // set sprite
+    setSprite(new Sprite(QPixmap(":/resources/graphics/weapons/spear.png")));
+
     // set straight mover
     StraightMover* sm = new StraightMover(this);
     sm->setFaceTarget(true);
@@ -18,17 +21,14 @@ SpearProjectile::SpearProjectile(double range, double damage, std::unordered_set
 
     // TODO: move to base class (if this needs to happen with all projectiles)
     setRotationPoint(QPointF(0,sprite()->boundingRect().height()/2));
-
-    // listen to movement, when moved enough, tell mover to stop moving
-    connect(this, &Entity::moved,this,&SpearProjectile::onMoved_);
 }
 
-/// Executed every time the SpearProjectile moves.
-/// Will detect if it has moved enough (exeded range), if so, will stop it and
-/// invoke its DestReachedBehavior.
-void SpearProjectile::onMoved_(Entity *entity, QPointF fromPos, QPointF toPos)
+void SpearProjectile::shootTowards(const QPointF &pos)
 {
-    Q_UNUSED(entity)
+    // move pos such that its right at the end of its range
+    QLineF shootLine(pointPos(),pos);
+    shootLine.setLength(range_);
 
-    distTravelledSoFar_ += distance(fromPos,toPos); // update distance travelled
+    // delegate to base
+    Projectile::shootTowards(shootLine.p2());
 }

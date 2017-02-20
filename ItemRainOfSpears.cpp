@@ -44,7 +44,8 @@ void ItemRainOfSpears::spearStep_()
     Entity* owner = inventory()->entity();
     assert(owner != nullptr);
 
-    int NUM_SPEARS_TO_GENERATE = 5;
+    const int NUM_WAVES = 1;
+    int NUM_SPEARS_TO_GENERATE = 1;
     int X_OFFSET_RANGE = 1000; // number of pixels around the owner's x position to spawn
                                // projectiles at
     int Y_OFFSET = 1000; // number of pixels ABOVE the owner to spawn projectiles
@@ -64,7 +65,7 @@ void ItemRainOfSpears::spearStep_()
         std::unordered_set<Entity*> noDmgList;
         noDmgList.insert(owner);
         noDmgList.insert(this);
-        SpearProjectile* spearProjectile = new SpearProjectile(800,5,noDmgList);
+        SpearProjectile* spearProjectile = new SpearProjectile(2500,5,noDmgList);
         owner->map()->addEntity(spearProjectile);
         spearProjectile->setPointPos(randomPos);
         spearProjectile->addToNoDamageList(owner);
@@ -73,7 +74,7 @@ void ItemRainOfSpears::spearStep_()
 
     times_++;
 
-    if (times_ > 15){
+    if (times_ >= NUM_WAVES){
         timer_->disconnect();
     }
 }

@@ -15,6 +15,9 @@ class SpearProjectile : public Projectile
 {
 public:
     SpearProjectile(double range, double damage, std::unordered_set<Entity *> noDmgList);
+
+    virtual void shootTowards(const QPointF& pos);
+
 public slots:
     void onMoved_(Entity* entity, QPointF fromPos, QPointF toPos);
 private:

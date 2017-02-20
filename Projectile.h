@@ -20,11 +20,6 @@ class QTimer;
 /// with Entities. The DestReachedBehavior determines what happens when the
 /// Projectile reaches its destination.
 ///
-/// Every projectile maintains a collection of entities that it should not
-/// damage. The Entity that spawns a projectile should probably be added to
-/// this list to prevent the projectile from damaging him (unless that is the
-/// intended effect).
-///
 /// To shoot a projectile towards a certain pos use shootTowards(). To have the
 /// projectile "home" to an Entity (i.e. follow the Entity while traveling),
 /// use homeTowards(). homeTowards() simply periodically calls shootTowards()
@@ -56,22 +51,15 @@ class Projectile: public Entity
 public:
     Projectile(Mover *mover = nullptr,
                CollisionBehavior *collisionBehavior = nullptr,
-               DestReachedBehavior* destReachedBeahvior = nullptr,
-               std::unordered_set<Entity*> noDamageList = std::unordered_set<Entity*>());
+               DestReachedBehavior* destReachedBeahvior = nullptr);
 
     // shooting
-    void shootTowards(const QPointF& pos);
+    virtual void shootTowards(const QPointF& pos);
     void homeTowards(Entity* entity);
-
-    // no damage list
-    std::unordered_set<Entity*> noDamageList();
-    void setNoDamageList(std::unordered_set<Entity*> noDamageList);
-    void addToNoDamageList(Entity* entity);
-    bool isInNoDamageList(Entity* entity);
 
     // behaviors
     Mover* moveBehavior();
-    void setMover(Mover* moveBehavior);
+    void setMover(Mover* mover);
 
     CollisionBehavior *collisionBehavior();
     void setCollisionBehavior(CollisionBehavior *collisionBehavior);
@@ -85,8 +73,6 @@ public slots:
     void onHomeStep_();
 
 private:
-    std::unordered_set<Entity*> noDamageList_;
-
     // behaviors
     std::unique_ptr<Mover> mover_;
     std::unique_ptr<CollisionBehavior> collisionBehavior_;

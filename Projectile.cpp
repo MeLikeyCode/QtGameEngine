@@ -5,36 +5,20 @@
 #include <QDebug> // TODO: remove, test
 #include <cassert>
 
-/// Constructs a Project from the specified behaviors and no damage list.
+/// Constructs a Project from the specified behaviors.
 /// You can pass in null for any of the behaviors, but be sure to use the setters
 /// to set all the behaviors prior to calling shootTowards() or homeTowards().
 Projectile::Projectile(Mover *mover,
                        CollisionBehavior *collisionBehavior,
-                       DestReachedBehavior* destReachedBehavior,
-                       std::unordered_set<Entity *> noDamageList):
-    noDamageList_(noDamageList),
+                       DestReachedBehavior* destReachedBehavior):
     mover_(mover),
     collisionBehavior_(collisionBehavior),
     destReachedBehavior_(destReachedBehavior)
 {
-    // make sure behaviors act on the projectile
     setMover(mover);
 
     // listen to when projectile collides with anything
     connect(this, &Entity::collided,this,&Projectile::onCollided_);
-
-    // listen to when the projectile is done moving
-    connect(moveBehavior, &Mover::entitySuccesfullyMoved, this, &Projectile::onSuccesfullyMoved_);
-}
-
-void Projectile::addToNoDamageList(Entity *entity)
-{
-    noDamageList_.insert(entity);
-}
-
-bool Projectile::isInNoDamageList(Entity *entity)
-{
-    return noDamageList_.count(entity) > 0;
 }
 
 /// Returns the MoveBehavior of the Projectile.
@@ -45,10 +29,21 @@ Mover *Projectile::moveBehavior()
 
 /// Sets the Mover of the Projectile.
 /// Destroys the old Mover.
-void Projectile::setMover(Mover *moveBehavior)
+/// Please ensure that the Projectile has a Mover before calling shootTowards()
+/// or homeTowards().
+void Projectile::setMover(Mover *mover)
 {
-    mover_ .reset(moveBehavior);
+    mover_ .reset(mover);
+
+    if (mover == nullptr)
+        return;
+
+    // make sure Mover operates on this entity
     mover_->setEntity(this);
+
+    // listen to when the projectile is done moving
+    connect(mover, &Mover::entitySuccesfullyMoved, this, &Projectile::onSuccesfullyMoved_);
+
 }
 
 /// Returns the CollisionsBehvaior of the Projectile.
@@ -93,8 +88,8 @@ void Projectile::onSuccesfullyMoved_(Mover *byMover)
     destReachedBehavior_->onDestinationReached(*this);
 }
 
-/// Executed whenever the Projectile is asked to home in on an Entity.
-/// Will simply shoot towards the Entity.
+/// Executed periodically when homeTowards() was used.
+/// Will simply re-shoot the Projectile towards the Entity.
 void Projectile::onHomeStep_()
 {
     shootTowards(homeTo_->pointPos());
@@ -117,19 +112,14 @@ void Projectile::shootTowards(const QPointF &pos)
 /// @warning Please make sure that the behaviors are set before calling this function.
 void Projectile::homeTowards(Entity *entity)
 {
+    // assert that behaviors are set
+    assert(mover_ != nullptr);
+    assert(collisionBehavior_ != nullptr);
+    assert(destReachedBehavior_ != nullptr);
+
     homeTo_ = entity;
     homeTimer_->disconnect();
     connect(homeTimer_,&QTimer::timeout,this,&Projectile::onHomeStep_);
     const int HOME_FREQ = 50; // how often to keep changing direction to follow player
     homeTimer_->start(HOME_FREQ);
-}
-
-std::unordered_set<Entity *> Projectile::noDamageList()
-{
-    return noDamageList_;
-}
-
-void Projectile::setNoDamageList(std::unordered_set<Entity *> noDamageList)
-{
-    noDamageList_ = noDamageList;
 }

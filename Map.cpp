@@ -243,7 +243,11 @@ std::unordered_set<Entity *> Map::entities(Entity *collidingWith)
 
     QRectF bbox = collidingWith->boundingRect();
     bbox.moveTopLeft(collidingWith->pointPos());
-    return entities(bbox);
+    std::unordered_set results = entities(bbox);
+
+    results.erase(collidingWith);   // remove entity itself
+
+    return results;
 }
 
 /// Returns the Entities in the specified region and in the specified z range.
