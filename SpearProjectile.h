@@ -14,7 +14,7 @@ class Map;
 class SpearProjectile : public Projectile
 {
 public:
-    SpearProjectile(double range, double damage, std::unordered_set<Entity *> noDmgList);
+    SpearProjectile(double range, double damage);
 
     virtual void shootTowards(const QPointF& pos);
 

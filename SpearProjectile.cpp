@@ -6,18 +6,25 @@
 #include "Sprite.h"
 #include "Utilities.h"
 
-SpearProjectile::SpearProjectile(double range, double damage, std::unordered_set<Entity*> noDmgList):
-    Projectile(nullptr, new CBDamage(0,damage), new DRBDestroyProjectile(),noDmgList),
+SpearProjectile::SpearProjectile(double range, double damage):
+    Projectile(nullptr, nullptr, new DRBDestroyProjectile()),
     range_(range),
     distTravelledSoFar_(0)
 {
     // set sprite
     setSprite(new Sprite(QPixmap(":/resources/graphics/weapons/spear.png")));
 
-    // set straight mover
+    setSpeed(1000);
+
+    // set Mover
     StraightMover* sm = new StraightMover(this);
     sm->setFaceTarget(true);
     setMover(sm);
+
+    // set CollisionBehavior
+    CBDamage* cb =  new CBDamage(0,damage);
+    cb->addException(this);
+    setCollisionBehavior(cb);
 
     // TODO: move to base class (if this needs to happen with all projectiles)
     setRotationPoint(QPointF(0,sprite()->boundingRect().height()/2));

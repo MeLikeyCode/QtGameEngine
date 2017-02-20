@@ -8,6 +8,7 @@
 #include "stdlib.h" // TODO: use C++ random number generatio instead
 #include "Sound.h"
 #include "Map.h"
+#include "CBDamage.h"
 
 ItemRainOfSpears::ItemRainOfSpears()
 {
@@ -44,31 +45,32 @@ void ItemRainOfSpears::spearStep_()
     Entity* owner = inventory()->entity();
     assert(owner != nullptr);
 
-    const int NUM_WAVES = 1;
-    int NUM_SPEARS_TO_GENERATE = 1;
-    int X_OFFSET_RANGE = 1000; // number of pixels around the owner's x position to spawn
+    const int NUM_WAVES = 15;
+    const int NUM_SPEARS_TO_GENERATE = 5;
+    const int X_RADIUS = 1000; // number of pixels around the owner's x position to spawn
                                // projectiles at
-    int Y_OFFSET = 1000; // number of pixels ABOVE the owner to spawn projectiles
-    int Y_OFFSET_RANGE = 600; // the y value "thickness" of possible y locations projectiles can spawn
+    const int Y_OFFSET = 1000; // number of pixels ABOVE the owner to spawn projectiles
+    const int Y_RADIUS = 600;  // the y value "thickness" of possible y locations projectiles can spawn
+
     for (int i = 0, n = NUM_SPEARS_TO_GENERATE; i < n; i++){
         // get a random position some where above the entity.
-        int randomXoffset = (rand() % X_OFFSET_RANGE) - (X_OFFSET_RANGE/2);
-        int randomYoffset = rand() % Y_OFFSET_RANGE - Y_OFFSET;
+        int randomXoffset = (rand() % X_RADIUS) - (X_RADIUS/2);
+        int randomYoffset = rand() % Y_RADIUS - Y_OFFSET;
         int posX = owner->pointPos().x() + randomXoffset;
         int posY = owner->pointPos().y() + randomYoffset;
         QPointF randomPos(posX,posY);
 
-        // spawn projectile
+        // get target position for the spear
         QPointF targetPos = randomPos;
         targetPos.setY(targetPos.y() + 20);
         targetPos.setX(targetPos.x());
-        std::unordered_set<Entity*> noDmgList;
-        noDmgList.insert(owner);
-        noDmgList.insert(this);
-        SpearProjectile* spearProjectile = new SpearProjectile(2500,5,noDmgList);
+
+        // create spear projectile
+        SpearProjectile* spearProjectile = new SpearProjectile(800,5);
+        CBDamage* cb = static_cast<CBDamage*>(spearProjectile->collisionBehavior());
+        cb->addException(owner); // don't damage owner
         owner->map()->addEntity(spearProjectile);
         spearProjectile->setPointPos(randomPos);
-        spearProjectile->addToNoDamageList(owner);
         spearProjectile->shootTowards(targetPos);
     }
 

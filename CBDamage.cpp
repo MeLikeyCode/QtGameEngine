@@ -11,10 +11,10 @@ CBDamage::CBDamage(double amountToDamageEntityOne, double amountToDamageEntityTw
 void CBDamage::onCollided(Entity *entityOne, Entity *entityTwo)
 {
     // damage entity one if not in exceptions
-    if (exceptions_.find(entityOne) != exceptions_.end())
+    if (exceptions_.find(entityOne) == exceptions_.end())
         entityTwo->damage(entityOne,amountToDamageEntityOne_);
     // damage entity two if not in exceptions
-    if (exceptions_.find(entityTwo) != exceptions_.end())
+    if (exceptions_.find(entityTwo) == exceptions_.end())
         entityOne->damage(entityTwo,amountToDamageEntityTwo_);
 }
 

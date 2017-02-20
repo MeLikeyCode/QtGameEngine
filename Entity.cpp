@@ -28,7 +28,7 @@ Entity::Entity():
     height_(0),
     sprite_(new Sprite()),
     inventory_(new Inventory()),
-    speed_(100),
+    speed_(250),
     rotationSpeed_(360),
     zValue_(0)
 {

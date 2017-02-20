@@ -45,7 +45,7 @@ void Bow::attack(QPointF targetPoint)
     noDamageList.insert(owningEntity);
     noDamageList.insert(this);
 
-    SpearProjectile* spearProjectile = new SpearProjectile(600,5,noDamageList);
+    SpearProjectile* spearProjectile = new SpearProjectile(600,5);
     map->addEntity(spearProjectile);
     spearProjectile->setPointPos(startPos);
     spearProjectile->shootTowards(targetPoint);

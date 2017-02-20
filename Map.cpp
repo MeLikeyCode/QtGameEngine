@@ -243,7 +243,7 @@ std::unordered_set<Entity *> Map::entities(Entity *collidingWith)
 
     QRectF bbox = collidingWith->boundingRect();
     bbox.moveTopLeft(collidingWith->pointPos());
-    std::unordered_set results = entities(bbox);
+    std::unordered_set<Entity*> results = entities(bbox);
 
     results.erase(collidingWith);   // remove entity itself
 
