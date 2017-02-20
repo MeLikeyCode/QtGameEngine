@@ -7,8 +7,9 @@
 
 class QPointF;
 
-/// An object that can move an Entity from its current position to a specified
-/// position.
+/// An object that can somehow move an Entity from its current position to a
+/// specified position. How the object moves depends on the concrete Mover
+/// class.
 ///
 /// Example usage
 /// =============

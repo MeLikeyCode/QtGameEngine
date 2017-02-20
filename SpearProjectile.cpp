@@ -7,15 +7,14 @@
 #include "Utilities.h"
 
 SpearProjectile::SpearProjectile(double range, double damage, std::unordered_set<Entity*> noDmgList):
-    Projectile(nullptr, new CBDamage(0,damage), nullptr,noDmgList),
+    Projectile(nullptr, new CBDamage(0,damage), new DRBDestroyProjectile(),noDmgList),
     range_(range),
     distTravelledSoFar_(0)
 {
     // set straight mover
     StraightMover* sm = new StraightMover(this);
     sm->setFaceTarget(true);
-
-    DRBDestroyProjectile d;
+    setMover(sm);
 
     // TODO: move to base class (if this needs to happen with all projectiles)
     setRotationPoint(QPointF(0,sprite()->boundingRect().height()/2));

@@ -18,8 +18,11 @@ class QTimer;
 /// SineMover* sm = new SineMover(entity);
 /// sm->setAmplitude(30);
 /// sm->setWavelength(60);
+/// sm->setSpeed(70);
 /// sm->moveEntity(toSomePoint);
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+///
+/// @author Abdullah Aghazadah
 class SineMover : Mover
 {
     Q_OBJECT

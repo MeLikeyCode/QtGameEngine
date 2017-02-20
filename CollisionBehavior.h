@@ -6,7 +6,7 @@ class Entity;
 /// An interface for behavior objects that decides what happens when two Entities
 /// collide.
 /// @author Abdullah Aghazadah
-/// 12/8/16
+/// @date 12/8/16
 class CollisionBehavior
 {
 public:

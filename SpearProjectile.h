@@ -7,10 +7,10 @@ class QPointF;
 class Map;
 
 /// Represents a Projectile that is a spear which simply goes from the start position
-/// towards the target position until it exceeds its range.
+/// towards the target position until it exceeds its range. When the SpearProjectile
+/// exceeds its range, it will simply be destroyed.
 /// @author Abdullah Aghazadah
 /// @date 5/24/16
-/// @see Projectile
 class SpearProjectile : public Projectile
 {
 public:

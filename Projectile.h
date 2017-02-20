@@ -32,7 +32,7 @@ class QTimer;
 ///
 /// Example usage:
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.cpp
-/// Projectile* p = new SomeConcreteProjectileClass(aMoveBehavior, aCollisionBehavior, listOfEntitiesToNotDmg);
+/// Projectile* p = new SomeConcreteProjectileClass(aMover, aCollisionBehavior, listOfEntitiesToNotDmg);
 /// p->setPointPos(somePos); // set the position of the projectile
 /// p->shootTowards(someOtherPos); // shoot the projectile towards the specified pos
 /// p->homeTowards(someEntity); // periodically redirects the projectile to follow said entity
@@ -54,7 +54,7 @@ class Projectile: public Entity
 {
     Q_OBJECT
 public:
-    Projectile(Mover *moveBehavior = nullptr,
+    Projectile(Mover *mover = nullptr,
                CollisionBehavior *collisionBehavior = nullptr,
                DestReachedBehavior* destReachedBeahvior = nullptr,
                std::unordered_set<Entity*> noDamageList = std::unordered_set<Entity*>());
@@ -71,7 +71,7 @@ public:
 
     // behaviors
     Mover* moveBehavior();
-    void setMoveBehavior(Mover* moveBehavior);
+    void setMover(Mover* moveBehavior);
 
     CollisionBehavior *collisionBehavior();
     void setCollisionBehavior(CollisionBehavior *collisionBehavior);
@@ -88,7 +88,7 @@ private:
     std::unordered_set<Entity*> noDamageList_;
 
     // behaviors
-    std::unique_ptr<Mover> moveBehavior_;
+    std::unique_ptr<Mover> mover_;
     std::unique_ptr<CollisionBehavior> collisionBehavior_;
     std::unique_ptr<DestReachedBehavior> destReachedBehavior_;
 

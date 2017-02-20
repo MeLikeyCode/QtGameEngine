@@ -8,6 +8,9 @@ class Projectile;
 ///
 /// Concrete Projectiles may destroy the projectile, explode
 /// it, etc...
+///
+/// @author Abdullah Aghazadah
+/// @date 2-18-17
 class DestReachedBehavior
 {
 public:
