@@ -14,10 +14,10 @@ ECPickUpItem::ECPickUpItem(Entity *entity):
     connect(entity,&Entity::collided,this,&ECPickUpItem::onCollide);
 }
 
-/// Executed whenever the controlled entity collides
+/// Executed whenever the controlled entity collides with anything.
 void ECPickUpItem::onCollide(Entity *controlledEntity, Entity *collidedWith)
 {
-    // do nothing if the type of the collided entity is not an item
+    // do nothing if it didnt colide with an item
     Item* asItem = dynamic_cast<Item*>(collidedWith);
     if (asItem == nullptr)
         return;

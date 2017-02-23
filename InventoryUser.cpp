@@ -28,8 +28,8 @@ QGraphicsItem *InventoryUser::getGraphicsItem()
 }
 
 /// Executed when an Item of the InventoryUser has been clicked.
-/// Will "use" the item if right clicked.
-/// Will drop the item if left clicked.
+/// Will "use" the item if left clicked.
+/// Will drop the item if right clicked.
 /// "use" depends on the type of the Item.
 /// If the Item is an EquipableItem, an attempt will be made to equip it into
 /// a viable slot. If no viable Slot is found, nothing happens. If a viable Slot

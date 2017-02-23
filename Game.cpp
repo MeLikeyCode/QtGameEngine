@@ -23,6 +23,7 @@
 #include "ECPathMover.h" // TODO: delete, test only
 #include "ECBodyThruster.h" // TODO: delete, test only
 #include "Sprite.h" // TODO: delete, test only
+#include "RangedWeaponSlot.h"; // TODO: delete, test only
 
 extern Entity* player;
 
@@ -167,7 +168,7 @@ void Game::mousePressEvent(QMouseEvent *event){
     // TODO: everything until end of this todo is test code, remove it
 
     if (event->button() == Qt::LeftButton)
-        player->slot("right hand melee")->use();
+        ((RangedWeaponSlot*)player->slot("ranged"))->use();
 
     if (event->button() == Qt::RightButton){
         // create an enemy for the player
@@ -327,6 +328,11 @@ void Game::addWatchedEntity(Entity *watched, Entity *watching, double range)
 
     // add emitted data
     watchedWatchingPairToEnterRangeEmitted_[watchedWatchingPair] = false; // initially not emitted
+
+    // listen to when either the watched or watching entities die
+    // (so we can update book keeping)
+    connect(watched,&QObject::destroyed,this,&Game::onWatchedEntityDies_);
+    connect(watching,&QObject::destroyed,this,&Game::onWatchingEntityDies_);
 }
 
 /// Returns true if the specified watched-watching pair exists.
@@ -397,6 +403,17 @@ void Game::removeWatchedEntity(Entity *watched)
     for (Entity* watchingEntity:watchingSet){
         removeWatchedEntity(watched,watchingEntity);
     }
+}
+
+/// Removes all the watched-watching pairs where the specified entity is the
+/// watching entity.
+/// In other words, effectively makes the specified entity stop watching all its
+/// watched entities.
+void Game::removeWatchingEntity(Entity *watching)
+{
+    std::set<Entity*> ents = watchedEntities(watching);
+    for (Entity* entity:ents)
+        removeWatchedEntity(entity,watching);
 }
 
 /// Returns all the entities that are being watched.
@@ -549,4 +566,18 @@ void Game::onEntityMoved(Entity *entity)
         }
     }
 
+}
+
+/// Executed when a watched entity dies.
+/// Will update book keeping.
+void Game::onWatchedEntityDies_(QObject *watchedEntity)
+{
+    removeWatchedEntity(static_cast<Entity*>(watchedEntity));
+}
+
+/// Executed when a watching entity dies.
+/// Will update book keeping.
+void Game::onWatchingEntityDies_(QObject *watchingEntity)
+{
+    removeWatchingEntity(static_cast<Entity*>(watchingEntity));
 }

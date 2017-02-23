@@ -47,12 +47,17 @@ void ECPathMover::stopMoving()
     pointsToFollow_.clear();    // reset variables
     targetPointIndex_ = 0;
 
-    // play stand animation
-    if (entity_->sprite()->hasAnimation("stand"))
-        entity_->sprite()->play("stand",-1,100);
-
     // set moving flag
     currentlyMoving_ = false;
+
+    if (entity_.isNull()) // if controlled entity is dead
+        return; // were done
+
+    // otherwise, play stand animation (if controlled entity has one)
+    Sprite* entitysSprite = entity_->sprite();
+    if (entitysSprite != nullptr)
+        if (entitysSprite->hasAnimation("stand"))
+            entity_->sprite()->play("stand",-1,100);
 }
 
 /// Returns true if the controlled entity is currently moving.
@@ -102,6 +107,10 @@ void ECPathMover::onPathCalculated_(std::vector<QPointF> path)
     // stop/clear previous movement
     stopMoving();
 
+    // if entity to move is dead by now, were done
+    if (entity_.isNull())
+        return;
+
     // set up variables for new path
     pointsToFollow_ = path;
     if (pointsToFollow_.size() > 1)
@@ -109,9 +118,11 @@ void ECPathMover::onPathCalculated_(std::vector<QPointF> path)
     connect(moveTimer_,SIGNAL(timeout()),this,SLOT(moveStep_()));
     moveTimer_->start(secondsToMs(frequency(stepSize_,entity_->speed())));
 
-    // play walk animation
-    if (entity_->sprite()->hasAnimation("walk"))
-        entity_->sprite()->play("walk",-1,100);
+    // play walk animation (if controlled entity has one)
+    Sprite* entitysSprite = entity_->sprite();
+    if (entitysSprite != nullptr)
+        if (entitysSprite->hasAnimation("walk"))
+            entity_->sprite()->play("walk",-1,100);
 }
 
 /// Executed periodically to take the controlled entity one step along its path.

@@ -28,7 +28,7 @@ class ECRotater;
 ///
 /// @author Abdullah Aghazadah
 /// @date 11/28/16
-class ECPathMover: public QObject
+class ECPathMover: public QObject // TODO: make ECPathMover a concrete Mover
 {
     Q_OBJECT
 public:

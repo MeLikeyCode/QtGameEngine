@@ -6,6 +6,8 @@
 #include "Sprite.h"
 #include "Entity.h"
 #include "Sound.h"
+#include <cassert>
+#include "CBDamage.h"
 
 Bow::Bow()
 {
@@ -35,40 +37,20 @@ void Bow::attack(QPointF targetPoint)
 {   
     soundEffect_->play(1);
 
-    Entity* owningEntity = inventory()->entity();     // Entity that owns this bow
-    Map* map = owningEntity->map();                          // Map that the owner is in
+    Entity* owningEntity = inventory()->entity();   // Entity that owns this bow
+    assert(owningEntity != nullptr);
+
+    Map* map = owningEntity->map();                 // Map that the owner is in
+    assert(map != nullptr);
 
     // create a spear projectile
     QPointF startPos = mapToMap(projectileSpawnPoint());
 
-    std::unordered_set<Entity*> noDamageList;
-    noDamageList.insert(owningEntity);
-    noDamageList.insert(this);
-
-    SpearProjectile* spearProjectile = new SpearProjectile(600,5);
+    SpearProjectile* spearProjectile = new SpearProjectile(600,50);
     map->addEntity(spearProjectile);
+    CBDamage* collisionBehavior = (CBDamage*)spearProjectile->collisionBehavior();
+    collisionBehavior->addException(owningEntity);
     spearProjectile->setPointPos(startPos);
     spearProjectile->shootTowards(targetPoint);
     spearProjectile->setPointZ(owningEntity->pointZ() + owningEntity->height());
-
-//    // create projectile (using Projectile and instantiating all the behaviors, etc...)
-//    ProjectileMoveBehaviorSine* mb = new ProjectileMoveBehaviorSine(100,200,1000,targetPoint);
-//    ProjectileCollisionBehaviorDamage* cb = new ProjectileCollisionBehaviorDamage(5);
-
-//    QPointF start = mapToMap(projectileSpawnPoint());
-
-//    Sprite* sprite = new Sprite();
-//    QPixmap pm = QPixmap(":resources/graphics/weapons/spear.png");
-//    sprite->setPixmap(pm);
-
-//    std::unordered_set<Entity*> noDamageList;
-//    noDamageList.insert(owningEntity);
-//    noDamageList.insert(this);
-
-//    Projectile* projectile = new Projectile(start,mb,cb,sprite,noDamageList,map);
-
-//    projectile->setStepSize(10);
-//    projectile->setStepFrequency(13);
-
-//    projectile->startMoving();
 }

@@ -86,6 +86,7 @@ void BodyThrust::setThrustDistance(double distance)
     thrustDistance_ = thrustLengthEachStep_ * numOfThrusts;
 }
 
+/// Executed periodically to take the entity one step closer to body thrusting.
 void BodyThrust::thrustStep_()
 {
     // if moved backward enough, stop moving
@@ -104,7 +105,12 @@ void BodyThrust::thrustStep_()
         return;
     }
 
-    Entity* theOwner = owner();
+    Entity* theOwner = owner(); // if the entity to thrust is dead, were done
+    if (theOwner == nullptr){
+        resetVariables();
+        timer_->disconnect();
+        return;
+    }
 
     // if still moving forward, kill things with tip, then move backward
     // due to collision

@@ -18,8 +18,6 @@ public:
 
     virtual void shootTowards(const QPointF& pos);
 
-public slots:
-    void onMoved_(Entity* entity, QPointF fromPos, QPointF toPos);
 private:
     double range_;
     double distTravelledSoFar_;

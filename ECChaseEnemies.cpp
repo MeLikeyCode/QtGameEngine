@@ -152,8 +152,11 @@ void ECChaseEnemies::onEntityLeavesRange_(Entity *watched, Entity *watching, dou
 /// Takes controlled entity one step closer to chase victim :P (if chasing something).
 void ECChaseEnemies::chaseStep_()
 {
-    // make sure is actually chasing something
-    assert(!targetEntity_.isNull());
+    // if whats being chased has died, stop chasing
+    if (targetEntity_.isNull()){
+        stopChasing();
+        return;
+    }
 
     // make sure entity and one being chased are in a map
     Map* entitysMap = controlledEntity_->map();

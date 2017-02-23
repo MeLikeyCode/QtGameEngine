@@ -62,6 +62,7 @@ public:
     bool watchedWatchingPairExists(Entity* watched, Entity* watching);
     void removeWatchedEntity(Entity* watched, Entity* watching);
     void removeWatchedEntity(Entity* watched);
+    void removeWatchingEntity(Entity* watching);
     std::set<Entity*> watchedEntities();
     std::set<Entity*> watchedEntities(Entity* of);
     std::set<Entity*> watchingEntities();
@@ -99,6 +100,8 @@ signals:
 public slots:
     void updateGuiPositions();
     void onEntityMoved(Entity* entity);
+    void onWatchedEntityDies_(QObject *watchedEntity);
+    void onWatchingEntityDies_(QObject *watchingEntity);
 
 private:
     // main private attributes

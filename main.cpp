@@ -20,6 +20,8 @@
 #include "InventoryViewer.h"
 #include "InventoryUser.h"
 #include "Sound.h"
+#include "Bow.h"
+#include "RangedWeaponSlot.h"
 
 Entity* player;
 
@@ -81,23 +83,35 @@ int main(int argc, char *argv[])
 
     player->setPointPos(QPointF(200,200));
 
-    // create a weapon for the player
+    // create some slots for the entity
     WeaponSlot* rightHandMelee = new WeaponSlot();
     rightHandMelee->setName("right hand melee");
     rightHandMelee->setPosition(QPointF(25,50));
     player->addSlot(rightHandMelee);
 
+    RangedWeaponSlot* rangedSlot = new RangedWeaponSlot();
+    rangedSlot->setName("ranged");
+    rangedSlot->setPosition(QPointF(50,25));
+    player->addSlot(rangedSlot);
+
+    // add spear to entity's inventory
     Spear* spear = new Spear();
     player->inventory()->addItem(spear);
-    rightHandMelee->equip(spear);
 
-//    // create an enemy for the player
+
+    // add bow to entitys inventory
+    Bow* bow = new Bow();
+    player->inventory()->addItem(bow);
+    rangedSlot->equip(bow);
+
+
+//    // create an entity that will thrust nearby enemy entities
 //    Entity* enemy = new Entity();
 //    map1->addEntity(enemy);
 //    ECBodyThruster* bodyThrustContr = new ECBodyThruster(*enemy);
 //    enemy->addEnemyGroup(0);
 
-//    // create an enemy that attacks with weapon (as a bonus)
+//    // create an entity that attacks nearby enemy entites with weapon
 //    Entity* enemy2 = new Entity();
 //    map1->addEntity(enemy2);
 
