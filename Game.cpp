@@ -36,7 +36,7 @@ Game::Game(MapGrid *mapGrid, int xPosOfStartingMap, int yPosOfStartingMap):
     qRegisterMetaType<std::vector<QPointF>>();
 
     for (Map* map:mapGrid_->maps()){
-        map->setGame(this);
+        map->setGame_(this);
     }
     setMouseTracking(true);
 
@@ -70,20 +70,27 @@ MapGrid *Game::mapGrid()
 
 /// Sets the current Map that the Game is visualizing.
 void Game::setCurrentMap(Map *map){
+    assert(map != nullptr);
+
     Map* oldMap = currentMap_;
     currentMap_ = map;
+
     setScene(currentMap_->scene());
-    setSceneRect(0,0,width(),height());  
+    setSceneRect(0,0,width(),height());
+    map->setGame_(this);
 
     // move guis over
     for (Gui* gui:guis_){
         scene()->addItem(gui->getGraphicsItem());
     }
 
-    emit mapChanged(oldMap,map);
+    // emit map changed signal
+    if (oldMap != currentMap_)
+        emit mapChanged(oldMap,map);
 }
 
-/// Returns the current Map.
+/// Returns the Game's current Map.
+/// The current Map is the one currently being visualized.
 Map *Game::currentMap(){
     return currentMap_;
 }

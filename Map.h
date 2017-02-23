@@ -16,13 +16,19 @@ class Sprite;
 class WeatherEffect;
 
 /// Represents a map which can contain a bunch of interacting Entities.
+///
 /// A Map has a PathingMap which keeps track of which cells are free and
 /// which are blocked. Each Entity can also contain its own PathingMap
 /// therefore the Map is notified every time an Entity is added/moved
 /// so that the Map's PathingMap can be updated accordingly.
+///
+/// A Map can be visualized by a Game. If the Map is currently being visualized
+/// by a game the game() function will return that Game, otherwise it will return
+/// nullptr.
 class Map: public QObject // so we can use QPointer<Map>
 {
     Q_OBJECT
+    friend class Game; // game needs to be able to set game_ ptr of Map
 public:
     enum Z_VALUES {
         GUI_Z_VALUE = 3,
@@ -62,7 +68,6 @@ public:
     QGraphicsScene* scene();
 
     Game* game();
-    void setGame(Game* game);
 
     // for testing
     void drawPathingMap();
@@ -119,6 +124,7 @@ private:
 
     // helper functions
     void setFadingBorder_();
+    void setGame_(Game* game);
 
 };
 

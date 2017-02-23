@@ -23,6 +23,8 @@
 #include "Bow.h"
 #include "RangedWeaponSlot.h"
 #include "PathMover.h"
+#include "ECMoveToNextMap.h"
+#include "ECGrabCurrentMap.h"
 
 Entity* player;
 
@@ -81,6 +83,8 @@ int main(int argc, char *argv[])
     ECRotateToMouse* rotContr = new ECRotateToMouse(*player);
     ECMoveInResponseToKeyboardRelativeToScreen* moveContr = new ECMoveInResponseToKeyboardRelativeToScreen(player);
     ECGrabCam* grabCamContr = new ECGrabCam(player);
+    ECMoveToNextMap* moveToNMC = new ECMoveToNextMap(player);
+    ECGrabCurrentMap* grabCM = new ECGrabCurrentMap(player);
 
     player->setPointPos(QPointF(200,200));
 

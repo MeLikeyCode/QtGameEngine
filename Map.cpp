@@ -641,7 +641,9 @@ Game *Map::game()
     return game_;
 }
 
-void Map::setGame(Game *game)
+/// Sets the Game that is currently visualizing the Map.
+/// If no game is currently visualizing the Map, will be nullptr.
+void Map::setGame_(Game *game)
 {
     // if the map has a previous game, stop listening to that games events
     if (game_){
