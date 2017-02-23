@@ -346,6 +346,28 @@ WeatherEffect *Map::weatherEffect()
     return weather_;
 }
 
+/// Executed when the game's camera moves around its current map.
+/// will emit camMoved() if its current map is this map.
+void Map::onCamMoved_(QPointF newCamPos)
+{
+    if (game()->currentMap() == this)
+        emit camMoved(newCamPos);
+}
+
+/// Executed when the game changes its current map.
+/// If the game changed it to this map, will emit setAsCurrentMap() signal.
+/// If the game changed it from this map to another map, will emit
+/// unsetAsCurrentMap() signal.
+/// If the game changed it from another map to another map, will do nothing.
+void Map::onMapChanged_(Map *oldMap, Map *newMap)
+{
+    if (newMap == this)
+        emit setAsCurrentMap();
+
+    if (oldMap == this && newMap != this)
+        emit unsetAsCurrentMap();
+}
+
 /// Sets a fading border around the map.
 void Map::setFadingBorder_()
 {
@@ -621,5 +643,18 @@ Game *Map::game()
 
 void Map::setGame(Game *game)
 {
+    // if the map has a previous game, stop listening to that games events
+    if (game_){
+        disconnect(game_, &Game::camMoved, this, &Map::onCamMoved_);
+        disconnect(game_,&Game::mapChanged,this,&Map::onMapChanged_);
+    }
+
+    // set internal game var
     game_ = game;
+
+    // listen to new game
+    if (game != nullptr){
+        connect(game_, &Game::camMoved, this, &Map::onCamMoved_);
+        connect(game, &Game::mapChanged, this, &Map::onMapChanged_);
+    }
 }

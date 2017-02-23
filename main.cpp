@@ -147,12 +147,5 @@ int main(int argc, char *argv[])
     InventoryUser* invUser = new InventoryUser(game,player->inventory());
     game->addGui(invUser);
 
-    // = test path mover
-    Entity* entityForPm = new Entity();
-    map1->addEntity(entityForPm);
-
-    PathMover* pm = new PathMover(entityForPm);
-    pm->moveEntity(QPointF(600,200));
-
     return a.exec();
 }

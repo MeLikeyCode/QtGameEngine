@@ -16,10 +16,6 @@ class Sprite;
 class WeatherEffect;
 
 /// Represents a map which can contain a bunch of interacting Entities.
-///
-/// The only thing that can be added to a map is an Entity (or one of its
-/// sub classes).
-///
 /// A Map has a PathingMap which keeps track of which cells are free and
 /// which are blocked. Each Entity can also contain its own PathingMap
 /// therefore the Map is notified every time an Entity is added/moved
@@ -87,6 +83,23 @@ public:
 
     void setWeatherEffect(WeatherEffect* weatherEffect);
     WeatherEffect *weatherEffect();
+
+signals:
+    /// Emitted when the Map is set as the current Map for the game.
+    void setAsCurrentMap();
+
+    /// Emitted when the Map is unset as the current Map for the game.
+    /// I.e. another Map becomes the current map of the game.
+    void unsetAsCurrentMap();
+
+    /// Emitted when the game camera moves around the Map.
+    /// This is only emitted when this map is set as the current Map.
+    void camMoved(QPointF newCamPos);
+
+public slots:
+    void onCamMoved_(QPointF newCamPos);
+    void onMapChanged_(Map* oldMap, Map* newMap);
+
 private:
     int width_;
     int height_;

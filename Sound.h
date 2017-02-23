@@ -9,9 +9,11 @@
 /// Represents a sound that can be played a certain number of times (including
 /// an infinite number of times).
 ///
-/// Example:
+/// Example usage:
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.cpp
 /// Sound* sound = new Sound("qrc:/resources/sounds/music.mp3");
 /// sound->play(-1); // play the Sound an infinite number of times (loop infinitely)
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 /// @author Abdullah Aghazadah
 /// @date 2/9/2016
 class Sound: public QObject

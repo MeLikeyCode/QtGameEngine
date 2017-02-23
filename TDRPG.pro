@@ -107,7 +107,8 @@ SOURCES += main.cpp \
     SineMover.cpp \
     DestReachedBehavior.cpp \
     DRBDestroyProjectile.cpp \
-    PathMover.cpp
+    PathMover.cpp \
+    PositionableSound.cpp
 
 HEADERS  += \
     Map.h \
@@ -200,7 +201,8 @@ HEADERS  += \
     SineMover.h \
     DestReachedBehavior.h \
     DRBDestroyProjectile.h \
-    PathMover.h
+    PathMover.h \
+    PositionableSound.h
 
 RESOURCES += \
     res.qrc

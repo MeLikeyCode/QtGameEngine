@@ -97,6 +97,10 @@ signals:
     /// @param range the range of the wathing entity that the watched entity just left.
     void watchedEntityLeavesRange(Entity* watched, Entity* watching, double range);
 
+    /// Emitted when the camera pans (moves).
+    /// Tells you the new center position of the camera.
+    void camMoved(QPointF newPos);
+
 public slots:
     void updateGuiPositions();
     void onEntityMoved(Entity* entity);

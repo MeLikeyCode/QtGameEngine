@@ -96,6 +96,8 @@ void Game::setCenterCamPos(QPointF position)
     double camHeight = this->sceneRect().height();
     QPointF topLeft(position.x() - camWidth/2,position.y() - camHeight/2);
     this->setSceneRect(topLeft.x(),topLeft.y(),camWidth,camHeight);
+
+    emit camMoved(position);
 }
 
 /// Returns the pos of the center of the camera.
@@ -120,6 +122,8 @@ void Game::moveCam(QVector2D byVector)
     double oldWidth = this->sceneRect().width();
     double oldHeight = this->sceneRect().height();
     this->setSceneRect(newPoint.x(), newPoint.y(), oldWidth,oldHeight);
+
+    emit camMoved(centerCamPos());
 }
 
 /// Moves the camera up by the specified amount.
