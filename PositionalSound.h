@@ -10,7 +10,11 @@ class Map;
 class Sound;
 
 /// Represents a sound object you can put in a Map. The furter the camera of
-/// the map is from the sound object, the lower its volume.
+/// the Map is from the sound object, the lower its volume. When the
+/// PositionalSound's Map is not being visualized, it is muted. When it's Map
+/// is being visualized, it is unmuted. So, in summary, PositionalSounds can only
+/// be heard when their Map is being visualized, and their volume depends on
+/// how far the camera is from them.
 ///
 /// Exmaple usage:
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.cpp
@@ -46,8 +50,6 @@ private:
 
     // helper fcn
     int getCalculatedVolume_();
-    void setMap_(Map* map);
-
 };
 
 #endif // POSITIONALSOUND_H

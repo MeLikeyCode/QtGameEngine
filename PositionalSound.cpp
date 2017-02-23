@@ -12,7 +12,10 @@ PositionalSound::PositionalSound(std::string filePath, QPointF pos):
     sound_.reset(new Sound(filePath));
 }
 
-/// Plays the PositionalSound.
+/// Plays the PositionalSound the specified number of times (pass -1 for infinite).
+/// PositionalSounds can only be heard if their Map is being visualized (but they
+/// continue to seek). If play() is called while the sound is already playing,
+/// it will simply restart right away.
 void PositionalSound::play(int numOfTimes)
 {
     sound_->play(numOfTimes);
@@ -26,26 +29,37 @@ void PositionalSound::play(int numOfTimes)
         }
     }
 
-    // otherwise, mute the sound
-    sound_.
+    // if not in a map, or map not visualized by game, mute sound
+    sound_->setMute(true);
 }
 
 /// Sets the overall volume of the PositionalSound.
-/// Note that the volume will still adjust as the camera is panned around.
+/// Note that the actual volume will still adjust as the camera is panned around.
 void PositionalSound::setVolume(int volume)
 {
     volume_ = volume;
     sound->setVolume(getCalculatedVolume_());
 }
 
-/// Executed when the Map that that positional sound is in is visualized.
-/// If were supposed to be playing, will calculate volume and play.
+/// Executed when the camera moves on the PositionalSound's Map (I.e. when the
+/// camera pans). Will adjust the volume of the sound accordingly.
+void PositionalSound::onCamMoved_(QPointF newCamPos)
+{
+    sound_->setVolume(getCalculatedVolume_());
+}
+
+/// Executed when the Map that the PositionalSound is in is visualized.
+/// Will unmute the sound.
 void PositionalSound::onMapVisualized_()
 {
-    if (shouldBePlaying_){
-        sound_->setVolume(getCalculatedVolume_());
-        play()
-    }
+    sound_->setMute(false);
+}
+
+/// Executed when the Map that the PositionalSound is in is no longer visualized.
+/// Will mute the sound.
+void PositionalSound::onMapNoLongerVisualized_()
+{
+    sound_->setMute(true);
 }
 
 /// Based on the volume of the PositionalSound and its current distance
@@ -57,13 +71,4 @@ int PositionalSound::getCalculatedVolume_()
         distFromCamera = 1;
     int calculatedVolume = 1/distFromCamera * volume_;
     return calculatedVolume;
-}
-
-/// Sets the Map that the positional sound is in.
-void PositionalSound::setMap_(Map *map)
-{
-    // if had an old map, stop listening to it
-
-
-    map_ = map;
 }
