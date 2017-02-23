@@ -1,5 +1,5 @@
-#ifndef POSITIONABLESOUND_H
-#define POSITIONABLESOUND_H
+#ifndef POSITIONALSOUND_H
+#define POSITIONALSOUND_H
 
 #include <QPointF>
 #include <string>
@@ -14,21 +14,19 @@ class Sound;
 ///
 /// Exmaple usage:
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.cpp
-/// PositionableSound* ps = new PositionableSound(soundFile,pos,map);
+/// PositionalSound* ps = new PositionalSound(soundFile,pos);
 /// Map* map; // assume map exists
-/// map->addPositionableSound(ps);
+/// map->addPositionalSound(ps);
 /// ps->play(3) // play the sound 3 times (pass -1 to play an infinite num times)
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 /// @author Abdullah Aghazadah
 /// @date 2/22/17
-class PositionableSound: public QObject
+class PositionalSound: public QObject
 {
     Q_OBJECT
     friend class Map;
 public:
-    PositionableSound(std::string filePath, QPointF pos);
-
-
+    PositionalSound(std::string filePath, QPointF pos);
 
     void play(int numOfTimes);
     void stop();
@@ -36,16 +34,20 @@ public:
 
 public slots:
     void onCamMoved_(QPointF newCamPos);
+    void onMapVisualized_();
+    void onMapNoLongerVisualized_();
 private:
     Map* map_; // the map the sound is in
     QPointF pos_; // the position of the sound
     int volume_;
+    bool shouldBePlaying_;
 
     std::unique_ptr<Sound> sound_; // internal sound (used to actually play the sound)
 
     // helper fcn
     int getCalculatedVolume_();
+    void setMap_(Map* map);
 
 };
 
-#endif // POSITIONABLESOUND_H
+#endif // POSITIONALSOUND_H

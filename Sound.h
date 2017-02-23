@@ -26,6 +26,13 @@ public:
     void stop();
     void setVolume(int volume);
 
+signals:
+    /// Emitted when the Sound is finished playing the number of times that it
+    /// has been asked to play.
+    /// @note This signal will never emit if the sound has been asked to play
+    /// an infinite number of times (i.e. -1 is passed in play()).
+    void finished(Sound* sound);
+
 public slots:
     void stateChanged_();
 private:

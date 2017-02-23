@@ -98,7 +98,7 @@ signals:
     void unsetAsCurrentMap();
 
     /// Emitted when the game camera moves around the Map.
-    /// This is only emitted when this map is set as the current Map.
+    /// This is only emitted when this map is set as the current Map for the Game.
     void camMoved(QPointF newCamPos);
 
 public slots:
@@ -114,7 +114,7 @@ private:
     PathingMap pathingMap_;
     std::unordered_set<Entity*> entities_;
     std::vector<TerrainLayer*> terrainLayers_;
-    QPointer<Game> game_;
+    QPointer<Game> game_; // the game that is currently visualizing the map, null if not currently being visualizing
     QPointer<WeatherEffect> weather_;
 
     // for testing
