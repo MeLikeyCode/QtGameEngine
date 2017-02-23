@@ -26,6 +26,8 @@ public:
     void play(int numOfTimes);
     void stop();
     void setVolume(int volume);
+    void setMute(bool tf);
+
     QMediaPlayer::State state();
 
 signals:

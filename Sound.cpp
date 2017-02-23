@@ -44,6 +44,12 @@ void Sound::setVolume(int volume)
     mediaPlayer_->setVolume(volume);
 }
 
+/// Mutes/unmutes the Sound.
+void Sound::setMute(bool tf)
+{
+    mediaPlayer_->setMuted(tf);
+}
+
 /// Returns the state of the Sound (i.e. playing, stopped, etc...)
 QMediaPlayer::State Sound::state()
 {
