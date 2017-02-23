@@ -22,6 +22,7 @@
 #include "Sound.h"
 #include "Bow.h"
 #include "RangedWeaponSlot.h"
+#include "PathMover.h"
 
 Entity* player;
 
@@ -145,6 +146,13 @@ int main(int argc, char *argv[])
     // create a gui that allows visualizing/using of inventory of player
     InventoryUser* invUser = new InventoryUser(game,player->inventory());
     game->addGui(invUser);
+
+    // = test path mover
+    Entity* entityForPm = new Entity();
+    map1->addEntity(entityForPm);
+
+    PathMover* pm = new PathMover(entityForPm);
+    pm->moveEntity(QPointF(600,200));
 
     return a.exec();
 }

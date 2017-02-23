@@ -90,7 +90,6 @@ SOURCES += main.cpp \
     ECRotater.cpp \
     ECChaseEnemies.cpp \
     ECFieldOfViewEmitter.cpp \
-    ECPathMover.cpp \
     ECMoveInResponseToKeyboardRelativeToSelf.cpp \
     ECGrabCam.cpp \
     ECBodyThruster.cpp \
@@ -107,7 +106,8 @@ SOURCES += main.cpp \
     StraightMover.cpp \
     SineMover.cpp \
     DestReachedBehavior.cpp \
-    DRBDestroyProjectile.cpp
+    DRBDestroyProjectile.cpp \
+    PathMover.cpp
 
 HEADERS  += \
     Map.h \
@@ -183,7 +183,6 @@ HEADERS  += \
     ECRotater.h \
     ECChaseEnemies.h \
     ECFieldOfViewEmitter.h \
-    ECPathMover.h \
     ECMoveInResponseToKeyboardRelativeToSelf.h \
     ECGrabCam.h \
     ECBodyThruster.h \
@@ -200,7 +199,8 @@ HEADERS  += \
     StraightMover.h \
     SineMover.h \
     DestReachedBehavior.h \
-    DRBDestroyProjectile.h
+    DRBDestroyProjectile.h \
+    PathMover.h
 
 RESOURCES += \
     res.qrc

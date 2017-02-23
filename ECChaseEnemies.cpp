@@ -1,6 +1,6 @@
 #include "ECChaseEnemies.h"
 #include "ECFieldOfViewEmitter.h"
-#include "ECPathMover.h"
+#include "PathMover.h"
 #include <cassert>
 #include <QTimer>
 #include "Map.h"
@@ -11,7 +11,7 @@ ECChaseEnemies::ECChaseEnemies(Entity &entity):
     stopDistance_(15),
     controlledEntity_(&entity),
     fovEmitter_(new ECFieldOfViewEmitter(entity)),
-    pathMover_(new ECPathMover(entity)),
+    pathMover_(new PathMover(&entity)),
     chaseTimer_(new QTimer(this)),
     shouldChase_(true),
     paused_(false),
@@ -34,13 +34,14 @@ ECChaseEnemies::ECChaseEnemies(Entity &entity):
     connect(fovEmitter_.get(),&ECFieldOfViewEmitter::entityLeavesFOV,this,&ECChaseEnemies::onEntityLeavesFOV_);
 
     // listen to path mover
-    connect(pathMover_.get(),&ECPathMover::moved,this,&ECChaseEnemies::onEntityMoved_);
+    connect(pathMover_.get(),&PathMover::moved,this,&ECChaseEnemies::onEntityMoved_);
 
     // connect timer
     connect(chaseTimer_,&QTimer::timeout,this,&ECChaseEnemies::chaseStep_);
 
-    // make controlled entity always face target position
+    // set up path mover
     pathMover_->setAlwaysFaceTargetPosition(true);
+    pathMover_->setEntity(&entity);
 }
 
 /// Makes it so the controlled entity stops chasing enemy entities.
@@ -138,7 +139,7 @@ void ECChaseEnemies::onEntityMoved_()
 /// Will stop moving towards the chased entity.
 void ECChaseEnemies::onEntityEntersRange_(Entity *watched, Entity *watching, double range)
 {
-    pathMover_->stopMoving();
+    pathMover_->stopMovingEntity();
     paused_ = true;
 }
 
@@ -153,7 +154,8 @@ void ECChaseEnemies::onEntityLeavesRange_(Entity *watched, Entity *watching, dou
 void ECChaseEnemies::chaseStep_()
 {
     // if whats being chased has died, stop chasing
-    if (targetEntity_.isNull()){
+    // if the thing chasing has died, stop chasing
+    if (targetEntity_.isNull() || controlledEntity_.isNull()){
         stopChasing();
         return;
     }
@@ -168,5 +170,5 @@ void ECChaseEnemies::chaseStep_()
 
     // order to move towards chase victim :P
     if (!paused_)
-        pathMover_->moveEntityTo(targetEntity_->pointPos());
+        pathMover_->moveEntity(targetEntity_->pointPos());
 }
