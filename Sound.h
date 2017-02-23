@@ -7,7 +7,8 @@
 #include <QTimer>
 
 /// Represents a sound that can be played a certain number of times (including
-/// an infinite number of times).
+/// an infinite number of times). The sound will emit a signal when its done
+/// playing however many times it has been asked to play.
 ///
 /// Example usage:
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.cpp
@@ -25,6 +26,7 @@ public:
     void play(int numOfTimes);
     void stop();
     void setVolume(int volume);
+    QMediaPlayer::State state();
 
 signals:
     /// Emitted when the Sound is finished playing the number of times that it

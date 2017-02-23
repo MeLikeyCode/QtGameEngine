@@ -15,15 +15,17 @@ PositionalSound::PositionalSound(std::string filePath, QPointF pos):
 /// Plays the PositionalSound.
 void PositionalSound::play(int numOfTimes)
 {
-    assert(map_ != nullptr);
-    Game* game = map_->game();
-    if (game == nullptr) // do nothing if map_ is not currently being visualized
-        return;
-
     // set volume based on distance from camera
     sound->setVolume(getCalculatedVolume_());
 
     sound_->play(numOfTimes);
+
+    // if currently in a map that is in a game, play
+    if (map_ != nullptr){
+        Game* game = map_->game();
+        if (game != nullptr)
+
+    }
 }
 
 /// Sets the overall volume of the PositionalSound.

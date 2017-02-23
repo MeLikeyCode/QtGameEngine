@@ -44,6 +44,12 @@ void Sound::setVolume(int volume)
     mediaPlayer_->setVolume(volume);
 }
 
+/// Returns the state of the Sound (i.e. playing, stopped, etc...)
+QMediaPlayer::State Sound::state()
+{
+    return mediaPlayer_->state();
+}
+
 /// Executed each time the state of the internal MediaPlayer changes.
 void Sound::stateChanged_()
 {
