@@ -56,10 +56,10 @@ Game::Game(MapGrid *mapGrid, int xPosOfStartingMap, int yPosOfStartingMap):
 
 /// Launches the Game.
 void Game::launch(){
-    showNormal(); // TODO: eventually should showFullscreen() (or parametrize to
+    //showNormal(); // TODO: eventually should showFullscreen() (or parametrize to
                   // allow launching normal or full screen
 
-     //showFullScreen();
+     showFullScreen();
     setSceneRect(0,0,width(),height());
 }
 
@@ -220,14 +220,6 @@ void Game::keyPressEvent(QKeyEvent *event)
 
     if (!event->isAutoRepeat()){
         keysPressed_.insert(event->key());
-    }
-
-    // TODO: remove, test
-    if (event->key() == Qt::Key_E){
-        currentMap()->weatherEffect()->start();
-    }
-    if (event->key() == Qt::Key_R){
-        currentMap()->weatherEffect()->stop();
     }
 }
 

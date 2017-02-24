@@ -8,6 +8,8 @@
 
 FogWeather::FogWeather() :
     fogTimer_(new QTimer(this)),
+    fog1_(nullptr),
+    fog2_(nullptr),
     started_(false),
     initial_(true),
     maxFogOpacity_(0.5)
@@ -44,8 +46,13 @@ void FogWeather::stop()
 {
     fogTimer_->stop();
 
-    map_->scene()->removeItem(fog1_);
-    map_->scene()->removeItem(fog2_);
+    QGraphicsScene* s = map_->scene();
+
+    // remove the fog graphics (if they have been created)
+    if (fog1_ != nullptr)
+        map_->scene()->removeItem(fog1_);
+    if (fog2_ != nullptr)
+        map_->scene()->removeItem(fog2_);
 
     initial_ = true;
     started_ = false;

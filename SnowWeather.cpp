@@ -10,6 +10,8 @@
 SnowWeather::SnowWeather():
     globularSnowTimer_(new QTimer(this)),
     linearSnowTimer_(new QTimer(this)),
+    snow1_(nullptr),
+    snow2_(nullptr),
     started_(false),
     initialGlobular_(true),
     initialLinear_(true)
@@ -63,8 +65,11 @@ void SnowWeather::stop()
     }
     globularSnows_.clear();
 
-    map_->scene()->removeItem(snow1_);
-    map_->scene()->removeItem(snow2_);
+    // remove snow graphics (if they have been created)
+    if (snow1_ != nullptr)
+        map_->scene()->removeItem(snow1_);
+    if (snow2_ != nullptr)
+        map_->scene()->removeItem(snow2_);
 
     globularSnowTimer_->stop();
     linearSnowTimer_->stop();

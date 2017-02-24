@@ -6,6 +6,7 @@
 #include <QPointer>
 #include "Game.h"
 #include <QObject>
+#include "PositionalSound.h"
 
 class QPolygonF;
 class QGraphicsItem;
@@ -74,7 +75,7 @@ public:
 
     double distance(Entity* e1, Entity* e2);
 
-    /// getting all entities at a certain point/region
+    /// getting all entities at a certain point/region/colliding w other entities
     Entity* closest(const QPointF& point);
     std::unordered_set<Entity*> entities(const QRectF& inRegion);
     std::unordered_set<Entity *> entities(const QPointF& atPoint);
@@ -86,8 +87,10 @@ public:
 
     void playOnce(Sprite* sprite, std::string animation, int delaybwFramesMS, QPointF atPos);
 
-    void setWeatherEffect(WeatherEffect* weatherEffect);
-    WeatherEffect *weatherEffect();
+    void addWeatherEffect(WeatherEffect &weatherEffect);
+    void removeWeatherEffect(WeatherEffect &weatherEffect);
+
+    void addPositionalSound(PositionalSound* sound);
 
 signals:
     /// Emitted when the Map is set as the current Map for the game.
@@ -115,7 +118,7 @@ private:
     std::unordered_set<Entity*> entities_;
     std::vector<TerrainLayer*> terrainLayers_;
     QPointer<Game> game_; // the game that is currently visualizing the map, null if not currently being visualizing
-    QPointer<WeatherEffect> weather_;
+    std::set<WeatherEffect*> weatherEffects_;
 
     // for testing
     std::vector<QGraphicsItem*> drawings_;

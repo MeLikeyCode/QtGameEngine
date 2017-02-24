@@ -50,6 +50,7 @@ private:
 
     // helper fcn
     int getCalculatedVolume_();
+    void setMap_(Map* map);
 };
 
 #endif // POSITIONALSOUND_H

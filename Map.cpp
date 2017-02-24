@@ -9,6 +9,8 @@
 #include "WeatherEffect.h"
 #include <QGraphicsOpacityEffect>
 #include "Sprite.h"
+#include "Sound.h"
+#include "PositionalSound.h"
 
 // TODO remove test
 #include <QDebug>
@@ -19,7 +21,6 @@ Map::Map(PathingMap pathingMap):
     cellSize_(pathingMap.cellSize()),
     pathingMap_(pathingMap),
     scene_(new QGraphicsScene(this)),
-    weather_(nullptr),
     game_(nullptr)
 {
     scene_->setSceneRect(0,0,width(),height());
@@ -322,28 +323,38 @@ void Map::playOnce(Sprite *sprite, std::string animationName, int delaybwFramesM
     sprite->play(animationName,1,delaybwFramesMS);
 }
 
-/// Sets the weather effect for Map. Pass in nullptr for no weather.
-/// If there is already a weather effect, will stop it first.
-void Map::setWeatherEffect(WeatherEffect *weather)
+/// Adds the specified WeatherEffect to the Map. Will automatically start the
+/// WeatherEffect. A Map can have multiple weather effects active at the same
+/// time. You can use WeatherEffect::start() and WeatherEffect::stop() to
+/// start/stop a certain WeatherEffect or you can completely remove it by using
+/// removeWeatherEffect().
+void Map::addWeatherEffect(WeatherEffect& weatherEffect)
 {
-    if (weather_){
-      weather_->stop();
-    }
+    // TODO: handle case when weather effect is already in another map
 
-    weather_ = weather;
-
-    if (weather){
-        weather->map_ = this;
-        weather->start();
-    }
+    weatherEffect.map_ = this;
+    weatherEffect.start();
+    weatherEffects_.insert(&weatherEffect);
 }
 
-/// Returns the WeatherEffect of the Map. Returns nullptr if the Map has no
-/// WeatherEffect. You can start and stop the returned WeatherEffect via
-/// WeatherEffect::start()/WeatherEffect::stop().
-WeatherEffect *Map::weatherEffect()
+/// Removes the specified WeatherEffect from the Map.
+/// Will automatically stop the WeatherEffect.
+/// @see addWeatherEffect()
+void Map::removeWeatherEffect(WeatherEffect& weatherEffect)
 {
-    return weather_;
+    // cannot remove a weather effect that has not been added
+    assert(weatherEffects_.count(&weatherEffect) != 0);
+
+    weatherEffect.stop();
+    weatherEffect.map_ = nullptr;
+    weatherEffects_.erase(&weatherEffect);
+}
+
+/// Adds a PositionalSound to the Map.
+/// PositionalSounds adjust their volume based on their distance from the camera.
+void Map::addPositionalSound(PositionalSound *sound)
+{
+    sound->setMap_(this);
 }
 
 /// Executed when the game's camera moves around its current map.

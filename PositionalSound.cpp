@@ -6,6 +6,7 @@
 #include <cassert>
 
 PositionalSound::PositionalSound(std::string filePath, QPointF pos):
+    map_(nullptr),
     pos_(pos),
     volume_(100)
 {
@@ -25,7 +26,9 @@ void PositionalSound::play(int numOfTimes)
         Game* game = map_->game();
         if (game != nullptr){
             // set volume based on distance from camera
-            sound->setVolume(getCalculatedVolume_());
+            int vol = getCalculatedVolume_();
+            sound_->setVolume(vol);
+            return;
         }
     }
 
@@ -38,7 +41,7 @@ void PositionalSound::play(int numOfTimes)
 void PositionalSound::setVolume(int volume)
 {
     volume_ = volume;
-    sound->setVolume(getCalculatedVolume_());
+    sound_->setVolume(getCalculatedVolume_());
 }
 
 /// Executed when the camera moves on the PositionalSound's Map (I.e. when the
@@ -66,9 +69,41 @@ void PositionalSound::onMapNoLongerVisualized_()
 /// from the camera, will return a calculated volume.
 int PositionalSound::getCalculatedVolume_()
 {
-    int distFromCamera = distance(game->centerCamPos(),pos_);
-    if (distance < 1) // clamp to 1 or greater
-        distFromCamera = 1;
-    int calculatedVolume = 1/distFromCamera * volume_;
+    assert(map_ != nullptr); // fcn cannot be called if map_ is null
+    Game* game = map_->game();
+    assert(game != nullptr); // fcn cannot be called if map_ is not being visualized
+
+    const double FALLOFF_SLOPE = 0.0005; // rate at which volume falls as distance grows
+    double distFromCamera = distance(game->centerCamPos(),pos_);
+    double someFrac = -FALLOFF_SLOPE * distFromCamera + 1;
+    if (someFrac < 0)
+        someFrac = 0;
+    if (someFrac > 1)
+        someFrac = 1;
+    int calculatedVolume = someFrac * volume_;
     return calculatedVolume;
+}
+
+/// Sets the Map of the PositionalSound. Called by Map when Map::addPositionalSound()
+/// fcn is used.
+void PositionalSound::setMap_(Map *map)
+{
+    // PositionalSound cannot change maps yet (maybe in future?).
+    // Once its in a map, has to stay in that map.
+    assert(map_ == nullptr);
+
+    map_ = map; // update internal variable
+
+    // if map is currently being visualized, unmute sound
+    Game* game = map_->game();
+    if (game != nullptr){
+        sound_->setVolume(getCalculatedVolume_());
+        sound_->setMute(false); // unmute sound
+    }
+
+    // listen to when this map is visualized/unvisualized
+    connect(map_, &Map::camMoved, this, &PositionalSound::onCamMoved_);
+    connect(map_, &Map::setAsCurrentMap, this, &PositionalSound::onMapVisualized_);
+    connect(map_, &Map::unsetAsCurrentMap, this, &PositionalSound::onMapNoLongerVisualized_);
+
 }

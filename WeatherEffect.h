@@ -7,7 +7,7 @@
 
 /// Abstract class that represents a weather effect for a Map. To add a
 /// WeatherEffect effect to a Map, first create an instance of the
-/// WeatherEffect, then use Map::setWeatherEffect(WeatherEffect*).
+/// WeatherEffect, then use Map::addWeatherEffect(WeatherEffect*).
 ///
 /// To create your own weather effect, extend this class and define what
 /// happens to the Map when the weather effect is started (virtual void
@@ -18,7 +18,7 @@
 class WeatherEffect: public QObject // so that we can use QPointer<WeatherEffect>
 {
     Q_OBJECT
-    friend class Map; // Map needs to set map_ during Map::setWeather(Weather*)
+    friend class Map; // Map needs to set map_ during Map::addWeatherEffect(WeatherEffect*)
                       // (because a WeatherEffect operates on a Map)
 public:
     WeatherEffect();
