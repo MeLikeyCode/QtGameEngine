@@ -22,7 +22,19 @@
 /// map->removeWeatherEffect(w);    // remove WeatherEffect from Map, automatically stops it
 /// w->start();                     // manually start WeatherEffect
 /// w->stop();                      // manually stop WeatherEffect
-/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/// w->pause();                     // "freeze" the WeatherEffect in its current "frame"
+/// w->start();                     // resumes the WeatherEffect from its current frame
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+///
+/// When a WeatherEffect is stopped, it will:
+/// - show itself slowly going away
+/// - clean up its graphics
+///
+/// When a WeatherEffect is paused, it will simply "freeze" itself in its current "frame."
+/// It will continue playing when its resumed.
+///
+/// A paused WeatherEffect should consume very little, if any, resource
+/// (concrete classes - please adhere).
 ///
 /// @author Abdullah Aghazadah
 /// @date 6/26/16
@@ -32,6 +44,8 @@ class WeatherEffect: public QObject // so that we can use QPointer<WeatherEffect
     friend class Map; // Map needs to set map_ during Map::addWeatherEffect(WeatherEffect*)
                       // (because a WeatherEffect operates on a Map)
 public:
+    enum State { STOPPED, STARTED, PAUSED };
+
     WeatherEffect();
 
     // these functions use template method pattern to do some "skeletal work"
@@ -40,13 +54,28 @@ public:
     // abide by the contract it sets forth in its api doc. Clients depend on this contract.
     virtual void start();
     virtual void stop();
+    virtual void resume();
+    virtual void pause();
+
+public slots:
+    void onMapVisualized_();
+    void onMapUnvisualized_();
 
 protected:
+
+    // the implementation of these functions should start/stop the
+    // WeatherEffect respectively. the template "skeletal" methods above
+    // already handle a few things for you (look at them to find out what)
     virtual void start_() = 0;
     virtual void stop_() = 0;
+    virtual void resume_() = 0;
+    virtual void pause_() = 0;
 
     QPointer<Map> map_;
-    bool started_;
+    State state_;
+
+private:
+    void setMap_(Map &map);
 };
 
 #endif // WEATHER_H

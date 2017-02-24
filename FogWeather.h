@@ -14,19 +14,24 @@ public:
     FogWeather();
     ~FogWeather();
 
-    virtual void start();
-    virtual void stop();
+    virtual void start_();
+    virtual void stop_();
 
 public slots:
-    void fogStep_();
+    void opacityStep_();
+    void moveStep_();
 
 private:
-    QTimer* fogTimer_;
+    QTimer* opacityTimer_;
+    QTimer* moveTimer_;
     QGraphicsPixmapItem* fog1_;
     QGraphicsPixmapItem* fog2_;
-    bool started_;
     bool initial_;
-    double maxFogOpacity_;
+    double initialOpacity_;
+    double maxOpacity_;
+
+    // helper functions
+    void createGraphicsIfNeeded_();
 };
 
 #endif // FOGWEATHER_H
