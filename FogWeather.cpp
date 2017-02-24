@@ -37,7 +37,7 @@ void FogWeather::start()
         return;
     }
 
-    fogTimer_->start(100);
+    fogTimer_->start(10);
 
     started_ = true;
 }
