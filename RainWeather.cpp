@@ -4,27 +4,41 @@
 #include "Sprite.h"
 #include "Map.h"
 #include <cassert>
+#include "Utilities.h"
 
-RainWeather::RainWeather(int numOfRainGraphics, int rainStepFreqMs, int rainMoveAmountPerStep, int splashStepFreq, int numSplashPerStep):
-    rainTimer_(new QTimer(this)),
-    splashTimer_(new QTimer(this)),
-    numOfRainGraphics_(numOfRainGraphics),
-    rainStepFreqMs_(rainStepFreqMs),
-    rainMoveAmountPerStep_(rainMoveAmountPerStep),
-    splashStepFreq_(splashStepFreq),
+RainWeather::RainWeather(QPixmap rainGraphic, int numOfRains, int rainFalldownSpeed, int rainMoveAmountPerStep, int splashStepFreqMs, int numSplashPerStep, double rainInitialOpacity, double rainMaxOpacity, double rainOpacityStepSize, int rainInitialToMaxOpacityTimeMS, double splashInitialOpacity, double splashFinalOpacity, double splashOpacityStepSize, int splashInitialToFinalOpacityTimeMS):
+    rainMoveTimer_(new QTimer(this)),
+    rainOpacityTimer_(new QTimer(this)),
+    createSplashTimer_(new QTimer(this)),
+    splashOpacityTimer_(new QTimer(this)),
+    rainGraphic_(rainGraphic),
+    numOfRainGraphics_(numOfRains),
+    fallDownSpeed_(rainFalldownSpeed),
+    rainStepSize_(rainMoveAmountPerStep),
+    splashStepFreq_(splashStepFreqMs),
     numSplashPerStep_(numSplashPerStep),
-    started_(false)
+    rainInitialOpacity_(rainInitialOpacity),
+    rainMaxOpacity_(rainMaxOpacity),
+    rainOpacityStepSize_(rainOpacityStepSize),
+    rainInitialToMaxOpacityTime_(rainInitialToMaxOpacityTimeMS),
+    splashInitialOpacity_(splashInitialOpacity),
+    splashMaxOpacity_(splashFinalOpacity),
+    splashOpacityStepSize_(splashOpacityStepSize),
+    splashInitialToMaxOpacityTime_(splashInitialToFinalOpacityTimeMS),
+    currentSplashOpacity_(splashInitialOpacity),
+    currentRainOpacity_(rainInitialOpacity)
 {
     // connect timers
-    connect(rainTimer_,&QTimer::timeout,this,&RainWeather::rainStep_);
-    connect(splashTimer_,&QTimer::timeout,this,&RainWeather::splashStep_);
+    connect(rainMoveTimer_,&QTimer::timeout,this,&RainWeather::rainMoveStep_);
+    connect(rainOpacityTimer_,&QTimer::timeout,this,&RainWeather::rainOpacityStep_);
+    connect(createSplashTimer_,&QTimer::timeout,this,&RainWeather::createSplashesStep_);
+    connect(splashOpacityTimer_,&QTimer::timeout,this,&RainWeather::splashOpacityStep_);
 
     // create some rain graphics
     for (int i = 0, n = numOfRainGraphics_; i < n; i ++){
-        QGraphicsPixmapItem* rain = new QGraphicsPixmapItem(QPixmap(":/resources/graphics/effects/rain.png"));
+        QGraphicsPixmapItem* rain = new QGraphicsPixmapItem(rainGraphic_);
         rains_.push_back(rain);
     }
-
 }
 
 RainWeather::~RainWeather()
@@ -38,69 +52,53 @@ RainWeather::~RainWeather()
     }
 }
 
-/// Starts raining. Does nothing if the rain has already started.
-void RainWeather::start()
+void RainWeather::start_()
 {
-    // make sure has a Map
-    assert(map_ != nullptr);
-
-    // do nothing if already started
-    if (started_){
-        return;
-    }
-
     // add rain graphics to scene/set their opacities
     for (QGraphicsPixmapItem* rain:rains_){
         map_->scene()->addItem(rain);
-        rain->setOpacity(0.08);
+        rain->setOpacity(rainInitialOpacity_);
         rain->setZValue(Map::Z_VALUES::WEATHER_Z_VALUE);
     }
 
-    rainTimer_->start(rainStepFreqMs_);
-    splashTimer_->start(splashStepFreq_);
-
-    started_ = true;
-    currentSplashOpacity_ = 0.08;
+    startTimers_();
 }
 
-/// Stops raining. Does nothing if the rain is already stopped.
-void RainWeather::stop()
+void RainWeather::stop_()
 {
     // stop timers
-    rainTimer_->stop();
-    splashTimer_->stop();
+    rainMoveTimer_->stop();
+    createSplashTimer_->stop();
 
     // remove rain graphics from scene (splashes remove themselves after playing)
     for (QGraphicsPixmapItem* rain:rains_){
         map_->scene()->removeItem(rain);
     }
-
-    started_ = false;
 }
 
-/// Executed every so often to simulate rain.
-/// Will move the rain graphics down, when the reached far down enough,
-/// will move them back up.
-void RainWeather::rainStep_()
+void RainWeather::resume_()
 {
-    assert(map_ != nullptr);    // make sure we have a Map
+    startTimers_();
+}
 
-    // do nothing if this Map isn't *currently* in a Game
+void RainWeather::pause_()
+{
+    rainMoveTimer_->stop();
+    rainOpacityTimer_->stop();
+    createSplashTimer_->stop();
+    splashOpacityTimer_->stop();
+}
+
+/// Executed periodically to move the rain graphics down.
+/// Will also move them back up (at a random x,y) when far down enough.
+void RainWeather::rainMoveStep_()
+{
     Game* mapsGame = map_->game();
-    if (mapsGame == nullptr){
-        return;
-    }
-    if (mapsGame->currentMap() != map_){
-        return;
-    }
 
     double screenBottomY = mapsGame->cam().bottom();
     for (QGraphicsPixmapItem* rain:rains_){
         // move down
-        rain->moveBy(0,rainMoveAmountPerStep_);
-
-        // increase opacity
-        rain->setOpacity(rain->opacity() + 0.0005);
+        rain->moveBy(0,rainStepSize_);
 
         // move back up if too far down
         if (rain->y() > screenBottomY){
@@ -111,29 +109,25 @@ void RainWeather::rainStep_()
     }
 }
 
-/// Executed every so often to simulate the splashes of the rain.
-/// Will randomly generate splash graphics where the cam is currently looking at.
-void RainWeather::splashStep_()
+/// Executed periodically to blend the rain in.
+/// Once rains reach max opacity, this function will disconnect its timer.
+void RainWeather::rainOpacityStep_()
 {
-    assert(map_ != nullptr);    // make sure we have a Map
+    if (currentRainOpacity_ < rainMaxOpacity_){
+        currentRainOpacity_ += rainOpacityStepSize_;
+        for (QGraphicsPixmapItem* rain:rains_)
+            rain->setOpacity(currentRainOpacity_);
+    }
+    else{
+        rainOpacityTimer_->disconnect(); // done raising opacity to max
+    }
+}
 
-    // do nothing if this Map isn't *currently* in a Game
+/// Executed every so often to generate splashes.
+/// Will randomly generate splash graphics where the cam is currently looking at.
+void RainWeather::createSplashesStep_()
+{
     Game* mapsGame = map_->game();
-    if (mapsGame == nullptr){
-        return;
-    }
-    if (mapsGame->currentMap() != map_){
-        return;
-    }
-
-    if (currentSplashOpacity_ < 0.5){
-        currentSplashOpacity_ += 0.002;
-    }
-    else {
-        int r = rand() % 5;
-        if (numSplashPerStep_ < 60 && r == 1)
-        numSplashPerStep_++;
-    }
 
     for (int i = 0, n = numSplashPerStep_; i < n; i++){
         Sprite* splash = new Sprite();
@@ -145,4 +139,27 @@ void RainWeather::splashStep_()
         QPointF pos = map_->game()->mapToMap(QPoint(xPos,yPos));
         map_->playOnce(splash,"splash",50,pos);
     }
+}
+
+/// Executed periodically to blend the splashes in.
+/// Once the splashes have been blended in, this function will disconnect its timer.
+void RainWeather::splashOpacityStep_()
+{
+    if (currentSplashOpacity_ < splashMaxOpacity_)
+        currentSplashOpacity_ += splashOpacityStepSize_;
+    else
+        splashOpacityTimer_->disconnect();
+}
+
+void RainWeather::startTimers_()
+{
+    rainMoveTimer_->start(secondsToMs(frequency(rainStepSize_,fallDownSpeed_)));
+
+    double rainOpacityRate = (rainMaxOpacity_ - rainInitialOpacity_) / rainInitialToMaxOpacityTime_; // ms
+    rainOpacityTimer_->start(frequency(rainOpacityStepSize_,rainOpacityRate));
+
+    createSplashTimer_->start(splashStepFreq_);
+
+    double splashOpacityRate = (splashMaxOpacity_ - splashInitialOpacity_) / splashInitialToMaxOpacityTime_;
+    splashOpacityTimer_->start(frequency(splashOpacityStepSize_,splashOpacityRate));
 }

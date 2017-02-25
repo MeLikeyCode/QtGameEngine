@@ -61,7 +61,7 @@ public slots:
 
 signals:
     // emitted each time an animation has finished playing
-    void animationFinished(std::string animation);
+    void animationFinished(Sprite* sprite, std::string animation);
 
 private:
     // mapping of string : vector of pixmaps (an animation)

@@ -155,14 +155,14 @@ int main(int argc, char *argv[])
     InventoryUser* invUser = new InventoryUser(game,player->inventory());
     game->addGui(invUser);
 
-    // test positional sound
-    PositionalSound* ps = new PositionalSound("qrc:/resources/sounds/axe.wav",QPointF(0,0));
-    ps->play(-1);
-    map1->addPositionalSound(ps);
+//    // test positional sound
+//    PositionalSound* ps = new PositionalSound("qrc:/resources/sounds/axe.wav",QPointF(0,0));
+//    ps->play(-1);
+//    map1->addPositionalSound(ps);
 
     // test weather effects
-    FogWeather* fog = new FogWeather();
-    map1->addWeatherEffect(*fog);
+    RainWeather* rain = new RainWeather();
+    map1->addWeatherEffect(*rain);
 
     return a.exec();
 }

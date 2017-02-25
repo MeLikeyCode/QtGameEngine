@@ -10,19 +10,31 @@ class QTimer;
 class QGraphicsPixmapItem;
 
 /// A WeatherEffect that represents fog.
+/// You can choose the fog image to use (must be tilable), the fog speed, its fade
+/// in rate, etc...
+///
 /// @author Abdullah Aghazadah
 /// @date 6/27/16
 class FogWeather : public WeatherEffect
 {
     Q_OBJECT
 public:
-    FogWeather();
+    FogWeather(QPixmap tileableFogGraphic = QPixmap(":/resources/graphics/effects/fog.png"),
+                int tileWidth = 1024,
+                int tileHeight = 1024,
+                double initialOpacity = 0.05,
+                double finalOpacity = 0.5,
+                double opacityFadeTimeMs = 2000,
+                double opacityStepSize = 0.005);
     ~FogWeather();
 
     virtual void start_() override;
     virtual void stop_() override;
     virtual void resume_() override;
     virtual void pause_() override;
+
+    void setFogSpeed(double pixelsPerSecond);
+    void setFogStepSize(double numPixels);
 
 public slots:
     void opacityStep_();

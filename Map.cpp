@@ -312,7 +312,6 @@ std::unordered_set<Entity *> Map::entities(const QPolygonF &inRegion, double zRa
 /// Plays the specified sprite's specified animation at the specified position
 /// on the map - once.
 /// @warning Deletes the sprite after it is finished playing.
-/// TODO: don't delete the sprite (create a copy, delete the copy, or something...)
 void Map::playOnce(Sprite *sprite, std::string animationName, int delaybwFramesMS, QPointF atPos)
 {
     sprite->setPos(atPos);

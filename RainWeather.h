@@ -7,36 +7,67 @@
 class QTimer;
 class QGraphicsPixmapItem;
 
-/// Class that represents a rain weather effect in a Map;
-/// @see WeatherEffect
+/// Class that represents a rain weather effect.
 /// @author Abdullah Aghazadah
 /// @date 6/26/16
 class RainWeather : public WeatherEffect
 {
     Q_OBJECT
 public:
-    RainWeather(int numOfRainGraphics=45, int rainStepFreqMs=10, int rainMoveAmountPerStep=100,
-                int splashStepFreq=75, int numSplashPerStep=7);
+    RainWeather(QPixmap rainGraphic = QPixmap(":/resources/graphics/effects/rain.png") ,
+                int numOfRains=45,
+                int rainFalldownSpeed=1500,
+                int rainMoveAmountPerStep=100,
+                int splashStepFreqMs=150,
+                int numSplashPerStep=7,
+                double rainInitialOpacity = 0.08,
+                double rainMaxOpacity = 0.5,
+                double rainOpacityStepSize = 0.005,
+                int rainInitialToMaxOpacityTimeMS = 5000,
+                double splashInitialOpacity = 0.08,
+                double splashFinalOpacity = 0.5,
+                double splashOpacityStepSize = 0.002,
+                int splashInitialToFinalOpacityTimeMS = 5000);
     ~RainWeather();
 
-    virtual void start();
-    virtual void stop();
+    virtual void start_() override;
+    virtual void stop_() override;
+    virtual void resume_() override;
+    virtual void pause_() override;
 
 public slots:
-    void rainStep_();
-    void splashStep_();
+    void rainMoveStep_();
+    void rainOpacityStep_();
+    void createSplashesStep_();
+    void splashOpacityStep_();
 private:
-    QTimer* rainTimer_;
-    QTimer* splashTimer_;
+    QTimer* rainMoveTimer_;
+    QTimer* rainOpacityTimer_;
+    QTimer* createSplashTimer_;
+    QTimer* splashOpacityTimer_;
     std::vector<QGraphicsPixmapItem*> rains_;
-    bool started_;
-    double currentSplashOpacity_;
 
-    int numOfRainGraphics_ = 25;        // number of rain graphics
-    int rainStepFreqMs_ = 10;           // how often to move the rain down in ms
-    int rainMoveAmountPerStep_ = 100;   // how much to move the rain down every step
-    int splashStepFreq_ = 75;           // how often to create splashes
-    int numSplashPerStep_ = 7;          // how many splashes to create each time they are created
+    // options
+    QPixmap rainGraphic_;       // the graphic to use for the actual rain
+    int numOfRainGraphics_;        // number of rain graphics to randomly generate
+    int fallDownSpeed_;              // speed at which the rain graphics fall down (in pixels per second)
+    int rainStepSize_;          // how much to move the rain down every step (determines movement granularity)
+    int splashStepFreq_;           // how often to create a group of splashes (in ms)
+    int numSplashPerStep_;          // how many splashes to create each time they are created
+    double rainInitialOpacity_;
+    double rainMaxOpacity_;
+    double rainOpacityStepSize_; // granularity to increase the opacity of the rain in
+    int rainInitialToMaxOpacityTime_; // how long do we have to go from rains initial to max opacity
+    double splashInitialOpacity_;
+    double splashMaxOpacity_;
+    double splashOpacityStepSize_;
+    int splashInitialToMaxOpacityTime_;
+
+    // helper function
+    void startTimers_();
+
+    double currentRainOpacity_;
+    double currentSplashOpacity_;
 };
 
 #endif // RAINWEATHER_H

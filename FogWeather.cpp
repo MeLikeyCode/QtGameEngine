@@ -7,20 +7,21 @@
 #include <cassert>
 #include "Utilities.h"
 #include <QRectF>
+#include <QDebug>
 
-FogWeather::FogWeather() :
+FogWeather::FogWeather(QPixmap tileableFogGraphic, int tileWidth, int tileHeight, double initialOpacity, double finalOpacity, double opacityFadeTimeMs, double opacityStepSize) :
     opacityTimer_(new QTimer(this)),
     moveTimer_(new QTimer(this)),
-    initialOpacity_(0.05),
-    maxOpacity_(0.5),
-    opacityFadeTime_(2000),
-    opacityStepSize_(0.005),
-    fogSpeed_(300),
+    initialOpacity_(initialOpacity),
+    maxOpacity_(finalOpacity),
+    opacityFadeTime_(opacityFadeTimeMs),
+    opacityStepSize_(opacityStepSize),
+    fogSpeed_(50),
     fogStepSize_(5),
     fogDirection_(QVector2D(0,1)), // down
-    fogPicture_(QPixmap(":/resources/graphics/effects/fog.png")),
-    fogPictureHeight_(500),
-    fogPictureWidth_(500)
+    fogPicture_(tileableFogGraphic),
+    fogPictureHeight_(tileHeight),
+    fogPictureWidth_(tileWidth)
 {
     // connect timers
     connect(opacityTimer_,&QTimer::timeout,this,&FogWeather::opacityStep_);
@@ -92,6 +93,23 @@ void FogWeather::pause_()
     moveTimer_->stop();
 }
 
+/// Sets how fast the fog should travel.
+void FogWeather::setFogSpeed(double pixelsPerSecond)
+{
+    fogSpeed_ = pixelsPerSecond;
+    pause_();
+    resume_();
+}
+
+/// Sets the granularity of movement of the fog.
+/// The lower, the smoother the movement but the more expensive.
+void FogWeather::setFogStepSize(double numPixels)
+{
+    fogStepSize_ = numPixels;
+    pause_();
+    resume_();
+}
+
 void FogWeather::stop_()
 {
     opacityTimer_->stop();
@@ -112,10 +130,8 @@ void FogWeather::opacityStep_()
         for (QGraphicsPixmapItem* fogSquare:fogSquares_)
             fogSquare->setOpacity(currentOpacity_);
     }
-
-    // if opacities increased enough, disconnect
-    if (currentOpacity_ >= maxOpacity_)
-        opacityTimer_->disconnect();
+    else
+       opacityTimer_->disconnect();
 }
 
 /// Executed periodically to move the fog graphics.

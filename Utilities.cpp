@@ -91,3 +91,17 @@ double secondsToMs(double seconds)
     double ms = seconds * MS_IN_S;
     return ms;
 }
+
+/// Generates a random 32 bit number (unsigned).
+/// This function is a lot more inexpensive than rand() but also not as reliable
+/// (i.e. for scientific purposes).
+quint32 fastRandom()
+{
+    static quint32 num = 7;
+
+    num ^= num << 13;
+    num ^= num >> 17;
+    num ^= num << 5;
+
+    return num;
+}
