@@ -5,129 +5,157 @@
 #include <QGraphicsPixmapItem>
 #include "Game.h"
 #include <cassert>
+#include "Utilities.h"
+#include <QRectF>
 
 FogWeather::FogWeather() :
     opacityTimer_(new QTimer(this)),
-    fog1_(nullptr),
-    fog2_(nullptr),
-    initial_(true),
+    moveTimer_(new QTimer(this)),
     initialOpacity_(0.05),
-    maxOpacity_(0.5)
+    maxOpacity_(0.5),
+    opacityFadeTime_(2000),
+    opacityStepSize_(0.005),
+    fogSpeed_(300),
+    fogStepSize_(5),
+    fogDirection_(QVector2D(0,1)) // down
 {
     // connect timers
     connect(opacityTimer_,&QTimer::timeout,this,&FogWeather::opacityStep_);
-    connect(moveTimer_&QTimer::timeout,this,&FogWeather::moveStep_);
+    connect(moveTimer_,&QTimer::timeout,this,&FogWeather::moveStep_);
+
+    currentOpacity_ = initialOpacity_;
 }
 
 FogWeather::~FogWeather()
 {
-    // delete fog graphics (if they were created)
-    if (fog1_ != nullptr){
-        map_->scene()->removeItem(fog1_);
-        delete fog1_;
+    // remove/delete all fog squares
+    for (QGraphicsPixmapItem* fogSquare:fogSquares_){
+        map_->scene()->removeItem(fogSquare);
+        delete fogSquare;
     }
-    if (fog2_ != nullptr){
-        map_->scene()->removeItem(fog2_);
-        delete fog2_;
-    }
+
 }
 
 void FogWeather::start_()
 {
-    opacityTimer_->start(10); // TODO replace 10 ms with needed time to get needed speed
-    moveTimer_->start(10);
+    Game* mapsGame = map_->game();
+
+    // create fog squares
+    int numFogSquresNeededX = mapsGame->cam().width() / 500 + 3; // TODO: replace 500 w/ width of pixmap (+2 needed!)
+    int numFogSquresNeededY = mapsGame->cam().height() / 500 + 3; // TODO: same as above
+    for (int i = 0, n = numFogSquresNeededX; i < n; i++){
+        for (int j = 0, p = numFogSquresNeededY; j < p; j++){
+            QPixmap fogPm(":/resources/graphics/effects/fog.png");
+            fogPm = fogPm.scaled(500,500); // TODO: replace 500 with size of pixmap
+
+            QGraphicsPixmapItem* fogSquare = new QGraphicsPixmapItem(fogPm);
+            fogSquare->setZValue(Map::Z_VALUES::WEATHER_Z_VALUE);
+            fogSquare->setOpacity(initialOpacity_);
+            map_->scene()->addItem(fogSquare);
+
+            fogSquares_.insert(fogSquare);
+        }
+    }
+
+    // set fog squares positions
+    double fogBoundryWidth = numFogSquresNeededX * 500; // TODO: replace 500 with width of pixmap
+    double fogBoundryHeight = numFogSquresNeededY * 500; // TODO: same as above
+    fogBoundry_ = QRectF(0,0,fogBoundryWidth,fogBoundryHeight);
+    fogBoundry_.moveCenter(mapsGame->centerCamPos());
+
+    int cellx = 0;
+    int celly = 0;
+    for (QGraphicsPixmapItem* fogSquare:fogSquares_){
+        double actualx = cellx * 500 + fogBoundry_.topLeft().x(); // TODO: replace with width (500)
+        double actualy = celly * 500 + fogBoundry_.topLeft().y(); // TODO: replace with height (500)
+        fogSquare->setPos(actualx,actualy);
+        cellx++;
+        if (cellx >= numFogSquresNeededX){
+            cellx = 0;
+            celly++;
+        }
+    }
+
+    // start timer to move fog squres
+    startTimers_();
 }
 
-void FogWeather::stop()
+void FogWeather::resume_()
+{
+    startTimers_();
+}
+
+void FogWeather::pause_()
 {
     opacityTimer_->stop();
+    moveTimer_->stop();
+}
 
-    // remove the fog graphics (if they have been created)
-    if (fog1_ != nullptr)
-        map_->scene()->removeItem(fog1_);
-    if (fog2_ != nullptr)
-        map_->scene()->removeItem(fog2_);
+void FogWeather::stop_()
+{
+    opacityTimer_->stop();
+    moveTimer_->stop();
 
-    initial_ = true;
+    // remove all fog squares
+    for (QGraphicsPixmapItem* fogSquare:fogSquares_){
+        map_->scene()->removeItem(fogSquare);
+    }
 }
 
 /// Executed periodically to blend the fog in (slowly increase its opacity).
 void FogWeather::opacityStep_()
 {
-    assert(map_ != nullptr);
-
-    // do nothing if this Map isn't *currently* in a Game
-    Game* mapsGame = map_->game();
-    if (mapsGame->currentMap() != map_)
-        return;
-
-    createGraphicsIfNeeded_();
-
     // increase opacities
-    if (fog1_->opacity() < maxOpacity_){
-        fog1_->setOpacity(fog1_->opacity() + 0.005);
-        fog2_->setOpacity(fog2_->opacity() + 0.005);
+    if (currentOpacity_ < maxOpacity_){
+        currentOpacity_ += opacityStepSize_;
+        for (QGraphicsPixmapItem* fogSquare:fogSquares_)
+            fogSquare->setOpacity(currentOpacity_);
     }
-    // if opacity increased fully, stop calling this function
-    else{
+
+    // if opacities increased enough, disconnect
+    if (currentOpacity_ >= maxOpacity_)
         opacityTimer_->disconnect();
-    }
 }
 
-/// Executed periodically to move the fog graphics down.
+/// Executed periodically to move the fog graphics.
 void FogWeather::moveStep_()
 {
-    assert(map_ != nullptr);
-
-    // do nothing if this Map isn't *currently* in a Game
     Game* mapsGame = map_->game();
-    if (mapsGame->currentMap() != map_)
-        return;
 
-    createGraphicsIfNeeded_();
-
-    // make sure both images are in the screen x wise
-    fog1_->setX(mapsGame->cam().topLeft().x());
-    fog2_->setX(mapsGame->cam().topLeft().x());
-
-    // move down both images
-    fog1_->setY(fog1_->y() + 5);
-    fog2_->setY(fog2_->y() + 5);
-
-    // if fog1 is at bottom, move it ontop of fog2
-    double bottomY = mapsGame->cam().bottom();
-    if (fog1_->y() > bottomY){
-        fog1_->setY(fog2_->y() - fog1_->boundingRect().height());
+    // move all fog squares down
+    for (QGraphicsPixmapItem* fogSquare:fogSquares_){
+        fogSquare->moveBy(0,fogStepSize_);
     }
 
-    // if fog2 is at bottom, move it ontop of fog1
-    if (fog2_->y() > bottomY){
-        fog2_->setY(fog1_->y() - fog2_->boundingRect().height());
+    fogBoundry_.moveCenter(mapsGame->centerCamPos());
+    for (QGraphicsPixmapItem* fogSquare:fogSquares_){
+        // if the fogsquare is too far down, move it back up
+        if (fogSquare->y() > fogBoundry_.bottom()){
+            double offset = fogSquare->y() - fogBoundry_.bottom();
+            fogSquare->setY(fogBoundry_.top() + offset);
+        }
+        // if the fogsquare is too far up, move it back down
+        if (fogSquare->y() + 500 < fogBoundry_.top()){
+            double offset = fogBoundry_.top() - (fogSquare->y() + 500);
+            fogSquare->setY(fogBoundry_.bottom() - 500 - offset);
+        }
+        // if the forgsquare is too far left, move it to right
+        if (fogSquare->x() + 500 < fogBoundry_.left()){
+            double offset = fogBoundry_.left() - (fogSquare->x() + 500);
+            fogSquare->setX(fogBoundry_.right() - 500 - offset);
+        }
+        // if the fogsquare is too far right, move it to the left
+        if (fogSquare->x() > fogBoundry_.right()){
+            double offset = fogSquare->x() - fogBoundry_.right();
+            fogSquare->setX(fogBoundry_.left() + offset);
+        }
     }
 }
 
-/// Creates the fog graphics if they have not already been created.
-void FogWeather::createGraphicsIfNeeded_()
+void FogWeather::startTimers_()
 {
-    if (initial_){
-        // create fog1 and fog2 images
-        QPixmap pm(":/resources/graphics/effects/fog.png");
-        pm = pm.scaled(mapsGame->cam().width(),mapsGame->cam().height() + 300);
-        fog1_ = new QGraphicsPixmapItem(pm);
-        fog2_ = new QGraphicsPixmapItem(pm);
-        fog1_->setZValue(Map::Z_VALUES::WEATHER_Z_VALUE);
-        fog2_->setZValue(Map::Z_VALUES::WEATHER_Z_VALUE);
-        fog1_->setOpacity(initialOpacity_);
-        fog2_->setOpacity(initialOpacity_);
-        map_->scene()->addItem(fog1_);
-        map_->scene()->addItem(fog2_);
+    double opacityRate = (maxOpacity_ - initialOpacity_) / opacityFadeTime_; // units per ms
 
-        // set up fog1 and 2
-        QPointF camPos = mapsGame->cam().topLeft();
-        fog1_->setPos(camPos);
-        fog2_->setPos(camPos);
-        fog2_->setY(fog2_->y() - fog2_->boundingRect().height());
-
-        initial_ = false;
-    }
+    opacityTimer_->start(frequency(opacityStepSize_, opacityRate));
+    moveTimer_->start(secondsToMs(frequency(fogStepSize_,fogSpeed_)));
 }

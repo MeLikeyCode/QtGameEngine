@@ -3,10 +3,15 @@
 
 #include <QObject>
 #include "WeatherEffect.h"
+#include "QVector2D"
+#include <set>
 
 class QTimer;
 class QGraphicsPixmapItem;
 
+/// A WeatherEffect that represents fog.
+/// @author Abdullah Aghazadah
+/// @date 6/27/16
 class FogWeather : public WeatherEffect
 {
     Q_OBJECT
@@ -14,8 +19,10 @@ public:
     FogWeather();
     ~FogWeather();
 
-    virtual void start_();
-    virtual void stop_();
+    virtual void start_() override;
+    virtual void stop_() override;
+    virtual void resume_() override;
+    virtual void pause_() override;
 
 public slots:
     void opacityStep_();
@@ -24,14 +31,23 @@ public slots:
 private:
     QTimer* opacityTimer_;
     QTimer* moveTimer_;
-    QGraphicsPixmapItem* fog1_;
-    QGraphicsPixmapItem* fog2_;
-    bool initial_;
+    std::set<QGraphicsPixmapItem*> fogSquares_;
+
+    // options
     double initialOpacity_;
     double maxOpacity_;
+    int opacityFadeTime_; // how long it takes for the opacity to go from initial to max (in ms)
+    double opacityStepSize_; // granularity of opacity fading in
+    double fogSpeed_; // how fast the fog moves in pixels per second
+    double fogStepSize_; // granularity of movement for the fog
+    QVector2D fogDirection_; // the direction the fog moves in
 
     // helper functions
-    void createGraphicsIfNeeded_();
+    void startTimers_();
+
+    // helper variables
+    QRectF fogBoundry_;
+    double currentOpacity_;
 };
 
 #endif // FOGWEATHER_H

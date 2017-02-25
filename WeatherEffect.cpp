@@ -1,5 +1,6 @@
 #include "WeatherEffect.h"
 #include <cassert>
+#include "Map.h"
 
 WeatherEffect::WeatherEffect():
     map_(nullptr),
@@ -15,6 +16,9 @@ void WeatherEffect::start()
 {
     // error: a WeatherEffect cannot be started if its not in a map
     assert(map_ != nullptr);
+
+    // error: a WeatherEffect cannot be started unless its map is being visualized
+    assert(map_->game() != nullptr);
 
     // error: use resume() to continue playing a paused WeatherEffect, not start()
     assert(state_ != PAUSED);
@@ -100,6 +104,6 @@ void WeatherEffect::setMap_(Map& map)
     map_ = &map; // update map internal variable
 
     // listen to when the Map is visualized/unvisualized
-    connect(&map_, &Map::setAsCurrentMap, this, &WeatherEffect::_);
-    connect(&map_, &Map::unsetAsCurrentMap, this, &WeatherEffect::onMapUnvisualized_);
+    connect(map_, &Map::setAsCurrentMap, this, &WeatherEffect::onMapVisualized_);
+    connect(map_, &Map::unsetAsCurrentMap, this, &WeatherEffect::onMapUnvisualized_);
 }

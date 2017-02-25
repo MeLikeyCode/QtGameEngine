@@ -162,10 +162,7 @@ int main(int argc, char *argv[])
 
     // test weather effects
     FogWeather* fog = new FogWeather();
-    RainWeather* rain = new RainWeather();
-    SnowWeather* snow = new SnowWeather();
-    map1->addWeatherEffect(*fog);
-    //map1->addWeatherEffect(*rain);
+    map2->addWeatherEffect(*fog);
 
     return a.exec();
 }
