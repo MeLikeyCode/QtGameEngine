@@ -161,8 +161,8 @@ int main(int argc, char *argv[])
 //    map1->addPositionalSound(ps);
 
     // test weather effects
-    RainWeather* rain = new RainWeather();
-    map1->addWeatherEffect(*rain);
+    SnowWeather* snow= new SnowWeather();
+    map1->addWeatherEffect(*snow);
 
     return a.exec();
 }

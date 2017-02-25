@@ -18,8 +18,10 @@ public:
     SnowWeather();
     ~SnowWeather();
 
-    virtual void start();
-    virtual void stop();
+    virtual void start_() override;
+    virtual void stop_() override;
+    virtual void resume_() override;
+    virtual void pause_() override;
 
 public slots:
     void snowStepGlobular_();
@@ -33,6 +35,8 @@ private:
     bool started_;
     bool initialGlobular_;
     bool initialLinear_;
+
+    void startTimers_();
 };
 
 #endif // SNOWWEATHER_H
