@@ -32,6 +32,8 @@ private:
     QTimer* opacityTimer_;
     QTimer* moveTimer_;
     std::set<QGraphicsPixmapItem*> fogSquares_;
+    int fogPictureWidth_;
+    int fogPictureHeight_;
 
     // options
     double initialOpacity_;
@@ -41,6 +43,7 @@ private:
     double fogSpeed_; // how fast the fog moves in pixels per second
     double fogStepSize_; // granularity of movement for the fog
     QVector2D fogDirection_; // the direction the fog moves in
+    QPixmap fogPicture_;
 
     // helper functions
     void startTimers_();

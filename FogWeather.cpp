@@ -17,7 +17,10 @@ FogWeather::FogWeather() :
     opacityStepSize_(0.005),
     fogSpeed_(300),
     fogStepSize_(5),
-    fogDirection_(QVector2D(0,1)) // down
+    fogDirection_(QVector2D(0,1)), // down
+    fogPicture_(QPixmap(":/resources/graphics/effects/fog.png")),
+    fogPictureHeight_(500),
+    fogPictureWidth_(500)
 {
     // connect timers
     connect(opacityTimer_,&QTimer::timeout,this,&FogWeather::opacityStep_);
@@ -33,7 +36,6 @@ FogWeather::~FogWeather()
         map_->scene()->removeItem(fogSquare);
         delete fogSquare;
     }
-
 }
 
 void FogWeather::start_()
@@ -41,14 +43,13 @@ void FogWeather::start_()
     Game* mapsGame = map_->game();
 
     // create fog squares
-    int numFogSquresNeededX = mapsGame->cam().width() / 500 + 3; // TODO: replace 500 w/ width of pixmap (+2 needed!)
-    int numFogSquresNeededY = mapsGame->cam().height() / 500 + 3; // TODO: same as above
+    int numFogSquresNeededX = mapsGame->cam().width() / fogPictureWidth_ + 3;
+    int numFogSquresNeededY = mapsGame->cam().height() / fogPictureHeight_ + 3;
     for (int i = 0, n = numFogSquresNeededX; i < n; i++){
         for (int j = 0, p = numFogSquresNeededY; j < p; j++){
-            QPixmap fogPm(":/resources/graphics/effects/fog.png");
-            fogPm = fogPm.scaled(500,500); // TODO: replace 500 with size of pixmap
+            fogPicture_ = fogPicture_.scaled(fogPictureWidth_,fogPictureHeight_);
 
-            QGraphicsPixmapItem* fogSquare = new QGraphicsPixmapItem(fogPm);
+            QGraphicsPixmapItem* fogSquare = new QGraphicsPixmapItem(fogPicture_);
             fogSquare->setZValue(Map::Z_VALUES::WEATHER_Z_VALUE);
             fogSquare->setOpacity(initialOpacity_);
             map_->scene()->addItem(fogSquare);
@@ -58,16 +59,16 @@ void FogWeather::start_()
     }
 
     // set fog squares positions
-    double fogBoundryWidth = numFogSquresNeededX * 500; // TODO: replace 500 with width of pixmap
-    double fogBoundryHeight = numFogSquresNeededY * 500; // TODO: same as above
+    double fogBoundryWidth = numFogSquresNeededX * fogPictureWidth_;
+    double fogBoundryHeight = numFogSquresNeededY * fogPictureHeight_;
     fogBoundry_ = QRectF(0,0,fogBoundryWidth,fogBoundryHeight);
     fogBoundry_.moveCenter(mapsGame->centerCamPos());
 
     int cellx = 0;
     int celly = 0;
     for (QGraphicsPixmapItem* fogSquare:fogSquares_){
-        double actualx = cellx * 500 + fogBoundry_.topLeft().x(); // TODO: replace with width (500)
-        double actualy = celly * 500 + fogBoundry_.topLeft().y(); // TODO: replace with height (500)
+        double actualx = cellx * fogPictureWidth_ + fogBoundry_.topLeft().x();
+        double actualy = celly * fogPictureHeight_ + fogBoundry_.topLeft().y();
         fogSquare->setPos(actualx,actualy);
         cellx++;
         if (cellx >= numFogSquresNeededX){
@@ -127,26 +128,32 @@ void FogWeather::moveStep_()
         fogSquare->moveBy(0,fogStepSize_);
     }
 
+    // set fog boundry based on location of cam
     fogBoundry_.moveCenter(mapsGame->centerCamPos());
     for (QGraphicsPixmapItem* fogSquare:fogSquares_){
-        // if the fogsquare is too far down, move it back up
-        if (fogSquare->y() > fogBoundry_.bottom()){
-            double offset = fogSquare->y() - fogBoundry_.bottom();
+        double fogSquareLeft = fogSquare->x();
+        double fogSquareRight = fogSquare->x() + fogPictureWidth_;
+        double fogSquareTop = fogSquare->y();
+        double fogSquareBottom = fogSquare->y() + fogPictureHeight_;
+
+        // if the fog square is too far down, move it back up
+        if (fogSquareTop > fogBoundry_.bottom()){
+            double offset = fogSquareTop - fogBoundry_.bottom();
             fogSquare->setY(fogBoundry_.top() + offset);
         }
-        // if the fogsquare is too far up, move it back down
-        if (fogSquare->y() + 500 < fogBoundry_.top()){
-            double offset = fogBoundry_.top() - (fogSquare->y() + 500);
-            fogSquare->setY(fogBoundry_.bottom() - 500 - offset);
+        // if the fog square is too far up, move it back down
+        if (fogSquareBottom < fogBoundry_.top()){
+            double offset = fogBoundry_.top() - fogSquareBottom;
+            fogSquare->setY(fogBoundry_.bottom() - fogPictureHeight_ - offset);
         }
-        // if the forgsquare is too far left, move it to right
-        if (fogSquare->x() + 500 < fogBoundry_.left()){
-            double offset = fogBoundry_.left() - (fogSquare->x() + 500);
-            fogSquare->setX(fogBoundry_.right() - 500 - offset);
+        // if the fog square is too far left, move it to right
+        if (fogSquareRight < fogBoundry_.left()){
+            double offset = fogBoundry_.left() - fogSquareRight;
+            fogSquare->setX(fogBoundry_.right() - fogPictureWidth_ - offset);
         }
-        // if the fogsquare is too far right, move it to the left
-        if (fogSquare->x() > fogBoundry_.right()){
-            double offset = fogSquare->x() - fogBoundry_.right();
+        // if the fog square is too far right, move it to the left
+        if (fogSquareLeft > fogBoundry_.right()){
+            double offset = fogSquareLeft - fogBoundry_.right();
             fogSquare->setX(fogBoundry_.left() + offset);
         }
     }
