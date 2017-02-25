@@ -56,10 +56,10 @@ Game::Game(MapGrid *mapGrid, int xPosOfStartingMap, int yPosOfStartingMap):
 
 /// Launches the Game.
 void Game::launch(){
-    showNormal(); // TODO: eventually should showFullscreen() (or parametrize to
+    //showNormal(); // TODO: eventually should showFullscreen() (or parametrize to
                   // allow launching normal or full screen
 
-    //showFullScreen();
+    showFullScreen();
     setSceneRect(0,0,width(),height());
 }
 
@@ -209,7 +209,7 @@ void Game::mousePressEvent(QMouseEvent *event){
 
 void Game::mouseMoveEvent(QMouseEvent *event)
 {
-    QGraphicsView::mouseMoveEvent(event);
+    //QGraphicsView::mouseMoveEvent(event);
 }
 
 void Game::keyPressEvent(QKeyEvent *event)
