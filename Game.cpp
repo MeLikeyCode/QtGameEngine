@@ -56,10 +56,10 @@ Game::Game(MapGrid *mapGrid, int xPosOfStartingMap, int yPosOfStartingMap):
 
 /// Launches the Game.
 void Game::launch(){
-    //showNormal(); // TODO: eventually should showFullscreen() (or parametrize to
+    showNormal(); // TODO: eventually should showFullscreen() (or parametrize to
                   // allow launching normal or full screen
 
-    showFullScreen();
+    //showFullScreen();
     setSceneRect(0,0,width(),height());
 }
 
@@ -184,6 +184,7 @@ void Game::mousePressEvent(QMouseEvent *event){
     if (event->button() == Qt::RightButton){
         // create an enemy for the player
         Entity* enemy = new Entity();
+        enemy->setGroup(1);
 
         Sprite* spr = new Sprite();
         spr->addFrames(":/resources/graphics/spider",7,"walk");
@@ -306,7 +307,6 @@ void Game::addWatchedEntity(Entity *watched, Entity *watching, double range)
     auto watchingSet = watchedToWatching_.find(watched); // 1 watched entity to * watching entities
     auto watchedSet = watchingToWatched_.find(watching); // 1 watching entit to * watched entities
 
-
     // simply update range if this watched-watching pair already exists
     if (watchedWatchingPairExists(watched,watching)){
             watchedWatchingPairToRange_[watchedWatchingPair] = range;
@@ -372,6 +372,9 @@ void Game::removeWatchedEntity(Entity *watched, Entity *watching)
     // init variables
     std::pair<Entity*,Entity*> watchedWatchingPair = std::make_pair(watched,watching);
     auto watchingSet = watchedToWatching_.find(watched)->second;
+    auto iter = watchingToWatched_.find(watching);
+    if (iter == watchingToWatched_.end())
+        bool b = true;
     auto watchedSet = watchingToWatched_.find(watching)->second;
     auto watcher = watchingSet.find(watching);
     auto watchee = watchedSet.find(watched);
@@ -381,13 +384,6 @@ void Game::removeWatchedEntity(Entity *watched, Entity *watching)
     watchedSet.erase(watchee);
     watchedWatchingPairToRange_.erase(watchedWatchingPair);
     watchedWatchingPairToEnterRangeEmitted_.erase(watchedWatchingPair);
-
-    // if this was the last watching, erase the watched
-    if (watchingSet.size() == 0)
-        watchedToWatching_.erase(watched);
-
-    if (watchedSet.size() == 0)
-        watchingToWatched_.erase(watching);
 }
 
 /// Completely removes the specified entity from the watched list.
