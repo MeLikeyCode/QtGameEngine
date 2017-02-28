@@ -56,6 +56,11 @@ QMediaPlayer::State Sound::state()
     return mediaPlayer_->state();
 }
 
+int Sound::volume()
+{
+    return mediaPlayer_->volume();
+}
+
 /// Executed each time the state of the internal MediaPlayer changes.
 void Sound::stateChanged_()
 {

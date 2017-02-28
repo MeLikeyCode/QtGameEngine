@@ -6,6 +6,7 @@
 
 class QTimer;
 class QGraphicsPixmapItem;
+class Sound;
 
 /// Class that represents a rain weather effect.
 /// @author Abdullah Aghazadah
@@ -15,7 +16,7 @@ class RainWeather : public WeatherEffect
     Q_OBJECT
 public:
     RainWeather(QPixmap rainGraphic = QPixmap(":/resources/graphics/effects/rain.png") ,
-                int numOfRains=45,
+                int numOfRains=150,
                 int rainFalldownSpeed=1500,
                 int rainMoveAmountPerStep=100,
                 int splashStepFreqMs=150,
@@ -46,6 +47,7 @@ private:
     QTimer* createSplashTimer_;
     QTimer* splashOpacityTimer_;
     std::vector<QGraphicsPixmapItem*> rains_;
+    Sound* rainSound_;
 
     // options
     QPixmap rainGraphic_;       // the graphic to use for the actual rain

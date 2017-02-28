@@ -29,6 +29,7 @@ public:
     void setMute(bool tf);
 
     QMediaPlayer::State state();
+    int volume();
 
 signals:
     /// Emitted when the Sound is finished playing the number of times that it

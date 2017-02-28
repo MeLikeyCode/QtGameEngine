@@ -160,5 +160,8 @@ int main(int argc, char *argv[])
 //    ps->play(-1);
 //    map1->addPositionalSound(ps);
 
+    RainWeather* rain = new RainWeather();
+    map1->addWeatherEffect(*rain);
+
     return a.exec();
 }

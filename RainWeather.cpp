@@ -5,6 +5,7 @@
 #include "Map.h"
 #include <cassert>
 #include "Utilities.h"
+#include "Sound.h"
 
 RainWeather::RainWeather(QPixmap rainGraphic, int numOfRains, int rainFalldownSpeed, int rainMoveAmountPerStep, int splashStepFreqMs, int numSplashPerStep, double rainInitialOpacity, double rainMaxOpacity, double rainOpacityStepSize, int rainInitialToMaxOpacityTimeMS, double splashInitialOpacity, double splashFinalOpacity, double splashOpacityStepSize, int splashInitialToFinalOpacityTimeMS):
     rainMoveTimer_(new QTimer(this)),
@@ -26,7 +27,8 @@ RainWeather::RainWeather(QPixmap rainGraphic, int numOfRains, int rainFalldownSp
     splashOpacityStepSize_(splashOpacityStepSize),
     splashInitialToMaxOpacityTime_(splashInitialToFinalOpacityTimeMS),
     currentSplashOpacity_(splashInitialOpacity),
-    currentRainOpacity_(rainInitialOpacity)
+    currentRainOpacity_(rainInitialOpacity),
+    rainSound_(new Sound("qrc:/resources/sounds/rain.ogg",this))
 {
     // connect timers
     connect(rainMoveTimer_,&QTimer::timeout,this,&RainWeather::rainMoveStep_);
@@ -61,6 +63,10 @@ void RainWeather::start_()
         rain->setZValue(Map::Z_VALUES::WEATHER_Z_VALUE);
     }
 
+    // start playing sound
+    rainSound_->setVolume(0);
+    rainSound_->play(-1);
+
     startTimers_();
 }
 
@@ -74,6 +80,9 @@ void RainWeather::stop_()
     for (QGraphicsPixmapItem* rain:rains_){
         map_->scene()->removeItem(rain);
     }
+
+    // stop playing sound
+    rainSound_->stop();
 }
 
 void RainWeather::resume_()
@@ -112,11 +121,12 @@ void RainWeather::rainMoveStep_()
 /// Executed periodically to blend the rain in.
 /// Once rains reach max opacity, this function will disconnect its timer.
 void RainWeather::rainOpacityStep_()
-{
+{   
     if (currentRainOpacity_ < rainMaxOpacity_){
         currentRainOpacity_ += rainOpacityStepSize_;
         for (QGraphicsPixmapItem* rain:rains_)
             rain->setOpacity(currentRainOpacity_);
+        rainSound_->setVolume(rainSound_->volume() + 1);
     }
     else{
         rainOpacityTimer_->disconnect(); // done raising opacity to max
