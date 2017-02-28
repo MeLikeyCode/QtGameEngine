@@ -69,6 +69,10 @@ void PathMover::onPathCalculated_(std::vector<QPointF> path)
     if (ent == nullptr)
         return;
 
+    // if entity tried to move from same cell to same cell, do nothing
+    if (path.size() == 0 || path.size() == 1)
+        return;
+
     // set up variables for new path
     pointsToFollow_ = path;
     if (pointsToFollow_.size() > 1)
@@ -114,7 +118,7 @@ void PathMover::onMoveStep_()
     // - snap to current target
     // - set next point as target
     // - face that point
-    int pointsSize = pointsToFollow_.size() - 1;
+    int pointsSize = pointsToFollow_.size();
     bool morePoints = targetPointIndex_ < pointsSize;
     if (morePoints && targetPointReached_()){
         // snap
@@ -129,9 +133,7 @@ void PathMover::onMoveStep_()
             rotater_->rotateTowards(pointsToFollow_[targetPointIndex_]);
     }
 
-    // take a step closer towards the target (if there is a target)
-    if (pointsToFollow_.size() > 0)
-        stepTowardsTarget_();
+    stepTowardsTarget_();
 }
 
 /// Starts moving the entity towards the specified position.

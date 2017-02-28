@@ -22,6 +22,7 @@ ECFieldOfViewEmitter::ECFieldOfViewEmitter(Entity &entity):
 
 /// Executed periodically for the entity controller to check the field of view
 /// of the controlled entity. Will emit a signal for each entity that
+/// enters/leaves its field of view.
 void ECFieldOfViewEmitter::checkFov_()
 {
     // approach:

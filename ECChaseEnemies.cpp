@@ -120,7 +120,7 @@ void ECChaseEnemies::onEntityLeavesFOV_(Entity *entity)
 
         // stop listening to enter/leave range for leaving entity
         controlledEntity_->map()->game()->removeWatchedEntity(entity,controlledEntity_);
-        chaseTimer_->disconnect();
+        chaseTimer_->stop();
     }
 }
 
