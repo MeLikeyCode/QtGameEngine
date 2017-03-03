@@ -26,6 +26,7 @@ class WeatherEffect;
 /// A Map can be visualized by a Game. If the Map is currently being visualized
 /// by a game the game() function will return that Game, otherwise it will return
 /// nullptr.
+/// @author Abdullah Aghazadah
 class Map: public QObject // so we can use QPointer<Map>
 {
     Q_OBJECT
@@ -40,6 +41,7 @@ public:
     };
 
     // constructor
+    Map();
     Map(PathingMap pathingMap);
 
     bool contains(const QPointF& pos);

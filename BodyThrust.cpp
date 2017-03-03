@@ -89,8 +89,10 @@ void BodyThrust::setThrustDistance(double distance)
 /// Executed periodically to take the entity one step closer to body thrusting.
 void BodyThrust::thrustStep_()
 {
+    const int EXTRA_BACK_STEPS = 10;
+
     // if moved backward enough, stop moving
-    if (headingBackward_ && currentThrustStep_ >= maxThrustSteps_){
+    if (headingBackward_ && currentThrustStep_ >= maxThrustSteps_ + EXTRA_BACK_STEPS){
         timer_->disconnect();
 
         resetVariables();
@@ -158,7 +160,7 @@ void BodyThrust::thrustStep_()
     }
 
     // if moving backward, move backward
-    if (headingBackward_ && currentThrustStep_ < maxThrustSteps_){
+    if (headingBackward_ && currentThrustStep_ < maxThrustSteps_ + EXTRA_BACK_STEPS){
         // move owner backward at current angle
         QLineF line(theOwner->pointPos(),QPointF(1,1));
         line.setAngle(360-theOwner->facingAngle());

@@ -15,6 +15,11 @@
 // TODO remove test
 #include <QDebug>
 
+Map::Map() : Map(PathingMap(50,50,32))
+{
+    // ctor chained
+}
+
 Map::Map(PathingMap pathingMap):
     numCellsWide_(pathingMap.numCellsWide()),
     numCellsLong_(pathingMap.numCellsLong()),

@@ -595,13 +595,18 @@ Go back through code and add QPointer/smart pointers where necessary
 =============================================================================
 
 ===TASK===
-Add rain and rain/thunder sound in the bg of map for tutorials...looks nice af!
-
-===TASK===
 Organize files into folders (i.e. one for projectile system, one for guis, etc...)
 
-===TASK==
-Improve collision detection algorithm (use kd tree) (or delegate to scene (which uses binary search space)
+===GREAT IDEA===
+Put things in namespaces according to system, especially things that use strategy patter
+i.e. behavior::collision::PushEntityOneBack
+i.e. behavior::collision::PushEntityTwoBack
+i.e. behavior::collision::PushBothEntitiesBack
+i.e. behavior::entity::MoveInResponseToKeysRelativeToSelf
+i.e. behavior::entity::MoveInResponseToKeysRelativeToScreen
+i.e. behavior::entity::RotateToFaceMouse
+i.e. behavior::entity::
+*it doesn't have to be exact namespace above...just figure out a way to "catagorize" and sub catagorize your 
 
 ===TASK===
 Still need to handle resource ownership for these classes:
@@ -619,16 +624,7 @@ Create youtube tutorial that creates a basic game
 -shop entity can sell you weapons in exchange for GoldItem - can show in tut how to make the ShopGuiBehavior
 -quest giver has a few quests such as "kill 10 x", when completed, you get bonus gold - can connect to when quest completed, spawn gold coin at loc of player
 
-===GREAT IDEA===
-Put things in namespaces according to system, especially things that use strategy patter
-i.e. behavior::collision::PushEntityOneBack
-i.e. behavior::collision::PushEntityTwoBack
-i.e. behavior::collision::PushBothEntitiesBack
-i.e. behavior::entity::MoveInResponseToKeysRelativeToSelf
-i.e. behavior::entity::MoveInResponseToKeysRelativeToScreen
-i.e. behavior::entity::RotateToFaceMouse
-i.e. behavior::entity::
-*it doesn't have to be exact namespace above...just figure out a way to "catagorize" and sub catagorize your 
+
 
 ===TASK===
 I have to eventually determine how entity controller clean up will happen.

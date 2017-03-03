@@ -45,11 +45,10 @@ int main(int argc, char *argv[])
     MapGrid* mapGrid = new MapGrid(3,3);
 
     // create PathingMaps for the Maps
-    PathingMap map1PathingMap(40,40,32);
     PathingMap map2PathingMap(50,50,64);
 
     // create the Maps
-    Map* map1 = new Map(map1PathingMap);
+    Map* map1 = new Map();
     Map* map2 = new Map(map2PathingMap);
 
     // create some Terrains (tiles) for the Maps
