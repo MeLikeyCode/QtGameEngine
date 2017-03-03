@@ -25,6 +25,12 @@ void TerrainLayer::setAlphaChannel(QPixmap& pixmap, int const alpha)
   pixmap = QPixmap::fromImage(image);
 }
 
+TerrainLayer::TerrainLayer(int numXTiles, int numYTiles):
+    TerrainLayer(numXTiles,numYTiles,QPixmap(":resources/graphics/terrain/grass.png"))
+{
+    // ctro chaining
+}
+
 TerrainLayer::TerrainLayer(int numXTiles, int numYTiles, QPixmap pixmap):
     numXTiles_(numXTiles),
     numYTiles_(numYTiles),

@@ -23,6 +23,7 @@ public:
     static void setAlphaChannel(QPixmap& pixmap, int const alpha);
 
     // constructor
+    TerrainLayer(int numXTiles, int numYTiles);
     TerrainLayer(int numXTiles, int numYTiles, QPixmap pixmap);
 
 
