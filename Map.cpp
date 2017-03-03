@@ -198,9 +198,10 @@ Entity *Map::closest(const QPointF &point){
 std::unordered_set<Entity *> Map::entities(const QRectF &inRegion){
     std::unordered_set<Entity*> ents;
     for (Entity* entity:entities()){
-        if (inRegion.contains(entity->pointPos())){
+        QRectF entityBBox = entity->boundingRect();
+        entityBBox.moveTo(entity->pointPos());
+        if (inRegion.intersects(entityBBox))
             ents.insert(entity);
-        }
     }
 
     return ents;
