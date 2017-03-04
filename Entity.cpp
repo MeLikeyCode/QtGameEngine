@@ -447,7 +447,7 @@ void Entity::setHealth(double health)
     if (health_ < 0){
         map()->removeEntity(this);
         emit dying(this);
-        delete this;
+        deleteLater();
     }
 }
 

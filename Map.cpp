@@ -31,9 +31,7 @@ Map::Map(PathingMap pathingMap):
     scene_->setSceneRect(0,0,width(),height());
 
     // add a default TerrainLayer
-    TerrainLayer* defaultTerrain = new TerrainLayer(width()/256+1,
-                                                    height()/256+1,
-                                                    QPixmap(":resources/graphics/terrain/grass.png"));
+    TerrainLayer* defaultTerrain = new TerrainLayer(width()/256+1, height()/256+1);
     defaultTerrain->fill();
     addTerrainLayer(defaultTerrain);
 

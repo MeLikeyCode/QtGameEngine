@@ -51,18 +51,14 @@ int main(int argc, char *argv[])
     Map* map1 = new Map();
     Map* map2 = new Map(map2PathingMap);
 
-    // create some Terrains (tiles) for the Maps
+    // create a TerrainLayer (tiles) that can go in a map
     TerrainLayer* dryTerrain = new TerrainLayer(map2->width()/256+1,
                                                 map2->height()/256+1,
                                                 QPixmap(":resources/graphics/terrain/grassstonedry.png"));
     dryTerrain->fill();
 
-    TerrainLayer* grassLayer = new TerrainLayer(3,3,QPixmap(":resources/graphics/terrain/flowersopacity.png"));
-    grassLayer->fill();
-
-    // set Maps' terrain
+    // add a terrain layer into map
     map2->addTerrainLayer(dryTerrain);
-    map1->addTerrainLayer(grassLayer);
 
     // put Maps in MapGrid
     mapGrid->insertMap(map1,0,1);
@@ -107,7 +103,6 @@ int main(int argc, char *argv[])
     Spear* spear = new Spear();
     player->inventory()->addItem(spear);
 
-
     // add bow to entitys inventory
     Bow* bow = new Bow();
     player->inventory()->addItem(bow);
@@ -135,13 +130,15 @@ int main(int argc, char *argv[])
 
     // drop some items on the ground
     Axe* axeItem = new Axe();
-    ItemRainOfSpears* ros = new ItemRainOfSpears();
-    ItemPushback* pushBackItem = new ItemPushback();
     axeItem->setPointPos(QPointF(100,300));
-    ros->setPointPos(QPointF(200,200));
-    pushBackItem->setPointPos(QPointF(300,300));
     map1->addEntity(axeItem);
+
+    ItemRainOfSpears* ros = new ItemRainOfSpears();
+    ros->setPointPos(QPointF(200,200));
     map1->addEntity(ros);
+
+    ItemPushback* pushBackItem = new ItemPushback();
+    pushBackItem->setPointPos(QPointF(300,300));
     map1->addEntity(pushBackItem);
 
     ECPickUpItem* pickUpItemContr = new ECPickUpItem(player);
