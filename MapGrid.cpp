@@ -12,9 +12,9 @@ MapGrid::MapGrid(int numMapsHorizontally, int numMapsVertically):
     }
 }
 
-/// Inserts the specified Map in the specified position in the MapGrid.
-/// map can be null.
-void MapGrid::insertMap(Map *map, int xPos, int yPos)
+/// Sets the specified Map in the specified position in the MapGrid.
+/// @param map The map to set at the specified position. Can be nullptr.
+void MapGrid::setMapAtPos(Map *map, int xPos, int yPos)
 {
     // make sure xPos and yPos are within bounds
     assert(xPos < numMapsHorizontally_ && yPos < numMapsVertically_);
@@ -23,11 +23,18 @@ void MapGrid::insertMap(Map *map, int xPos, int yPos)
     maps_[posInArray] = map;
 }
 
+/// Sets the specified Map in the specified position in the MapGrid.
+/// @param map The Map to set at the specified position. Can be nullptr.
+void MapGrid::setMapAtPos(Map *map, const Node &atPos)
+{
+    setMapAtPos(map,atPos.x(),atPos.y());
+}
+
 /// Returns the Map at the specified position in the MapGrid.
 /// If there is no Map at the specified position, returns null.
 /// If the position is outside the bounds of the MapGrid, will return null because
 /// there is no Map there!
-Map *MapGrid::mapAt(int xPos, int yPos)
+Map *MapGrid::mapAt(int xPos, int yPos) const
 {
     if (xPos < 0 || xPos >= numMapsHorizontally_ || yPos < 0 || yPos >= numMapsVertically_){
         return nullptr;
@@ -38,7 +45,7 @@ Map *MapGrid::mapAt(int xPos, int yPos)
 }
 
 /// Returns true if the MapGrid contains the specified map.
-bool MapGrid::contains(Map *map)
+bool MapGrid::contains(Map *map) const
 {
     for (Map* eachMap:maps_){
         if (eachMap == map ){
@@ -52,7 +59,7 @@ bool MapGrid::contains(Map *map)
 /// If the specified map is not in the map grid, will throw.
 /// Use contains(Map*) to check if the map is in the MapGrid before calling
 /// this function.
-Node MapGrid::positionOf(Map *map)
+Node MapGrid::positionOf(Map *map) const
 {
     assert(contains(map));
 
@@ -70,7 +77,7 @@ Node MapGrid::positionOf(Map *map)
 }
 
 /// Returns all the Maps in the MapGrid (order top left to bottom right).
-std::vector<Map *> MapGrid::maps()
+std::vector<Map *> MapGrid::maps() const
 {
     std::vector<Map*> resultantMaps;
     for (Map* map:maps_){

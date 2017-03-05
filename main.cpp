@@ -61,8 +61,8 @@ int main(int argc, char *argv[])
     map2->addTerrainLayer(dryTerrain);
 
     // put Maps in MapGrid
-    mapGrid->insertMap(map1,0,1);
-    mapGrid->insertMap(map2,0,0);
+    mapGrid->setMapAtPos(map1,0,1);
+    mapGrid->setMapAtPos(map2,0,0);
 
     // create a Game
     Game* game = new Game(mapGrid,0,1);
