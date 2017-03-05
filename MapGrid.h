@@ -13,6 +13,7 @@ public:
     MapGrid(int numMapsHorizontally, int numMapsVertically);
 
     void insertMap(Map* map, int xPos, int yPos);
+    void insertMap(const Node& at);
     Map* mapAt(int xPos, int yPos);
     bool contains(Map* map);
     Node positionOf(Map* map);

@@ -1,7 +1,7 @@
 #include "Node.h"
 
-/// Do not use. This is just here so Nodes can be stored in Maps.
-Node::Node(){
+/// Constructs a Node with values x = 0, and y = 0.
+Node::Node(): x_(0), y_(0){
 
 }
 
