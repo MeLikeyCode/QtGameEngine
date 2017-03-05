@@ -130,7 +130,7 @@ bool TerrainLayer::filled(const Node &cell)
 /// Fills the entire TerrainLayer with its pixmap.
 void TerrainLayer::fill(){
     // for each cell (node) in the terrain
-    for (Node cell:grid_.nodes()){
+    for (Node cell:grid_.cells()){
         // fill it with the specified pixmap
         fill(cell);
     }
@@ -395,7 +395,7 @@ void TerrainLayer::draw_()
         if (pixmapItem){
             Node pos = positionOf_(pixmapItem);
             pixmapItem->setPixmap(pixmap_);
-            pixmapItem->setPos(grid_.nodeToPoint(pos));
+            pixmapItem->setPos(grid_.posOf(pos));
             setCorrectFade_(pos.x(),pos.y());
         }
     }

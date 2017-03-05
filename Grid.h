@@ -1,55 +1,59 @@
 #ifndef GRID_H
 #define GRID_H
 
-// uses:
-class QPointF;
-class Node;
 #include <vector>
 
-/// Represents a region of space that is divided into Nodes in a grid
-/// like fashion. This class is useful for divinding a region of space
-/// into "cells" (called "Nodes") and then being able to map back and forth
-/// between Nodes and actual positions.
+class QPointF;
+class Node;
+
+/// Represents a region of space that is divided into a grid of cells.
+/// You can set the the number and size of the cells of the grid.
+/// Provides functions for mapping between a cell and an actual position.
 /// @author Abdullah Aghazadah
 /// @date 5-15-15
 ///
-/// To get the actual point at a specified Node, use Grid::toPoint(Node).
-/// To get the Node closest to (the top left of) a point, use Grid::toNode(QPointF).
-/// To get a vector of all the Nodes, use Grid::nodes();
-/// To get a vector of all the Nodes in a specific column or row use
-/// Grid::nodesOfColumn(int) or Grid::nodesOfRow(int). Similar functions exist
+/// To get the actual point at a specified cell, use posOf().
+/// To get the cell at the specified point, use cellAt();
+/// To get a vector of all the cells, use cells();
+/// To get a vector of all the cells in a specific column or row use
+/// cellsOfColumn(int) or cellsOfRow(int). Similar functions exist
 /// to get the vector of all the points in a specified column, row, or in the
 /// entire Grid.
 ///
-/// The Node (0,0) represents the top left corner of the grid while the Node
-/// (width,height) represents the bottom right of the grid.
+/// The cell (0,0) represents the top left corner of the grid while the cell
+/// (numXCells-1,numYCells-1) represents the bottom right of the grid.
 class Grid{
 public:
     // constructor
     Grid();
-    Grid(int numXNodes, int numYNodes, int nodeWidth, int nodeHeight);
+    Grid(int numXCells, int numYCells, int cellWidth, int cellHeight);
 
     // readers
-    QPointF nodeToPoint(const Node& node) const;
-    Node pointToNode(const QPointF& point) const;
-    std::vector<Node> nodesOfColumn(int i) const;
-    std::vector<Node> nodesOfRow(int i) const;
-    std::vector<Node> nodes() const;
+    QPointF posOf(const Node& cell) const;
+    Node cellAt(const QPointF& pos) const;
+    std::vector<Node> cellsOfColumn(int i) const;
+    std::vector<Node> cellsOfRow(int i) const;
+    std::vector<Node> cells() const;
     std::vector<QPointF> pointsOfColumn(int i) const;
     std::vector<QPointF> pointsOfRow(int i) const;
     std::vector<QPointF> points() const;
-    int numXNodes() const;
-    int numYNodes() const;
-    int nodeWidth() const;
-    int nodeHeight() const;
+    int numXCells() const;
+    int numYCells() const;
+    int cellWidth() const;
+    int cellHeight() const;
     int width() const;
     int height() const;
 
+    void setNumXCells(int to);
+    void setNumYCells(int to);
+    void setCellWidth(int to);
+    void setCellHeight(int to);
+
 private:
-    int numXNodes_;
-    int numYNodes_;
-    int nodeWidth_;
-    int nodeHeight_;
+    int numXCells_;
+    int numYCells_;
+    int cellWidth_;
+    int cellHeight_;
     int width_;
     int height_;
 };

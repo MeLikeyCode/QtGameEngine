@@ -3,79 +3,85 @@
 #include "Node.h"
 #include <cassert>
 
-/// Constructs an empty Grid.
+/// Constructs an empty Grid (no cells).
 Grid::Grid():
-    numXNodes_(0),
-    numYNodes_(0),
-    nodeWidth_(0),
-    nodeHeight_(0),
+    numXCells_(0),
+    numYCells_(0),
+    cellWidth_(0),
+    cellHeight_(0),
     width_(0),
     height_(0)
 {
 
 }
 
-Grid::Grid(int numXNodes, int numYNodes, int nodeWidth, int nodeHeight):
-    numXNodes_(numXNodes),
-    numYNodes_(numYNodes),
-    nodeWidth_(nodeWidth),
-    nodeHeight_(nodeHeight)
+/// Constructs a Grid with the specified number of cells and the specified cell size.
+Grid::Grid(int numXCells, int numYCells, int cellWidth, int cellHeight):
+    numXCells_(numXCells),
+    numYCells_(numYCells),
+    cellWidth_(cellWidth),
+    cellHeight_(cellHeight)
 {
     // constructor body
     // calculate width and height
-    width_ = numXNodes * nodeWidth;
-    height_ = numYNodes * nodeHeight;
+    width_ = numXCells * cellWidth;
+    height_ = numYCells * cellHeight;
 
 }
 
-QPointF Grid::nodeToPoint(const Node &node) const{
+/// Returns the position of the specified cell.
+/// More specifically, returns the position of the top left corner of the specified cell.
+QPointF Grid::posOf(const Node &cell) const{
     // make sure the Node is in the Grid
-    assert(node.x() < numXNodes() && node.y() < numYNodes());
+    assert(cell.x() < numXCells() && cell.y() < numYCells());
 
-    int pointX = node.x() * nodeWidth();
-    int pointY = node.y() * nodeHeight();
+    int pointX = cell.x() * cellWidth();
+    int pointY = cell.y() * cellHeight();
     return QPointF(pointX,pointY);
 }
 
-/// Returns the Node closest to the top left of the specified point.
-Node Grid::pointToNode(const QPointF &point) const{
+/// Returns the cell at the specified position.
+Node Grid::cellAt(const QPointF &pos) const{
     // make sure the point is in the Grid
-    assert(int(point.x()) < width() && int(point.y()) << height());
+    assert(int(pos.x()) < width() && int(pos.y()) << height());
 
-    int nodeX = point.x() / nodeWidth();
-    int nodeY = point.y() / nodeHeight();
+    int nodeX = pos.x() / cellWidth();
+    int nodeY = pos.y() / cellHeight();
     return Node(nodeX,nodeY);
 }
 
-std::vector<Node> Grid::nodesOfColumn(int i) const{
+/// Returns all the cells of the specified column of the Grid.
+std::vector<Node> Grid::cellsOfColumn(int i) const{
     // make sure the column is in the grid
-    assert (i < numXNodes());
+    assert (i < numXCells());
 
     std::vector<Node> nodesOfC;
-    for (int y = 0, n = numYNodes(); y < n; ++y ){
+    for (int y = 0, n = numYCells(); y < n; ++y ){
         nodesOfC.push_back(Node(i,y));
     }
 
     return nodesOfC;
 }
 
-std::vector<Node> Grid::nodesOfRow(int i) const{
+/// Returns all the cells of the specified row of the Grid.
+std::vector<Node> Grid::cellsOfRow(int i) const{
     // make sure the row is in the grid
-    assert(i < numYNodes());
+    assert(i < numYCells());
 
     std::vector<Node> nodesOfR;
-    for (int x = 0, n = numXNodes(); x < n; ++x ){
+    for (int x = 0, n = numXCells(); x < n; ++x ){
         nodesOfR.push_back(Node(x,i));
     }
 
     return nodesOfR;
 }
 
-std::vector<Node> Grid::nodes() const{
+/// Returns all the cells of the Grid.
+std::vector<Node> Grid::cells() const{
     std::vector<Node> allNodes;
     // add all columns
-    for (int x = 0, n = numXNodes(); x < n; ++x){
-        std::vector<Node> colNodes = nodesOfColumn(x);
+    for (int x = 0, n = numXCells(); x < n; ++x){
+        std::vector<Node> colNodes = cellsOfColumn(x);
         for (Node node:colNodes){
             allNodes.push_back(node);
         }
@@ -84,59 +90,97 @@ std::vector<Node> Grid::nodes() const{
     return allNodes;
 }
 
+/// Returns the positions of all the cells of the specified column.
+/// Their top left position to be more specified.
 std::vector<QPointF> Grid::pointsOfColumn(int i) const{
     // get nodes of column
-    std::vector<Node> nodesOfC = nodesOfColumn(i);
+    std::vector<Node> nodesOfC = cellsOfColumn(i);
     std::vector<QPointF> pointsOfC;
     for (Node node:nodesOfC){
-        pointsOfC.push_back(nodeToPoint(node));
+        pointsOfC.push_back(posOf(node));
     }
 
     return pointsOfC;
 }
 
+/// Returns the positions of all the cells of the specified row.
+/// Their top left positions to be more specific.
 std::vector<QPointF> Grid::pointsOfRow(int i) const{
     // get nodes of row
-    std::vector<Node> nodesOfR = nodesOfRow(i);
+    std::vector<Node> nodesOfR = cellsOfRow(i);
     std::vector<QPointF> pointsOfR;
     for (Node node:nodesOfR){
-        pointsOfR.push_back(nodeToPoint(node));
+        pointsOfR.push_back(posOf(node));
     }
 
     return pointsOfR;
 }
 
+/// Returns the positions of all the cells.
+/// Their top left positions to be more specific.
 std::vector<QPointF> Grid::points() const{
     // get nodes
-    std::vector<Node> allNodes = nodes();
+    std::vector<Node> allNodes = cells();
     std::vector<QPointF> allPoints;
     for (Node node:allNodes){
-        allPoints.push_back(nodeToPoint(node));
+        allPoints.push_back(posOf(node));
     }
 
     return allPoints;
 }
 
-int Grid::numXNodes() const{
-    return numXNodes_;
+/// Returns the number of cells in the x direction.
+int Grid::numXCells() const{
+    return numXCells_;
 }
 
-int Grid::numYNodes() const{
-    return numYNodes_;
+/// Returns the number of cells in the y direction.
+int Grid::numYCells() const{
+    return numYCells_;
 }
 
+/// Returns the width of the Grid.
+/// This is (number of cells in x direction) * (cell width).
 int Grid::width() const{
     return width_;
 }
 
+/// Returns the height of the Grid.
+/// This is (number of cells in y direction) * (cell height).
 int Grid::height() const{
     return height_;
 }
 
-int Grid::nodeWidth() const{
-    return nodeWidth_;
+/// Sets the number of cells in the x direction.
+void Grid::setNumXCells(int to)
+{
+    numXCells_ = to;
 }
 
-int Grid::nodeHeight() const{
-    return nodeHeight_;
+/// Sets the number of cells in the y direction.
+void Grid::setNumYCells(int to)
+{
+    numYCells_ = to;
+}
+
+/// Sets the width of each cell.
+void Grid::setCellWidth(int to)
+{
+    cellWidth_ = to;
+}
+
+/// Sets the height of each cell.
+void Grid::setCellHeight(int to)
+{
+    cellHeight_ = to;
+}
+
+/// Returns the width of each cell.
+int Grid::cellWidth() const{
+    return cellWidth_;
+}
+
+/// Returns the height of each cell.
+int Grid::cellHeight() const{
+    return cellHeight_;
 }
