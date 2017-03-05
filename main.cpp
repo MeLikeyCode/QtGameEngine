@@ -38,13 +38,13 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     // play music
-    //Sound* bgMusic = new Sound("qrc:/resources/sounds/music.mp3");
-    //bgMusic->play(-1);
+    Sound* bgMusic = new Sound("qrc:/resources/sounds/music.mp3");
+    bgMusic->play(-1);
 
     // create a MapGrid to put some Maps inside
     MapGrid* mapGrid = new MapGrid(3,3);
 
-    // create PathingMaps for the Maps
+    // create
     PathingMap map2PathingMap(50,50,64);
 
     // create the Maps

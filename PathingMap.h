@@ -6,15 +6,12 @@
 #include <QRectF>
 #include <QMetaType>
 
-/// Represents a region divided into cells where each cell can either be filled
-/// or unfilled.
+/// Represents a rectangular region of space divided into square cells where
+/// each cell can either be filled or unfilled.
 /// @author Abdullah Aghazadah
 /// @date 4-28-15
 ///
-/// A PathingMap can be thought of as a region of space that is occupied by
-/// cells. These cells can either be filled or unfilled.
-///
-/// To find the shortest path between any two cells (or points),
+/// To find the shortest path between any two cells (or points), use
 /// PathingMap::shortestPath().
 ///
 /// Several functions help with filling the PathingMap in various ways, such as
