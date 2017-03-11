@@ -36,7 +36,7 @@ public:
     std::vector<PointerType*> pointers() const;
 
 private:
-    std::vector<PointerType> pointers_;
+    std::vector<PointerType*> pointers_;
     int numPointersX_;
     int numPointersY_;
 };

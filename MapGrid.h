@@ -5,16 +5,18 @@
 #include <QPointer>
 #include "Map.h"
 
-class Node;
+#include "PointerGrid.h"
+
+class Map;
 
 /// Represents a grid of maps. You can get/set the Map at each Node ("cell") of
 /// the grid. The top left node of the grid is (0,0), bottom right is
 /// (numMapsHorizontally -1, numMapsVertically -1).
-///
+/// @author Abdullah Aghazadah
 class MapGrid
 {
 public:
-    MapGrid(int numMapsHorizontally, int numMapsVertically);
+    MapGrid(int numMapsHorizontally = 0, int numMapsVertically = 0);
 
     // setters
     void setMapAtPos(Map* map, int xPos, int yPos);
@@ -27,9 +29,7 @@ public:
     std::vector<Map*> maps() const;
 
 private:
-    std::vector<QPointer<Map>> maps_;
-    int numMapsHorizontally_;
-    int numMapsVertically_;
+    PointerGrid<Map> pointerGrid_;
 };
 
 #endif // MAPGRID_H

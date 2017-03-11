@@ -3,24 +3,16 @@
 #include <Node.h>
 
 MapGrid::MapGrid(int numMapsHorizontally, int numMapsVertically):
-    numMapsHorizontally_(numMapsHorizontally),
-    numMapsVertically_(numMapsVertically)
+    pointerGrid_(numMapsHorizontally,numMapsVertically)
 {
-    // initialize all maps to nullptr
-    for (int i = 0, n = numMapsHorizontally_* numMapsVertically_; i < n; i++){
-        maps_.push_back(nullptr);
-    }
+    // empty
 }
 
 /// Sets the specified Map in the specified position in the MapGrid.
 /// @param map The map to set at the specified position. Can be nullptr.
 void MapGrid::setMapAtPos(Map *map, int xPos, int yPos)
 {
-    // make sure xPos and yPos are within bounds
-    assert(xPos < numMapsHorizontally_ && yPos < numMapsVertically_);
-
-    int posInArray = yPos * numMapsHorizontally_ + xPos;
-    maps_[posInArray] = map;
+    pointerGrid_.setPointerAtPos(xPos,yPos,map);
 }
 
 /// Sets the specified Map in the specified position in the MapGrid.
@@ -36,23 +28,13 @@ void MapGrid::setMapAtPos(Map *map, const Node &atPos)
 /// there is no Map there!
 Map *MapGrid::mapAt(int xPos, int yPos) const
 {
-    if (xPos < 0 || xPos >= numMapsHorizontally_ || yPos < 0 || yPos >= numMapsVertically_){
-        return nullptr;
-    }
-
-    int posInArray = yPos * numMapsHorizontally_ + xPos;
-    return maps_[posInArray];
+    return pointerGrid_.pointerAt(xPos,yPos);
 }
 
 /// Returns true if the MapGrid contains the specified map.
 bool MapGrid::contains(Map *map) const
 {
-    for (Map* eachMap:maps_){
-        if (eachMap == map ){
-            return true;
-        }
-    }
-    return false;
+    return pointerGrid_.contains(map);
 }
 
 /// Returns the position of the specified map in the MapGrid.
@@ -61,29 +43,11 @@ bool MapGrid::contains(Map *map) const
 /// this function.
 Node MapGrid::positionOf(Map *map) const
 {
-    assert(contains(map));
-
-    int indexOfMap;
-    for (int i = 0, n = maps_.size(); i < n; i++){
-        if (maps_[i] == map){
-            indexOfMap = i;
-            break;
-        }
-    }
-
-    int yPos = indexOfMap / numMapsHorizontally_;
-    int xPos = indexOfMap % numMapsHorizontally_;
-    return Node(xPos,yPos);
+    return pointerGrid_.positionOf(map);
 }
 
-/// Returns all the Maps in the MapGrid (order top left to bottom right).
+/// Returns a vector of all the Maps in the MapGrid (order top left to bottom right).
 std::vector<Map *> MapGrid::maps() const
 {
-    std::vector<Map*> resultantMaps;
-    for (Map* map:maps_){
-        if (map != nullptr){
-            resultantMaps.push_back(map);
-        }
-    }
-    return resultantMaps;
+    return pointerGrid_.pointers();
 }
