@@ -68,7 +68,7 @@ void ItemRainOfSpears::spearStep_()
         // create spear projectile
         SpearProjectile* spearProjectile = new SpearProjectile(800,5);
         CBDamage* cb = static_cast<CBDamage*>(spearProjectile->collisionBehavior());
-        cb->addException(owner); // don't damage owner
+        cb->addCollisionToIgnore(owner,spearProjectile); // don't damage owner
         owner->map()->addEntity(spearProjectile);
         spearProjectile->setPointPos(randomPos);
         spearProjectile->shootTowards(targetPos);

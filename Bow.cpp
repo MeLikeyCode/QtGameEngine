@@ -49,7 +49,8 @@ void Bow::attack(QPointF targetPoint)
     SpearProjectile* spearProjectile = new SpearProjectile(600,50);
     map->addEntity(spearProjectile);
     CBDamage* collisionBehavior = (CBDamage*)spearProjectile->collisionBehavior();
-    collisionBehavior->addException(owningEntity);
+    collisionBehavior->addCollisionToIgnore(owningEntity,spearProjectile);
+    collisionBehavior->addCollisionToIgnore(spearProjectile,this);
     spearProjectile->setPointPos(startPos);
     spearProjectile->shootTowards(targetPoint);
     spearProjectile->setPointZ(owningEntity->pointZ() + owningEntity->height());

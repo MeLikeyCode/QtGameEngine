@@ -9,6 +9,7 @@
 #include <typeindex>// same ^
 #include <set>
 #include <QPointer>
+#include <utility>
 
 class Map;
 class Inventory;
@@ -182,6 +183,15 @@ template <> struct hash<QPointer<Entity>>
 {
     size_t operator()(const QPointer<Entity>& node) const{
         return hash<Entity*>()(node.data());
+    }
+};
+}
+
+// hash pair of entities (order shouldn't matter)
+namespace std{
+    template <> struct hash<std::pair<Entity*,Entity*>>{
+    size_t operator()(const std::pair<Entity*,Entity*>& pairOfEntities) const{
+        return (53 + hash<Entity*>()(pairOfEntities.first)) * 53 + hash<Entity*>()(pairOfEntities.first);
     }
 };
 }

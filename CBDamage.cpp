@@ -10,17 +10,17 @@ CBDamage::CBDamage(double amountToDamageEntityOne, double amountToDamageEntityTw
 
 void CBDamage::onCollided(Entity *entityOne, Entity *entityTwo)
 {
-    // damage entity one if not in exceptions
-    if (exceptions_.find(entityOne) == exceptions_.end())
-        entityTwo->damage(entityOne,amountToDamageEntityOne_);
-    // damage entity two if not in exceptions
-    if (exceptions_.find(entityTwo) == exceptions_.end())
-        entityOne->damage(entityTwo,amountToDamageEntityTwo_);
+    // if this collision is to be ignored, do nothing
+    if (ignoredCollisions_.find(std::make_pair(entityOne,entityTwo)) != ignoredCollisions_.end())
+        return;
+
+    entityOne->damage(entityTwo,amountToDamageEntityTwo_);
+    entityTwo->damage(entityOne,amountToDamageEntityOne_);
 }
 
-/// Adds the specified Entity to the "exceptions" list of the CBDamage.
-/// Entities in the exceptions list will not be damaged.
-void CBDamage::addException(Entity *entity)
+/// Specifies that the collision between these two entities should be ignored.
+void CBDamage::addCollisionToIgnore(Entity *one, Entity *two)
 {
-    exceptions_.insert(entity);
+    ignoredCollisions_.insert(std::make_pair(one,two));
+    ignoredCollisions_.insert(std::make_pair(two,one));
 }

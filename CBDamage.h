@@ -3,9 +3,12 @@
 
 #include "CollisionBehavior.h"
 #include <unordered_set>
+#include <utility>
+#include "Entity.h"
 
 /// A CollisionBehavior that will damage one, both, or none of the colliding entities.
-/// You can add "exceptions" (Entities that will not be damaged).
+/// You can specifiy collisions to ignore.
+/// @author Abdullah Aghazadah
 class CBDamage : public CollisionBehavior
 {
 public:
@@ -13,12 +16,12 @@ public:
 
     void onCollided(Entity *entityOne, Entity *entityTwo);
 
-    void addException(Entity* entity);
+    void addCollisionToIgnore(Entity* one, Entity* two);
 
 private:
     double amountToDamageEntityOne_;
     double amountToDamageEntityTwo_;
-    std::unordered_set<Entity*> exceptions_;
+    std::unordered_set<std::pair<Entity*,Entity*>> ignoredCollisions_;
 };
 
 #endif // CBDAMAGE_H

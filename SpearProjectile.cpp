@@ -23,7 +23,6 @@ SpearProjectile::SpearProjectile(double range, double damage):
 
     // set CollisionBehavior
     CBDamage* cb =  new CBDamage(this->health(),damage);
-    //cb->addException(this);
     setCollisionBehavior(cb);
 
     // TODO: move to base class (if this needs to happen with all projectiles)
