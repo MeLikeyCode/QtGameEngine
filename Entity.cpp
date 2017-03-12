@@ -42,6 +42,8 @@ Entity::Entity():
 /// and removed from the Map first.
 Entity::~Entity()
 {
+    emit dying(this); // let listeners know this entity is about to die
+
     // recursively delete child Entities
     for (Entity* entity: children()){
         delete entity;
@@ -445,8 +447,10 @@ void Entity::setHealth(double health)
     health_ = health;
 
     if (health_ < 0){
-        map()->removeEntity(this);
-        emit dying(this);
+        Map* entitysMap = map();
+        if (entitysMap != nullptr)
+            entitysMap->removeEntity(this);
+
         deleteLater();
     }
 }

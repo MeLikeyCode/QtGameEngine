@@ -54,7 +54,10 @@ public slots:
     void onEntityMoved_();
     void onEntityEntersRange_(Entity* watched, Entity* watching, double range);
     void onEntityLeavesRange_(Entity* watched, Entity* watching, double range);
-
+    void onChasingEntityDies_(QObject* entity);
+    void onChasedEntityDies_(QObject* entity);
+    void onChasingEntityLeavesMap_(Entity* entity);
+    void onChasedEntityLeavesMap_(Entity* entity);
     void chaseStep_();
 
 private:

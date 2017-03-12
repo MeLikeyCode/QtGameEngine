@@ -73,6 +73,9 @@ public:
     virtual bool isMovingEntity();
     virtual void stopMovingEntity();
 
+public slots:
+    void onEntityDied_(Entity *entity);
+
 signals:
     /// Emitted when the Mover has succesfully moved its Entity to the target
     /// position. Note: It is the responsiblity of concrete Movers to emit this

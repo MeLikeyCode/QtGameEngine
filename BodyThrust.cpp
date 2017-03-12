@@ -27,6 +27,8 @@ BodyThrust::BodyThrust(Entity &owner):
     soundEffect_ = new Sound("qrc:/resources/sounds/spear.wav");
 
     setIcon(new Sprite());
+
+    setOwner(owner);
 }
 
 void BodyThrust::useImplementation()
@@ -91,6 +93,20 @@ void BodyThrust::thrustStep_()
 {
     const int EXTRA_BACK_STEPS = 10;
 
+    Entity* theOwner = owner(); // if the entity to thrust is dead, were done
+    if (theOwner == nullptr){
+        resetVariables();
+        timer_->disconnect();
+        return;
+    }
+
+    Map* ownersMap = theOwner->map(); // if the entity to thrust is no longer in a map, were done
+    if (ownersMap == nullptr){
+        resetVariables();
+        timer_->disconnect();
+        return;
+    }
+
     // if moved backward enough, stop moving
     if (headingBackward_ && currentThrustStep_ >= maxThrustSteps_ + EXTRA_BACK_STEPS){
         timer_->disconnect();
@@ -104,13 +120,6 @@ void BodyThrust::thrustStep_()
         timer_->disconnect();
 
         resetVariables();
-        return;
-    }
-
-    Entity* theOwner = owner(); // if the entity to thrust is dead, were done
-    if (theOwner == nullptr){
-        resetVariables();
-        timer_->disconnect();
         return;
     }
 

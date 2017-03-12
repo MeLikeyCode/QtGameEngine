@@ -6,7 +6,7 @@ Mover::Mover(Entity* entity):
     entity_(entity),
     isMovingEntity_(false)
 {
-    // empty
+    setEntity(entity);
 }
 
 /// Returns the Entity that the Mover moves.
@@ -19,6 +19,10 @@ Entity *Mover::entity()
 void Mover::setEntity(Entity *entity)
 {
     assert(!isMovingEntity()); // cannot call setEntity() while Mover is already moving an Entity
+
+    // listen to when the entity to move has died, so we can stop moving it
+    disconnect(0,&Entity::dying,this,&Mover::onEntityDied_); // stop listening to any previous entitys dieing
+    connect(entity,&Entity::dying,this,&Mover::onEntityDied_); // listen to when this entity dies
 
     entity_ = entity;
 }
@@ -38,6 +42,13 @@ void Mover::stopMovingEntity()
 {
     isMovingEntity_ = false;    // update internal variable
     stopMovingEntity_();      // delegate to derived class's implementation
+}
+
+/// Executed when the Entity that the Mover is supposed to move has died.
+/// Will stop moving.
+void Mover::onEntityDied_(Entity *entity)
+{
+    stopMovingEntity();
 }
 
 /// Returns true if the Mover is currently moving its Entity.

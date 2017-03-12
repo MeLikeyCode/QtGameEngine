@@ -641,6 +641,9 @@ void Map::removeEntity(Entity *entity)
     entity->map_ = nullptr;
 
     // TODO: remove the leftover pathing of the Entity
+
+    // emit entity left map event
+    entity->mapLeft(entity,this);
 }
 
 /// Returns (a pointer to) the internal scene.

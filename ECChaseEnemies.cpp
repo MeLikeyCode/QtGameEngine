@@ -36,6 +36,12 @@ ECChaseEnemies::ECChaseEnemies(Entity &entity):
     // listen to path mover
     connect(pathMover_.get(),&PathMover::moved,this,&ECChaseEnemies::onEntityMoved_);
 
+    // listen to when the chasing entity dies
+    connect(controlledEntity_,&QObject::destroyed,this,&ECChaseEnemies::onChasingEntityDies_);
+
+    // listen to when chasing entity leaves map
+    connect(controlledEntity_,&Entity::mapLeft,this, &ECChaseEnemies::onChasingEntityLeavesMap_);
+
     // connect timer
     connect(chaseTimer_,&QTimer::timeout,this,&ECChaseEnemies::chaseStep_);
 
@@ -97,8 +103,14 @@ void ECChaseEnemies::onEntityEntersFOV_(Entity *entity)
     if (controlledEntity_->isAnEnemyGroup(entity->group()) == false)
         return;
 
-    // otherwise, set entering entity as the target entity
+    // listen to when target entity dies (so we can stop chasing)
     targetEntity_ = entity;
+    disconnect(0,&QObject::destroyed,this,&ECChaseEnemies::onChasedEntityDies_); // disconnect any previous signals connect to this slot
+    connect(entity,&QObject::destroyed,this,&ECChaseEnemies::onChasedEntityDies_);
+
+    // listen to when target entity leaves map (so we can stop chasing)
+    disconnect(0,&Entity::mapLeft,this,&ECChaseEnemies::onChasedEntityLeavesMap_);
+    connect(entity,&Entity::mapLeft,this,&ECChaseEnemies::onChasedEntityLeavesMap_);
 
     // listen to when the target entity enters/leaves stop distance
     controlledEntity_->map()->game()->addWatchedEntity(entity,controlledEntity_,stopDistance_);
@@ -148,6 +160,36 @@ void ECChaseEnemies::onEntityEntersRange_(Entity *watched, Entity *watching, dou
 void ECChaseEnemies::onEntityLeavesRange_(Entity *watched, Entity *watching, double range)
 {
     paused_ = false;
+}
+
+/// Executed when the chasing entity dies.
+/// Will stop chasing.
+void ECChaseEnemies::onChasingEntityDies_(QObject *entity)
+{
+    stopChasing();
+}
+
+/// Executed when the chased entity dies.
+/// Will stop chasing.
+void ECChaseEnemies::onChasedEntityDies_(QObject *entity)
+{
+    stopChasing();
+}
+
+/// Executed when the controlled entity (chasing entity) leaves a map.
+/// If it left to no map (i.e. map ptr is now nullptr), will stop chasing.
+void ECChaseEnemies::onChasingEntityLeavesMap_(Entity *entity)
+{
+    if (entity->map() == nullptr)
+        stopChasing();
+}
+
+/// Executed when the chased entity leaves a Map.
+/// If it left to no map (i.e. map ptr is now nullptr), will stop chasing.
+void ECChaseEnemies::onChasedEntityLeavesMap_(Entity *entity)
+{
+    if (entity->map() == nullptr)
+        stopChasing();
 }
 
 /// Takes controlled entity one step closer to chase victim :P (if chasing something).
