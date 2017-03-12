@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QPointer>
 #include "Entity.h"
+#include <QGraphicsPolygonItem>
 
 class QTimer;
 
@@ -40,6 +41,8 @@ private:
     double fieldOfViewDistance_;
     double fieldOfViewCheckFrequency_;
     QTimer* timerCheckFov_;
+
+    QGraphicsPolygonItem* polyItem_; // TODO: test remove
 
     // helper
     std::unordered_set<Entity*> entitiesInView_();

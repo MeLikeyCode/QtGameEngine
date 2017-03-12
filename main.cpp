@@ -70,6 +70,7 @@ int main(int argc, char *argv[])
 
     // create an entity that is controlled via keyboard/mouse
     player = new Entity();
+    player->setHealth(500);
 
     // create a sprite for the entity
     Sprite* sprplayer = new Sprite();

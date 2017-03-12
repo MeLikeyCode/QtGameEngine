@@ -10,7 +10,7 @@
 
 ECFieldOfViewEmitter::ECFieldOfViewEmitter(Entity &entity):
     entity_(&entity),
-    fieldOfViewAngle_(130),
+    fieldOfViewAngle_(90),
     fieldOfViewDistance_(600),
     fieldOfViewCheckFrequency_(50),
     timerCheckFov_(new QTimer(this))
@@ -18,6 +18,15 @@ ECFieldOfViewEmitter::ECFieldOfViewEmitter(Entity &entity):
     // connect timer to keep checking fov
     connect(timerCheckFov_,&QTimer::timeout,this,&ECFieldOfViewEmitter::checkFov_);
     timerCheckFov_->start(fieldOfViewCheckFrequency_);
+
+    // TODO: test remove
+    polyItem_= new QGraphicsPolygonItem();
+    QBrush brush;
+    brush.setStyle(Qt::SolidPattern);
+    brush.setColor(Qt::red);
+    polyItem_->setBrush(brush);
+    polyItem_->setOpacity(0.3);
+    entity_->map()->scene()->addItem(polyItem_);
 }
 
 /// Executed periodically for the entity controller to check the field of view
@@ -92,6 +101,9 @@ std::unordered_set<Entity *> ECFieldOfViewEmitter::entitiesInView_()
     points.append(p3);
 
     QPolygonF poly(points);
+
+    // TEST remove TODO remove
+    polyItem_->setPolygon(poly);
 
     std::unordered_set<Entity*> entities = entitysMap->entities(poly);
     entities.erase(entity_);
