@@ -231,7 +231,13 @@ std::unordered_set<Entity *> Map::entities(const QPolygonF &inRegion)
 {
     std::unordered_set<Entity*> ents;
     for (Entity* entity:entities()){
-        if (inRegion.containsPoint(entity->pointPos(),Qt::OddEvenFill)){
+        QRectF entityBBox = entity->boundingRect();
+        entityBBox.moveTo(entity->pointPos());
+        bool containsTopLeft = inRegion.containsPoint(entityBBox.topLeft(),Qt::OddEvenFill);
+        bool containsTopRight = inRegion.containsPoint(entityBBox.topRight(),Qt::OddEvenFill);
+        bool containsBottomRight = inRegion.containsPoint(entityBBox.bottomRight(),Qt::OddEvenFill);
+        bool containsBottomLeft = inRegion.containsPoint(entityBBox.bottomLeft(),Qt::OddEvenFill);
+        if (containsTopLeft || containsTopRight || containsBottomRight || containsBottomLeft){
             ents.insert(entity);
         }
     }

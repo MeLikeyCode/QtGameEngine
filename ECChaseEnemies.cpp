@@ -6,6 +6,7 @@
 #include "Map.h"
 #include "Utilities.h"
 #include "Game.h"
+#include <QDebug> // TODO: test remove
 
 ECChaseEnemies::ECChaseEnemies(Entity &entity):
     stopDistance_(15),
@@ -91,6 +92,9 @@ double ECChaseEnemies::stopDistance()
 /// entering entity as the target entity.
 void ECChaseEnemies::onEntityEntersFOV_(Entity *entity)
 {
+    // TODO: test remove
+    qDebug() << "onEntityEntersFOF_ executed";
+
     // if the controlled entity isn't supposed to chase anything, do nothing
     if (!shouldChase_)
         return;
@@ -126,6 +130,8 @@ void ECChaseEnemies::onEntityEntersFOV_(Entity *entity)
 /// Will unset the leaving entity as the target entity.
 void ECChaseEnemies::onEntityLeavesFOV_(Entity *entity)
 {
+    qDebug() << "onEntityLeavesFOV_ executed"; // TODO: remove, test
+
     // if leaving entity is target of controlled entity, unset as target
     if (entity == targetEntity_){
         targetEntity_ = nullptr;
@@ -151,6 +157,7 @@ void ECChaseEnemies::onEntityMoved_()
 /// Will stop moving towards the chased entity.
 void ECChaseEnemies::onEntityEntersRange_(Entity *watched, Entity *watching, double range)
 {
+    qDebug() << "onEntityEntersRange_ executed"; // TODO: remove test
     pathMover_->stopMovingEntity();
     paused_ = true;
 }
@@ -159,6 +166,7 @@ void ECChaseEnemies::onEntityEntersRange_(Entity *watched, Entity *watching, dou
 /// Will start chasing it again.
 void ECChaseEnemies::onEntityLeavesRange_(Entity *watched, Entity *watching, double range)
 {
+    qDebug() << "onEntityLeavesRange_ executed"; // TODO: remove test
     paused_ = false;
 }
 
