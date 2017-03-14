@@ -54,8 +54,8 @@ void ECFieldOfViewEmitter::checkFov_()
         return;
 
     // emit entityEntersFOV if any entities just entered the fov
-    std::unordered_set<Entity*> entitiesInView = entitiesInView();
-    for (Entity* entity:entitiesInView){
+    std::unordered_set<Entity*> entsInView = entitiesInView();
+    for (Entity* entity:entsInView){
         // if were not in fov earlier, emit
         if (entitiesInViewLastTime_.count(entity) == 0){
             entitiesInViewLastTime_.insert(entity);
@@ -67,7 +67,7 @@ void ECFieldOfViewEmitter::checkFov_()
     std::unordered_set<Entity*> copy = entitiesInViewLastTime_;
     for (Entity* entity:copy){
         // if the entiy is no longer in view, remove from list and emit
-        if (entitiesInView.count(entity) == 0){
+        if (entsInView.count(entity) == 0){
             entitiesInViewLastTime_.erase(entity);
             emit entityLeavesFOV(entity);
         }

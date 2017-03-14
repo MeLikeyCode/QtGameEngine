@@ -16,8 +16,7 @@ ECChaseEnemies::ECChaseEnemies(Entity &entity):
     chaseTimer_(new QTimer(this)),
     shouldChase_(true),
     paused_(false),
-    targetEntity_(nullptr),
-    somethingInFov_(false)
+    targetEntity_(nullptr)
 {
     // make sure entity is in a map
     Map* entitysMap = entity.map();
@@ -96,8 +95,6 @@ void ECChaseEnemies::onEntityEntersFOV_(Entity *entity)
     // TODO: test remove
     qDebug() << "onEntityEntersFOF_ executed";
 
-    somethingInFov_ = true;
-
     // if the controlled entity isn't supposed to chase anything, do nothing
     if (!shouldChase_)
         return;
@@ -135,13 +132,26 @@ void ECChaseEnemies::onEntityLeavesFOV_(Entity *entity)
 {
     qDebug() << "onEntityLeavesFOV_ executed"; // TODO: remove, test
 
-    // if leaving entity is target of controlled entity, unset as target
-    if (entity == targetEntity_){
-        targetEntity_ = nullptr;
+    // if leaving entity isn't the target of controlled entity, do nothing
+    if (entity != targetEntity_)
+        return;
 
-        // stop listening to enter/leave range for leaving entity
-        controlledEntity_->map()->game()->removeWatchedEntity(entity,controlledEntity_);
-        chaseTimer_->stop();
+    // other wise
+
+    // unset as target
+    targetEntity_ = nullptr;
+
+    // stop listening to enter/leave range for leaving entity
+    controlledEntity_->map()->game()->removeWatchedEntity(entity,controlledEntity_);
+    chaseTimer_->stop();
+
+    // if there is another enemy in view, target that one
+    std::unordered_set<Entity*> otherEntitiesInView = fovEmitter_->entitiesInView();
+    for (Entity* possibleEnemy:otherEntitiesInView){
+        if (targetEntity_->isAnEnemyGroup(possibleEnemy->group())){
+            onEntityEntersFOV_(possibleEnemy);
+            return;
+        }
     }
 }
 

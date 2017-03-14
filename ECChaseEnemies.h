@@ -71,7 +71,6 @@ private:
     QTimer* chaseTimer_;
 
     bool shouldChase_;
-    bool somethingInFov_; // is there something in the field of view right now?
     bool paused_;   // controlled entity is w/i stop distance of chased entity
     QPointer<Entity> targetEntity_;
 };
