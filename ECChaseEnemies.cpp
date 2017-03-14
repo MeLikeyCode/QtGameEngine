@@ -9,14 +9,15 @@
 #include <QDebug> // TODO: test remove
 
 ECChaseEnemies::ECChaseEnemies(Entity &entity):
-    stopDistance_(15),
+    stopDistance_(100),
     controlledEntity_(&entity),
     fovEmitter_(new ECFieldOfViewEmitter(entity)),
     pathMover_(new PathMover(&entity)),
     chaseTimer_(new QTimer(this)),
     shouldChase_(true),
     paused_(false),
-    targetEntity_(nullptr)
+    targetEntity_(nullptr),
+    somethingInFov_(false)
 {
     // make sure entity is in a map
     Map* entitysMap = entity.map();
@@ -94,6 +95,8 @@ void ECChaseEnemies::onEntityEntersFOV_(Entity *entity)
 {
     // TODO: test remove
     qDebug() << "onEntityEntersFOF_ executed";
+
+    somethingInFov_ = true;
 
     // if the controlled entity isn't supposed to chase anything, do nothing
     if (!shouldChase_)

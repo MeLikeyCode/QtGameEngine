@@ -54,7 +54,7 @@ void ECFieldOfViewEmitter::checkFov_()
         return;
 
     // emit entityEntersFOV if any entities just entered the fov
-    std::unordered_set<Entity*> entitiesInView = entitiesInView_();
+    std::unordered_set<Entity*> entitiesInView = entitiesInView();
     for (Entity* entity:entitiesInView){
         // if were not in fov earlier, emit
         if (entitiesInViewLastTime_.count(entity) == 0){
@@ -76,7 +76,7 @@ void ECFieldOfViewEmitter::checkFov_()
 }
 
 /// Returns all the entities in the fov of the entity being controlled.
-std::unordered_set<Entity *> ECFieldOfViewEmitter::entitiesInView_()
+std::unordered_set<Entity *> ECFieldOfViewEmitter::entitiesInView()
 {
     // - create QPolygon triangel w/ distance and angle
     // - pass this triangle to map to get entities in their

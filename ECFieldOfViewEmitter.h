@@ -11,7 +11,8 @@ class QTimer;
 
 /// An entity controller (TODO: add doc link) that checks the field of view of
 /// an entity and emits a signal whenever other entities enter or leave the
-/// controlled entity's field of view.
+/// controlled entity's field of view. You can also use entitiesInView() to get
+/// all the current entities in the controlled entity's field of view.
 ///
 /// Example usage:
 /// ECCheckFOV* c = new ECCheckFOV(entity);
@@ -24,6 +25,7 @@ class ECFieldOfViewEmitter: public QObject
     Q_OBJECT
 public:
     ECFieldOfViewEmitter(Entity& entity);
+    std::unordered_set<Entity*> entitiesInView();
 
 public slots:
     void checkFov_();
@@ -45,7 +47,6 @@ private:
     QGraphicsPolygonItem* polyItem_; // TODO: test remove
 
     // helper
-    std::unordered_set<Entity*> entitiesInView_();
     std::unordered_set<Entity*> entitiesInViewLastTime_;
 };
 

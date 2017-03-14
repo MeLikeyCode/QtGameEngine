@@ -30,6 +30,8 @@
 #include "RainWeather.h"
 #include "SnowWeather.h"
 #include "Utilities.h"
+#include "ECFieldOfViewEmitter.h"
+#include "ECChaseEnemies.h"
 
 Entity* player;
 
@@ -166,6 +168,15 @@ int main(int argc, char *argv[])
 //    map1->addWeatherEffect(*snow);
 
     //addRandomTrees(map1,50);
+
+    // create a test chaser enemy
+    Entity* testFOVEntity = new Entity();
+    testFOVEntity->setGroup(2);
+    testFOVEntity->addEnemyGroup(0);
+    testFOVEntity->setPointPos(QPoint(50,700));
+    map1->addEntity(testFOVEntity);
+    ECChaseEnemies* ecChase = new ECChaseEnemies(*testFOVEntity);
+
 
     return a.exec();
 }
