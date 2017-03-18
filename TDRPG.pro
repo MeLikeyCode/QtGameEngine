@@ -109,7 +109,8 @@ SOURCES += main.cpp \
     DRBDestroyProjectile.cpp \
     PathMover.cpp \
     PositionalSound.cpp \
-    PointerGrid.cpp
+    PointerGrid.cpp \
+    SpriteSheet.cpp
 
 HEADERS  += \
     Map.h \
@@ -204,7 +205,8 @@ HEADERS  += \
     DRBDestroyProjectile.h \
     PathMover.h \
     PositionalSound.h \
-    PointerGrid.h
+    PointerGrid.h \
+    SpriteSheet.h
 
 RESOURCES += \
     res.qrc
