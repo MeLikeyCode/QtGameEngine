@@ -78,5 +78,6 @@
         <file>graphics/spider/walk5.png</file>
         <file>graphics/spider/walk6.png</file>
         <file>sounds/rain.ogg</file>
+        <file>graphics/human/download.png</file>
     </qresource>
 </RCC>

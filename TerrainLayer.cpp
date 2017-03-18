@@ -395,7 +395,7 @@ void TerrainLayer::draw_()
         if (pixmapItem){
             Node pos = positionOf_(pixmapItem);
             pixmapItem->setPixmap(pixmap_);
-            pixmapItem->setPos(grid_.posOf(pos));
+            pixmapItem->setPos(grid_.cellToPoint(pos));
             setCorrectFade_(pos.x(),pos.y());
         }
     }

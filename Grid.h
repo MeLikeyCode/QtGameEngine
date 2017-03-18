@@ -4,6 +4,7 @@
 #include <vector>
 
 class QPointF;
+class QRectF;
 class Node;
 
 /// Represents a region of space that is divided into a grid of cells.
@@ -29,14 +30,18 @@ public:
     Grid(int numXCells, int numYCells, int cellWidth, int cellHeight);
 
     // readers
-    QPointF posOf(const Node& cell) const;
-    Node cellAt(const QPointF& pos) const;
+    bool contains(const Node& cell) const;
+    QPointF cellToPoint(const Node& cell) const;
+    Node pointToCell(const QPointF& pos) const;
+    QRectF cellToRect(const Node& cell) const;
     std::vector<Node> cellsOfColumn(int i) const;
     std::vector<Node> cellsOfRow(int i) const;
     std::vector<Node> cells() const;
+    std::vector<Node> cells(const Node& topLeft, const Node& bottomRight) const;
     std::vector<QPointF> pointsOfColumn(int i) const;
     std::vector<QPointF> pointsOfRow(int i) const;
     std::vector<QPointF> points() const;
+    std::vector<QRectF> cellsAsRects(const Node& topLeft, const Node& bottomRight) const;
     int numXCells() const;
     int numYCells() const;
     int cellWidth() const;
@@ -44,6 +49,7 @@ public:
     int width() const;
     int height() const;
 
+    // setters
     void setNumXCells(int to);
     void setNumYCells(int to);
     void setCellWidth(int to);

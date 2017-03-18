@@ -2,8 +2,8 @@
 #define SPRITESHEET_H
 
 #include "Grid.h"
+#include <QPixmap>
 
-class QPixmap;
 class Node;
 
 /// Represents a sprite sheet.
@@ -21,6 +21,7 @@ public:
     SpriteSheet(std::string filepath, int numXTiles, int numYTiles, double tileWidth, double tileHeight);
 
     QPixmap tileAt(const Node& cell) const;
+    std::vector<QPixmap> tilesAt(const Node& topLeft, const Node& bottomRight) const;
 
     int numXTiles() const;
     int numYTiles() const;

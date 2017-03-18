@@ -1,7 +1,10 @@
 #include "Grid.h"
+
 #include <QPointF>
-#include "Node.h"
 #include <cassert>
+#include <QRectF>
+
+#include "Node.h"
 
 /// Constructs an empty Grid (no cells).
 Grid::Grid():
@@ -29,9 +32,15 @@ Grid::Grid(int numXCells, int numYCells, int cellWidth, int cellHeight):
 
 }
 
+/// Returns true if the specified cell is in the Grid.
+bool Grid::contains(const Node &cell) const
+{
+    return cell.x() >= 0 && cell.y() >= 0 && cell.x() < numXCells() && cell.y() < numYCells();
+}
+
 /// Returns the position of the specified cell.
 /// More specifically, returns the position of the top left corner of the specified cell.
-QPointF Grid::posOf(const Node &cell) const{
+QPointF Grid::cellToPoint(const Node &cell) const{
     // make sure the Node is in the Grid
     assert(cell.x() < numXCells() && cell.y() < numYCells());
 
@@ -41,7 +50,7 @@ QPointF Grid::posOf(const Node &cell) const{
 }
 
 /// Returns the cell at the specified position.
-Node Grid::cellAt(const QPointF &pos) const{
+Node Grid::pointToCell(const QPointF &pos) const{
     // make sure the point is in the Grid
     assert(int(pos.x()) < width() && int(pos.y()) << height());
 
@@ -90,6 +99,21 @@ std::vector<Node> Grid::cells() const{
     return allNodes;
 }
 
+/// Returns a vector of all the cells in the range [topLeft, bottomRight].
+/// The order is left to right, top to bottom.
+std::vector<Node> Grid::cells(const Node &topLeft, const Node &bottomRight) const
+{
+    std::vector<Node> nodesInRegion;
+    for (int x = topLeft.x(), n = bottomRight.x(); x <= n; ++x){
+        for (int y = topLeft.y(), p = bottomRight.y(); y <= p; ++y){
+            if (contains(Node(x,y)))
+            nodesInRegion.push_back(Node(x,y));
+        }
+    }
+
+    return nodesInRegion;
+}
+
 /// Returns the positions of all the cells of the specified column.
 /// Their top left position to be more specified.
 std::vector<QPointF> Grid::pointsOfColumn(int i) const{
@@ -97,7 +121,7 @@ std::vector<QPointF> Grid::pointsOfColumn(int i) const{
     std::vector<Node> nodesOfC = cellsOfColumn(i);
     std::vector<QPointF> pointsOfC;
     for (Node node:nodesOfC){
-        pointsOfC.push_back(posOf(node));
+        pointsOfC.push_back(cellToPoint(node));
     }
 
     return pointsOfC;
@@ -110,7 +134,7 @@ std::vector<QPointF> Grid::pointsOfRow(int i) const{
     std::vector<Node> nodesOfR = cellsOfRow(i);
     std::vector<QPointF> pointsOfR;
     for (Node node:nodesOfR){
-        pointsOfR.push_back(posOf(node));
+        pointsOfR.push_back(cellToPoint(node));
     }
 
     return pointsOfR;
@@ -123,10 +147,37 @@ std::vector<QPointF> Grid::points() const{
     std::vector<Node> allNodes = cells();
     std::vector<QPointF> allPoints;
     for (Node node:allNodes){
-        allPoints.push_back(posOf(node));
+        allPoints.push_back(cellToPoint(node));
     }
 
     return allPoints;
+}
+
+/// Returns the rect at the specified cell.
+QRectF Grid::cellToRect(const Node &cell) const
+{
+    QRectF asRect;
+    asRect.setX(cell.x() * cellWidth());
+    asRect.setY(cell.y() * cellHeight());
+    asRect.setWidth(cellWidth());
+    asRect.setHeight(cellHeight());
+
+    return asRect;
+}
+
+/// Returns the specified region of cells in the range [topLeft, bottomRight] as rects.
+std::vector<QRectF> Grid::cellsAsRects(const Node &topLeft, const Node &bottomRight) const
+{
+    // get the cells as nodes
+    std::vector<Node> cellsAsNodes = cells(topLeft,bottomRight);
+
+    // convert them to rects
+    std::vector<QRectF> cellsAsRects;
+    for (Node node:cellsAsNodes){
+        cellsAsRects.push_back(cellToRect(node));
+    }
+
+    return cellsAsRects;
 }
 
 /// Returns the number of cells in the x direction.

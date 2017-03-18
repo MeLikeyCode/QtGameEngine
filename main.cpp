@@ -32,6 +32,7 @@
 #include "Utilities.h"
 #include "ECFieldOfViewEmitter.h"
 #include "ECChaseEnemies.h"
+#include "SpriteSheet.h"
 
 Entity* player;
 
@@ -177,6 +178,13 @@ int main(int argc, char *argv[])
     map1->addEntity(testFOVEntity);
     ECChaseEnemies* ecChase = new ECChaseEnemies(*testFOVEntity);
 
+    // test spritesheet
+    SpriteSheet spriteSheet(":/resources/graphics/human/download.png",7,10,64,64);
+    Sprite* testSprite = new Sprite();
+    testSprite->addFrames(Node(0,7),Node(7,7),spriteSheet,"walk");
+    testSprite->setPos(600,600);
+    map1->scene()->addItem(testSprite);
+    testSprite->play("walk",-1,100);
 
     return a.exec();
 }

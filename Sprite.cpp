@@ -3,6 +3,8 @@
 #include <QDebug>
 #include <QGraphicsScene>
 #include <QTimer>
+#include "Node.h"
+#include "SpriteSheet.h"
 
 /// Constructs a Sprite with no animations and no current frame.
 Sprite::Sprite(QGraphicsItem *parent):
@@ -108,7 +110,7 @@ bool Sprite::hasAnimation(std::string animation) const{
 }
 
 /// Returns the name of the currently playing animation.
-std::string Sprite::playingAnimation()
+std::string Sprite::playingAnimation() const
 {
     return playingAnimation_;
 }
@@ -167,6 +169,30 @@ void Sprite::addFrames(std::string resourceFolder, int numOfImages, std::string 
     for (int i = 0, n = numOfImages; i < n; ++i){
         std::string fullPath = resourceFolder + "/" + imagePrefix + std::to_string(i) + ".png";
         addFrame(QPixmap(fullPath.c_str()),imagePrefix);
+    }
+}
+
+/// Adds a tile from a SpriteSheet to an animation of the Sprite.
+
+/// If the animation already exists, the tile will simply be added as the next
+/// frame in the animation. If the animation does not exist, it will be created with
+/// the tile being its first frame.
+void Sprite::addFrame(const Node &tile, const SpriteSheet &fromSpriteSheet, std::string toAnimation)
+{
+    QPixmap asPixmap = fromSpriteSheet.tileAt(tile);
+    addFrame(asPixmap,toAnimation);
+}
+
+/// Adds a specified set of tiles from a SpriteSheet to an animation of the Sprite.
+
+/// If the animation already exists, the tile will simply be added as the next
+/// frame in the animation. If the animation does not exist, it will be created with
+/// the tile being its first frame.
+void Sprite::addFrames(const Node &topLeftCell, const Node &bottomRightCell, const SpriteSheet &fromSpriteSheet, std::string toAnimation)
+{
+    std::vector<QPixmap> pixmaps = fromSpriteSheet.tilesAt(topLeftCell,bottomRightCell);
+    for (QPixmap pixmap:pixmaps){
+        addFrame(pixmap,toAnimation);
     }
 }
 
