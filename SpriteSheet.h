@@ -10,6 +10,7 @@ class Node;
 /// A sprite sheet is a sheet of paper with sprites arranged in a grid like fashion.
 /// This is a cheap value class.
 /// @author Abdullah Aghazadah
+/// @date 3/18/17
 ///
 /// Example usage:
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.cpp

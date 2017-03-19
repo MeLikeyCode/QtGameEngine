@@ -60,6 +60,7 @@ Node Grid::pointToCell(const QPointF &pos) const{
 }
 
 /// Returns all the cells of the specified column of the Grid.
+/// The order is top to bottom.
 std::vector<Node> Grid::cellsOfColumn(int i) const{
     // make sure the column is in the grid
     assert (i < numXCells());
@@ -73,6 +74,7 @@ std::vector<Node> Grid::cellsOfColumn(int i) const{
 }
 
 /// Returns all the cells of the specified row of the Grid.
+/// The order is left to right.
 std::vector<Node> Grid::cellsOfRow(int i) const{
     // make sure the row is in the grid
     assert(i < numYCells());
@@ -86,12 +88,13 @@ std::vector<Node> Grid::cellsOfRow(int i) const{
 }
 
 /// Returns all the cells of the Grid.
+/// The order is left to right, top to bottom.
 std::vector<Node> Grid::cells() const{
     std::vector<Node> allNodes;
     // add all columns
-    for (int x = 0, n = numXCells(); x < n; ++x){
-        std::vector<Node> colNodes = cellsOfColumn(x);
-        for (Node node:colNodes){
+    for (int y = 0, n = numYCells(); y < n; ++y){
+        std::vector<Node> rowNodes = cellsOfRow(y);
+        for (Node node:rowNodes){
             allNodes.push_back(node);
         }
     }
@@ -104,14 +107,38 @@ std::vector<Node> Grid::cells() const{
 std::vector<Node> Grid::cells(const Node &topLeft, const Node &bottomRight) const
 {
     std::vector<Node> nodesInRegion;
-    for (int x = topLeft.x(), n = bottomRight.x(); x <= n; ++x){
-        for (int y = topLeft.y(), p = bottomRight.y(); y <= p; ++y){
+    for (int y = topLeft.y(), n = bottomRight.y(); y <= n; ++y){
+        for (int x = topLeft.x(), p = bottomRight.x(); x <= p; ++x){
             if (contains(Node(x,y)))
             nodesInRegion.push_back(Node(x,y));
         }
     }
 
     return nodesInRegion;
+}
+
+/// Returns all the cells that are (even partially) in the specified rectangular region.
+/// The order is left to right, top to bottom.
+/// @note Use cellsFullyIn() to get only cells that are *fully* in the specified region.
+std::vector<Node> Grid::cellsIn(const QRectF &region) const
+{
+    Node topLeft = pointToCell(region.topLeft());
+    Node bottomRight = pointToCell(region.bottomRight());
+    return cells(topLeft,bottomRight);
+}
+
+/// Returns all the cells that are *fully* in the specified rectangular region.
+/// The order is left to right, top to bottom.
+/// @note Use cellsIn() to get cells which are even partially in the specified region.
+std::vector<Node> Grid::cellsFullyIn(const QRectF &region) const
+{
+    Node topLeft = pointToCell(region.topLeft());
+    Node bottomRight = pointToCell(region.bottomRight());
+    topLeft.setX(topLeft.x() + 1);
+    topLeft.setY(topLeft.y() + 1);
+    bottomRight.setX(bottomRight.x() - 1);
+    bottomRight.setY(bottomRight.y() - 1);
+    return cells(topLeft,bottomRight);
 }
 
 /// Returns the positions of all the cells of the specified column.
@@ -166,7 +193,8 @@ QRectF Grid::cellToRect(const Node &cell) const
 }
 
 /// Returns the specified region of cells in the range [topLeft, bottomRight] as rects.
-std::vector<QRectF> Grid::cellsAsRects(const Node &topLeft, const Node &bottomRight) const
+/// The order is top left to bottom right.
+std::vector<QRectF> Grid::cellsToRects(const Node &topLeft, const Node &bottomRight) const
 {
     // get the cells as nodes
     std::vector<Node> cellsAsNodes = cells(topLeft,bottomRight);

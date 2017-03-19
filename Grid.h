@@ -7,25 +7,24 @@ class QPointF;
 class QRectF;
 class Node;
 
-/// Represents a region of space that is divided into a grid of cells.
-/// You can set the the number and size of the cells of the grid.
-/// Provides functions for mapping between a cell and an actual position.
+/// Represents a region of 2d space that is divided into a grid of cells.
+/// You can do things such finding the cell at a specified point, finding the position
+/// of a specified cell, getting a bounding box of a cell or some cells in a region, etc...
+/// This class is a value class.
 /// @author Abdullah Aghazadah
 /// @date 5-15-15
 ///
-/// To get the actual point at a specified cell, use posOf().
-/// To get the cell at the specified point, use cellAt();
-/// To get a vector of all the cells, use cells();
-/// To get a vector of all the cells in a specific column or row use
-/// cellsOfColumn(int) or cellsOfRow(int). Similar functions exist
-/// to get the vector of all the points in a specified column, row, or in the
-/// entire Grid.
+/// Here are a few things you can do to a Grid:
+/// To get the top left position of a specified cell, use cellToPoint().
+/// To get the cell at the specified point, use pointToCell();
+/// Functions exist to get the cells in a specified region of the Grid.
+/// Functions exist to get the top left corners of a bunch of cells in a specified region.
 ///
 /// The cell (0,0) represents the top left corner of the grid while the cell
 /// (numXCells-1,numYCells-1) represents the bottom right of the grid.
 class Grid{
 public:
-    // constructor
+    // constructors
     Grid();
     Grid(int numXCells, int numYCells, int cellWidth, int cellHeight);
 
@@ -38,10 +37,13 @@ public:
     std::vector<Node> cellsOfRow(int i) const;
     std::vector<Node> cells() const;
     std::vector<Node> cells(const Node& topLeft, const Node& bottomRight) const;
+    std::vector<Node> cellsIn(const QRectF& region) const;
+    std::vector<Node> cellsFullyIn(const QRectF& region) const;
     std::vector<QPointF> pointsOfColumn(int i) const;
     std::vector<QPointF> pointsOfRow(int i) const;
     std::vector<QPointF> points() const;
-    std::vector<QRectF> cellsAsRects(const Node& topLeft, const Node& bottomRight) const;
+    std::vector<QRectF> cellsToRects(const Node& topLeft, const Node& bottomRight) const;
+
     int numXCells() const;
     int numYCells() const;
     int cellWidth() const;
