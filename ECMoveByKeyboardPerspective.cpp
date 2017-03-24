@@ -1,4 +1,4 @@
-#include "ECMoveInResponseToKeyboardRelativeToSelf.h"
+#include "ECMoveByKeyboardPerspective.h"
 #include "Map.h"
 #include "QTimer"
 #include "Sprite.h"
@@ -6,7 +6,7 @@
 #include <cassert>
 #include "Utilities.h"
 
-ECMoveInResponseToKeyboardRelativeToSelf::ECMoveInResponseToKeyboardRelativeToSelf(Entity* entity):
+ECMoveByKeyboardPerspective::ECMoveByKeyboardPerspective(Entity* entity):
     entity_(entity),
     stepSize_(15),
     moveTimer_(new QTimer(this))
@@ -15,23 +15,23 @@ ECMoveInResponseToKeyboardRelativeToSelf::ECMoveInResponseToKeyboardRelativeToSe
     assert(entity != nullptr);
 
     // connect timer to move step
-    connect(moveTimer_,&QTimer::timeout,this,&ECMoveInResponseToKeyboardRelativeToSelf::moveStep_);
+    connect(moveTimer_,&QTimer::timeout,this,&ECMoveByKeyboardPerspective::moveStep_);
     moveTimer_->start(secondsToMs(frequency(stepSize_,entity_->speed())));
 }
 
 /// See ECPathMover::setStepSize().
-void ECMoveInResponseToKeyboardRelativeToSelf::setStepSize(double stepSize)
+void ECMoveByKeyboardPerspective::setStepSize(double stepSize)
 {
     stepSize_ = stepSize;
 }
 
 /// See ECPathMover::stepSize().
-double ECMoveInResponseToKeyboardRelativeToSelf::stepSize()
+double ECMoveByKeyboardPerspective::stepSize()
 {
     return stepSize_;
 }
 
-void ECMoveInResponseToKeyboardRelativeToSelf::moveStep_()
+void ECMoveByKeyboardPerspective::moveStep_()
 {
     // if the entity has been destroyed, stop
     if (entity_.isNull()){

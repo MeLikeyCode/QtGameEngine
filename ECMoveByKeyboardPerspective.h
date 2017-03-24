@@ -1,5 +1,5 @@
-#ifndef ECMOVEINRESPONSETOKEYBOARDRELATIVETOSELF_H
-#define ECMOVEINRESPONSETOKEYBOARDRELATIVETOSELF_H
+#ifndef ECMOVEBYKEYBOARDPERSPECTIVE_H
+#define ECMOVEBYKEYBOARDPERSPECTIVE_H
 
 #include <QObject>
 #include <QPointer>
@@ -9,15 +9,17 @@
 /// his own facing angle in response to keyboard keys.
 ///
 /// Example usage:
-/// ECMoveInResponseToKeyboardRelativeToSelf* c = new ECMoveInResponseToKeyboardRelativeToSelf(entity);
+/// ECMoveByKeyboardPerspective* c = new ECMoveByKeyboardPerspective(entity);
 ///
 /// That is all needed. Once constructed, te Entity passed into the constructor will move
 /// in response to the keyboard. WASD keys are used to control the Entity.
-class ECMoveInResponseToKeyboardRelativeToSelf: public QObject
+/// A and D are used to straf left/right while W and S are used to move forward/backward
+/// at current angle.
+class ECMoveByKeyboardPerspective: public QObject
 {
     Q_OBJECT
 public:
-    ECMoveInResponseToKeyboardRelativeToSelf(Entity* entity);
+    ECMoveByKeyboardPerspective(Entity* entity);
 
     void setStepSize(double stepSize);
     double stepSize();
@@ -30,4 +32,4 @@ private:
     QTimer* moveTimer_;
 };
 
-#endif // ECMOVEINRESPONSETOKEYBOARDRELATIVETOSELF_H
+#endif // ECMOVEBYKEYBOARDPERSPECTIVE_H

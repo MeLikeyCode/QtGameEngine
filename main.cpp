@@ -3,7 +3,7 @@
 #include "PathingMap.h"
 #include "Map.h"
 #include "Entity.h"
-#include "ECMoveInResponseToKeyboardRelativeToScreen.h"
+#include "ECMoveByKeyboardEightDirectional.h"
 #include "ECRotateToMouse.h"
 #include "ECGrabCam.h"
 #include "TerrainLayer.h"
@@ -33,6 +33,7 @@
 #include "ECFieldOfViewEmitter.h"
 #include "ECChaseEnemies.h"
 #include "SpriteSheet.h"
+#include "ECMoveByKeyboardFourDirectional.h"
 
 Entity* player;
 
@@ -76,16 +77,23 @@ int main(int argc, char *argv[])
     player->setHealth(500);
 
     // create a sprite for the entity
+    SpriteSheet characterSpriteSheet(":/resources/graphics/human/character.png",13,21,64,64);
     Sprite* sprplayer = new Sprite();
-    sprplayer->addFrames(":/resources/graphics/human",6,"walk");
-    sprplayer->addFrames(":/resources/graphics/human",1,"stand");
+    sprplayer->addFrames(Node(0,8),Node(8,8),characterSpriteSheet,"walkUp");
+    sprplayer->addFrame(Node(0,8),characterSpriteSheet,"standUp");
+    sprplayer->addFrames(Node(0,9),Node(8,9),characterSpriteSheet,"walkLeft");
+    sprplayer->addFrame(Node(0,9),characterSpriteSheet,"standLeft");
+    sprplayer->addFrames(Node(0,10),Node(8,10),characterSpriteSheet,"walkDown");
+    sprplayer->addFrame(Node(0,10),characterSpriteSheet,"standDown");
+    sprplayer->addFrames(Node(0,11),Node(8,11),characterSpriteSheet,"walkRight");
+    sprplayer->addFrame(Node(0,11),characterSpriteSheet,"standRight");
     player->setSprite(sprplayer);
 
     map1->addEntity(player);
 
     // add controllers to control the entity
-    ECRotateToMouse* rotContr = new ECRotateToMouse(*player);
-    ECMoveInResponseToKeyboardRelativeToScreen* moveContr = new ECMoveInResponseToKeyboardRelativeToScreen(player);
+    //ECRotateToMouse* rotContr = new ECRotateToMouse(*player);
+    ECMoveByKeyboardFourDirectional* moveContr = new ECMoveByKeyboardFourDirectional(player);
     ECGrabCam* grabCamContr = new ECGrabCam(player);
     ECMoveToNextMap* moveToNMC = new ECMoveToNextMap(player);
     ECGrabCurrentMap* grabCM = new ECGrabCurrentMap(player);

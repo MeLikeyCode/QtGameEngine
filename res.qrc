@@ -5,13 +5,6 @@
         <file>graphics/terrain/grassstone.png</file>
         <file>graphics/terrain/grassstonedry.png</file>
         <file>graphics/terrain/rock.png</file>
-        <file>graphics/human/stand0.png</file>
-        <file>graphics/human/walk0.png</file>
-        <file>graphics/human/walk1.png</file>
-        <file>graphics/human/walk2.png</file>
-        <file>graphics/human/walk3.png</file>
-        <file>graphics/human/walk4.png</file>
-        <file>graphics/human/walk5.png</file>
         <file>graphics/weapons/spear.png</file>
         <file>graphics/weapons/axe.png</file>
         <file>sounds/music.mp3</file>
@@ -78,6 +71,8 @@
         <file>graphics/spider/walk5.png</file>
         <file>graphics/spider/walk6.png</file>
         <file>sounds/rain.ogg</file>
-        <file>graphics/human/download.png</file>
+        <file>graphics/human/character.png</file>
+        <file>graphics/human/characterBow.png</file>
+        <file>graphics/human/characterSpear.png</file>
     </qresource>
 </RCC>

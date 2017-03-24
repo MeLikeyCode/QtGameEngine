@@ -86,11 +86,9 @@ SOURCES += main.cpp \
     PointTargetAbility.cpp \
     EntityTargetAbility.cpp \
     ECRotateToMouse.cpp \
-    ECMoveInResponseToKeyboardRelativeToScreen.cpp \
     ECRotater.cpp \
     ECChaseEnemies.cpp \
     ECFieldOfViewEmitter.cpp \
-    ECMoveInResponseToKeyboardRelativeToSelf.cpp \
     ECGrabCam.cpp \
     ECBodyThruster.cpp \
     ECPickUpItem.cpp \
@@ -110,7 +108,10 @@ SOURCES += main.cpp \
     PathMover.cpp \
     PositionalSound.cpp \
     PointerGrid.cpp \
-    SpriteSheet.cpp
+    SpriteSheet.cpp \
+    ECMoveByKeyboardEightDirectional.cpp \
+    ECMoveByKeyboardPerspective.cpp \
+    ECMoveByKeyboardFourDirectional.cpp
 
 HEADERS  += \
     Map.h \
@@ -182,11 +183,9 @@ HEADERS  += \
     PointTargetAbility.h \
     EntityTargetAbility.h \
     ECRotateToMouse.h \
-    ECMoveInResponseToKeyboardRelativeToScreen.h \
     ECRotater.h \
     ECChaseEnemies.h \
     ECFieldOfViewEmitter.h \
-    ECMoveInResponseToKeyboardRelativeToSelf.h \
     ECGrabCam.h \
     ECBodyThruster.h \
     ECPickUpItem.h \
@@ -206,7 +205,10 @@ HEADERS  += \
     PathMover.h \
     PositionalSound.h \
     PointerGrid.h \
-    SpriteSheet.h
+    SpriteSheet.h \
+    ECMoveByKeyboardEightDirectional.h \
+    ECMoveByKeyboardPerspective.h \
+    ECMoveByKeyboardFourDirectional.h
 
 RESOURCES += \
     res.qrc

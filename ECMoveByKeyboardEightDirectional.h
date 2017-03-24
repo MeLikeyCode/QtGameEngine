@@ -1,5 +1,5 @@
-#ifndef EBMOVEINRESPONSETOKEYBOARDRELATIVETOSCREEN_H
-#define EBMOVEINRESPONSETOKEYBOARDRELATIVETOSCREEN_H
+#ifndef ECMOVEBYKEYBOARDEIGHTDIRECTIONAL_H
+#define ECMOVEBYKEYBOARDEIGHTDIRECTIONAL_H
 
 #include <QObject>
 #include <QPointer>
@@ -11,19 +11,19 @@ class QTimer;
 /// moves an Entity relative to the screen in response to keyboard keys.
 ///
 /// Example usage:
-/// ECMoveInResponseToKeyboardRelativeToScreen* c = new ECMoveInResponseToKeyboardRelativeToScreen(entity);
+/// ECMoveByKeyboardEightDirectional* c = new ECMoveByKeyboardEightDirectional(entity);
 ///
 /// That is all that is needed. Once constructed, the Entity passed into the constructor will move
 /// in response to the keyboard. The WASD keys are used to move the entity up, left, down, and right
-/// relative to the screen.
+/// relative to the screen. The entity is also moved diagonally if two of the keys is pressed simultaneously.
 /// @author Abdullah Aghazadah
 /// @date 11/21/16
-class ECMoveInResponseToKeyboardRelativeToScreen: public QObject
+class ECMoveByKeyboardEightDirectional: public QObject
 {
     Q_OBJECT
 public:
     // TODO factor out constructor for behaviors into a base EntityBehavior class
-    ECMoveInResponseToKeyboardRelativeToScreen(Entity* entity);
+    ECMoveByKeyboardEightDirectional(Entity* entity);
 
     void setStepSize(double stepSize);
     double stepSize();
@@ -38,4 +38,4 @@ private:
     QTimer* moveTimer_;
 };
 
-#endif // EBMOVEINRESPONSETOKEYBOARDRELATIVETOSCREEN_H
+#endif // ECMOVEBYKEYBOARDEIGHTDIRECTIONAL_H

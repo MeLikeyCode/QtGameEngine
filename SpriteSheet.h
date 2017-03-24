@@ -7,7 +7,7 @@
 class Node;
 
 /// Represents a sprite sheet.
-/// A sprite sheet is a sheet of paper with sprites arranged in a grid like fashion.
+/// A sprite sheet is a sheet of paper with tiles arranged in a grid like fashion.
 /// This is a cheap value class.
 /// @author Abdullah Aghazadah
 /// @date 3/18/17
