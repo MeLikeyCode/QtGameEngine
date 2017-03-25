@@ -14,7 +14,7 @@ class QTimer;
 /// Example usage:
 /// ECMoveByKeyboardFourDirectional* c = new ECMoveByKeyboardFourDirectional(entity);
 ///
-/// That is all that is needed. Once constructed, the Entity passed into the constructor will move
+/// Thats all thats needed. Once constructed, the Entity passed into the constructor will move
 /// in response to the keyboard. The WASD keys are used to move the entity up, left, down, and right
 /// relative to the screen.
 /// @date 11/21/16

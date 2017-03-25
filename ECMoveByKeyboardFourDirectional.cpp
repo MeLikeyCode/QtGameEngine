@@ -91,6 +91,7 @@ void ECMoveByKeyboardFourDirectional::moveStep_()
                     && entity_->sprite()->hasAnimation("walkUp")){
                 entity_->sprite()->play("walkUp",-1,100);
             }
+            entity_->setFacingAngle(270);
         }
         return;
     }
@@ -110,6 +111,7 @@ void ECMoveByKeyboardFourDirectional::moveStep_()
                     && entity_->sprite()->hasAnimation("walkDown")){
                 entity_->sprite()->play("walkDown",-1,100);
             }
+            entity_->setFacingAngle(90);
         }
         return;
     }
@@ -129,6 +131,7 @@ void ECMoveByKeyboardFourDirectional::moveStep_()
                     && entity_->sprite()->hasAnimation("walkLeft")){
                 entity_->sprite()->play("walkLeft",-1,100);
             }
+            entity_->setFacingAngle(180);
         }
         return;
     }
@@ -148,6 +151,7 @@ void ECMoveByKeyboardFourDirectional::moveStep_()
                     && entity_->sprite()->hasAnimation("walkRight")){
                 entity_->sprite()->play("walkRight",-1,100);
             }
+            entity_->setFacingAngle(0);
         }
         return;
     }
@@ -158,7 +162,7 @@ void ECMoveByKeyboardFourDirectional::moveStep_()
         double facingAngle = entity_->facingAngle();
 
         // right stand anim
-        if ( facingAngle > 360 - BUFFER && facingAngle < 0 + BUFFER ){
+        if ( (facingAngle >= 360 - BUFFER && facingAngle <= 360) || (facingAngle <= 0 + BUFFER && facingAngle >= 0) ){
             if (entity_->sprite()->playingAnimation() != std::string("standRight")
                     && entity_->sprite()->hasAnimation("standRight")){
                 entity_->sprite()->play("standRight",-1,100);
@@ -166,7 +170,7 @@ void ECMoveByKeyboardFourDirectional::moveStep_()
         }
 
         // left stand anim
-        if (facingAngle > 180 - BUFFER && facingAngle < 180 + BUFFER){
+        if (facingAngle >= 180 - BUFFER && facingAngle <= 180 + BUFFER){
             if (entity_->sprite()->playingAnimation() != std::string("standLeft")
                     && entity_->sprite()->hasAnimation("standLeft")){
                 entity_->sprite()->play("standLeft",-1,100);
@@ -174,7 +178,7 @@ void ECMoveByKeyboardFourDirectional::moveStep_()
         }
 
         // up stand anim
-        if (facingAngle >  270 - BUFFER && facingAngle < 270 + BUFFER){
+        if (facingAngle >=  270 - BUFFER && facingAngle <= 270 + BUFFER){
             if (entity_->sprite()->playingAnimation() != std::string("standUp")
                     && entity_->sprite()->hasAnimation("standUp")){
                 entity_->sprite()->play("standUp",-1,100);
@@ -182,7 +186,7 @@ void ECMoveByKeyboardFourDirectional::moveStep_()
         }
 
         // down stand anim
-        if (facingAngle >  90 - BUFFER && facingAngle < 90 + BUFFER){
+        if (facingAngle >=  90 - BUFFER && facingAngle <= 90 + BUFFER){
             if (entity_->sprite()->playingAnimation() != std::string("standDown")
                     && entity_->sprite()->hasAnimation("standDown")){
                 entity_->sprite()->play("standDown",-1,100);

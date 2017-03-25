@@ -16,6 +16,7 @@
 Entity::Entity():
     pathingMap_(1,1,64),            // default 1x1 unfilled (in body) PathingMap
     map_(nullptr),
+    sprite_(new Sprite()),
     children_(),
     parent_(nullptr),
     health_(10),                    // default health of 10
@@ -26,9 +27,9 @@ Entity::Entity():
     invulnerable_(false),
     zPos_(0),
     height_(0),
-    sprite_(new Sprite()),
     inventory_(new Inventory()),
     speed_(250),
+    facingAngle_(0),
     rotationSpeed_(360),
     zValue_(0)
 {
@@ -287,13 +288,13 @@ QRectF Entity::boundingRect()
 /// Returns the current angle the Entity is facing in degrees.
 int Entity::facingAngle()
 {
-    return sprite()->rotation();
+    return facingAngle_;
 }
 
 /// Sets the facing angle of the entity.
 void Entity::setFacingAngle(double angle)
 {
-    sprite()->setRotation(angle);
+    facingAngle_ = angle;
 }
 
 /// Sets the z value of the Entity. Entities with a higher z value are drawn ontop of entities with a lower z value.

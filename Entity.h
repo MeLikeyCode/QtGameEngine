@@ -173,6 +173,7 @@ private:
     Inventory* inventory_;
     std::unordered_map<std::string,Slot*> stringToSlot_;
     double speed_; // pixels per second
+    double facingAngle_;
     double rotationSpeed_; // degrees per second
     double zValue_;
 
