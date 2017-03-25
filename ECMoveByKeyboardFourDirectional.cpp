@@ -163,35 +163,33 @@ void ECMoveByKeyboardFourDirectional::moveStep_()
 
         // right stand anim
         if ( (facingAngle >= 360 - BUFFER && facingAngle <= 360) || (facingAngle <= 0 + BUFFER && facingAngle >= 0) ){
-            if (entity_->sprite()->playingAnimation() != std::string("standRight")
-                    && entity_->sprite()->hasAnimation("standRight")){
-                entity_->sprite()->play("standRight",-1,100);
-            }
+            playAnimationIfExists_("standRight");
         }
 
         // left stand anim
         if (facingAngle >= 180 - BUFFER && facingAngle <= 180 + BUFFER){
-            if (entity_->sprite()->playingAnimation() != std::string("standLeft")
-                    && entity_->sprite()->hasAnimation("standLeft")){
-                entity_->sprite()->play("standLeft",-1,100);
-            }
+            playAnimationIfExists_("standLeft");
         }
 
         // up stand anim
         if (facingAngle >=  270 - BUFFER && facingAngle <= 270 + BUFFER){
-            if (entity_->sprite()->playingAnimation() != std::string("standUp")
-                    && entity_->sprite()->hasAnimation("standUp")){
-                entity_->sprite()->play("standUp",-1,100);
-            }
+            playAnimationIfExists_("standUp");
         }
 
         // down stand anim
         if (facingAngle >=  90 - BUFFER && facingAngle <= 90 + BUFFER){
-            if (entity_->sprite()->playingAnimation() != std::string("standDown")
-                    && entity_->sprite()->hasAnimation("standDown")){
-                entity_->sprite()->play("standDown",-1,100);
-            }
+            playAnimationIfExists_("standDown");
         }
 
+    }
+}
+
+/// Plays the specified animation of the entity_ if a) the entity has that animation
+/// and b) its not already playing. This function exists solely to reduce code
+/// duplication (b/c I was using this fragment of code in 4 places).
+void ECMoveByKeyboardFourDirectional::playAnimationIfExists_(std::string animation)
+{
+    if (entity_->sprite()->playingAnimation() != animation && entity_->sprite()->hasAnimation(animation)){
+        entity_->sprite()->play(animation,-1,100);
     }
 }
