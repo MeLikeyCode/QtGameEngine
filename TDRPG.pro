@@ -111,7 +111,8 @@ SOURCES += main.cpp \
     SpriteSheet.cpp \
     ECMoveByKeyboardEightDirectional.cpp \
     ECMoveByKeyboardPerspective.cpp \
-    ECMoveByKeyboardFourDirectional.cpp
+    ECMoveByKeyboardFourDirectional.cpp \
+    Animation.cpp
 
 HEADERS  += \
     Map.h \
@@ -208,7 +209,8 @@ HEADERS  += \
     SpriteSheet.h \
     ECMoveByKeyboardEightDirectional.h \
     ECMoveByKeyboardPerspective.h \
-    ECMoveByKeyboardFourDirectional.h
+    ECMoveByKeyboardFourDirectional.h \
+    Animation.h
 
 RESOURCES += \
     res.qrc

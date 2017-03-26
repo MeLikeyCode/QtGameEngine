@@ -34,6 +34,7 @@
 #include "ECChaseEnemies.h"
 #include "SpriteSheet.h"
 #include "ECMoveByKeyboardFourDirectional.h"
+#include "Animation.h"
 
 Entity* player;
 
@@ -186,13 +187,12 @@ int main(int argc, char *argv[])
     map1->addEntity(testFOVEntity);
     ECChaseEnemies* ecChase = new ECChaseEnemies(*testFOVEntity);
 
-    // test spritesheet
-    SpriteSheet spriteSheet(":/resources/graphics/human/download.png",7,10,64,64);
-    Sprite* testSprite = new Sprite();
-    testSprite->addFrames(Node(0,7),Node(7,7),spriteSheet,"walk");
-    testSprite->setPos(600,600);
-    map1->scene()->addItem(testSprite);
-    testSprite->play("walk",-1,100);
+    // test Animation
+    SpriteSheet spriteSheet(":/resources/graphics/human/character.png",13,21,64,64);
+    Animation* anim = new Animation(spriteSheet,Node(0,0),Node(6,0));
+    map1->scene()->addItem(anim);
+    anim->setPos(300,300);
+    anim->play(-1,15);
 
     return a.exec();
 }
