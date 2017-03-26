@@ -31,6 +31,7 @@ class Animation :
     Q_OBJECT
 public:
     // constructors
+    Animation(QGraphicsItem* parent = nullptr);
     Animation(const QPixmap& pixmap, QGraphicsItem* parent = nullptr);
     Animation(const SpriteSheet& spriteSheet, Node from, Node to, QGraphicsItem* parent = nullptr);
 

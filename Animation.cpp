@@ -7,6 +7,13 @@
 #include "Utilities.h"
 #include "Node.h"
 
+/// Constructs an Animation with no frames. Use addFrame() or addFrames() to add frames.
+Animation::Animation(QGraphicsItem *parent):
+    QGraphicsItem(parent)
+{
+    initialize_();
+}
+
 /// Constructs an Animation with just 1 frame. Use addFrame() or addFrames() to add
 /// additional frames.
 Animation::Animation(const QPixmap &pixmap, QGraphicsItem *parent):
@@ -92,9 +99,12 @@ QRectF Animation::boundingRect() const
 }
 
 /// Returns the current frame number that is being displayed.
-/// Returns -1 if the Animation has no
+/// Returns -1 if the Animation has no frames.
 int Animation::currentFrame()
 {
+    if (pixmaps_.empty())
+        return -1;
+
     return currentFrame_;
 }
 
@@ -120,6 +130,7 @@ void Animation::animationStep_()
         emit finished(this);
         currentFrame_ = 0;
         ++timesPlayed_;
+        return;
     }
 
     // show the next frame
