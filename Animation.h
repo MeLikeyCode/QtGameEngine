@@ -39,6 +39,7 @@ public:
     void addFrame(const QPixmap& pixmap);
     void addFrames(const SpriteSheet& fromSpriteSheet, const Node& startCell, const Node& endCell);
     void setCurrentFrame(int frameNumber);
+    void setStaticFrame(const QPixmap& pixmap);
     void play(int numTimesToPlay, double framesPerSecondToPlayAt);
     void pause();
 

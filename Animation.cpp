@@ -67,6 +67,14 @@ void Animation::setCurrentFrame(int frameNumber)
     currentPixmap_->setPixmap(pixmaps_[currentFrame_]); // set current pixmap to be this frame
 }
 
+/// Pauses the Animation and sets its graphic to the specified pixmap.
+/// When play() is called again, it will disregard this pixmap, and just play the animation again.
+void Animation::setStaticFrame(const QPixmap &pixmap)
+{
+    pause();
+    currentPixmap_->setPixmap(pixmap);
+}
+
 /// Plays the Animation the specified number of times at the specified frames per second.
 /// Pass -1 for numTimesToPlay to play the animation an infinite number of times (i.e. loop infinitely).
 /// Does nothing if the animation is already playing.
@@ -76,6 +84,9 @@ void Animation::play(int numTimesToPlay, double framesPerSecondToPlayAt)
 {
     if (isPlaying_)
         return;
+
+    // remove static frame (if there)
+    currentPixmap_->setPixmap(QPixmap());
 
     timesToPlay_ = numTimesToPlay;
     framesPerSecond_ = framesPerSecondToPlayAt;
