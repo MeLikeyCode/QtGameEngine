@@ -33,25 +33,30 @@ double ECMoveByKeyboardFourDirectional::stepSize()
 
 void ECMoveByKeyboardFourDirectional::moveStep_()
 {
+    // this function is executed periodically when the EC needs to move the entity
+    // - we will check to see which keys are currently pressed
+    // - we will move the entity in the correct direction with the correct speed and play the correct animation
+
     // if the entity has been destroyed, stop
     if (entity_.isNull()){
         moveTimer_->disconnect();
         return;
     }
 
-    // if currently not in a Map, do nothing
+    // if the entity is currently not in a Map, do nothing
+    // TODO: instead of polling, listen to when entiy enters a map (efficiency)
     Map* entitysMap = entity_->map();
     if (entitysMap == nullptr)
         return;
 
     // if entitysMap is not in a Game, do noting
+    // TODO: instead of polling, listen to when the entiys map enters a game (efficiency)
     Game* entitysGame = entitysMap->game();
     if (entitysGame == nullptr)
         return;
 
-    // temporarly disable pathingmap (will be automatically reenabled when moved)
+    // temporarly disable entity's pathingmap (will be automatically reenabled when moved)
     QPointF entitysPos = entity_->pointPos();
-
     std::vector<QRectF> entitysCellsAsRects = entity_->pathingMap().cellsAsRects();
     std::vector<QRectF> entitysFilledCellsAsRects;
     for (QRectF rect:entitysCellsAsRects){
@@ -61,7 +66,6 @@ void ECMoveByKeyboardFourDirectional::moveStep_()
             entitysFilledCellsAsRects.push_back(rect);
         }
     }
-
     for (QRectF rect:entitysFilledCellsAsRects){
         std::vector<Node> intersectedCells = entitysMap->pathingMap().cells(rect);
         for (Node cell:intersectedCells){
@@ -69,7 +73,7 @@ void ECMoveByKeyboardFourDirectional::moveStep_()
         }
     }
 
-    // find out which keys are pressed during this step
+    // find out which keys are pressed during this move step
     bool wPressed = entitysGame->keysPressed().count(Qt::Key_W);
     bool sPressed = entitysGame->keysPressed().count(Qt::Key_S);
     bool aPressed = entitysGame->keysPressed().count(Qt::Key_A);
@@ -78,19 +82,14 @@ void ECMoveByKeyboardFourDirectional::moveStep_()
     // move up if W is pressed
     if (wPressed){
         // find newPt to move to
-        double newX = entity_->pointPos().x();
-        double newY = entity_->pointPos().y() - stepSize_;
+        double newX = entity_->pointX();
+        double newY = entity_->pointY() - stepSize_;
         QPointF newPt(newX,newY);
 
         // move if the new location is free
         if (entity_->canFit(newPt)){
             entity_->setPointPos(newPt);
-
-            // if the walk animation isn't playing already, play it.
-            if (entity_->sprite()->playingAnimation() != std::string("walkUp")
-                    && entity_->sprite()->hasAnimation("walkUp")){
-                entity_->sprite()->play("walkUp",-1,100);
-            }
+            playAnimationIfItExists_("walkUp");
             entity_->setFacingAngle(270);
         }
         return;
@@ -105,12 +104,7 @@ void ECMoveByKeyboardFourDirectional::moveStep_()
         // move if the newPt is free
         if (entity_->canFit(newPt)){
             entity_->setPointPos(newPt);
-
-            // if the walk animation isn't playing already, play it.
-            if (entity_->sprite()->playingAnimation() != std::string("walkDown")
-                    && entity_->sprite()->hasAnimation("walkDown")){
-                entity_->sprite()->play("walkDown",-1,100);
-            }
+            playAnimationIfItExists_("walkDown");
             entity_->setFacingAngle(90);
         }
         return;
@@ -125,12 +119,7 @@ void ECMoveByKeyboardFourDirectional::moveStep_()
         // move if the newPt is free
         if (entity_->canFit(newPt)){
             entity_->setPointPos(newPt);
-
-            // if the walk animation isn't playing already, play it.
-            if (entity_->sprite()->playingAnimation() != std::string("walkLeft")
-                    && entity_->sprite()->hasAnimation("walkLeft")){
-                entity_->sprite()->play("walkLeft",-1,100);
-            }
+            playAnimationIfItExists_("walkLeft");
             entity_->setFacingAngle(180);
         }
         return;
@@ -145,12 +134,7 @@ void ECMoveByKeyboardFourDirectional::moveStep_()
         // move if the newPt is free
         if (entity_->canFit(newPt)){
             entity_->setPointPos(newPt);
-
-            // if the walk animation isn't playing already, play it.
-            if (entity_->sprite()->playingAnimation() != std::string("walkRight")
-                    && entity_->sprite()->hasAnimation("walkRight")){
-                entity_->sprite()->play("walkRight",-1,100);
-            }
+            playAnimationIfItExists_("walkRight");
             entity_->setFacingAngle(0);
         }
         return;
@@ -163,33 +147,32 @@ void ECMoveByKeyboardFourDirectional::moveStep_()
 
         // right stand anim
         if ( (facingAngle >= 360 - BUFFER && facingAngle <= 360) || (facingAngle <= 0 + BUFFER && facingAngle >= 0) ){
-            playAnimationIfExists_("standRight");
+            playAnimationIfItExists_("standRight");
         }
 
         // left stand anim
         if (facingAngle >= 180 - BUFFER && facingAngle <= 180 + BUFFER){
-            playAnimationIfExists_("standLeft");
+            playAnimationIfItExists_("standLeft");
         }
 
         // up stand anim
         if (facingAngle >=  270 - BUFFER && facingAngle <= 270 + BUFFER){
-            playAnimationIfExists_("standUp");
+            playAnimationIfItExists_("standUp");
         }
 
         // down stand anim
         if (facingAngle >=  90 - BUFFER && facingAngle <= 90 + BUFFER){
-            playAnimationIfExists_("standDown");
+            playAnimationIfItExists_("standDown");
         }
 
     }
 }
 
-/// Plays the specified animation of the entity_ if a) the entity has that animation
-/// and b) its not already playing. This function exists solely to reduce code
-/// duplication (b/c I was using this fragment of code in 4 places).
-void ECMoveByKeyboardFourDirectional::playAnimationIfExists_(std::string animation)
+/// Plays the specified animation of the entity_ only if the entity has that
+/// animation, otherwise does nothing. This function exists solely to reduce
+/// code duplication (b/c I was using this fragment of code in 4 places).
+void ECMoveByKeyboardFourDirectional::playAnimationIfItExists_(std::string animation)
 {
-    if (entity_->sprite()->playingAnimation() != animation && entity_->sprite()->hasAnimation(animation)){
+    if (entity_->sprite()->hasAnimation(animation))
         entity_->sprite()->play(animation,-1,100);
-    }
 }

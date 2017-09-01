@@ -36,6 +36,6 @@ private:
 
     QTimer* moveTimer_;
 
-    void playAnimationIfExists_(std::string animation);
+    void playAnimationIfItExists_(std::string animation);
 };
 #endif // ECMOVEBYKEYBOARDFOURDIRECTIONAL_H

@@ -42,9 +42,17 @@ Sprite::Sprite(QPixmap pixmap, QGraphicsItem *parent): QGraphicsItem(parent)
 
 /// Plays the specified animation the specified number of times with the specified
 /// delay between each frame.
+/// Does nothing if the specified animation is already playing. If you want to replay
+/// a currently playing animiation then you need to call stop() and then play().
+/// If any other animations are currently playing, they will be stopped immediately and
+/// the specified animation will start playing.
 void Sprite::play(std::string animation, int timesToPlay, int delayBetweenFrames){
     // make sure the animation exists
     assert(animation_.find(animation) != animation_.end());
+
+    // do nothing if we're already playing the specified animation
+    if (playingAnimation() == animation)
+        return;
 
     // stop the currently playing animation
     stop();
