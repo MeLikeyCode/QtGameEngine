@@ -189,7 +189,8 @@ int main(int argc, char *argv[])
 
     // test Animation
     SpriteSheet spriteSheet(":/resources/graphics/human/character.png",13,21,64,64);
-    Animation* anim = new Animation(spriteSheet,Node(0,0),Node(6,0));
+    Animation* anim = new Animation();
+    anim->addFrames(":/resources/graphics/human2",6,"walk",".png");
     map1->scene()->addItem(anim);
     anim->setPos(300,300);
     anim->play(-1,15);

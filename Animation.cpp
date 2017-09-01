@@ -51,6 +51,34 @@ void Animation::addFrames(const SpriteSheet &fromSpriteSheet, const Node &startC
     }
 }
 
+/// Goes inside the specified folder ('folderPath') and looks for images with the following pattern:
+/// "imagePrefix0.fileExtension"
+/// "imagePrefix1.fileExtension"
+/// "imagePrefix2.fileExtension"
+/// Will look for images all the way up to but not including 'numOfImages'.
+///
+/// It will load each of these images as frames of the Animation.
+/// This function is useful if each of your frames are a sperate image. Simply
+/// place all the images in one folder, give them all the same prefix (and file extension), and
+/// number them from 0 and up.
+///
+/// Example
+/// =======
+/// If your folder structure looks like so:
+/// C:/myfolder
+///     walk0.png
+///     walk1.png
+///     walk2.png
+/// You can load these images as frames of an Animation by the following addFrames() call:
+/// addFrames("C:/myfolder",3,"walk",".png");
+void Animation::addFrames(std::string folderPath, int numOfImages, std::string imagePrefix, std::string fileExtension)
+{
+    for (int i = 0, n = numOfImages; i < n; ++i){
+        std::string fullPath = folderPath + "/" + imagePrefix + std::to_string(i) + fileExtension;
+        addFrame(QPixmap(fullPath.c_str()));
+    }
+}
+
 /// Sets the currently displayed frame of the Animation.
 /// If the animation is currently playing, it will jump to this frame and continue playing.
 /// If the animation is not currently playing, whenever it is asked to play, it will

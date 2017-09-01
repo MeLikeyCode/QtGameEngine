@@ -14,7 +14,7 @@ class SpriteSheet;
 class Node;
 
 /// A QGraphicsItem that represents a sprite with named animations that can
-/// be played.
+/// be played. A Sprite is basically a bunch of named Animation objects.
 /// @author Abdullah Aghazadah
 /// @date 5-16-15
 ///
