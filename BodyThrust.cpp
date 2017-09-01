@@ -138,14 +138,14 @@ void BodyThrust::thrustStep_()
     // if heading backward due to collision, move backward
     if (headingBackwardDueToCollision_ && currentThrustStep_ > 0){
         // move owner backward at current angle
-        QLineF line(theOwner->pointPos(),QPointF(1,1));
+        QLineF line(theOwner->pos(),QPointF(1,1));
         line.setAngle(360-theOwner->facingAngle());
         line.setAngle(line.angle() + 180);
         line.setLength(thrustLengthEachStep_);
-        double newX = theOwner->pointPos().x() + line.dx();
-        double newY = theOwner->pointPos().y() + line.dy();
+        double newX = theOwner->pos().x() + line.dx();
+        double newY = theOwner->pos().y() + line.dy();
         QPointF newPt(newX,newY);
-        theOwner->setPointPos(newPt);
+        theOwner->setPos(newPt);
 
         currentThrustStep_--;
         return;
@@ -154,13 +154,13 @@ void BodyThrust::thrustStep_()
     // if moving forward, move forward
     if (headingForward_ && currentThrustStep_ < maxThrustSteps_){
         // move owner forward at current angle
-        QLineF line(theOwner->pointPos(),QPointF(1,1));
+        QLineF line(theOwner->pos(),QPointF(1,1));
         line.setAngle(360-theOwner->facingAngle());
         line.setLength(thrustLengthEachStep_);
-        double newX = theOwner->pointPos().x() + line.dx();
-        double newY = theOwner->pointPos().y() + line.dy();
+        double newX = theOwner->pos().x() + line.dx();
+        double newY = theOwner->pos().y() + line.dy();
         QPointF newPt(newX,newY);
-        theOwner->setPointPos(newPt);
+        theOwner->setPos(newPt);
 
         // update thrust step counter
         currentThrustStep_++;
@@ -171,14 +171,14 @@ void BodyThrust::thrustStep_()
     // if moving backward, move backward
     if (headingBackward_ && currentThrustStep_ < maxThrustSteps_ + EXTRA_BACK_STEPS){
         // move owner backward at current angle
-        QLineF line(theOwner->pointPos(),QPointF(1,1));
+        QLineF line(theOwner->pos(),QPointF(1,1));
         line.setAngle(360-theOwner->facingAngle());
         line.setAngle(line.angle() + 180);
         line.setLength(thrustLengthEachStep_);
-        double newX = theOwner->pointPos().x() + line.dx();
-        double newY = theOwner->pointPos().y() + line.dy();
+        double newX = theOwner->pos().x() + line.dx();
+        double newY = theOwner->pos().y() + line.dy();
         QPointF newPt(newX,newY);
-        theOwner->setPointPos(newPt);
+        theOwner->setPos(newPt);
 
         // update thrust step counter
         currentThrustStep_++;

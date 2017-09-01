@@ -28,10 +28,10 @@ void ItemTeleport::use(const QPointF &point)
     soundEffect_->play(1);
 
     // move owner to the specified location
-    owner->setPointPos(point);
+    owner->setPos(point);
 
     // play a "poof" animation at the location of the owner
     Sprite* poofSprite = new Sprite();
     poofSprite->addFrames(":resources/graphics/effects/poof",10,"poof");
-    owner->map()->playOnce(poofSprite,"poof",50,owner->pointPos());
+    owner->map()->playOnce(poofSprite,"poof",50,owner->pos());
 }

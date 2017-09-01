@@ -29,7 +29,7 @@ void ECAttackEnemiesWithWeapon::onEnemyChaseContinued(Entity *entityChased, doub
                 Weapon* weapon = dynamic_cast<Weapon*>(asWS->item());
                 if (weapon){
                     if (distance < weapon->castRange())
-                        weapon->attack(entityChased->pointPos());
+                        weapon->attack(entityChased->pos());
                 }
             }
         }

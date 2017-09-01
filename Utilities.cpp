@@ -24,7 +24,7 @@ void addRandomTrees(Map *mapToAddTreesTo, int numTreesToAdd)
 
         double randXPos = rand() % mapToAddTreesTo->width() - 100;
         double randYPos = rand() % mapToAddTreesTo->height() - 100;
-        tree->setPointPos(QPointF(randXPos,randYPos));
+        tree->setPos(QPointF(randXPos,randYPos));
     }
 }
 
@@ -40,7 +40,7 @@ void addRandomRocks(Map *mapToAddRocksTo, int numRocksToAdd)
 
         double randXPos = rand() % mapToAddRocksTo->width() - 100;
         double randYPos = rand() % mapToAddRocksTo->height() - 100;
-        rock->setPointPos(QPointF(randXPos,randYPos));
+        rock->setPos(QPointF(randXPos,randYPos));
     }
 }
 
@@ -56,7 +56,7 @@ void addRandomBushes(Map *mapToAddBushesTo, int numBushesToAdd)
 
         double randXPos = rand() % mapToAddBushesTo->width() - 100;
         double randYPos = rand() % mapToAddBushesTo->height() - 100;
-        rock->setPointPos(QPointF(randXPos,randYPos));
+        rock->setPos(QPointF(randXPos,randYPos));
     }
 }
 

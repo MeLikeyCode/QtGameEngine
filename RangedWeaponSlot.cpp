@@ -22,7 +22,7 @@ void RangedWeaponSlot::use()
 
     int RANGE = 400; //TODO: get from item_
 
-    QLineF line(owner->pointPos(),QPointF(-5,-5));
+    QLineF line(owner->pos(),QPointF(-5,-5));
     line.setAngle(-1 * owner->facingAngle());
     line.setLength(RANGE);
 

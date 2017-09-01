@@ -82,7 +82,7 @@ void Map::updatePathingMap()
 
     // fill each Entity's pathing map
     for (Entity* entity:entities()){
-        pathingMap().addFilling(entity->pathingMap(),entity->pointPos() + entity->pathingMapPos());
+        pathingMap().addFilling(entity->pathingMap(),entity->pos() + entity->pathingMapPos());
     }
 
     //drawPathingMap(); // TODO: remove, test
@@ -170,7 +170,7 @@ void Map::drawPathingMap(){
 
 /// Returns the distance (in pixels) b/w the two Entities.
 double Map::distance(Entity *e1, Entity *e2){
-    QLineF line(QPointF(e1->pointPos()),QPointF(e2->pointPos()));
+    QLineF line(QPointF(e1->pos()),QPointF(e2->pos()));
     return line.length();
 }
 
@@ -178,10 +178,10 @@ double Map::distance(Entity *e1, Entity *e2){
 Entity *Map::closest(const QPointF &point){
     // assume the first Entity in the list is the closest
     Entity* closestEntity = *entities().begin();
-    double closestDistance = QLineF(closestEntity->pointPos(),point).length();
+    double closestDistance = QLineF(closestEntity->pos(),point).length();
     // try to find a closer one
     for (Entity* entity:entities()){
-        double thisDistance = QLineF(entity->pointPos(),point).length();
+        double thisDistance = QLineF(entity->pos(),point).length();
         if (thisDistance < closestDistance){
             closestDistance = thisDistance;
             closestEntity = entity;
@@ -197,7 +197,7 @@ std::unordered_set<Entity *> Map::entities(const QRectF &inRegion){
     std::unordered_set<Entity*> ents;
     for (Entity* entity:entities()){
         QRectF entityBBox = entity->boundingRect();
-        entityBBox.moveTo(entity->pointPos());
+        entityBBox.moveTo(entity->pos());
         if (inRegion.intersects(entityBBox))
             ents.insert(entity);
     }
@@ -232,7 +232,7 @@ std::unordered_set<Entity *> Map::entities(const QPolygonF &inRegion)
     std::unordered_set<Entity*> ents;
     for (Entity* entity:entities()){
         QRectF entityBBox = entity->boundingRect();
-        entityBBox.moveTo(entity->pointPos());
+        entityBBox.moveTo(entity->pos());
         bool containsTopLeft = inRegion.containsPoint(entityBBox.topLeft(),Qt::OddEvenFill);
         bool containsTopRight = inRegion.containsPoint(entityBBox.topRight(),Qt::OddEvenFill);
         bool containsBottomRight = inRegion.containsPoint(entityBBox.bottomRight(),Qt::OddEvenFill);
@@ -253,7 +253,7 @@ std::unordered_set<Entity *> Map::entities(Entity *collidingWith)
     // - return entites colliding with that rect
 
     QRectF bbox = collidingWith->boundingRect();
-    bbox.moveTopLeft(collidingWith->pointPos());
+    bbox.moveTopLeft(collidingWith->pos());
     std::unordered_set<Entity*> results = entities(bbox);
 
     results.erase(collidingWith);   // remove entity itself
@@ -269,7 +269,7 @@ std::unordered_set<Entity *> Map::entities(const QRectF &inRegion, double zRange
 
     std::unordered_set<Entity*> entities;
     for (Entity* entity:entitiesInRegion){
-        double entitysZ = entity->pointZ();
+        double entitysZ = entity->z();
         double entitysZPlusHeight = entitysZ + entity->height();
         if ((entitysZ >= zRangeMin && entitysZ <= zRangeMax) ||
                 (entitysZPlusHeight >= zRangeMin && entitysZPlusHeight <= zRangeMax)){
@@ -289,7 +289,7 @@ std::unordered_set<Entity *> Map::entities(const QPointF &atPoint, double zRange
     // return only ones in valid z range
     std::unordered_set<Entity*> entities;
     for (Entity* entity:entitiesAtPoint){
-        double entitysZ = entity->pointZ();
+        double entitysZ = entity->z();
         double entitysZPlusHeight = entitysZ + entity->height();
         if ((entitysZ >= zRangeMin && entitysZ <= zRangeMax) ||
                 (entitysZPlusHeight >= zRangeMin && entitysZPlusHeight <= zRangeMax)){
@@ -308,7 +308,7 @@ std::unordered_set<Entity *> Map::entities(const QPolygonF &inRegion, double zRa
 
     std::unordered_set<Entity*> entities;
     for (Entity* entity:entitiesInRegion){
-        double entitysZ = entity->pointZ();
+        double entitysZ = entity->z();
         double entitysZPlusHeight = entitysZ + entity->height();
         if ((entitysZ >= zRangeMin && entitysZ <= zRangeMax) ||
                 (entitysZPlusHeight >= zRangeMin && entitysZPlusHeight <= zRangeMax)){

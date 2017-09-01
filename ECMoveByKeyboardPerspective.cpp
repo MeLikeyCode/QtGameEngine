@@ -57,16 +57,16 @@ void ECMoveByKeyboardPerspective::moveStep_()
     // move up if W is pressed
     if (wPressed){
         // find newPt to move to
-        QLineF line(entity_->pointPos(),QPoint(0,0));
+        QLineF line(entity_->pos(),QPoint(0,0));
         line.setAngle(360-entity_->facingAngle());
         line.setLength(stepSize_);
-        double newX = entity_->pointPos().x() + line.dx();
-        double newY = entity_->pointPos().y() + line.dy();
+        double newX = entity_->pos().x() + line.dx();
+        double newY = entity_->pos().y() + line.dy();
         QPointF newPt(newX,newY);
 
         // move if the newPt is free
         if (entity_->canFit(newPt)){
-            entity_->setPointPos(newPt);
+            entity_->setPos(newPt);
 
             // if the walk animation isn't playing already, play it.
             if (entity_->sprite()->playingAnimation() != std::string("walk")){
@@ -77,17 +77,17 @@ void ECMoveByKeyboardPerspective::moveStep_()
 
     // move down if S is pressed
     if (sPressed){
-        QLineF line(entity_->pointPos(),QPoint(0,0));
+        QLineF line(entity_->pos(),QPoint(0,0));
         line.setAngle(360-entity_->facingAngle());
         line.setLength(stepSize_);
         line.setAngle(line.angle()+180);
-        double newX = entity_->pointPos().x() + line.dx();
-        double newY = entity_->pointPos().y() + line.dy();
+        double newX = entity_->pos().x() + line.dx();
+        double newY = entity_->pos().y() + line.dy();
         QPointF newPt(newX,newY);
 
         // move if the newPt is free
         if (entity_->canFit(newPt)){
-            entity_->setPointPos(newPt);
+            entity_->setPos(newPt);
 
             // if the walk animation isn't playing already, play it.
             if (entity_->sprite()->playingAnimation() != std::string("walk")){
@@ -98,17 +98,17 @@ void ECMoveByKeyboardPerspective::moveStep_()
 
     // move left if A is pressed
     if (aPressed){
-        QLineF line(entity_->pointPos(),QPoint(0,0));
+        QLineF line(entity_->pos(),QPoint(0,0));
         line.setAngle(360-entity_->facingAngle());
         line.setLength(stepSize_);
         line.setAngle(line.angle()+90);
-        double newX = entity_->pointPos().x() + line.dx();
-        double newY = entity_->pointPos().y() + line.dy();
+        double newX = entity_->pos().x() + line.dx();
+        double newY = entity_->pos().y() + line.dy();
         QPointF newPt(newX,newY);
 
         // move if the newPt is free
         if (entity_->canFit(newPt)){
-            entity_->setPointPos(newPt);
+            entity_->setPos(newPt);
 
             // if the walk animation isn't playing already, play it.
             if (entity_->sprite()->playingAnimation() != std::string("walk")){
@@ -120,17 +120,17 @@ void ECMoveByKeyboardPerspective::moveStep_()
 
     // move right if D is pressed
     if (dPressed){
-        QLineF line(entity_->pointPos(),QPoint(0,0));
+        QLineF line(entity_->pos(),QPoint(0,0));
         line.setAngle(360-entity_->facingAngle());
         line.setLength(stepSize_);
         line.setAngle(line.angle()-90);
-        double newX = entity_->pointPos().x() + line.dx();
-        double newY = entity_->pointPos().y() + line.dy();
+        double newX = entity_->pos().x() + line.dx();
+        double newY = entity_->pos().y() + line.dy();
         QPointF newPt(newX,newY);
 
         // move if the newPt is free
         if (entity_->canFit(newPt)){
-            entity_->setPointPos(newPt);
+            entity_->setPos(newPt);
 
             // if the walk animation isn't playing already, play it.
             if (entity_->sprite()->playingAnimation() != std::string("walk")){

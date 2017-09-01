@@ -193,7 +193,7 @@ void Game::mousePressEvent(QMouseEvent *event){
         enemy->setSprite(spr);
 
         player->map()->addEntity(enemy);
-        enemy->setPointPos(mapToMap(event->pos()));
+        enemy->setPos(mapToMap(event->pos()));
         ECBodyThruster* bodyThrustContr = new ECBodyThruster(*enemy);
         enemy->addEnemyGroup(0);
     }
@@ -526,7 +526,7 @@ void Game::onEntityMoved(Entity *entity)
     for (Entity* watching:watchingEntities(entity)){
         // entity - watching variables
         std::pair<Entity*,Entity*> watchedWatchingPair = std::make_pair(entity,watching);
-        double dist = distance(entity->pointPos(),watching->pointPos());
+        double dist = distance(entity->pos(),watching->pos());
         double range = watchedWatchingRange(entity,watching);
         bool alreadyInRange = watchedWatchingPairToEnterRangeEmitted_[watchedWatchingPair]; // already in range?
 
@@ -548,7 +548,7 @@ void Game::onEntityMoved(Entity *entity)
     for (Entity* watched:watchedEntities(entity)){
         // entity - watching variables
         std::pair<Entity*,Entity*> watchedWatchingPair = std::make_pair(watched,entity);
-        double dist = distance(entity->pointPos(),watched->pointPos());
+        double dist = distance(entity->pos(),watched->pos());
         double range = watchedWatchingRange(watched,entity);
         bool alreadyInRange = watchedWatchingPairToEnterRangeEmitted_[watchedWatchingPair];
 

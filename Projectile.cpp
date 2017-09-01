@@ -92,7 +92,7 @@ void Projectile::onSuccesfullyMoved_(Mover *byMover)
 /// Will simply re-shoot the Projectile towards the Entity.
 void Projectile::onHomeStep_()
 {
-    shootTowards(homeTo_->pointPos());
+    shootTowards(homeTo_->pos());
 }
 
 /// Shoots the Projectile towards the specified position.

@@ -50,7 +50,7 @@ void StraightMover::moveEntity_(const QPointF& pos)
     targetPos_ = pos;
 
     // store initial angle (so we know when the entity has past its target point)
-    QLineF line(theEntity->pointPos(),pos);
+    QLineF line(theEntity->pos(),pos);
     initialAngle_ = line.angle();
 
     // face target position (if option enabled)
@@ -92,15 +92,15 @@ void StraightMover::onMoveStep_()
     }
 
     // move
-    QLineF line(theEntity->pointPos(),targetPos_);
+    QLineF line(theEntity->pos(),targetPos_);
     line.setLength(stepSize_);
-    double newX = theEntity->pointX()+line.dx();
-    double newY = theEntity->pointY()+line.dy();
-    theEntity->setPointPos(QPointF(newX,newY));
+    double newX = theEntity->x()+line.dx();
+    double newY = theEntity->y()+line.dy();
+    theEntity->setPos(QPointF(newX,newY));
 
     // if close enough, stop moving
     const double EPSILON = 50;
-    if (distance(theEntity->pointPos(),targetPos_) < EPSILON){
+    if (distance(theEntity->pos(),targetPos_) < EPSILON){
         emit entitySuccesfullyMoved(this);
         stopMovingEntity();
         return;

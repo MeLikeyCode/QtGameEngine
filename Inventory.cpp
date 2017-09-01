@@ -73,9 +73,9 @@ void Inventory::removeItem(Item *item)
     if (owner != nullptr){
         Map* theMap = owner->map();
         if ( theMap != nullptr){
-            QPointF closeToEntity = owner->pointPos();
+            QPointF closeToEntity = owner->pos();
             closeToEntity.setY(closeToEntity.y() + 100);
-            item->setPointPos(closeToEntity);
+            item->setPos(closeToEntity);
             theMap->addEntity(item);
         }
     }

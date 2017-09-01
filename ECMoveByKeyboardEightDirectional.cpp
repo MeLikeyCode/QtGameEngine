@@ -50,7 +50,7 @@ void ECMoveByKeyboardEightDirectional::moveStep_()
         return;
 
     // temporarly disable pathingmap (will be automatically reenabled when moved)
-    QPointF entitysPos = entity_->pointPos();
+    QPointF entitysPos = entity_->pos();
 
     std::vector<QRectF> entitysCellsAsRects = entity_->pathingMap().cellsAsRects();
     std::vector<QRectF> entitysFilledCellsAsRects;
@@ -78,13 +78,13 @@ void ECMoveByKeyboardEightDirectional::moveStep_()
     // move up if W is pressed
     if (wPressed){
         // find newPt to move to
-        double newX = entity_->pointPos().x();
-        double newY = entity_->pointPos().y() - stepSize_;
+        double newX = entity_->pos().x();
+        double newY = entity_->pos().y() - stepSize_;
         QPointF newPt(newX,newY);
 
         // move if the new location is free
         if (entity_->canFit(newPt)){
-            entity_->setPointPos(newPt);
+            entity_->setPos(newPt);
 
             // if the walk animation isn't playing already, play it.
             if (entity_->sprite()->playingAnimation() != std::string("walk")
@@ -96,13 +96,13 @@ void ECMoveByKeyboardEightDirectional::moveStep_()
 
     // move down if S is pressed
     if (sPressed){
-        double newX = entity_->pointPos().x();
-        double newY = entity_->pointPos().y() + stepSize_;
+        double newX = entity_->pos().x();
+        double newY = entity_->pos().y() + stepSize_;
         QPointF newPt(newX,newY);
 
         // move if the newPt is free
         if (entity_->canFit(newPt)){
-            entity_->setPointPos(newPt);
+            entity_->setPos(newPt);
 
             // if the walk animation isn't playing already, play it.
             if (entity_->sprite()->playingAnimation() != std::string("walk")
@@ -114,13 +114,13 @@ void ECMoveByKeyboardEightDirectional::moveStep_()
 
     // move left if A is pressed
     if (aPressed){
-        double newX = entity_->pointPos().x() - stepSize_;
-        double newY = entity_->pointPos().y();
+        double newX = entity_->pos().x() - stepSize_;
+        double newY = entity_->pos().y();
         QPointF newPt(newX,newY);
 
         // move if the newPt is free
         if (entity_->canFit(newPt)){
-            entity_->setPointPos(newPt);
+            entity_->setPos(newPt);
 
             // if the walk animation isn't playing already, play it.
             if (entity_->sprite()->playingAnimation() != std::string("walk")
@@ -132,13 +132,13 @@ void ECMoveByKeyboardEightDirectional::moveStep_()
 
     // move right if D is pressed
     if (dPressed){
-        double newX = entity_->pointPos().x() + stepSize_;
-        double newY = entity_->pointPos().y();
+        double newX = entity_->pos().x() + stepSize_;
+        double newY = entity_->pos().y();
         QPointF newPt(newX,newY);
 
         // move if the newPt is free
         if (entity_->canFit(newPt)){
-            entity_->setPointPos(newPt);
+            entity_->setPos(newPt);
 
             // if the walk animation isn't playing already, play it.
             if (entity_->sprite()->playingAnimation() != std::string("walk")

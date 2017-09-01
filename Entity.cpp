@@ -96,7 +96,7 @@ void Entity::setMap(Map *toMap)
 ///
 /// The position is returned relative to the parent Entity. If there is no
 /// parent Entitiy, it is returned relative to the Map.
-QPointF Entity::pointPos() const{
+QPointF Entity::pos() const{
     return currentPos_;
 }
 
@@ -108,21 +108,21 @@ QPointF Entity::pathingMapPos() const
 
 /// Returns the x position of the Entity relative to the parent, relative to
 /// Map if no parent.
-double Entity::pointX() const
+double Entity::x() const
 {
-    return pointPos().x();
+    return pos().x();
 }
 
 /// Returns the y position of the Entity relative to the parent, relative to
 /// Map if no parent.
-double Entity::pointY() const
+double Entity::y() const
 {
-    return pointPos().y();
+    return pos().y();
 }
 
 /// Returns the z position of the Entity. The z position is the height
 /// above level ground that the Entity is at.
-double Entity::pointZ() const
+double Entity::z() const
 {
     return zPos_;
 }
@@ -137,7 +137,7 @@ double Entity::height() const
 ///
 /// The position is relative to the parent Entity. If there is no
 /// parent Entitiy, it is relative to the Map.
-void Entity::setPointPos(const QPointF &pos){
+void Entity::setPos(const QPointF &pos){
     // set internal variable
     currentPos_ = pos;
 
@@ -167,59 +167,59 @@ void Entity::setPointPos(const QPointF &pos){
 
     // if actually moved (i.e. last position is different than current pos),
     // emit signal
-    if (lastPos_ != pointPos()){
+    if (lastPos_ != this->pos()){
         QPointF lastPosCpy = lastPos_;
-        lastPos_ = pointPos(); // update last position
-        emit moved(this,lastPosCpy,pointPos());
+        lastPos_ = this->pos(); // update last position
+        emit moved(this,lastPosCpy,this->pos());
     }
 }
 
 /// Sets the position of the Entity by moving the specified named position.
-void Entity::setPointPos(std::string namedPos, const QPointF &pos)
+void Entity::setPos(std::string namedPos, const QPointF &pos)
 {
     // move regularly
-    setPointPos(pos);
+    setPos(pos);
 
     // shift by amount
     QLineF line(namedPoint("namedPos"),QPointF(0,0));
-    double newX = pointPos().x() - line.dx();
-    double newY = pointPos().y() - line.dy();
-    setPointPos(QPointF(newX,newY));
+    double newX = this->pos().x() - line.dx();
+    double newY = this->pos().y() - line.dy();
+    setPos(QPointF(newX,newY));
 }
 
 /// Sets the position of the Entity's specific point.
 ///
 /// So if you wanted to move the Entity's 50,50 to somewhere, you would use this
 /// function.
-void Entity::setPointPos(const QPointF &moveThisPt, const QPointF &toThisPoint)
+void Entity::setPos(const QPointF &moveThisPt, const QPointF &toThisPoint)
 {
     // move regularly
-    setPointPos(toThisPoint);
+    setPos(toThisPoint);
 
     // shift back
     QLineF line(moveThisPt,QPointF(0,0));
-    double newX = pointPos().x() + line.dx();
-    double newY = pointPos().y() + line.dy();
-    setPointPos(QPointF(newX,newY));
+    double newX = pos().x() + line.dx();
+    double newY = pos().y() + line.dy();
+    setPos(QPointF(newX,newY));
 }
 
 /// Sets the x position of the Entity.
-void Entity::setPointX(double x)
+void Entity::setX(double x)
 {
-    QPointF newPoint(x,pointY());
-    setPointPos(newPoint);
+    QPointF newPoint(x,y());
+    setPos(newPoint);
 }
 
 /// Sets the y position of the Entity.
-void Entity::setPointY(double y)
+void Entity::setY(double y)
 {
-    QPointF newPoint(pointX(),y);
-    setPointPos(newPoint);
+    QPointF newPoint(x(),y);
+    setPos(newPoint);
 }
 
 /// Sets the z position of the Entity.
 /// See Entity:pointZ() for more info.
-void Entity::setPointZ(double z)
+void Entity::setZ(double z)
 {
     zPos_ = z;
 
@@ -232,7 +232,7 @@ void Entity::setPointZ(double z)
 /// Moves the entity by the specified dx,dy.
 void Entity::moveBy(double dx, double dy)
 {
-    setPointPos(QPointF(pointX() + dx, pointY() + dy));
+    setPos(QPointF(x() + dx, y() + dy));
 }
 
 /// Sets the height of the Entity.
@@ -243,7 +243,7 @@ void Entity::setHeight(double height)
 
 /// Returns the cell that the Entity is in.
 Node Entity::cellPos(){
-    return map()->pathingMap().pointToCell(pointPos());
+    return map()->pathingMap().pointToCell(pos());
 }
 
 /// Sets the Sprite of the Entity. This does not *delete* the old sprite, it simply
@@ -321,7 +321,7 @@ void Entity::setCellPos(const Node &cell){
 
     // move to new region
     QPointF newPos = map()->pathingMap().cellToPoint(cell);
-    setPointPos(newPos);
+    setPos(newPos);
 
     // enable pathing map
     // enablePathingMap();

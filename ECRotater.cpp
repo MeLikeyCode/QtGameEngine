@@ -47,7 +47,7 @@ void ECRotater::rotateTowards(int angle)
 /// rotate in whatever direction is the closest.
 void ECRotater::rotateTowards(const QPointF &point)
 {
-    QLineF line(entity_->pointPos(),point);
+    QLineF line(entity_->pos(),point);
     int r = 360-line.angle();
     rotateTowards(r);
 }

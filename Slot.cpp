@@ -67,7 +67,7 @@ bool Slot::equip(EquipableItem *item)
     if (theOwner->map() != nullptr)
         theOwner->map()->addEntity(item);  // make sure the item is in the owners map
     item->setParentEntity(theOwner);
-    item->setPointPos(item->attachmentPoint(),position());
+    item->setPos(item->attachmentPoint(),position());
 
     // update references for both Slot and Item
     item_ = item;

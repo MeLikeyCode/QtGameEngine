@@ -51,7 +51,7 @@ public:
     virtual ~Entity();
 
     // pathing map
-    PathingMap pathingMap() const;  // TODO do not return by value, too expensive to copy
+    PathingMap pathingMap() const;  // TODO do not return by value, too expensive to copy (maybe return const ref?)
     void setPathingMap(const PathingMap& pathingMap, const QPointF &pos=QPointF(0,0));
 
     // map
@@ -60,22 +60,22 @@ public:
     QPointF mapToMap(const QPointF& point) const;
 
     // pos/height/facing angle
-    QPointF pointPos() const;
-    QPointF pathingMapPos() const;
-    double pointX() const;
-    double pointY() const;
-    double pointZ() const;
+    QPointF pos() const;
+    double x() const;
+    double y() const;
+    double z() const;
     double height() const;
-    void setPointPos(const QPointF &pos);
-    void setPointPos(std::string namedPos, const QPointF& pos);
-    void setPointPos(const QPointF& moveThisPt, const QPointF& toThisPoint);
-    void setPointX(double x);
-    void setPointY(double y);
-    void setPointZ(double z);
+    void setPos(const QPointF &pos);
+    void setPos(std::string namedPos, const QPointF& pos);
+    void setPos(const QPointF& moveThisPt, const QPointF& toThisPoint);
+    void setX(double x);
+    void setY(double y);
+    void setZ(double z);
     void moveBy(double dx, double dy);
     void setHeight(double height);
     Node cellPos();
     void setCellPos(const Node& cell);
+    QPointF pathingMapPos() const;
     int facingAngle();
     void setFacingAngle(double angle);
     void setZValue(double zValue);

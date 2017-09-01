@@ -54,14 +54,14 @@ void ECMoveToNextMap::onEntityMoved(Entity *controlledEntity, QPointF fromPos, Q
 
     // set up variables
     Node mapPos = mapGrid->positionOf(entitysMap);
-    QPointF entityPos = entity_->pointPos();
+    QPointF entityPos = entity_->pos();
 
     // if entity moved high up enough, move to top map
     if (entityPos.y() < borderThreshold_){
         Map* m = mapGrid->mapAt(mapPos.x(),mapPos.y()-1);
         if (m){
             m->addEntity(entity_);
-            entity_->setPointPos(QPointF(entity_->pointX(),m->height() - borderThreshold_*2));
+            entity_->setPos(QPointF(entity_->x(),m->height() - borderThreshold_*2));
         }
     }
 
@@ -70,7 +70,7 @@ void ECMoveToNextMap::onEntityMoved(Entity *controlledEntity, QPointF fromPos, Q
         Map* m = mapGrid->mapAt(mapPos.x(),mapPos.y()+1);
         if (m){
             m->addEntity(entity_);
-            entity_->setPointPos(QPointF(entity_->pointX(),borderThreshold_*2));
+            entity_->setPos(QPointF(entity_->x(),borderThreshold_*2));
         }
     }
 
@@ -79,7 +79,7 @@ void ECMoveToNextMap::onEntityMoved(Entity *controlledEntity, QPointF fromPos, Q
         Map* m = mapGrid->mapAt(mapPos.x()-1,mapPos.y());
         if (m){
             m->addEntity(entity_);
-            entity_->setPointPos(QPointF(m->width() - borderThreshold_*2,entity_->pointY()));
+            entity_->setPos(QPointF(m->width() - borderThreshold_*2,entity_->y()));
         }
     }
 
@@ -88,7 +88,7 @@ void ECMoveToNextMap::onEntityMoved(Entity *controlledEntity, QPointF fromPos, Q
         Map* m = mapGrid->mapAt(mapPos.x()+1,mapPos.y());
         if (m){
             m->addEntity(entity_);
-            entity_->setPointPos(QPointF(borderThreshold_*2,entity_->pointY()));
+            entity_->setPos(QPointF(borderThreshold_*2,entity_->y()));
         }
     }
 }

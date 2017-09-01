@@ -23,9 +23,9 @@ void ItemPushback::use(Entity *onEntity)
 
     // move entity AMOUNT pixels along owner-entity line
     int AMOUNT = 250;
-    QLineF line(owner->pointPos(),onEntity->pointPos());
+    QLineF line(owner->pos(),onEntity->pos());
     line.setLength(line.length()+AMOUNT);
-    QLineF line2(onEntity->pointPos(),line.p2());
-    onEntity->setPointX(onEntity->pointX() + line2.dx());
-    onEntity->setPointY(onEntity->pointY() + line2.dy());
+    QLineF line2(onEntity->pos(),line.p2());
+    onEntity->setX(onEntity->x() + line2.dx());
+    onEntity->setY(onEntity->y() + line2.dy());
 }

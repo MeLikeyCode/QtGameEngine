@@ -56,8 +56,8 @@ void ItemRainOfSpears::spearStep_()
         // get a random position some where above the entity.
         int randomXoffset = (rand() % X_RADIUS) - (X_RADIUS/2);
         int randomYoffset = rand() % Y_RADIUS - Y_OFFSET;
-        int posX = owner->pointPos().x() + randomXoffset;
-        int posY = owner->pointPos().y() + randomYoffset;
+        int posX = owner->pos().x() + randomXoffset;
+        int posY = owner->pos().y() + randomYoffset;
         QPointF randomPos(posX,posY);
 
         // get target position for the spear
@@ -70,7 +70,7 @@ void ItemRainOfSpears::spearStep_()
         CBDamage* cb = static_cast<CBDamage*>(spearProjectile->collisionBehavior());
         cb->addCollisionToIgnore(owner,spearProjectile); // don't damage owner
         owner->map()->addEntity(spearProjectile);
-        spearProjectile->setPointPos(randomPos);
+        spearProjectile->setPos(randomPos);
         spearProjectile->shootTowards(targetPos);
     }
 

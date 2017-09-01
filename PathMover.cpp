@@ -145,7 +145,7 @@ void PathMover::moveEntity_(const QPointF &toPos)
 
     // tell async path finder to start finding path to the pos,
     // when found, the path finder will emit an event (which we listen to)
-    pf_->findPath(entitysMap->pathingMap(),entity()->pointPos(),toPos);
+    pf_->findPath(entitysMap->pathingMap(),entity()->pos(),toPos);
 }
 
 /// This function is executed when the MoveBehavior is asked to stop moving the entity.
@@ -176,7 +176,7 @@ bool PathMover::targetPointReached_()
         return true;
 
     // get a line b/w entity's pos and the targetPos
-    QLineF ln(entity()->pointPos(),pointsToFollow_[targetPointIndex_]);
+    QLineF ln(entity()->pos(),pointsToFollow_[targetPointIndex_]);
 
     // if the length of this line is less than a step size, return true
     return ln.length() < stepSize_;
@@ -192,19 +192,19 @@ void PathMover::stepTowardsTarget_()
     Entity* ent = entity();
 
     // get a line b/w the entity's pos and the target pos
-    QLineF ln(ent->pointPos(),pointsToFollow_[targetPointIndex_]);
+    QLineF ln(ent->pos(),pointsToFollow_[targetPointIndex_]);
 
     // set the length of this line to be the same as stepSize
     ln.setLength(stepSize_);
 
     // find new pos
-    double newX = ent->pointPos().x() + ln.dx();
-    double newY = ent->pointPos().y() + ln.dy();
+    double newX = ent->pos().x() + ln.dx();
+    double newY = ent->pos().y() + ln.dy();
     QPointF newPt(newX,newY);
 
     if (alwaysFaceTargetPosition_)
         rotater_->rotateTowards(pointsToFollow_.back());
 
-    ent->setPointPos(newPt);
+    ent->setPos(newPt);
     emit moved(newPt);
 }

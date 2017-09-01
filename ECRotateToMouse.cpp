@@ -35,6 +35,6 @@ void ECRotateToMouse::rotateStep_()
     // TODO: ECRotater is way too slow right now.
     // When you speed it up, enable the line immediately below and disable all lines after that (in this function)
     // rotater_->rotateTowards(entitysMap->getMousePosition());
-    QLineF entityToMousePos(entity_->pointPos(),entitysMap->getMousePosition());
+    QLineF entityToMousePos(entity_->pos(),entitysMap->getMousePosition());
     entity_->setFacingAngle(-1 * entityToMousePos.angle());
 }

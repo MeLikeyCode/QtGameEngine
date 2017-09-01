@@ -32,10 +32,10 @@ void SineMover::moveEntity_(const QPointF& pos)
 
     // update internal variables
     targetPos_ = pos;
-    startPos_ = theEntity->pointPos();
+    startPos_ = theEntity->pos();
 
     // calculate range (so we know when we have gone past the target)
-    QLineF line(theEntity->pointPos(),pos);
+    QLineF line(theEntity->pos(),pos);
     range_ = line.length();
 
     // face target position (if option enabled)
@@ -113,7 +113,7 @@ void SineMover::onMoveStep_()
         vComponent.setAngle(vComponent.angle()-90);
 
     // move to final location
-    theEntity->setPointPos(vComponent.p2());
+    theEntity->setPos(vComponent.p2());
 
     // if moved far enough
     if (distanceMoved_ > range_){

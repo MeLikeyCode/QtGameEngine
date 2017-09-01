@@ -27,7 +27,7 @@ void Item::setInventory(Inventory *inv)
     // set on ground
     if (inv == nullptr){
         sprite()->setVisible(true);         // make visible
-        setPointPos(mapToMap(pointPos()));  // put pos relative to map
+        setPos(mapToMap(pos()));  // put pos relative to map
         setParentEntity(nullptr);
         inventory_ = inv;
     }

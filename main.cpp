@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
     ECMoveToNextMap* moveToNMC = new ECMoveToNextMap(player);
     ECGrabCurrentMap* grabCM = new ECGrabCurrentMap(player);
 
-    player->setPointPos(QPointF(200,200));
+    player->setPos(QPointF(200,200));
 
     // create some slots for the entity
     WeaponSlot* rightHandMelee = new WeaponSlot();
@@ -143,15 +143,15 @@ int main(int argc, char *argv[])
 
     // drop some items on the ground
     Axe* axeItem = new Axe();
-    axeItem->setPointPos(QPointF(100,300));
+    axeItem->setPos(QPointF(100,300));
     map1->addEntity(axeItem);
 
     ItemRainOfSpears* ros = new ItemRainOfSpears();
-    ros->setPointPos(QPointF(200,200));
+    ros->setPos(QPointF(200,200));
     map1->addEntity(ros);
 
     ItemPushback* pushBackItem = new ItemPushback();
-    pushBackItem->setPointPos(QPointF(300,300));
+    pushBackItem->setPos(QPointF(300,300));
     map1->addEntity(pushBackItem);
 
     ECPickUpItem* pickUpItemContr = new ECPickUpItem(player);
@@ -183,7 +183,7 @@ int main(int argc, char *argv[])
     Entity* testFOVEntity = new Entity();
     testFOVEntity->setGroup(2);
     testFOVEntity->addEnemyGroup(0);
-    testFOVEntity->setPointPos(QPoint(50,700));
+    testFOVEntity->setPos(QPoint(50,700));
     map1->addEntity(testFOVEntity);
     ECChaseEnemies* ecChase = new ECChaseEnemies(*testFOVEntity);
 

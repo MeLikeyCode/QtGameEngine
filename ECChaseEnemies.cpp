@@ -122,7 +122,7 @@ void ECChaseEnemies::onEntityEntersFOV_(Entity *entity)
     chaseStep_();
     chaseTimer_->start(2000); // TODO: store in a (modifiable) variable somewhere
 
-    double distBW = distance(controlledEntity_->pointPos(),entity->pointPos());
+    double distBW = distance(controlledEntity_->pos(),entity->pos());
     emit entityChaseStarted(entity, distBW);
 }
 
@@ -162,7 +162,7 @@ void ECChaseEnemies::onEntityMoved_()
     if (targetEntity_.isNull())
         return;
 
-    double distBW = distance(controlledEntity_->pointPos(),targetEntity_->pointPos());
+    double distBW = distance(controlledEntity_->pos(),targetEntity_->pos());
     emit entityChaseContinued(targetEntity_,distBW);
 }
 
@@ -233,5 +233,5 @@ void ECChaseEnemies::chaseStep_()
 
     // order to move towards chase victim :P
     if (!paused_)
-        pathMover_->moveEntity(targetEntity_->pointPos());
+        pathMover_->moveEntity(targetEntity_->pos());
 }

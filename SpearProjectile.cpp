@@ -32,7 +32,7 @@ SpearProjectile::SpearProjectile(double range, double damage):
 void SpearProjectile::shootTowards(const QPointF &pos)
 {
     // move pos such that its right at the end of its range
-    QLineF shootLine(pointPos(),pos);
+    QLineF shootLine(this->pos(),pos);
     shootLine.setLength(range_);
 
     // delegate to base

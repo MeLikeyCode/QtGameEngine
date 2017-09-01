@@ -130,14 +130,14 @@ void Spear::thrustStep()
     // if heading backward due to collision, move backward
     if (headingBackwardDueToCollision_ && currentThrustStep_ > 0){
         // move spear backward at current angle
-        QLineF line(pointPos(),QPointF(1,1));
+        QLineF line(pos(),QPointF(1,1));
         line.setAngle(360-facingAngle());
         line.setAngle(line.angle() + 180);
         line.setLength(thrustLengthEachStep_);
-        double newX = pointPos().x() + line.dx();
-        double newY = pointPos().y() + line.dy();
+        double newX = pos().x() + line.dx();
+        double newY = pos().y() + line.dy();
         QPointF newPt(newX,newY);
-        setPointPos(newPt);
+        setPos(newPt);
 
         currentThrustStep_--;
         return;
@@ -146,13 +146,13 @@ void Spear::thrustStep()
     // if moving forward, move forward
     if (headingForward_ && currentThrustStep_ < maxThrustSteps_){
         // move spear forward at current angle
-        QLineF line(pointPos(),QPointF(1,1));
+        QLineF line(pos(),QPointF(1,1));
         line.setAngle(360-facingAngle());
         line.setLength(thrustLengthEachStep_);
-        double newX = pointPos().x() + line.dx();
-        double newY = pointPos().y() + line.dy();
+        double newX = pos().x() + line.dx();
+        double newY = pos().y() + line.dy();
         QPointF newPt(newX,newY);
-        setPointPos(newPt);
+        setPos(newPt);
 
         // update thrust step counter
         currentThrustStep_++;
@@ -163,14 +163,14 @@ void Spear::thrustStep()
     // if moving backward, move backward
     if (headingBackward_ && currentThrustStep_ < maxThrustSteps_){
         // move spear backward at current angle
-        QLineF line(pointPos(),QPointF(1,1));
+        QLineF line(pos(),QPointF(1,1));
         line.setAngle(360-facingAngle());
         line.setAngle(line.angle() + 180);
         line.setLength(thrustLengthEachStep_);
-        double newX = pointPos().x() + line.dx();
-        double newY = pointPos().y() + line.dy();
+        double newX = pos().x() + line.dx();
+        double newY = pos().y() + line.dy();
         QPointF newPt(newX,newY);
-        setPointPos(newPt);
+        setPos(newPt);
 
         // update thrust step counter
         currentThrustStep_++;
