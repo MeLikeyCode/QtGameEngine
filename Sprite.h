@@ -15,18 +15,19 @@ class Node;
 
 /// A QGraphicsItem that represents a sprite with named animations that can
 /// be played. A Sprite is basically a bunch of named Animation objects.
+/// All entities have sprites (some of which are invisible and do nothing).
 /// @author Abdullah Aghazadah
 /// @date 5-16-15
 ///
 /// Since a Sprite is a QGraphicsItem, it can be placed inside a
 /// QGraphicsScene. To add a QPixmap to an animation, use
-/// Sprite::addFrame(QPixmap,std::string). The specified pixmap will then
-/// be added to the specified animation. If an animation of that name does not
+/// Sprite::addFrame(QPixmap,std::string). The specified pixmap will then be
+/// added to the specified animation. If an animation of that name does not
 /// exist, it will be created. If an animation of that name already exists,
 /// then the pixmap will be added as the next image in the animation. To add a
 /// bunch of images from a resource folder to an animation use
-/// Sprite::addFrames(std::string,int,std::string). You can also add tiles from a SpriteSheet
-/// as animation frames in the Sprite.
+/// Sprite::addFrames(std::string,int,std::string,std::string). You can also
+/// add tiles from a SpriteSheet as animation frames in the Sprite.
 ///
 /// A Sprite can play an animation a certain number of times by using
 /// Sprite::play(std::string,int,int). A value of -1 times means that the
@@ -39,7 +40,7 @@ public:
     Sprite(QPixmap pixmap, QGraphicsItem* parent=nullptr);
 
     // readers
-    QSizeF size();
+    QSize size();
     bool hasAnimation(std::string animation) const;
     std::string playingAnimation() const;
     QPixmap currentFrame() const;
@@ -58,7 +59,6 @@ public:
     void stop();
 
     // resizing
-    void setSize(std::string animation, int width, int height);
     void setSize(int width, int height);
     void setSizeOfCurrentFrame(int width, int height);
 
@@ -82,8 +82,14 @@ private:
     int timesPlayed_;
     int timesToPlay_;
 
-    QSizeF size_;
+    QSize size_;
 
+    // if the client calls setSize() we will make sure all current and future frames are specified size,
+    // otherwise size of frames will be whatever the pixmap size is
+    bool sizeManuallySet_;
+
+    void commonInitialize_();
+    void setSize_(std::string ofAnimation, int width, int height);
 };
 
 #endif // SPRITE_H

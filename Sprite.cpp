@@ -7,37 +7,17 @@
 #include "SpriteSheet.h"
 
 /// Constructs a Sprite with no animations and no current frame.
-Sprite::Sprite(QGraphicsItem *parent):
-    QGraphicsItem(parent)
+Sprite::Sprite(QGraphicsItem *parent): QGraphicsItem(parent)
 {
-    // constructor body
-    // initialize
-    timer_ = new QTimer(this);
     pixmap_ = new QGraphicsPixmapItem((QPixmap(":resources/graphics/misc/defaultEntity.png")),this);
-    currentFrame_ = 0;
-    timesPlayed_ = 0;
-    timesToPlay_ = 0;
-
-    // origin
-    setTransformOriginPoint(pixmap_->boundingRect().width()/2,
-                            pixmap_->boundingRect().height()/2);
+    commonInitialize_();
 }
 
 /// Constructs a Sprite with the specified pixmap being the currently displayed frame.
 Sprite::Sprite(QPixmap pixmap, QGraphicsItem *parent): QGraphicsItem(parent)
 {
-    // TODO, this and default ctor have duplicated code, take care of it
-    // constructor body
-    // initialize
-    timer_ = new QTimer(this);
     pixmap_ = new QGraphicsPixmapItem(pixmap,this);
-    currentFrame_ = 0;
-    timesPlayed_ = 0;
-    timesToPlay_ = 0;
-
-    // origin
-    setTransformOriginPoint(pixmap_->boundingRect().width()/2,
-                            pixmap_->boundingRect().height()/2);
+    commonInitialize_();
 }
 
 /// Plays the specified animation the specified number of times with the specified
@@ -71,35 +51,25 @@ void Sprite::play(std::string animation, int timesToPlay, int delayBetweenFrames
 }
 
 /// Returns the size of the Sprite.
-QSizeF Sprite::size()
+/// If setSize() has been called, the size of the sprite is whatever was passed into that function.
+/// Otherwise, size of the sprite is the size of its currently displayed frame's size.
+QSize Sprite::size()
 {
-    return size_;
+    if (sizeManuallySet_)
+        return size_;
+
+    QRect rect = pixmap_->boundingRect().toRect();
+    return QSize(rect.width(),rect.height());
 }
 
-/// Sets the size (width and height) of the frames of the specified
-/// animation.
-void Sprite::setSize(std::string animation, int width, int height)
-{
-    assert(hasAnimation(animation)); // make sure the animation exists
-
-    // set size of each frame in the animation
-    std::vector<QPixmap> frames = animation_[animation];
-    for (QPixmap& pixmap:frames){
-        pixmap = pixmap.scaled(width,height);
-    }
-    animation_[animation] = frames;
-
-    // make sure origin is up to date
-    setTransformOriginPoint(width/2.0,height/2.0);
-}
-
-/// Sets the size of all the frames of all the animations.
+/// Sets the size of all the current and future frames of all the animations of this Sprite.
 void Sprite::setSize(int width, int height)
 {
     for (std::pair<std::string,std::vector<QPixmap>> pair:animation_){
         std::string theAnim = pair.first;
-        setSize(theAnim,width,height);
+        setSize_(theAnim,width,height);
     }
+    sizeManuallySet_ = true;
 }
 
 /// Sets the size (width and height) of the currently displayed frame.
@@ -135,6 +105,10 @@ QPixmap Sprite::currentFrame() const
 /// frame in the animation. If the animation does not exist, it will be created with
 /// the pixmap being its first frame.
 void Sprite::addFrame(QPixmap frame, std::string toAnimation){
+    // resize frame if size was manually set
+    if (sizeManuallySet_ == true)
+        frame = frame.scaled(size_);
+
     // if the anim already exists, simply push back the new pixmap into
     // the anim's vector
     if (animation_.find(toAnimation) != animation_.end()){
@@ -146,10 +120,7 @@ void Sprite::addFrame(QPixmap frame, std::string toAnimation){
     else {
         animation_[toAnimation] = std::vector<QPixmap>();
         animation_[toAnimation].push_back(frame);
-    }
-
-    // make sure size is up to date
-    size_ = frame.size();
+    }     
 
     // make sure transform point is upto date
     setTransformOriginPoint(frame.width()/2,
@@ -241,4 +212,35 @@ void Sprite::nextFrame_(){
     setPixmap(animationPixmaps[currentFrame_]);
     ++currentFrame_;
 
+}
+
+/// Contains common initialization code for several ctors (reduces code duplication).
+void Sprite::commonInitialize_()
+{
+    timer_ = new QTimer(this);
+    currentFrame_ = 0;
+    timesPlayed_ = 0;
+    timesToPlay_ = 0;
+    sizeManuallySet_ = false;
+
+    // set origin
+    setTransformOriginPoint(pixmap_->boundingRect().width()/2,
+                            pixmap_->boundingRect().height()/2);
+}
+
+/// Sets the size (width and height) of the frames of the specified
+/// animation.
+void Sprite::setSize_(std::string ofAnimation, int width, int height)
+{
+    assert(hasAnimation(ofAnimation)); // make sure the animation exists
+
+    // set size of each frame in the animation
+    std::vector<QPixmap> frames = animation_[ofAnimation];
+    for (QPixmap& pixmap:frames){
+        pixmap = pixmap.scaled(width,height);
+    }
+    animation_[ofAnimation] = frames;
+
+    // make sure origin is up to date
+    setTransformOriginPoint(width/2.0,height/2.0);
 }
