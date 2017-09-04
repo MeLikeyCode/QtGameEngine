@@ -11,6 +11,7 @@
 #include "Sprite.h"
 #include "Sound.h"
 #include "PositionalSound.h"
+#include "Utilities.h"
 
 // TODO remove test
 #include <QDebug>
@@ -329,7 +330,7 @@ void Map::playOnce(Sprite *sprite, std::string animationName, int delaybwFramesM
 
     QObject::connect(sprite,&Sprite::animationFinished,sprite,&Sprite::deleteLater);
 
-    sprite->play(animationName,1,delaybwFramesMS);
+    sprite->play(animationName,1, 1/msToSeconds(delaybwFramesMS));
 }
 
 /// Adds the specified WeatherEffect to the Map. Will automatically start the

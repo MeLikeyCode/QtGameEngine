@@ -84,7 +84,7 @@ void PathMover::onPathCalculated_(std::vector<QPointF> path)
     Sprite* entitysSprite = ent->sprite();
     if (entitysSprite != nullptr)
         if (entitysSprite->hasAnimation("walk"))
-            ent->sprite()->play("walk",-1,100);
+            ent->sprite()->play("walk",-1,10);
 }
 
 /// Executed periodically to take the controlled entity one step along its path.
@@ -164,7 +164,7 @@ void PathMover::stopMovingEntity_()
     Sprite* entitysSprite = ent->sprite();
     if (entitysSprite != nullptr)
         if (entitysSprite->hasAnimation("stand"))
-            ent->sprite()->play("stand",-1,100);
+            ent->sprite()->play("stand",-1,10);
 }
 
 /// Internal helper function that returns true if the controlled entity has reached

@@ -5,6 +5,7 @@
 #include <QTimer>
 #include "Node.h"
 #include "SpriteSheet.h"
+#include "Utilities.h"
 
 /// Constructs a Sprite with no animations and no current frame.
 Sprite::Sprite(QGraphicsItem *parent): QGraphicsItem(parent)
@@ -26,7 +27,7 @@ Sprite::Sprite(QPixmap pixmap, QGraphicsItem *parent): QGraphicsItem(parent)
 /// a currently playing animiation then you need to call stop() and then play().
 /// If any other animations are currently playing, they will be stopped immediately and
 /// the specified animation will start playing.
-void Sprite::play(std::string animation, int timesToPlay, int delayBetweenFrames){
+void Sprite::play(std::string animation, int timesToPlay, int framesPerSecond){
     // make sure the animation exists
     assert(animation_.find(animation) != animation_.end());
 
@@ -47,7 +48,7 @@ void Sprite::play(std::string animation, int timesToPlay, int delayBetweenFrames
     // play the animation
     nextFrame_();   // go to next frame immediately
     connect(timer_,SIGNAL(timeout()),this,SLOT(nextFrame_())); // keep going to
-    timer_->start(delayBetweenFrames);                         // next frames
+    timer_->start(secondsToMs(1/framesPerSecond));                         // next frames
 }
 
 /// Returns the size of the Sprite.

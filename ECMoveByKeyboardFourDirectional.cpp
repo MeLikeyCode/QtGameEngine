@@ -174,5 +174,5 @@ void ECMoveByKeyboardFourDirectional::moveStep_()
 void ECMoveByKeyboardFourDirectional::playAnimationIfItExists_(std::string animation)
 {
     if (entity_->sprite()->hasAnimation(animation))
-        entity_->sprite()->play(animation,-1,100);
+        entity_->sprite()->play(animation,-1,10);
 }

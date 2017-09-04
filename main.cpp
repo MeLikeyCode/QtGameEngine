@@ -194,7 +194,6 @@ int main(int argc, char *argv[])
     map1->scene()->addItem(anim);
     anim->setPos(300,300);
     anim->play(-1,15);
-    anim->play(-1,15);
 
     return a.exec();
 }

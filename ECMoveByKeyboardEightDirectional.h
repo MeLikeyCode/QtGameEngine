@@ -9,6 +9,7 @@ class QTimer;
 
 /// An entity controller (TODO: link to documentation) that
 /// moves an Entity relative to the screen in response to keyboard keys.
+/// The entity can move in 4 directions only (up, down, left, and right) not diagonally.
 ///
 /// Example usage:
 /// ECMoveByKeyboardEightDirectional* c = new ECMoveByKeyboardEightDirectional(entity);

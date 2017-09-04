@@ -21,6 +21,7 @@ void addRandomBushes(Map* mapToAddBushesTo, int numBushesToAdd);
 double distance(QPointF p1, QPointF p2);
 double frequency(double stepSize, double rate);
 double secondsToMs(double seconds);
+double msToSeconds(double milliseconds);
 quint32 fastRandom();
 
 #endif // UTILITIES_H

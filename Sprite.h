@@ -55,7 +55,7 @@ public:
     virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
     virtual QRectF boundingRect() const;
 
-    void play(std::string animation, int timesToPlay, int delayBetweenFrames);
+    void play(std::string animation, int timesToPlay, int framesPerSecond);
     void stop();
 
     // resizing

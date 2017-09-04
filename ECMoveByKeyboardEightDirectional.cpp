@@ -89,7 +89,7 @@ void ECMoveByKeyboardEightDirectional::moveStep_()
             // if the walk animation isn't playing already, play it.
             if (entity_->sprite()->playingAnimation() != std::string("walk")
                     && entity_->sprite()->hasAnimation("walk")){
-                entity_->sprite()->play("walk",-1,100);
+                entity_->sprite()->play("walk",-1,10);
             }
         }
     }
@@ -107,7 +107,7 @@ void ECMoveByKeyboardEightDirectional::moveStep_()
             // if the walk animation isn't playing already, play it.
             if (entity_->sprite()->playingAnimation() != std::string("walk")
                     && entity_->sprite()->hasAnimation("walk")){
-                entity_->sprite()->play("walk",-1,100);
+                entity_->sprite()->play("walk",-1,10);
             }
         }
     }
@@ -125,7 +125,7 @@ void ECMoveByKeyboardEightDirectional::moveStep_()
             // if the walk animation isn't playing already, play it.
             if (entity_->sprite()->playingAnimation() != std::string("walk")
                     && entity_->sprite()->hasAnimation("walk")){
-                entity_->sprite()->play("walk",-1,100);
+                entity_->sprite()->play("walk",-1,10);
             }
         }
     }
@@ -143,7 +143,7 @@ void ECMoveByKeyboardEightDirectional::moveStep_()
             // if the walk animation isn't playing already, play it.
             if (entity_->sprite()->playingAnimation() != std::string("walk")
                     && entity_->sprite()->hasAnimation("walk")){
-                entity_->sprite()->play("walk",-1,100);
+                entity_->sprite()->play("walk",-1,10);
             }
         }
     }
@@ -153,7 +153,7 @@ void ECMoveByKeyboardEightDirectional::moveStep_()
         // only play if it isn't already playing
         if (entity_->sprite()->playingAnimation() != std::string("stand")
                 && entity_->sprite()->hasAnimation("stand")){
-            entity_->sprite()->play("stand",-1,100);
+            entity_->sprite()->play("stand",-1,10);
         }
     }
 }

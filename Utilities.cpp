@@ -92,6 +92,13 @@ double secondsToMs(double seconds)
     return ms;
 }
 
+/// Converts milliseconds to seconds.
+double msToSeconds(double milliseconds)
+{
+    return milliseconds/1000.0;
+}
+
+
 /// Generates a random 32 bit number (unsigned).
 /// This function is a lot more inexpensive than rand() but also not as reliable
 /// (i.e. for scientific purposes).
@@ -105,3 +112,4 @@ quint32 fastRandom()
 
     return num;
 }
+

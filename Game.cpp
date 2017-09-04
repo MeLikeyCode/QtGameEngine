@@ -189,7 +189,7 @@ void Game::mousePressEvent(QMouseEvent *event){
         Sprite* spr = new Sprite();
         spr->addFrames(":/resources/graphics/spider",7,"walk");
         spr->addFrames(":/resources/graphics/spider",1,"stand");
-        spr->play("stand",-1,1000);
+        spr->play("stand",-1,1);
         enemy->setSprite(spr);
 
         player->map()->addEntity(enemy);
