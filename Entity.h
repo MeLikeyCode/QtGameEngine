@@ -56,7 +56,6 @@ public:
 
     // map
     Map* map() const;
-    void setMap(Map* toMap);
     QPointF mapToMap(const QPointF& point) const;
 
     // pos/height/facing angle

@@ -83,15 +83,6 @@ Map *Entity::map() const{
     return map_;
 }
 
-/// Sets the Map that the Entity should be in.
-/// Simply delegates to Map::addEntity(Entity*);
-/// // TODO: get rid of this function, map->addEntity() is enough
-/// @see Map::addEntity(Entity*)
-void Entity::setMap(Map *toMap)
-{
-    toMap->addEntity(this);
-}
-
 /// Returns the position of the Entity.
 ///
 /// The position is returned relative to the parent Entity. If there is no
