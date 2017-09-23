@@ -36,6 +36,7 @@ class EntitySprite
     friend class Map; // map needs access to the underlying QGraphicsItem for the reason mentioned in "Implementation Details" section of this class's API documentation.
     friend class Entity;
 public:
+    virtual ~EntitySprite();
 
     /// Sets the angle that the EntitySprite should face.
     /// When you call setFacingAngle(someValue), the EntitySprite will attempt to face as close to the specified angle as possible.
@@ -53,6 +54,7 @@ public:
 
     /// Sets the size of the EntitySprite.
     virtual void setSize(const QSize& size) = 0;
+    void scale(double value);
 
     /// Returns true if the EntitySprite has the specified animation.
     virtual bool hasAnimation(const std::string& animationName) const = 0;

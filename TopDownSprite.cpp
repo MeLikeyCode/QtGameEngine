@@ -31,7 +31,12 @@ QRectF TopDownSprite::boundingBox() const
     return sprite_->boundingRect();
 }
 
-bool TopDownSprite::hasAnimation(std::string animationName) const
+void TopDownSprite::setSize(const QSize &size)
+{
+    sprite_->setSize(size.width(),size.height());
+}
+
+bool TopDownSprite::hasAnimation(const std::string &animationName) const
 {
     return sprite_->hasAnimation(animationName);
 }
