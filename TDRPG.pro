@@ -112,7 +112,9 @@ SOURCES += main.cpp \
     ECMoveByKeyboardEightDirectional.cpp \
     ECMoveByKeyboardPerspective.cpp \
     ECMoveByKeyboardFourDirectional.cpp \
-    Animation.cpp
+    Animation.cpp \
+    EntitySprite.cpp \
+    TopDownSprite.cpp
 
 HEADERS  += \
     Map.h \
@@ -210,7 +212,9 @@ HEADERS  += \
     ECMoveByKeyboardEightDirectional.h \
     ECMoveByKeyboardPerspective.h \
     ECMoveByKeyboardFourDirectional.h \
-    Animation.h
+    Animation.h \
+    EntitySprite.h \
+    TopDownSprite.h
 
 RESOURCES += \
     res.qrc

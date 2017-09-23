@@ -17,6 +17,7 @@ class QPixmap;
 /// @date 3/26/17
 ///
 /// Example usage:
+/// ==============
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.cpp
 /// Animation* animation = new Animation(spriteSheet,fromNode,toNode); // create an animation with the specified frames of a SpriteSheet
 /// animation->play(5,15); // play the animation 5 times at 15 frames per second
@@ -24,6 +25,11 @@ class QPixmap;
 /// animation->play(-1,15); // play the animation an infinite number of times
 /// connect(animation, &Animation::finished, myObject,myCallback); // be notified each time the animation finishes
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+///
+/// Implementation Details
+/// ======================
+/// Animation is a QGraphicsItem so that it can go inside a QGraphicsScene. It has a child QGraphicsPixmapItem whos
+/// image is constantly changed when play() is called.
 class Animation :
         public QObject,         // inherits from QObject so it can use signals/slots
         public QGraphicsItem    // inherits from QGraphicsItem so it can go in a scene

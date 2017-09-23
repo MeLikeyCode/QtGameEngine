@@ -3,14 +3,14 @@
 
 /// Returns the position of the Gui relative to its parent (or relative to
 /// top left of screen if no parent).
-Gui::Gui(): parent_(nullptr)
+Gui::Gui(): parentGui_(nullptr)
 {
 }
 
 Gui::~Gui()
 {
     // destroy children
-    for (Gui* gui:children_){
+    for (Gui* gui:childGuis_){
         delete gui;
     }
 }
@@ -43,23 +43,23 @@ void Gui::setParentGui(Gui *gui)
     // is handled automatically
 
     // if gui is null but parent is already null, don't do anything
-    if (gui == nullptr && parent_ == nullptr)
+    if (gui == nullptr && parentGui_ == nullptr)
         return;
 
     // if gui is null but it has a parent, remove the parent
-    if (gui == nullptr && parent_ != nullptr){
-        parent_->children_.erase(this);
+    if (gui == nullptr && parentGui_ != nullptr){
+        parentGui_->childGuis_.erase(this);
         getGraphicsItem()->setParentItem(nullptr);
         getGraphicsItem()->setVisible(false);
-        parent_ = nullptr;
+        parentGui_ = nullptr;
         return;
     }
 
     // set parent to an actual gui
     getGraphicsItem()->setParentItem(gui->getGraphicsItem());
     getGraphicsItem()->setVisible(true);
-    gui->children_.insert(this);
-    parent_ = gui;
+    gui->childGuis_.insert(this);
+    parentGui_ = gui;
 }
 
 QRectF Gui::getGuiBoundingBox()

@@ -16,6 +16,7 @@ class QRectF;
 ///
 /// Most Guis offer functions for customizing their look in some way.
 /// Most Guis emit signals when they are interacted with.
+/// When a parent Gui is deleted, it will delete all of its child Guis.
 ///@author Abdullah Aghazadah
 class Gui
 {
@@ -34,14 +35,15 @@ public:
     virtual QGraphicsItem* getGraphicsItem() = 0;
 
     /// Returns the bounding box for the Gui.
-    /// The bounding box encompasses all the art of the Gui.
+    /// The default implementation will return a bounding box that encompasses all the child Gui's bounding box.
+    /// This function is virtual, so that sub classes may provide a better implementation if they wish.
     virtual QRectF getGuiBoundingBox();
 
 protected:
-    std::unordered_set<Gui*> children_;
-    Gui* parent_;
+    std::unordered_set<Gui*> childGuis_;
+    Gui* parentGui_;
 
-    QPointF pos_;
+    QPointF pos_; // relative to the parent (or top left of screen if no parent)
 
     std::vector<QRectF> getBoundingBoxesFor_(QGraphicsItem* gi, QGraphicsItem *mapTo);
 };
