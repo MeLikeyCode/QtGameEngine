@@ -15,7 +15,7 @@ class Map;
 class Inventory;
 class EquipableItem;
 class Item;
-class Sprite;
+class EntitySprite;
 class QPointF;
 class Slot;
 class Inventory;
@@ -81,8 +81,8 @@ public:
     double zValue();
 
     // sprite
-    void setSprite(Sprite* sprite);
-    Sprite* sprite() const;
+    void setSprite(EntitySprite* sprite);
+    EntitySprite* sprite() const;
     void setRotationPoint(QPointF point);
 
     // parent/child relationship
@@ -156,7 +156,7 @@ private:
     QPointF currentPos_;
     QPointF lastPos_;
     Map* map_;
-    Sprite* sprite_;
+    EntitySprite* sprite_;
     std::unordered_set<Entity*> children_;
     Entity* parent_;
     std::map<std::string,QPointF> namedPoints_;

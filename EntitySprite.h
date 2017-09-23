@@ -2,6 +2,7 @@
 #define ENTITYSPRITE_H
 
 #include <string>
+#include <QSize>
 
 class QGraphicsItem;
 class QRectF;
@@ -33,6 +34,7 @@ class QPixmap;
 class EntitySprite
 {
     friend class Map; // map needs access to the underlying QGraphicsItem for the reason mentioned in "Implementation Details" section of this class's API documentation.
+    friend class Entity;
 public:
 
     /// Sets the angle that the EntitySprite should face.
@@ -46,8 +48,11 @@ public:
     /// This may be different than the facingAngle() if the EntitySprite could not completely face where it was asked to face.
     virtual double actualFacingAngle() const = 0;
 
-    /// Returns the bounding box of the EntitySprite.
+    /// Returns the bounding box of the EntitySprite in local coordinates.
     virtual QRectF boundingBox() const;
+
+    /// Sets the size of the EntitySprite.
+    virtual void setSize(const QSize& size) = 0;
 
     /// Returns true if the EntitySprite has the specified animation.
     virtual bool hasAnimation(const std::string& animationName) const = 0;

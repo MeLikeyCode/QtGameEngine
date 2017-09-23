@@ -3,7 +3,8 @@
 #include <string>
 #include <cassert>
 #include "Map.h"
-#include "Sprite.h"
+#include "EntitySprite.h"
+#include "TopDownSprite.h"
 #include <QGraphicsScene>
 #include <QLineF>
 #include "Game.h"
@@ -16,7 +17,7 @@
 Entity::Entity():
     pathingMap_(1,1,64),            // default 1x1 unfilled (in body) PathingMap
     map_(nullptr),
-    sprite_(new Sprite()),
+    sprite_(new TopDownSprite()),
     children_(),
     parent_(nullptr),
     health_(10),                    // default health of 10
@@ -133,9 +134,9 @@ void Entity::setPos(const QPointF &pos){
     currentPos_ = pos;
 
     // if has a sprite, set position of sprite
-    Sprite* entitysSprite = sprite();
+    EntitySprite* entitysSprite = sprite();
     if (entitysSprite != nullptr)
-        entitysSprite->setPos(pos);
+        entitysSprite->underlyingItem_->setPos(pos);
 
     // if the Entity is in a Map, update the PathingMap
     Map* entitysMap = map();
@@ -239,7 +240,7 @@ Node Entity::cellPos(){
 
 /// Sets the Sprite of the Entity. This does not *delete* the old sprite, it simply
 /// sets the current art to the specified sprite.
-void Entity::setSprite(Sprite *sprite){
+void Entity::setSprite(EntitySprite *sprite){
     // set all children's sprite's parent to new sprite
     for (Entity* child: children()){
         child->sprite()->setParentItem(sprite);
