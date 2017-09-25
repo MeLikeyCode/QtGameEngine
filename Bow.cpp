@@ -8,11 +8,12 @@
 #include "Sound.h"
 #include <cassert>
 #include "CBDamage.h"
+#include "TopDownSprite.h"
 
 Bow::Bow()
 {
     // default sprite
-    Sprite* spr = new Sprite(QPixmap(":resources/graphics/weapons/bow.png"));
+    TopDownSprite* spr = new TopDownSprite(QPixmap(":resources/graphics/weapons/bow.png"));
     setSprite(spr);
 
     // default projectile spawn point (center of sprite)
@@ -20,8 +21,8 @@ Bow::Bow()
 
     // default attachment point
     QPointF pt;
-    pt.setX(spr->currentFrame().width()/2);
-    pt.setY(spr->currentFrame().height()/2);
+    pt.setX(spr->currentlyDisplayedFrame().width()/2);
+    pt.setY(spr->currentlyDisplayedFrame().height()/2);
     setAttachmentPoint(pt);
 
     // default sound effect

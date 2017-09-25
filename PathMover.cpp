@@ -7,6 +7,7 @@
 #include "ECRotater.h"
 #include <QLineF>
 #include "Utilities.h"
+#include "EntitySprite.h"
 
 PathMover::PathMover(Entity *entity):
     Mover(entity),
@@ -81,7 +82,7 @@ void PathMover::onPathCalculated_(std::vector<QPointF> path)
     moveTimer_->start(secondsToMs(frequency(stepSize_,ent->speed())));
 
     // play walk animation (if controlled entity has one)
-    Sprite* entitysSprite = ent->sprite();
+    EntitySprite* entitysSprite = ent->sprite();
     if (entitysSprite != nullptr)
         if (entitysSprite->hasAnimation("walk"))
             ent->sprite()->play("walk",-1,10);
@@ -161,7 +162,7 @@ void PathMover::stopMovingEntity_()
         return; // were done
 
     // otherwise, play stand animation (if controlled entity has one)
-    Sprite* entitysSprite = ent->sprite();
+    EntitySprite* entitysSprite = ent->sprite();
     if (entitysSprite != nullptr)
         if (entitysSprite->hasAnimation("stand"))
             ent->sprite()->play("stand",-1,10);

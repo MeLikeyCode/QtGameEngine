@@ -7,6 +7,7 @@
 #include "Entity.h"
 #include "Sound.h"
 #include "CBDamage.h"
+#include "TopDownSprite.h"
 
 void Spear::resetVariables()
 {
@@ -28,7 +29,7 @@ Spear::Spear()
     setThrustSpeed(250);
 
     // default sprite
-    Sprite* spr = new Sprite(QPixmap(":resources/graphics/weapons/spear.png"));
+    EntitySprite* spr = new TopDownSprite(QPixmap(":resources/graphics/weapons/spear.png"));
     setSprite(spr);
 
     // default tip (length and width/2)
@@ -36,8 +37,8 @@ Spear::Spear()
 
     // default attachment point
     QPointF pt;
-    pt.setX(spr->currentFrame().width()/3);
-    pt.setY(spr->currentFrame().height()/2);
+    pt.setX(spr->currentlyDisplayedFrame().width()/3);
+    pt.setY(spr->currentlyDisplayedFrame().height()/2);
     setAttachmentPoint(pt);
 
     timer_ = new QTimer(this);

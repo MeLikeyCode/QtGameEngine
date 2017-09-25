@@ -1,5 +1,6 @@
 #include "RangedWeapon.h"
 #include "Sprite.h"
+#include "EntitySprite.h"
 
 /// Returns the point at which projectiles will be spawn.
 /// This point is in local coordinates (relative to the RangedWeapon itself).
@@ -16,8 +17,8 @@ void RangedWeapon::setProjectileSpawnPoint(QPointF point)
 /// Resets the projectile spawn point to be at the very center of the RangedWeapon.
 void RangedWeapon::resetProjectileSpawnPoint()
 {
-    double length = sprite()->currentFrame().width();
-    double width = sprite()->currentFrame().height();
+    double length = sprite()->currentlyDisplayedFrame().width();
+    double width = sprite()->currentlyDisplayedFrame().height();
 
     QPointF center;
     center.setX(length/2);

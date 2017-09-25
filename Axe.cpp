@@ -7,6 +7,7 @@
 #include "Entity.h"
 #include "Sound.h"
 #include "CollisionBehavior.h"
+#include "TopDownSprite.h"
 
 Axe::Axe()
 {
@@ -20,7 +21,7 @@ Axe::Axe()
     maxBackwardSteps_ = 7;
 
     // default sprite
-    Sprite* spr = new Sprite(QPixmap(":resources/graphics/weapons/axe.png"));
+    TopDownSprite* spr = new TopDownSprite(QPixmap(":resources/graphics/weapons/axe.png"));
     setSprite(spr);
 
     // default tip (spriteWidth and spriteHeight/2)
@@ -28,8 +29,8 @@ Axe::Axe()
 
     // default attachment point
     QPointF pt;
-    pt.setX(spr->currentFrame().width()/3);
-    pt.setY(spr->currentFrame().height()/2);
+    pt.setX(spr->currentlyDisplayedFrame().width()/3);
+    pt.setY(spr->currentlyDisplayedFrame().height()/2);
     setAttachmentPoint(pt);
 
     // default cast range

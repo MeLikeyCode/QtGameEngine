@@ -9,6 +9,7 @@ class QGraphicsPixmapItem;
 class Sound;
 
 /// Class that represents a rain weather effect.
+/// @see WeatherEffect
 /// @author Abdullah Aghazadah
 /// @date 6/26/16
 class RainWeather : public WeatherEffect

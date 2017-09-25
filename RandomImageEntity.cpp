@@ -2,6 +2,7 @@
 #include "Sprite.h"
 #include "stdlib.h" // rand() and srand()
 #include "time.h" // time(0) -> current time in ms
+#include "TopDownSprite.h"
 
 RandomImageEntity::RandomImageEntity(std::vector<QPixmap> pixmaps, const PathingMap &pathingMap)
 {
@@ -18,7 +19,8 @@ RandomImageEntity::RandomImageEntity(std::vector<QPixmap> pixmaps, const Pathing
     int randIndex = rand() % pixmaps.size(); // 0 to one less than num of pixmaps
 
     // set the sprites pixmap to that pixmap
-    sprite()->setPixmap(pixmaps[randIndex]);
+    TopDownSprite* tds = new TopDownSprite(pixmaps[randIndex]);
+    setSprite(tds);
 
     double pathingMapX = pixmaps[0].width() / 2.0 - pathingMap.cellSize() / 2.0;
     double pathingMapY = pixmaps[0].height() / 2.0 - pathingMap.cellSize() / 2.0;
@@ -40,7 +42,8 @@ RandomImageEntity::RandomImageEntity(std::string resourceFolderPath, std::string
     int randIndex = rand() % pixmaps.size(); // 0 to one less than num of pixmaps
 
     // set the sprites pixmap to that pixmap
-    sprite()->setPixmap(pixmaps[randIndex]);
+    TopDownSprite* tds = new TopDownSprite(pixmaps[randIndex]);
+    setSprite(tds);
 
     double pathingMapX = pixmaps[0].width() / 2.0 - pm.cellSize() / 2.0;
     double pathingMapY = pixmaps[0].height() / 2.0 - pm.cellSize() / 2.0;

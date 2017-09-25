@@ -30,6 +30,8 @@ private:
     double stepSize_;
 
     QTimer* moveTimer_;
+
+    void playAnimIfExists_(std::string anim);
 };
 
 #endif // ECMOVEBYKEYBOARDPERSPECTIVE_H

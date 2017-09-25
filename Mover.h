@@ -15,7 +15,7 @@ class QPointF;
 /// =============
 ///
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.cpp
-/// Mover* mover = new Mover(entityToMove);
+/// Mover* mover = new SomeConcreteMover(entityToMove);
 /// mover->moveEntity(toSomePosition);
 /// bool isMoving = mover->isMovingEntity();
 /// mover->stopMovingEntity();

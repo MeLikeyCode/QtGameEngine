@@ -12,6 +12,7 @@
 #include "Sound.h"
 #include "PositionalSound.h"
 #include "Utilities.h"
+#include "EntitySprite.h"
 
 // TODO remove test
 #include <QDebug>
@@ -577,7 +578,7 @@ void Map::addTerrainLayer(TerrainLayer *terrainLayer){
 }
 
 /// Adds the specified Entity (and all of its children) to the Map and updates
-/// the PathingMap.
+/// the PathingMap of the Map to reflect the additional content.
 /// If the Entity is already in the Map, does nothing.
 /// If the Entity is in another Map, it will be removed from that Map first.
 void Map::addEntity(Entity *entity){
@@ -596,10 +597,10 @@ void Map::addEntity(Entity *entity){
     entities_.insert(entity);
 
     // add its sprite to the interal QGraphicsScene
-    scene_->addItem(entity->sprite());
+    scene_->addItem(entity->sprite()->underlyingItem_);
 
     // set its z value
-    entity->sprite()->setZValue(Z_VALUES::ENTITY_Z_VALUE);
+    entity->sprite()->underlyingItem_->setZValue(Z_VALUES::ENTITY_Z_VALUE);
 
     // add its children's sprite's as a child of its sprites
     for (Entity* childEntity:entity->children()){
@@ -639,9 +640,9 @@ void Map::removeEntity(Entity *entity)
     entities_.erase(entity);
 
     // remove sprite (if it has one)
-    Sprite* entitysSprite = entity->sprite();
+    EntitySprite* entitysSprite = entity->sprite();
     if (entitysSprite != nullptr){
-        scene()->removeItem(entitysSprite);
+        scene()->removeItem(entitysSprite->underlyingItem_);
     }
 
     // set its internal pointer

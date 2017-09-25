@@ -5,6 +5,7 @@
 
 #include <stdlib.h>
 #include <time.h>
+#include <cassert>
 
 #include "Map.h"
 #include "RandomImageEntity.h"
@@ -113,3 +114,29 @@ quint32 fastRandom()
     return num;
 }
 
+/// Returns the angle in 'allAngles' that is the closest to the 'targetAngle'.
+/// Angles are measured from 0-360 and "wrap around".
+double closestAngle(const std::vector<int> &allAngles, double targetAngle)
+{
+    assert(!allAngles.empty());
+
+    targetAngle = fmod(targetAngle,360);
+
+    if (targetAngle < 0)
+        targetAngle = 360 - abs(targetAngle);
+
+    double closest = allAngles[0]; // assume first angle is the closest and search for better
+    double closestDist1 = 360-closest+targetAngle;
+    double closestDist2 = abs(targetAngle-closest);
+    double closestNearestDist = std::min(closestDist1,closestDist2);
+    for (int angle : allAngles){
+        double dist1 = 360-angle+targetAngle;
+        double dist2 = abs(targetAngle-angle);
+        double nearest = std::min(dist1,dist2);
+        if (nearest < closestNearestDist){
+            closest = angle;
+            closestNearestDist = nearest;
+        }
+    }
+    return closest;
+}

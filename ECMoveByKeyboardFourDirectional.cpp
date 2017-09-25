@@ -5,6 +5,7 @@
 #include "Game.h"
 #include "Sprite.h"
 #include "Utilities.h"
+#include "EntitySprite.h"
 
 ECMoveByKeyboardFourDirectional::ECMoveByKeyboardFourDirectional(Entity *entity):
     entity_(entity),
@@ -89,8 +90,7 @@ void ECMoveByKeyboardFourDirectional::moveStep_()
         // move if the new location is free
         if (entity_->canFit(newPt)){
             entity_->setPos(newPt);
-            playAnimationIfItExists_("walkUp");
-            entity_->setFacingAngle(270);
+            playAnimationIfItExists_("walk");
         }
         return;
     }
@@ -104,8 +104,7 @@ void ECMoveByKeyboardFourDirectional::moveStep_()
         // move if the newPt is free
         if (entity_->canFit(newPt)){
             entity_->setPos(newPt);
-            playAnimationIfItExists_("walkDown");
-            entity_->setFacingAngle(90);
+            playAnimationIfItExists_("walk");
         }
         return;
     }
@@ -119,8 +118,7 @@ void ECMoveByKeyboardFourDirectional::moveStep_()
         // move if the newPt is free
         if (entity_->canFit(newPt)){
             entity_->setPos(newPt);
-            playAnimationIfItExists_("walkLeft");
-            entity_->setFacingAngle(180);
+            playAnimationIfItExists_("walk");
         }
         return;
     }
@@ -134,37 +132,14 @@ void ECMoveByKeyboardFourDirectional::moveStep_()
         // move if the newPt is free
         if (entity_->canFit(newPt)){
             entity_->setPos(newPt);
-            playAnimationIfItExists_("walkRight");
-            entity_->setFacingAngle(0);
+            playAnimationIfItExists_("walk");
         }
         return;
     }
 
     // if none of the keys are pressed, play stand animation at currently facing direction
     if (!wPressed && !aPressed && !sPressed && !dPressed){
-        const static double BUFFER = 10;
-        double facingAngle = entity_->facingAngle();
-
-        // right stand anim
-        if ( (facingAngle >= 360 - BUFFER && facingAngle <= 360) || (facingAngle <= 0 + BUFFER && facingAngle >= 0) ){
-            playAnimationIfItExists_("standRight");
-        }
-
-        // left stand anim
-        if (facingAngle >= 180 - BUFFER && facingAngle <= 180 + BUFFER){
-            playAnimationIfItExists_("standLeft");
-        }
-
-        // up stand anim
-        if (facingAngle >=  270 - BUFFER && facingAngle <= 270 + BUFFER){
-            playAnimationIfItExists_("standUp");
-        }
-
-        // down stand anim
-        if (facingAngle >=  90 - BUFFER && facingAngle <= 90 + BUFFER){
-            playAnimationIfItExists_("standDown");
-        }
-
+        playAnimationIfItExists_("stand");
     }
 }
 

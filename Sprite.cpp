@@ -27,7 +27,7 @@ Sprite::Sprite(QPixmap pixmap, QGraphicsItem *parent): QGraphicsItem(parent)
 /// a currently playing animiation then you need to call stop() and then play().
 /// If any other animations are currently playing, they will be stopped immediately and
 /// the specified animation will start playing.
-void Sprite::play(std::string animation, int timesToPlay, int framesPerSecond){
+void Sprite::play(std::string animation, int timesToPlay, double framesPerSecond){
     // make sure the animation exists
     assert(animation_.find(animation) != animation_.end());
 
@@ -40,6 +40,7 @@ void Sprite::play(std::string animation, int timesToPlay, int framesPerSecond){
 
     // set up to play this animation
     playingAnimation_ = animation;
+    playingAnimationFPS_ = framesPerSecond;
     animationPixmaps = animation_[animation];
     timesPlayed_ = 0;
     currentFrame_ = 0;
@@ -51,34 +52,6 @@ void Sprite::play(std::string animation, int timesToPlay, int framesPerSecond){
     timer_->start(secondsToMs(1/framesPerSecond));                         // next frames
 }
 
-/// Returns the size of the Sprite.
-/// If setSize() has been called, the size of the sprite is whatever was passed into that function.
-/// Otherwise, size of the sprite is the size of its currently displayed frame's size.
-QSize Sprite::size()
-{
-    if (sizeManuallySet_)
-        return size_;
-
-    QRect rect = pixmap_->boundingRect().toRect();
-    return QSize(rect.width(),rect.height());
-}
-
-/// Sets the size of all the current and future frames of all the animations of this Sprite.
-void Sprite::setSize(int width, int height)
-{
-    for (std::pair<std::string,std::vector<QPixmap>> pair:animation_){
-        std::string theAnim = pair.first;
-        setSize_(theAnim,width,height);
-    }
-    sizeManuallySet_ = true;
-}
-
-/// Sets the size (width and height) of the currently displayed frame.
-void Sprite::setSizeOfCurrentFrame(int width, int height)
-{
-    pixmap_->setPixmap(pixmap_->pixmap().scaled(width,height));
-}
-
 QRectF Sprite::boundingRect() const{
     return pixmap_->boundingRect();
 }
@@ -88,16 +61,50 @@ bool Sprite::hasAnimation(std::string animation) const{
     return animation_.find(animation) != animation_.end();
 }
 
+/// Returns the names of all the animations this Sprite has.
+std::vector<std::string> Sprite::animations() const
+{
+    std::vector<std::string> results;
+    for (const auto& animationPixmapPair : animation_)
+        results.push_back(animationPixmapPair.first);
+    return results;
+}
+
 /// Returns the name of the currently playing animation.
+/// Returns empty string if no animation is playing.
 std::string Sprite::playingAnimation() const
 {
     return playingAnimation_;
 }
 
-/// Returns the current frame of the Sprite.
+/// Returns the number of times we have left to play the currently playing animation.
+/// Includes the current run.
+int Sprite::playingAnimationTimesLeftToPlay() const
+{
+    assert(playingAnimation() != "");
+    return timesToPlay_ - timesPlayed_;
+}
+
+/// Returns the currently displayed frame of the Sprite.
 QPixmap Sprite::currentFrame() const
 {
     return pixmap_->pixmap();
+}
+
+/// Returns the frame number of the currently displayed frame.
+/// Frame numbers start at 0 for animations.
+int Sprite::currentFrameNumber() const
+{
+    return currentFrame_;
+}
+
+/// Returns the FPS that the currently playing animation is playing at.
+/// Throws (assertion error) if there is no currently playing animation.
+int Sprite::playingAnimationFPS() const
+{
+    assert(playingAnimation() != "");
+
+    return playingAnimationFPS_;
 }
 
 /// Adds the specified pixmap as a frame to the specified animation.
@@ -106,9 +113,7 @@ QPixmap Sprite::currentFrame() const
 /// frame in the animation. If the animation does not exist, it will be created with
 /// the pixmap being its first frame.
 void Sprite::addFrame(QPixmap frame, std::string toAnimation){
-    // resize frame if size was manually set
-    if (sizeManuallySet_ == true)
-        frame = frame.scaled(size_);
+    assert(toAnimation != "");
 
     // if the anim already exists, simply push back the new pixmap into
     // the anim's vector
@@ -183,7 +188,8 @@ void Sprite::setPixmap(QPixmap pixmap){
 
 /// Stops the currently playing animation.
 void Sprite::stop(){
-    playingAnimation_ = std::string("none");
+    playingAnimation_ = "";
+    playingAnimationFPS_ = -1;
     timer_->disconnect();
 }
 
@@ -222,26 +228,11 @@ void Sprite::commonInitialize_()
     currentFrame_ = 0;
     timesPlayed_ = 0;
     timesToPlay_ = 0;
-    sizeManuallySet_ = false;
+
+    playingAnimation_ = "";
+    playingAnimationFPS_ = -1;
 
     // set origin
     setTransformOriginPoint(pixmap_->boundingRect().width()/2,
                             pixmap_->boundingRect().height()/2);
-}
-
-/// Sets the size (width and height) of the frames of the specified
-/// animation.
-void Sprite::setSize_(std::string ofAnimation, int width, int height)
-{
-    assert(hasAnimation(ofAnimation)); // make sure the animation exists
-
-    // set size of each frame in the animation
-    std::vector<QPixmap> frames = animation_[ofAnimation];
-    for (QPixmap& pixmap:frames){
-        pixmap = pixmap.scaled(width,height);
-    }
-    animation_[ofAnimation] = frames;
-
-    // make sure origin is up to date
-    setTransformOriginPoint(width/2.0,height/2.0);
 }

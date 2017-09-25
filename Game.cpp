@@ -19,6 +19,7 @@
 #include <cassert>
 #include "Utilities.h"
 #include <QGraphicsItem>
+#include "TopDownSprite.h"
 
 #include "PathMover.h" // TODO: delete, test only
 #include "ECBodyThruster.h" // TODO: delete, test only
@@ -186,9 +187,9 @@ void Game::mousePressEvent(QMouseEvent *event){
         Entity* enemy = new Entity();
         enemy->setGroup(1);
 
-        Sprite* spr = new Sprite();
-        spr->addFrames(":/resources/graphics/spider",7,"walk");
-        spr->addFrames(":/resources/graphics/spider",1,"stand");
+        TopDownSprite* spr = new TopDownSprite();
+        spr->addAnimation(":/resources/graphics/spider",7,"walk");
+        spr->addAnimation(":/resources/graphics/spider",1,"stand");
         spr->play("stand",-1,1);
         enemy->setSprite(spr);
 

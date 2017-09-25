@@ -4,9 +4,10 @@
 #include <string>
 
 #include "EntitySprite.h"
-#include "SpriteSheet.h"
 
 class Sprite;
+class SpriteSheet;
+class Node;
 
 /// Represents top down graphics for an Entity.
 /// @author Abdullah Aghazadah
@@ -19,22 +20,26 @@ class TopDownSprite : public EntitySprite
 {
 public:
     TopDownSprite();
+    TopDownSprite(const QPixmap& pixmap);
 
     void addAnimation(std::string animationName,
                       const SpriteSheet& fromSpriteSheet,
                       const Node& from,
                       const Node& to);
 
+    void addAnimation(std::string resourceFolder, int numOfImages, std::string imagePrefix);
+
     virtual double actualFacingAngle() const override;
     virtual QRectF boundingBox() const override;
-    virtual void setSize(const QSize& size) override;
     virtual bool hasAnimation(const std::string& animationName) const override;
-    virtual void play(const std::string &animationName, int numTimesToPlay, int fpsToPlayAt) override;
-    virtual void stop() override;
     virtual QPixmap currentlyDisplayedFrame() const override;
 
 private:
     Sprite* sprite_;
+
+    virtual void setFacingAngle_(double angle) override;
+    virtual void play_(const std::string &animationName, int numTimesToPlay, int fpsToPlayAt) override;
+    virtual void stop_() override;
 };
 
 #endif // TOPDOWNSPRITE_H

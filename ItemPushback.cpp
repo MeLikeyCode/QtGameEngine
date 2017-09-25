@@ -4,11 +4,12 @@
 #include "Inventory.h"
 #include <QPixmap>
 #include "Sprite.h"
+#include "TopDownSprite.h"
 
 ItemPushback::ItemPushback()
 {
     // set sprite
-    Sprite* sprite = new Sprite(QPixmap(":resources/graphics/misc/pushback.png"));
+    TopDownSprite* sprite = new TopDownSprite(QPixmap(":resources/graphics/misc/pushback.png"));
     setSprite(sprite);
 }
 

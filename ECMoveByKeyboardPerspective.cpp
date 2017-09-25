@@ -5,6 +5,7 @@
 #include "Game.h"
 #include <cassert>
 #include "Utilities.h"
+#include "EntitySprite.h"
 
 ECMoveByKeyboardPerspective::ECMoveByKeyboardPerspective(Entity* entity):
     entity_(entity),
@@ -67,11 +68,7 @@ void ECMoveByKeyboardPerspective::moveStep_()
         // move if the newPt is free
         if (entity_->canFit(newPt)){
             entity_->setPos(newPt);
-
-            // if the walk animation isn't playing already, play it.
-            if (entity_->sprite()->playingAnimation() != std::string("walk")){
-                entity_->sprite()->play("walk",-1,10);
-            }
+            playAnimIfExists_("walk");
         }
     }
 
@@ -88,11 +85,7 @@ void ECMoveByKeyboardPerspective::moveStep_()
         // move if the newPt is free
         if (entity_->canFit(newPt)){
             entity_->setPos(newPt);
-
-            // if the walk animation isn't playing already, play it.
-            if (entity_->sprite()->playingAnimation() != std::string("walk")){
-                entity_->sprite()->play("walk",-1,10);
-            }
+            playAnimIfExists_("walk");
         }
     }
 
@@ -109,11 +102,7 @@ void ECMoveByKeyboardPerspective::moveStep_()
         // move if the newPt is free
         if (entity_->canFit(newPt)){
             entity_->setPos(newPt);
-
-            // if the walk animation isn't playing already, play it.
-            if (entity_->sprite()->playingAnimation() != std::string("walk")){
-                entity_->sprite()->play("walk",-1,10);
-            }
+            playAnimIfExists_("walk");
         }
 
     }
@@ -131,20 +120,19 @@ void ECMoveByKeyboardPerspective::moveStep_()
         // move if the newPt is free
         if (entity_->canFit(newPt)){
             entity_->setPos(newPt);
-
-            // if the walk animation isn't playing already, play it.
-            if (entity_->sprite()->playingAnimation() != std::string("walk")){
-                entity_->sprite()->play("walk",-1,10);
-            }
+            playAnimIfExists_("walk");
         }
 
     }
 
     // if none of the keys are pressed, play stand animation
     if (!wPressed && !aPressed && !sPressed && !dPressed){
-        // only play if it isn't already playing
-        if (entity_->sprite()->playingAnimation() != std::string("stand")){
-            entity_->sprite()->play("stand",-1,10);
-        }
+        playAnimIfExists_("stand");
     }
+}
+
+void ECMoveByKeyboardPerspective::playAnimIfExists_(std::string anim)
+{
+    if (entity_->sprite()->hasAnimation(anim))
+        entity_->sprite()->play(anim,-1,10);
 }

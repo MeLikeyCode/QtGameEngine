@@ -114,7 +114,8 @@ SOURCES += main.cpp \
     ECMoveByKeyboardFourDirectional.cpp \
     Animation.cpp \
     EntitySprite.cpp \
-    TopDownSprite.cpp
+    TopDownSprite.cpp \
+    AngledSprite.cpp
 
 HEADERS  += \
     Map.h \
@@ -214,7 +215,8 @@ HEADERS  += \
     ECMoveByKeyboardFourDirectional.h \
     Animation.h \
     EntitySprite.h \
-    TopDownSprite.h
+    TopDownSprite.h \
+    AngledSprite.h
 
 RESOURCES += \
     res.qrc

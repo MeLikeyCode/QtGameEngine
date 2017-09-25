@@ -1,10 +1,11 @@
 #include "ItemGold.h"
 #include "Sprite.h"
+#include "TopDownSprite.h"
 
 ItemGold::ItemGold()
 {
     // set sprite
-    Sprite* sprite = new Sprite(QPixmap(":/resources/graphics/misc/gold.png"));
+    TopDownSprite* sprite = new TopDownSprite(QPixmap(":/resources/graphics/misc/gold.png"));
     setSprite(sprite);
 }
 

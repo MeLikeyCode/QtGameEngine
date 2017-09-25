@@ -8,6 +8,7 @@
 #include "Sound.h"
 #include <cassert>
 #include "QTimer"
+#include "EntitySprite.h"
 
 BodyThrust::BodyThrust(Entity &owner):
     NoTargetAbility(owner,nullptr)
@@ -39,8 +40,8 @@ void BodyThrust::useImplementation()
     assert(theOwner->map() != nullptr);  // make sure owner is in a map
 
     // set point that will be checked for collision
-    double ownerWidth = theOwner->sprite()->size().width();
-    double ownerHeight = theOwner->sprite()->size().height();
+    double ownerWidth = theOwner->sprite()->boundingBox().width();
+    double ownerHeight = theOwner->sprite()->boundingBox().height();
     collisionPoint_ = QPointF(ownerWidth/2,ownerHeight/2);
 
     // if its already thrusting, don't do anything

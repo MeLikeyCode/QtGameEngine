@@ -74,5 +74,6 @@
         <file>graphics/human/character.png</file>
         <file>graphics/human/characterBow.png</file>
         <file>graphics/human/characterSpear.png</file>
+        <file>graphics/human3/skeleton_0.png</file>
     </qresource>
 </RCC>

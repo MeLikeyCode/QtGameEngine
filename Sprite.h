@@ -13,8 +13,7 @@ class QTimer;
 class SpriteSheet;
 class Node;
 
-/// A QGraphicsItem that represents a sprite with named animations that can
-/// be played. A Sprite is basically a bunch of named Animation objects.
+/// A QGraphicsItem that represents a bunch of animations that can be played.
 /// All entities have sprites (some of which are invisible and do nothing).
 /// @author Abdullah Aghazadah
 /// @date 5-16-15
@@ -42,8 +41,12 @@ public:
     // readers
     QSize size();
     bool hasAnimation(std::string animation) const;
+    std::vector<std::string> animations() const;
     std::string playingAnimation() const;
+    int playingAnimationFPS() const;
+    int playingAnimationTimesLeftToPlay() const;
     QPixmap currentFrame() const;
+    int currentFrameNumber() const;
 
     // modifiers
     void addFrame(QPixmap frame, std::string toAnimation);
@@ -55,12 +58,8 @@ public:
     virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
     virtual QRectF boundingRect() const;
 
-    void play(std::string animation, int timesToPlay, int framesPerSecond);
+    void play(std::string animation, int timesToPlay, double framesPerSecond);
     void stop();
-
-    // resizing
-    void setSize(int width, int height);
-    void setSizeOfCurrentFrame(int width, int height);
 
 public slots:
     void nextFrame_();
@@ -73,6 +72,7 @@ private:
     // mapping of string : vector of pixmaps (an animation)
     std::unordered_map<std::string,std::vector<QPixmap>> animation_;
     std::string playingAnimation_;
+    int playingAnimationFPS_; // the fps the currently playing animation is playing at
 
     QGraphicsPixmapItem* pixmap_; // currently displayed pixmap
     QTimer* timer_;
@@ -81,12 +81,6 @@ private:
     int currentFrame_;
     int timesPlayed_;
     int timesToPlay_;
-
-    QSize size_;
-
-    // if the client calls setSize() we will make sure all current and future frames are specified size,
-    // otherwise size of frames will be whatever the pixmap size is
-    bool sizeManuallySet_;
 
     void commonInitialize_();
     void setSize_(std::string ofAnimation, int width, int height);

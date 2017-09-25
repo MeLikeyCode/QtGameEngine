@@ -3,6 +3,11 @@
 #include <QRectF>
 #include <QGraphicsItem>
 
+EntitySprite::EntitySprite(): underlyingItem_(nullptr)
+{
+
+}
+
 EntitySprite::~EntitySprite()
 {
     delete underlyingItem_;
@@ -28,12 +33,24 @@ QRectF EntitySprite::boundingBox() const
     return underlyingItem_->boundingRect();
 }
 
-/// Sets the size of the EntitySprite to be a scaled version of its current size.
-/// @param value Can be from 0-1. A value of 0.5 means shrink in half, a value of 2 means double size.
-void EntitySprite::scale(double value)
+void EntitySprite::scale(double scale)
 {
-    QRectF bbox = boundingBox();
-    double newWidth = bbox.width() * value;
-    double newHeight = bbox.height() * value;
-    setSize(QSize(newWidth,newHeight));
+    underlyingItem_->setScale(scale);
+}
+
+void EntitySprite::play(const std::string &animationName, int numTimesToPlay, int fpsToPlayAt)
+{
+    play_(animationName,numTimesToPlay,fpsToPlayAt); // delegate to concrete classes
+    playingAnimation_ = animationName; // remember that we are currently playing this animation
+}
+
+std::string EntitySprite::playingAnimation() const
+{
+    return playingAnimation_;
+}
+
+void EntitySprite::stop()
+{
+    stop_(); // delegate to sub class
+    playingAnimation_ = ""; // remember that we are not currently playing any animations
 }

@@ -7,7 +7,6 @@
 #include "ECRotateToMouse.h"
 #include "ECGrabCam.h"
 #include "TerrainLayer.h"
-#include "Sprite.h"
 #include "WeaponSlot.h"
 #include "Spear.h"
 #include "Inventory.h"
@@ -35,6 +34,9 @@
 #include "SpriteSheet.h"
 #include "ECMoveByKeyboardFourDirectional.h"
 #include "Animation.h"
+#include "TopDownSprite.h"
+#include "AngledSprite.h"
+#include "Sprite.h"
 
 Entity* player;
 
@@ -49,7 +51,7 @@ int main(int argc, char *argv[])
     // create a MapGrid to put some Maps inside
     MapGrid* mapGrid = new MapGrid(3,3);
 
-    // create
+    // create a PathingMap for a Map
     PathingMap map2PathingMap(50,50,64);
 
     // create the Maps
@@ -77,24 +79,21 @@ int main(int argc, char *argv[])
     player = new Entity();
     player->setHealth(500);
 
-    // create a sprite for the entity
-    SpriteSheet characterSpriteSheet(":/resources/graphics/human/character.png",13,21,64,64);
-    Sprite* sprplayer = new Sprite();
-    sprplayer->addFrames(Node(0,8),Node(8,8),characterSpriteSheet,"walkUp");
-    sprplayer->addFrame(Node(0,8),characterSpriteSheet,"standUp");
-    sprplayer->addFrames(Node(0,9),Node(8,9),characterSpriteSheet,"walkLeft");
-    sprplayer->addFrame(Node(0,9),characterSpriteSheet,"standLeft");
-    sprplayer->addFrames(Node(0,10),Node(8,10),characterSpriteSheet,"walkDown");
-    sprplayer->addFrame(Node(0,10),characterSpriteSheet,"standDown");
-    sprplayer->addFrames(Node(0,11),Node(8,11),characterSpriteSheet,"walkRight");
-    sprplayer->addFrame(Node(0,11),characterSpriteSheet,"standRight");
+    // create an EntitySprite for the entity
+    SpriteSheet skeletonSpriteSheet(":/resources/graphics/human3/skeleton_0.png",32,8,128,128);
+    AngledSprite* sprplayer = new AngledSprite();
+    sprplayer->scale(0.5);
+    for (int i = 0, n = 8; i < n; ++i){
+        sprplayer->addAnimation((180+45*i) % 360,"stand",skeletonSpriteSheet,Node(0,0*i),Node(3,0*i));
+        sprplayer->addAnimation((180+45*i) % 360,"walk",skeletonSpriteSheet,Node(4,0*i),Node(11,0*i));
+    }
     player->setSprite(sprplayer);
 
     map1->addEntity(player);
 
     // add controllers to control the entity
-    //ECRotateToMouse* rotContr = new ECRotateToMouse(*player);
-    ECMoveByKeyboardFourDirectional* moveContr = new ECMoveByKeyboardFourDirectional(player);
+    ECRotateToMouse* rotContr = new ECRotateToMouse(*player);
+    ECMoveByKeyboardEightDirectional* moveContr = new ECMoveByKeyboardEightDirectional(player);
     ECGrabCam* grabCamContr = new ECGrabCam(player);
     ECMoveToNextMap* moveToNMC = new ECMoveToNextMap(player);
     ECGrabCurrentMap* grabCM = new ECGrabCurrentMap(player);
@@ -116,10 +115,10 @@ int main(int argc, char *argv[])
     Spear* spear = new Spear();
     player->inventory()->addItem(spear);
 
-    // add bow to entitys inventory
-    Bow* bow = new Bow();
-    player->inventory()->addItem(bow);
-    rangedSlot->equip(bow);
+//    // add bow to entitys inventory and equip it
+//    Bow* bow = new Bow();
+//    player->inventory()->addItem(bow);
+//    rangedSlot->equip(bow);
 
 
 //    // create an entity that will thrust nearby enemy entities
@@ -165,11 +164,7 @@ int main(int argc, char *argv[])
     InventoryUser* invUser = new InventoryUser(game,player->inventory());
     game->addGui(invUser);
 
-//    // test positional sound
-//    PositionalSound* ps = new PositionalSound("qrc:/resources/sounds/axe.wav",QPointF(0,0));
-//    ps->play(-1);
-//    map1->addPositionalSound(ps);
-
+    // test weather effects
 //    RainWeather* rain = new RainWeather();
 //    map1->addWeatherEffect(*rain);
 //    FogWeather* fog = new FogWeather();
@@ -177,6 +172,7 @@ int main(int argc, char *argv[])
 //    SnowWeather* snow = new SnowWeather();
 //    map1->addWeatherEffect(*snow);
 
+    // test random image entites
     //addRandomTrees(map1,50);
 
     // create a test chaser enemy
@@ -186,14 +182,6 @@ int main(int argc, char *argv[])
     testFOVEntity->setPos(QPoint(50,700));
     map1->addEntity(testFOVEntity);
     ECChaseEnemies* ecChase = new ECChaseEnemies(*testFOVEntity);
-
-    // test Animation
-    SpriteSheet spriteSheet(":/resources/graphics/human/character.png",13,21,64,64);
-    Animation* anim = new Animation();
-    anim->addFrames(":/resources/graphics/human2",6,"walk",".png");
-    map1->scene()->addItem(anim);
-    anim->setPos(300,300);
-    anim->play(-1,15);
 
     return a.exec();
 }

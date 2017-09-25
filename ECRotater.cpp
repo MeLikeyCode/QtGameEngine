@@ -136,11 +136,11 @@ void ECRotater::rotateTowardsTargetAngle_()
 /// Rotates the entity 1 degrees to the right.
 void ECRotater::rotate1Right_()
 {
-    entity_->sprite()->setRotation(entity_->sprite()->rotation()+1);
+    entity_->setFacingAngle(entity_->facingAngle() + 1);
 }
 
 /// Rotates the entity 1 degrees to the left.
 void ECRotater::rotate1Left_()
 {
-    entity_->sprite()->setRotation(entity_->sprite()->rotation()-1);
+    entity_->setFacingAngle(entity_->facingAngle() - 1);
 }

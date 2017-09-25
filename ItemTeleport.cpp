@@ -5,11 +5,12 @@
 #include "Inventory.h"
 #include "Map.h"
 #include "Sound.h"
+#include "TopDownSprite.h"
 
 ItemTeleport::ItemTeleport()
 {
     // set sprite
-    Sprite* sprite = new Sprite(QPixmap(":resources/graphics/misc/teleport.png"));
+    TopDownSprite* sprite = new TopDownSprite(QPixmap(":resources/graphics/misc/teleport.png"));
     setSprite(sprite);
 
     soundEffect_ = new Sound("qrc:/resources/sounds/blink.wav", this);

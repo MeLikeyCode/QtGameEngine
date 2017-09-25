@@ -37,6 +37,9 @@ private:
     double stepSize_;
 
     QTimer* moveTimer_;
+
+    // helper
+    void playAnimIfHas_(std::string anim);
 };
 
 #endif // ECMOVEBYKEYBOARDEIGHTDIRECTIONAL_H

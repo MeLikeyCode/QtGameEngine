@@ -9,11 +9,12 @@
 #include "Sound.h"
 #include "Map.h"
 #include "CBDamage.h"
+#include "TopDownSprite.h"
 
 ItemRainOfSpears::ItemRainOfSpears()
 {
     // set sprite
-    Sprite* sprite = new Sprite(QPixmap(":/resources/graphics/weapons/trippleSpear.png"));
+    TopDownSprite* sprite = new TopDownSprite(QPixmap(":/resources/graphics/weapons/trippleSpear.png"));
     setSprite(sprite);
 
     timer_ = new QTimer(this);

@@ -5,6 +5,7 @@
 #include "Game.h"
 #include "Sprite.h"
 #include "Utilities.h"
+#include "EntitySprite.h"
 
 ECMoveByKeyboardEightDirectional::ECMoveByKeyboardEightDirectional(Entity *entity):
     entity_(entity),
@@ -31,6 +32,13 @@ double ECMoveByKeyboardEightDirectional::stepSize()
     return stepSize_;
 }
 
+void ECMoveByKeyboardEightDirectional::playAnimIfHas_(std::string anim)
+{
+    if (entity_->sprite()->hasAnimation(anim)){
+        entity_->sprite()->play(anim,-1,10);
+    }
+}
+
 void ECMoveByKeyboardEightDirectional::moveStep_()
 {
     // if the entity has been destroyed, stop
@@ -50,18 +58,16 @@ void ECMoveByKeyboardEightDirectional::moveStep_()
         return;
 
     // temporarly disable pathingmap (will be automatically reenabled when moved)
-    QPointF entitysPos = entity_->pos();
-
     std::vector<QRectF> entitysCellsAsRects = entity_->pathingMap().cellsAsRects();
     std::vector<QRectF> entitysFilledCellsAsRects;
     for (QRectF rect:entitysCellsAsRects){
         if (entity_->pathingMap().filled(rect)){
             // shift it and add it to filled collection
+            QPointF entitysPos = entity_->pos();
             rect.moveTopLeft(QPointF(entitysPos.x() + rect.x(), entitysPos.y() + rect.y()));
             entitysFilledCellsAsRects.push_back(rect);
         }
     }
-
     for (QRectF rect:entitysFilledCellsAsRects){
         std::vector<Node> intersectedCells = entitysMap->pathingMap().cells(rect);
         for (Node cell:intersectedCells){
@@ -84,13 +90,8 @@ void ECMoveByKeyboardEightDirectional::moveStep_()
 
         // move if the new location is free
         if (entity_->canFit(newPt)){
-            entity_->setPos(newPt);
-
-            // if the walk animation isn't playing already, play it.
-            if (entity_->sprite()->playingAnimation() != std::string("walk")
-                    && entity_->sprite()->hasAnimation("walk")){
-                entity_->sprite()->play("walk",-1,10);
-            }
+            entity_->setPos(newPt); // set pos
+            playAnimIfHas_("walk"); // ensure animation is playing
         }
     }
 
@@ -103,12 +104,7 @@ void ECMoveByKeyboardEightDirectional::moveStep_()
         // move if the newPt is free
         if (entity_->canFit(newPt)){
             entity_->setPos(newPt);
-
-            // if the walk animation isn't playing already, play it.
-            if (entity_->sprite()->playingAnimation() != std::string("walk")
-                    && entity_->sprite()->hasAnimation("walk")){
-                entity_->sprite()->play("walk",-1,10);
-            }
+            playAnimIfHas_("walk");
         }
     }
 
@@ -121,12 +117,7 @@ void ECMoveByKeyboardEightDirectional::moveStep_()
         // move if the newPt is free
         if (entity_->canFit(newPt)){
             entity_->setPos(newPt);
-
-            // if the walk animation isn't playing already, play it.
-            if (entity_->sprite()->playingAnimation() != std::string("walk")
-                    && entity_->sprite()->hasAnimation("walk")){
-                entity_->sprite()->play("walk",-1,10);
-            }
+            playAnimIfHas_("walk");
         }
     }
 
@@ -139,21 +130,12 @@ void ECMoveByKeyboardEightDirectional::moveStep_()
         // move if the newPt is free
         if (entity_->canFit(newPt)){
             entity_->setPos(newPt);
-
-            // if the walk animation isn't playing already, play it.
-            if (entity_->sprite()->playingAnimation() != std::string("walk")
-                    && entity_->sprite()->hasAnimation("walk")){
-                entity_->sprite()->play("walk",-1,10);
-            }
+            playAnimIfHas_("walk");
         }
     }
 
     // if none of the keys are pressed, play stand animation
     if (!wPressed && !aPressed && !sPressed && !dPressed){
-        // only play if it isn't already playing
-        if (entity_->sprite()->playingAnimation() != std::string("stand")
-                && entity_->sprite()->hasAnimation("stand")){
-            entity_->sprite()->play("stand",-1,10);
-        }
+        playAnimIfHas_("stand");
     }
 }

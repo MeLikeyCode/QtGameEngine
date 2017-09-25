@@ -2,6 +2,7 @@
 #include <cassert>
 #include "Sprite.h"
 #include "Map.h"
+#include "EntitySprite.h"
 
 #include "Inventory.h"
 
@@ -17,8 +18,8 @@ void MeleeWeapon::setTip(QPointF point)
 void MeleeWeapon::resetTip()
 {
     QPointF pt;
-    pt.setX(sprite()->currentFrame().width());
-    pt.setY(sprite()->currentFrame().height()/2);
+    pt.setX(sprite()->currentlyDisplayedFrame().width());
+    pt.setY(sprite()->currentlyDisplayedFrame().height()/2);
     setTip(pt);
 }
 

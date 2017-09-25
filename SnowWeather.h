@@ -8,7 +8,8 @@
 class QGraphicsPixmapItem;
 class QTimer;
 
-/// Class that represents snow weather in a Map.
+/// Class that represents a snow weather effect.
+/// @see WeatherEffect
 /// @author Abdullah Aghazadah
 /// @date 7/2/16
 class SnowWeather : public WeatherEffect

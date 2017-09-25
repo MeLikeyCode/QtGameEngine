@@ -12,6 +12,7 @@
 #include "Inventory.h"
 #include "Slot.h"
 #include <algorithm>
+#include "QGraphicsItem"
 
 /// Constructs a default entity.
 Entity::Entity():
@@ -217,7 +218,7 @@ void Entity::setZ(double z)
 
     // scale according to z
     if (sprite_ != nullptr){
-        scaleSprite_();
+        scaleBasedOnZ_();
     }
 }
 
@@ -243,38 +244,38 @@ Node Entity::cellPos(){
 void Entity::setSprite(EntitySprite *sprite){
     // set all children's sprite's parent to new sprite
     for (Entity* child: children()){
-        child->sprite()->setParentItem(sprite);
+        child->sprite()->underlyingItem_->setParentItem(sprite->underlyingItem_);
     }
 
     // make sure the new sprite is positioned correctly
-    sprite->setPos(currentPos_);
+    sprite->underlyingItem_->setPos(currentPos_);
 
     // if the Entity is already in a map
     if (map_){
         // remove old sprite/add new sprite
-        map()->scene()->removeItem(sprite_);
-        map()->scene()->addItem(sprite);
+        map()->scene()->removeItem(sprite_->underlyingItem_);
+        map()->scene()->addItem(sprite->underlyingItem_);
     }
 
     // set internal sprite_ pointer to the new sprite
     sprite_ = sprite;
 
     // set scaling of the new sprite
-    scaleSprite_();
+    scaleBasedOnZ_();
 
     // set the zvalue of the new sprite
-    sprite->setZValue(zValue());
+    sprite->underlyingItem_->setZValue(zValue());
 }
 
 /// Returns the Entity's Sprite. If the Entity does not have a sprite,
 /// returns nullptr.
-Sprite *Entity::sprite() const{
+EntitySprite *Entity::sprite() const{
     return sprite_;
 }
 
 QRectF Entity::boundingRect()
 {
-    return sprite()->boundingRect();
+    return sprite()->boundingBox();
 }
 
 /// Returns the current angle the Entity is facing in degrees.
@@ -287,6 +288,8 @@ int Entity::facingAngle()
 void Entity::setFacingAngle(double angle)
 {
     facingAngle_ = angle;
+    if (sprite_)
+        sprite_->setFacingAngle(angle);
 }
 
 /// Sets the z value of the Entity. Entities with a higher z value are drawn ontop of entities with a lower z value.
@@ -296,7 +299,7 @@ void Entity::setZValue(double zValue)
 
     // if has a sprite, update sprites z value
     if (sprite() != nullptr){
-        sprite()->setZValue(zValue);
+        sprite()->underlyingItem_->setZValue(zValue);
     }
 }
 
@@ -349,7 +352,7 @@ void Entity::setParentEntity(Entity *parent)
             parent_->children_.erase(this);
             parent_ = nullptr;
         }
-        sprite()->setParentItem(nullptr);
+        sprite()->underlyingItem_->setParentItem(nullptr);
         return;
     }
 
@@ -362,7 +365,7 @@ void Entity::setParentEntity(Entity *parent)
         // set new parent
         parent_ = parent;
         parent_->children_.insert(this);
-        sprite()->setParentItem(parent->sprite());
+        sprite()->underlyingItem_->setParentItem(parent->sprite()->underlyingItem_);
     }
 }
 
@@ -375,7 +378,7 @@ Entity *Entity::parent()
 /// Maps a point from local (Entity) coordinates to the Map (scene) coordinates.
 QPointF Entity::mapToMap(const QPointF &point) const
 {
-    return sprite()->mapToScene(point);
+    return sprite()->underlyingItem_->mapToScene(point);
 }
 
 /// Names the specified point (so it can be retrieved with a name).
@@ -427,11 +430,11 @@ double Entity::rotationSpeed()
     return rotationSpeed_;
 }
 
-// Sets the point the Entity should rotate about.
+/// Sets the point the Entity should rotate about.
 void Entity::setRotationPoint(QPointF point)
 {
     assert(sprite() != nullptr);  // needs a sprite to have a rotation point
-    sprite()->setTransformOriginPoint(point);
+    sprite()->underlyingItem_->setTransformOriginPoint(point);
 }
 
 /// Sets the health of the entity, if set below 0, entity dies.
@@ -617,12 +620,10 @@ Inventory *Entity::inventory()
 
 /// Sets the width and height of the Entity's sprite based on the z value of the Entity.
 /// This makes it so that Entities higher up are shown bigger.
-void Entity::scaleSprite_()
+void Entity::scaleBasedOnZ_()
 {
     assert(sprite_ != nullptr);
 
     double scaleFactor = 1.0 + zPos_ / 100.0; // scale up by z%
-    int newWidth = sprite_->size().width() * (scaleFactor);
-    int newHeight = sprite_->size().height() * (scaleFactor);
-    sprite_->setSize(newWidth,newHeight);
+    sprite_->scale(scaleFactor);
 }

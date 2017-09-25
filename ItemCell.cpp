@@ -7,6 +7,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include "Panel.h"
 #include "Sprite.h"
+#include "EntitySprite.h"
 
 /// Constructs an ItemCell with the given width, height, and Item.
 ItemCell::ItemCell(int width, int height, Item *item):
@@ -77,7 +78,7 @@ void ItemCell::draw_()
     if (item_ != nullptr){
         double width = background_->width();
         double height = background_->height();
-        picture_->setPixmap(item_->sprite()->currentFrame().scaled(width-20,height-20));
+        picture_->setPixmap(item_->sprite()->currentlyDisplayedFrame().scaled(width-20,height-20));
         picture_->setPos(10,10);
     }
 }

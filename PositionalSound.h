@@ -9,12 +9,11 @@
 class Map;
 class Sound;
 
-/// Represents a sound object you can put in a Map. The furter the camera of
-/// the Map is from the sound object, the lower its volume. When the
-/// PositionalSound's Map is not being visualized, it is muted. When it's Map
-/// is being visualized, it is unmuted. So, in summary, PositionalSounds can only
-/// be heard when their Map is being visualized, and their volume depends on
-/// how far the camera is from them.
+/// Represents a sound object you can put in a Map. The furter the camera of the Map is from the
+/// sound object, the lower its volume. When the PositionalSound's Map is not being visualized
+/// (i.e. its Map is not the one Game is currently rendering) it is muted. When its Map is being
+/// visualized, it is unmuted. So, in summary, PositionalSounds can only be heard when their Map is
+/// being visualized, and their volume depends on how far the camera is from them.
 ///
 /// Exmaple usage:
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.cpp

@@ -10,9 +10,7 @@ class QTimer;
 class QGraphicsPixmapItem;
 
 /// A WeatherEffect that represents fog.
-/// You can choose the fog image to use (must be tilable), the fog speed, its fade
-/// in rate, etc...
-///
+/// @see WeatherEffect
 /// @author Abdullah Aghazadah
 /// @date 6/27/16
 class FogWeather : public WeatherEffect

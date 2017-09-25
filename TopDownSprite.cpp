@@ -1,10 +1,21 @@
 #include "TopDownSprite.h"
 
 #include "Sprite.h"
+#include "SpriteSheet.h"
+#include "Node.h"
 
-TopDownSprite::TopDownSprite()
+/// Constructs a TopDownSprite that will have no animations but the frame will by default display a
+/// "Default" graphic.
+TopDownSprite::TopDownSprite(): sprite_(new Sprite())
 {
-    sprite_ = new Sprite();
+    underlyingItem_ = sprite_;
+}
+
+/// Constructs a TopDownSprite that will have no animations but the specified pixmap will be displayed
+/// as the currently showing frame.
+TopDownSprite::TopDownSprite(const QPixmap &pixmap)
+{
+    sprite_ = new Sprite(pixmap);
     underlyingItem_ = sprite_;
 }
 
@@ -16,6 +27,11 @@ TopDownSprite::TopDownSprite()
 void TopDownSprite::addAnimation(std::string animationName, const SpriteSheet &fromSpriteSheet, const Node &from, const Node &to)
 {
     sprite_->addFrames(from,to,fromSpriteSheet,animationName);
+}
+
+void TopDownSprite::addAnimation(std::string resourceFolder, int numOfImages, std::string imagePrefix)
+{
+    sprite_->addFrames(resourceFolder,numOfImages,imagePrefix);
 }
 
 double TopDownSprite::actualFacingAngle() const
@@ -31,22 +47,17 @@ QRectF TopDownSprite::boundingBox() const
     return sprite_->boundingRect();
 }
 
-void TopDownSprite::setSize(const QSize &size)
-{
-    sprite_->setSize(size.width(),size.height());
-}
-
 bool TopDownSprite::hasAnimation(const std::string &animationName) const
 {
     return sprite_->hasAnimation(animationName);
 }
 
-void TopDownSprite::play(const std::string &animationName, int numTimesToPlay, int fpsToPlayAt)
+void TopDownSprite::play_(const std::string &animationName, int numTimesToPlay, int fpsToPlayAt)
 {
     sprite_->play(animationName,numTimesToPlay,fpsToPlayAt);
 }
 
-void TopDownSprite::stop()
+void TopDownSprite::stop_()
 {
     sprite_->stop();
 }
@@ -54,4 +65,10 @@ void TopDownSprite::stop()
 QPixmap TopDownSprite::currentlyDisplayedFrame() const
 {
     return sprite_->currentFrame();
+}
+
+void TopDownSprite::setFacingAngle_(double angle)
+{
+    // rotate the underlying frames
+    sprite_->setRotation(angle);
 }

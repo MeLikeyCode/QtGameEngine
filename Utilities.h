@@ -2,6 +2,7 @@
 #define UTILITIES_H
 
 #include <QtGlobal>
+#include <vector>
 
 /// This file contains a bunch of utility functions for the game engine.
 /// @author Abdullah Aghazadah
@@ -23,5 +24,7 @@ double frequency(double stepSize, double rate);
 double secondsToMs(double seconds);
 double msToSeconds(double milliseconds);
 quint32 fastRandom();
+double closestAngle(const std::vector<int>& allAngles, double targetAngle);
+
 
 #endif // UTILITIES_H

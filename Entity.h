@@ -177,7 +177,7 @@ private:
     double zValue_;
 
     // helper functions
-    void scaleSprite_();
+    void scaleBasedOnZ_();
 };
 
 // make QPointer<Entity> hashable (simply "delegate" to hasing a regular Entity*)
