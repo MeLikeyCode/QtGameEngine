@@ -84,9 +84,13 @@ int main(int argc, char *argv[])
     AngledSprite* sprplayer = new AngledSprite();
     sprplayer->scale(0.5);
     for (int i = 0, n = 8; i < n; ++i){
-        sprplayer->addAnimation((180+45*i) % 360,"stand",skeletonSpriteSheet,Node(0,0*i),Node(3,0*i));
-        sprplayer->addAnimation((180+45*i) % 360,"walk",skeletonSpriteSheet,Node(4,0*i),Node(11,0*i));
+        sprplayer->addAnimation((180+45*i) % 360,"stand",skeletonSpriteSheet,Node(0,0+i),Node(3,0+i));
+        sprplayer->addAnimation((180+45*i) % 360,"walk",skeletonSpriteSheet,Node(4,0+i),Node(11,0+i));
+        for (int j = 2; j > 0; --j){
+            sprplayer->addFrame(skeletonSpriteSheet.tileAt(Node(j,0+i)),"stand",(180+45*i) % 360);
+        }
     }
+
     player->setSprite(sprplayer);
 
     map1->addEntity(player);

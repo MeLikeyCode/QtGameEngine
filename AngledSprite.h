@@ -19,7 +19,7 @@ class AngledSprite : public EntitySprite
 public:
     AngledSprite();
 
-    void addFrame()
+    void addFrame(const QPixmap& frame, const std::string& toAnimation, int forAngle);
     void addAnimation(int angle, std::string animationName, const SpriteSheet& fromSpriteSheet, const Node& fromNode, const Node& toNode);
 
     virtual double actualFacingAngle() const override;
@@ -28,8 +28,12 @@ public:
     virtual QPixmap currentlyDisplayedFrame() const override;
 
 private:
+    // The underlying sprite will contain all animations for every angle.
+    // For example if we have a walk animation at 30 degrees, its name in sprite_ will be walk30.
+    // If we are facing 30 degrees and we are playing walk, we will ask sprite to play animation "walk30"
     Sprite* sprite_;
-    std::unordered_map<std::string,std::vector<int>> animationToAngle_; // for each animation the angles we've added
+
+    std::unordered_map<std::string,std::vector<int>> animationToAngle_; // for each animation, what angles do they support?
 
     double actualFacingAngle_;
 

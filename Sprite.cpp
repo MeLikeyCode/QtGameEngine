@@ -78,10 +78,16 @@ std::string Sprite::playingAnimation() const
 }
 
 /// Returns the number of times we have left to play the currently playing animation.
+/// Sprite::play() allows you to pass in the number of times you want the animation to be played.
+/// This function can tell you how many times you have left to play.
+/// Returns -1 if the animation was asked to play an infinite number of times (thus it has an infinite number of times left to play).
 /// Includes the current run.
 int Sprite::playingAnimationTimesLeftToPlay() const
 {
     assert(playingAnimation() != "");
+    if (timesToPlay_ == -1)
+        return -1;
+
     return timesToPlay_ - timesPlayed_;
 }
 

@@ -16,6 +16,7 @@ class Node;
 /// For TopDownSprite, you only need to add frames from a "pure" top down view.
 /// When the sprite is asked to change its facing angle, it will simply rotate
 /// the underlying picture.
+/// @see EntitySprite
 class TopDownSprite : public EntitySprite
 {
 public:

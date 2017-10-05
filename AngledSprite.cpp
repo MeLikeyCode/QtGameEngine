@@ -10,6 +10,28 @@ AngledSprite::AngledSprite(): sprite_(new Sprite())
     underlyingItem_ = sprite_;
 }
 
+/// Adds the specified pixmap as a frame to the specified animation for the specified angle.
+///
+/// If the animation already exists, the pixmap will simply be added as the next
+/// frame in the animation. If the animation does not exist, it will be created with
+/// the pixmap being its first frame.
+void AngledSprite::addFrame(const QPixmap &frame, const std::string &toAnimation, int forAngle)
+{
+    assert(toAnimation != "");
+
+    // if this animation doesn't exist for any angle
+    if (animationToAngle_.find(toAnimation) == std::end(animationToAngle_))
+        animationToAngle_[toAnimation] = std::vector<int>();
+
+    // if this animation doesn't exist just for this angle
+    std::vector<int> angles = animationToAngle_[toAnimation];
+    if (std::find(std::begin(angles),std::end(angles),forAngle) == std::end(angles)){
+        animationToAngle_[toAnimation].push_back(forAngle);
+    }
+
+    sprite_->addFrame(frame,toAnimation + std::to_string(forAngle));
+}
+
 /// Adds an animation to the AngledSprite.
 /// @param angle The facing angle that frames of this animation are facing.
 /// @param animationName What to call the animation.

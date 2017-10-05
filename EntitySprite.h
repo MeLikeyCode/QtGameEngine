@@ -8,7 +8,11 @@ class QGraphicsItem;
 class QRectF;
 class QPixmap;
 
-/// Represents the graphics of an Entity.
+/// Represents the visual aspect of an Entity.
+/// An EntitySprite has a facing angle. When it is asked to play one of its animations, it
+/// will ensure that the frames chosen to play are facing its facing angle. If the EntitySprite
+/// is currently playing an animation and it is asked to change its facing angle, it will
+/// continue playing the animation but at the new angle.
 /// @author Abdullah Aghazadah
 /// @date 9-23-17
 ///
@@ -36,7 +40,8 @@ class QPixmap;
 /// to access the underlying QGraphicsItem of the Entity's EntitySprite. Thus, every EntitySprite
 /// shall have a pointer to its QGraphicsItem representation (called underlyingItem_). Sub classes
 /// must ensure that this pointer points to the proper QGraphicsItem that visually represents that
-/// concrete EntitySprite.
+/// concrete EntitySprite. As the EntitySprite is rotated, you must ensure that the QGraphicsItem's
+/// visual always represents the current angle.
 ///
 /// @warning As mentioned above, your sub class needs to make the 'underlyingItem_' variable point
 /// to the correct QGraphicsItem. 'underlyingItem_' is the QGraphicsItem that will be added/removed from the
