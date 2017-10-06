@@ -33,6 +33,7 @@
 #include "ECChaseEnemies.h"
 #include "SpriteSheet.h"
 #include "ECMoveByKeyboardFourDirectional.h"
+#include "ECMoveByKeyboardPerspective.h"
 #include "Animation.h"
 #include "TopDownSprite.h"
 #include "AngledSprite.h"
@@ -97,7 +98,7 @@ int main(int argc, char *argv[])
 
     // add controllers to control the entity
     ECRotateToMouse* rotContr = new ECRotateToMouse(*player);
-    ECMoveByKeyboardEightDirectional* moveContr = new ECMoveByKeyboardEightDirectional(player);
+    ECMoveByKeyboardPerspective* moveContr = new ECMoveByKeyboardPerspective(player);
     ECGrabCam* grabCamContr = new ECGrabCam(player);
     ECMoveToNextMap* moveToNMC = new ECMoveToNextMap(player);
     ECGrabCurrentMap* grabCM = new ECGrabCurrentMap(player);

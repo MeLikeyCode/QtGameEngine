@@ -34,6 +34,7 @@ void Mover::setEntity(Entity *entity)
 void Mover::moveEntity(const QPointF &toPos)
 {
     assert(!entity_.isNull());  // assert
+    isMovingEntity_ = true;
     moveEntity_(toPos);         // delegate
 }
 

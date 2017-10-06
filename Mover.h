@@ -8,7 +8,7 @@
 class QPointF;
 
 /// An object that can somehow move an Entity from its current position to a
-/// specified position. How the object moves depends on the concrete Mover
+/// specified position. *How* the object moves depends on the concrete Mover
 /// class.
 ///
 /// Example usage
@@ -38,7 +38,6 @@ class QPointF;
 ///
 /// `mover->stopMovingEntity();`
 /// Tells the Mover to stop moving the Entity.
-///
 ///
 /// @warning
 /// You cannot call setEntity() while the Mover is already busy moving an
