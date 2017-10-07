@@ -8,12 +8,13 @@
 #include "Utilities.h"
 
 ECAttackEnemiesWithWeapon::ECAttackEnemiesWithWeapon(Entity& entity):
-    entity_(&entity),
+    EntityController(entity),
     controllerChaseEnemies_(new ECChaseEnemies(entity))
 {
     // listen to chaser
-    connect(controllerChaseEnemies_.get(),&ECChaseEnemies::entityChaseContinued,this,&ECAttackEnemiesWithWeapon::onEnemyChaseContinued);
-    connect(controllerChaseEnemies_.get(),&ECChaseEnemies::entityChaseStarted,this,&ECAttackEnemiesWithWeapon::onEnemyChaseContinued);
+    ECChaseEnemies* ce = controllerChaseEnemies_.get();
+    connect(ce, &ECChaseEnemies::entityChaseContinued,this,&ECAttackEnemiesWithWeapon::onEnemyChaseContinued);
+    connect(ce,&ECChaseEnemies::entityChaseStarted,this,&ECAttackEnemiesWithWeapon::onEnemyChaseContinued);
 }
 
 /// Executed whenever the controlled entity takes one step closer to chased entity.
@@ -22,7 +23,7 @@ void ECAttackEnemiesWithWeapon::onEnemyChaseContinued(Entity *entityChased, doub
 {
     // TODO only attack if close to range of weapon
     // pick first weapon in controlled enities slots and use it to attack chased entity
-    for (Slot* slot: entity_->getSlots()){
+    for (Slot* slot: entityControlled()->getSlots()){
         WeaponSlot* asWS = dynamic_cast<WeaponSlot*>(slot);
         if (asWS){
             if (asWS->isFilled()){
