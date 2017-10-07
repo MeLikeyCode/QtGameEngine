@@ -83,7 +83,6 @@ int main(int argc, char *argv[])
     // create an EntitySprite for the entity
     SpriteSheet skeletonSpriteSheet(":/resources/graphics/human3/skeleton_0.png",32,8,128,128);
     AngledSprite* sprplayer = new AngledSprite();
-    sprplayer->scale(0.5);
     for (int i = 0, n = 8; i < n; ++i){
         sprplayer->addAnimation((180+45*i) % 360,"stand",skeletonSpriteSheet,Node(0,0+i),Node(3,0+i));
         sprplayer->addAnimation((180+45*i) % 360,"walk",skeletonSpriteSheet,Node(4,0+i),Node(11,0+i));
@@ -91,6 +90,7 @@ int main(int argc, char *argv[])
             sprplayer->addFrame(skeletonSpriteSheet.tileAt(Node(j,0+i)),"stand",(180+45*i) % 360);
         }
     }
+    sprplayer->scale(2);
 
     player->setSprite(sprplayer);
 

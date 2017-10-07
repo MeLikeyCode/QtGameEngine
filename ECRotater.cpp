@@ -13,12 +13,12 @@ ECRotater::ECRotater(Entity &entity):
     rotateRight_(false),
     targetAngle_(0)
 {
-    // empty
+    connect(rotationTimer_,&QTimer::timeout,this,&ECRotater::rotateStep_);
 }
 
-/// Rotate the entity until it faces the specified angle.
-/// Angle must be between 0-360 inclusive.
-/// A specified angle of 0 degrees is right, 90 degrees is down and so on.
+/// Rotate the entity until it faces the specified angle. Angle must be between
+/// 0-360 inclusive. A specified angle of 0 degrees is right, 90 degrees is
+/// down and so on (in other words, angle increases clockwise).
 void ECRotater::rotateTowards(int angle)
 {
     // make sure angle is between 0-360
@@ -63,7 +63,6 @@ void ECRotater::rotateLeft(int numDegrees)
     rotateRight_ = false;
 
     // start the timer
-    connect(rotationTimer_,SIGNAL(timeout()),this,SLOT(rotateStep_()));
     rotationTimer_->start(secondsToMs(frequency(stepSize_,entity_->rotationSpeed())));
 }
 
@@ -78,14 +77,22 @@ void ECRotater::rotateRight(int numDegrees)
     rotateRight_ = true;
 
     // start the timer
-    connect(rotationTimer_,SIGNAL(timeout()),this,SLOT(rotateStep_()));
     rotationTimer_->start(secondsToMs(frequency(stepSize_,entity_->rotationSpeed())));
 }
 
 /// Stop the entity's rotating.
 void ECRotater::stopRotating()
 {
-    rotationTimer_->disconnect();
+    rotationTimer_->stop();
+}
+
+/// Returns true if the ECRotater is currently rotating its Entity. @note This
+/// function only returns true if the *ECRotater* is the one rotating the
+/// Entity, not if the Entity is being rotated due to itself or some other
+/// object.
+bool ECRotater::isRotating() const
+{
+    return rotationTimer_->isActive();
 }
 
 /// Sets how many degrees the controlled entity will rotate each time it rotates.
@@ -112,7 +119,7 @@ void ECRotater::rotateStep_()
 
     // if it has reached its targetAngle, stop rotating
     if (abs(entity_->facingAngle() - targetAngle_) == 0 ){
-        rotationTimer_->disconnect();
+        rotationTimer_->stop();
     }
     // other wise, rotate once towards targetAngle
     else {
@@ -124,23 +131,11 @@ void ECRotater::rotateTowardsTargetAngle_()
 {
     // rotate right if rotateRight
     if (rotateRight_){
-        rotate1Right_();
+        entity_->setFacingAngle(entity_->facingAngle() + 1);
     }
 
     // other wise rotate left
     else {
-        rotate1Left_();
+        entity_->setFacingAngle(entity_->facingAngle() - 1);
     }
-}
-
-/// Rotates the entity 1 degrees to the right.
-void ECRotater::rotate1Right_()
-{
-    entity_->setFacingAngle(entity_->facingAngle() + 1);
-}
-
-/// Rotates the entity 1 degrees to the left.
-void ECRotater::rotate1Left_()
-{
-    entity_->setFacingAngle(entity_->facingAngle() - 1);
 }
