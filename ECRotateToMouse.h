@@ -12,13 +12,16 @@ class ECRotater;
 /// An entity controller (TODO: link to doc) that makes an Entity constantly rotate
 /// towards the mouse.
 /// Example usage:
+/// ==============
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.cpp
 /// ECRotateToMouse* c = new ECRotateToMouse(entity);
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ///
 /// That is all that is needed. Once constructed, the entity passed into the
-/// constructor will contineously rotate towards the mouse.
+/// constructor will contineously rotate to face the mouse.
 /// @author Abdullah Aghazadah
 /// @date 11/22/16
-class ECRotateToMouse: public QObject
+class ECRotateToMouse: public QObject // inherits from QObject so that we can use the 'parent manages lifetime of child' functionality for fields that are QObjects
 {
     Q_OBJECT
 public:

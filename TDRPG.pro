@@ -115,7 +115,8 @@ SOURCES += main.cpp \
     Animation.cpp \
     EntitySprite.cpp \
     TopDownSprite.cpp \
-    AngledSprite.cpp
+    AngledSprite.cpp \
+    EntityController.cpp
 
 HEADERS  += \
     Map.h \
@@ -216,7 +217,8 @@ HEADERS  += \
     Animation.h \
     EntitySprite.h \
     TopDownSprite.h \
-    AngledSprite.h
+    AngledSprite.h \
+    EntityController.h
 
 RESOURCES += \
     res.qrc

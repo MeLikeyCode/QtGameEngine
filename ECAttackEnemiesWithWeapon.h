@@ -3,8 +3,9 @@
 
 #include <QPointer>
 #include <QObject>
-#include "Entity.h"
 #include <memory>
+
+#include "Entity.h"
 
 class ECChaseEnemies;
 
