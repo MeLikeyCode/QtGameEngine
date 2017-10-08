@@ -8,7 +8,7 @@
 #include "EntitySprite.h"
 
 ECMoveByKeyboardPerspective::ECMoveByKeyboardPerspective(Entity* entity):
-    entity_(entity),
+    EntityController(entity),
     stepSize_(15),
     moveTimer_(new QTimer(this))
 {
@@ -17,7 +17,7 @@ ECMoveByKeyboardPerspective::ECMoveByKeyboardPerspective(Entity* entity):
 
     // connect timer to move step
     connect(moveTimer_,&QTimer::timeout,this,&ECMoveByKeyboardPerspective::moveStep_);
-    moveTimer_->start(secondsToMs(frequency(stepSize_,entity_->speed())));
+    moveTimer_->start(secondsToMs(frequency(stepSize_,entityControlled()->speed())));
 }
 
 /// See ECPathMover::setStepSize().
@@ -35,13 +35,14 @@ double ECMoveByKeyboardPerspective::stepSize()
 void ECMoveByKeyboardPerspective::moveStep_()
 {
     // if the entity has been destroyed, stop
-    if (entity_.isNull()){
+    Entity* entity = entityControlled();
+    if (entity == nullptr){
         moveTimer_->disconnect();
         return;
     }
 
     // if currently not in a Map, do nothing
-    Map* entitysMap = entity_->map();
+    Map* entitysMap = entity->map();
     if (entitysMap == nullptr)
         return;
 
@@ -58,50 +59,50 @@ void ECMoveByKeyboardPerspective::moveStep_()
     // move up if W is pressed
     if (wPressed){
         // find newPt to move to
-        QLineF line(entity_->pos(),QPoint(0,0));
-        line.setAngle(360-entity_->facingAngle());
+        QLineF line(entity->pos(),QPoint(0,0));
+        line.setAngle(360-entity->facingAngle());
         line.setLength(stepSize_);
-        double newX = entity_->pos().x() + line.dx();
-        double newY = entity_->pos().y() + line.dy();
+        double newX = entity->pos().x() + line.dx();
+        double newY = entity->pos().y() + line.dy();
         QPointF newPt(newX,newY);
 
         // move if the newPt is free
-        if (entity_->canFit(newPt)){
-            entity_->setPos(newPt);
+        if (entity->canFit(newPt)){
+            entity->setPos(newPt);
             playAnimIfExists_("walk");
         }
     }
 
     // move down if S is pressed
     if (sPressed){
-        QLineF line(entity_->pos(),QPoint(0,0));
-        line.setAngle(360-entity_->facingAngle());
+        QLineF line(entity->pos(),QPoint(0,0));
+        line.setAngle(360-entity->facingAngle());
         line.setLength(stepSize_);
         line.setAngle(line.angle()+180);
-        double newX = entity_->pos().x() + line.dx();
-        double newY = entity_->pos().y() + line.dy();
+        double newX = entity->pos().x() + line.dx();
+        double newY = entity->pos().y() + line.dy();
         QPointF newPt(newX,newY);
 
         // move if the newPt is free
-        if (entity_->canFit(newPt)){
-            entity_->setPos(newPt);
+        if (entity->canFit(newPt)){
+            entity->setPos(newPt);
             playAnimIfExists_("walk");
         }
     }
 
     // move left if A is pressed
     if (aPressed){
-        QLineF line(entity_->pos(),QPoint(0,0));
-        line.setAngle(360-entity_->facingAngle());
+        QLineF line(entity->pos(),QPoint(0,0));
+        line.setAngle(360-entity->facingAngle());
         line.setLength(stepSize_);
         line.setAngle(line.angle()+90);
-        double newX = entity_->pos().x() + line.dx();
-        double newY = entity_->pos().y() + line.dy();
+        double newX = entity->pos().x() + line.dx();
+        double newY = entity->pos().y() + line.dy();
         QPointF newPt(newX,newY);
 
         // move if the newPt is free
-        if (entity_->canFit(newPt)){
-            entity_->setPos(newPt);
+        if (entity->canFit(newPt)){
+            entity->setPos(newPt);
             playAnimIfExists_("walk");
         }
 
@@ -109,17 +110,17 @@ void ECMoveByKeyboardPerspective::moveStep_()
 
     // move right if D is pressed
     if (dPressed){
-        QLineF line(entity_->pos(),QPoint(0,0));
-        line.setAngle(360-entity_->facingAngle());
+        QLineF line(entity->pos(),QPoint(0,0));
+        line.setAngle(360-entity->facingAngle());
         line.setLength(stepSize_);
         line.setAngle(line.angle()-90);
-        double newX = entity_->pos().x() + line.dx();
-        double newY = entity_->pos().y() + line.dy();
+        double newX = entity->pos().x() + line.dx();
+        double newY = entity->pos().y() + line.dy();
         QPointF newPt(newX,newY);
 
         // move if the newPt is free
-        if (entity_->canFit(newPt)){
-            entity_->setPos(newPt);
+        if (entity->canFit(newPt)){
+            entity->setPos(newPt);
             playAnimIfExists_("walk");
         }
 
@@ -133,6 +134,7 @@ void ECMoveByKeyboardPerspective::moveStep_()
 
 void ECMoveByKeyboardPerspective::playAnimIfExists_(std::string anim)
 {
-    if (entity_->sprite()->hasAnimation(anim))
-        entity_->sprite()->play(anim,-1,10);
+    Entity* entity = entityControlled();
+    if (entity->sprite()->hasAnimation(anim))
+        entity->sprite()->play(anim,-1,10);
 }

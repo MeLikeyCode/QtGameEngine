@@ -4,8 +4,8 @@
 #include "ECRotater.h"
 #include "Map.h"
 
-ECRotateToMouse::ECRotateToMouse(Entity& entity):
-    entity_(&entity),
+ECRotateToMouse::ECRotateToMouse(Entity *entity):
+    EntityController(entity),
     rotateStepSize_(5),
     rotateFrequency_(30),
     rotateTimer_(new QTimer(this)),
@@ -22,19 +22,20 @@ ECRotateToMouse::ECRotateToMouse(Entity& entity):
 void ECRotateToMouse::rotateStep_()
 {
     // if the entity has been destroyed, stop rotating
-    if (entity_.isNull()){
+    Entity* entity = entityControlled();
+    if (entity == nullptr){
         rotateTimer_->disconnect();
         return;
     }
 
     // do nothing if entity is not in a map
-    Map* entitysMap = entity_->map();
+    Map* entitysMap = entity->map();
     if (entitysMap == nullptr)
         return;
 
     // TODO: ECRotater is way too slow right now.
     // When you speed it up, enable the line immediately below and disable all lines after that (in this function)
     // rotater_->rotateTowards(entitysMap->getMousePosition());
-    QLineF entityToMousePos(entity_->pos(),entitysMap->getMousePosition());
-    entity_->setFacingAngle(-1 * entityToMousePos.angle());
+    QLineF entityToMousePos(entity->pos(),entitysMap->getMousePosition());
+    entity->setFacingAngle(-1 * entityToMousePos.angle());
 }

@@ -3,8 +3,10 @@
 
 #include <QPointer>
 #include <QObject>
-#include "Entity.h"
 #include <memory>
+
+#include "EntityController.h"
+#include "Entity.h"
 
 class ECChaseEnemies;
 class BodyThrust;
@@ -13,12 +15,15 @@ class BodyThrust;
 /// in its field of view and BodyThrust them when close enough.
 ///
 /// Example usage:
+/// ==============
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.cpp
 /// ECBodyThruster* c = new ECBodyThruster(controlledEntity);
-class ECBodyThruster: public QObject
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class ECBodyThruster: public EntityController
 {
     Q_OBJECT
 public:
-    ECBodyThruster(Entity &entity);
+    ECBodyThruster(Entity* entity);
 
 public slots:
     void onEnemyChaseContinued(Entity* entityChased, double distance);
@@ -28,7 +33,6 @@ signals:
     void thrusted(Entity* towardsEnemy);
 
 private:
-    QPointer<Entity> entity_;
     std::unique_ptr<ECChaseEnemies> controllerChaseEnemies_;
     std::unique_ptr<BodyThrust> bodyThrustAbility_;
 };

@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QPointF>
 #include <QPointer>
+
+#include "EntityController.h"
 #include "Entity.h"
 
 class QTimer;
@@ -28,11 +30,11 @@ class QTimer;
 /// After calling the rotateTowards() method, the entity will begin to rotate
 /// towards the specified angle/point. The rate at which the entity rotates
 /// can be altered via setRotationSpeed() // TODO <--.
-class ECRotater : public QObject // inherits from QObject so that we can use the 'parent manages lifetime of child' functionality for fields that are QObjects
+class ECRotater : public EntityController // inherits from QObject so that we can use the 'parent manages lifetime of child' functionality for fields that are QObjects
 {
     Q_OBJECT
 public:
-    ECRotater(Entity& entity);
+    ECRotater(Entity* entity);
 
     // actions
     void rotateTowards(int angle);
@@ -52,8 +54,6 @@ public slots:
     void rotateStep_();
 private:
     double stepSize_;
-
-    QPointer<Entity> entity_;
 
     QTimer* rotationTimer_;
 

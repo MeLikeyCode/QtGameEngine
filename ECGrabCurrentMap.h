@@ -2,6 +2,8 @@
 #define ECGRABCURRENTMAP_H
 
 #include <QPointer>
+
+#include "EntityController.h"
 #include "Entity.h"
 
 class Map;
@@ -17,15 +19,13 @@ class Map;
 /// current map is basically the map that is being visualized.
 /// @author Abdullah Aghazadah
 /// @date 12/7/16
-class ECGrabCurrentMap: public QObject
+class ECGrabCurrentMap: public EntityController
 {
     Q_OBJECT
 public:
     ECGrabCurrentMap(Entity* entity);
 public slots:
     void onEntityEntersMap(Entity* controlledEntity, Map* mapJustEntered, Map* oldMap);
-private:
-    QPointer<Entity> entity_;
 };
 
 #endif // ECGRABCURRENTMAP_H

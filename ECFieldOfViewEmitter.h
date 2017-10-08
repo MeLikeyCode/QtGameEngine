@@ -2,29 +2,33 @@
 #define ECCHECKFOV_H
 
 #include <unordered_set>
-#include <QObject>
 #include <QPointer>
-#include "Entity.h"
 #include <QGraphicsPolygonItem>
+
+#include "EntityController.h"
+#include "Entity.h"
 
 class QTimer;
 
-/// An entity controller (TODO: add doc link) that checks the field of view of
+/// An entity controller that checks the field of view of
 /// an entity and emits a signal whenever other entities enter or leave the
 /// controlled entity's field of view. You can also use entitiesInView() to get
 /// all the current entities in the controlled entity's field of view.
 ///
 /// Example usage:
+/// ==============
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.cpp
 /// ECCheckFOV* c = new ECCheckFOV(entity);
 /// connect(c,&ECCheckFOV::entityEntersFOV,this,myCallback);
 /// connect(c,&ECCheckFOV::entityLeavesFOV,this,myCallback);
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 /// @author Abdullah Aghazadah
 /// @date 11/23/16
-class ECFieldOfViewEmitter: public QObject
+class ECFieldOfViewEmitter: public EntityController
 {
     Q_OBJECT
 public:
-    ECFieldOfViewEmitter(Entity& entity);
+    ECFieldOfViewEmitter(Entity* entity);
     std::unordered_set<Entity*> entitiesInView();
 
 public slots:
@@ -38,7 +42,6 @@ signals:
     /// controlled.
     void entityLeavesFOV(Entity* entity);
 private:
-    QPointer<Entity> entity_;
     double fieldOfViewAngle_;
     double fieldOfViewDistance_;
     double fieldOfViewCheckFrequency_;

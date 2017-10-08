@@ -8,8 +8,8 @@
 #include <QPointF>
 #include <QPolygonF>
 
-ECFieldOfViewEmitter::ECFieldOfViewEmitter(Entity &entity):
-    entity_(&entity),
+ECFieldOfViewEmitter::ECFieldOfViewEmitter(Entity *entity):
+    EntityController(entity),
     fieldOfViewAngle_(90),
     fieldOfViewDistance_(600),
     fieldOfViewCheckFrequency_(50),
@@ -26,7 +26,7 @@ ECFieldOfViewEmitter::ECFieldOfViewEmitter(Entity &entity):
     brush.setColor(Qt::red);
     polyItem_->setBrush(brush);
     polyItem_->setOpacity(0.3);
-    entity_->map()->scene()->addItem(polyItem_);
+    entityControlled()->map()->scene()->addItem(polyItem_);
 }
 
 /// Executed periodically for the entity controller to check the field of view
@@ -43,13 +43,13 @@ void ECFieldOfViewEmitter::checkFov_()
     //   earlier, but not anymore
 
     // if the controlled entity is destroyed, stop
-    if (entity_.isNull()){
+    if (entityControlled() == nullptr){
         timerCheckFov_->disconnect();
         return;
     }
 
     // if the controlled entity is not in a map, do nothing
-    Map* entitysMap = entity_->map();
+    Map* entitysMap = entityControlled()->map();
     if (entitysMap == nullptr)
         return;
 
@@ -81,12 +81,12 @@ std::unordered_set<Entity *> ECFieldOfViewEmitter::entitiesInView()
     // - create QPolygon triangel w/ distance and angle
     // - pass this triangle to map to get entities in their
 
-    Map* entitysMap = entity_->map();
+    Map* entitysMap = entityControlled()->map();
     assert(entitysMap != nullptr); // make sure entitys map is not null
 
-    QPointF p1(entity_->mapToMap(QPointF(0,0)));
+    QPointF p1(entityControlled()->mapToMap(QPointF(0,0)));
     QLineF adjacent(p1,QPointF(-5,-5));
-    adjacent.setAngle(-1 * entity_->facingAngle());
+    adjacent.setAngle(-1 * entityControlled()->facingAngle());
     adjacent.setLength(fieldOfViewDistance_);
     QLineF topL(adjacent);
     topL.setAngle(topL.angle() + fieldOfViewAngle_/2);
@@ -106,7 +106,7 @@ std::unordered_set<Entity *> ECFieldOfViewEmitter::entitiesInView()
     polyItem_->setPolygon(poly);
 
     std::unordered_set<Entity*> entities = entitysMap->entities(poly);
-    entities.erase(entity_);
+    entities.erase(entityControlled());
 
     return entities;
 }

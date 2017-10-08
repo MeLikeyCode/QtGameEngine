@@ -4,7 +4,7 @@
 #include "Game.h"
 
 ECGrabCurrentMap::ECGrabCurrentMap(Entity *entity):
-    entity_(entity)
+    EntityController(entity)
 {
     assert(entity != nullptr);
 

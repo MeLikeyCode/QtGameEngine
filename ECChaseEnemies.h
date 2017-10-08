@@ -1,11 +1,12 @@
 #ifndef ECCHASEENEMIES_H
 #define ECCHASEENEMIES_H
 
-#include <QObject>
 #include <QPointer>
 #include <unordered_set>
-#include "Entity.h"
 #include <memory>
+
+#include "EntityController.h"
+#include "Entity.h"
 
 class PathMover;
 class ECFieldOfViewEmitter;
@@ -22,15 +23,18 @@ class QTimer;
 /// unless the chased entity moves far again.
 ///
 /// Example usage:
+/// ==============
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.cpp
 /// ECChaseEnemies* c = new ECChaseEnemies(entity);
 /// c->setStopDistance(50); // set how close you want the controlled entity to get to the chased entity
 /// connect(c,&ECChaseEnemies::entityChaseStarted,this,myCallback);
 /// connect(c,&ECChaseEnemies::entityChaseContinued,this,myCallback);
-class ECChaseEnemies: public QObject
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+class ECChaseEnemies: public EntityController
 {
     Q_OBJECT
 public:
-    ECChaseEnemies(Entity& entity);
+    ECChaseEnemies(Entity* entity);
 
     void stopChasing();
     void startChasing();
@@ -64,7 +68,6 @@ private:
     // options
     double stopDistance_;
 
-    QPointer<Entity> controlledEntity_;
     std::unique_ptr<ECFieldOfViewEmitter> fovEmitter_; // helper controller that emits events whenever
                                                        // anothe entity enters/leaves the controlled entity's fov
     std::unique_ptr<PathMover> pathMover_;

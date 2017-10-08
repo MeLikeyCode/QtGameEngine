@@ -8,9 +8,9 @@
 #include "Game.h"
 #include <QDebug> // TODO: test remove
 
-ECChaseEnemies::ECChaseEnemies(Entity &entity):
+ECChaseEnemies::ECChaseEnemies(Entity* entity):
+    EntityController(entity),
     stopDistance_(100),
-    controlledEntity_(&entity),
     fovEmitter_(new ECFieldOfViewEmitter(entity)),
     pathMover_(new PathMover(&entity)),
     chaseTimer_(new QTimer(this)),
@@ -19,7 +19,7 @@ ECChaseEnemies::ECChaseEnemies(Entity &entity):
     targetEntity_(nullptr)
 {
     // make sure entity is in a map
-    Map* entitysMap = entity.map();
+    Map* entitysMap = entity->map();
     assert(entitysMap != nullptr);
 
     // make sure entity's map is in a game
@@ -38,17 +38,17 @@ ECChaseEnemies::ECChaseEnemies(Entity &entity):
     connect(pathMover_.get(),&PathMover::moved,this,&ECChaseEnemies::onEntityMoved_);
 
     // listen to when the chasing entity dies
-    connect(controlledEntity_,&QObject::destroyed,this,&ECChaseEnemies::onChasingEntityDies_);
+    connect(entityControlled(),&QObject::destroyed,this,&ECChaseEnemies::onChasingEntityDies_);
 
     // listen to when chasing entity leaves map
-    connect(controlledEntity_,&Entity::mapLeft,this, &ECChaseEnemies::onChasingEntityLeavesMap_);
+    connect(entityControlled(),&Entity::mapLeft,this, &ECChaseEnemies::onChasingEntityLeavesMap_);
 
     // connect timer
     connect(chaseTimer_,&QTimer::timeout,this,&ECChaseEnemies::chaseStep_);
 
     // set up path mover
     pathMover_->setAlwaysFaceTargetPosition(true);
-    pathMover_->setEntity(&entity);
+    pathMover_->setEntity(entity);
 }
 
 /// Makes it so the controlled entity stops chasing enemy entities.
@@ -104,7 +104,7 @@ void ECChaseEnemies::onEntityEntersFOV_(Entity *entity)
         return;
 
     // if the entering entity is not an enemy, do nothing
-    if (controlledEntity_->isAnEnemyGroup(entity->group()) == false)
+    if (entityControlled()->isAnEnemyGroup(entity->group()) == false)
         return;
 
     // listen to when target entity dies (so we can stop chasing)
@@ -117,12 +117,12 @@ void ECChaseEnemies::onEntityEntersFOV_(Entity *entity)
     connect(entity,&Entity::mapLeft,this,&ECChaseEnemies::onChasedEntityLeavesMap_);
 
     // listen to when the target entity enters/leaves stop distance
-    controlledEntity_->map()->game()->addWatchedEntity(entity,controlledEntity_,stopDistance_);
+    entityControlled()->map()->game()->addWatchedEntity(entity,entityControlled(),stopDistance_);
 
     chaseStep_();
     chaseTimer_->start(2000); // TODO: store in a (modifiable) variable somewhere
 
-    double distBW = distance(controlledEntity_->pos(),entity->pos());
+    double distBW = distance(entityControlled()->pos(),entity->pos());
     emit entityChaseStarted(entity, distBW);
 }
 
@@ -142,7 +142,7 @@ void ECChaseEnemies::onEntityLeavesFOV_(Entity *entity)
     targetEntity_ = nullptr;
 
     // stop listening to enter/leave range for leaving entity
-    controlledEntity_->map()->game()->removeWatchedEntity(entity,controlledEntity_);
+    entityControlled()->map()->game()->removeWatchedEntity(entity,controlledEntity_);
     chaseTimer_->stop();
 
     // if there is another enemy in view, target that one
@@ -162,7 +162,7 @@ void ECChaseEnemies::onEntityMoved_()
     if (targetEntity_.isNull())
         return;
 
-    double distBW = distance(controlledEntity_->pos(),targetEntity_->pos());
+    double distBW = distance(entityControlled()->pos(),targetEntity_->pos());
     emit entityChaseContinued(targetEntity_,distBW);
 }
 
@@ -218,13 +218,13 @@ void ECChaseEnemies::chaseStep_()
 {
     // if whats being chased has died, stop chasing
     // if the thing chasing has died, stop chasing
-    if (targetEntity_.isNull() || controlledEntity_.isNull()){
+    if (targetEntity_.isNull() || entityControlled() == nullptr){
         stopChasing();
         return;
     }
 
     // make sure entity and one being chased are in a map
-    Map* entitysMap = controlledEntity_->map();
+    Map* entitysMap = entityControlled()->map();
     Map* chaseVictimsMap = targetEntity_->map();
     assert(entitysMap != nullptr && chaseVictimsMap != nullptr);
 

@@ -1,9 +1,9 @@
 #ifndef ECMOVEBYKEYBOARDFOURDIRECTIONAL_H
 #define ECMOVEBYKEYBOARDFOURDIRECTIONAL_H
 
-
-#include <QObject>
 #include <QPointer>
+
+#include "EntityController.h"
 #include "Entity.h"
 
 class QTimer;
@@ -18,7 +18,7 @@ class QTimer;
 /// in response to the keyboard. The WASD keys are used to move the entity up, left, down, and right
 /// relative to the screen.
 /// @date 11/21/16
-class ECMoveByKeyboardFourDirectional: public QObject
+class ECMoveByKeyboardFourDirectional: public EntityController
 {
     Q_OBJECT
 public:
@@ -29,9 +29,6 @@ public:
 public slots:
     void moveStep_();
 private:
-    QPointer<Entity> entity_;   // TODO factor this attribute out into base EntityBehavior class
-                                // this is a QPointer because we wanna know when the Entity is deleted
-                                // so that we can stop moving it (dangling pointer!)
     double stepSize_;
 
     QTimer* moveTimer_;

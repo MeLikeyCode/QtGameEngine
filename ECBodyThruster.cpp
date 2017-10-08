@@ -4,8 +4,8 @@
 #include "BodyThrust.h"
 #include <cassert>
 
-ECBodyThruster::ECBodyThruster(Entity& entity):
-    entity_(&entity),
+ECBodyThruster::ECBodyThruster(Entity *entity):
+    EntityController(entity)
     controllerChaseEnemies_(new ECChaseEnemies(entity)),
     bodyThrustAbility_(new BodyThrust(entity))
 {

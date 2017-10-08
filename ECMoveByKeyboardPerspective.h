@@ -1,8 +1,9 @@
 #ifndef ECMOVEBYKEYBOARDPERSPECTIVE_H
 #define ECMOVEBYKEYBOARDPERSPECTIVE_H
 
-#include <QObject>
 #include <QPointer>
+
+#include "EntityController.h"
 #include "Entity.h"
 
 /// An entity controller (TODO: link to doc) that moves an Entity relative to
@@ -15,7 +16,7 @@
 /// in response to the keyboard. WASD keys are used to control the Entity.
 /// A and D are used to straf left/right while W and S are used to move forward/backward
 /// at current angle.
-class ECMoveByKeyboardPerspective: public QObject
+class ECMoveByKeyboardPerspective: public EntityController
 {
     Q_OBJECT
 public:
@@ -26,7 +27,6 @@ public:
 public slots:
     void moveStep_();
 private:
-    QPointer<Entity> entity_;
     double stepSize_;
 
     QTimer* moveTimer_;

@@ -4,7 +4,7 @@
 #include "Game.h"
 
 ECGrabCam::ECGrabCam(Entity *entity):
-    entity_(entity)
+    EntityController(entity)
 {
     // make sure passed in entity is not nullptr
     assert(entity != nullptr);

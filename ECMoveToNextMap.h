@@ -2,8 +2,9 @@
 #define ECMOVETONEXTMAP_H
 
 #include <QPointer>
+
+#include "EntityController.h"
 #include "Entity.h"
-#include <QObject>
 
 class QPointF;
 
@@ -12,11 +13,14 @@ class QPointF;
 /// in the MapGrid in that direction.
 ///
 /// Example usage:
+/// ==============
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.cpp
 /// ECMoveToNextMap* c = new ECMoveToNextMap(entity);
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ///
 /// Thats it. From then on whenever the entity's position is set near the border
 /// of its map, it will move to the next map in the MapGrid in that direction.
-class ECMoveToNextMap: public QObject
+class ECMoveToNextMap: public EntityController
 {
     Q_OBJECT
 public:
@@ -28,7 +32,6 @@ public slots:
     void onEntityMoved(Entity* controlledEntity, QPointF fromPos, QPointF toPos);
 
 private:
-    QPointer<Entity> entity_;
     double borderThreshold_;
 };
 

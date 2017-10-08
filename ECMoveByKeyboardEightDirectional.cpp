@@ -8,7 +8,7 @@
 #include "EntitySprite.h"
 
 ECMoveByKeyboardEightDirectional::ECMoveByKeyboardEightDirectional(Entity *entity):
-    entity_(entity),
+    EntityController(entity),
     stepSize_(15),
     moveTimer_(new QTimer(this))
 {
@@ -17,7 +17,7 @@ ECMoveByKeyboardEightDirectional::ECMoveByKeyboardEightDirectional(Entity *entit
 
     // connect timer to move step
     connect(moveTimer_,&QTimer::timeout,this,&ECMoveByKeyboardEightDirectional::moveStep_);
-    moveTimer_->start(secondsToMs(frequency(stepSize_,entity_->speed())));
+    moveTimer_->start(secondsToMs(frequency(stepSize_,entityControlled()->speed())));
 }
 
 /// See ECPathMover::setStepSize().
@@ -34,21 +34,23 @@ double ECMoveByKeyboardEightDirectional::stepSize()
 
 void ECMoveByKeyboardEightDirectional::playAnimIfHas_(std::string anim)
 {
-    if (entity_->sprite()->hasAnimation(anim)){
-        entity_->sprite()->play(anim,-1,10);
+    Entity* entity = entityControlled();
+    if (entity->sprite()->hasAnimation(anim)){
+        entity->sprite()->play(anim,-1,10);
     }
 }
 
 void ECMoveByKeyboardEightDirectional::moveStep_()
 {
     // if the entity has been destroyed, stop
-    if (entity_.isNull()){
+    Entity* entity = entityControlled();
+    if (entity == nullptr){
         moveTimer_->disconnect();
         return;
     }
 
     // if currently not in a Map, do nothing
-    Map* entitysMap = entity_->map();
+    Map* entitysMap = entity->map();
     if (entitysMap == nullptr)
         return;
 
@@ -58,12 +60,12 @@ void ECMoveByKeyboardEightDirectional::moveStep_()
         return;
 
     // temporarly disable pathingmap (will be automatically reenabled when moved)
-    std::vector<QRectF> entitysCellsAsRects = entity_->pathingMap().cellsAsRects();
+    std::vector<QRectF> entitysCellsAsRects = entity->pathingMap().cellsAsRects();
     std::vector<QRectF> entitysFilledCellsAsRects;
     for (QRectF rect:entitysCellsAsRects){
-        if (entity_->pathingMap().filled(rect)){
+        if (entity->pathingMap().filled(rect)){
             // shift it and add it to filled collection
-            QPointF entitysPos = entity_->pos();
+            QPointF entitysPos = entity->pos();
             rect.moveTopLeft(QPointF(entitysPos.x() + rect.x(), entitysPos.y() + rect.y()));
             entitysFilledCellsAsRects.push_back(rect);
         }
@@ -84,52 +86,52 @@ void ECMoveByKeyboardEightDirectional::moveStep_()
     // move up if W is pressed
     if (wPressed){
         // find newPt to move to
-        double newX = entity_->pos().x();
-        double newY = entity_->pos().y() - stepSize_;
+        double newX = entity->pos().x();
+        double newY = entity->pos().y() - stepSize_;
         QPointF newPt(newX,newY);
 
         // move if the new location is free
-        if (entity_->canFit(newPt)){
-            entity_->setPos(newPt); // set pos
+        if (entity->canFit(newPt)){
+            entity->setPos(newPt); // set pos
             playAnimIfHas_("walk"); // ensure animation is playing
         }
     }
 
     // move down if S is pressed
     if (sPressed){
-        double newX = entity_->pos().x();
-        double newY = entity_->pos().y() + stepSize_;
+        double newX = entity->pos().x();
+        double newY = entity->pos().y() + stepSize_;
         QPointF newPt(newX,newY);
 
         // move if the newPt is free
-        if (entity_->canFit(newPt)){
-            entity_->setPos(newPt);
+        if (entity->canFit(newPt)){
+            entity->setPos(newPt);
             playAnimIfHas_("walk");
         }
     }
 
     // move left if A is pressed
     if (aPressed){
-        double newX = entity_->pos().x() - stepSize_;
-        double newY = entity_->pos().y();
+        double newX = entity->pos().x() - stepSize_;
+        double newY = entity->pos().y();
         QPointF newPt(newX,newY);
 
         // move if the newPt is free
-        if (entity_->canFit(newPt)){
-            entity_->setPos(newPt);
+        if (entity->canFit(newPt)){
+            entity->setPos(newPt);
             playAnimIfHas_("walk");
         }
     }
 
     // move right if D is pressed
     if (dPressed){
-        double newX = entity_->pos().x() + stepSize_;
-        double newY = entity_->pos().y();
+        double newX = entity->pos().x() + stepSize_;
+        double newY = entity->pos().y();
         QPointF newPt(newX,newY);
 
         // move if the newPt is free
-        if (entity_->canFit(newPt)){
-            entity_->setPos(newPt);
+        if (entity->canFit(newPt)){
+            entity->setPos(newPt);
             playAnimIfHas_("walk");
         }
     }

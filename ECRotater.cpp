@@ -6,9 +6,9 @@
 #include <QTimer>
 #include "Utilities.h"
 
-ECRotater::ECRotater(Entity &entity):
+ECRotater::ECRotater(Entity* entity):
+    EntityController(entity),
     stepSize_(1),
-    entity_(&entity),
     rotationTimer_(new QTimer(this)),
     rotateRight_(false),
     targetAngle_(0)
@@ -26,7 +26,7 @@ void ECRotater::rotateTowards(int angle)
     assert(angle <= 360);
 
     QLineF line(QPointF(0,0),QPointF(1,1));
-    line.setAngle(-entity_->facingAngle());
+    line.setAngle(-entityControlled()->facingAngle());
 
     QLineF line2(QPointF(0,0),QPointF(1,1));
     line2.setAngle(-angle);
@@ -47,7 +47,7 @@ void ECRotater::rotateTowards(int angle)
 /// rotate in whatever direction is the closest.
 void ECRotater::rotateTowards(const QPointF &point)
 {
-    QLineF line(entity_->pos(),point);
+    QLineF line(entityControlled()->pos(),point);
     int r = 360-line.angle();
     rotateTowards(r);
 }
@@ -59,11 +59,12 @@ void ECRotater::rotateLeft(int numDegrees)
     stopRotating();
 
     // set targetAngle and direction
-    targetAngle_ = entity_->facingAngle() - numDegrees;
+    Entity* entity = entityControlled();
+    targetAngle_ = entity->facingAngle() - numDegrees;
     rotateRight_ = false;
 
     // start the timer
-    rotationTimer_->start(secondsToMs(frequency(stepSize_,entity_->rotationSpeed())));
+    rotationTimer_->start(secondsToMs(frequency(stepSize_,entity->rotationSpeed())));
 }
 
 /// Rotates the entity the specified number of degrees to the right.
@@ -73,11 +74,12 @@ void ECRotater::rotateRight(int numDegrees)
     stopRotating();
 
     // set targetAngle and direction
-    targetAngle_ = entity_->facingAngle() + numDegrees;
+    Entity* entity = entityControlled();
+    targetAngle_ = entity->facingAngle() + numDegrees;
     rotateRight_ = true;
 
     // start the timer
-    rotationTimer_->start(secondsToMs(frequency(stepSize_,entity_->rotationSpeed())));
+    rotationTimer_->start(secondsToMs(frequency(stepSize_,entity->rotationSpeed())));
 }
 
 /// Stop the entity's rotating.
@@ -112,13 +114,14 @@ double ECRotater::stepSize()
 void ECRotater::rotateStep_()
 {
     // if the entity has been destroyed, do nothing
-    if (entity_.isNull()){
+    Entity* entity = entityControlled();
+    if (entity == nullptr){
         stopRotating();
         return;
     }
 
     // if it has reached its targetAngle, stop rotating
-    if (abs(entity_->facingAngle() - targetAngle_) == 0 ){
+    if (abs(entity->facingAngle() - targetAngle_) == 0 ){
         rotationTimer_->stop();
     }
     // other wise, rotate once towards targetAngle
@@ -130,12 +133,13 @@ void ECRotater::rotateStep_()
 void ECRotater::rotateTowardsTargetAngle_()
 {
     // rotate right if rotateRight
+    Entity* entity = entityControlled();
     if (rotateRight_){
-        entity_->setFacingAngle(entity_->facingAngle() + 1);
+        entity->setFacingAngle(entity->facingAngle() + 1);
     }
 
     // other wise rotate left
     else {
-        entity_->setFacingAngle(entity_->facingAngle() - 1);
+        entity->setFacingAngle(entity->facingAngle() - 1);
     }
 }

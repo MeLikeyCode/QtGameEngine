@@ -36,7 +36,7 @@ class Entity;
 /// When an Entity is deconstructed, it will deconstruct all of the EntityControllers that are
 /// operating on it. This stays consistent with our general policy of "container" objects owning
 /// the lifetime of their "contained" objects.
-class EntityController : QObject // inherits from QObject for 'parent-child lifetime managment' and
+class EntityController : public QObject // inherits from QObject for 'parent-child lifetime managment' and
                                  // because most sub classes will probably need to inherit from QObject anyways
 {
     Q_OBJECT

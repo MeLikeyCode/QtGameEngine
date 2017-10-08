@@ -6,7 +6,7 @@
 #include "Node.h"
 
 ECMoveToNextMap::ECMoveToNextMap(Entity *entity):
-    entity_(entity),
+    EntityController(entity),
     borderThreshold_(100)
 {
     assert(entity != nullptr);
@@ -35,7 +35,8 @@ double ECMoveToNextMap::borderThreshold()
 void ECMoveToNextMap::onEntityMoved(Entity *controlledEntity, QPointF fromPos, QPointF toPos)
 {
     // do nothing if controlled entity is not in a map
-    Map* entitysMap = entity_->map();
+    Entity* entity = entityControlled();
+    Map* entitysMap = entity->map();
     if (entitysMap == nullptr)
         return;
 
@@ -54,14 +55,14 @@ void ECMoveToNextMap::onEntityMoved(Entity *controlledEntity, QPointF fromPos, Q
 
     // set up variables
     Node mapPos = mapGrid->positionOf(entitysMap);
-    QPointF entityPos = entity_->pos();
+    QPointF entityPos = entity->pos();
 
     // if entity moved high up enough, move to top map
     if (entityPos.y() < borderThreshold_){
         Map* m = mapGrid->mapAt(mapPos.x(),mapPos.y()-1);
         if (m){
-            m->addEntity(entity_);
-            entity_->setPos(QPointF(entity_->x(),m->height() - borderThreshold_*2));
+            m->addEntity(entity);
+            entity->setPos(QPointF(entity->x(),m->height() - borderThreshold_*2));
         }
     }
 
@@ -69,8 +70,8 @@ void ECMoveToNextMap::onEntityMoved(Entity *controlledEntity, QPointF fromPos, Q
     if (entityPos.y() > entitysMap->height() - borderThreshold_){
         Map* m = mapGrid->mapAt(mapPos.x(),mapPos.y()+1);
         if (m){
-            m->addEntity(entity_);
-            entity_->setPos(QPointF(entity_->x(),borderThreshold_*2));
+            m->addEntity(entity);
+            entity->setPos(QPointF(entity->x(),borderThreshold_*2));
         }
     }
 
@@ -78,8 +79,8 @@ void ECMoveToNextMap::onEntityMoved(Entity *controlledEntity, QPointF fromPos, Q
     if (entityPos.x() < borderThreshold_){
         Map* m = mapGrid->mapAt(mapPos.x()-1,mapPos.y());
         if (m){
-            m->addEntity(entity_);
-            entity_->setPos(QPointF(m->width() - borderThreshold_*2,entity_->y()));
+            m->addEntity(entity);
+            entity->setPos(QPointF(m->width() - borderThreshold_*2,entity->y()));
         }
     }
 
@@ -87,8 +88,8 @@ void ECMoveToNextMap::onEntityMoved(Entity *controlledEntity, QPointF fromPos, Q
     if (entityPos.x() > entitysMap->width() - borderThreshold_){
         Map* m = mapGrid->mapAt(mapPos.x()+1,mapPos.y());
         if (m){
-            m->addEntity(entity_);
-            entity_->setPos(QPointF(borderThreshold_*2,entity_->y()));
+            m->addEntity(entity);
+            entity->setPos(QPointF(borderThreshold_*2,entity->y()));
         }
     }
 }
