@@ -8,7 +8,7 @@
 #include "Utilities.h"
 
 ECAttackEnemiesWithWeapon::ECAttackEnemiesWithWeapon(Entity& entity):
-    EntityController(entity),
+    EntityController(&entity),
     controllerChaseEnemies_(new ECChaseEnemies(entity))
 {
     // listen to chaser
@@ -29,8 +29,10 @@ void ECAttackEnemiesWithWeapon::onEnemyChaseContinued(Entity *entityChased, doub
             if (asWS->isFilled()){
                 Weapon* weapon = dynamic_cast<Weapon*>(asWS->item());
                 if (weapon){
-                    if (distance < weapon->castRange())
+                    if (distance < weapon->castRange()){
                         weapon->attack(entityChased->pos());
+                        emit attacked(entityChased);
+                    }
                 }
             }
         }

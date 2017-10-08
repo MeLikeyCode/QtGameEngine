@@ -13,6 +13,7 @@
 #include "Slot.h"
 #include <algorithm>
 #include "QGraphicsItem"
+#include "EntityController.h"
 
 /// Constructs a default entity.
 Entity::Entity():
@@ -276,6 +277,16 @@ EntitySprite *Entity::sprite() const{
 QRectF Entity::boundingRect()
 {
     return sprite()->boundingBox();
+}
+
+/// Adds an EntityController to the list of EntityControllers that are controlling this Entity.
+/// When an entity dies, it destroys all of its entity controllers.
+void Entity::addController(EntityController *controller)
+{
+    if (controller->entityControlled() != this)
+        controller->setEntityControlled(this);
+
+    entityControllers_.push_back(std::unique_ptr<EntityController>(controller));
 }
 
 /// Returns the current angle the Entity is facing in degrees.

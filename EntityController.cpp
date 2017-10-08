@@ -1,4 +1,5 @@
 #include "EntityController.h"
+#include "Entity.h"
 
 EntityController::EntityController(Entity *entityToControl) : entityControlled_(entityToControl)
 {
@@ -10,13 +11,18 @@ EntityController::EntityController(Entity *entityToControl) : entityControlled_(
     entityToControl->addController(this);
 }
 
+EntityController::~EntityController()
+{
+    // empty
+}
+
 /// Returns the entity that this EntityController is controlling.
-Entity *EntityController::entity()
+Entity *EntityController::entityControlled()
 {
     return entityControlled_;
 }
 
-Entity *EntityController::setEntity(Entity* entity)
+void EntityController::setEntityControlled(Entity* entity)
 {
     entityControlled_ = entity;
 }

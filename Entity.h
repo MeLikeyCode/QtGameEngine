@@ -10,6 +10,7 @@
 #include <set>
 #include <QPointer>
 #include <utility>
+#include <memory>
 
 class Map;
 class Inventory;
@@ -21,6 +22,7 @@ class Slot;
 class Inventory;
 class AsyncShortestPathFinder;
 class QTimer;
+class EntityController;
 
 /// An Entity is the base class for anything that can go inside a Map.
 /// @author Abdullah Aghazadah
@@ -129,6 +131,8 @@ public:
     bool canFit(const QPointF& atPos);
     QRectF boundingRect();
 
+    void addController(EntityController* controller);
+
 signals:
     /// Emitted whenever the Entity moves from a certain position to another
     /// position.
@@ -175,6 +179,7 @@ private:
     double facingAngle_;
     double rotationSpeed_; // degrees per second
     double zValue_;
+    std::vector<std::unique_ptr<EntityController>> entityControllers_;
 
     // helper functions
     void scaleBasedOnZ_();

@@ -6,6 +6,9 @@
 class Entity;
 
 /// An object that provides some sort of behavior for an Entity (i.e "controls" the Entity in some way).
+/// @warning This class is not meant to be instantiated, it is an abstract class. Construct one of the
+/// concrete base classes instead.
+///
 /// @author Abdullah Aghazadah
 /// @date 10/6/17
 ///
@@ -35,17 +38,17 @@ class Entity;
 /// When an Entity is deconstructed, it will deconstruct all of the EntityControllers that are
 /// operating on it. This stays consistent with our general policy of "container" objects owning
 /// the lifetime of their "contained" objects.
-class EntityController : QObject // inherits from QObject for 'parent-child lifetime managment' and
+class EntityController : public QObject // inherits from QObject for 'parent-child lifetime managment' and
                                  // because most sub classes will probably need to inherit from QObject anyways
 {
     Q_OBJECT
 public:
     // ctor/dtor
     EntityController(Entity* entityToControl);
-    virtual ~EntityController() = 0; // dtor virtual because sub class will be used (and deleted) polymorphically, pure to make EntityController abstract
+    virtual ~EntityController(); // dtor virtual because sub class will be used (and deleted) polymorphically
 
     Entity* entityControlled();
-    Entity* setEntityControlled(Entity* entityControlled);
+    void setEntityControlled(Entity* entityControlled);
 
 private:
     Entity* entityControlled_;
