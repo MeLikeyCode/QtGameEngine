@@ -3,7 +3,7 @@
 
 #include <unordered_set>
 #include "Entity.h"
-#include "Mover.h"
+#include "ECMover.h"
 #include "CollisionBehavior.h"
 #include <memory>
 #include <QPointer>
@@ -49,7 +49,7 @@ class Projectile: public Entity
 {
     Q_OBJECT
 public:
-    Projectile(Mover *mover = nullptr,
+    Projectile(ECMover *mover = nullptr,
                CollisionBehavior *collisionBehavior = nullptr,
                DestReachedBehavior* destReachedBeahvior = nullptr);
 
@@ -58,8 +58,8 @@ public:
     void homeTowards(Entity* entity);
 
     // behaviors
-    Mover* moveBehavior();
-    void setMover(Mover* mover);
+    ECMover* moveBehavior();
+    void setMover(ECMover* mover);
 
     CollisionBehavior *collisionBehavior();
     void setCollisionBehavior(CollisionBehavior *collisionBehavior);
@@ -69,12 +69,12 @@ public:
 
 public slots:
     void onCollided_(Entity* self, Entity* collidedWith);
-    void onSuccesfullyMoved_(Mover* byMover);
+    void onSuccesfullyMoved_(ECMover* byMover);
     void onHomeStep_();
 
 private:
     // behaviors
-    std::unique_ptr<Mover> mover_;
+    std::unique_ptr<ECMover> mover_;
     std::unique_ptr<CollisionBehavior> collisionBehavior_;
     std::unique_ptr<DestReachedBehavior> destReachedBehavior_;
 

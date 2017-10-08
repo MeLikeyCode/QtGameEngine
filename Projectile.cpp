@@ -8,7 +8,7 @@
 /// Constructs a Project from the specified behaviors.
 /// You can pass in null for any of the behaviors, but be sure to use the setters
 /// to set all the behaviors prior to calling shootTowards() or homeTowards().
-Projectile::Projectile(Mover *mover,
+Projectile::Projectile(ECMover *mover,
                        CollisionBehavior *collisionBehavior,
                        DestReachedBehavior* destReachedBehavior):
     mover_(mover),
@@ -22,7 +22,7 @@ Projectile::Projectile(Mover *mover,
 }
 
 /// Returns the MoveBehavior of the Projectile.
-Mover *Projectile::moveBehavior()
+ECMover *Projectile::moveBehavior()
 {
     return mover_.get();
 }
@@ -31,7 +31,7 @@ Mover *Projectile::moveBehavior()
 /// Destroys the old Mover.
 /// Please ensure that the Projectile has a Mover before calling shootTowards()
 /// or homeTowards().
-void Projectile::setMover(Mover *mover)
+void Projectile::setMover(ECMover *mover)
 {
     mover_ .reset(mover);
 
@@ -42,7 +42,7 @@ void Projectile::setMover(Mover *mover)
     mover_->setEntity(this);
 
     // listen to when the projectile is done moving
-    connect(mover, &Mover::entitySuccesfullyMoved, this, &Projectile::onSuccesfullyMoved_);
+    connect(mover, &ECMover::entitySuccesfullyMoved, this, &Projectile::onSuccesfullyMoved_);
 
 }
 
@@ -82,7 +82,7 @@ void Projectile::onCollided_(Entity *self, Entity *collidedWith)
 
 /// Executed when the Projectile has finished its moving (has reached its final
 /// destination). Will let the DestReachedBehavior know.
-void Projectile::onSuccesfullyMoved_(Mover *byMover)
+void Projectile::onSuccesfullyMoved_(ECMover *byMover)
 {
     Q_UNUSED(byMover);
     destReachedBehavior_->onDestinationReached(*this);

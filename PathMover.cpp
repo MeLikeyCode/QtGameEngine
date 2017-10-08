@@ -10,7 +10,7 @@
 #include "EntitySprite.h"
 
 PathMover::PathMover(Entity *entity):
-    Mover(entity),
+    ECMover(entity),
     alwaysFaceTargetPosition_(false),
     moveTimer_(new QTimer(this)),
     pf_(new AsyncShortestPathFinder()),

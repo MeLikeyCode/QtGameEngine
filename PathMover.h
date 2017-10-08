@@ -7,7 +7,7 @@
 #include <QPointF>
 #include "Entity.h"
 #include <memory>
-#include "Mover.h"
+#include "ECMover.h"
 
 class QTimer;
 class AsyncShortestPathFinder;
@@ -28,7 +28,7 @@ class ECRotater;
 ///
 /// @author Abdullah Aghazadah
 /// @date 11/28/16
-class PathMover: public Mover
+class PathMover: public ECMover
 {
     Q_OBJECT
 public:

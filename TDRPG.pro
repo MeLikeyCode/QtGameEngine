@@ -100,7 +100,6 @@ SOURCES += main.cpp \
     ECGrabCurrentMap.cpp \
     CollisionBehavior.cpp \
     CBDamage.cpp \
-    Mover.cpp \
     StraightMover.cpp \
     SineMover.cpp \
     DestReachedBehavior.cpp \
@@ -116,7 +115,8 @@ SOURCES += main.cpp \
     EntitySprite.cpp \
     TopDownSprite.cpp \
     AngledSprite.cpp \
-    EntityController.cpp
+    EntityController.cpp \
+    ECMover.cpp
 
 HEADERS  += \
     Map.h \
@@ -202,7 +202,6 @@ HEADERS  += \
     ECGrabCurrentMap.h \
     CollisionBehavior.h \
     CBDamage.h \
-    Mover.h \
     StraightMover.h \
     SineMover.h \
     DestReachedBehavior.h \
@@ -218,7 +217,8 @@ HEADERS  += \
     EntitySprite.h \
     TopDownSprite.h \
     AngledSprite.h \
-    EntityController.h
+    EntityController.h \
+    ECMover.h
 
 RESOURCES += \
     res.qrc

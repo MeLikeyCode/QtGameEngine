@@ -5,7 +5,7 @@
 #include <QObject>
 #include "Entity.h"
 #include <QPointF>
-#include "Mover.h"
+#include "ECMover.h"
 
 class QTimer;
 
@@ -23,7 +23,7 @@ class QTimer;
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ///
 /// @author Abdullah Aghazadah
-class StraightMover: public Mover
+class StraightMover: public ECMover
 {
     Q_OBJECT
 public:

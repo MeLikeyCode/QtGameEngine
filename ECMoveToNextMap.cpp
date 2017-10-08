@@ -7,7 +7,7 @@
 
 ECMoveToNextMap::ECMoveToNextMap(Entity *entity):
     EntityController(entity),
-    borderThreshold_(100)
+    borderThreshold_(10)
 {
     assert(entity != nullptr);
 

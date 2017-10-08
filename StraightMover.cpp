@@ -5,7 +5,7 @@
 #include <QLineF>
 
 StraightMover::StraightMover(Entity *entity):
-    Mover(entity),
+    ECMover(entity),
     speed_(entity->speed()),
     faceTarget_(true),
     moveTimer_(new QTimer(this)),

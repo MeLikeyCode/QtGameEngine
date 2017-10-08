@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
     mapGrid->setMapAtPos(map1,0,1);
     mapGrid->setMapAtPos(map2,0,0);
 
-    // create a Game
+    // create a Game to visualize the Maps
     Game* game = new Game(mapGrid,0,1);
     game->launch();
 
@@ -87,8 +87,6 @@ int main(int argc, char *argv[])
             sprplayer->addFrame(skeletonSpriteSheet.tileAt(Node(j,0+i)),"stand",(180+45*i) % 360);
         }
     }
-    sprplayer->scale(2);
-
     player->setSprite(sprplayer);
 
     map1->addEntity(player);

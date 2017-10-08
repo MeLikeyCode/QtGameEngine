@@ -2,12 +2,13 @@
 #define MOVER_H
 
 #include <QPointer>
+
+#include "EntityController.h"
 #include "Entity.h"
-#include <QObject>
 
 class QPointF;
 
-/// An object that can somehow move an Entity from its current position to a
+/// A EntityController that can somehow move an Entity from its current position to a
 /// specified position. *How* the object moves depends on the concrete Mover
 /// class.
 ///
@@ -59,11 +60,11 @@ class QPointF;
 /// own Movers.
 ///
 /// @author Abdullah Aghazadah
-class Mover: public QObject
+class ECMover: public EntityController
 {
     Q_OBJECT
 public:
-    Mover(Entity *entity = nullptr);
+    ECMover(Entity *entity = nullptr);
 
     virtual Entity* entity();
     virtual void setEntity(Entity* entity);
@@ -80,7 +81,7 @@ signals:
     /// position. Note: It is the responsiblity of concrete Movers to emit this
     /// function when they have determined that the entity has been succesfully
     /// moved.
-    void entitySuccesfullyMoved(Mover* byMover);
+    void entitySuccesfullyMoved(ECMover* byMover);
 
 protected:
     // Executed when the Mover is asked to move the Entity to the specified

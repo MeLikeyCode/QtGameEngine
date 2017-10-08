@@ -5,7 +5,7 @@
 #include <QtMath>
 
 SineMover::SineMover(Entity *entity):
-    Mover(entity),
+    ECMover(entity),
     moveTimer_(new QTimer(this)),
     amplitude_(20),
     wavelength_(100),
