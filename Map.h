@@ -118,7 +118,7 @@ private:
     int cellSize_;
     PathingMap pathingMap_;
     std::unordered_set<Entity*> entities_;
-    std::vector<TerrainLayer*> terrainLayers_;
+    std::vector<std::unique_ptr<TerrainLayer>> terrainLayers_;
     QPointer<Game> game_; // the game that is currently visualizing the map, null if not currently being visualizing
     std::set<WeatherEffect*> weatherEffects_;
 

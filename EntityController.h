@@ -15,8 +15,8 @@ class Entity;
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.cpp
 /// Entity* e; // assume e points to some entity
 /// EntityController* c = new SomeConcreteEntityController(e);
-/// c.setEntity(e); // make the EntityController control Entity e
-/// c.entity(); // get the Entity that the EntityController is controlling/operating on
+/// c.setEntityControlled(e); // make the EntityController control Entity e
+/// c.entityControlled(); // get the Entity that the EntityController is controlling/operating on
 /// // Note: Concrete EntityControllers will most likely have additional methods and/or signals.
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ///

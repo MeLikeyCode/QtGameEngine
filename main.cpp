@@ -52,12 +52,9 @@ int main(int argc, char *argv[])
     // create a MapGrid to put some Maps inside
     MapGrid* mapGrid = new MapGrid(3,3);
 
-    // create a PathingMap for a Map
-    PathingMap map2PathingMap(50,50,64);
-
     // create the Maps
     Map* map1 = new Map();
-    Map* map2 = new Map(map2PathingMap);
+    Map* map2 = new Map(PathingMap(50,50,64));
 
     // create a TerrainLayer (tiles) that can go in a map
     TerrainLayer* dryTerrain = new TerrainLayer(map2->width()/256+1,

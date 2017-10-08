@@ -568,8 +568,9 @@ void Map::setFadingBorder_()
 
 /// Adds the specified TerrainLayer to the Map.
 /// TerrainLayers stack in the order added (the later added, the "topper").
+/// @lifetime The Map will uniquely own the lifetime of the specified TerrainLayer.
 void Map::addTerrainLayer(TerrainLayer *terrainLayer){
-    terrainLayers_.push_back(terrainLayer);
+    terrainLayers_.push_back(std::unique_ptr<TerrainLayer>(terrainLayer));
 
     // add the parent terrain to the map's scene
     terrainLayer->parentItem_->setZValue(Z_VALUES::TERRAIN_Z_VALUE);

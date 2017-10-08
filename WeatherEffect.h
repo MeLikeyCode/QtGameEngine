@@ -11,18 +11,18 @@
 /// remove a WeatherEffect from a map by calling Map::removeWeatherEffect().
 ///
 /// To create your own weather effect, extend this class and define what
-/// happens to the Map when the weather effect is started (start_()) and
-/// stopped (stop_()). Additionally, define what happens when the weather
-/// effect is paused (pause_()) and resumed (resume_()).
+/// happens to the Map when the weather effect is started (start_()),
+/// stopped (stop_()), paused (pause_()), and resumed (resume_()).
 ///
 /// Example usage:
+/// ==============
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.cpp
 /// WeatherEffect* w = new SomeConcreteWeatherEffect();
 /// Map* map; // assume valid Map
-/// map->addWeatherEffect(w);       // add the WeatherEffect to the Map, automatically starts it
+/// map->addWeatherEffect(w);       // add the WeatherEffect to the Map, automatically start()s it
 /// map->removeWeatherEffect(w);    // remove WeatherEffect from Map, automatically stops it
-/// w->start();                     // manually start WeatherEffect
-/// w->stop();                      // manually stop WeatherEffect
+/// w->stop();                      // stop WeatherEffect
+/// w->start();                     // start WeatherEffect
 /// w->pause();                     // "freeze" the WeatherEffect in its current "frame"
 /// w->start();                     // resumes the WeatherEffect from its current frame
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
