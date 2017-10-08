@@ -283,8 +283,8 @@ QRectF Entity::boundingRect()
 /// When an entity dies, it destroys all of its entity controllers.
 void Entity::addController(EntityController *controller)
 {
-    if (controller->entityControlled() != this)
-        controller->setEntityControlled(this);
+    if (&(controller->entityControlled()) != this)
+        controller->setEntityControlled(*this);
 
     entityControllers_.push_back(std::unique_ptr<EntityController>(controller));
 }

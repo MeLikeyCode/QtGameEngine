@@ -2,8 +2,7 @@
 #define ENTITYCONTROLLER_H
 
 #include <QObject>
-
-class Entity;
+#include "Entity.h"
 
 /// An object that provides some sort of behavior for an Entity (i.e "controls" the Entity in some way).
 /// @warning This class is not meant to be instantiated, it is an abstract class. Construct one of the
@@ -44,14 +43,14 @@ class EntityController : public QObject // inherits from QObject for 'parent-chi
     Q_OBJECT
 public:
     // ctor/dtor
-    EntityController(Entity* entityToControl);
+    EntityController(Entity& entityToControl);
     virtual ~EntityController(); // dtor virtual because sub class will be used (and deleted) polymorphically
 
-    Entity* entityControlled();
-    void setEntityControlled(Entity* entityControlled);
+    Entity &entityControlled();
+    void setEntityControlled(Entity &entityControlled);
 
 private:
-    Entity* entityControlled_;
+    QPointer<Entity> entityControlled_; // QPointer to prevent dangling pointer bugs (client will check this for null before using it)
 };
 
 #endif // ENTITYCONTROLLER_H

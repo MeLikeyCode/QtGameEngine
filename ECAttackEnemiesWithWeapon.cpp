@@ -8,7 +8,7 @@
 #include "Utilities.h"
 
 ECAttackEnemiesWithWeapon::ECAttackEnemiesWithWeapon(Entity& entity):
-    EntityController(&entity),
+    EntityController(entity),
     controllerChaseEnemies_(new ECChaseEnemies(entity))
 {
     // listen to chaser
@@ -23,7 +23,7 @@ void ECAttackEnemiesWithWeapon::onEnemyChaseContinued(Entity *entityChased, doub
 {
     // TODO only attack if close to range of weapon
     // pick first weapon in controlled enities slots and use it to attack chased entity
-    for (Slot* slot: entityControlled()->getSlots()){
+    for (Slot* slot: entityControlled().getSlots()){
         WeaponSlot* asWS = dynamic_cast<WeaponSlot*>(slot);
         if (asWS){
             if (asWS->isFilled()){
