@@ -2,6 +2,7 @@
 #define ENTITYCONTROLLER_H
 
 #include <QObject>
+#include "Entity.h"
 
 class Entity;
 
@@ -48,7 +49,7 @@ public:
     Entity* setEntityControlled(Entity* entityControlled);
 
 private:
-    Entity* entityControlled_;
+    QPointer<Entity> entityControlled_; // QPointer to prevent dangling pointer issues
 };
 
 #endif // ENTITYCONTROLLER_H

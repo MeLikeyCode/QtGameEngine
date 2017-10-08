@@ -11,12 +11,12 @@ EntityController::EntityController(Entity *entityToControl) : entityControlled_(
 }
 
 /// Returns the entity that this EntityController is controlling.
-Entity *EntityController::entity()
+Entity *EntityController::entityControlled()
 {
     return entityControlled_;
 }
 
-Entity *EntityController::setEntity(Entity* entity)
+Entity *EntityController::setEntityControlled(Entity* entity)
 {
     entityControlled_ = entity;
 }
