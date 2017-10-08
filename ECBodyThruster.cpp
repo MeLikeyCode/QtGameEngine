@@ -5,9 +5,9 @@
 #include <cassert>
 
 ECBodyThruster::ECBodyThruster(Entity *entity):
-    EntityController(entity)
+    EntityController(entity),
     controllerChaseEnemies_(new ECChaseEnemies(entity)),
-    bodyThrustAbility_(new BodyThrust(entity))
+    bodyThrustAbility_(new BodyThrust(*entity))
 {
     // listen to chase controller
     connect(controllerChaseEnemies_.get(),&ECChaseEnemies::entityChaseContinued,this,&ECBodyThruster::onEnemyChaseContinued);

@@ -43,10 +43,10 @@ class EntityController : public QObject // inherits from QObject for 'parent-chi
 public:
     // ctor/dtor
     EntityController(Entity* entityToControl);
-    virtual ~EntityController() = 0; // dtor virtual because sub class will be used (and deleted) polymorphically, pure to make EntityController abstract
+    virtual ~EntityController(); // dtor virtual because sub class will be used (and deleted) polymorphically
 
     Entity* entityControlled();
-    Entity* setEntityControlled(Entity* entityControlled);
+    void setEntityControlled(Entity* entityControlled);
 
 private:
     QPointer<Entity> entityControlled_; // QPointer to prevent dangling pointer issues

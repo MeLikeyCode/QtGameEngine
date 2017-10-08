@@ -10,6 +10,11 @@ EntityController::EntityController(Entity *entityToControl) : entityControlled_(
     entityToControl->addEntityController(this);
 }
 
+EntityController::~EntityController()
+{
+    // empty
+}
+
 /// Returns the entity that this EntityController is controlling.
 /// Returns nullptr if the EntityController isn't controlling an Entity (this can happen if the
 /// entity controlled dies).
@@ -19,7 +24,7 @@ Entity *EntityController::entityControlled()
 }
 
 /// Set the entity that this EntityController should control.
-Entity *EntityController::setEntityControlled(Entity* entity)
+void EntityController::setEntityControlled(Entity* entity)
 {
     entityControlled_ = entity;
 }

@@ -97,8 +97,8 @@ int main(int argc, char *argv[])
     map1->addEntity(player);
 
     // add controllers to control the entity
-    ECRotateToMouse* rotContr = new ECRotateToMouse(*player);
-    ECMoveByKeyboardPerspective* moveContr = new ECMoveByKeyboardPerspective(player);
+    ECRotateToMouse* rotContr = new ECRotateToMouse(player);
+    ECMoveByKeyboardEightDirectional* moveContr = new ECMoveByKeyboardEightDirectional(player);
     ECGrabCam* grabCamContr = new ECGrabCam(player);
     ECMoveToNextMap* moveToNMC = new ECMoveToNextMap(player);
     ECGrabCurrentMap* grabCM = new ECGrabCurrentMap(player);
@@ -186,7 +186,7 @@ int main(int argc, char *argv[])
     testFOVEntity->addEnemyGroup(0);
     testFOVEntity->setPos(QPoint(50,700));
     map1->addEntity(testFOVEntity);
-    ECChaseEnemies* ecChase = new ECChaseEnemies(*testFOVEntity);
+    ECChaseEnemies* ecChase = new ECChaseEnemies(testFOVEntity);
 
     return a.exec();
 }

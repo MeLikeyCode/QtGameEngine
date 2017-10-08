@@ -195,7 +195,7 @@ void Game::mousePressEvent(QMouseEvent *event){
 
         player->map()->addEntity(enemy);
         enemy->setPos(mapToMap(event->pos()));
-        ECBodyThruster* bodyThrustContr = new ECBodyThruster(*enemy);
+        ECBodyThruster* bodyThrustContr = new ECBodyThruster(enemy);
         enemy->addEnemyGroup(0);
     }
 

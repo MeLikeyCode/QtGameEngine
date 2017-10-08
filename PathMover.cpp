@@ -14,7 +14,7 @@ PathMover::PathMover(Entity *entity):
     alwaysFaceTargetPosition_(false),
     moveTimer_(new QTimer(this)),
     pf_(new AsyncShortestPathFinder()),
-    rotater_(new ECRotater(*entity)),
+    rotater_(new ECRotater(entity)),
     stepSize_(5),
     pointsToFollow_(),
     targetPointIndex_(0),

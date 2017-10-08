@@ -12,7 +12,7 @@ ECChaseEnemies::ECChaseEnemies(Entity* entity):
     EntityController(entity),
     stopDistance_(100),
     fovEmitter_(new ECFieldOfViewEmitter(entity)),
-    pathMover_(new PathMover(&entity)),
+    pathMover_(new PathMover(entity)),
     chaseTimer_(new QTimer(this)),
     shouldChase_(true),
     paused_(false),
@@ -142,7 +142,7 @@ void ECChaseEnemies::onEntityLeavesFOV_(Entity *entity)
     targetEntity_ = nullptr;
 
     // stop listening to enter/leave range for leaving entity
-    entityControlled()->map()->game()->removeWatchedEntity(entity,controlledEntity_);
+    entityControlled()->map()->game()->removeWatchedEntity(entity,entityControlled());
     chaseTimer_->stop();
 
     // if there is another enemy in view, target that one
