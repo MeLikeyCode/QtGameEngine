@@ -2,10 +2,9 @@
 #define ECBODYTHRUSTER_H
 
 #include <QPointer>
-#include <memory>
-
-#include "EntityController.h"
+#include <QObject>
 #include "Entity.h"
+#include <memory>
 
 class ECChaseEnemies;
 class BodyThrust;
@@ -14,14 +13,8 @@ class BodyThrust;
 /// in its field of view and BodyThrust them when close enough.
 ///
 /// Example usage:
-/// ==============
-/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.cpp
 /// ECBodyThruster* c = new ECBodyThruster(controlledEntity);
-/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-///
-/// That's all that's needed. From then on, the controlled entity will "body thrust"
-/// any enemy Entities that enters its field of view.
-class ECBodyThruster: public EntityController
+class ECBodyThruster: public QObject
 {
     Q_OBJECT
 public:
@@ -35,6 +28,7 @@ signals:
     void thrusted(Entity* towardsEnemy);
 
 private:
+    QPointer<Entity> entity_;
     std::unique_ptr<ECChaseEnemies> controllerChaseEnemies_;
     std::unique_ptr<BodyThrust> bodyThrustAbility_;
 };

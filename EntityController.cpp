@@ -1,29 +1,22 @@
 #include "EntityController.h"
-#include "Entity.h"
 
-/// Constructs an EntityController that controlls the specified entity.
-EntityController::EntityController(Entity &entityToControl) : entityControlled_(&entityToControl)
+EntityController::EntityController(Entity *entityToControl) : entityControlled_(entityToControl)
 {
     // Entity maintains a collection of EntityControllers that are operating on it.
     // When an Entity dies, it kills all of its controllers.
     // When we construct an EntityController we can pass in the entity that it will operate on via its ctor.
     // This ctor will need to ensure that it adds the object ('this') to the Entity's list of controllers (via Entity::addController())
     // so that the lifetime of the EntityController can be managed by the Entity (which is the policy we have chosen).
-    entityToControl.addController(this);
-}
-
-EntityController::~EntityController()
-{
-    // empty
+    entityToControl->addController(this);
 }
 
 /// Returns the entity that this EntityController is controlling.
-Entity& EntityController::entityControlled()
+Entity *EntityController::entity()
 {
-    return *entityControlled_;
+    return entityControlled_;
 }
 
-void EntityController::setEntityControlled(Entity& entity)
+Entity *EntityController::setEntity(Entity* entity)
 {
-    entityControlled_ = &entity;
+    entityControlled_ = entity;
 }

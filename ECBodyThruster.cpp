@@ -5,7 +5,7 @@
 #include <cassert>
 
 ECBodyThruster::ECBodyThruster(Entity& entity):
-    EntityController(entity),
+    entity_(&entity),
     controllerChaseEnemies_(new ECChaseEnemies(entity)),
     bodyThrustAbility_(new BodyThrust(entity))
 {
