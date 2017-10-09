@@ -21,7 +21,7 @@
 #include <QGraphicsItem>
 #include "TopDownSprite.h"
 
-#include "PathMover.h" // TODO: delete, test only
+#include "ECPathMover.h" // TODO: delete, test only
 #include "ECBodyThruster.h" // TODO: delete, test only
 #include "Sprite.h" // TODO: delete, test only
 #include "RangedWeaponSlot.h"; // TODO: delete, test only

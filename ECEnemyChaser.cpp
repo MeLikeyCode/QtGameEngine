@@ -1,6 +1,6 @@
 #include "ECEnemyChaser.h"
 #include "ECFieldOfViewEmitter.h"
-#include "PathMover.h"
+#include "ECPathMover.h"
 #include <cassert>
 #include <QTimer>
 #include "Map.h"
@@ -12,7 +12,7 @@ ECEnemyChaser::ECEnemyChaser(Entity* entity):
     EntityController(entity),
     stopDistance_(100),
     fovEmitter_(new ECFieldOfViewEmitter(entity)),
-    pathMover_(new PathMover(entity)),
+    pathMover_(new ECPathMover(entity)),
     chaseTimer_(new QTimer(this)),
     shouldChase_(true),
     paused_(false),
@@ -35,7 +35,7 @@ ECEnemyChaser::ECEnemyChaser(Entity* entity):
     connect(fovEmitter_.get(),&ECFieldOfViewEmitter::entityLeavesFOV,this,&ECEnemyChaser::onEntityLeavesFOV_);
 
     // listen to path mover
-    connect(pathMover_.get(),&PathMover::moved,this,&ECEnemyChaser::onEntityMoved_);
+    connect(pathMover_.get(),&ECPathMover::moved,this,&ECEnemyChaser::onEntityMoved_);
 
     // listen to when the chasing entity dies
     connect(entityControlled(),&QObject::destroyed,this,&ECEnemyChaser::onChasingEntityDies_);

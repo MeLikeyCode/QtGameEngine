@@ -1,5 +1,5 @@
 #include "SpearProjectile.h"
-#include "StraightMover.h"
+#include "ECStraightMover.h"
 #include "CBDamage.h"
 #include "DRBDestroyProjectile.h"
 #include <QPixmap>
@@ -18,7 +18,7 @@ SpearProjectile::SpearProjectile(double range, double damage):
     setSpeed(1000);
 
     // set Mover
-    StraightMover* sm = new StraightMover(this);
+    ECStraightMover* sm = new ECStraightMover(this);
     sm->setFaceTarget(true);
     setMover(sm);
 

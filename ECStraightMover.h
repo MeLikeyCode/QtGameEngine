@@ -23,11 +23,11 @@ class QTimer;
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ///
 /// @author Abdullah Aghazadah
-class StraightMover: public ECMover
+class ECStraightMover: public ECMover
 {
     Q_OBJECT
 public:
-    StraightMover(Entity* entity = nullptr);
+    ECStraightMover(Entity* entity = nullptr);
 
     void setSpeed(int speed);
     int speed();

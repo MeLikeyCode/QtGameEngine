@@ -21,7 +21,7 @@
 #include "Sound.h"
 #include "Bow.h"
 #include "RangedWeaponSlot.h"
-#include "PathMover.h"
+#include "ECPathMover.h"
 #include "ECMapMover.h"
 #include "ECCurrentMapGrabber.h"
 #include "PositionalSound.h"

@@ -11,11 +11,11 @@
 
 class QTimer;
 
-/// Represents a projectile that moves a certain way and collides with things
+/// An Entity that represents a projectile that moves a certain way and collides with things
 /// along the way.
 ///
 /// Strategy pattern is used to determine the behavior of the projectile. The
-/// Mover of the Projectile determines how the projectile moves. The
+/// ECMover of the Projectile determines how the projectile moves. The
 /// CollisionBehavior determines how the projectile responds when it collides
 /// with Entities. The DestReachedBehavior determines what happens when the
 /// Projectile reaches its destination.
@@ -25,7 +25,8 @@ class QTimer;
 /// use homeTowards(). homeTowards() simply periodically calls shootTowards()
 /// passing in the new position of the Entity.
 ///
-/// Example usage:
+/// Example usage
+/// =============
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.cpp
 /// Projectile* p = new SomeConcreteProjectileClass(aMover, aCollisionBehavior, listOfEntitiesToNotDmg);
 /// p->setPointPos(somePos); // set the position of the projectile
@@ -42,6 +43,8 @@ class QTimer;
 /// Note that several prebuilt Movers/CollisionBehaviors/DestReachedBehaviors
 /// are included as well as several concrete Projectile subclasses that you can
 /// use as examples to follow.
+///
+/// @see
 ///
 /// @author Abdullah Aghazadah
 /// @date 2/21/16

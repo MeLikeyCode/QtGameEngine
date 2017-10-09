@@ -8,7 +8,7 @@
 #include "EntityController.h"
 #include "Entity.h"
 
-class PathMover;
+class ECPathMover;
 class ECFieldOfViewEmitter;
 class QTimer;
 
@@ -70,7 +70,7 @@ private:
 
     std::unique_ptr<ECFieldOfViewEmitter> fovEmitter_; // helper controller that emits events whenever
                                                        // anothe entity enters/leaves the controlled entity's fov
-    std::unique_ptr<PathMover> pathMover_;
+    std::unique_ptr<ECPathMover> pathMover_;
     QTimer* chaseTimer_;
 
     bool shouldChase_;

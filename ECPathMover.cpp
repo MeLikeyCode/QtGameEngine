@@ -1,4 +1,4 @@
-#include "PathMover.h"
+#include "ECPathMover.h"
 #include <QTimer>
 #include <cassert>
 #include <AsyncShortestPathFinder.h>
@@ -9,7 +9,7 @@
 #include "Utilities.h"
 #include "EntitySprite.h"
 
-PathMover::PathMover(Entity *entity):
+ECPathMover::ECPathMover(Entity *entity):
     ECMover(entity),
     alwaysFaceTargetPosition_(false),
     moveTimer_(new QTimer(this)),
@@ -27,7 +27,7 @@ PathMover::PathMover(Entity *entity):
 /// Returns true if the entity will always face the target position while
 /// moving along path or simply face the current direction in which its
 /// heading. See setAlwaysFaceTargetPosition() for more info.
-bool PathMover::alwaysFaceTargetPosition()
+bool ECPathMover::alwaysFaceTargetPosition()
 {
     return alwaysFaceTargetPosition_;
 }
@@ -35,7 +35,7 @@ bool PathMover::alwaysFaceTargetPosition()
 /// If true is passed in, makes it so that as the entity is moving, it will
 /// contineuosly face it's target position. If false is passed in, the
 /// controlled entity will face the current direction its heading in.
-void PathMover::setAlwaysFaceTargetPosition(bool tf)
+void ECPathMover::setAlwaysFaceTargetPosition(bool tf)
 {
     alwaysFaceTargetPosition_ = tf;
 }
@@ -46,21 +46,21 @@ void PathMover::setAlwaysFaceTargetPosition(bool tf)
 /// Lower values means the controlled entity takes frequent small steps.
 /// Note that this does not effect the speed of the controlled entity, just the
 /// movement "granularity"!
-void PathMover::setStepSize(double stepSize)
+void ECPathMover::setStepSize(double stepSize)
 {
     stepSize_ = stepSize;
 }
 
 /// Returns how many pixels the controlled entity should move every time he moves.
 /// @see setStepSize()
-double PathMover::stepSize()
+double ECPathMover::stepSize()
 {
     return stepSize_;
 }
 
 /// Executed when the async path finder has succesfully calculated a requested path.
 /// Will start the timer to make the entity move on the path.
-void PathMover::onPathCalculated_(std::vector<QPointF> path)
+void ECPathMover::onPathCalculated_(std::vector<QPointF> path)
 {
     // stop/clear previous movement
     stopMovingEntity();
@@ -89,7 +89,7 @@ void PathMover::onPathCalculated_(std::vector<QPointF> path)
 }
 
 /// Executed periodically to take the controlled entity one step along its path.
-void PathMover::onMoveStep_()
+void ECPathMover::onMoveStep_()
 {
     // if the entity is destroyed, disconnect
     Entity* ent = entity();
@@ -138,7 +138,7 @@ void PathMover::onMoveStep_()
 }
 
 /// Starts moving the entity towards the specified position.
-void PathMover::moveEntity_(const QPointF &toPos)
+void ECPathMover::moveEntity_(const QPointF &toPos)
 {
     // make sure the entiy is in a map
     Map* entitysMap = entity()->map();
@@ -150,7 +150,7 @@ void PathMover::moveEntity_(const QPointF &toPos)
 }
 
 /// This function is executed when the MoveBehavior is asked to stop moving the entity.
-void PathMover::stopMovingEntity_()
+void ECPathMover::stopMovingEntity_()
 {
     moveTimer_->disconnect();   // disconnect timer
     pointsToFollow_.clear();    // reset variables
@@ -170,7 +170,7 @@ void PathMover::stopMovingEntity_()
 
 /// Internal helper function that returns true if the controlled entity has reached
 /// its current target point.
-bool PathMover::targetPointReached_()
+bool ECPathMover::targetPointReached_()
 {
     // if there are no target points, return true
     if (pointsToFollow_.size() == 0)
@@ -185,7 +185,7 @@ bool PathMover::targetPointReached_()
 
 /// Internal helper function that will cause the controlled entity to take one
 /// step closer to its target point.
-void PathMover::stepTowardsTarget_()
+void ECPathMover::stepTowardsTarget_()
 {
     // make sure points to follow is not empty
     assert(pointsToFollow_.size() != 0);

@@ -93,11 +93,8 @@ SOURCES += main.cpp \
     ShopBehaviorNoCost.cpp \
     CollisionBehavior.cpp \
     CBDamage.cpp \
-    StraightMover.cpp \
-    SineMover.cpp \
     DestReachedBehavior.cpp \
     DRBDestroyProjectile.cpp \
-    PathMover.cpp \
     PositionalSound.cpp \
     PointerGrid.cpp \
     SpriteSheet.cpp \
@@ -116,7 +113,10 @@ SOURCES += main.cpp \
     ECMapMover.cpp \
     ECCameraFollower.cpp \
     ECItemPickerUpper.cpp \
-    ECMouseFacer.cpp
+    ECMouseFacer.cpp \
+    ECPathMover.cpp \
+    ECSineMover.cpp \
+    ECStraightMover.cpp
 
 HEADERS  += \
     Map.h \
@@ -195,11 +195,8 @@ HEADERS  += \
     ShopBehaviorNoCost.h \
     CollisionBehavior.h \
     CBDamage.h \
-    StraightMover.h \
-    SineMover.h \
     DestReachedBehavior.h \
     DRBDestroyProjectile.h \
-    PathMover.h \
     PositionalSound.h \
     PointerGrid.h \
     SpriteSheet.h \
@@ -218,7 +215,10 @@ HEADERS  += \
     ECMapMover.h \
     ECCameraFollower.h \
     ECItemPickerUpper.h \
-    ECMouseFacer.h
+    ECMouseFacer.h \
+    ECPathMover.h \
+    ECSineMover.h \
+    ECStraightMover.h
 
 RESOURCES += \
     res.qrc

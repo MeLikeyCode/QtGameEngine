@@ -23,11 +23,11 @@ class QTimer;
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ///
 /// @author Abdullah Aghazadah
-class SineMover : ECMover
+class ECSineMover : ECMover
 {
     Q_OBJECT
 public:
-    SineMover(Entity* entity=nullptr);
+    ECSineMover(Entity* entity=nullptr);
 
     void setFaceTarget(bool tf);
     bool faceTarget();

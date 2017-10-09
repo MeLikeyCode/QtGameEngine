@@ -1,10 +1,10 @@
-#include "SineMover.h"
+#include "ECSineMover.h"
 #include <QTimer>
 #include "Utilities.h"
 #include <cassert>
 #include <QtMath>
 
-SineMover::SineMover(Entity *entity):
+ECSineMover::ECSineMover(Entity *entity):
     ECMover(entity),
     moveTimer_(new QTimer(this)),
     amplitude_(20),
@@ -22,7 +22,7 @@ SineMover::SineMover(Entity *entity):
 
 /// Moves the Entity in a sine like fashion from its current position to the
 /// specified position.
-void SineMover::moveEntity_(const QPointF& pos)
+void ECSineMover::moveEntity_(const QPointF& pos)
 {
     Entity* theEntity = entity();
 
@@ -48,38 +48,38 @@ void SineMover::moveEntity_(const QPointF& pos)
     moveTimer_->start(secondsToMs(frequency(stepSize_,speed_)));
 }
 
-bool SineMover::faceTarget()
+bool ECSineMover::faceTarget()
 {
     return faceTarget_;
 }
 
-void SineMover::setSpeed(int speed)
+void ECSineMover::setSpeed(int speed)
 {
     speed_ = speed;
 }
 
-int SineMover::speed()
+int ECSineMover::speed()
 {
     return speed_;
 }
 
-void SineMover::setStepSize(int stepSize)
+void ECSineMover::setStepSize(int stepSize)
 {
     stepSize_ = stepSize;
 }
 
-int SineMover::stepSize()
+int ECSineMover::stepSize()
 {
     return stepSize_;
 }
 
-void SineMover::setFaceTarget(bool tf)
+void ECSineMover::setFaceTarget(bool tf)
 {
     faceTarget_ = tf;
 }
 
 /// Executed periodically to move the controlled entity to the next step of its movement.
-void SineMover::onMoveStep_()
+void ECSineMover::onMoveStep_()
 {
     Entity* theEntity = entity();
 
@@ -123,7 +123,7 @@ void SineMover::onMoveStep_()
 }
 
 /// Executed whenever the MoveBehavior is asked to stop moving the Entity.
-void SineMover::stopMovingEntity_()
+void ECSineMover::stopMovingEntity_()
 {
     moveTimer_->disconnect();
     distanceMoved_ = 0;

@@ -28,11 +28,11 @@ class ECRotater;
 ///
 /// @author Abdullah Aghazadah
 /// @date 11/28/16
-class PathMover: public ECMover
+class ECPathMover: public ECMover
 {
     Q_OBJECT
 public:
-    PathMover(Entity* entity = nullptr);
+    ECPathMover(Entity* entity = nullptr);
 
     void setSpeed(int speed);
     int speed();
