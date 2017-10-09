@@ -8,7 +8,7 @@
 /// An abstract class that represents an ability.
 /// An Ability has an owner and an icon.
 /// The owner may be effected in some way when the ability is used, depending
-/// on the ability. The Icon is used by GUI purposes (i.e.by AbilityCell).
+/// on the ability. The Icon is used for GUI purposes (i.e.by AbilityCell).
 ///
 /// All Abilities will throw assertion errors if they are used after the owner is dead
 /// (this is automatically handled by NoTargetAbility, PointTargetAbility, and EntityTargetAbility).

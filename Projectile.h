@@ -77,7 +77,7 @@ public slots:
 
 private:
     // behaviors
-    std::unique_ptr<ECMover> mover_;
+    ECMover* mover_;
     std::unique_ptr<CollisionBehavior> collisionBehavior_;
     std::unique_ptr<DestReachedBehavior> destReachedBehavior_;
 

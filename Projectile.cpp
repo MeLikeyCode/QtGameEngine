@@ -24,7 +24,7 @@ Projectile::Projectile(ECMover *mover,
 /// Returns the MoveBehavior of the Projectile.
 ECMover *Projectile::moveBehavior()
 {
-    return mover_.get();
+    return mover_;
 }
 
 /// Sets the Mover of the Projectile.
@@ -33,7 +33,7 @@ ECMover *Projectile::moveBehavior()
 /// or homeTowards().
 void Projectile::setMover(ECMover *mover)
 {
-    mover_ .reset(mover);
+    mover_ = mover;
 
     if (mover == nullptr)
         return;

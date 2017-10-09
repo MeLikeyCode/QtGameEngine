@@ -115,10 +115,10 @@ int main(int argc, char *argv[])
     Spear* spear = new Spear();
     player->inventory()->addItem(spear);
 
-//    // add bow to entitys inventory and equip it
-//    Bow* bow = new Bow();
-//    player->inventory()->addItem(bow);
-//    rangedSlot->equip(bow);
+    // add bow to entitys inventory and equip it
+    Bow* bow = new Bow();
+    player->inventory()->addItem(bow);
+    rangedSlot->equip(bow);
 
 
 //    // create an entity that will thrust nearby enemy entities
