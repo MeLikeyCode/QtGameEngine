@@ -18,11 +18,11 @@ class QTimer;
 /// in response to the keyboard. The WASD keys are used to move the entity up, left, down, and right
 /// relative to the screen.
 /// @date 11/21/16
-class ECMoveByKeyboardFourDirectional: public EntityController
+class ECKeyboardMover4Directional: public EntityController
 {
     Q_OBJECT
 public:
-    ECMoveByKeyboardFourDirectional(Entity* entity);
+    ECKeyboardMover4Directional(Entity* entity);
 
     void setStepSize(double stepSize);
     double stepSize();

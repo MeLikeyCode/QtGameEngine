@@ -1,25 +1,25 @@
-#include "ECAttackEnemiesWithWeapon.h"
+#include "ECEnemyAttacker.h"
 
-#include "ECChaseEnemies.h"
+#include "ECEnemyChaser.h"
 #include <cassert>
 #include "Slot.h"
 #include "Weapon.h"
 #include "WeaponSlot.h"
 #include "Utilities.h"
 
-ECAttackEnemiesWithWeapon::ECAttackEnemiesWithWeapon(Entity *entity):
+ECEnemyAttacker::ECEnemyAttacker(Entity *entity):
     EntityController(entity),
-    controllerChaseEnemies_(new ECChaseEnemies(entity))
+    controllerChaseEnemies_(new ECEnemyChaser(entity))
 {
     // listen to chaser
-    ECChaseEnemies* ce = controllerChaseEnemies_.get();
-    connect(ce, &ECChaseEnemies::entityChaseContinued,this,&ECAttackEnemiesWithWeapon::onEnemyChaseContinued);
-    connect(ce,&ECChaseEnemies::entityChaseStarted,this,&ECAttackEnemiesWithWeapon::onEnemyChaseContinued);
+    ECEnemyChaser* ce = controllerChaseEnemies_.get();
+    connect(ce, &ECEnemyChaser::entityChaseContinued,this,&ECEnemyAttacker::onEnemyChaseContinued);
+    connect(ce,&ECEnemyChaser::entityChaseStarted,this,&ECEnemyAttacker::onEnemyChaseContinued);
 }
 
 /// Executed whenever the controlled entity takes one step closer to chased entity.
 /// Will see if close enough to use weapon. If so, will use it.
-void ECAttackEnemiesWithWeapon::onEnemyChaseContinued(Entity *entityChased, double distance)
+void ECEnemyAttacker::onEnemyChaseContinued(Entity *entityChased, double distance)
 {
     // TODO only attack if close to range of weapon
     // pick first weapon in controlled enities slots and use it to attack chased entity

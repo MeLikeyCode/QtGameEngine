@@ -1,4 +1,4 @@
-#include "ECMoveByKeyboardPerspective.h"
+#include "ECKeyboardMoverPerspective.h"
 #include "Map.h"
 #include "QTimer"
 #include "Sprite.h"
@@ -7,7 +7,7 @@
 #include "Utilities.h"
 #include "EntitySprite.h"
 
-ECMoveByKeyboardPerspective::ECMoveByKeyboardPerspective(Entity* entity):
+ECKeyboardMoverPerspective::ECKeyboardMoverPerspective(Entity* entity):
     EntityController(entity),
     stepSize_(15),
     moveTimer_(new QTimer(this))
@@ -16,23 +16,23 @@ ECMoveByKeyboardPerspective::ECMoveByKeyboardPerspective(Entity* entity):
     assert(entity != nullptr);
 
     // connect timer to move step
-    connect(moveTimer_,&QTimer::timeout,this,&ECMoveByKeyboardPerspective::moveStep_);
+    connect(moveTimer_,&QTimer::timeout,this,&ECKeyboardMoverPerspective::moveStep_);
     moveTimer_->start(secondsToMs(frequency(stepSize_,entityControlled()->speed())));
 }
 
 /// See ECPathMover::setStepSize().
-void ECMoveByKeyboardPerspective::setStepSize(double stepSize)
+void ECKeyboardMoverPerspective::setStepSize(double stepSize)
 {
     stepSize_ = stepSize;
 }
 
 /// See ECPathMover::stepSize().
-double ECMoveByKeyboardPerspective::stepSize()
+double ECKeyboardMoverPerspective::stepSize()
 {
     return stepSize_;
 }
 
-void ECMoveByKeyboardPerspective::moveStep_()
+void ECKeyboardMoverPerspective::moveStep_()
 {
     // if the entity has been destroyed, stop
     Entity* entity = entityControlled();
@@ -132,7 +132,7 @@ void ECMoveByKeyboardPerspective::moveStep_()
     }
 }
 
-void ECMoveByKeyboardPerspective::playAnimIfExists_(std::string anim)
+void ECKeyboardMoverPerspective::playAnimIfExists_(std::string anim)
 {
     Entity* entity = entityControlled();
     if (entity->sprite()->hasAnimation(anim))

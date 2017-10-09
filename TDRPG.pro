@@ -85,19 +85,12 @@ SOURCES += main.cpp \
     NoTargetAbility.cpp \
     PointTargetAbility.cpp \
     EntityTargetAbility.cpp \
-    ECRotateToMouse.cpp \
     ECRotater.cpp \
-    ECChaseEnemies.cpp \
     ECFieldOfViewEmitter.cpp \
-    ECGrabCam.cpp \
     ECBodyThruster.cpp \
-    ECPickUpItem.cpp \
-    ECAttackEnemiesWithWeapon.cpp \
     AbilityCell.cpp \
     ShopGuiBehavior.cpp \
     ShopBehaviorNoCost.cpp \
-    ECMoveToNextMap.cpp \
-    ECGrabCurrentMap.cpp \
     CollisionBehavior.cpp \
     CBDamage.cpp \
     StraightMover.cpp \
@@ -108,15 +101,22 @@ SOURCES += main.cpp \
     PositionalSound.cpp \
     PointerGrid.cpp \
     SpriteSheet.cpp \
-    ECMoveByKeyboardEightDirectional.cpp \
-    ECMoveByKeyboardPerspective.cpp \
-    ECMoveByKeyboardFourDirectional.cpp \
     Animation.cpp \
     EntitySprite.cpp \
     TopDownSprite.cpp \
     AngledSprite.cpp \
     EntityController.cpp \
-    ECMover.cpp
+    ECMover.cpp \
+    ECEnemyAttacker.cpp \
+    ECEnemyChaser.cpp \
+    ECCurrentMapGrabber.cpp \
+    ECKeyboardMover8Directional.cpp \
+    ECKeyboardMover4Directional.cpp \
+    ECKeyboardMoverPerspective.cpp \
+    ECMapMover.cpp \
+    ECCameraFollower.cpp \
+    ECItemPickerUpper.cpp \
+    ECMouseFacer.cpp
 
 HEADERS  += \
     Map.h \
@@ -187,19 +187,12 @@ HEADERS  += \
     NoTargetAbility.h \
     PointTargetAbility.h \
     EntityTargetAbility.h \
-    ECRotateToMouse.h \
     ECRotater.h \
-    ECChaseEnemies.h \
     ECFieldOfViewEmitter.h \
-    ECGrabCam.h \
     ECBodyThruster.h \
-    ECPickUpItem.h \
-    ECAttackEnemiesWithWeapon.h \
     AbilityCell.h \
     ShopGuiBehavior.h \
     ShopBehaviorNoCost.h \
-    ECMoveToNextMap.h \
-    ECGrabCurrentMap.h \
     CollisionBehavior.h \
     CBDamage.h \
     StraightMover.h \
@@ -210,15 +203,22 @@ HEADERS  += \
     PositionalSound.h \
     PointerGrid.h \
     SpriteSheet.h \
-    ECMoveByKeyboardEightDirectional.h \
-    ECMoveByKeyboardPerspective.h \
-    ECMoveByKeyboardFourDirectional.h \
     Animation.h \
     EntitySprite.h \
     TopDownSprite.h \
     AngledSprite.h \
     EntityController.h \
-    ECMover.h
+    ECMover.h \
+    ECEnemyAttacker.h \
+    ECEnemyChaser.h \
+    ECCurrentMapGrabber.h \
+    ECKeyboardMover8Directional.h \
+    ECKeyboardMover4Directional.h \
+    ECKeyboardMoverPerspective.h \
+    ECMapMover.h \
+    ECCameraFollower.h \
+    ECItemPickerUpper.h \
+    ECMouseFacer.h
 
 RESOURCES += \
     res.qrc

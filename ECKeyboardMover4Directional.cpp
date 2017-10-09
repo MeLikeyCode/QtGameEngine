@@ -1,4 +1,4 @@
-#include "ECMoveByKeyboardFourDirectional.h"
+#include "ECKeyboardMover4Directional.h"
 #include "Map.h"
 #include <QTimer>
 #include <cassert>
@@ -7,7 +7,7 @@
 #include "Utilities.h"
 #include "EntitySprite.h"
 
-ECMoveByKeyboardFourDirectional::ECMoveByKeyboardFourDirectional(Entity *entity):
+ECKeyboardMover4Directional::ECKeyboardMover4Directional(Entity *entity):
     EntityController(entity),
     stepSize_(15),
     moveTimer_(new QTimer(this))
@@ -16,23 +16,23 @@ ECMoveByKeyboardFourDirectional::ECMoveByKeyboardFourDirectional(Entity *entity)
     assert(entity != nullptr);
 
     // connect timer to move step
-    connect(moveTimer_,&QTimer::timeout,this,&ECMoveByKeyboardFourDirectional::moveStep_);
+    connect(moveTimer_,&QTimer::timeout,this,&ECKeyboardMover4Directional::moveStep_);
     moveTimer_->start(secondsToMs(frequency(stepSize_,entityControlled()->speed())));
 }
 
 /// See ECPathMover::setStepSize().
-void ECMoveByKeyboardFourDirectional::setStepSize(double stepSize)
+void ECKeyboardMover4Directional::setStepSize(double stepSize)
 {
     stepSize_ = stepSize;
 }
 
 /// See ECPathMover::stepSize().
-double ECMoveByKeyboardFourDirectional::stepSize()
+double ECKeyboardMover4Directional::stepSize()
 {
     return stepSize_;
 }
 
-void ECMoveByKeyboardFourDirectional::moveStep_()
+void ECKeyboardMover4Directional::moveStep_()
 {
     // this function is executed periodically when the EC needs to move the entity
     // - we will check to see which keys are currently pressed
@@ -147,7 +147,7 @@ void ECMoveByKeyboardFourDirectional::moveStep_()
 /// Plays the specified animation of the entity_ only if the entity has that
 /// animation, otherwise does nothing. This function exists solely to reduce
 /// code duplication (b/c I was using this fragment of code in 4 places).
-void ECMoveByKeyboardFourDirectional::playAnimationIfItExists_(std::string animation)
+void ECKeyboardMover4Directional::playAnimationIfItExists_(std::string animation)
 {
     Entity* entity = entityControlled();
     if (entity->sprite()->hasAnimation(animation))

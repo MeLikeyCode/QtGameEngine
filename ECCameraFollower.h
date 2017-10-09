@@ -20,11 +20,11 @@
 ///
 /// That is all. From then on, anytime the entity moves, the game's camera
 /// will follow it.
-class ECGrabCam: public EntityController
+class ECCameraFollower: public EntityController
 {
     Q_OBJECT
 public:
-    ECGrabCam(Entity* entity);
+    ECCameraFollower(Entity* entity);
 public slots:
     void onEntityMoved_(Entity* entity, QPointF fromPos, QPointF toPos);
 };

@@ -1,4 +1,4 @@
-#include "ECMoveByKeyboardEightDirectional.h"
+#include "ECKeyboardMover8Directional.h"
 #include "Map.h"
 #include <QTimer>
 #include <cassert>
@@ -7,7 +7,7 @@
 #include "Utilities.h"
 #include "EntitySprite.h"
 
-ECMoveByKeyboardEightDirectional::ECMoveByKeyboardEightDirectional(Entity *entity):
+ECKeyboardMover8Directional::ECKeyboardMover8Directional(Entity *entity):
     EntityController(entity),
     stepSize_(15),
     moveTimer_(new QTimer(this))
@@ -16,23 +16,23 @@ ECMoveByKeyboardEightDirectional::ECMoveByKeyboardEightDirectional(Entity *entit
     assert(entity != nullptr);
 
     // connect timer to move step
-    connect(moveTimer_,&QTimer::timeout,this,&ECMoveByKeyboardEightDirectional::moveStep_);
+    connect(moveTimer_,&QTimer::timeout,this,&ECKeyboardMover8Directional::moveStep_);
     moveTimer_->start(secondsToMs(frequency(stepSize_,entityControlled()->speed())));
 }
 
 /// See ECPathMover::setStepSize().
-void ECMoveByKeyboardEightDirectional::setStepSize(double stepSize)
+void ECKeyboardMover8Directional::setStepSize(double stepSize)
 {
     stepSize_ = stepSize;
 }
 
 /// See ECPathMover::stepSize().
-double ECMoveByKeyboardEightDirectional::stepSize()
+double ECKeyboardMover8Directional::stepSize()
 {
     return stepSize_;
 }
 
-void ECMoveByKeyboardEightDirectional::playAnimIfHas_(std::string anim)
+void ECKeyboardMover8Directional::playAnimIfHas_(std::string anim)
 {
     Entity* entity = entityControlled();
     if (entity->sprite()->hasAnimation(anim)){
@@ -40,7 +40,7 @@ void ECMoveByKeyboardEightDirectional::playAnimIfHas_(std::string anim)
     }
 }
 
-void ECMoveByKeyboardEightDirectional::moveStep_()
+void ECKeyboardMover8Directional::moveStep_()
 {
     // if the entity has been destroyed, stop
     Entity* entity = entityControlled();

@@ -1,17 +1,17 @@
 #include "ECBodyThruster.h"
 
-#include "ECChaseEnemies.h"
+#include "ECEnemyChaser.h"
 #include "BodyThrust.h"
 #include <cassert>
 
 ECBodyThruster::ECBodyThruster(Entity *entity):
     EntityController(entity),
-    controllerChaseEnemies_(new ECChaseEnemies(entity)),
+    controllerChaseEnemies_(new ECEnemyChaser(entity)),
     bodyThrustAbility_(new BodyThrust(*entity))
 {
     // listen to chase controller
-    connect(controllerChaseEnemies_.get(),&ECChaseEnemies::entityChaseContinued,this,&ECBodyThruster::onEnemyChaseContinued);
-    connect(controllerChaseEnemies_.get(),&ECChaseEnemies::entityChaseStarted,this,&ECBodyThruster::onEnemyChaseContinued);
+    connect(controllerChaseEnemies_.get(),&ECEnemyChaser::entityChaseContinued,this,&ECBodyThruster::onEnemyChaseContinued);
+    connect(controllerChaseEnemies_.get(),&ECEnemyChaser::entityChaseStarted,this,&ECBodyThruster::onEnemyChaseContinued);
 }
 
 /// Executed whenever the controlled enity moves closer to the chased entity.

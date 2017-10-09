@@ -1,10 +1,10 @@
-#include "ECRotateToMouse.h"
+#include "ECMouseFacer.h"
 #include <cassert>
 #include <QTimer>
 #include "ECRotater.h"
 #include "Map.h"
 
-ECRotateToMouse::ECRotateToMouse(Entity *entity):
+ECMouseFacer::ECMouseFacer(Entity *entity):
     EntityController(entity),
     rotateStepSize_(5),
     rotateFrequency_(30),
@@ -13,13 +13,13 @@ ECRotateToMouse::ECRotateToMouse(Entity *entity):
 {
     rotater_->setParent(this);
 
-    connect(rotateTimer_,&QTimer::timeout,this,&ECRotateToMouse::rotateStep_);
+    connect(rotateTimer_,&QTimer::timeout,this,&ECMouseFacer::rotateStep_);
     rotateTimer_->start(rotateFrequency_);
 }
 
 /// Executed whenever the entity_ needs to rotate.
 /// Will rotate it closer to the mouse.
-void ECRotateToMouse::rotateStep_()
+void ECMouseFacer::rotateStep_()
 {
     // if the entity has been destroyed, stop rotating
     Entity* entity = entityControlled();

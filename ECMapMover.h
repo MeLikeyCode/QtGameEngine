@@ -20,11 +20,11 @@ class QPointF;
 ///
 /// Thats it. From then on whenever the entity's position is set near the border
 /// of its map, it will move to the next map in the MapGrid in that direction.
-class ECMoveToNextMap: public EntityController
+class ECMapMover: public EntityController
 {
     Q_OBJECT
 public:
-    ECMoveToNextMap(Entity* entity);
+    ECMapMover(Entity* entity);
 
     void setBorderThreshold(double threshold);
     double borderThreshold();

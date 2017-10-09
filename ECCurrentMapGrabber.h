@@ -19,11 +19,11 @@ class Map;
 /// current map is basically the map that is being visualized.
 /// @author Abdullah Aghazadah
 /// @date 12/7/16
-class ECGrabCurrentMap: public EntityController
+class ECCurrentMapGrabber: public EntityController
 {
     Q_OBJECT
 public:
-    ECGrabCurrentMap(Entity* entity);
+    ECCurrentMapGrabber(Entity* entity);
 public slots:
     void onEntityEntersMap(Entity* controlledEntity, Map* mapJustEntered, Map* oldMap);
 };

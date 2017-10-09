@@ -23,11 +23,11 @@ class ECRotater;
 /// constructor will contineously rotate to face the mouse.
 /// @author Abdullah Aghazadah
 /// @date 11/22/16
-class ECRotateToMouse: public EntityController
+class ECMouseFacer: public EntityController
 {
     Q_OBJECT
 public:
-    ECRotateToMouse(Entity* entity);
+    ECMouseFacer(Entity* entity);
 
 public slots:
     void rotateStep_();

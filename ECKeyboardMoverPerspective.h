@@ -16,11 +16,11 @@
 /// in response to the keyboard. WASD keys are used to control the Entity.
 /// A and D are used to straf left/right while W and S are used to move forward/backward
 /// at current angle.
-class ECMoveByKeyboardPerspective: public EntityController
+class ECKeyboardMoverPerspective: public EntityController
 {
     Q_OBJECT
 public:
-    ECMoveByKeyboardPerspective(Entity* entity);
+    ECKeyboardMoverPerspective(Entity* entity);
 
     void setStepSize(double stepSize);
     double stepSize();

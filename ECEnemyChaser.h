@@ -30,11 +30,11 @@ class QTimer;
 /// connect(c,&ECChaseEnemies::entityChaseStarted,this,myCallback);
 /// connect(c,&ECChaseEnemies::entityChaseContinued,this,myCallback);
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-class ECChaseEnemies: public EntityController
+class ECEnemyChaser: public EntityController
 {
     Q_OBJECT
 public:
-    ECChaseEnemies(Entity* entity);
+    ECEnemyChaser(Entity* entity);
 
     void stopChasing();
     void startChasing();

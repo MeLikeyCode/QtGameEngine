@@ -8,7 +8,7 @@
 #include "EntityController.h"
 #include "Entity.h"
 
-class ECChaseEnemies;
+class ECEnemyChaser;
 class BodyThrust;
 
 /// An entity controller that causes the controlled entity to chase enemy entites
@@ -33,7 +33,7 @@ signals:
     void thrusted(Entity* towardsEnemy);
 
 private:
-    std::unique_ptr<ECChaseEnemies> controllerChaseEnemies_;
+    std::unique_ptr<ECEnemyChaser> controllerChaseEnemies_;
     std::unique_ptr<BodyThrust> bodyThrustAbility_;
 };
 

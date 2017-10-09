@@ -1,38 +1,38 @@
-#include "ECMoveToNextMap.h"
+#include "ECMapMover.h"
 #include <cassert>
 #include "Map.h"
 #include "Game.h"
 #include "MapGrid.h"
 #include "Node.h"
 
-ECMoveToNextMap::ECMoveToNextMap(Entity *entity):
+ECMapMover::ECMapMover(Entity *entity):
     EntityController(entity),
     borderThreshold_(10)
 {
     assert(entity != nullptr);
 
     // listen to when entity moves
-    connect(entity,&Entity::moved,this,&ECMoveToNextMap::onEntityMoved);
+    connect(entity,&Entity::moved,this,&ECMapMover::onEntityMoved);
 }
 
 /// Sets the border threshold. Whenever the controlled entity gets within
 /// this distance to any of the borders of its map, it will be transported
 /// to the next map in that direction.
-void ECMoveToNextMap::setBorderThreshold(double threshold)
+void ECMapMover::setBorderThreshold(double threshold)
 {
     borderThreshold_ = threshold;
 }
 
 /// Returns the border threshold.
 /// See setBorderThreshold() for more info.
-double ECMoveToNextMap::borderThreshold()
+double ECMapMover::borderThreshold()
 {
     return borderThreshold_;
 }
 
 /// Executed when the controlled entity moves.
 /// Will see if it should move to new border map.
-void ECMoveToNextMap::onEntityMoved(Entity *controlledEntity, QPointF fromPos, QPointF toPos)
+void ECMapMover::onEntityMoved(Entity *controlledEntity, QPointF fromPos, QPointF toPos)
 {
     // do nothing if controlled entity is not in a map
     Entity* entity = entityControlled();

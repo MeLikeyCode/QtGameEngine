@@ -3,37 +3,37 @@
 #include "PathingMap.h"
 #include "Map.h"
 #include "Entity.h"
-#include "ECMoveByKeyboardEightDirectional.h"
-#include "ECRotateToMouse.h"
-#include "ECGrabCam.h"
+#include "ECKeyboardMover8Directional.h"
+#include "ECMouseFacer.h"
+#include "ECCameraFollower.h"
 #include "TerrainLayer.h"
 #include "WeaponSlot.h"
 #include "Spear.h"
 #include "Inventory.h"
 #include "ECBodyThruster.h"
-#include "ECAttackEnemiesWithWeapon.h"
+#include "ECEnemyAttacker.h"
 #include "Axe.h"
 #include "ItemRainOfSpears.h"
 #include "ItemPushback.h"
-#include "ECPickUpItem.h"
+#include "ECItemPickerUpper.h"
 #include "InventoryViewer.h"
 #include "InventoryUser.h"
 #include "Sound.h"
 #include "Bow.h"
 #include "RangedWeaponSlot.h"
 #include "PathMover.h"
-#include "ECMoveToNextMap.h"
-#include "ECGrabCurrentMap.h"
+#include "ECMapMover.h"
+#include "ECCurrentMapGrabber.h"
 #include "PositionalSound.h"
 #include "FogWeather.h"
 #include "RainWeather.h"
 #include "SnowWeather.h"
 #include "Utilities.h"
 #include "ECFieldOfViewEmitter.h"
-#include "ECChaseEnemies.h"
+#include "ECEnemyChaser.h"
 #include "SpriteSheet.h"
-#include "ECMoveByKeyboardFourDirectional.h"
-#include "ECMoveByKeyboardPerspective.h"
+#include "ECKeyboardMover4Directional.h"
+#include "ECKeyboardMoverPerspective.h"
 #include "Animation.h"
 #include "TopDownSprite.h"
 #include "AngledSprite.h"
@@ -92,11 +92,11 @@ int main(int argc, char *argv[])
     map1->addEntity(player);
 
     // add controllers to control the entity
-    ECRotateToMouse* rotContr = new ECRotateToMouse(player);
-    ECMoveByKeyboardEightDirectional* moveContr = new ECMoveByKeyboardEightDirectional(player);
-    ECGrabCam* grabCamContr = new ECGrabCam(player);
-    ECMoveToNextMap* moveToNMC = new ECMoveToNextMap(player);
-    ECGrabCurrentMap* grabCM = new ECGrabCurrentMap(player);
+    ECMouseFacer* rotContr = new ECMouseFacer(player);
+    ECKeyboardMoverPerspective* moveContr = new ECKeyboardMoverPerspective(player);
+    ECCameraFollower* grabCamContr = new ECCameraFollower(player);
+    ECMapMover* moveToNMC = new ECMapMover(player);
+    ECCurrentMapGrabber* grabCM = new ECCurrentMapGrabber(player);
 
     player->setPos(QPointF(200,200));
 
@@ -153,7 +153,7 @@ int main(int argc, char *argv[])
     pushBackItem->setPos(QPointF(300,300));
     map1->addEntity(pushBackItem);
 
-    ECPickUpItem* pickUpItemContr = new ECPickUpItem(player);
+    ECItemPickerUpper* pickUpItemContr = new ECItemPickerUpper(player);
 
 //    // create an inventory viewer to visuallize the inventory of player
 //    InventoryViewer* invViewer = new InventoryViewer();
@@ -181,7 +181,7 @@ int main(int argc, char *argv[])
     testFOVEntity->addEnemyGroup(0);
     testFOVEntity->setPos(QPoint(50,700));
     map1->addEntity(testFOVEntity);
-    ECChaseEnemies* ecChase = new ECChaseEnemies(testFOVEntity);
+    ECEnemyChaser* ecChase = new ECEnemyChaser(testFOVEntity);
 
     return a.exec();
 }

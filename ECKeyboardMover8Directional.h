@@ -20,12 +20,12 @@ class QTimer;
 /// relative to the screen. The entity is also moved diagonally if two of the keys is pressed simultaneously.
 /// @author Abdullah Aghazadah
 /// @date 11/21/16
-class ECMoveByKeyboardEightDirectional: public EntityController
+class ECKeyboardMover8Directional: public EntityController
 {
     Q_OBJECT
 public:
     // TODO factor out constructor for behaviors into a base EntityBehavior class
-    ECMoveByKeyboardEightDirectional(Entity* entity);
+    ECKeyboardMover8Directional(Entity* entity);
 
     void setStepSize(double stepSize);
     double stepSize();

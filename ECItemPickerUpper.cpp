@@ -1,21 +1,21 @@
-#include "ECPickUpItem.h"
+#include "ECItemPickerUpper.h"
 #include "Inventory.h"
 #include "Item.h"
 
 #include <cassert>
 
-ECPickUpItem::ECPickUpItem(Entity *entity):
+ECItemPickerUpper::ECItemPickerUpper(Entity *entity):
     EntityController(entity)
 {
     // make sure passed in entity is not nullptr
     assert(entity != nullptr);
 
     // listen to when entity collides
-    connect(entity,&Entity::collided,this,&ECPickUpItem::onCollide);
+    connect(entity,&Entity::collided,this,&ECItemPickerUpper::onCollide);
 }
 
 /// Executed whenever the controlled entity collides with anything.
-void ECPickUpItem::onCollide(Entity *controlledEntity, Entity *collidedWith)
+void ECItemPickerUpper::onCollide(Entity *controlledEntity, Entity *collidedWith)
 {
     // do nothing if it didnt colide with an item
     Item* asItem = dynamic_cast<Item*>(collidedWith);

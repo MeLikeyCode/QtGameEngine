@@ -1,21 +1,21 @@
-#include "ECGrabCam.h"
+#include "ECCameraFollower.h"
 #include <cassert>
 #include "Map.h"
 #include "Game.h"
 
-ECGrabCam::ECGrabCam(Entity *entity):
+ECCameraFollower::ECCameraFollower(Entity *entity):
     EntityController(entity)
 {
     // make sure passed in entity is not nullptr
     assert(entity != nullptr);
 
     // listen to when the entity moves
-    connect(entity,&Entity::moved,this,&ECGrabCam::onEntityMoved_);
+    connect(entity,&Entity::moved,this,&ECCameraFollower::onEntityMoved_);
 }
 
 /// Executed whenever the controlled entity moves.
 /// Will make game follow it.
-void ECGrabCam::onEntityMoved_(Entity *entity, QPointF fromPos, QPointF toPos)
+void ECCameraFollower::onEntityMoved_(Entity *entity, QPointF fromPos, QPointF toPos)
 {
     // if the entity is not in a map at this moment, do nothing
     Map* entitysMap = entity->map();

@@ -1,4 +1,4 @@
-#include "ECChaseEnemies.h"
+#include "ECEnemyChaser.h"
 #include "ECFieldOfViewEmitter.h"
 #include "PathMover.h"
 #include <cassert>
@@ -8,7 +8,7 @@
 #include "Game.h"
 #include <QDebug> // TODO: test remove
 
-ECChaseEnemies::ECChaseEnemies(Entity* entity):
+ECEnemyChaser::ECEnemyChaser(Entity* entity):
     EntityController(entity),
     stopDistance_(100),
     fovEmitter_(new ECFieldOfViewEmitter(entity)),
@@ -27,24 +27,24 @@ ECChaseEnemies::ECChaseEnemies(Entity* entity):
     assert(entitysGame != nullptr);
 
     // listen to game
-    connect(entitysGame, &Game::watchedEntityEntersRange, this, &ECChaseEnemies::onEntityEntersRange_);
-    connect(entitysGame, &Game::watchedEntityLeavesRange, this, &ECChaseEnemies::onEntityLeavesRange_);
+    connect(entitysGame, &Game::watchedEntityEntersRange, this, &ECEnemyChaser::onEntityEntersRange_);
+    connect(entitysGame, &Game::watchedEntityLeavesRange, this, &ECEnemyChaser::onEntityLeavesRange_);
 
     // listen to fov emitter
-    connect(fovEmitter_.get(),&ECFieldOfViewEmitter::entityEntersFOV,this,&ECChaseEnemies::onEntityEntersFOV_);
-    connect(fovEmitter_.get(),&ECFieldOfViewEmitter::entityLeavesFOV,this,&ECChaseEnemies::onEntityLeavesFOV_);
+    connect(fovEmitter_.get(),&ECFieldOfViewEmitter::entityEntersFOV,this,&ECEnemyChaser::onEntityEntersFOV_);
+    connect(fovEmitter_.get(),&ECFieldOfViewEmitter::entityLeavesFOV,this,&ECEnemyChaser::onEntityLeavesFOV_);
 
     // listen to path mover
-    connect(pathMover_.get(),&PathMover::moved,this,&ECChaseEnemies::onEntityMoved_);
+    connect(pathMover_.get(),&PathMover::moved,this,&ECEnemyChaser::onEntityMoved_);
 
     // listen to when the chasing entity dies
-    connect(entityControlled(),&QObject::destroyed,this,&ECChaseEnemies::onChasingEntityDies_);
+    connect(entityControlled(),&QObject::destroyed,this,&ECEnemyChaser::onChasingEntityDies_);
 
     // listen to when chasing entity leaves map
-    connect(entityControlled(),&Entity::mapLeft,this, &ECChaseEnemies::onChasingEntityLeavesMap_);
+    connect(entityControlled(),&Entity::mapLeft,this, &ECEnemyChaser::onChasingEntityLeavesMap_);
 
     // connect timer
-    connect(chaseTimer_,&QTimer::timeout,this,&ECChaseEnemies::chaseStep_);
+    connect(chaseTimer_,&QTimer::timeout,this,&ECEnemyChaser::chaseStep_);
 
     // set up path mover
     pathMover_->setAlwaysFaceTargetPosition(true);
@@ -55,7 +55,7 @@ ECChaseEnemies::ECChaseEnemies(Entity* entity):
 /// The controlled entity will then simply ignore any enemy entities that enter
 /// its field of view.
 /// If the controlled entity is currently chasing, it will stop.
-void ECChaseEnemies::stopChasing()
+void ECEnemyChaser::stopChasing()
 {    
     // if currently chasing stop
     if (targetEntity_ != nullptr){
@@ -68,21 +68,21 @@ void ECChaseEnemies::stopChasing()
 
 /// Makes it so that the controlled entity will chase any enemy entites that
 /// enter its field of view.
-void ECChaseEnemies::startChasing()
+void ECEnemyChaser::startChasing()
 {
     shouldChase_ = true;
 }
 
 /// Sets the stop distance.
 /// See stopDistance() for more info.
-void ECChaseEnemies::setStopDistance(double distance)
+void ECEnemyChaser::setStopDistance(double distance)
 {
     stopDistance_ = distance;
 }
 
 /// Returns the distance that the controlled Entity will stop before the
 /// positions of the chased entity.
-double ECChaseEnemies::stopDistance()
+double ECEnemyChaser::stopDistance()
 {
     return stopDistance_;
 }
@@ -90,7 +90,7 @@ double ECChaseEnemies::stopDistance()
 /// Executed whenever an entity enters the fov of the controlled entity.
 /// If the controlled entity doesn't already have a target entity, will set the newly
 /// entering entity as the target entity.
-void ECChaseEnemies::onEntityEntersFOV_(Entity *entity)
+void ECEnemyChaser::onEntityEntersFOV_(Entity *entity)
 {
     // TODO: test remove
     qDebug() << "onEntityEntersFOF_ executed";
@@ -109,12 +109,12 @@ void ECChaseEnemies::onEntityEntersFOV_(Entity *entity)
 
     // listen to when target entity dies (so we can stop chasing)
     targetEntity_ = entity;
-    disconnect(0,&QObject::destroyed,this,&ECChaseEnemies::onChasedEntityDies_); // disconnect any previous signals connect to this slot
-    connect(entity,&QObject::destroyed,this,&ECChaseEnemies::onChasedEntityDies_);
+    disconnect(0,&QObject::destroyed,this,&ECEnemyChaser::onChasedEntityDies_); // disconnect any previous signals connect to this slot
+    connect(entity,&QObject::destroyed,this,&ECEnemyChaser::onChasedEntityDies_);
 
     // listen to when target entity leaves map (so we can stop chasing)
-    disconnect(0,&Entity::mapLeft,this,&ECChaseEnemies::onChasedEntityLeavesMap_);
-    connect(entity,&Entity::mapLeft,this,&ECChaseEnemies::onChasedEntityLeavesMap_);
+    disconnect(0,&Entity::mapLeft,this,&ECEnemyChaser::onChasedEntityLeavesMap_);
+    connect(entity,&Entity::mapLeft,this,&ECEnemyChaser::onChasedEntityLeavesMap_);
 
     // listen to when the target entity enters/leaves stop distance
     entityControlled()->map()->game()->addWatchedEntity(entity,entityControlled(),stopDistance_);
@@ -128,7 +128,7 @@ void ECChaseEnemies::onEntityEntersFOV_(Entity *entity)
 
 /// Executed whenever an entity leaves the fov of the controlled entity.
 /// Will unset the leaving entity as the target entity.
-void ECChaseEnemies::onEntityLeavesFOV_(Entity *entity)
+void ECEnemyChaser::onEntityLeavesFOV_(Entity *entity)
 {
     qDebug() << "onEntityLeavesFOV_ executed"; // TODO: remove, test
 
@@ -156,7 +156,7 @@ void ECChaseEnemies::onEntityLeavesFOV_(Entity *entity)
 }
 
 /// Executed whenever the controlled entity moves towards its chase target.
-void ECChaseEnemies::onEntityMoved_()
+void ECEnemyChaser::onEntityMoved_()
 {
     // do nothing if nothing being chased
     if (targetEntity_.isNull())
@@ -168,7 +168,7 @@ void ECChaseEnemies::onEntityMoved_()
 
 /// Executed whenever the controlled entity has just reached the stop distance from the chased entity.
 /// Will stop moving towards the chased entity.
-void ECChaseEnemies::onEntityEntersRange_(Entity *watched, Entity *watching, double range)
+void ECEnemyChaser::onEntityEntersRange_(Entity *watched, Entity *watching, double range)
 {
     qDebug() << "onEntityEntersRange_ executed"; // TODO: remove test
     pathMover_->stopMovingEntity();
@@ -177,7 +177,7 @@ void ECChaseEnemies::onEntityEntersRange_(Entity *watched, Entity *watching, dou
 
 /// Executed whenever the chased entity just leaves stop distance from controlled entity.
 /// Will start chasing it again.
-void ECChaseEnemies::onEntityLeavesRange_(Entity *watched, Entity *watching, double range)
+void ECEnemyChaser::onEntityLeavesRange_(Entity *watched, Entity *watching, double range)
 {
     qDebug() << "onEntityLeavesRange_ executed"; // TODO: remove test
     paused_ = false;
@@ -185,21 +185,21 @@ void ECChaseEnemies::onEntityLeavesRange_(Entity *watched, Entity *watching, dou
 
 /// Executed when the chasing entity dies.
 /// Will stop chasing.
-void ECChaseEnemies::onChasingEntityDies_(QObject *entity)
+void ECEnemyChaser::onChasingEntityDies_(QObject *entity)
 {
     stopChasing();
 }
 
 /// Executed when the chased entity dies.
 /// Will stop chasing.
-void ECChaseEnemies::onChasedEntityDies_(QObject *entity)
+void ECEnemyChaser::onChasedEntityDies_(QObject *entity)
 {
     stopChasing();
 }
 
 /// Executed when the controlled entity (chasing entity) leaves a map.
 /// If it left to no map (i.e. map ptr is now nullptr), will stop chasing.
-void ECChaseEnemies::onChasingEntityLeavesMap_(Entity *entity)
+void ECEnemyChaser::onChasingEntityLeavesMap_(Entity *entity)
 {
     if (entity->map() == nullptr)
         stopChasing();
@@ -207,14 +207,14 @@ void ECChaseEnemies::onChasingEntityLeavesMap_(Entity *entity)
 
 /// Executed when the chased entity leaves a Map.
 /// If it left to no map (i.e. map ptr is now nullptr), will stop chasing.
-void ECChaseEnemies::onChasedEntityLeavesMap_(Entity *entity)
+void ECEnemyChaser::onChasedEntityLeavesMap_(Entity *entity)
 {
     if (entity->map() == nullptr)
         stopChasing();
 }
 
 /// Takes controlled entity one step closer to chase victim :P (if chasing something).
-void ECChaseEnemies::chaseStep_()
+void ECEnemyChaser::chaseStep_()
 {
     // if whats being chased has died, stop chasing
     // if the thing chasing has died, stop chasing
