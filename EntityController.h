@@ -25,11 +25,17 @@ class Entity;
 ///
 /// @note As a naming convention, all concrete EntityControllers have the prefix EC.
 ///
-/// ECFieldOfViewEmitter will emit a signal whenever another entity either enters or leaves its controlled
-/// entity's field of view. ECMoveByKeyboardFourDirectional will move its controlled entity in response
-/// to the keyboard keys being pressed. ECRotater allows you to rotate its controlled entity via its
-/// rotateRight(), rotateLeft(), etc... functions. As you can see (like the ECFieldOFViewEmitter) some
-/// Entities simply "watch" their controlled entity and emit signals when they see something interesting.
+/// ECFieldOfViewEmitter will emit a signal whenever another entity either enters or leaves its
+/// controlled entity's field of view. ECMoveByKeyboardFourDirectional will move its controlled
+/// entity in response to the keyboard keys being pressed. ECRotater allows you to rotate its
+/// controlled entity via its rotateRight(), rotateLeft(), etc... functions.
+///
+/// As you can see some EntitiyControllers simply "watch" their controlled entity and emit signals
+/// when they see something interesting (e.g. ECFieldOFViewEmitter), other EntityControllers allow
+/// you to do something to the controlled entity (e.g. ECRotater), and some EntityControllers make
+/// the controlled entity do something in response to some external event (e.g.
+/// ECKeyboardMover4Directional). In summary, EntityControllers allow you to give a certain Entity
+/// some functionality.
 ///
 /// Lifetime
 /// ========
