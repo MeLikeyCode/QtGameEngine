@@ -14,7 +14,7 @@ void RangedWeapon::setProjectileSpawnPoint(QPointF point)
     this->projectileSpawnPoint_ = point;
 }
 
-/// Resets the projectile spawn point to be at the very center of the RangedWeapon.
+/// Resets the projectile spawn point to be at the very center of the RangedWeapon's sprite.
 void RangedWeapon::resetProjectileSpawnPoint()
 {
     double length = sprite()->currentlyDisplayedFrame().width();

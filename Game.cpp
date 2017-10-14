@@ -180,7 +180,7 @@ void Game::mousePressEvent(QMouseEvent *event){
     // TODO: everything until end of this todo is test code, remove it
 
     if (event->button() == Qt::LeftButton)
-        ((RangedWeaponSlot*)player->slot("ranged"))->use();
+        ((RangedWeaponSlot*)player->slot("ranged"))->use(); // use whatever item is equipped in the players "ranged" slot
 
     if (event->button() == Qt::RightButton){
         // create an enemy for the player

@@ -116,7 +116,8 @@ SOURCES += main.cpp \
     ECMouseFacer.cpp \
     ECPathMover.cpp \
     ECSineMover.cpp \
-    ECStraightMover.cpp
+    ECStraightMover.cpp \
+    FireballOrb.cpp
 
 HEADERS  += \
     Map.h \
@@ -218,7 +219,8 @@ HEADERS  += \
     ECMouseFacer.h \
     ECPathMover.h \
     ECSineMover.h \
-    ECStraightMover.h
+    ECStraightMover.h \
+    FireballOrb.h
 
 RESOURCES += \
     res.qrc

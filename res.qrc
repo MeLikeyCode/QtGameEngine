@@ -75,5 +75,7 @@
         <file>graphics/human/characterBow.png</file>
         <file>graphics/human/characterSpear.png</file>
         <file>graphics/human3/skeleton_0.png</file>
+        <file>graphics/effects/fireball.png</file>
+        <file>sounds/fireball.wav</file>
     </qresource>
 </RCC>

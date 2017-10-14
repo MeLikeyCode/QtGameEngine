@@ -38,6 +38,7 @@
 #include "TopDownSprite.h"
 #include "AngledSprite.h"
 #include "Sprite.h"
+#include "FireballOrb.h"
 
 Entity* player;
 
@@ -108,17 +109,22 @@ int main(int argc, char *argv[])
 
     RangedWeaponSlot* rangedSlot = new RangedWeaponSlot();
     rangedSlot->setName("ranged");
-    rangedSlot->setPosition(QPointF(50,25));
+    rangedSlot->setPosition(QPointF(64,45));
     player->addSlot(rangedSlot);
 
     // add spear to entity's inventory
     Spear* spear = new Spear();
     player->inventory()->addItem(spear);
 
-    // add bow to entitys inventory and equip it
-    Bow* bow = new Bow();
-    player->inventory()->addItem(bow);
-    rangedSlot->equip(bow);
+//    // add bow to entitys inventory and equip it
+//    Bow* bow = new Bow();
+//    player->inventory()->addItem(bow);
+//    rangedSlot->equip(bow);
+
+    // add fireball to entitys inventory and equip it
+    FireballOrb* fireballOrb = new FireballOrb();
+    player->inventory()->addItem(fireballOrb);
+    rangedSlot->equip(fireballOrb);
 
 
 //    // create an entity that will thrust nearby enemy entities
