@@ -38,7 +38,7 @@
 #include "TopDownSprite.h"
 #include "AngledSprite.h"
 #include "Sprite.h"
-#include "FireballOrb.h"
+#include "FireballLauncher.h"
 
 Entity* player;
 
@@ -122,7 +122,7 @@ int main(int argc, char *argv[])
 //    rangedSlot->equip(bow);
 
     // add fireball to entitys inventory and equip it
-    FireballOrb* fireballOrb = new FireballOrb();
+    FireballLauncher* fireballOrb = new FireballLauncher();
     player->inventory()->addItem(fireballOrb);
     rangedSlot->equip(fireballOrb);
 

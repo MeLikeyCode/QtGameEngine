@@ -1,4 +1,4 @@
-#include "FireballOrb.h"
+#include "FireballLauncher.h"
 
 #include "TopDownSprite.h"
 #include "SpearProjectile.h"
@@ -8,7 +8,7 @@
 #include "Map.h"
 #include "CBDamage.h"
 
-FireballOrb::FireballOrb()
+FireballLauncher::FireballLauncher()
 {
     // default sprite
     TopDownSprite* spr = new TopDownSprite(QPixmap(":resources/graphics/effects/fireball.png"));
@@ -32,7 +32,7 @@ FireballOrb::FireballOrb()
 
 /// Spawns a projectile towards the specified position.
 /// The specified position is in map coordinates.
-void FireballOrb::attack(QPointF position)
+void FireballLauncher::attack(QPointF position)
 {
     soundEffect_->play(1);
 
