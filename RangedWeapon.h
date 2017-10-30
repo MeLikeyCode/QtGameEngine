@@ -5,7 +5,7 @@
 
 class QPointF;
 
-/// Abstract class that represents a weapon that fires projectiles.
+/// Abstract class that represents a weapon that can fire projectiles.
 class RangedWeapon : public Weapon
 {
 public:

@@ -45,14 +45,14 @@ void FireballLauncher::attack(QPointF position)
     // create a spear projectile
     QPointF startPos = mapToMap(projectileSpawnPoint());
 
-    SpearProjectile* spearProjectile = new SpearProjectile(600,50);
+    SpearProjectile* fireballProjectile = new SpearProjectile(600,50);
     TopDownSprite* spr = new TopDownSprite(QPixmap(":resources/graphics/effects/fireball.png"));
-    spearProjectile->setSprite(spr);
-    map->addEntity(spearProjectile);
-    CBDamage* collisionBehavior = (CBDamage*)spearProjectile->collisionBehavior();
-    collisionBehavior->addCollisionToIgnore(owningEntity,spearProjectile);
-    collisionBehavior->addCollisionToIgnore(spearProjectile,this);
-    spearProjectile->setPos(startPos);
-    spearProjectile->shootTowards(position);
-    spearProjectile->setZ(owningEntity->z() + owningEntity->height());
+    fireballProjectile->setSprite(spr);
+    map->addEntity(fireballProjectile);
+    CBDamage* collisionBehavior = (CBDamage*)fireballProjectile->collisionBehavior();
+    collisionBehavior->addCollisionToIgnore(owningEntity,fireballProjectile);
+    collisionBehavior->addCollisionToIgnore(fireballProjectile,this);
+    fireballProjectile->setPos(startPos);
+    fireballProjectile->shootTowards(position);
+    fireballProjectile->setZ(owningEntity->z() + owningEntity->height());
 }
