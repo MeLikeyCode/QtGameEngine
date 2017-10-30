@@ -6,7 +6,7 @@
 class QPointF;
 class Map;
 
-/// Represents a Projectile that is a spear which simply goes from the start position
+/// Represents a Projectile that simply goes from the start position
 /// towards the target position until it exceeds its range. When the SpearProjectile
 /// exceeds its range, it will simply be destroyed.
 /// @author Abdullah Aghazadah

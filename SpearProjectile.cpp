@@ -12,9 +12,8 @@ SpearProjectile::SpearProjectile(double range, double damage):
     range_(range),
     distTravelledSoFar_(0)
 {
-    // set sprite
+    // defaults
     setSprite(new TopDownSprite(QPixmap(":/resources/graphics/weapons/spear.png")));
-
     setSpeed(1000);
 
     // set Mover
