@@ -20,6 +20,8 @@ AngledSprite::AngledSprite(): sprite_(new Sprite())
 void AngledSprite::addFrame(const QPixmap &frame, const std::string &toAnimation, int forAngle)
 {
     assert(toAnimation != "");
+    bool hasDigits = std::find_if(std::begin(toAnimation),std::end(toAnimation),[](char c){return isdigit(c);}) != std::end(toAnimation);
+    assert(!hasDigits); // numbers not allowed in animation names
 
     // if this animation doesn't exist for any angle
     if (animationToAngle_.find(toAnimation) == std::end(animationToAngle_))
@@ -42,6 +44,9 @@ void AngledSprite::addFrame(const QPixmap &frame, const std::string &toAnimation
 /// @param toNode Where on the SpriteSheet to stop adding frames for the animation.
 void AngledSprite::addAnimation(int angle, std::string animationName, const SpriteSheet &fromSpriteSheet, const Node &fromNode, const Node &toNode)
 {
+    bool hasDigits = std::find_if(std::begin(animationName),std::end(animationName),[](char c){return isdigit(c);}) != std::end(animationName);
+    assert(!hasDigits); // numbers not allowed in animation names
+
     if (animationToAngle_.find(animationName) == animationToAngle_.end())
         animationToAngle_[animationName] = std::vector<int>();
 

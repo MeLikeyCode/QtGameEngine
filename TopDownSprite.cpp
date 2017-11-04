@@ -1,5 +1,8 @@
 #include "TopDownSprite.h"
 
+#include <cassert>
+
+
 #include "Sprite.h"
 #include "SpriteSheet.h"
 #include "Node.h"
@@ -25,11 +28,17 @@ TopDownSprite::TopDownSprite(const QPixmap &pixmap): sprite_(new Sprite(pixmap))
 /// @param to Where on the SpriteSheet to stop adding frames from.
 void TopDownSprite::addAnimation(std::string animationName, const SpriteSheet &fromSpriteSheet, const Node &from, const Node &to)
 {
+    bool hasDigits = std::find_if(std::begin(animationName),std::end(animationName),[](char c){return isdigit(c);}) != std::end(animationName);
+    assert(!hasDigits); // numbers not allowed in animation names
+
     sprite_->addFrames(from,to,fromSpriteSheet,animationName);
 }
 
 void TopDownSprite::addAnimation(std::string resourceFolder, int numOfImages, std::string imagePrefix)
 {
+    bool hasDigits = std::find_if(std::begin(imagePrefix),std::end(imagePrefix),[](char c){return isdigit(c);}) != std::end(imagePrefix);
+    assert(!hasDigits); // numbers not allowed in animation names
+
     sprite_->addFrames(resourceFolder,numOfImages,imagePrefix);
 }
 
