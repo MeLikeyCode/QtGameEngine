@@ -211,6 +211,7 @@ void Sprite::nextFrame_(){
     // forever, stop
     if (timesPlayed_ >= timesToPlay_ && timesToPlay_ != -1){
         emit animationFinished(this,playingAnimation());
+        emit animationFinishedCompletely(this,playingAnimation());
         stop();
         return;
     }

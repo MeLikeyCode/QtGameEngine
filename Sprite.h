@@ -65,8 +65,17 @@ public slots:
     void nextFrame_();
 
 signals:
-    // emitted each time an animation has finished playing
-    void animationFinished(Sprite* sprite, std::string animation);
+    /// Emitted each time an animation has finished playing.
+    /// Even if an animation was asked to play multiple (even infinite) number of times,
+    /// this event will emit every time the last frame is reached.
+    void animationFinished(Sprite* sender, std::string animation);
+
+    /// Emitted when an animation has finished playing the number of times it was asked to play.
+    /// The difference between this and animationFinished() is that this is only
+    /// emitted when the animation has finished playing the number of times
+    /// it was asked to play, where as animationFinished() will be emitted
+    /// every single time the last frame is reached.
+    void animationFinishedCompletely(Sprite* sender, std::string animation);
 
 private:
     // mapping of string : vector of pixmaps (an animation)
