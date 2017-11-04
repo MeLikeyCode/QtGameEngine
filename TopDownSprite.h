@@ -19,6 +19,7 @@ class Node;
 /// @see EntitySprite
 class TopDownSprite : public EntitySprite
 {
+    Q_OBJECT
 public:
     TopDownSprite();
     TopDownSprite(const QPixmap& pixmap);
@@ -34,13 +35,20 @@ public:
     virtual QRectF boundingBox() const override;
     virtual bool hasAnimation(const std::string& animationName) const override;
     virtual QPixmap currentlyDisplayedFrame() const override;
+    virtual void play(const std::string &animationName, int numTimesToPlay, int fpsToPlayAt) override;
+    virtual void stop() override;
+    virtual std::string playingAnimation() override;
+
+public slots:
+    void onInternalSpriteAnimationFinished_(Sprite* sender, std::string animation);
+    void onInternalSpriteAnimationCompletelyFinished_(Sprite* sender, std::string animation);
 
 private:
     Sprite* sprite_;
 
     virtual void setFacingAngle_(double angle) override;
-    virtual void play_(const std::string &animationName, int numTimesToPlay, int fpsToPlayAt) override;
-    virtual void stop_() override;
+
+    void commonInitialize_();
 };
 
 #endif // TOPDOWNSPRITE_H

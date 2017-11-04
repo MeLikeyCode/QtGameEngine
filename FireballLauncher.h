@@ -6,6 +6,8 @@
 class QPointF;
 class Sound;
 
+/// A RangedWeapon that on attack() will launch a fireball towards the specified position.
+/// @author Abdullah Aghazadah
 class FireballLauncher : public RangedWeapon
 {
 public:

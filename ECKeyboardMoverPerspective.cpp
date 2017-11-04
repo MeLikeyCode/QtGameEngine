@@ -69,7 +69,7 @@ void ECKeyboardMoverPerspective::moveStep_()
         // move if the newPt is free
         if (entity->canFit(newPt)){
             entity->setPos(newPt);
-            playAnimIfExists_("walk");
+            playAnimIfExistsAndNoOtherPlaying_("walk");
         }
     }
 
@@ -86,7 +86,7 @@ void ECKeyboardMoverPerspective::moveStep_()
         // move if the newPt is free
         if (entity->canFit(newPt)){
             entity->setPos(newPt);
-            playAnimIfExists_("walk");
+            playAnimIfExistsAndNoOtherPlaying_("walk");
         }
     }
 
@@ -103,7 +103,7 @@ void ECKeyboardMoverPerspective::moveStep_()
         // move if the newPt is free
         if (entity->canFit(newPt)){
             entity->setPos(newPt);
-            playAnimIfExists_("walk");
+            playAnimIfExistsAndNoOtherPlaying_("walk");
         }
 
     }
@@ -121,20 +121,21 @@ void ECKeyboardMoverPerspective::moveStep_()
         // move if the newPt is free
         if (entity->canFit(newPt)){
             entity->setPos(newPt);
-            playAnimIfExists_("walk");
+            playAnimIfExistsAndNoOtherPlaying_("walk");
         }
 
     }
 
     // if none of the keys are pressed, play stand animation
     if (!wPressed && !aPressed && !sPressed && !dPressed){
-        playAnimIfExists_("stand");
+        playAnimIfExistsAndNoOtherPlaying_("stand");
     }
 }
 
-void ECKeyboardMoverPerspective::playAnimIfExists_(std::string anim)
+void ECKeyboardMoverPerspective::playAnimIfExistsAndNoOtherPlaying_(std::string anim)
 {
     Entity* entity = entityControlled();
-    if (entity->sprite()->hasAnimation(anim))
+    EntitySprite* entitysSprite = entity->sprite();
+    if (entitysSprite->hasAnimation(anim) && (entitysSprite->playingAnimation() == "" || entitysSprite->playingAnimation() == "stand"))
         entity->sprite()->play(anim,-1,10);
 }

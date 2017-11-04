@@ -117,7 +117,8 @@ SOURCES += main.cpp \
     ECPathMover.cpp \
     ECSineMover.cpp \
     ECStraightMover.cpp \
-    FireballLauncher.cpp
+    FireballLauncher.cpp \
+    AnimationAttack.cpp
 
 HEADERS  += \
     Map.h \
@@ -220,7 +221,8 @@ HEADERS  += \
     ECPathMover.h \
     ECSineMover.h \
     ECStraightMover.h \
-    FireballLauncher.h
+    FireballLauncher.h \
+    AnimationAttack.h
 
 RESOURCES += \
     res.qrc

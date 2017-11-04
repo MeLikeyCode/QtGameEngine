@@ -37,20 +37,3 @@ void EntitySprite::scale(double scale)
 {
     underlyingItem_->setScale(scale);
 }
-
-void EntitySprite::play(const std::string &animationName, int numTimesToPlay, int fpsToPlayAt)
-{
-    play_(animationName,numTimesToPlay,fpsToPlayAt); // delegate to concrete classes
-    playingAnimation_ = animationName; // remember that we are currently playing this animation
-}
-
-std::string EntitySprite::playingAnimation() const
-{
-    return playingAnimation_;
-}
-
-void EntitySprite::stop()
-{
-    stop_(); // delegate to sub class
-    playingAnimation_ = ""; // remember that we are not currently playing any animations
-}

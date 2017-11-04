@@ -24,7 +24,8 @@
 #include "ECPathMover.h" // TODO: delete, test only
 #include "ECBodyThruster.h" // TODO: delete, test only
 #include "Sprite.h" // TODO: delete, test only
-#include "RangedWeaponSlot.h"; // TODO: delete, test only
+#include "RangedWeaponSlot.h" // TODO: delete, test only
+#include "MeleeWeaponSlot.h"
 
 extern Entity* player;
 
@@ -180,7 +181,7 @@ void Game::mousePressEvent(QMouseEvent *event){
     // TODO: everything until end of this todo is test code, remove it
 
     if (event->button() == Qt::LeftButton)
-        ((RangedWeaponSlot*)player->slot("ranged"))->use(); // use whatever item is equipped in the players "ranged" slot
+        ((MeleeWeaponSlot*)player->slot("melee"))->use(); // use whatever item is equipped in the players "ranged" slot
 
     if (event->button() == Qt::RightButton){
         // create an enemy for the player

@@ -39,6 +39,7 @@
 #include "AngledSprite.h"
 #include "Sprite.h"
 #include "FireballLauncher.h"
+#include "AnimationAttack.h"
 
 Entity* player;
 
@@ -81,12 +82,17 @@ int main(int argc, char *argv[])
     // create an EntitySprite for the entity
     SpriteSheet skeletonSpriteSheet(":/resources/graphics/human3/skeleton_0.png",32,8,128,128);
     AngledSprite* sprplayer = new AngledSprite();
-    for (int i = 0, n = 8; i < n; ++i){
+    for (int i = 0, n = 8; i < n; ++i){ // for each angle
+        // stand
         sprplayer->addAnimation((180+45*i) % 360,"stand",skeletonSpriteSheet,Node(0,0+i),Node(3,0+i));
-        sprplayer->addAnimation((180+45*i) % 360,"walk",skeletonSpriteSheet,Node(4,0+i),Node(11,0+i));
         for (int j = 2; j > 0; --j){
             sprplayer->addFrame(skeletonSpriteSheet.tileAt(Node(j,0+i)),"stand",(180+45*i) % 360);
         }
+        // walk
+        sprplayer->addAnimation((180+45*i) % 360,"walk",skeletonSpriteSheet,Node(4,0+i),Node(11,0+i));
+
+        // attack
+        sprplayer->addAnimation((180+45*i) % 360,"attack",skeletonSpriteSheet,Node(12,0+i),Node(16,0+i));
     }
     player->setSprite(sprplayer);
 
@@ -103,7 +109,7 @@ int main(int argc, char *argv[])
 
     // create some slots for the entity
     WeaponSlot* rightHandMelee = new WeaponSlot();
-    rightHandMelee->setName("right hand melee");
+    rightHandMelee->setName("melee");
     rightHandMelee->setPosition(QPointF(25,50));
     player->addSlot(rightHandMelee);
 
@@ -122,9 +128,13 @@ int main(int argc, char *argv[])
 //    rangedSlot->equip(bow);
 
     // add fireball to entitys inventory and equip it
-    FireballLauncher* fireballOrb = new FireballLauncher();
-    player->inventory()->addItem(fireballOrb);
-    rangedSlot->equip(fireballOrb);
+//    FireballLauncher* fireballOrb = new FireballLauncher();
+//    player->inventory()->addItem(fireballOrb);
+//    rangedSlot->equip(fireballOrb);
+
+    AnimationAttack* animAttack = new AnimationAttack("attack",10);
+    player->inventory()->addItem(animAttack);
+    rightHandMelee->equip(animAttack);
 
 
 //    // create an entity that will thrust nearby enemy entities

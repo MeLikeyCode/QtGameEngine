@@ -8,15 +8,14 @@
 /// "Default" graphic.
 TopDownSprite::TopDownSprite(): sprite_(new Sprite())
 {
-    underlyingItem_ = sprite_;
+    commonInitialize_();
 }
 
 /// Constructs a TopDownSprite that will have no animations but the specified pixmap will be displayed
 /// as the currently showing frame.
-TopDownSprite::TopDownSprite(const QPixmap &pixmap)
+TopDownSprite::TopDownSprite(const QPixmap &pixmap): sprite_(new Sprite(pixmap))
 {
-    sprite_ = new Sprite(pixmap);
-    underlyingItem_ = sprite_;
+    commonInitialize_();
 }
 
 /// Adds an animation to the TopDownSprite from frames of a SpriteSheet.
@@ -52,19 +51,48 @@ bool TopDownSprite::hasAnimation(const std::string &animationName) const
     return sprite_->hasAnimation(animationName);
 }
 
-void TopDownSprite::play_(const std::string &animationName, int numTimesToPlay, int fpsToPlayAt)
+void TopDownSprite::play(const std::string &animationName, int numTimesToPlay, int fpsToPlayAt)
 {
     sprite_->play(animationName,numTimesToPlay,fpsToPlayAt);
 }
 
-void TopDownSprite::stop_()
+void TopDownSprite::stop()
 {
     sprite_->stop();
+}
+
+std::string TopDownSprite::playingAnimation()
+{
+    return sprite_->playingAnimation();
+}
+
+void TopDownSprite::commonInitialize_()
+{
+    underlyingItem_ = sprite_;
+
+    // listen to when internal sprite finishes playing animations
+    connect(sprite_,&Sprite::animationFinished,this,&TopDownSprite::onInternalSpriteAnimationFinished_);
+    connect(sprite_,&Sprite::animationFinishedCompletely,this,&TopDownSprite::onInternalSpriteAnimationCompletelyFinished_);
+
 }
 
 QPixmap TopDownSprite::currentlyDisplayedFrame() const
 {
     return sprite_->currentFrame();
+}
+
+/// Executed when the underlying sprite emits the "animationFinished" signal.
+/// Will emit our own animationFinished signal in response.
+void TopDownSprite::onInternalSpriteAnimationFinished_(Sprite *sender, std::string animation)
+{
+    emit animationFinished(this,animation);
+}
+
+/// Executed when the underlying sprite emits the "animationFinishedCompletely" signal.
+/// Will emit our own animationFinishedComplete signal in response.
+void TopDownSprite::onInternalSpriteAnimationCompletelyFinished_(Sprite *sender, std::string animation)
+{
+    emit animationFinishedCompletely(this,animation);
 }
 
 void TopDownSprite::setFacingAngle_(double angle)

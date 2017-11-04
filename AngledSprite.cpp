@@ -8,6 +8,8 @@
 AngledSprite::AngledSprite(): sprite_(new Sprite())
 {
     underlyingItem_ = sprite_;
+    connect(sprite_,&Sprite::animationFinished,this,&AngledSprite::onInternalSpriteAnimationFinished_);
+    connect(sprite_,&Sprite::animationFinishedCompletely,this,&AngledSprite::onInternalSpriteAnimationCompletelyFinished_);
 }
 
 /// Adds the specified pixmap as a frame to the specified animation for the specified angle.
@@ -64,7 +66,7 @@ bool AngledSprite::hasAnimation(const std::string &animationName) const
     return contains;
 }
 
-void AngledSprite::play_(const std::string &animationName, int numTimesToPlay, int fpsToPlayAt)
+void AngledSprite::play(const std::string &animationName, int numTimesToPlay, int fpsToPlayAt)
 {
     // approach:
     // - find animation with specified name
@@ -72,6 +74,8 @@ void AngledSprite::play_(const std::string &animationName, int numTimesToPlay, i
     // - play animation (name + angle)
 
     assert(hasAnimation(animationName));
+
+    playingAnimation_ = animationName;
 
     // find closest angle available for specified animation and play that angle version
     std::vector<int> anglesForAnim = animationToAngle_[animationName];
@@ -82,14 +86,49 @@ void AngledSprite::play_(const std::string &animationName, int numTimesToPlay, i
     actualFacingAngle_ = closest; // keep track of what the actual angle of the animation is
 }
 
-void AngledSprite::stop_()
+void AngledSprite::stop()
 {
     sprite_->stop();
+    playingAnimation_ = "";
+}
+
+std::string AngledSprite::playingAnimation()
+{
+    return playingAnimation_;
 }
 
 QPixmap AngledSprite::currentlyDisplayedFrame() const
 {
     return sprite_->currentFrame();
+}
+
+/// Executed when the underlying sprite emits the "animationFinished" signal.
+/// Will emit our own "animationFinished" signal in response.
+void AngledSprite::onInternalSpriteAnimationFinished_(Sprite *sender, std::string animation)
+{
+    // remove number from end
+    std::string animWONums;
+    for (char c : animation){
+        if (!isdigit(c))
+            animWONums.push_back(c);
+    }
+
+    emit animationFinished(this,animWONums);
+}
+
+/// Executed when the underlying sprite emits the "animationFinishedCompletely" signal.
+/// Will emit our own "animationFinishedCompletely" signal in response.
+void AngledSprite::onInternalSpriteAnimationCompletelyFinished_(Sprite *sender, std::string animation)
+{
+    // remove number from end
+    std::string animWONums;
+    for (char c : animation){
+        if (!isdigit(c))
+            animWONums.push_back(c);
+    }
+
+    emit animationFinishedCompletely(this,animWONums);
+    playingAnimation_ = "";
 }
 
 void AngledSprite::setFacingAngle_(double angle)

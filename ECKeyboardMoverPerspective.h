@@ -31,7 +31,7 @@ private:
 
     QTimer* moveTimer_;
 
-    void playAnimIfExists_(std::string anim);
+    void playAnimIfExistsAndNoOtherPlaying_(std::string anim);
 };
 
 #endif // ECMOVEBYKEYBOARDPERSPECTIVE_H
