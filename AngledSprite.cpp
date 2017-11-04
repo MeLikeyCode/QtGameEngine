@@ -66,7 +66,7 @@ bool AngledSprite::hasAnimation(const std::string &animationName) const
     return contains;
 }
 
-void AngledSprite::play(const std::string &animationName, int numTimesToPlay, int fpsToPlayAt)
+void AngledSprite::play(const std::string &animationName, int numTimesToPlay, int fpsToPlayAt, int startingFrameNumber)
 {
     // approach:
     // - find animation with specified name
@@ -81,7 +81,7 @@ void AngledSprite::play(const std::string &animationName, int numTimesToPlay, in
     std::vector<int> anglesForAnim = animationToAngle_[animationName];
     double fAngle = facingAngle();
     int closest = closestAngle(anglesForAnim,fAngle);
-    sprite_->play(animationName + std::to_string(closest),numTimesToPlay,fpsToPlayAt);
+    sprite_->play(animationName + std::to_string(closest),numTimesToPlay,fpsToPlayAt,startingFrameNumber);
 
     actualFacingAngle_ = closest; // keep track of what the actual angle of the animation is
 }
@@ -134,9 +134,11 @@ void AngledSprite::onInternalSpriteAnimationCompletelyFinished_(Sprite *sender, 
 void AngledSprite::setFacingAngle_(double angle)
 {
     // approach:
-    // - if currently playing an animation, pick version closest to angle
+    // - if currently playing an animation, find version closest to angle and start playing that version from current frame index
+
+    int frameIndex = sprite_->currentFrameNumber();
 
     if (sprite_->playingAnimation() != ""){
-        play(playingAnimation_,sprite_->playingAnimationTimesLeftToPlay(),sprite_->playingAnimationFPS());
+        play(playingAnimation_,sprite_->playingAnimationTimesLeftToPlay(),sprite_->playingAnimationFPS(),frameIndex);
     }
 }

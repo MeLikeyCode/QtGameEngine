@@ -51,9 +51,9 @@ bool TopDownSprite::hasAnimation(const std::string &animationName) const
     return sprite_->hasAnimation(animationName);
 }
 
-void TopDownSprite::play(const std::string &animationName, int numTimesToPlay, int fpsToPlayAt)
+void TopDownSprite::play(const std::string &animationName, int numTimesToPlay, int fpsToPlayAt, int startingFrameNumber)
 {
-    sprite_->play(animationName,numTimesToPlay,fpsToPlayAt);
+    sprite_->play(animationName,numTimesToPlay,fpsToPlayAt,startingFrameNumber);
 }
 
 void TopDownSprite::stop()

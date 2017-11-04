@@ -58,7 +58,7 @@ public:
     virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
     virtual QRectF boundingRect() const;
 
-    void play(std::string animation, int timesToPlay, double framesPerSecond);
+    void play(std::string animation, int timesToPlay, double framesPerSecond, int startingFrameNumber = 0);
     void stop();
 
 public slots:

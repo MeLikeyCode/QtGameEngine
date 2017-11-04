@@ -81,7 +81,7 @@ public:
     /// If the specified animation is already playing (at current angle), does nothing
     /// (so if you want to restart, call stop() then play() again).
     /// If any other animation is currently playing, it will be stop()ed first.
-    virtual void play(const std::string& animationName, int numTimesToPlay, int fpsToPlayAt) = 0;
+    virtual void play(const std::string& animationName, int numTimesToPlay, int fpsToPlayAt, int startingFrameNumber) = 0;
 
     /// Returns the currently playing animation.
     /// Returns "" (empty string) if no animation is currently playing.

@@ -151,5 +151,5 @@ void ECKeyboardMover4Directional::playAnimationIfItExists_(std::string animation
 {
     Entity* entity = entityControlled();
     if (entity->sprite()->hasAnimation(animation))
-        entity->sprite()->play(animation,-1,10);
+        entity->sprite()->play(animation,-1,10,0);
 }

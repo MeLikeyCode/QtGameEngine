@@ -36,7 +36,7 @@ void ECKeyboardMover8Directional::playAnimIfHas_(std::string anim)
 {
     Entity* entity = entityControlled();
     if (entity->sprite()->hasAnimation(anim)){
-        entity->sprite()->play(anim,-1,10);
+        entity->sprite()->play(anim,-1,10,0);
     }
 }
 

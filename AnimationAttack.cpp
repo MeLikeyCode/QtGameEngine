@@ -29,7 +29,7 @@ void AnimationAttack::attack(QPointF position)
 
     // play animation
     alreadyAttacking_ = true;
-    ownersSprite->play(animationToPlayOnAttack_,1,20);
+    ownersSprite->play(animationToPlayOnAttack_,1,10,0);
 
     // get everyone in arc and damage them
     Map* entitysMap = owner->map();

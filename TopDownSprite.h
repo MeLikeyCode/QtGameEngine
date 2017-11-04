@@ -35,7 +35,7 @@ public:
     virtual QRectF boundingBox() const override;
     virtual bool hasAnimation(const std::string& animationName) const override;
     virtual QPixmap currentlyDisplayedFrame() const override;
-    virtual void play(const std::string &animationName, int numTimesToPlay, int fpsToPlayAt) override;
+    virtual void play(const std::string &animationName, int numTimesToPlay, int fpsToPlayAt, int startingFrameNumber) override;
     virtual void stop() override;
     virtual std::string playingAnimation() override;
 

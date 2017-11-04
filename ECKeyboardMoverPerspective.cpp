@@ -138,5 +138,5 @@ void ECKeyboardMoverPerspective::playAnimIfExistsAndNoOtherPlaying_(std::string 
     EntitySprite* entitysSprite = entity->sprite();
     std::string playingAnim = entitysSprite->playingAnimation();
     if (entitysSprite->hasAnimation(anim) && (playingAnim == "" || playingAnim == "stand" || playingAnim == "walk"))
-        entity->sprite()->play(anim,-1,10);
+        entity->sprite()->play(anim,-1,10,0);
 }
