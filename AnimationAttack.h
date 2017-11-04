@@ -19,11 +19,11 @@ public:
     void attack(QPointF position);
 
 public slots:
-    void onOwnerCollides_(Entity* owner, Entity* collidedWith);
     void onOwnerAnimationFinished_(EntitySprite* ownerSprite, std::string animation);
 private:
     Sound* soundEffect_;
     std::string animationToPlayOnAttack_;
     int damage_;
+    bool alreadyAttacking_;
 };
 

@@ -12,6 +12,7 @@
 class Map;
 class QPointF;
 class AIEntity;
+class Entity;
 
 // convenience functions
 void addRandomTrees(Map* mapToAddTreesTo, int numTreesToAdd);
@@ -25,6 +26,8 @@ double secondsToMs(double seconds);
 double msToSeconds(double milliseconds);
 quint32 fastRandom();
 double closestAngle(const std::vector<int>& allAngles, double targetAngle);
+
+QPointF centerPos(Entity* entity);
 
 
 #endif // UTILITIES_H

@@ -35,7 +35,7 @@ class EntityController;
 ///
 /// Entities support parent/child relationships. When a parent Entity moves or
 /// rotates, so do all of its children. When a parent Entity is deleted, so
-/// are all of its children. When a parent Entity is removed from a Map,
+/// are all of its children. When a parent Entity is added/removed to/from a Map,
 /// so are all of its children.
 ///
 /// Entities can be controlled by entity controllers (TODO: link to doc).

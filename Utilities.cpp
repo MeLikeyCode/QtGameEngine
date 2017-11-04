@@ -6,12 +6,12 @@
 #include <stdlib.h>
 #include <time.h>
 #include <cassert>
+#include <QtMath>
 
 #include "Map.h"
 #include "RandomImageEntity.h"
 #include "PathingMap.h"
-#include <QtMath>
-
+#include "EntitySprite.h"
 
 /// Adds the specified number of trees randomly scattered on the specified Map.
 void addRandomTrees(Map *mapToAddTreesTo, int numTreesToAdd)
@@ -139,4 +139,14 @@ double closestAngle(const std::vector<int> &allAngles, double targetAngle)
         }
     }
     return closest;
+}
+
+/// Returns the center pos of the specified entity.
+/// The center pos is the center of its sprite.
+QPointF centerPos(Entity *entity)
+{
+    EntitySprite* entitysSprite = entity->sprite();
+    double spriteWidth = entitysSprite->boundingBox().width();
+    double spriteHeight = entitysSprite->boundingBox().height();
+    return entity->mapToMap(QPointF(spriteWidth/2,spriteHeight/2));
 }
