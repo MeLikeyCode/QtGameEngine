@@ -6,13 +6,15 @@
 #include "Map.h"
 #include "Utilities.h"
 
-AnimationAttack::AnimationAttack(std::string animationToPlayOnAttack, int damage):
+AnimationAttack::AnimationAttack(std::string animationToPlayOnAttack, int damage, double arcRange, double arcAngle):
     animationToPlayOnAttack_(animationToPlayOnAttack),
     damage_(damage),
+    archRange_(arcRange),
+    arcAngle_(arcAngle),
     alreadyAttacking_(false)
 {
     soundEffect_ = new Sound("qrc:/resources/sounds/axe.wav");
-    setSprite(new TopDownSprite(QPixmap()));
+    setSprite(new TopDownSprite(QPixmap())); // empty sprite
 }
 
 void AnimationAttack::attack(QPointF position)
@@ -38,12 +40,10 @@ void AnimationAttack::attack(QPointF position)
     poly.append(ownersPos);
     QLineF line(ownersPos,QPointF(0,0));
     line.setAngle(owner->facingAngle() * -1);
-    const static double LENGTH = 75;
-    const static double DELTA = 30;
-    line.setLength(LENGTH);
-    line.setAngle(line.angle() + DELTA);
+    line.setLength(archRange_);
+    line.setAngle(line.angle() + arcAngle_/2);
     poly.append(line.p2());
-    line.setAngle(line.angle() - DELTA * 2);
+    line.setAngle(line.angle() - arcAngle_);
     poly.append(line.p2());
 
     std::unordered_set<Entity*> entsInRegion = entitysMap->entities(poly);

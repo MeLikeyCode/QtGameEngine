@@ -132,7 +132,7 @@ int main(int argc, char *argv[])
 //    player->inventory()->addItem(fireballOrb);
 //    rangedSlot->equip(fireballOrb);
 
-    AnimationAttack* animAttack = new AnimationAttack("attack",10);
+    AnimationAttack* animAttack = new AnimationAttack("attack",10,75,45);
     player->inventory()->addItem(animAttack);
     rightHandMelee->equip(animAttack);
 
