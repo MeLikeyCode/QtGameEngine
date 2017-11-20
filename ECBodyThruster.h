@@ -12,7 +12,7 @@ class ECEnemyChaser;
 class BodyThrust;
 
 /// An entity controller that causes the controlled entity to chase enemy entites
-/// in its field of view and BodyThrust them when close enough.
+/// in its field of view and use the BodyThrust ability on them when close enough.
 ///
 /// Example usage:
 /// ==============
@@ -33,8 +33,8 @@ signals:
     void thrusted(Entity* towardsEnemy);
 
 private:
-    std::unique_ptr<ECEnemyChaser> controllerChaseEnemies_;
-    std::unique_ptr<BodyThrust> bodyThrustAbility_;
+    ECEnemyChaser* controllerChaseEnemies_;
+    BodyThrust* bodyThrustAbility_;
 };
 
 #endif // ECBODYTHRUSTER_H

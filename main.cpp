@@ -96,16 +96,17 @@ int main(int argc, char *argv[])
     }
     player->setSprite(sprplayer);
 
+    // add entity to a map
     map1->addEntity(player);
+    player->setPos(QPointF(200,200));
 
-    // add controllers to control the entity
+    // add controllers to control the behavior of the entity
     ECMouseFacer* rotContr = new ECMouseFacer(player);
     ECKeyboardMoverPerspective* moveContr = new ECKeyboardMoverPerspective(player);
     ECCameraFollower* grabCamContr = new ECCameraFollower(player);
     ECMapMover* moveToNMC = new ECMapMover(player);
     ECCurrentMapGrabber* grabCM = new ECCurrentMapGrabber(player);
-
-    player->setPos(QPointF(200,200));
+    ECItemPickerUpper* pickUpItemContr = new ECItemPickerUpper(player);
 
     // create some slots for the entity
     WeaponSlot* rightHandMelee = new WeaponSlot();
@@ -135,7 +136,6 @@ int main(int argc, char *argv[])
     AnimationAttack* animAttack = new AnimationAttack("attack",10,75,45);
     player->inventory()->addItem(animAttack);
     rightHandMelee->equip(animAttack);
-
 
 //    // create an entity that will thrust nearby enemy entities
 //    Entity* enemy = new Entity();
@@ -169,7 +169,7 @@ int main(int argc, char *argv[])
     pushBackItem->setPos(QPointF(300,300));
     map1->addEntity(pushBackItem);
 
-    ECItemPickerUpper* pickUpItemContr = new ECItemPickerUpper(player);
+
 
 //    // create an inventory viewer to visuallize the inventory of player
 //    InventoryViewer* invViewer = new InventoryViewer();

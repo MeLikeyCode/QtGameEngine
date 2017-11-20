@@ -62,7 +62,7 @@ private:
 
     QTimer* moveTimer_;
     std::unique_ptr<AsyncShortestPathFinder> pf_;
-    std::unique_ptr<ECRotater> rotater_;
+    ECRotater* rotater_;
 
     // moving helper attributes
     std::vector<QPointF> pointsToFollow_;

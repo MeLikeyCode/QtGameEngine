@@ -37,7 +37,7 @@ private:
 
     QTimer* rotateTimer_;
 
-    std::unique_ptr<ECRotater> rotater_;
+    ECRotater* rotater_;
 };
 
 #endif // ECROTATETOMOUSE_H

@@ -40,7 +40,7 @@ signals:
     /// tries to *attack* an entity (and not simply chase it).
     void attacked(Entity* entityAttacked);
 private:
-    std::unique_ptr<ECEnemyChaser> controllerChaseEnemies_;
+    ECEnemyChaser* controllerChaseEnemies_;
 };
 
 #endif // ECATTACKENEMIESWITHWEAPON_H

@@ -68,9 +68,9 @@ private:
     // options
     double stopDistance_;
 
-    std::unique_ptr<ECFieldOfViewEmitter> fovEmitter_; // helper controller that emits events whenever
-                                                       // anothe entity enters/leaves the controlled entity's fov
-    std::unique_ptr<ECPathMover> pathMover_;
+    ECFieldOfViewEmitter* fovEmitter_; // helper controller that emits events whenever
+                                       // another entity enters/leaves the controlled entity's fov
+    ECPathMover* pathMover_;
     QTimer* chaseTimer_;
 
     bool shouldChase_;

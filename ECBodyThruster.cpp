@@ -10,8 +10,8 @@ ECBodyThruster::ECBodyThruster(Entity *entity):
     bodyThrustAbility_(new BodyThrust(*entity))
 {
     // listen to chase controller
-    connect(controllerChaseEnemies_.get(),&ECEnemyChaser::entityChaseContinued,this,&ECBodyThruster::onEnemyChaseContinued);
-    connect(controllerChaseEnemies_.get(),&ECEnemyChaser::entityChaseStarted,this,&ECBodyThruster::onEnemyChaseContinued);
+    connect(controllerChaseEnemies_,&ECEnemyChaser::entityChaseContinued,this,&ECBodyThruster::onEnemyChaseContinued);
+    connect(controllerChaseEnemies_,&ECEnemyChaser::entityChaseStarted,this,&ECBodyThruster::onEnemyChaseContinued);
 }
 
 /// Executed whenever the controlled enity moves closer to the chased entity.

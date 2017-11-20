@@ -131,8 +131,6 @@ public:
     bool canFit(const QPointF& atPos);
     QRectF boundingRect();
 
-    void addEntityController(EntityController* controller);
-
 signals:
     /// Emitted whenever the Entity moves from a certain position to another
     /// position.
@@ -179,7 +177,6 @@ private:
     double facingAngle_;
     double rotationSpeed_; // degrees per second
     double zValue_;
-    std::vector<std::unique_ptr<EntityController>> entityControllers_;
 
     // helper functions
     void scaleBasedOnZ_();

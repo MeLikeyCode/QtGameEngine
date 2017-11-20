@@ -279,16 +279,6 @@ QRectF Entity::boundingRect()
     return sprite()->boundingBox();
 }
 
-/// Adds an EntityController to the list of entities controlling this entity.
-/// When an Entity dies, it will destroy all of its EntityControllers.
-void Entity::addEntityController(EntityController *controller)
-{
-    if (controller->entityControlled() != this)
-        controller->setEntityControlled(this);
-
-    entityControllers_.push_back(std::unique_ptr<EntityController>(controller));
-}
-
 /// Returns the current angle the Entity is facing in degrees.
 int Entity::facingAngle()
 {

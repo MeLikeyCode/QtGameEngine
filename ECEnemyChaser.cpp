@@ -31,11 +31,11 @@ ECEnemyChaser::ECEnemyChaser(Entity* entity):
     connect(entitysGame, &Game::watchedEntityLeavesRange, this, &ECEnemyChaser::onEntityLeavesRange_);
 
     // listen to fov emitter
-    connect(fovEmitter_.get(),&ECFieldOfViewEmitter::entityEntersFOV,this,&ECEnemyChaser::onEntityEntersFOV_);
-    connect(fovEmitter_.get(),&ECFieldOfViewEmitter::entityLeavesFOV,this,&ECEnemyChaser::onEntityLeavesFOV_);
+    connect(fovEmitter_,&ECFieldOfViewEmitter::entityEntersFOV,this,&ECEnemyChaser::onEntityEntersFOV_);
+    connect(fovEmitter_,&ECFieldOfViewEmitter::entityLeavesFOV,this,&ECEnemyChaser::onEntityLeavesFOV_);
 
     // listen to path mover
-    connect(pathMover_.get(),&ECPathMover::moved,this,&ECEnemyChaser::onEntityMoved_);
+    connect(pathMover_,&ECPathMover::moved,this,&ECEnemyChaser::onEntityMoved_);
 
     // listen to when the chasing entity dies
     connect(entityControlled(),&QObject::destroyed,this,&ECEnemyChaser::onChasingEntityDies_);
@@ -148,7 +148,7 @@ void ECEnemyChaser::onEntityLeavesFOV_(Entity *entity)
     // if there is another enemy in view, target that one
     std::unordered_set<Entity*> otherEntitiesInView = fovEmitter_->entitiesInView();
     for (Entity* possibleEnemy:otherEntitiesInView){
-        if (targetEntity_->isAnEnemyGroup(possibleEnemy->group())){
+        if (entityControlled()->isAnEnemyGroup(possibleEnemy->group())){
             onEntityEntersFOV_(possibleEnemy);
             return;
         }

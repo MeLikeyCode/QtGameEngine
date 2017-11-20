@@ -4,10 +4,7 @@ EntityController::EntityController(Entity *entityToControl) : entityControlled_(
 {
     // Entity maintains a collection of EntityControllers that are operating on it.
     // When an Entity dies, it kills all of its controllers.
-    // When we construct an EntityController we can pass in the entity that it will operate on via its ctor.
-    // This ctor will need to ensure that it adds the object ('this') to the Entity's list of controllers (via Entity::addController())
-    // so that the lifetime of the EntityController can be managed by the Entity (which is the policy we have chosen).
-    entityToControl->addEntityController(this);
+    setParent(entityToControl);
 }
 
 EntityController::~EntityController()
@@ -26,5 +23,6 @@ Entity *EntityController::entityControlled()
 /// Set the entity that this EntityController should control.
 void EntityController::setEntityControlled(Entity* entity)
 {
+    setParent(entity);
     entityControlled_ = entity;
 }

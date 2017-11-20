@@ -12,9 +12,8 @@ ECEnemyAttacker::ECEnemyAttacker(Entity *entity):
     controllerChaseEnemies_(new ECEnemyChaser(entity))
 {
     // listen to chaser
-    ECEnemyChaser* ce = controllerChaseEnemies_.get();
-    connect(ce, &ECEnemyChaser::entityChaseContinued,this,&ECEnemyAttacker::onEnemyChaseContinued);
-    connect(ce,&ECEnemyChaser::entityChaseStarted,this,&ECEnemyAttacker::onEnemyChaseContinued);
+    connect(controllerChaseEnemies_, &ECEnemyChaser::entityChaseContinued,this,&ECEnemyAttacker::onEnemyChaseContinued);
+    connect(controllerChaseEnemies_,&ECEnemyChaser::entityChaseStarted,this,&ECEnemyAttacker::onEnemyChaseContinued);
 }
 
 /// Executed whenever the controlled entity takes one step closer to chased entity.
