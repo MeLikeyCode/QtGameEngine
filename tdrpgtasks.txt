@@ -588,11 +588,23 @@ Go back through code and add QPointer/smart pointers where necessary
 -if class creates (owns) something, consider using unique_ptr so memory is automatically cleaned up
 -fuctions should still take by raw pointer unless they will participate in ownership somehow (i.e. either own it, or be one of the owners (shared))
 	
+===TASK===----------DONE
+Decide weather if we want Entities to own lifetime of all their EntityControllers.
+pros:
+-simpler lifetime management, just create lots and lots of EntityControllers without worrying about deleting them (they'll be deleted when the Entity dies)
+cons:
+-none, but the unique ptr approach i'm taking right now is wrong. I should use Qt's parent/child system to handle the lifetime.
+
 =============================================================================
 =============================================================================
 =========================UNFINISHED TASKS====================================
 =============================================================================
 =============================================================================
+
+===TASK===
+Use Qt's parent/child system to enforce 'container/contained lifetime ownership policy'
+-do this for Entity/EntityControllers - DONE
+-do this for entity and sprite
 
 ===TASK===
 IMPORTANT - work on THIS task only (while doing it, you will discover new things to do)
