@@ -12,9 +12,9 @@ class ECPathMover;
 class ECFieldOfViewEmitter;
 class QTimer;
 
-/// An entity controller (TODO: link to doc) that makes it so the controlled
-/// entity will chase enemy entities in its field of view. Whenever the
-/// controlled entity *starts* chasing an enemy entity, a signal will be
+/// An entity controller that makes it so the controlled
+/// entity will chase certain other entities that enter its field of view. Whenever the
+/// controlled entity *starts* chasing an entity, a signal will be
 /// emitted. As long as the controlled entity *continues* to chase that entity, a
 /// signal will continue to periodically be emitted in order to tell you the
 /// updated distance between the controlled entity and the entity being chased.
@@ -22,29 +22,39 @@ class QTimer;
 /// the controlled entity gets to within the specified distance, it won't get any closer
 /// unless the chased entity moves far again.
 ///
+/// Some relavent terminlogy used in the context of ECChaser:
+/// - a "chasee" is any Entity that will be chased if it enters the field ov view of the controlled entity
+/// - the "target" entity is the entity that the controller is currently chasing
+///
 /// Example usage:
 /// ==============
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.cpp
-/// ECChaseEnemies* c = new ECChaseEnemies(entity);
+/// ECChaser* c = new ECChaser(entity);
+/// c->addChasee(someOtherEntity);
+/// c->addChasee(someOtherEntity2); // "Chasees" will be chased when they enter the controlled entity's field of view
 /// c->setStopDistance(50); // set how close you want the controlled entity to get to the chased entity
-/// connect(c,&ECChaseEnemies::entityChaseStarted,this,myCallback);
-/// connect(c,&ECChaseEnemies::entityChaseContinued,this,myCallback);
+/// connect(c,&ECChaser::entityChaseStarted,this,myCallback);
+/// connect(c,&ECChaser::entityChaseContinued,this,myCallback);
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-class ECEnemyChaser: public EntityController
+class ECChaser: public EntityController
 {
     Q_OBJECT
 public:
-    ECEnemyChaser(Entity* entity);
+    ECChaser(Entity* entity);
+
+    void addChasee(Entity* entity);
+    void removeChasee(Entity* entity);
+    std::unordered_set<Entity*> chasees() const;
 
     void stopChasing();
     void startChasing();
     void setStopDistance(double distance);
-    double stopDistance();
+    double stopDistance() const;
 
 signals:
-    /// Emitted whenever the controlled entity *starts* chasing an enemy entity.
-    /// @param distToChasedEntity the distance between the controlled entity and the enemy
-    /// entity that the controlled entity just started chasing
+    /// Emitted whenever the controlled entity *starts* chasing an entity.
+    /// @param distToChasedEntity the distance between the controlled entity and the chased
+    /// entity.
     void entityChaseStarted(Entity* chasedEntity, double distToChasedEntity);
 
     /// Emitted every once in a while to update you on the distance between the
@@ -62,9 +72,12 @@ public slots:
     void onChasedEntityDies_(QObject* entity);
     void onChasingEntityLeavesMap_(Entity* entity);
     void onChasedEntityLeavesMap_(Entity* entity);
+    void onChaseeDestroyed_(QObject* chasee);
     void chaseStep_();
 
 private:
+    std::unordered_set<Entity*> chasees_;
+
     // options
     double stopDistance_;
 

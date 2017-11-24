@@ -105,7 +105,6 @@ SOURCES += main.cpp \
     EntityController.cpp \
     ECMover.cpp \
     ECEnemyAttacker.cpp \
-    ECEnemyChaser.cpp \
     ECCurrentMapGrabber.cpp \
     ECKeyboardMover8Directional.cpp \
     ECKeyboardMover4Directional.cpp \
@@ -118,7 +117,8 @@ SOURCES += main.cpp \
     ECSineMover.cpp \
     ECStraightMover.cpp \
     FireballLauncher.cpp \
-    AnimationAttack.cpp
+    AnimationAttack.cpp \
+    ECChaser.cpp
 
 HEADERS  += \
     Map.h \
@@ -209,7 +209,6 @@ HEADERS  += \
     EntityController.h \
     ECMover.h \
     ECEnemyAttacker.h \
-    ECEnemyChaser.h \
     ECCurrentMapGrabber.h \
     ECKeyboardMover8Directional.h \
     ECKeyboardMover4Directional.h \
@@ -222,7 +221,8 @@ HEADERS  += \
     ECSineMover.h \
     ECStraightMover.h \
     FireballLauncher.h \
-    AnimationAttack.h
+    AnimationAttack.h \
+    ECChaser.h
 
 RESOURCES += \
     res.qrc

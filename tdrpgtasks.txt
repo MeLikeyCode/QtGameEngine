@@ -612,6 +612,11 @@ EntitySprite::setPos() should set the position of the EntitySprite relative to i
 =============================================================================
 =============================================================================
 
+===TASK===---PICK UP HERE
+Change ECEnemyAttacker such that you give it a list of entities that the controlled entity should attack.
+Change ECEnemyChaser too
+-Get rid of the group system.
+
 ===TASK===
 Create some "creep" entities that will stand around	and attack enemies as they enter their line of sight.
 |
@@ -621,8 +626,7 @@ V
 -create an ECEnemyAttacker and attach it to the entity
 -randomly spawn these entities in the map
 		
-===TASK===
-Change ECEnemyAttacker such that you give it a list of entities that the controlled entity should attack.
+
 		
 ===TASK===
 IMPORTANT - work on THIS task only (while doing it, you will discover new things to do)

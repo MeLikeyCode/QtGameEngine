@@ -186,7 +186,6 @@ void Game::mousePressEvent(QMouseEvent *event){
     if (event->button() == Qt::RightButton){
         // create an enemy for the player
         Entity* enemy = new Entity();
-        enemy->setGroup(1);
 
         TopDownSprite* spr = new TopDownSprite();
         spr->addAnimation(":/resources/graphics/spider",7,"walk");
@@ -197,7 +196,7 @@ void Game::mousePressEvent(QMouseEvent *event){
         player->map()->addEntity(enemy);
         enemy->setPos(mapToMap(event->pos()));
         ECBodyThruster* bodyThrustContr = new ECBodyThruster(enemy);
-        enemy->addEnemyGroup(0);
+        bodyThrustContr->addTargetEntity(player);
     }
 
     // end of TODO

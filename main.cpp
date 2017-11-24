@@ -30,7 +30,7 @@
 #include "SnowWeather.h"
 #include "Utilities.h"
 #include "ECFieldOfViewEmitter.h"
-#include "ECEnemyChaser.h"
+#include "ECChaser.h"
 #include "SpriteSheet.h"
 #include "ECKeyboardMover4Directional.h"
 #include "ECKeyboardMoverPerspective.h"
@@ -221,9 +221,8 @@ int main(int argc, char *argv[])
     goblinEntity->setPos(QPointF(500,500));
     map1->addEntity(goblinEntity);
 
-    ECEnemyAttacker* enemyAttacker = new ECEnemyAttacker(goblinEntity);
-    goblinEntity->setGroup(12);
-    goblinEntity->addEnemyGroup(0);
+    ECAttacker* enemyAttacker = new ECAttacker(goblinEntity);
+    enemyAttacker->addAttackee(player);
 
     AnimationAttack* animAtt = new AnimationAttack("attack",10,200,45);
     animAtt->setCastRange(200);

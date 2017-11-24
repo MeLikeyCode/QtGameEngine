@@ -1,17 +1,32 @@
 #include "ECBodyThruster.h"
 
-#include "ECEnemyChaser.h"
+#include "ECChaser.h"
 #include "BodyThrust.h"
 #include <cassert>
 
 ECBodyThruster::ECBodyThruster(Entity *entity):
     EntityController(entity),
-    controllerChaseEnemies_(new ECEnemyChaser(entity)),
+    controllerChaseEnemies_(new ECChaser(entity)),
     bodyThrustAbility_(new BodyThrust(*entity))
 {
     // listen to chase controller
-    connect(controllerChaseEnemies_,&ECEnemyChaser::entityChaseContinued,this,&ECBodyThruster::onEnemyChaseContinued);
-    connect(controllerChaseEnemies_,&ECEnemyChaser::entityChaseStarted,this,&ECBodyThruster::onEnemyChaseContinued);
+    connect(controllerChaseEnemies_,&ECChaser::entityChaseContinued,this,&ECBodyThruster::onEnemyChaseContinued);
+    connect(controllerChaseEnemies_,&ECChaser::entityChaseStarted,this,&ECBodyThruster::onEnemyChaseContinued);
+}
+
+void ECBodyThruster::addTargetEntity(Entity *entity)
+{
+    controllerChaseEnemies_->addChasee(entity);
+}
+
+void ECBodyThruster::removeTargetEntity(Entity *entity)
+{
+    controllerChaseEnemies_->removeChasee(entity);
+}
+
+std::unordered_set<Entity *> ECBodyThruster::targetEntities() const
+{
+    return controllerChaseEnemies_->chasees();
 }
 
 /// Executed whenever the controlled enity moves closer to the chased entity.

@@ -8,10 +8,10 @@
 #include "EntityController.h"
 #include "Entity.h"
 
-class ECEnemyChaser;
+class ECChaser;
 class BodyThrust;
 
-/// An entity controller that causes the controlled entity to chase enemy entites
+/// An entity controller that causes the controlled entity to chase certain other entites
 /// in its field of view and use the BodyThrust ability on them when close enough.
 ///
 /// Example usage:
@@ -25,6 +25,10 @@ class ECBodyThruster: public EntityController
 public:
     ECBodyThruster(Entity* entity);
 
+    void addTargetEntity(Entity* entity);
+    void removeTargetEntity(Entity* entity);
+    std::unordered_set<Entity*> targetEntities() const;
+
 public slots:
     void onEnemyChaseContinued(Entity* entityChased, double distance);
 
@@ -33,7 +37,7 @@ signals:
     void thrusted(Entity* towardsEnemy);
 
 private:
-    ECEnemyChaser* controllerChaseEnemies_;
+    ECChaser* controllerChaseEnemies_;
     BodyThrust* bodyThrustAbility_;
 };
 
