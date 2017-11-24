@@ -11,9 +11,15 @@
 class QTimer;
 
 /// An entity controller that checks the field of view of
-/// an entity and emits a signal whenever other entities enter or leave the
-/// controlled entity's field of view. You can also use entitiesInView() to get
+/// the controlled entity and emits a signal whenever other entities enter or leave the
+/// controlled entity's field of view.
+///
+/// You can also use entitiesInView() to get
 /// all the current entities in the controlled entity's field of view.
+///
+/// TODO: By default, ECFieldOfViewEmitter will emit a signal when *any* entity enters the
+/// controlled entity's field of view, but you can have it only emit signals when
+/// certain entities of interest enters the field of view of the controlled entity.
 ///
 /// Example usage:
 /// ==============
@@ -28,8 +34,14 @@ class ECFieldOfViewEmitter: public EntityController
 {
     Q_OBJECT
 public:
-    ECFieldOfViewEmitter(Entity* entity);
+    ECFieldOfViewEmitter(Entity* entity, double fovAngle=90, double fovDistance=600);
+
     std::unordered_set<Entity*> entitiesInView();
+
+    void setCheckFrequency(double timesPerSecond);
+    double checkFrequency() const;
+
+    void setOn(bool tf);
 
 public slots:
     void checkFov_();
@@ -44,7 +56,7 @@ signals:
 private:
     double fieldOfViewAngle_;
     double fieldOfViewDistance_;
-    double fieldOfViewCheckFrequency_;
+    double fieldOfViewCheckDelayMs_; // in ms
     QTimer* timerCheckFov_;
 
     QGraphicsPolygonItem* polyItem_; // TODO: remove, for debugging only

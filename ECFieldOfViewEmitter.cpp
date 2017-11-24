@@ -9,16 +9,16 @@
 #include <QPolygonF>
 #include <QDebug>
 
-ECFieldOfViewEmitter::ECFieldOfViewEmitter(Entity *entity):
+ECFieldOfViewEmitter::ECFieldOfViewEmitter(Entity *entity, double fovAngle, double fovDistance):
     EntityController(entity),
-    fieldOfViewAngle_(90),
-    fieldOfViewDistance_(600),
-    fieldOfViewCheckFrequency_(50),
+    fieldOfViewAngle_(fovAngle),
+    fieldOfViewDistance_(fovDistance),
+    fieldOfViewCheckDelayMs_(50),
     timerCheckFov_(new QTimer(this))
 {
     // connect timer to keep checking fov
     connect(timerCheckFov_,&QTimer::timeout,this,&ECFieldOfViewEmitter::checkFov_);
-    timerCheckFov_->start(fieldOfViewCheckFrequency_);
+    timerCheckFov_->start(fieldOfViewCheckDelayMs_);
 
     // TODO: remove, for debugging only
     polyItem_= new QGraphicsPolygonItem();
@@ -112,4 +112,34 @@ std::unordered_set<Entity *> ECFieldOfViewEmitter::entitiesInView()
     entities.erase(entityControlled());
 
     return entities;
+}
+
+/// Sets how often the controller should check the field of view in order to determine
+/// if something has entered or left it.
+void ECFieldOfViewEmitter::setCheckFrequency(double timesPerSecond)
+{
+    timerCheckFov_->stop();
+    double timesPerMS = timesPerSecond/1000.0;
+    fieldOfViewCheckDelayMs_ = 1/timesPerMS;
+    timerCheckFov_->start(fieldOfViewCheckDelayMs_);
+}
+
+/// See setCheckFrequency().
+double ECFieldOfViewEmitter::checkFrequency() const
+{
+    double timesPerMS = 1 / fieldOfViewCheckDelayMs_;
+    double timesPerS = timesPerMS * 1000;
+    return timesPerS;
+}
+
+/// Turns the controller on/off.
+/// When on, signals will be emitted.
+/// When off, signals will not be emitted.
+/// Turning it on when its already on or turning it off when its already off does nothing.
+void ECFieldOfViewEmitter::setOn(bool tf)
+{
+    if (tf)
+        timerCheckFov_->start(tf);
+    else
+        timerCheckFov_->stop();
 }
