@@ -36,17 +36,18 @@ Entity::Entity():
     rotationSpeed_(360),
     zValue_(0)
 {
+    sprite_->setParent(this);
     inventory_->entity_ = this;
 }
 
 /// When an Entity is deleted, it will delete all of its children, and then
-/// remove itself from the Map (if in one). As each child is deleted, it will
+/// remove itself from its Map. As each child is deleted, it will
 /// delete its own children and then remove itself from the Map. You can kinda
 /// see how the "flow" of deletion happens :). The "deepest" child is deleted
 /// and removed from the Map first.
 Entity::~Entity()
 {
-    emit dying(this); // let listeners know this entity is about to die
+    emit dying(this); // let listeners know this entity is *about* to die
 
     // recursively delete child Entities
     for (Entity* entity: children()){
@@ -64,8 +65,6 @@ Entity::~Entity()
     if (entitysMap != nullptr){
         entitysMap->removeEntity(this);
     }
-
-    delete sprite_;
 }
 
 /// Returns the PathingMap of the Entity.

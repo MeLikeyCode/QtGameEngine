@@ -156,12 +156,18 @@ private:
     PathingMap pathingMap_;
     QPointF pathingMapPos_;
     QPointF currentPos_;
-    QPointF lastPos_;
+    double zPos_;
+    double height_;
+    double facingAngle_;
+    double speed_; // pixels per second
+    double rotationSpeed_; // degrees per second
+    double zValue_;
     Map* map_;
     EntitySprite* sprite_;
     std::unordered_set<Entity*> children_;
     Entity* parent_;
     std::map<std::string,QPointF> namedPoints_;
+
     double health_;
     std::set<std::type_index> canOnlyBeDamagedBy_;
     std::set<std::type_index> canBeDamagedByAllExcept_;
@@ -169,14 +175,11 @@ private:
     int groupNumber_;
     std::unordered_set<int> enemyGroups_;
     bool invulnerable_;
-    double zPos_;
-    double height_;
+
     Inventory* inventory_;
     std::unordered_map<std::string,Slot*> stringToSlot_;
-    double speed_; // pixels per second
-    double facingAngle_;
-    double rotationSpeed_; // degrees per second
-    double zValue_;
+
+    QPointF lastPos_;
 
     // helper functions
     void scaleBasedOnZ_();
