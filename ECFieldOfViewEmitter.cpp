@@ -7,6 +7,7 @@
 #include <QLineF>
 #include <QPointF>
 #include <QPolygonF>
+#include <QDebug>
 
 ECFieldOfViewEmitter::ECFieldOfViewEmitter(Entity *entity):
     EntityController(entity),
@@ -19,7 +20,7 @@ ECFieldOfViewEmitter::ECFieldOfViewEmitter(Entity *entity):
     connect(timerCheckFov_,&QTimer::timeout,this,&ECFieldOfViewEmitter::checkFov_);
     timerCheckFov_->start(fieldOfViewCheckFrequency_);
 
-    // TODO: test remove
+    // TODO: remove, for debugging only
     polyItem_= new QGraphicsPolygonItem();
     QBrush brush;
     brush.setStyle(Qt::SolidPattern);
@@ -59,6 +60,7 @@ void ECFieldOfViewEmitter::checkFov_()
         // if were not in fov earlier, emit
         if (entitiesInViewLastTime_.count(entity) == 0){
             entitiesInViewLastTime_.insert(entity);
+            qDebug() << "entity entered fov";
             emit entityEntersFOV(entity);
         }
     }
@@ -69,6 +71,7 @@ void ECFieldOfViewEmitter::checkFov_()
         // if the entiy is no longer in view, remove from list and emit
         if (entsInView.count(entity) == 0){
             entitiesInViewLastTime_.erase(entity);
+            qDebug() << "entity left fov";
             emit entityLeavesFOV(entity);
         }
     }

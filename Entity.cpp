@@ -136,7 +136,7 @@ void Entity::setPos(const QPointF &pos){
     // if has a sprite, set position of sprite
     EntitySprite* entitysSprite = sprite();
     if (entitysSprite != nullptr)
-        entitysSprite->underlyingItem_->setPos(pos + entitysSprite->pos());
+        entitysSprite->underlyingItem_->setPos(pos - entitysSprite->origin());
 
     // if the Entity is in a Map, update the PathingMap
     Map* entitysMap = map();
@@ -247,7 +247,7 @@ void Entity::setSprite(EntitySprite *sprite){
     }
 
     // make sure the new sprite is positioned correctly
-    sprite->underlyingItem_->setPos(currentPos_ + sprite->pos());
+    sprite->underlyingItem_->setPos(currentPos_ - sprite->origin());
 
     // if the Entity is already in a map
     if (map_){

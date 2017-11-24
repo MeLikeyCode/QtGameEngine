@@ -38,12 +38,12 @@ void EntitySprite::scale(double scale)
     underlyingItem_->setScale(scale);
 }
 
-void EntitySprite::setPos(const QPointF &posRelToEntity)
+void EntitySprite::setOrigin(const QPointF &pos)
 {
-    pos_ = posRelToEntity;
+    pos_ = pos;
 }
 
-QPointF EntitySprite::pos() const
+QPointF EntitySprite::origin() const
 {
     return pos_;
 }

@@ -94,11 +94,11 @@ public:
     /// Returns the currently displayed frame of the EntitySprite.
     virtual QPixmap currentlyDisplayedFrame() const = 0;
 
-    /// Sets the position of the EntitySprite relative to its Entity.
-    void setPos(const QPointF& posRelToEntity);
+    /// Sets the position of the EntitySprite that will be used as the origin point.
+    void setOrigin(const QPointF& pos);
 
-    /// Returns the position of the EntitySprite relative to its Entity.
-    QPointF pos() const;
+    /// Returns the origin point of the EntitySprite.
+    QPointF origin() const;
 
 signals:
     /// Emitted each time the EntitySprite finishes playing an animation.

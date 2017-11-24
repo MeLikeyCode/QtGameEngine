@@ -47,7 +47,7 @@ private:
     double fieldOfViewCheckFrequency_;
     QTimer* timerCheckFov_;
 
-    QGraphicsPolygonItem* polyItem_; // TODO: test remove
+    QGraphicsPolygonItem* polyItem_; // TODO: remove, for debugging only
 
     // helper
     std::unordered_set<Entity*> entitiesInViewLastTime_;
