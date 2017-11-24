@@ -1,5 +1,12 @@
 #include "Weapon.h"
 
+Weapon::Weapon():
+    castRange_(100)
+{
+
+}
+
+
 /// Returns the cast range of the Weapon.
 /// @see setCastRange().
 double Weapon::castRange()

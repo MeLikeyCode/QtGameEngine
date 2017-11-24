@@ -84,7 +84,7 @@ std::unordered_set<Entity *> ECFieldOfViewEmitter::entitiesInView()
     Map* entitysMap = entityControlled()->map();
     assert(entitysMap != nullptr); // make sure entitys map is not null
 
-    QPointF p1(entityControlled()->mapToMap(QPointF(0,0)));
+    QPointF p1(entityControlled()->pos());
     QLineF adjacent(p1,QPointF(-5,-5));
     adjacent.setAngle(-1 * entityControlled()->facingAngle());
     adjacent.setLength(fieldOfViewDistance_);

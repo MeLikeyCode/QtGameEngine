@@ -77,5 +77,6 @@
         <file>graphics/human3/skeleton_0.png</file>
         <file>graphics/effects/fireball.png</file>
         <file>sounds/fireball.wav</file>
+        <file>graphics/characterSpritesheets/goblin.png</file>
     </qresource>
 </RCC>

@@ -137,7 +137,7 @@ void Entity::setPos(const QPointF &pos){
     // if has a sprite, set position of sprite
     EntitySprite* entitysSprite = sprite();
     if (entitysSprite != nullptr)
-        entitysSprite->underlyingItem_->setPos(pos);
+        entitysSprite->underlyingItem_->setPos(pos + entitysSprite->pos());
 
     // if the Entity is in a Map, update the PathingMap
     Map* entitysMap = map();
@@ -242,13 +242,13 @@ Node Entity::cellPos(){
 /// Sets the Sprite of the Entity. This does not *delete* the old sprite, it simply
 /// sets the current art to the specified sprite.
 void Entity::setSprite(EntitySprite *sprite){
-    // set all children's sprite's parent to new sprite
+    // set all childrens' sprites' parent to new sprite
     for (Entity* child: children()){
         child->sprite()->underlyingItem_->setParentItem(sprite->underlyingItem_);
     }
 
     // make sure the new sprite is positioned correctly
-    sprite->underlyingItem_->setPos(currentPos_);
+    sprite->underlyingItem_->setPos(currentPos_ + sprite->pos());
 
     // if the Entity is already in a map
     if (map_){

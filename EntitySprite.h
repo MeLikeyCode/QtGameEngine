@@ -4,6 +4,7 @@
 #include <QObject>
 #include <string>
 #include <QSize>
+#include <QPointF>
 
 class QGraphicsItem;
 class QRectF;
@@ -93,6 +94,12 @@ public:
     /// Returns the currently displayed frame of the EntitySprite.
     virtual QPixmap currentlyDisplayedFrame() const = 0;
 
+    /// Sets the position of the EntitySprite relative to its Entity.
+    void setPos(const QPointF& posRelToEntity);
+
+    /// Returns the position of the EntitySprite relative to its Entity.
+    QPointF pos() const;
+
 signals:
     /// Emitted each time the EntitySprite finishes playing an animation.
     /// It is the responsibility of sub classes to emit this event.
@@ -112,6 +119,7 @@ protected:
     virtual void setFacingAngle_(double angle) = 0;
 
     double facingAngle_; // the angle that the EntitySprite is supposed to be facing
+    QPointF pos_;
 };
 
 #endif // ENTITYSPRITE_H

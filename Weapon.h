@@ -9,6 +9,7 @@
 class Weapon : public EquipableItem
 {
 public:
+    Weapon();
     virtual void attack(QPointF position) = 0;
 
     double castRange();
