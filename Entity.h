@@ -85,7 +85,6 @@ public:
     // sprite
     void setSprite(EntitySprite* sprite);
     EntitySprite* sprite() const;
-    void setRotationPoint(QPointF point);
 
     // parent/child relationship
     std::unordered_set<Entity*> children();

@@ -140,13 +140,3 @@ double closestAngle(const std::vector<int> &allAngles, double targetAngle)
     }
     return closest;
 }
-
-/// Returns the center pos of the specified entity.
-/// The center pos is the center of its sprite.
-QPointF centerPos(Entity *entity)
-{
-    EntitySprite* entitysSprite = entity->sprite();
-    double spriteWidth = entitysSprite->boundingBox().width();
-    double spriteHeight = entitysSprite->boundingBox().height();
-    return entity->mapToMap(QPointF(spriteWidth/2,spriteHeight/2));
-}

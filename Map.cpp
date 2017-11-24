@@ -176,7 +176,8 @@ double Map::distance(Entity *e1, Entity *e2){
     return line.length();
 }
 
-/// Returns (a pointer to) the closest Entity to the specified point.
+/// Returns the closest Entity to the specified point.
+/// If there is a tie between two entities, an arbitrary one is returned.
 Entity *Map::closest(const QPointF &point){
     // assume the first Entity in the list is the closest
     Entity* closestEntity = *entities().begin();

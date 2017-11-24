@@ -36,7 +36,7 @@ void AnimationAttack::attack(QPointF position)
     // get everyone in arc and damage them
     Map* entitysMap = owner->map();
     QPolygonF poly;
-    QPointF ownersPos = centerPos(owner);
+    QPointF ownersPos = owner->pos();
     poly.append(ownersPos);
     QLineF line(ownersPos,QPointF(0,0));
     line.setAngle(owner->facingAngle() * -1);
@@ -48,7 +48,8 @@ void AnimationAttack::attack(QPointF position)
 
     std::unordered_set<Entity*> entsInRegion = entitysMap->entities(poly);
     for (Entity* e:entsInRegion)
-        this->damage(e,damage_);
+        if (e != this && e != owner) // don't hurt self
+            this->damage(e,damage_);
 }
 
 /// Executed when the owner has finished playing its attack animation.

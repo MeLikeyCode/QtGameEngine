@@ -429,13 +429,6 @@ double Entity::rotationSpeed()
     return rotationSpeed_;
 }
 
-/// Sets the point the Entity should rotate about.
-void Entity::setRotationPoint(QPointF point)
-{
-    assert(sprite() != nullptr);  // needs a sprite to have a rotation point
-    sprite()->underlyingItem_->setTransformOriginPoint(point);
-}
-
 /// Sets the health of the entity, if set below 0, entity dies.
 void Entity::setHealth(double health)
 {

@@ -25,8 +25,7 @@ SpearProjectile::SpearProjectile(double range, double damage):
     CBDamage* cb =  new CBDamage(this->health()+1,damage);
     setCollisionBehavior(cb);
 
-    // TODO: move to base class (if this needs to happen with all projectiles)
-    setRotationPoint(QPointF(0,sprite()->boundingBox().height()/2));
+    sprite()->setOrigin(QPointF(0,sprite()->boundingBox().height()/2));
 }
 
 void SpearProjectile::shootTowards(const QPointF &pos)

@@ -2,6 +2,7 @@
 
 #include <QRectF>
 #include <QGraphicsItem>
+#include <cassert>
 
 EntitySprite::EntitySprite(): underlyingItem_(nullptr)
 {
@@ -41,6 +42,8 @@ void EntitySprite::scale(double scale)
 void EntitySprite::setOrigin(const QPointF &pos)
 {
     pos_ = pos;
+    assert(underlyingItem_);
+    underlyingItem_->setTransformOriginPoint(pos);
 }
 
 QPointF EntitySprite::origin() const
