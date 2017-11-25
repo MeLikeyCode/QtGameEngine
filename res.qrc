@@ -53,9 +53,6 @@
         <file>graphics/rock/rock0.png</file>
         <file>graphics/rock/rock1.png</file>
         <file>graphics/rock/rock2.png</file>
-        <file>graphics/tree/tree0.png</file>
-        <file>graphics/tree/tree1.png</file>
-        <file>graphics/tree/tree2.png</file>
         <file>graphics/terrain/flowers.png</file>
         <file>graphics/terrain/flowersopacity.png</file>
         <file>graphics/effects/fog.png</file>
@@ -79,5 +76,10 @@
         <file>sounds/fireball.wav</file>
         <file>graphics/characterSpritesheets/goblin.png</file>
         <file>graphics/characterSpritesheets/minotaur_alpha.png</file>
+        <file>graphics/tree/treeOne0.png</file>
+        <file>graphics/tree/treeOne1.png</file>
+        <file>graphics/tree/treeOne2.png</file>
+        <file>graphics/tree/treeOne3.png</file>
+        <file>graphics/tree/treeOne4.png</file>
     </qresource>
 </RCC>

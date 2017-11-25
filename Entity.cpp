@@ -133,10 +133,13 @@ void Entity::setPos(const QPointF &pos){
     // set internal variable
     currentPos_ = pos;
 
-    // if has a sprite, set position of sprite
+    // if has a sprite
     EntitySprite* entitysSprite = sprite();
-    if (entitysSprite != nullptr)
-        entitysSprite->underlyingItem_->setPos(pos - entitysSprite->origin());
+    if (entitysSprite != nullptr){
+        entitysSprite->underlyingItem_->setPos(pos - entitysSprite->origin()); // set position of sprite
+        qreal bot = pos.y() + boundingRect().height() - sprite()->origin().y();
+        sprite()->underlyingItem_->setZValue(bot); // set z value
+    }
 
     // if the Entity is in a Map, update the PathingMap
     Map* entitysMap = map();
@@ -164,6 +167,8 @@ void Entity::setPos(const QPointF &pos){
         lastPos_ = this->pos(); // update last position
         emit moved(this,lastPosCpy,this->pos());
     }
+
+
 }
 
 /// Sets the position of the Entity by moving the specified named position.

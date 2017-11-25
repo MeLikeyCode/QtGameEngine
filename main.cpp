@@ -57,6 +57,8 @@ int main(int argc, char *argv[])
     // create the Maps
     Map* map1 = new Map();
     Map* map2 = new Map(PathingMap(50,50,64));
+    // add some random trees
+    addRandomTrees(map1,5);
 
     // create a TerrainLayer (tiles) that can go in a map
     TerrainLayer* dryTerrain = new TerrainLayer(map2->width()/256+1,
@@ -177,20 +179,17 @@ int main(int argc, char *argv[])
 //    invViewer->setInventory(player->inventory());
 //    game->addGui(invViewer);
 
-//    // create a gui that allows visualizing/using of inventory of player
-//    InventoryUser* invUser = new InventoryUser(game,player->inventory());
-//    game->addGui(invUser);
+    // create a gui that allows visualizing/using of inventory of player
+    InventoryUser* invUser = new InventoryUser(game,player->inventory());
+    game->addGui(invUser);
 
-    // test weather effects
-//    RainWeather* rain = new RainWeather();
-//    map1->addWeatherEffect(*rain);
-//    FogWeather* fog = new FogWeather();
-//    map1->addWeatherEffect(*fog);
-//    SnowWeather* snow = new SnowWeather();
-//    map1->addWeatherEffect(*snow);
+    // add a weather effect (can add multiple at the same time)
+    RainWeather* rain = new RainWeather();
+    map1->addWeatherEffect(*rain);
+    FogWeather* fog = new FogWeather();
+    map1->addWeatherEffect(*fog);
 
-    // test random image entites
-    //addRandomTrees(map1,50);
+
 
 //    // create a test chaser enemy
 //    Entity* testFOVEntity = new Entity();
