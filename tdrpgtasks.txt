@@ -611,12 +611,27 @@ Change ECEnemyAttacker such that you give it a list of entities that the control
 Change ECEnemyChaser too
 -Get rid of the group system.
 
+===TASK===---------DONE
+ECBodyThruster/ECAttacker just don't appear to behave well. Fix.
+
+start at the base, test fov emitter
+-setFOVDebugging(true/false) -> 1) show field of view, emit messages when someone enters/leaves
+-test and ensure correct behavior
+	-when entity enters fov, enters messages should show and only once
+	-when entity leaves fov, leaves message should show and only once
+	*when any part of the "bounding box" of the entity enters it should do this
+	
+go up higher test ECChaser
+
+go up higher test ECBodyThruster
+
+go right (horizontally) test ECAttacker
+
 =============================================================================
 =============================================================================
 =========================UNFINISHED TASKS====================================
 =============================================================================
 =============================================================================
-
 
 
 ===TASK===

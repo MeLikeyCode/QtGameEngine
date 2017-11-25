@@ -80,20 +80,20 @@ int main(int argc, char *argv[])
     player->setHealth(500);
 
     // create an EntitySprite for the entity
-    SpriteSheet skeletonSpriteSheet(":/resources/graphics/human3/skeleton_0.png",32,8,128,128);
+    SpriteSheet minitaurSpriteSheet(":/resources/graphics/characterSpritesheets/minotaur_alpha.png",24,8,128,128);
     AngledSprite* sprplayer = new AngledSprite();
     sprplayer->setOrigin(QPointF(64,64));
     for (int i = 0, n = 8; i < n; ++i){ // for each angle
         // stand
-        sprplayer->addAnimation((180+45*i) % 360,"stand",skeletonSpriteSheet,Node(0,0+i),Node(3,0+i));
+        sprplayer->addAnimation((180+45*i) % 360,"stand",minitaurSpriteSheet,Node(0,0+i),Node(3,0+i));
         for (int j = 2; j > 0; --j){
-            sprplayer->addFrame(skeletonSpriteSheet.tileAt(Node(j,0+i)),"stand",(180+45*i) % 360);
+            sprplayer->addFrame(minitaurSpriteSheet.tileAt(Node(j,0+i)),"stand",(180+45*i) % 360);
         }
         // walk
-        sprplayer->addAnimation((180+45*i) % 360,"walk",skeletonSpriteSheet,Node(4,0+i),Node(11,0+i));
+        sprplayer->addAnimation((180+45*i) % 360,"walk",minitaurSpriteSheet,Node(4,0+i),Node(11,0+i));
 
         // attack
-        sprplayer->addAnimation((180+45*i) % 360,"attack",skeletonSpriteSheet,Node(12,0+i),Node(16,0+i));
+        sprplayer->addAnimation((180+45*i) % 360,"attack",minitaurSpriteSheet,Node(12,0+i),Node(18,0+i));
     }
     player->setSprite(sprplayer);
 

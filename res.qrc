@@ -78,5 +78,6 @@
         <file>graphics/effects/fireball.png</file>
         <file>sounds/fireball.wav</file>
         <file>graphics/characterSpritesheets/goblin.png</file>
+        <file>graphics/characterSpritesheets/minotaur_alpha.png</file>
     </qresource>
 </RCC>
