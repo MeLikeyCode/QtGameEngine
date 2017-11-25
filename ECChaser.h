@@ -23,8 +23,8 @@ class QTimer;
 /// unless the chased entity moves far again.
 ///
 /// Some relavent terminlogy used in the context of ECChaser:
-/// - a "chasee" is any Entity that will be chased if it enters the field ov view of the controlled entity
-/// - the "target" entity is the entity that the controller is currently chasing
+/// - a "chasee" is any Entity that will be chased if it enters the field of view of the controlled entity.
+/// - the "target" or "target chasee" entity is the chasee that the controller is *currently* chasing.
 ///
 /// Example usage:
 /// ==============
@@ -57,10 +57,13 @@ signals:
     /// entity.
     void entityChaseStarted(Entity* chasedEntity, double distToChasedEntity);
 
-    /// Emitted every once in a while to update you on the distance between the
-    /// controlled entity and the entity being chased.
+    /// Emitted every time the controlled entity takes a step closer towards the chased entity.
     /// @see entityChaseStarted()
     void entityChaseContinued(Entity* chasedEntity, double distToChasedEntity);
+
+    /// Emitted every time the controlled entity gets within the stop distance of the chased
+    /// entity and thus stops.
+    void entityChasePaused(Entity* chasedEntity);
 
 public slots:
     void onEntityEntersFOV_(Entity* entity);
@@ -86,9 +89,11 @@ private:
     ECPathMover* pathMover_;
     QTimer* chaseTimer_;
 
-    bool shouldChase_;
     bool paused_;   // controlled entity is w/i stop distance of chased entity
     QPointer<Entity> targetEntity_;
+
+    void connectToTargetSignals_();
+    void disconnectFromTargetSignals_();
 };
 
 #endif // ECCHASEENEMIES_H
