@@ -19,7 +19,7 @@ class BodyThrust: public NoTargetAbility {
     Q_OBJECT
 public:
     // constructor
-    BodyThrust(Entity& owner, const std::string& animationToPlay = "");
+    BodyThrust(Entity& owner);
 
     virtual void useImplementation();
 
@@ -27,6 +27,8 @@ public:
     double thrustSpeed();
     void setThrustSpeed(double speed);
     void setThrustDistance(double distance);
+
+    void setAnimationToPlayWhileThrusting(const std::string& animation);
 
 public slots:
     void thrustStep_();

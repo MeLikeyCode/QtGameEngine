@@ -42,7 +42,6 @@ int PlayingAnimationInfo::currentFrame() const
 /// Returns true if this struct represents no animation playing.
 bool PlayingAnimationInfo::isNone() const
 {
-    assert(!isNone());
     return name() == "";
 }
 

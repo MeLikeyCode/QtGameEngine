@@ -134,7 +134,7 @@ int main(int argc, char *argv[])
 //    player->inventory()->addItem(fireballOrb);
 //    rangedSlot->equip(fireballOrb);
 
-    AnimationAttack* animAttack = new AnimationAttack("attack",10,75,45);
+    AnimationAttack* animAttack = new AnimationAttack("attack",10,85,90);
     player->inventory()->addItem(animAttack);
     rightHandMelee->equip(animAttack);
 
@@ -215,37 +215,32 @@ int main(int argc, char *argv[])
 //    chaser->addChasee(player);
 //    e->setPos({100,600});
 
-        // create a test goblin
-        Entity* goblinEntity = new Entity();
-        AngledSprite* goblinSprite = new AngledSprite();
-        goblinEntity->setSprite(goblinSprite);
-        SpriteSheet goblinSpriteSheet(":/resources/graphics/characterSpritesheets/goblin.png",48,8,128,128);
-        for (int i = 0, n = 8; i < n; ++i){ // for each angle
-            // stand
-            goblinSprite->addAnimation((180+45*i) % 360,"stand",goblinSpriteSheet,Node(0,0+i),Node(3,0+i));
-            for (int j = 2; j > 0; --j){
-                goblinSprite->addFrame(goblinSpriteSheet.tileAt(Node(j,0+i)),"stand",(180+45*i) % 360);
-            }
-            // walk
-            goblinSprite->addAnimation((180+45*i) % 360,"walk",goblinSpriteSheet,Node(12,0+i),Node(19,0+i));
-
-            // attack
-            goblinSprite->addAnimation((180+45*i) % 360,"attack",goblinSpriteSheet,Node(20,0+i),Node(23,0+i));
+    // create a test goblin
+    Entity* goblinEntity = new Entity();
+    AngledSprite* goblinSprite = new AngledSprite();
+    goblinEntity->setSprite(goblinSprite);
+    SpriteSheet goblinSpriteSheet(":/resources/graphics/characterSpritesheets/goblin.png",48,8,128,128);
+    for (int i = 0, n = 8; i < n; ++i){ // for each angle
+        // stand
+        goblinSprite->addAnimation((180+45*i) % 360,"stand",goblinSpriteSheet,Node(0,0+i),Node(3,0+i));
+        for (int j = 2; j > 0; --j){
+            goblinSprite->addFrame(goblinSpriteSheet.tileAt(Node(j,0+i)),"stand",(180+45*i) % 360);
         }
-        goblinSprite->play("stand",-1,10,0);
-        goblinSprite->setOrigin(QPointF(64,64));
-        goblinEntity->setPos(QPointF(500,500));
-        map1->addEntity(goblinEntity);
+        // walk
+        goblinSprite->addAnimation((180+45*i) % 360,"walk",goblinSpriteSheet,Node(12,0+i),Node(19,0+i));
 
-        ECAttacker* enemyAttacker = new ECAttacker(goblinEntity);
-        enemyAttacker->addAttackee(player);
+        // attack
+        goblinSprite->addAnimation((180+45*i) % 360,"attack",goblinSpriteSheet,Node(20,0+i),Node(23,0+i));
+    }
+    goblinSprite->play("stand",-1,10,0);
+    goblinSprite->setOrigin(QPointF(64,64));
+    goblinEntity->setPos(QPointF(500,500));
+    map1->addEntity(goblinEntity);
 
-        AnimationAttack* animAtt = new AnimationAttack("attack",10,200,45);
-        animAtt->setCastRange(200);
-        goblinEntity->inventory()->addItem(animAtt);
-        WeaponSlot* goblinSlot = new WeaponSlot();
-        goblinEntity->addSlot(goblinSlot);
-        goblinSlot->equip(animAtt);
+    ECBodyThruster* bt = new ECBodyThruster(goblinEntity);
+    bt->setAnimationToPlayWhileThrusting("attack");
+    bt->setThrustDistance(200);
+    bt->addTargetEntity(player);
 
     return a.exec();
 }

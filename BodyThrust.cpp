@@ -10,9 +10,8 @@
 #include "QTimer"
 #include "EntitySprite.h"
 
-BodyThrust::BodyThrust(Entity &owner, const std::string& animationToPlay):
-    NoTargetAbility(owner,nullptr),
-    animationToPlay_(animationToPlay)
+BodyThrust::BodyThrust(Entity &owner):
+    NoTargetAbility(owner,nullptr)
 {
     // default thrust parameters
     currentThrustStep_ = 0;
@@ -93,6 +92,13 @@ void BodyThrust::setThrustDistance(double distance)
     int numOfThrusts =  distance / thrustLengthEachStep_;
     maxThrustSteps_ = numOfThrusts;
     thrustDistance_ = thrustLengthEachStep_ * numOfThrusts;
+}
+
+/// Sets the animation that should play when the owner is thrusting forward.
+/// Pass in "" to have no animation play (leave w.e. animation the owner has at the time).
+void BodyThrust::setAnimationToPlayWhileThrusting(const std::string &animation)
+{
+    animationToPlay_ = animation;
 }
 
 /// Executed periodically to take the entity one step closer to body thrusting.

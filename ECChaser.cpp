@@ -81,7 +81,6 @@ void ECChaser::stopChasing()
     // if currently chasing stop
     if (targetEntity_ != nullptr){
         targetEntity_ = nullptr;
-        disconnectFromTargetSignals_(); // stop listening to target signals
         chaseTimer_->stop(); // stop moving
     }
 

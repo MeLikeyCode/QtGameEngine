@@ -31,6 +31,7 @@ public:
     std::unordered_set<Entity*> targetEntities() const;
 
     void setThrustDistance(double distance);
+    void setAnimationToPlayWhileThrusting(const std::string& animationName);
 public slots:
     void onChaseContinued_(Entity* entityChased, double distance);
     void onChasePaused_(Entity* entity);

@@ -46,6 +46,8 @@ void AnimationAttack::attack(QPointF position)
     line.setAngle(line.angle() - arcAngle_);
     poly.append(line.p2());
 
+    // owner->map()->scene()->addPolygon(poly); // DEBUG, enable this to visualize attack area
+
     std::unordered_set<Entity*> entsInRegion = entitysMap->entities(poly);
     for (Entity* e:entsInRegion)
         if (e != this && e != owner) // don't hurt self
