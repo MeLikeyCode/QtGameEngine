@@ -20,7 +20,6 @@ void addRandomRocks(Map* mapToAddRocksTo, int numRocksToAdd);
 void addRandomBushes(Map* mapToAddBushesTo, int numBushesToAdd);
 
 // mathmatical
-double distance(QPointF p1, QPointF p2);
 double frequency(double stepSize, double rate);
 double secondsToMs(double seconds);
 double msToSeconds(double milliseconds);

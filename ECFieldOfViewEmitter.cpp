@@ -132,14 +132,17 @@ double ECFieldOfViewEmitter::checkFrequency() const
     return timesPerS;
 }
 
-/// Turns the controller on/off.
+/// Turns the controller on.
 /// When on, signals will be emitted.
 /// When off, signals will not be emitted.
 /// Turning it on when its already on or turning it off when its already off does nothing.
-void ECFieldOfViewEmitter::setOn(bool tf)
+void ECFieldOfViewEmitter::turnOn()
 {
-    if (tf)
-        timerCheckFov_->start(tf);
-    else
-        timerCheckFov_->stop();
+    timerCheckFov_->start(fieldOfViewCheckDelayMs_);
+}
+
+/// See turnOn().
+void ECFieldOfViewEmitter::turnOff()
+{
+    timerCheckFov_->stop();
 }

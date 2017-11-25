@@ -6,6 +6,8 @@
 #include <QSize>
 #include <QPointF>
 
+#include "PlayingAnimationInfo.h"
+
 class QGraphicsItem;
 class QRectF;
 class QPixmap;
@@ -71,9 +73,6 @@ public:
     /// Returns the bounding box of the EntitySprite in local coordinates.
     virtual QRectF boundingBox() const;
 
-    /// Scales the EntitySprite.
-    void scale(double scale);
-
     /// Returns true if the EntitySprite has the specified animation.
     virtual bool hasAnimation(const std::string& animationName) const = 0;
 
@@ -85,8 +84,7 @@ public:
     virtual void play(const std::string& animationName, int numTimesToPlay, int fpsToPlayAt, int startingFrameNumber) = 0;
 
     /// Returns the currently playing animation.
-    /// Returns "" (empty string) if no animation is currently playing.
-    virtual std::string playingAnimation() = 0;
+    virtual PlayingAnimationInfo playingAnimation() = 0;
 
     /// Stops playing the currently playing animation. The frame that it was stopped on will still show.
     virtual void stop() = 0;
@@ -99,6 +97,9 @@ public:
 
     /// Returns the origin point of the EntitySprite.
     QPointF origin() const;
+
+    /// Scales the EntitySprite.
+    void scale(double scale);
 
 signals:
     /// Emitted each time the EntitySprite finishes playing an animation.

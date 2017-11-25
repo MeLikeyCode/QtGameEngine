@@ -12,15 +12,18 @@ class ECPathMover;
 class ECFieldOfViewEmitter;
 class QTimer;
 
-/// An entity controller that makes it so the controlled
-/// entity will chase certain other entities that enter its field of view. Whenever the
-/// controlled entity *starts* chasing an entity, a signal will be
-/// emitted. As long as the controlled entity *continues* to chase that entity, a
-/// signal will continue to periodically be emitted in order to tell you the
-/// updated distance between the controlled entity and the entity being chased.
-/// You can set how close the controlled entity will get to the chased entity. When
-/// the controlled entity gets to within the specified distance, it won't get any closer
-/// unless the chased entity moves far again.
+/// An entity controller that makes it so the controlled entity will chase certain other entities
+/// that enter its field of view.
+///
+/// Use addChasee() to add entities that should be chased when within the field of view.
+///
+/// Whenever the controlled entity *starts* chasing an entity, a signal (entityChaseStarted()) will
+/// be emitted. Everytime the controlled entity takes a step closer to the chased entity another
+/// signal (entityChaseContinued()) will be emitted. You can set how close the controlled entity
+/// will get to the chased entity before it pauses ("stop distance"). When the controlled entity
+/// gets to within the specified distance a signal (entityChasePaused()) will be emitted and the
+/// controlled entity won't get any closer. When the chased entity gets out of the stop distance,
+/// the controlled entity will start chasing again and entityChaseContinued() will be emitted.
 ///
 /// Some relavent terminlogy used in the context of ECChaser:
 /// - a "chasee" is any Entity that will be chased if it enters the field of view of the controlled entity.

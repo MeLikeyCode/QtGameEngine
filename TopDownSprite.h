@@ -37,7 +37,7 @@ public:
     virtual QPixmap currentlyDisplayedFrame() const override;
     virtual void play(const std::string &animationName, int numTimesToPlay, int fpsToPlayAt, int startingFrameNumber) override;
     virtual void stop() override;
-    virtual std::string playingAnimation() override;
+    virtual PlayingAnimationInfo playingAnimation() override;
 
 public slots:
     void onInternalSpriteAnimationFinished_(Sprite* sender, std::string animation);

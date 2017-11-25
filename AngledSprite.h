@@ -29,7 +29,7 @@ public:
     virtual QPixmap currentlyDisplayedFrame() const override;
     virtual void play(const std::string& animationName, int numTimesToPlay, int fpsToPlayAt, int startingFrameNumber) override;
     virtual void stop() override;
-    virtual std::string playingAnimation() override;
+    virtual PlayingAnimationInfo playingAnimation() override;
 
 public slots:
     void onInternalSpriteAnimationFinished_(Sprite* sender, std::string animation);
@@ -40,7 +40,10 @@ private:
     // For example if we have a walk animation at 30 degrees, its name in sprite_ will be walk30.
     // If we are facing 30 degrees and we are playing walk, we will ask sprite to play animation "walk30"
     Sprite* sprite_;
+
     std::string playingAnimation_;
+    int numTimesToPlay_;
+    int fpsToPlayAt_;
 
     std::unordered_map<std::string,std::vector<int>> animationToAngle_; // for each animation, what angles do they support?
 

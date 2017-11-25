@@ -1,12 +1,14 @@
 #include "ECChaser.h"
-#include "ECFieldOfViewEmitter.h"
-#include "ECPathMover.h"
+
 #include <cassert>
 #include <QTimer>
-#include "Map.h"
-#include "Utilities.h"
-#include "Game.h"
 #include <QDebug> // TODO: test remove
+
+#include "ECFieldOfViewEmitter.h"
+#include "ECPathMover.h"
+#include "Map.h"
+#include "Game.h"
+#include "QtUtilities.h"
 
 ECChaser::ECChaser(Entity* entity):
     EntityController(entity),
@@ -169,8 +171,10 @@ void ECChaser::onEntityMoved_()
     if (targetEntity_.isNull())
         return;
 
-    double distBW = distance(entityControlled()->pos(),targetEntity_->pos());
-    emit entityChaseContinued(targetEntity_,distBW);
+    if (!paused_){
+        double distBW = distance(entityControlled()->pos(),targetEntity_->pos());
+        emit entityChaseContinued(targetEntity_,distBW);
+    }
 }
 
 /// Executed whenever the controlled entity has just reached the stop distance from the chased entity.
@@ -180,6 +184,7 @@ void ECChaser::onEntityEntersRange_(Entity *watched, Entity *watching, double ra
     qDebug() << "onEntityEntersRange_ executed"; // TODO: remove test
     pathMover_->stopMovingEntity();
     paused_ = true;
+    emit entityChasePaused(targetEntity_);
 }
 
 /// Executed whenever the chased entity just leaves stop distance from controlled entity.

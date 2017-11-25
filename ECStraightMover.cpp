@@ -1,8 +1,11 @@
 #include "ECStraightMover.h"
+
 #include <QTimer>
-#include "Utilities.h"
 #include <cassert>
 #include <QLineF>
+
+#include "Utilities.h"
+#include "QtUtilities.h"
 
 ECStraightMover::ECStraightMover(Entity *entity):
     ECMover(entity),

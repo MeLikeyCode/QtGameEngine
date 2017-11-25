@@ -17,9 +17,9 @@
 #include "MapGrid.h"
 #include "Gui.h"
 #include <cassert>
-#include "Utilities.h"
 #include <QGraphicsItem>
 #include "TopDownSprite.h"
+#include "QtUtilities.h"
 
 #include "ECPathMover.h" // TODO: delete, test only
 #include "ECBodyThruster.h" // TODO: delete, test only

@@ -41,7 +41,8 @@ public:
     void setCheckFrequency(double timesPerSecond);
     double checkFrequency() const;
 
-    void setOn(bool tf);
+    void turnOn();
+    void turnOff();
 
 public slots:
     void checkFov_();

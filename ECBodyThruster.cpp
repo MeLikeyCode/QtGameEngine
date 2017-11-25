@@ -1,17 +1,29 @@
 #include "ECBodyThruster.h"
 
+#include <cassert>
+#include <QTimer>
+
 #include "ECChaser.h"
 #include "BodyThrust.h"
-#include <cassert>
+#include "QtUtilities.h"
 
 ECBodyThruster::ECBodyThruster(Entity *entity):
     EntityController(entity),
     controllerChaseEnemies_(new ECChaser(entity)),
-    bodyThrustAbility_(new BodyThrust(*entity))
+    bodyThrustAbility_(new BodyThrust(*entity)),
+    periodicCheckTimer_(new QTimer(this)),
+    lastEntityChased_(nullptr)
 {
+    // set stop distance for chaser to thrust distance of body thrust ability
+    controllerChaseEnemies_->setStopDistance(bodyThrustAbility_->thrustDistance());
+
     // listen to chase controller
-    connect(controllerChaseEnemies_,&ECChaser::entityChaseContinued,this,&ECBodyThruster::onEnemyChaseContinued);
-    connect(controllerChaseEnemies_,&ECChaser::entityChaseStarted,this,&ECBodyThruster::onEnemyChaseContinued);
+    connect(controllerChaseEnemies_,&ECChaser::entityChaseContinued,this,&ECBodyThruster::onChaseContinued_);
+    connect(controllerChaseEnemies_,&ECChaser::entityChaseStarted,this,&ECBodyThruster::onChaseContinued_);
+    connect(controllerChaseEnemies_,&ECChaser::entityChasePaused,this,&ECBodyThruster::onChasePaused_);
+
+    // listen to timer
+    connect(periodicCheckTimer_,&QTimer::timeout,this,&ECBodyThruster::periodicCheck_);
 }
 
 void ECBodyThruster::addTargetEntity(Entity *entity)
@@ -29,13 +41,43 @@ std::unordered_set<Entity *> ECBodyThruster::targetEntities() const
     return controllerChaseEnemies_->chasees();
 }
 
+void ECBodyThruster::setThrustDistance(double distance)
+{
+    controllerChaseEnemies_->setStopDistance(distance);
+}
+
 /// Executed whenever the controlled enity moves closer to the chased entity.
 /// Will see if close enough, if so, will BodyThrust chased entity.
-void ECBodyThruster::onEnemyChaseContinued(Entity *entityChased, double distance)
+void ECBodyThruster::onChaseContinued_(Entity *entityChased, double distance)
 {
-    // if the entity is close enough to body thrust the chased entity, body thrust it
-    if (distance < bodyThrustAbility_->thrustDistance() * 2){
+    lastEntityChased_ = entityChased;
+    periodicCheckTimer_->stop();
+    bodyThrustIfCloseEnough_();
+}
+
+/// Executed when the controlled entity gets within the stop distance of chased entity.
+/// We will periodically body thrust.
+void ECBodyThruster::onChasePaused_(Entity *entity)
+{
+    lastEntityChased_ = entity;
+    periodicCheckTimer_->start(1000);
+    bodyThrustIfCloseEnough_();
+}
+
+
+void ECBodyThruster::periodicCheck_()
+{
+    bodyThrustIfCloseEnough_();
+}
+
+void ECBodyThruster::bodyThrustIfCloseEnough_()
+{
+    if (lastEntityChased_.isNull())
+        return;
+
+    double dist = distance(lastEntityChased_->pos(),entityControlled()->pos());
+    if (dist < bodyThrustAbility_->thrustDistance() * 2){
         bodyThrustAbility_->useImplementation();
-        emit thrusted(entityChased);
+        emit thrusted(lastEntityChased_);
     }
 }

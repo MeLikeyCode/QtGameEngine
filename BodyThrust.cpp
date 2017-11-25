@@ -10,13 +10,14 @@
 #include "QTimer"
 #include "EntitySprite.h"
 
-BodyThrust::BodyThrust(Entity &owner):
-    NoTargetAbility(owner,nullptr)
+BodyThrust::BodyThrust(Entity &owner, const std::string& animationToPlay):
+    NoTargetAbility(owner,nullptr),
+    animationToPlay_(animationToPlay)
 {
     // default thrust parameters
     currentThrustStep_ = 0;
     thrustLengthEachStep_ = 5;
-    setThrustDistance(45);
+    setThrustDistance(65);
     setThrustSpeed(250);
 
     timer_ = new QTimer(this);
@@ -57,6 +58,11 @@ void BodyThrust::useImplementation()
     connect(timer_,SIGNAL(timeout()),this,SLOT(thrustStep_()));
     timer_->start(thrustStepFrequency_);
     alreadyThrusting_ = true;
+
+    if (animationToPlay_ != ""){
+        lastAnim_ = owner()->sprite()->playingAnimation();
+        owner()->sprite()->play(animationToPlay_,-1,10,0);
+    }
 }
 
 /// Returns the number of pixels the owner will thrust.
@@ -96,31 +102,25 @@ void BodyThrust::thrustStep_()
 
     Entity* theOwner = owner(); // if the entity to thrust is dead, were done
     if (theOwner == nullptr){
-        resetVariables();
-        timer_->disconnect();
+        done_();
         return;
     }
 
     Map* ownersMap = theOwner->map(); // if the entity to thrust is no longer in a map, were done
     if (ownersMap == nullptr){
-        resetVariables();
-        timer_->disconnect();
+        done_();
         return;
     }
 
     // if moved backward enough, stop moving
     if (headingBackward_ && currentThrustStep_ >= maxThrustSteps_ + EXTRA_BACK_STEPS){
-        timer_->disconnect();
-
-        resetVariables();
+        done_();
         return;
     }
 
     // if moved backward enough due to collision, stop
     if (headingBackwardDueToCollision_ && currentThrustStep_ == 0){
-        timer_->disconnect();
-
-        resetVariables();
+        done_();
         return;
     }
 
@@ -205,4 +205,16 @@ void BodyThrust::resetVariables()
     headingForward_ = false;
     headingBackwardDueToCollision_ = false;
     alreadyThrusting_ = false;
+}
+
+void BodyThrust::done_()
+{
+    resetVariables();
+    timer_->disconnect();
+
+    if (animationToPlay_ != ""){
+        if (!lastAnim_.isNone()){
+            owner()->sprite()->play(lastAnim_.name(),lastAnim_.timesLeftToPlay(),lastAnim_.fps(),lastAnim_.currentFrame());
+        }
+    }
 }

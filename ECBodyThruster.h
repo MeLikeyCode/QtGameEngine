@@ -10,6 +10,7 @@
 
 class ECChaser;
 class BodyThrust;
+class QTimer;
 
 /// An entity controller that causes the controlled entity to chase certain other entites
 /// in its field of view and use the BodyThrust ability on them when close enough.
@@ -29,8 +30,11 @@ public:
     void removeTargetEntity(Entity* entity);
     std::unordered_set<Entity*> targetEntities() const;
 
+    void setThrustDistance(double distance);
 public slots:
-    void onEnemyChaseContinued(Entity* entityChased, double distance);
+    void onChaseContinued_(Entity* entityChased, double distance);
+    void onChasePaused_(Entity* entity);
+    void periodicCheck_();
 
 signals:
     /// Emitted each time the controlled entity thrusts towards an enemy.
@@ -39,6 +43,11 @@ signals:
 private:
     ECChaser* controllerChaseEnemies_;
     BodyThrust* bodyThrustAbility_;
+    QPointer<Entity> lastEntityChased_;
+
+    QTimer* periodicCheckTimer_;
+
+    void bodyThrustIfCloseEnough_();
 };
 
 #endif // ECBODYTHRUSTER_H

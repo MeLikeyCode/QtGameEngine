@@ -74,6 +74,8 @@ void ECPathMover::onPathCalculated_(std::vector<QPointF> path)
     if (path.size() == 0 || path.size() == 1)
         return;
 
+     path.pop_back();
+
     // set up variables for new path
     pointsToFollow_ = path;
     if (pointsToFollow_.size() > 1)

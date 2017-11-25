@@ -1,9 +1,9 @@
 #include "PositionalSound.h"
 #include "Sound.h"
-#include "Utilities.h"
 #include "Map.h"
 #include "Game.h"
 #include <cassert>
+#include <QtUtilities.h>
 
 PositionalSound::PositionalSound(std::string filePath, QPointF pos):
     map_(nullptr),

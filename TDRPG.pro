@@ -118,7 +118,8 @@ SOURCES += main.cpp \
     ECStraightMover.cpp \
     FireballLauncher.cpp \
     AnimationAttack.cpp \
-    ECChaser.cpp
+    ECChaser.cpp \
+    PlayingAnimationInfo.cpp
 
 HEADERS  += \
     Map.h \
@@ -222,7 +223,8 @@ HEADERS  += \
     ECStraightMover.h \
     FireballLauncher.h \
     AnimationAttack.h \
-    ECChaser.h
+    ECChaser.h \
+    PlayingAnimationInfo.h
 
 RESOURCES += \
     res.qrc

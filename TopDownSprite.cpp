@@ -70,9 +70,12 @@ void TopDownSprite::stop()
     sprite_->stop();
 }
 
-std::string TopDownSprite::playingAnimation()
+PlayingAnimationInfo TopDownSprite::playingAnimation()
 {
-    return sprite_->playingAnimation();
+    return PlayingAnimationInfo(sprite_->playingAnimation(),
+                                sprite_->playingAnimationFPS(),
+                                sprite_->playingAnimationTimesLeftToPlay(),
+                                sprite_->currentFrameNumber());
 }
 
 void TopDownSprite::commonInitialize_()

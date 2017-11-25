@@ -81,6 +81,8 @@ void AngledSprite::play(const std::string &animationName, int numTimesToPlay, in
     assert(hasAnimation(animationName));
 
     playingAnimation_ = animationName;
+    numTimesToPlay_ = numTimesToPlay;
+    fpsToPlayAt_ = fpsToPlayAt;
 
     // find closest angle available for specified animation and play that angle version
     std::vector<int> anglesForAnim = animationToAngle_[animationName];
@@ -97,9 +99,14 @@ void AngledSprite::stop()
     playingAnimation_ = "";
 }
 
-std::string AngledSprite::playingAnimation()
+PlayingAnimationInfo AngledSprite::playingAnimation()
 {
-    return playingAnimation_;
+    if (playingAnimation_ == "")
+        return PlayingAnimationInfo();
+
+    int timesLeftToPlay = sprite_->playingAnimationTimesLeftToPlay();
+    int currentFrame = sprite_->currentFrameNumber();
+    return PlayingAnimationInfo(playingAnimation_,fpsToPlayAt_,timesLeftToPlay,currentFrame);
 }
 
 QPixmap AngledSprite::currentlyDisplayedFrame() const

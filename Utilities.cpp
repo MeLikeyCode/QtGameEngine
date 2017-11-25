@@ -61,13 +61,7 @@ void addRandomBushes(Map *mapToAddBushesTo, int numBushesToAdd)
     }
 }
 
-/// Returns the distance between the two points.
-double distance(QPointF p1, QPointF p2)
-{
-    double deltaX = p2.x() - p1.x();
-    double deltaY = p2.y() - p1.y();
-    return qAbs(qSqrt(qPow(deltaX,2) + qPow(deltaY,2)));
-}
+
 
 /// Given a step size and a target rate, will tell you the frequency needed to get the
 /// target rate.
