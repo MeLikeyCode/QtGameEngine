@@ -34,6 +34,7 @@ public:
 public slots:
     void onInternalSpriteAnimationFinished_(Sprite* sender, std::string animation);
     void onInternalSpriteAnimationCompletelyFinished_(Sprite* sender, std::string animation);
+    void onInternalSpriteFrameSwitched_(Sprite* sender, int fromFrameNum, int toFrameNum);
 
 private:
     // The underlying sprite will contain all animations for every angle.

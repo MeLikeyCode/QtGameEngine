@@ -649,6 +649,23 @@ Images should have a "channel" on which they can highlight parts that cannot be 
 V
 when importing, I can read that channel and draw polygons around those areas, then get a bbox around the polygon and "fill" that area
 
+===TASK===---------DONE
+MCSpawner* spawner = new MCSpanwer(map);
+spawner->setRadius(900);
+spawner->setSpawnType(MCSSpawner::SpawnType::Spider);
+spawner->turnOn();
+spawner->turnOff();
+
+
+===TASK===----------DONE
+Create some "creep" entities that will stand around	and attack enemies as they enter their line of sight.
+|
+V
+-get some sprites for creeps - done (spider, goblin, etc..)
+-create an Entity
+-create an ECBodyThruster and attach it to the entity
+-randomly spawn these entities in the map
+
 =============================================================================
 =============================================================================
 =========================UNFINISHED TASKS====================================
@@ -657,22 +674,7 @@ when importing, I can read that channel and draw polygons around those areas, th
 
 
 
-===TASK===
-MCSpawner* spawner = new MCSpanwer(map);
-spawner->setRadius(900);
-spawner->setSpawnType(MCSSpawner::SpawnType::Spider);
-spawner->turnOn();
-spawner->turnOff();
 
-
-===TASK===
-Create some "creep" entities that will stand around	and attack enemies as they enter their line of sight.
-|
-V
--get some sprites for creeps - done (spider, goblin, etc..)
--create an Entity
--create an ECBodyThruster and attach it to the entity
--randomly spawn these entities in the map
 		
 
 		
@@ -680,9 +682,9 @@ V
 IMPORTANT - work on THIS task only (while doing it, you will discover new things to do)
 Create youtube tutorial that creates a *basic game*
 - WORKING - DONE - player controlled entity (grabs cam and can go to other maps) - have all necessary tools  
--creep entities (will chase/attack enemies w/i their line of sight) - have all necessary tools
+- WORKING - DONE -creep entities (will chase/attack enemies w/i their line of sight) - have all necessary tools
 -creeps drop items (health, GoldItem, Weapons, NoTargetItem, TargetItem, etc...) - have all necessary tools
--creeps respawn - have all necessary tools
+- WORKING - DONE -creeps respawn - have all necessary tools
 -player keeps killing creeps, thus keeps getting new items - have all necessary tools
 -there is a small "town" with some npcs (shop and quest giver) - have all necessary tools (use watched-watching sys to keep track of when playing entity comes near shop or quest giver)
 -shop entity can sell you weapons in exchange for GoldItem - can show in tut how to make the ShopGuiBehavior

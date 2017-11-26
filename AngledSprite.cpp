@@ -10,6 +10,7 @@ AngledSprite::AngledSprite(): sprite_(new Sprite())
     underlyingItem_ = sprite_;
     connect(sprite_,&Sprite::animationFinished,this,&AngledSprite::onInternalSpriteAnimationFinished_);
     connect(sprite_,&Sprite::animationFinishedCompletely,this,&AngledSprite::onInternalSpriteAnimationCompletelyFinished_);
+    connect(sprite_,&Sprite::frameSwitched,this,&AngledSprite::onInternalSpriteFrameSwitched_);
 }
 
 /// Adds the specified pixmap as a frame to the specified animation for the specified angle.
@@ -141,6 +142,11 @@ void AngledSprite::onInternalSpriteAnimationCompletelyFinished_(Sprite *sender, 
 
     emit animationFinishedCompletely(this,animWONums);
     playingAnimation_ = "";
+}
+
+void AngledSprite::onInternalSpriteFrameSwitched_(Sprite *sender, int fromFrameNum, int toFrameNum)
+{
+    emit frameSwitched(this,fromFrameNum,toFrameNum);
 }
 
 void AngledSprite::setFacingAngle_(double angle)

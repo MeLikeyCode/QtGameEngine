@@ -224,6 +224,7 @@ void Sprite::nextFrame_(){
     }
 
     setPixmap(animationPixmaps[currentFrame_]);
+    emit frameSwitched(this,currentFrame_ == 0 ? animationPixmaps.size() - 1 : currentFrame_ - 1, currentFrame_);
     ++currentFrame_;
 
 }

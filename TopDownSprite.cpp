@@ -85,7 +85,7 @@ void TopDownSprite::commonInitialize_()
     // listen to when internal sprite finishes playing animations
     connect(sprite_,&Sprite::animationFinished,this,&TopDownSprite::onInternalSpriteAnimationFinished_);
     connect(sprite_,&Sprite::animationFinishedCompletely,this,&TopDownSprite::onInternalSpriteAnimationCompletelyFinished_);
-
+    connect(sprite_,&Sprite::frameSwitched,this,&TopDownSprite::onInternalSpriteFrameSwitched_);
 }
 
 QPixmap TopDownSprite::currentlyDisplayedFrame() const
@@ -105,6 +105,11 @@ void TopDownSprite::onInternalSpriteAnimationFinished_(Sprite *sender, std::stri
 void TopDownSprite::onInternalSpriteAnimationCompletelyFinished_(Sprite *sender, std::string animation)
 {
     emit animationFinishedCompletely(this,animation);
+}
+
+void TopDownSprite::onInternalSpriteFrameSwitched_(Sprite *sender, int fromFrameNum, int toFrameNum)
+{
+    emit frameSwitched(this,fromFrameNum,toFrameNum);
 }
 
 void TopDownSprite::setFacingAngle_(double angle)

@@ -42,6 +42,7 @@ public:
 public slots:
     void onInternalSpriteAnimationFinished_(Sprite* sender, std::string animation);
     void onInternalSpriteAnimationCompletelyFinished_(Sprite* sender, std::string animation);
+    void onInternalSpriteFrameSwitched_(Sprite* sender, int fromFrameNum, int toFrameNum);
 
 private:
     Sprite* sprite_;

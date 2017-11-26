@@ -65,6 +65,9 @@ public slots:
     void nextFrame_();
 
 signals:
+    /// Emitted each time the frame switches due to an animation playing.
+    void frameSwitched(Sprite* sender, int fromFrameNumber, int toFrameNumber);
+
     /// Emitted each time an animation has finished playing.
     /// Even if an animation was asked to play multiple (even infinite) number of times,
     /// this event will emit every time the last frame is reached.

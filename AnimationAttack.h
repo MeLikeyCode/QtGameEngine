@@ -18,6 +18,7 @@ public:
     void attack(QPointF position);
 
 public slots:
+    void onFrameSwitched_(EntitySprite* ownersSprite, int fromFrameNum, int toFrameNum);
     void onOwnerAnimationFinished_(EntitySprite* ownerSprite, std::string animation);
 private:
     std::string animationToPlayOnAttack_;
@@ -27,5 +28,6 @@ private:
 
     Sound* soundEffect_;
     bool alreadyAttacking_;
+    int attackingFrameNumber_; // the frame number to actually attack (create arc and damage entities)
 };
 

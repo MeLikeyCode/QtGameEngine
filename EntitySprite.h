@@ -86,7 +86,8 @@ public:
     /// Plays the specified animation and when finished will go back to playing w.e. animation was playing before.
     void playThenGoBackToOldAnimation(const std::string animationToPlay, int numTimesToPlay, int fpsToPlayAt, int startingFrameNumber);
 
-    /// Returns the currently playing animation.
+    /// Returns some information about the currently playing animation.
+    /// Call PlayingAnimationInfo::isNone() on the returned object to find out if no animation was playing.
     virtual PlayingAnimationInfo playingAnimation() = 0;
 
     /// Stops playing the currently playing animation. The frame that it was stopped on will still show.
@@ -105,6 +106,10 @@ public:
     void scale(double scale);
 
 signals:
+    /// Emitted each time the frame of a playing animation switches.
+    /// It is the responsibility of sub classes to emit this event.
+    void frameSwitched(EntitySprite* sender, int fromFrameNumber, int toFrameNumber);
+
     /// Emitted each time the EntitySprite finishes playing an animation.
     /// It is the responsibility of sub classes to emit this event.
     void animationFinished(EntitySprite* sender,std::string animation);
