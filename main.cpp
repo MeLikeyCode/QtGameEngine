@@ -40,6 +40,7 @@
 #include "Sprite.h"
 #include "FireballLauncher.h"
 #include "AnimationAttack.h"
+#include "MCSpawner.h"
 
 Entity* player;
 
@@ -79,6 +80,7 @@ int main(int argc, char *argv[])
 
     // create an entity that is controlled via keyboard/mouse
     player = new Entity();
+    player->setGroup(1);
     player->setHealth(500);
 
     // create an EntitySprite for the entity
@@ -242,9 +244,12 @@ int main(int argc, char *argv[])
     spiderEntity->setPos(QPointF(500,500));
     map1->addEntity(spiderEntity);
 
-//    ECBodyThruster* bt = new ECBodyThruster(spiderEntity);
-//    bt->setThrustDistance(200);
-//    bt->addTargetEntity(player);
+    ECBodyThruster* bt = new ECBodyThruster(spiderEntity);
+    bt->setThrustDistance(100);
+    bt->addTargetEntity(player);
+
+    // create a spawner
+    MCSpawner* spawner = new MCSpawner(map1,QRectF(0,0,map1->width(),map1->height()),MCSpawner::SpawnType::Spider,10,0.3);
 
     return a.exec();
 }

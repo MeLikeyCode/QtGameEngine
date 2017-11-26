@@ -4,6 +4,8 @@ class QPointF;
 class QRectF;
 
 /// Allows generating random numbers/points.
+/// Seeds in the constructor.
+/// Value semantics - create, use, let die (cheap).
 /// @author Abdullah Aghazadah
 /// @date 11/25/17
 class RandomGenerator

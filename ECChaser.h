@@ -71,14 +71,22 @@ signals:
 public slots:
     void onEntityEntersFOV_(Entity* entity);
     void onEntityLeavesFOV_(Entity* entity);
-    void onEntityMoved_();
-    void onEntityEntersRange_(Entity* watched, Entity* watching, double range);
-    void onEntityLeavesRange_(Entity* watched, Entity* watching, double range);
-    void onChasingEntityDies_(QObject* entity);
+
+    void onControlledEntityMoved_();
+
+    void onStopRangeEntered_(Entity* watched, Entity* watching, double range);
+    void onStopRangeLeft_(Entity* watched, Entity* watching, double range);
+
+    void onControlledEntityDies_(QObject* entity);
     void onChasedEntityDies_(QObject* entity);
-    void onChasingEntityLeavesMap_(Entity* entity);
+
+    void onControlledEntityLeavesMap_(Entity* entity);
     void onChasedEntityLeavesMap_(Entity* entity);
+
     void onChaseeDestroyed_(QObject* chasee);
+
+    void onControlledEntityEntersMap_();
+
     void chaseStep_();
 
 private:

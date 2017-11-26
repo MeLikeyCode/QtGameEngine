@@ -52,7 +52,7 @@ void AnimationAttack::attack(QPointF position)
     std::unordered_set<Entity*> entsInRegion = entitysMap->entities(poly);
     for (Entity* e:entsInRegion){
         if (e != this && e != owner) { // don't hurt self
-            this->damage(e,0);
+            this->damage(e,damage_);
             if (e->sprite() != nullptr){
                 if (e->sprite()->hasAnimation("hit")){
                     qDebug() << "hit";

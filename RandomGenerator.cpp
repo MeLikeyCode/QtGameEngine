@@ -32,3 +32,8 @@ QPointF RandomGenerator::randQPointF(const QPointF &topLeft, const QPointF &botR
     double ry = randDouble(topLeft.y(), botRight.y());
     return QPointF(rx,ry);
 }
+
+QPointF RandomGenerator::randQPointF(const QRectF &inRegion)
+{
+    return randQPointF(inRegion.topLeft(),inRegion.bottomRight());
+}

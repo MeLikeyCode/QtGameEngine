@@ -119,7 +119,9 @@ SOURCES += main.cpp \
     FireballLauncher.cpp \
     AnimationAttack.cpp \
     ECChaser.cpp \
-    PlayingAnimationInfo.cpp
+    PlayingAnimationInfo.cpp \
+    MCSpawner.cpp \
+    RandomGenerator.cpp
 
 HEADERS  += \
     Map.h \
@@ -224,7 +226,9 @@ HEADERS  += \
     FireballLauncher.h \
     AnimationAttack.h \
     ECChaser.h \
-    PlayingAnimationInfo.h
+    PlayingAnimationInfo.h \
+    MCSpawner.h \
+    RandomGenerator.h
 
 RESOURCES += \
     res.qrc

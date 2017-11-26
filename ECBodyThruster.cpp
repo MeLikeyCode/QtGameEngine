@@ -85,7 +85,7 @@ void ECBodyThruster::bodyThrustIfCloseEnough_()
         return;
 
     double dist = distance(lastEntityChased_->pos(),entityControlled()->pos());
-    if (dist < bodyThrustAbility_->thrustDistance() * 2){
+    if (dist < bodyThrustAbility_->thrustDistance()){
         bodyThrustAbility_->useImplementation();
         emit thrusted(lastEntityChased_);
     }

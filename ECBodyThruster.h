@@ -15,6 +15,8 @@ class QTimer;
 /// An entity controller that causes the controlled entity to chase certain other entites
 /// in its field of view and use the BodyThrust ability on them when close enough.
 ///
+/// Will chase both "target" entities and any entities that are enmies of the controlled entity.
+///
 /// Example usage:
 /// ==============
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.cpp

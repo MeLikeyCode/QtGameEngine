@@ -640,6 +640,15 @@ V
 plan
 -on entity::setPos(), set z value to be w.e. bottom of boundingbox is
 
+===TASK===-------DONE
+Give trees a pathing map
+|
+V
+Images should have a "channel" on which they can highlight parts that cannot be crossed
+|
+V
+when importing, I can read that channel and draw polygons around those areas, then get a bbox around the polygon and "fill" that area
+
 =============================================================================
 =============================================================================
 =========================UNFINISHED TASKS====================================
@@ -647,18 +656,22 @@ plan
 =============================================================================
 
 
+
 ===TASK===
-Give trees a pathing map
-|
-V
+MCSpawner* spawner = new MCSpanwer(map);
+spawner->setRadius(900);
+spawner->setSpawnType(MCSSpawner::SpawnType::Spider);
+spawner->turnOn();
+spawner->turnOff();
+
 
 ===TASK===
 Create some "creep" entities that will stand around	and attack enemies as they enter their line of sight.
 |
 V
--get some sprites for creeps
+-get some sprites for creeps - done (spider, goblin, etc..)
 -create an Entity
--create an ECEnemyAttacker and attach it to the entity
+-create an ECBodyThruster and attach it to the entity
 -randomly spawn these entities in the map
 		
 

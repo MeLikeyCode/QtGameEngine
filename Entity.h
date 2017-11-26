@@ -111,6 +111,13 @@ public:
     bool isInvulnerable();
     void setInvulnerable(bool tf);
 
+    // group/enemy groups
+    void setGroup(int groupNumber_);
+    int group();
+    void addEnemyGroup(int groupNumber);
+    std::unordered_set<int> enemyGroups();
+    bool isAnEnemyGroup(int groupNumber);
+
     // slot/equipment/inventory
     void addSlot(Slot* slot);
     Slot* slot(std::string name);
@@ -165,6 +172,8 @@ private:
     std::set<std::type_index> canOnlyBeDamagedBy_;
     std::set<std::type_index> canBeDamagedByAllExcept_;
     bool canOnlyBeDamagedByMode_;
+    int groupNumber_;
+    std::unordered_set<int> enemyGroups_;
     bool invulnerable_;
 
     Inventory* inventory_;
