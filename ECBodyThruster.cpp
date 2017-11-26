@@ -45,6 +45,7 @@ std::unordered_set<Entity *> ECBodyThruster::targetEntities() const
 void ECBodyThruster::setThrustDistance(double distance)
 {
     controllerChaseEnemies_->setStopDistance(distance);
+    bodyThrustAbility_->setThrustDistance(distance);
 }
 
 /// Sets the animation to play while the controlled entity is thrusting forward.

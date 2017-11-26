@@ -78,7 +78,6 @@ public:
     double distance(Entity* e1, Entity* e2);
 
     /// getting all entities at a certain point/region/colliding w other entities
-    Entity* closest(const QPointF& point);
     std::unordered_set<Entity*> entities(const QRectF& inRegion);
     std::unordered_set<Entity *> entities(const QPointF& atPoint);
     std::unordered_set<Entity*> entities(const QPolygonF& inRegion);

@@ -45,8 +45,8 @@ RandomImageEntity::RandomImageEntity(std::string resourceFolderPath, std::string
     TopDownSprite* tds = new TopDownSprite(pixmaps[randIndex]);
     setSprite(tds);
 
-    double pathingMapX = pixmaps[0].width() / 2.0 - pm.cellSize() / 2.0;
-    double pathingMapY = pixmaps[0].height() / 2.0 - pm.cellSize() / 2.0;
+    double pathingMapX = 390;
+    double pathingMapY = 545;
 
     setInvulnerable(true); // make random image entities invulnerable ( they are just for show for gods sake! :P)
 

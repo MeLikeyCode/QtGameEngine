@@ -385,6 +385,11 @@ QPointF Entity::mapToMap(const QPointF &point) const
     return sprite()->underlyingItem_->mapToScene(point);
 }
 
+QPolygonF Entity::mapToMap(const QRectF &rect) const
+{
+    return sprite()->underlyingItem_->mapToScene(rect);
+}
+
 /// Names the specified point (so it can be retrieved with a name).
 /// The point is in local (Entity) coordinates.
 void Entity::addNamedPoint(const QPointF &point, std::string name)

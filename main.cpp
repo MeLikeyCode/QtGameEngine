@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
 
     // add entity to a map
     map1->addEntity(player);
-    player->setPos(QPointF(200,200));
+    player->setPos(QPointF(200,650));
 
     // add controllers to control the behavior of the entity
     ECMouseFacer* rotContr = new ECMouseFacer(player);
@@ -183,11 +183,11 @@ int main(int argc, char *argv[])
     InventoryUser* invUser = new InventoryUser(game,player->inventory());
     game->addGui(invUser);
 
-    // add a weather effect (can add multiple at the same time)
-    RainWeather* rain = new RainWeather();
-    map1->addWeatherEffect(*rain);
-    FogWeather* fog = new FogWeather();
-    map1->addWeatherEffect(*fog);
+//    // add a weather effect (can add multiple at the same time)
+//    RainWeather* rain = new RainWeather();
+//    map1->addWeatherEffect(*rain);
+//    FogWeather* fog = new FogWeather();
+//    map1->addWeatherEffect(*fog);
 
 
 
@@ -214,32 +214,37 @@ int main(int argc, char *argv[])
 //    chaser->addChasee(player);
 //    e->setPos({100,600});
 
-    // create a test goblin
-    Entity* goblinEntity = new Entity();
-    AngledSprite* goblinSprite = new AngledSprite();
-    goblinEntity->setSprite(goblinSprite);
-    SpriteSheet goblinSpriteSheet(":/resources/graphics/characterSpritesheets/goblin.png",48,8,128,128);
+    // create a test spider
+    Entity* spiderEntity = new Entity();
+    AngledSprite* spiderSprite = new AngledSprite();
+    spiderEntity->setSprite(spiderSprite);
+    SpriteSheet spiderSpriteSheet(":/resources/graphics/characterSpritesheets/spider.png",48,8,128,128);
     for (int i = 0, n = 8; i < n; ++i){ // for each angle
         // stand
-        goblinSprite->addAnimation((180+45*i) % 360,"stand",goblinSpriteSheet,Node(0,0+i),Node(3,0+i));
+        spiderSprite->addAnimation((180+45*i) % 360,"stand",spiderSpriteSheet,Node(0,0+i),Node(3,0+i));
         for (int j = 2; j > 0; --j){
-            goblinSprite->addFrame(goblinSpriteSheet.tileAt(Node(j,0+i)),"stand",(180+45*i) % 360);
+            spiderSprite->addFrame(spiderSpriteSheet.tileAt(Node(j,0+i)),"stand",(180+45*i) % 360);
         }
         // walk
-        goblinSprite->addAnimation((180+45*i) % 360,"walk",goblinSpriteSheet,Node(12,0+i),Node(19,0+i));
+        spiderSprite->addAnimation((180+45*i) % 360,"walk",spiderSpriteSheet,Node(4,0+i),Node(11,0+i));
 
         // attack
-        goblinSprite->addAnimation((180+45*i) % 360,"attack",goblinSpriteSheet,Node(20,0+i),Node(23,0+i));
-    }
-    goblinSprite->play("stand",-1,10,0);
-    goblinSprite->setOrigin(QPointF(64,64));
-    goblinEntity->setPos(QPointF(500,500));
-    map1->addEntity(goblinEntity);
+        spiderSprite->addAnimation((180+45*i) % 360,"attack",spiderSpriteSheet,Node(12,0+i),Node(15,0+i));
 
-    ECBodyThruster* bt = new ECBodyThruster(goblinEntity);
-    bt->setAnimationToPlayWhileThrusting("attack");
-    bt->setThrustDistance(200);
-    bt->addTargetEntity(player);
+        // hit
+        spiderSprite->addAnimation((180+45*i) % 360,"hit",spiderSpriteSheet,Node(18,0+i),Node(20,0+i));
+
+        // die
+        spiderSprite->addAnimation((180+45*i) % 360,"diee",spiderSpriteSheet,Node(18,0+i),Node(23,0+i));
+    }
+    spiderSprite->play("stand",-1,10,0);
+    spiderSprite->setOrigin(QPointF(64,64));
+    spiderEntity->setPos(QPointF(500,500));
+    map1->addEntity(spiderEntity);
+
+//    ECBodyThruster* bt = new ECBodyThruster(spiderEntity);
+//    bt->setThrustDistance(200);
+//    bt->addTargetEntity(player);
 
     return a.exec();
 }

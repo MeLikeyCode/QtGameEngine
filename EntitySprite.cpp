@@ -34,9 +34,23 @@ QRectF EntitySprite::boundingBox() const
     return underlyingItem_->boundingRect();
 }
 
+/// Plays the specified animation, then goes back to w.e. animation was playing previously.
+void EntitySprite::playThenGoBackToOldAnimation(const std::string animationToPlay, int numTimesToPlay, int fpsToPlayAt, int startingFrameNumber)
+{
+    playingBeforePlayOnce_ = playingAnimation();
+    connect(this,&EntitySprite::animationFinished,this,&EntitySprite::onPlayThenGoBackDone_);
+    play(animationToPlay,numTimesToPlay,fpsToPlayAt,startingFrameNumber);
+}
+
 void EntitySprite::scale(double scale)
 {
     underlyingItem_->setScale(scale);
+}
+
+void EntitySprite::onPlayThenGoBackDone_()
+{
+    disconnect(this,&EntitySprite::animationFinished,this,&EntitySprite::onPlayThenGoBackDone_);
+    play(playingBeforePlayOnce_.name(),playingBeforePlayOnce_.timesLeftToPlay(),playingBeforePlayOnce_.fps(),playingBeforePlayOnce_.currentFrame());
 }
 
 void EntitySprite::setOrigin(const QPointF &pos)

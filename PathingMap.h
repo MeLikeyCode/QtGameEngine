@@ -32,7 +32,6 @@ public:
     PathingMap(int numCellsWide, int numCellsLong, int cellSize);
     PathingMap(const PathingMap& copy) = default;   // make compiler generate default copy ctor
                                                     // (memberwise copy).
-
     // readers ("getters")
     std::vector<Node> cells(const Node& topLeft, const Node& bottomRight) const;
     std::vector<Node> cells(const QPointF& topLeft, const QPointF& bottomRight) const;

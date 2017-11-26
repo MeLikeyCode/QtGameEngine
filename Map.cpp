@@ -87,7 +87,7 @@ void Map::updatePathingMap()
         pathingMap().addFilling(entity->pathingMap(),entity->pos() + entity->pathingMapPos());
     }
 
-    //drawPathingMap(); // TODO: remove, test
+    // drawPathingMap(); // TODO: DEBUG, enable this to visualize pathing map
 }
 
 int Map::width() const{
@@ -176,32 +176,14 @@ double Map::distance(Entity *e1, Entity *e2){
     return line.length();
 }
 
-/// Returns the closest Entity to the specified point.
-/// If there is a tie between two entities, an arbitrary one is returned.
-Entity *Map::closest(const QPointF &point){
-    // assume the first Entity in the list is the closest
-    Entity* closestEntity = *entities().begin();
-    double closestDistance = QLineF(closestEntity->pos(),point).length();
-    // try to find a closer one
-    for (Entity* entity:entities()){
-        double thisDistance = QLineF(entity->pos(),point).length();
-        if (thisDistance < closestDistance){
-            closestDistance = thisDistance;
-            closestEntity = entity;
-        }
-    }
-
-    // return the closest Entity
-    return closestEntity;
-}
-
 /// Returns the Entities in the specified region.
 std::unordered_set<Entity *> Map::entities(const QRectF &inRegion){
+    QPolygonF inRegionAsPoly(inRegion);
+
     std::unordered_set<Entity*> ents;
     for (Entity* entity:entities()){
-        QRectF entityBBox = entity->boundingRect();
-        entityBBox.moveTo(entity->pos());
-        if (inRegion.intersects(entityBBox))
+        QPolygonF entityBBox = entity->mapToMap(entity->boundingRect());
+        if (inRegionAsPoly.intersected(entityBBox).isEmpty() == false)
             ents.insert(entity);
     }
 
@@ -217,13 +199,11 @@ std::unordered_set<Entity *> Map::entities(const QPointF &atPoint)
     std::unordered_set<Entity*> ents;
     for (Entity* entity:entities()){
         // get the Entity's bounding rect
-        QRectF bRect(entity->boundingRect());
-        bRect.moveTo(entity->mapToMap(QPointF(0,0)));
+        QPolygonF bRect(entity->mapToMap(entity->boundingRect()));
 
         // see if the bounding rect contains the point
-        if (bRect.contains(atPoint)){
+        if (bRect.contains(atPoint))
             ents.insert(entity);
-        }
     }
 
     return ents;
@@ -232,17 +212,16 @@ std::unordered_set<Entity *> Map::entities(const QPointF &atPoint)
 /// Returns the Entities in the specified region.
 std::unordered_set<Entity *> Map::entities(const QPolygonF &inRegion)
 {
+    // approach:
+    // - 'inRegion' is in scene coordinates
+    // - can convert bounding rect of sprite of all entities to scene coordinates
+    // - can use qt's collision functionality
+
     std::unordered_set<Entity*> ents;
     for (Entity* entity:entities()){
-        QRectF entityBBox = entity->boundingRect();
-        entityBBox.moveTo(entity->pos());
-        bool containsTopLeft = inRegion.containsPoint(entityBBox.topLeft(),Qt::OddEvenFill);
-        bool containsTopRight = inRegion.containsPoint(entityBBox.topRight(),Qt::OddEvenFill);
-        bool containsBottomRight = inRegion.containsPoint(entityBBox.bottomRight(),Qt::OddEvenFill);
-        bool containsBottomLeft = inRegion.containsPoint(entityBBox.bottomLeft(),Qt::OddEvenFill);
-        if (containsTopLeft || containsTopRight || containsBottomRight || containsBottomLeft){
+        QPolygonF entityBox = entity->mapToMap(entity->boundingRect());
+        if (!entityBox.intersected(inRegion).isEmpty())
             ents.insert(entity);
-        }
     }
 
     return ents;
@@ -252,11 +231,10 @@ std::unordered_set<Entity *> Map::entities(const QPolygonF &inRegion)
 std::unordered_set<Entity *> Map::entities(Entity *collidingWith)
 {
     // approach:
-    // - get bbox of colliding entity, move it to location of entity
+    // - get bbox of 'collidingWith'
     // - return entites colliding with that rect
 
-    QRectF bbox = collidingWith->boundingRect();
-    bbox.moveTopLeft(collidingWith->pos());
+    QPolygonF bbox = collidingWith->mapToMap(collidingWith->boundingRect());
     std::unordered_set<Entity*> results = entities(bbox);
 
     results.erase(collidingWith);   // remove entity itself
@@ -270,6 +248,7 @@ std::unordered_set<Entity *> Map::entities(const QRectF &inRegion, double zRange
     // get all entities in this region
     auto entitiesInRegion = entities(inRegion);
 
+    // filter based on specified z range
     std::unordered_set<Entity*> entities;
     for (Entity* entity:entitiesInRegion){
         double entitysZ = entity->z();
@@ -309,6 +288,7 @@ std::unordered_set<Entity *> Map::entities(const QPolygonF &inRegion, double zRa
     // get all entities in this region
     auto entitiesInRegion = entities(inRegion);
 
+    // filter based on z range
     std::unordered_set<Entity*> entities;
     for (Entity* entity:entitiesInRegion){
         double entitysZ = entity->z();
@@ -651,6 +631,7 @@ void Map::removeEntity(Entity *entity)
     entity->map_ = nullptr;
 
     // TODO: remove the leftover pathing of the Entity
+    updatePathingMap();
 
     // emit entity left map event
     entity->mapLeft(entity,this);

@@ -59,6 +59,7 @@ public:
     // map
     Map* map() const;
     QPointF mapToMap(const QPointF& point) const;
+    QPolygonF mapToMap(const QRectF& rect) const;
 
     // pos/height/facing angle
     QPointF pos() const;

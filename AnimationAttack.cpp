@@ -5,6 +5,7 @@
 #include "TopDownSprite.h"
 #include "Map.h"
 #include "Utilities.h"
+#include <QDebug>
 
 AnimationAttack::AnimationAttack(std::string animationToPlayOnAttack, int damage, double arcRange, double arcAngle):
     animationToPlayOnAttack_(animationToPlayOnAttack),
@@ -49,9 +50,17 @@ void AnimationAttack::attack(QPointF position)
     // owner->map()->scene()->addPolygon(poly); // DEBUG, enable this to visualize attack area
 
     std::unordered_set<Entity*> entsInRegion = entitysMap->entities(poly);
-    for (Entity* e:entsInRegion)
-        if (e != this && e != owner) // don't hurt self
-            this->damage(e,damage_);
+    for (Entity* e:entsInRegion){
+        if (e != this && e != owner) { // don't hurt self
+            this->damage(e,0);
+            if (e->sprite() != nullptr){
+                if (e->sprite()->hasAnimation("hit")){
+                    qDebug() << "hit";
+                    e->sprite()->playThenGoBackToOldAnimation("hit",1,10,0);
+                }
+            }
+        }
+    }
 }
 
 /// Executed when the owner has finished playing its attack animation.

@@ -81,5 +81,6 @@
         <file>graphics/tree/treeOne2.png</file>
         <file>graphics/tree/treeOne3.png</file>
         <file>graphics/tree/treeOne4.png</file>
+        <file>graphics/characterSpritesheets/spider.png</file>
     </qresource>
 </RCC>

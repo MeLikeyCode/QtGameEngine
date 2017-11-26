@@ -83,6 +83,9 @@ public:
     /// If any other animation is currently playing, it will be stop()ed first.
     virtual void play(const std::string& animationName, int numTimesToPlay, int fpsToPlayAt, int startingFrameNumber) = 0;
 
+    /// Plays the specified animation and when finished will go back to playing w.e. animation was playing before.
+    void playThenGoBackToOldAnimation(const std::string animationToPlay, int numTimesToPlay, int fpsToPlayAt, int startingFrameNumber);
+
     /// Returns the currently playing animation.
     virtual PlayingAnimationInfo playingAnimation() = 0;
 
@@ -111,6 +114,9 @@ signals:
     /// It is the responsibility of sub classes to emit this event.
     void animationFinishedCompletely(EntitySprite* sender, std::string animation);
 
+public slots:
+    void onPlayThenGoBackDone_();
+
 protected:
     QGraphicsItem* underlyingItem_; // the underlying QGraphicsItem represenation of the EntitySprite
 
@@ -121,6 +127,8 @@ protected:
 
     double facingAngle_; // the angle that the EntitySprite is supposed to be facing
     QPointF pos_;
+
+    PlayingAnimationInfo playingBeforePlayOnce_;
 };
 
 #endif // ENTITYSPRITE_H

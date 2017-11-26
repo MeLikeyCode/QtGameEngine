@@ -136,7 +136,7 @@ V
 - create a StraightProjectile class that moves in a straight line till it reaches its target
 - create a ZigzagProjectile that will zigzag to its target point
 |
-V----done
+V
 - create a Projectile class that
     - has a target point (QPointF)
     - has a set of entities that it will not damage
@@ -627,14 +627,30 @@ go up higher test ECBodyThruster
 
 go right (horizontally) test ECAttacker
 
+===TASK===----DONE
+Create z system
+|
+V
+entities with lower y should be drawn higher
+|
+V
+entities whos bottom of bounding box is lower should be drawn higher (greater z value)
+|
+V
+plan
+-on entity::setPos(), set z value to be w.e. bottom of boundingbox is
+
 =============================================================================
 =============================================================================
 =========================UNFINISHED TASKS====================================
 =============================================================================
 =============================================================================
 
-===TASK===
 
+===TASK===
+Give trees a pathing map
+|
+V
 
 ===TASK===
 Create some "creep" entities that will stand around	and attack enemies as they enter their line of sight.
