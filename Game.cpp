@@ -235,9 +235,10 @@ void Game::keyReleaseEvent(QKeyEvent *event)
 /// Adds the specified Gui to the game.
 void Game::addGui(Gui *gui)
 {
+    assert(currentMap() != nullptr);
+
     guis_.insert(gui);
-    scene()->addItem(gui->getGraphicsItem());
-    gui->getGraphicsItem()->setZValue(Map::Z_VALUES::GUI_Z_VALUE); // put Guis on top
+    gui->getGraphicsItem()->setParentItem(currentMap()->guiLayer_);
     gui->getGraphicsItem()->setVisible(true); // when a gui is added to a game, it's always visible
 }
 

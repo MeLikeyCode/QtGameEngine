@@ -32,14 +32,6 @@ class Map: public QObject // so we can use QPointer<Map>
     Q_OBJECT
     friend class Game; // game needs to be able to set game_ ptr of Map
 public:
-    enum Z_VALUES {
-        GUI_Z_VALUE = 3,
-        WEATHER_Z_VALUE = 2,
-        BORDER_Z_VALUE = 1,
-        ENTITY_Z_VALUE = 0,
-        TERRAIN_Z_VALUE = -1
-    };
-
     // constructor
     Map();
     Map(PathingMap pathingMap);
@@ -120,6 +112,10 @@ private:
     std::vector<std::unique_ptr<TerrainLayer>> terrainLayers_;
     QPointer<Game> game_; // the game that is currently visualizing the map, null if not currently being visualizing
     std::set<WeatherEffect*> weatherEffects_;
+    QGraphicsRectItem* guiLayer_;
+    QGraphicsRectItem* weatherLayer_;
+    QGraphicsRectItem* entityLayer_;
+    QGraphicsRectItem* terrainLayer_;
 
     // for testing
     std::vector<QGraphicsItem*> drawings_;
@@ -129,7 +125,6 @@ private:
     // helper functions
     void setFadingBorder_();
     void setGame_(Game* game);
-
 };
 
 #endif // MAP_H

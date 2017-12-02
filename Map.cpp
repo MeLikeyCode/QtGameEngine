@@ -28,9 +28,19 @@ Map::Map(PathingMap pathingMap):
     cellSize_(pathingMap.cellSize()),
     pathingMap_(pathingMap),
     scene_(new QGraphicsScene(this)),
-    game_(nullptr)
+    game_(nullptr),
+    guiLayer_(new QGraphicsRectItem()),
+    weatherLayer_(new QGraphicsRectItem()),
+    entityLayer_(new QGraphicsRectItem()),
+    terrainLayer_(new QGraphicsRectItem())
 {
     scene_->setSceneRect(0,0,width(),height());
+
+    // add layers in proper order
+    scene_->addItem(terrainLayer_);
+    scene_->addItem(entityLayer_);
+    scene_->addItem(weatherLayer_);
+    scene_->addItem(guiLayer_);
 
     // add a default TerrainLayer
     TerrainLayer* defaultTerrain = new TerrainLayer(width()/256+1, height()/256+1);
@@ -382,6 +392,8 @@ void Map::setFadingBorder_()
     b.setStyle(Qt::SolidPattern);
     b.setColor(Qt::black);
 
+    const int BORDER_Z = -1;
+
     // top
     QLinearGradient topGradient;
     topGradient.setStart(0,R_WIDTH);
@@ -399,7 +411,7 @@ void Map::setFadingBorder_()
     topRect->setBrush(b);
     topRect->setGraphicsEffect(topOpacity);
 
-    topRect->setZValue(Z_VALUES::BORDER_Z_VALUE);
+    topRect->setZValue(BORDER_Z);
     scene_->addItem(topRect);
 
     // bottom
@@ -419,7 +431,7 @@ void Map::setFadingBorder_()
     bottomRect->setBrush(b);
     bottomRect->setGraphicsEffect(bottomOpacity);
 
-    bottomRect->setZValue(Z_VALUES::BORDER_Z_VALUE);
+    bottomRect->setZValue(BORDER_Z);
     scene_->addItem(bottomRect);
 
     // left
@@ -439,7 +451,7 @@ void Map::setFadingBorder_()
     leftRect->setBrush(b);
     leftRect->setGraphicsEffect(leftOpacity);
 
-    leftRect->setZValue(Z_VALUES::BORDER_Z_VALUE);
+    leftRect->setZValue(BORDER_Z);
     scene_->addItem(leftRect);
 
     // right
@@ -459,7 +471,7 @@ void Map::setFadingBorder_()
     rightRect->setBrush(b);
     rightRect->setGraphicsEffect(rightOpacity);
 
-    rightRect->setZValue(Z_VALUES::BORDER_Z_VALUE);
+    rightRect->setZValue(BORDER_Z);
     scene_->addItem(rightRect);
 
     // top left
@@ -480,7 +492,7 @@ void Map::setFadingBorder_()
     tlRect->setBrush(b);
     tlRect->setGraphicsEffect(tlOpacity);
 
-    tlRect->setZValue(Z_VALUES::BORDER_Z_VALUE);
+    tlRect->setZValue(BORDER_Z);
     scene_->addItem(tlRect);
 
     // top right
@@ -501,7 +513,7 @@ void Map::setFadingBorder_()
     trRect->setBrush(b);
     trRect->setGraphicsEffect(trOpacity);
 
-    trRect->setZValue(Z_VALUES::BORDER_Z_VALUE);
+    trRect->setZValue(BORDER_Z);
     scene_->addItem(trRect);
 
     // bottom left
@@ -522,7 +534,7 @@ void Map::setFadingBorder_()
     blRect->setBrush(b);
     blRect->setGraphicsEffect(blOpacity);
 
-    blRect->setZValue(Z_VALUES::BORDER_Z_VALUE);
+    blRect->setZValue(BORDER_Z);
     scene_->addItem(blRect);
 
     // bottom right
@@ -543,7 +555,7 @@ void Map::setFadingBorder_()
     brRect->setBrush(b);
     brRect->setGraphicsEffect(brOpacity);
 
-    brRect->setZValue(Z_VALUES::BORDER_Z_VALUE);
+    brRect->setZValue(BORDER_Z);
     scene_->addItem(brRect);
 }
 
@@ -552,11 +564,7 @@ void Map::setFadingBorder_()
 /// @lifetime The Map will uniquely own the lifetime of the specified TerrainLayer.
 void Map::addTerrainLayer(TerrainLayer *terrainLayer){
     terrainLayers_.push_back(std::unique_ptr<TerrainLayer>(terrainLayer));
-
-    // add the parent terrain to the map's scene
-    terrainLayer->parentItem_->setZValue(Z_VALUES::TERRAIN_Z_VALUE);
-    scene()->addItem(terrainLayer->parentItem_);
-
+    terrainLayer->parentItem_->setParentItem(terrainLayer_);
 }
 
 /// Adds the specified Entity (and all of its children) to the Map and updates
@@ -579,10 +587,7 @@ void Map::addEntity(Entity *entity){
     entities_.insert(entity);
 
     // add its sprite to the interal QGraphicsScene
-    scene_->addItem(entity->sprite()->underlyingItem_);
-
-    // set its z value
-    entity->sprite()->underlyingItem_->setZValue(Z_VALUES::ENTITY_Z_VALUE);
+    entity->sprite()->underlyingItem_->setParentItem(terrainLayer_);
 
     // add its children's sprite's as a child of its sprites
     for (Entity* childEntity:entity->children()){
@@ -624,6 +629,7 @@ void Map::removeEntity(Entity *entity)
     // remove sprite (if it has one)
     EntitySprite* entitysSprite = entity->sprite();
     if (entitysSprite != nullptr){
+        entitysSprite->underlyingItem_->setParentItem(nullptr);
         scene()->removeItem(entitysSprite->underlyingItem_);
     }
 

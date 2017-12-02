@@ -185,11 +185,11 @@ int main(int argc, char *argv[])
     InventoryUser* invUser = new InventoryUser(game,player->inventory());
     game->addGui(invUser);
 
-//    // add a weather effect (can add multiple at the same time)
-//    RainWeather* rain = new RainWeather();
-//    map1->addWeatherEffect(*rain);
-//    FogWeather* fog = new FogWeather();
-//    map1->addWeatherEffect(*fog);
+    // add a weather effect (can add multiple at the same time)
+    RainWeather* rain = new RainWeather();
+    map1->addWeatherEffect(*rain);
+    FogWeather* fog = new FogWeather();
+    map1->addWeatherEffect(*fog);
 
 
 

@@ -51,7 +51,6 @@ void FogWeather::start_()
             fogPicture_ = fogPicture_.scaled(fogPictureWidth_,fogPictureHeight_);
 
             QGraphicsPixmapItem* fogSquare = new QGraphicsPixmapItem(fogPicture_);
-            fogSquare->setZValue(Map::Z_VALUES::WEATHER_Z_VALUE);
             fogSquare->setOpacity(initialOpacity_);
             map_->scene()->addItem(fogSquare);
 

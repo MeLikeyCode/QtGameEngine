@@ -139,7 +139,7 @@ void Entity::setPos(const QPointF &pos){
     if (entitysSprite != nullptr){
         entitysSprite->underlyingItem_->setPos(pos - entitysSprite->origin()); // set position of sprite
         qreal bot = pos.y() + boundingRect().height() - sprite()->origin().y();
-        sprite()->underlyingItem_->setZValue(bot); // set z value
+        sprite()->underlyingItem_->setZValue(bot); // set z value (lower -> higher)
     }
 
     // if the Entity is in a Map, update the PathingMap
