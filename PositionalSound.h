@@ -29,11 +29,13 @@ class PositionalSound: public QObject
     Q_OBJECT
     friend class Map;
 public:
-    PositionalSound(std::string filePath, QPointF pos);
+    PositionalSound(Map* inMap, std::string filePath, QPointF pos);
 
     void play(int numOfTimes);
     void stop();
     void setVolume(int volume);
+    void setPos(const QPointF& pos);
+    QPointF pos();
 
 public slots:
     void onCamMoved_(QPointF newCamPos);

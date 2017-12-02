@@ -14,7 +14,6 @@ An entity should have two move functions
     -moveAIControlled() // fiers when entity is AI controlled - moves in response to its own thinking
 If the entity isPlayerControlled(), its movePlayerControlled() function should executed, other wise its moveAIControlled()
 
-
 ===TASK===---------------DONE
 Test to see if you can dynamically set/unset an entity to be controlled by player/ai
 -how:connect to right click of mouse in game
@@ -666,6 +665,20 @@ V
 -create an ECBodyThruster and attach it to the entity
 -randomly spawn these entities in the map
 
+===TASK===---------DONE
+Make order of drawings (top to bottom):
+-GUIs (later added -> topper)
+-Entities (lower on screen -> topper)
+-TerrainLayers (later added -> topper)
+
+implementation
+-entity z value is equal to bottom of bounding rects y (higher y draws on top) -> DONE
+-make terrain z values start at -1000000 and subsequently added ones get incremented
+    -ensure no more than 1000000 terrains are ever added
+-make gui z values start at some number so large no map will ever be that large 
+    -lets say start at 1000000
+    -keep increasing as they are added
+
 =============================================================================
 =============================================================================
 =========================UNFINISHED TASKS====================================
@@ -674,10 +687,6 @@ V
 
 
 
-
-		
-
-		
 ===TASK===
 IMPORTANT - work on THIS task only (while doing it, you will discover new things to do)
 Create youtube tutorial that creates a *basic game*

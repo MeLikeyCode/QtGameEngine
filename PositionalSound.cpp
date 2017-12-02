@@ -5,12 +5,13 @@
 #include <cassert>
 #include <QtUtilities.h>
 
-PositionalSound::PositionalSound(std::string filePath, QPointF pos):
-    map_(nullptr),
+PositionalSound::PositionalSound(Map *inMap, std::string filePath, QPointF pos):
+    map_(inMap),
     pos_(pos),
     volume_(100)
 {
     sound_.reset(new Sound(filePath));
+    setMap_(inMap);
 }
 
 /// Plays the PositionalSound the specified number of times (pass -1 for infinite).
@@ -42,6 +43,17 @@ void PositionalSound::setVolume(int volume)
 {
     volume_ = volume;
     sound_->setVolume(getCalculatedVolume_());
+}
+
+void PositionalSound::setPos(const QPointF &pos)
+{
+    pos_ = pos;
+    sound_->setVolume(getCalculatedVolume_());
+}
+
+QPointF PositionalSound::pos()
+{
+    return pos_;
 }
 
 /// Executed when the camera moves on the PositionalSound's Map (I.e. when the
@@ -84,14 +96,9 @@ int PositionalSound::getCalculatedVolume_()
     return calculatedVolume;
 }
 
-/// Sets the Map of the PositionalSound. Called by Map when Map::addPositionalSound()
-/// fcn is used.
+/// Sets the Map of the PositionalSound.
 void PositionalSound::setMap_(Map *map)
 {
-    // PositionalSound cannot change maps yet (maybe in future?).
-    // Once its in a map, has to stay in that map.
-    assert(map_ == nullptr);
-
     map_ = map; // update internal variable
 
     // if map is currently being visualized, unmute sound
@@ -102,6 +109,9 @@ void PositionalSound::setMap_(Map *map)
     }
 
     // listen to when this map is visualized/unvisualized
+    disconnect(0, &Map::camMoved, this, &PositionalSound::onCamMoved_);
+    disconnect(0, &Map::setAsCurrentMap, this, &PositionalSound::onMapVisualized_);
+    disconnect(0, &Map::unsetAsCurrentMap, this, &PositionalSound::onMapNoLongerVisualized_);
     connect(map_, &Map::camMoved, this, &PositionalSound::onCamMoved_);
     connect(map_, &Map::setAsCurrentMap, this, &PositionalSound::onMapVisualized_);
     connect(map_, &Map::unsetAsCurrentMap, this, &PositionalSound::onMapNoLongerVisualized_);

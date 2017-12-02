@@ -138,7 +138,7 @@ int main(int argc, char *argv[])
 //    player->inventory()->addItem(fireballOrb);
 //    rangedSlot->equip(fireballOrb);
 
-    AnimationAttack* animAttack = new AnimationAttack("attack",10,85,90);
+    AnimationAttack* animAttack = new AnimationAttack("attack","qrc:/resources/sounds/axe.wav",10,85,90);
     player->inventory()->addItem(animAttack);
     rightHandMelee->equip(animAttack);
 

@@ -1,21 +1,26 @@
 #include "AnimationAttack.h"
-#include "Sound.h"
+
+#include <cassert>
+
+#include "PositionalSound.h"
 #include "Slot.h"
 #include "EntitySprite.h"
 #include "TopDownSprite.h"
 #include "Map.h"
 #include "Utilities.h"
+
 #include <QDebug>
 
-AnimationAttack::AnimationAttack(std::string animationToPlayOnAttack, int damage, double arcRange, double arcAngle):
+AnimationAttack::AnimationAttack(const std::string& animationToPlayOnAttack, const std::string& soundToPlayOnAttack, int damage, double arcRange, double arcAngle):
     animationToPlayOnAttack_(animationToPlayOnAttack),
+    soundToPlayOnAttack_(soundToPlayOnAttack),
     damage_(damage),
     archRange_(arcRange),
     arcAngle_(arcAngle),
     alreadyAttacking_(false),
-    attackingFrameNumber_(0)
+    attackingFrameNumber_(0),
+    soundEffect_(nullptr)
 {
-    soundEffect_ = new Sound("qrc:/resources/sounds/axe.wav");
     setSprite(new TopDownSprite(QPixmap())); // empty sprite
 }
 
@@ -25,8 +30,17 @@ void AnimationAttack::attack(QPointF position)
     if (alreadyAttacking_)
         return;
 
+    // assert assumptions
     Entity* owner = slotEquippedIn()->owner();
+    assert(owner != nullptr);
+    Map* ownersMap = owner->map();
+    assert(ownersMap != nullptr);
     EntitySprite* ownersSprite = owner->sprite();
+    assert(ownersSprite != nullptr);
+
+    // set up sound
+    soundEffect_ = new PositionalSound(ownersMap, "qrc:/resources/sounds/axe.wav",QPointF());
+    soundEffect_->setPos(owner->pos());
 
     // listen to when the animation reaches nth frame (when we'll apply the damage)
     connect(ownersSprite,&EntitySprite::frameSwitched,this,&AnimationAttack::onFrameSwitched_);
@@ -37,6 +51,7 @@ void AnimationAttack::attack(QPointF position)
     // play animation
     alreadyAttacking_ = true;
     ownersSprite->playThenGoBackToOldAnimation(animationToPlayOnAttack_,1,10,0);
+    soundEffect_->play(1);
 }
 
 /// Executed when the owner's sprite's frames are being switched.
