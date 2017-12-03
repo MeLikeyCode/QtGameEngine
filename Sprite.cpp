@@ -55,6 +55,15 @@ void Sprite::play(std::string animation, int timesToPlay, double framesPerSecond
     timer_->start(secondsToMs(1/framesPerSecond));                         // next frames
 }
 
+/// Plays an animation and then goes back to whatever (if any) animation was previously playing.
+void Sprite::playThenGoBackToOldAnimation(std::string animation, int numTimesToPlay, double framesPerSecond, int startingFrameNumber)
+{
+    animationPlayingLast = playingAnimation();
+    disconnect(this,&Sprite::animationFinishedCompletely,this,&Sprite::onTemporaryPlayDone_); // prevent double connect
+    connect(this,&Sprite::animationFinishedCompletely,this,&Sprite::onTemporaryPlayDone_);
+    play(animation,numTimesToPlay,framesPerSecond,startingFrameNumber);
+}
+
 QRectF Sprite::boundingRect() const{
     return pixmapItem_->boundingRect();
 }
@@ -222,6 +231,17 @@ void Sprite::nextFrame_(){
     emit frameSwitched(this,currentFrame_ == 0 ? animationPixmaps.size() - 1 : currentFrame_ - 1, currentFrame_);
     ++currentFrame_;
 
+}
+
+/// Executed when a "temporary" play has just finished.
+/// A temporary play initiates due to playThenGoBackToOldAnimation().
+/// Will play the old playing animation.
+void Sprite::onTemporaryPlayDone_(Sprite *sender, std::string animation)
+{
+    // client takes care of preventing double connects
+
+    if (animationPlayingLast_.isNone() == false)
+        play(animationPlayingLast_.name(),animationPlayingLast_.timesLeftToPlay(),animationPlayingLast_.fps(),animationPlayingLast_.currentFrame());
 }
 
 /// Contains common initialization code for several ctors (reduces code duplication).

@@ -8,11 +8,12 @@
 #include <vector>
 #include <QPixmap>
 
+#include "PlayingAnimationInfo.h"
+
 class QGraphicsPixmapItem;
 class QTimer;
 class SpriteSheet;
 class Node;
-class PlayingAnimationInfo;
 
 /// A QGraphicsItem that represents a bunch of animations that can be played.
 /// All entities have sprites (some of which are invisible and do nothing).
@@ -58,10 +59,12 @@ public:
     virtual QRectF boundingRect() const;
 
     void play(std::string animation, int timesToPlay, double framesPerSecond, int startingFrameNumber = 0);
+    void playThenGoBackToOldAnimation(std::string animation, int numTimesToPlay, double framesPerSecond, int startingFrameNumber = 0);
     void stop();
 
 public slots:
     void nextFrame_();
+    void onTemporaryPlayDone_(Sprite* sender, std::string animation);
 
 signals:
     /// Emitted each time the frame switches due to an animation playing.
@@ -96,6 +99,8 @@ private:
     void commonInitialize_();
     void setSize_(std::string ofAnimation, int width, int height);
     int playingAnimationTimesLeftToPlay_() const;
+
+    PlayingAnimationInfo animationPlayingLast_;
 };
 
 #endif // SPRITE_H
