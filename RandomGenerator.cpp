@@ -14,7 +14,7 @@ RandomGenerator::RandomGenerator()
 
 int RandomGenerator::randInt(int min, int max)
 {
-    int range = max - min;
+    int range = max - min + 1;
     int r = rand() % range + min;
     return r;
 }

@@ -131,6 +131,9 @@ public:
     bool canFit(const QPointF& atPos);
     QRectF boundingRect();
 
+public slots:
+    void onAnimationFinishedCompletely_(EntitySprite* sender, std::string animation);
+
 signals:
     /// Emitted whenever the Entity moves from a certain position to another
     /// position.

@@ -133,7 +133,7 @@ protected:
     double facingAngle_; // the angle that the EntitySprite is supposed to be facing
     QPointF pos_;
 
-    PlayingAnimationInfo playingBeforePlayOnce_;
+    PlayingAnimationInfo animationPlayingBefore_;
 };
 
 #endif // ENTITYSPRITE_H

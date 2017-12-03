@@ -34,12 +34,11 @@ class Node;
 class Sprite:public QObject, public QGraphicsItem{
     Q_OBJECT
 public:
-    // constructor
+    // constructors
     Sprite(QGraphicsItem* parent=nullptr);
     Sprite(QPixmap pixmap, QGraphicsItem* parent=nullptr);
 
     // readers
-    QSize size();
     bool hasAnimation(std::string animation) const;
     std::vector<std::string> animations() const;
     std::string playingAnimation() const;

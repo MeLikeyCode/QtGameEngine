@@ -189,8 +189,9 @@ bool ECPathMover::targetPointReached_()
 /// step closer to its target point.
 void ECPathMover::stepTowardsTarget_()
 {
-    // make sure points to follow is not empty
-    assert(pointsToFollow_.size() != 0);
+    // do nothing if there are no points to follow
+    if (pointsToFollow_.size() <= 0)
+        return;
 
     Entity* ent = entity();
 

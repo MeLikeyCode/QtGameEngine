@@ -12,6 +12,7 @@
 #include "RandomImageEntity.h"
 #include "PathingMap.h"
 #include "EntitySprite.h"
+#include "RandomGenerator.h"
 
 /// Adds the specified number of trees randomly scattered on the specified Map.
 void addRandomTrees(Map *mapToAddTreesTo, int numTreesToAdd)
@@ -134,4 +135,11 @@ double closestAngle(const std::vector<int> &allAngles, double targetAngle)
         }
     }
     return closest;
+}
+
+double randInt(int from, int to)
+{
+    static RandomGenerator generator;
+
+    return generator.randInt(from,to);
 }

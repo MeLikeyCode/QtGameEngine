@@ -38,9 +38,10 @@ void AnimationAttack::attack(QPointF position)
     EntitySprite* ownersSprite = owner->sprite();
     assert(ownersSprite != nullptr);
 
-    // set up sound
+    // play sound
     soundEffect_ = new PositionalSound(ownersMap, "qrc:/resources/sounds/axe.wav",QPointF());
     soundEffect_->setPos(owner->pos());
+    soundEffect_->play(1);
 
     // listen to when the animation reaches nth frame (when we'll apply the damage)
     connect(ownersSprite,&EntitySprite::frameSwitched,this,&AnimationAttack::onFrameSwitched_);
@@ -51,7 +52,6 @@ void AnimationAttack::attack(QPointF position)
     // play animation
     alreadyAttacking_ = true;
     ownersSprite->playThenGoBackToOldAnimation(animationToPlayOnAttack_,1,10,0);
-    soundEffect_->play(1);
 }
 
 /// Executed when the owner's sprite's frames are being switched.

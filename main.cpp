@@ -185,11 +185,11 @@ int main(int argc, char *argv[])
     InventoryUser* invUser = new InventoryUser(game,player->inventory());
     game->addGui(invUser);
 
-    // add a weather effect (can add multiple at the same time)
-    RainWeather* rain = new RainWeather();
-    map1->addWeatherEffect(*rain);
-    FogWeather* fog = new FogWeather();
-    map1->addWeatherEffect(*fog);
+//    // add a weather effect (can add multiple at the same time)
+//    RainWeather* rain = new RainWeather();
+//    map1->addWeatherEffect(*rain);
+//    FogWeather* fog = new FogWeather();
+//    map1->addWeatherEffect(*fog);
 
 
 
@@ -237,7 +237,7 @@ int main(int argc, char *argv[])
         spiderSprite->addAnimation((180+45*i) % 360,"hit",spiderSpriteSheet,Node(18,0+i),Node(20,0+i));
 
         // die
-        spiderSprite->addAnimation((180+45*i) % 360,"diee",spiderSpriteSheet,Node(18,0+i),Node(23,0+i));
+        spiderSprite->addAnimation((180+45*i) % 360,"die",spiderSpriteSheet,Node(18,0+i),Node(23,0+i));
     }
     spiderSprite->play("stand",-1,10,0);
     spiderSprite->setOrigin(QPointF(64,64));

@@ -14,6 +14,7 @@
 #include <algorithm>
 #include "QGraphicsItem"
 #include "EntityController.h"
+#include "Utilities.h"
 
 /// Constructs a default entity.
 Entity::Entity():
@@ -283,6 +284,20 @@ QRectF Entity::boundingRect()
     return sprite()->boundingBox();
 }
 
+void Entity::onAnimationFinishedCompletely_(EntitySprite *sender, std::string animation)
+{
+    if (animation == "die" || animation == "dieTwo"){
+        // self disconnect
+        disconnect(sender,&EntitySprite::animationFinishedCompletely,this,&Entity::onAnimationFinishedCompletely_);
+
+        Map* entitysMap = map();
+        if (entitysMap != nullptr)
+            entitysMap->removeEntity(this);
+
+        deleteLater();
+    }
+}
+
 /// Returns the current angle the Entity is facing in degrees.
 int Entity::facingAngle()
 {
@@ -443,9 +458,27 @@ double Entity::rotationSpeed()
 /// Sets the health of the entity, if set below 0, entity dies.
 void Entity::setHealth(double health)
 {
-    health_ = health;
+    health_ = health; // update internal var
 
-    if (health_ < 0){
+    if (health_ < 0){ // if health is below z, kill entity
+
+        // if entity has a death anim, play it first, then kill it
+        EntitySprite* spr = sprite();
+        if (spr){
+            if (spr->hasAnimation("die")){
+                connect(spr,&EntitySprite::animationFinishedCompletely,this,&Entity::onAnimationFinishedCompletely_);
+                int r = randInt(1,2);
+                if (r == 2 && spr->hasAnimation("dieTwo")){
+                    spr->play("dieTwo",1,10,0);
+                    return;
+                }
+                else{
+                    spr->play("die",1,10,0);
+                    return;
+                }
+            }
+        }
+
         Map* entitysMap = map();
         if (entitysMap != nullptr)
             entitysMap->removeEntity(this);

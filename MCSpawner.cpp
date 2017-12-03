@@ -61,7 +61,10 @@ void MCSpawner::onTimeout_()
             spiderSprite->addAnimation((180+45*i) % 360,"hit",spiderSpriteSheet,Node(18,0+i),Node(20,0+i));
 
             // die
-            spiderSprite->addAnimation((180+45*i) % 360,"diee",spiderSpriteSheet,Node(18,0+i),Node(23,0+i));
+            spiderSprite->addAnimation((180+45*i) % 360,"die",spiderSpriteSheet,Node(18,0+i),Node(23,0+i));
+
+            // dieTwo
+            spiderSprite->addAnimation((180+45*i) % 360,"dieTwo",spiderSpriteSheet,Node(24,0+i),Node(31,0+i));
         }
         spiderSprite->play("stand",-1,10,0);
         spiderSprite->setOrigin(QPointF(64,64));
