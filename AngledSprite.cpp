@@ -105,7 +105,7 @@ PlayingAnimationInfo AngledSprite::playingAnimation()
     if (playingAnimation_ == "")
         return PlayingAnimationInfo();
 
-    int timesLeftToPlay = sprite_->playingAnimationTimesLeftToPlay();
+    int timesLeftToPlay = sprite_->playingAnimation().timesLeftToPlay();
     int currentFrame = sprite_->currentFrameNumber();
     return PlayingAnimationInfo(playingAnimation_,fpsToPlayAt_,timesLeftToPlay,currentFrame);
 }
@@ -156,7 +156,7 @@ void AngledSprite::setFacingAngle_(double angle)
 
     int frameIndex = sprite_->currentFrameNumber();
 
-    if (sprite_->playingAnimation() != ""){
-        play(playingAnimation_,sprite_->playingAnimationTimesLeftToPlay(),sprite_->playingAnimationFPS(),frameIndex);
+    if (sprite_->playingAnimation().name() != ""){
+        play(playingAnimation_,sprite_->playingAnimation().timesLeftToPlay(),sprite_->playingAnimation().fps(),frameIndex);
     }
 }

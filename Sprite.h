@@ -12,6 +12,7 @@ class QGraphicsPixmapItem;
 class QTimer;
 class SpriteSheet;
 class Node;
+class PlayingAnimationInfo;
 
 /// A QGraphicsItem that represents a bunch of animations that can be played.
 /// All entities have sprites (some of which are invisible and do nothing).
@@ -42,9 +43,7 @@ public:
     // readers
     bool hasAnimation(std::string animation) const;
     std::vector<std::string> animations() const;
-    std::string playingAnimation() const;
-    int playingAnimationFPS() const;
-    int playingAnimationTimesLeftToPlay() const;
+    PlayingAnimationInfo playingAnimation() const;
     QPixmap currentFrame() const;
     int currentFrameNumber() const;
 
@@ -96,6 +95,7 @@ private:
 
     void commonInitialize_();
     void setSize_(std::string ofAnimation, int width, int height);
+    int playingAnimationTimesLeftToPlay_() const;
 };
 
 #endif // SPRITE_H

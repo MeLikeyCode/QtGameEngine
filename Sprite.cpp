@@ -1,11 +1,14 @@
 #include "Sprite.h"
+
 #include <cassert>
 #include <QDebug>
 #include <QGraphicsScene>
 #include <QTimer>
+
 #include "Node.h"
 #include "SpriteSheet.h"
 #include "Utilities.h"
+#include "PlayingAnimationInfo.h"
 
 /// Constructs a Sprite with a default displayed frame.
 Sprite::Sprite(QGraphicsItem *parent): QGraphicsItem(parent)
@@ -32,7 +35,7 @@ void Sprite::play(std::string animation, int timesToPlay, double framesPerSecond
     assert(animation_.find(animation) != animation_.end());
 
     // do nothing if we're already playing the specified animation
-    if (playingAnimation() == animation)
+    if (playingAnimation().name() == animation)
         return;
 
     // stop the currently playing animation
@@ -70,11 +73,12 @@ std::vector<std::string> Sprite::animations() const
     return results;
 }
 
-/// Returns the name of the currently playing animation.
-/// Returns empty string if no animation is playing.
-std::string Sprite::playingAnimation() const
+/// Returns the currently playing animation.
+/// PlayingAnimationInfo::isNone() will return true if no animation is currently playing.
+PlayingAnimationInfo Sprite::playingAnimation() const
 {
-    return playingAnimation_;
+    PlayingAnimationInfo info(playingAnimation_,playingAnimationFPS_,playingAnimationTimesLeftToPlay_(),currentFrameNumber());
+    return info;
 }
 
 /// Returns the number of times we have left to play the currently playing animation.
@@ -82,9 +86,9 @@ std::string Sprite::playingAnimation() const
 /// This function can tell you how many times you have left to play.
 /// Returns -1 if the animation was asked to play an infinite number of times (thus it has an infinite number of times left to play).
 /// Includes the current run.
-int Sprite::playingAnimationTimesLeftToPlay() const
+int Sprite::playingAnimationTimesLeftToPlay_() const
 {
-    assert(playingAnimation() != "");
+    assert(playingAnimation_ != "");
     if (timesToPlay_ == -1)
         return -1;
 
@@ -102,15 +106,6 @@ QPixmap Sprite::currentFrame() const
 int Sprite::currentFrameNumber() const
 {
     return currentFrame_;
-}
-
-/// Returns the FPS that the currently playing animation is playing at.
-/// Throws (assertion error) if there is no currently playing animation.
-int Sprite::playingAnimationFPS() const
-{
-    assert(playingAnimation() != "");
-
-    return playingAnimationFPS_;
 }
 
 /// Adds the specified pixmap as a frame to the specified animation.
@@ -210,15 +205,15 @@ void Sprite::nextFrame_(){
     // if we have played it enough times and we are not supposed to play it
     // forever, stop
     if (timesPlayed_ >= timesToPlay_ && timesToPlay_ != -1){
-        emit animationFinished(this,playingAnimation());
-        emit animationFinishedCompletely(this,playingAnimation());
+        emit animationFinished(this,playingAnimation().name());
+        emit animationFinishedCompletely(this,playingAnimation().name());
         stop();
         return;
     }
 
     // if there are no more frames, start again and increment times played
     if (currentFrame_ >= animationPixmaps.size()){
-        emit animationFinished(this,playingAnimation());
+        emit animationFinished(this,playingAnimation().name());
         currentFrame_ = 0;
         ++timesPlayed_;
     }

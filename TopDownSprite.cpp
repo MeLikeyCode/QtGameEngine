@@ -72,10 +72,7 @@ void TopDownSprite::stop()
 
 PlayingAnimationInfo TopDownSprite::playingAnimation()
 {
-    return PlayingAnimationInfo(sprite_->playingAnimation(),
-                                sprite_->playingAnimationFPS(),
-                                sprite_->playingAnimationTimesLeftToPlay(),
-                                sprite_->currentFrameNumber());
+    return sprite_->playingAnimation();
 }
 
 void TopDownSprite::commonInitialize_()

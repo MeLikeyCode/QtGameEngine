@@ -45,6 +45,8 @@ bool PlayingAnimationInfo::isNone() const
     return name() == "";
 }
 
+/// Returns the name of the playing animation.
+/// "" if no currently playing animation.
 std::string PlayingAnimationInfo::name() const
 {
     return animationName_;
