@@ -501,7 +501,11 @@ void Entity::damage(Entity *entity, double amount)
         return;
     }
 
-    // can be damaged
+    // play hit animation
+    if (entity->sprite()->hasAnimation("hit"))
+        entity->sprite()->playThenGoBackToOldAnimation("hit",1,10,0);
+
+    // damage
     entity->setHealth(entity->health() - amount);
 }
 

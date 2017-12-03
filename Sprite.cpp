@@ -7,17 +7,17 @@
 #include "SpriteSheet.h"
 #include "Utilities.h"
 
-/// Constructs a Sprite with no animations and no current frame.
+/// Constructs a Sprite with a default displayed frame.
 Sprite::Sprite(QGraphicsItem *parent): QGraphicsItem(parent)
 {
-    pixmap_ = new QGraphicsPixmapItem((QPixmap(":resources/graphics/misc/defaultEntity.png")),this);
+    pixmapItem_ = new QGraphicsPixmapItem((QPixmap(":resources/graphics/misc/defaultEntity.png")),this);
     commonInitialize_();
 }
 
 /// Constructs a Sprite with the specified pixmap being the currently displayed frame.
 Sprite::Sprite(QPixmap pixmap, QGraphicsItem *parent): QGraphicsItem(parent)
 {
-    pixmap_ = new QGraphicsPixmapItem(pixmap,this);
+    pixmapItem_ = new QGraphicsPixmapItem(pixmap,this);
     commonInitialize_();
 }
 
@@ -53,7 +53,7 @@ void Sprite::play(std::string animation, int timesToPlay, double framesPerSecond
 }
 
 QRectF Sprite::boundingRect() const{
-    return pixmap_->boundingRect();
+    return pixmapItem_->boundingRect();
 }
 
 /// Returns true if the Sprite contains the specified animation.
@@ -94,7 +94,7 @@ int Sprite::playingAnimationTimesLeftToPlay() const
 /// Returns the currently displayed frame of the Sprite.
 QPixmap Sprite::currentFrame() const
 {
-    return pixmap_->pixmap();
+    return pixmapItem_->pixmap();
 }
 
 /// Returns the frame number of the currently displayed frame.
@@ -189,7 +189,7 @@ void Sprite::addFrames(const Node &topLeftCell, const Node &bottomRightCell, con
 
 /// Sets the specified pixmap as the one currently being displayed by the Sprite.
 void Sprite::setPixmap(QPixmap pixmap){
-    pixmap_->setPixmap(pixmap);
+    pixmapItem_->setPixmap(pixmap);
 }
 
 /// Stops the currently playing animation.
@@ -241,6 +241,6 @@ void Sprite::commonInitialize_()
     playingAnimationFPS_ = -1;
 
     // set origin
-    setTransformOriginPoint(pixmap_->boundingRect().width()/2,
-                            pixmap_->boundingRect().height()/2);
+    setTransformOriginPoint(pixmapItem_->boundingRect().width()/2,
+                            pixmapItem_->boundingRect().height()/2);
 }

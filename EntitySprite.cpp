@@ -6,7 +6,7 @@
 
 EntitySprite::EntitySprite(): underlyingItem_(nullptr)
 {
-
+    // empty
 }
 
 EntitySprite::~EntitySprite()
@@ -38,8 +38,7 @@ QRectF EntitySprite::boundingBox() const
 void EntitySprite::playThenGoBackToOldAnimation(const std::string animationToPlay, int numTimesToPlay, int fpsToPlayAt, int startingFrameNumber)
 {
     animationPlayingBefore_ = playingAnimation();
-    disconnect(this,&EntitySprite::animationFinished,this,&EntitySprite::onPlayThenGoBackDone_);
-    connect(this,&EntitySprite::animationFinished,this,&EntitySprite::onPlayThenGoBackDone_);
+    connect(this,&EntitySprite::animationFinishedCompletely,this,&EntitySprite::onTemporaryAnimationDone_);
     play(animationToPlay,numTimesToPlay,fpsToPlayAt,startingFrameNumber);
 }
 
@@ -48,10 +47,12 @@ void EntitySprite::scale(double scale)
     underlyingItem_->setScale(scale);
 }
 
-void EntitySprite::onPlayThenGoBackDone_()
+void EntitySprite::onTemporaryAnimationDone_(EntitySprite *sender, std::string animation)
 {
-    disconnect(this,&EntitySprite::animationFinished,this,&EntitySprite::onPlayThenGoBackDone_);
-    play(animationPlayingBefore_.name(),animationPlayingBefore_.timesLeftToPlay(),animationPlayingBefore_.fps(),animationPlayingBefore_.currentFrame());
+    if (animationPlayingBefore_.isNone() == false){
+        disconnect(this,&EntitySprite::animationFinishedCompletely,this,&EntitySprite::onTemporaryAnimationDone_);
+        play(animationPlayingBefore_.name(),animationPlayingBefore_.timesLeftToPlay(),animationPlayingBefore_.fps(),animationPlayingBefore_.currentFrame());
+    }
 }
 
 void EntitySprite::setOrigin(const QPointF &pos)

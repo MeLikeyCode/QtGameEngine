@@ -81,12 +81,6 @@ void AnimationAttack::onFrameSwitched_(EntitySprite *ownersSprite, int fromFrame
         for (Entity* e:entsInRegion){
             if (e != this && e != owner) { // don't hurt self
                 this->damage(e,damage_);
-                if (e->sprite() != nullptr){
-                    if (e->sprite()->hasAnimation("hit")){
-                        qDebug() << "hit";
-                        e->sprite()->playThenGoBackToOldAnimation("hit",1,10,0);
-                    }
-                }
             }
         }
 

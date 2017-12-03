@@ -120,7 +120,7 @@ signals:
     void animationFinishedCompletely(EntitySprite* sender, std::string animation);
 
 public slots:
-    void onPlayThenGoBackDone_();
+    void onTemporaryAnimationDone_(EntitySprite* sender, std::string animation);
 
 protected:
     QGraphicsItem* underlyingItem_; // the underlying QGraphicsItem represenation of the EntitySprite

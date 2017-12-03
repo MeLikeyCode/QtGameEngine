@@ -31,7 +31,8 @@ class Node;
 /// A Sprite can play an animation a certain number of times by using
 /// Sprite::play(std::string,int,int). A value of -1 times means that the
 /// animation will be played again and again forever.
-class Sprite:public QObject, public QGraphicsItem{
+class Sprite:public QObject, // inherits from QObject so it can use signals/slots
+             public QGraphicsItem{ // inherits from QGraphicsItem so it can go inside scenes
     Q_OBJECT
 public:
     // constructors
@@ -85,7 +86,7 @@ private:
     std::string playingAnimation_;
     int playingAnimationFPS_; // the fps the currently playing animation is playing at
 
-    QGraphicsPixmapItem* pixmap_; // currently displayed pixmap
+    QGraphicsPixmapItem* pixmapItem_; // currently displayed pixmap
     QTimer* timer_;
     std::vector<QPixmap> animationPixmaps; // frames of the currently
                                            // playing animation
