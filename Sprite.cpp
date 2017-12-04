@@ -58,7 +58,7 @@ void Sprite::play(std::string animation, int timesToPlay, double framesPerSecond
 /// Plays an animation and then goes back to whatever (if any) animation was previously playing.
 void Sprite::playThenGoBackToOldAnimation(std::string animation, int numTimesToPlay, double framesPerSecond, int startingFrameNumber)
 {
-    animationPlayingLast = playingAnimation();
+    animationPlayingLast_ = playingAnimation();
     disconnect(this,&Sprite::animationFinishedCompletely,this,&Sprite::onTemporaryPlayDone_); // prevent double connect
     connect(this,&Sprite::animationFinishedCompletely,this,&Sprite::onTemporaryPlayDone_);
     play(animation,numTimesToPlay,framesPerSecond,startingFrameNumber);
@@ -97,7 +97,6 @@ PlayingAnimationInfo Sprite::playingAnimation() const
 /// Includes the current run.
 int Sprite::playingAnimationTimesLeftToPlay_() const
 {
-    assert(playingAnimation_ != "");
     if (timesToPlay_ == -1)
         return -1;
 

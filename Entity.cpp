@@ -284,6 +284,38 @@ QRectF Entity::boundingRect()
     return sprite()->boundingBox();
 }
 
+/// Adds a sound to the entity with the specified name.
+void Entity::addSound(const std::string &soundName, const std::string &filepath)
+{
+    soundNameToFilepath_[soundName] = filepath;
+}
+
+/// Plays the specified sound, if it exists, else does nothing.
+void Entity::playSound(const std::string &soundName, int numTimesToPlay)
+{
+    Map* entitysMap = map();
+    assert(entitysMap != nullptr);
+
+    // do nothing if specified sound doesn't exists
+    auto itrToFilepath = soundNameToFilepath_.find(soundName);
+    if (itrToFilepath == std::end(soundNameToFilepath_))
+        return;
+
+    std::string filepath = itrToFilepath->second;
+    auto itrPS = soundPathToPS_.find(filepath);
+
+    // create positional sound if necessary
+    if (itrPS == std::end(soundPathToPS_)){
+        soundPathToPS_[filepath] = new PositionalSound(entitysMap,filepath,pos());
+        itrPS = soundPathToPS_.find(filepath);
+    }
+
+    // play
+    PositionalSound* ps = itrPS->second;
+    ps->play(numTimesToPlay);
+
+}
+
 void Entity::onAnimationFinishedCompletely_(EntitySprite *sender, std::string animation)
 {
     if (animation == "die" || animation == "dieTwo"){
@@ -470,10 +502,12 @@ void Entity::setHealth(double health)
                 int r = randInt(1,2);
                 if (r == 2 && spr->hasAnimation("dieTwo")){
                     spr->play("dieTwo",1,10,0);
+                    playSound("die",1);
                     return;
                 }
                 else{
                     spr->play("die",1,10,0);
+                    playSound("die",1);
                     return;
                 }
             }

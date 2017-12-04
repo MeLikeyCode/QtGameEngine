@@ -71,6 +71,8 @@ void MCSpawner::onTimeout_()
 
         ECBodyThruster* bt = new ECBodyThruster(entity);
         bt->setThrustDistance(100);
+
+        entity->addSound("die","qrc:/resources/sounds/spiderDie.mp3");
     }
 
     // add entity to map

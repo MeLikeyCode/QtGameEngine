@@ -23,6 +23,7 @@ class Inventory;
 class AsyncShortestPathFinder;
 class QTimer;
 class EntityController;
+class PositionalSound;
 
 /// An Entity is the base class for anything that can go inside a Map.
 /// @author Abdullah Aghazadah
@@ -131,6 +132,10 @@ public:
     bool canFit(const QPointF& atPos);
     QRectF boundingRect();
 
+    // sounds
+    void addSound(const std::string& soundName, const std::string& filepath);
+    void playSound(const std::string& soundName, int numTimesToPlay);
+
 public slots:
     void onAnimationFinishedCompletely_(EntitySprite* sender, std::string animation);
 
@@ -183,6 +188,9 @@ private:
     std::unordered_map<std::string,Slot*> stringToSlot_;
 
     QPointF lastPos_;
+
+    std::unordered_map<std::string,std::string> soundNameToFilepath_;
+    std::unordered_map<std::string,PositionalSound*> soundPathToPS_;
 
     // helper functions
     void scaleBasedOnZ_();

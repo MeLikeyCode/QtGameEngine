@@ -683,11 +683,37 @@ implementation
 Play sound when minitaur attacks
 -make sound settable for AnimationAttack
 
+===TASK===------DONE
+Make spider play death animation before dying.
+
 =============================================================================
 =============================================================================
 =========================UNFINISHED TASKS====================================
 =============================================================================
 =============================================================================
+
+===TASK===
+Experiment/play with the idea of 'adding' sound to animations.
+-Not a good idea, they should remain decoupled.
+-a better idea might be to give each entity a collection of string:PositionalSounds
+    -e.g. die:PositionalSound, hit:PositionalSound
+    -these sounds get played when the entity gets hit or die
+
+Interface
+    Entity* e; // assume e points to a valid entity
+    e->addSound("hit","qrc:/resources/sounds/hit.wav");
+    e->addSound("die,"qrc:/resources/sounds/die.wav");
+    e->play("hit",1); // play sound "hit" one time
+
+implementation of addSound():
+    sounds_["hit"] = "qrc:/resources/sounds/hit.wav";
+
+implementation of play()
+    assert(map() != nullptr)
+    if (soundStrToPS[str].find() == end())
+        soundStrToPS = new PositionalSound(map(),"path", QPointF());
+    s->setPos(pos()); // set pos of sound to pos of entity
+    s->play() // play it
 
 
 ===TASK===

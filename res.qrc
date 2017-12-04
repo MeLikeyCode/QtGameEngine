@@ -82,5 +82,6 @@
         <file>graphics/tree/treeOne3.png</file>
         <file>graphics/tree/treeOne4.png</file>
         <file>graphics/characterSpritesheets/spider.png</file>
+        <file>sounds/spiderDie.mp3</file>
     </qresource>
 </RCC>

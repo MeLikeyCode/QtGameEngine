@@ -247,6 +247,7 @@ int main(int argc, char *argv[])
     ECBodyThruster* bt = new ECBodyThruster(spiderEntity);
     bt->setThrustDistance(100);
     bt->addTargetEntity(player);
+    spiderEntity->addSound("die","qrc:/resources/sounds/spiderDie.mp3");
 
     // create a spawner
     MCSpawner* spawner = new MCSpawner(map1,QRectF(0,0,map1->width(),map1->height()),MCSpawner::SpawnType::Spider,10,0.3);
