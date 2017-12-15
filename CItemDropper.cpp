@@ -25,8 +25,7 @@ void CItemDropper::removeEntity(Entity *entity)
     disconnect(entity,&Entity::dying,this,&CItemDropper::onEntityDies_);
 
     // remove
-    entities_.erase(entity);
-    //remove(entities_,entity);
+    remove(entities_,entity);
 }
 
 /// Executed when an Entity added to the CItemDropper dies.

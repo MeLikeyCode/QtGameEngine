@@ -210,7 +210,7 @@ template <> struct hash<QPointer<Entity>>
 namespace std{
     template <> struct hash<std::pair<Entity*,Entity*>>{
     size_t operator()(const std::pair<Entity*,Entity*>& pairOfEntities) const{
-        return (53 + hash<Entity*>()(pairOfEntities.first)) * 53 + hash<Entity*>()(pairOfEntities.first);
+        return (53 + hash<Entity*>()(pairOfEntities.first)) * 53 + hash<Entity*>()(pairOfEntities.second);
     }
 };
 }

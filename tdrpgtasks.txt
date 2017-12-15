@@ -715,6 +715,17 @@ implementation of play()
 =============================================================================
 =============================================================================
 
+===TASK===
+Have creeps drop items
+|
+V
+dream interface
+    CItemDropper* itemDropper = new CItemDropper(); // C = controller, so "Controller ItemDropper"
+    itemDropper->addEntity(e1);
+    itemDropper->addEntity(e2);
+
+    ===TASK===
+    Create a health potion item.
 
 
 ===TASK===
@@ -729,6 +740,7 @@ Create youtube tutorial that creates a *basic game*
 -shop entity can sell you weapons in exchange for GoldItem - can show in tut how to make the ShopGuiBehavior
 -quest giver has a few quests such as "kill 10 x", when completed, you get bonus gold - can connect to when quest completed, spawn gold coin at loc of player
 
+===TASK===
 
 
 

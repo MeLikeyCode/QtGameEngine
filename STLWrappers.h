@@ -4,13 +4,12 @@
 /// Provides the following functions for all STL containers.
 /// -find(inContainer, item) -> iterator to item if found, else end iterator
 /// -contains(container, item) -> true if container contains item, else false
+/// -containsAll(container, items) -> true if container contains all the specified items
 /// -add(inContainer, item) -> adds item to the container
 /// -remove(fromContainer, item) -> removes item from the container
 /// -count(inContainer,item) -> number of times item is in the container
 /// All functions use the most efficient search, add, and removal operations available for the container.
 /// @file
-/// @author Abdullah Aghazadah
-/// @date 12/10/17
 
 #include <algorithm>
 #include <set>
@@ -77,6 +76,39 @@ namespace STLWrappers
 		return find(container, item) != std::end(container);
 	}
 
+	/// Returns true if the specified container contains *all* the specified items.
+	/// If the container is a map (or unordered map), the items should be keys.
+	///@{
+	template<typename ContainerToCheckType, typename ContainerOfItemsType>
+	bool containsAll(const ContainerToCheckType& container, const ContainerOfItemsType& items)
+	{
+		// approach:
+		// - for each item in items
+		//		- if its not contained in container, return false
+		// - at the end (return true)
+
+		for (const auto& item : items)
+			if (!contains(container, item))
+				return false;
+		return true;
+	}
+	///
+	/// containsAll() overload for initializer lists
+	template<typename ContainerToCheckType, typename ItemType>
+	bool containsAll(const ContainerToCheckType& container, const std::initializer_list<ItemType>& items)
+	{
+		// approach:
+		// - for each item in items
+		//		- if its not contained in container, return false
+		// - at the end (return true)
+
+		for (const auto& item : items)
+			if (!contains(container, item))
+				return false;
+		return true;
+	}
+	///@}
+
 	/// @name remove(fromContainer, item)
 	/// Removes the specified item from the container (if it exists).
 	/// @note The most efficient removal algorithm available for the container is used.
@@ -85,7 +117,7 @@ namespace STLWrappers
 	/// Overload that works for any container that the "erase and remove" idiom works for.
 	/// Complexity is linear.
 	template<typename ContainerType, typename ItemType>
-	void remove(const ContainerType& fromContainer, const ItemType& item)
+	void remove(ContainerType& fromContainer, const ItemType& item)
 	{
 		auto new_end_itr = std::remove(std::begin(fromContainer), std::end(fromContainer), item);
 		fromContainer.erase(new_end_itr,std::end(fromContainer));
@@ -93,27 +125,27 @@ namespace STLWrappers
 	///
 	/// remove() overload for set, complexity is logarithmic.
 	template<typename ItemType>
-	void remove(const std::set<ItemType>& fromContainer, const ItemType& item)
+	void remove(std::set<ItemType>& fromContainer, const ItemType& item)
 	{
 		fromContainer.erase(item);
 	}
 	///
 	/// remove() overload for unordred set, complexity is constant.
 	template<typename ItemType>
-	void remove(const std::unordered_set<ItemType>& fromContainer, const ItemType& item)
+	void remove(std::unordered_set<ItemType>& fromContainer, const ItemType& item)
 	{
 		fromContainer.erase(item);
 	}
 	/// remove() overload for map, complexity is logarithmic.
 	template<typename KeyType, typename ValueType>
-	void remove(const std::map<KeyType,ValueType>& fromContainer, const KeyType& item)
+	void remove(std::map<KeyType,ValueType>& fromContainer, const KeyType& item)
 	{
 		fromContainer.erase(item);
 	}
 	///
 	/// remove() overload for unordered map, complexity is constant.
 	template<typename KeyType, typename ValueType>
-	void remove(const std::unordered_map<KeyType, ValueType>& fromContainer, const KeyType& item)
+	void remove(std::unordered_map<KeyType, ValueType>& fromContainer, const KeyType& item)
 	{
 		fromContainer.erase(item);
 	}
@@ -124,7 +156,7 @@ namespace STLWrappers
 	/// Adds an item to the end of a container.
 	/// @note Uses the most efficient insertion operation available for the container.
 	template<typename ContainerType, typename ItemType>
-	void add(const ContainerType& inContainer, const ItemType& item)
+	void add(ContainerType& inContainer, const ItemType& item)
 	{
 		inContainer.insert(std::end(inContainer), item);
 	}
