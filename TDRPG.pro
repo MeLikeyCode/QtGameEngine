@@ -121,7 +121,8 @@ SOURCES += main.cpp \
     ECChaser.cpp \
     PlayingAnimationInfo.cpp \
     MCSpawner.cpp \
-    RandomGenerator.cpp
+    RandomGenerator.cpp \
+    CItemDropper.cpp
 
 HEADERS  += \
     Map.h \
@@ -228,7 +229,9 @@ HEADERS  += \
     ECChaser.h \
     PlayingAnimationInfo.h \
     MCSpawner.h \
-    RandomGenerator.h
+    RandomGenerator.h \
+    CItemDropper.h \
+    STLWrappers.h
 
 RESOURCES += \
     res.qrc

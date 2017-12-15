@@ -13,6 +13,9 @@ class Node;
 /// @author Abdullah Aghazadah
 /// @date 9-23-17
 ///
+/// This class can be used to represent legit top down entities, or just a picture.
+/// If you just want a picture, pass a QPixmap into the constructor.
+///
 /// For TopDownSprite, you only need to add frames from a "pure" top down view.
 /// When the sprite is asked to change its facing angle, it will simply rotate
 /// the underlying picture.

@@ -41,6 +41,7 @@
 #include "FireballLauncher.h"
 #include "AnimationAttack.h"
 #include "MCSpawner.h"
+#include "CItemDropper.h"
 
 Entity* player;
 
@@ -251,6 +252,10 @@ int main(int argc, char *argv[])
 
     // create a spawner
     MCSpawner* spawner = new MCSpawner(map1,QRectF(0,0,map1->width(),map1->height()),MCSpawner::SpawnType::Spider,10,0.3);
+
+    // create an item dropper
+    CItemDropper* itemDropper = new CItemDropper();
+    itemDropper->addEntity(spiderEntity);
 
     return a.exec();
 }

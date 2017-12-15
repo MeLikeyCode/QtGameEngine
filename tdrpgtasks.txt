@@ -686,13 +686,7 @@ Play sound when minitaur attacks
 ===TASK===------DONE
 Make spider play death animation before dying.
 
-=============================================================================
-=============================================================================
-=========================UNFINISHED TASKS====================================
-=============================================================================
-=============================================================================
-
-===TASK===
+===TASK===-----DONE
 Experiment/play with the idea of 'adding' sound to animations.
 -Not a good idea, they should remain decoupled.
 -a better idea might be to give each entity a collection of string:PositionalSounds
@@ -714,6 +708,13 @@ implementation of play()
         soundStrToPS = new PositionalSound(map(),"path", QPointF());
     s->setPos(pos()); // set pos of sound to pos of entity
     s->play() // play it
+
+=============================================================================
+=============================================================================
+=========================UNFINISHED TASKS====================================
+=============================================================================
+=============================================================================
+
 
 
 ===TASK===

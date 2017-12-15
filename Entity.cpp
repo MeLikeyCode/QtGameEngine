@@ -322,10 +322,6 @@ void Entity::onAnimationFinishedCompletely_(EntitySprite *sender, std::string an
         // self disconnect
         disconnect(sender,&EntitySprite::animationFinishedCompletely,this,&Entity::onAnimationFinishedCompletely_);
 
-        Map* entitysMap = map();
-        if (entitysMap != nullptr)
-            entitysMap->removeEntity(this);
-
         deleteLater();
     }
 }
@@ -512,10 +508,6 @@ void Entity::setHealth(double health)
                 }
             }
         }
-
-        Map* entitysMap = map();
-        if (entitysMap != nullptr)
-            entitysMap->removeEntity(this);
 
         deleteLater();
     }
