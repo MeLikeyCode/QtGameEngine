@@ -26,5 +26,6 @@ double msToSeconds(double milliseconds);
 quint32 fastRandom();
 double closestAngle(const std::vector<int>& allAngles, double targetAngle);
 double randInt(int from, int to);
+double randDouble(double from, double to);
 
 #endif // UTILITIES_H

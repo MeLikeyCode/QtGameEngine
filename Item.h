@@ -21,6 +21,7 @@ class Item: public Entity
     friend class Inventory;
 public:
     Inventory* inventory();
+    Entity* owner();
     void setInventory(Inventory* inv);
     int numOfCharges();
     void setNumOfCharges(int n);

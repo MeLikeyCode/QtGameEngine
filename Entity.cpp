@@ -483,10 +483,17 @@ double Entity::rotationSpeed()
     return rotationSpeed_;
 }
 
-/// Sets the health of the entity, if set below 0, entity dies.
+/// Sets the health of the entity.
+/// If set below 0, entity dies.
+/// If the entity has a a "die" or "dieTwo" animation, one of the two will be played and then the
+/// entity will be destroyed.
+/// This function will not allow the health to be set above the maximum health (will clamp it),
+/// use setMaxHealth() if you want to change the maximum health of an entity.
 void Entity::setHealth(double health)
 {
-    health_ = health; // update internal var
+    health_ = health; // update internal var (clamp to max)
+    if (health_ > maxHealth())
+        health_ = maxHealth();
 
     if (health_ < 0){ // if health is below z, kill entity
 
@@ -516,6 +523,16 @@ void Entity::setHealth(double health)
 double Entity::health()
 {
     return health_;
+}
+
+void Entity::setMaxHealth(double maxHealth)
+{
+    maxHealth_ = maxHealth;
+}
+
+double Entity::maxHealth()
+{
+    return maxHealth_;
 }
 
 /// Attempts to damage the specified Entity. Every Entity can specifiy,

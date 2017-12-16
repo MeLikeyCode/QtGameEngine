@@ -143,3 +143,10 @@ double randInt(int from, int to)
 
     return generator.randInt(from,to);
 }
+
+double randDouble(double from, double to)
+{
+    static RandomGenerator generator;
+
+    return generator.randDouble(from,to);
+}

@@ -61,3 +61,15 @@ std::string Item::description()
 {
     return description_;
 }
+
+/// Returns the owner of the item (which is just the owner of the inventory that the item is in).
+/// Returns nullptr if the item isn't in an inventory or if the inventory doesn't belong to anyone.
+Entity *Item::owner()
+{
+    Inventory* inv = inventory();
+    if (inv == nullptr)
+        return nullptr;
+
+    Entity* ow = inv->entity();
+    return ow;
+}

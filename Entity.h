@@ -103,6 +103,8 @@ public:
 
     void setHealth(double health);
     double health();
+    void setMaxHealth(double maxHealth);
+    double maxHealth();
     void damage(Entity* entity, double amount);
 
     void setCanOnlyBeDamagedBy(bool tf);
@@ -177,6 +179,7 @@ private:
     std::map<std::string,QPointF> namedPoints_;
 
     double health_;
+    double maxHealth_;
     std::set<std::type_index> canOnlyBeDamagedBy_;
     std::set<std::type_index> canBeDamagedByAllExcept_;
     bool canOnlyBeDamagedByMode_;

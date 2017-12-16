@@ -3,6 +3,8 @@
 #include "Entity.h"
 #include "Map.h"
 #include "ItemGold.h"
+#include "ItemHealthPotion.h"
+#include "Utilities.h"
 
 using namespace STLWrappers;
 
@@ -38,9 +40,18 @@ void CItemDropper::onEntityDies_(Entity *entity)
         return;
 
     // other wise, drop an item
-    ItemGold* gold = new ItemGold();
-    gold->setPos(entity->pos());
-    entitysMap->addEntity(gold);
+    int r = randInt(0,1);
+    if (r == 0){
+        ItemGold* gold = new ItemGold();
+        gold->setPos(entity->pos());
+        entitysMap->addEntity(gold);
+    }
+    else if (r == 1){
+        ItemHealthPotion* hp = new ItemHealthPotion(20);
+        hp->setPos(entity->pos());
+        entitysMap->addEntity(hp);
+    }
+
 
     // stop listening for when this entity dies (this wil happen automatically when the entity (QObject) gets destroyed
 }
