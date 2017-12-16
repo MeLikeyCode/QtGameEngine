@@ -42,6 +42,7 @@
 #include "AnimationAttack.h"
 #include "MCSpawner.h"
 #include "CItemDropper.h"
+#include "CHealthShower.h"
 
 Entity* player;
 CItemDropper* itemDropper;
@@ -83,7 +84,8 @@ int main(int argc, char *argv[])
     // create an entity that is controlled via keyboard/mouse
     player = new Entity();
     player->setGroup(1);
-    player->setHealth(500);
+    player->setMaxHealth(100);
+    player->setHealth(100);
 
     // create an EntitySprite for the entity
     SpriteSheet minitaurSpriteSheet(":/resources/graphics/characterSpritesheets/minotaur_alpha.png",24,8,128,128);
@@ -257,6 +259,11 @@ int main(int argc, char *argv[])
     // create an item dropper
     itemDropper = new CItemDropper();
     itemDropper->addEntity(spiderEntity);
+
+    // create health shower
+    CHealthShower* hs = new CHealthShower();
+    hs->addEntity(spiderEntity);
+    hs->addEntity(player);
 
     return a.exec();
 }

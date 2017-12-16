@@ -256,6 +256,12 @@ QPointF Game::mapToMap(const QPoint& point)
     return mapToScene(point);
 }
 
+/// Converts the specified point from Map coordinates to Game coordinates.
+QPointF Game::mapFromMap(const QPointF &point)
+{
+    return mapFromScene(point);
+}
+
 /// Returns the keys that are _currently_ pressed.
 std::set<int> Game::keysPressed()
 {

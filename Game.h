@@ -33,6 +33,7 @@ public:
     void setCurrentMap(Map* currentMap);
     Map* currentMap();
     QPointF mapToMap(const QPoint &point);
+    QPointF mapFromMap(const QPointF &point);
 
     void setCenterCamPos(QPointF position);
     QPointF centerCamPos();

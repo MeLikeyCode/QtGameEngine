@@ -496,6 +496,8 @@ void Entity::setHealth(double health)
     if (health_ > maxHealth())
         health_ = maxHealth();
 
+    emit healthChanged(this);
+
     if (health_ < 0){ // if health is below z, kill entity
 
         // if entity has a death anim, play it first, then kill it

@@ -157,6 +157,9 @@ signals:
     /// Emitted when the entity leaves a Map.
     void mapLeft(Entity* sender, Map* mapJustLeft);
 
+    /// Emitted when the health of the entity changes.
+    void healthChanged(Entity* sender);
+
     /// Emitted right before the entity is about to diee.
     /// Gives listeners one last chance to clear any references to this entity.
     void dying(Entity* sender);

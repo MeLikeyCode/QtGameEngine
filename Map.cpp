@@ -375,10 +375,10 @@ void Map::onCamMoved_(QPointF newCamPos)
 void Map::onMapChanged_(Map *oldMap, Map *newMap)
 {
     if (newMap == this)
-        emit setAsCurrentMap();
+        emit setAsCurrentMap(this);
 
     if (oldMap == this && newMap != this)
-        emit unsetAsCurrentMap();
+        emit unsetAsCurrentMap(this);
 }
 
 /// Sets a fading border around the map.

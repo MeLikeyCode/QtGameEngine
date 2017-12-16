@@ -123,7 +123,8 @@ SOURCES += main.cpp \
     MCSpawner.cpp \
     RandomGenerator.cpp \
     CItemDropper.cpp \
-    ItemHealthPotion.cpp
+    ItemHealthPotion.cpp \
+    CHealthShower.cpp
 
 HEADERS  += \
     Map.h \
@@ -233,7 +234,8 @@ HEADERS  += \
     RandomGenerator.h \
     CItemDropper.h \
     STLWrappers.h \
-    ItemHealthPotion.h
+    ItemHealthPotion.h \
+    CHealthShower.h
 
 RESOURCES += \
     res.qrc

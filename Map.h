@@ -87,11 +87,11 @@ public:
 
 signals:
     /// Emitted when the Map is set as the current Map for the game.
-    void setAsCurrentMap();
+    void setAsCurrentMap(Map* sender);
 
     /// Emitted when the Map is unset as the current Map for the game.
     /// I.e. another Map becomes the current map of the game.
-    void unsetAsCurrentMap();
+    void unsetAsCurrentMap(Map* sender);
 
     /// Emitted when the game camera moves around the Map.
     /// This is only emitted when this map is set as the current Map for the Game.
