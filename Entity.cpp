@@ -24,6 +24,7 @@ Entity::Entity():
     children_(),
     parent_(nullptr),
     health_(10),                    // default health of 10
+    maxHealth_(100),                // deafult max health of 100
     canOnlyBeDamagedBy_(),
     canBeDamagedByAllExcept_(),
     canOnlyBeDamagedByMode_(false), // by default, can be damaged by all

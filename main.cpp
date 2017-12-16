@@ -44,6 +44,7 @@
 #include "CItemDropper.h"
 
 Entity* player;
+CItemDropper* itemDropper;
 
 int main(int argc, char *argv[])
 {
@@ -254,7 +255,7 @@ int main(int argc, char *argv[])
     MCSpawner* spawner = new MCSpawner(map1,QRectF(0,0,map1->width(),map1->height()),MCSpawner::SpawnType::Spider,10,0.3);
 
     // create an item dropper
-    CItemDropper* itemDropper = new CItemDropper();
+    itemDropper = new CItemDropper();
     itemDropper->addEntity(spiderEntity);
 
     return a.exec();
