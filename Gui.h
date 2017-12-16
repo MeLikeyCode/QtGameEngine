@@ -12,7 +12,7 @@ class QRectF;
 /// Abstract class that Represents a GUI element in a Game.
 ///
 /// A Gui is placed relative to its parent Gui, if it does not have a parent
-/// Gui, its place relative to the top left hand corner of the screen.
+/// Gui, its place relative to the top left hand corner of the Game's screen.
 ///
 /// Most Guis offer functions for customizing their look in some way.
 /// Most Guis emit signals when they are interacted with.

@@ -709,11 +709,9 @@ implementation of play()
     s->setPos(pos()); // set pos of sound to pos of entity
     s->play() // play it
 
-=============================================================================
-=============================================================================
-=========================UNFINISHED TASKS====================================
-=============================================================================
-=============================================================================
+===TASK===-------DONE
+Create a health potion item.
+-its use() should simply give the owner some health
 
 ===TASK===
 Have creeps drop items
@@ -724,8 +722,18 @@ dream interface
     itemDropper->addEntity(e1);
     itemDropper->addEntity(e2);
 
-    ===TASK===
-    Create a health potion item.
+=============================================================================
+=============================================================================
+=========================UNFINISHED TASKS====================================
+=============================================================================
+=============================================================================
+
+
+===TASK===
+Show health bar above spiders.
+
+
+
 
 
 ===TASK===
@@ -733,7 +741,7 @@ IMPORTANT - work on THIS task only (while doing it, you will discover new things
 Create youtube tutorial that creates a *basic game*
 - WORKING - DONE - player controlled entity (grabs cam and can go to other maps) - have all necessary tools  
 - WORKING - DONE -creep entities (will chase/attack enemies w/i their line of sight) - have all necessary tools
--creeps drop items (health, GoldItem, Weapons, NoTargetItem, TargetItem, etc...) - have all necessary tools
+- WORKING - DONE -creeps drop items (health, GoldItem, Weapons, NoTargetItem, TargetItem, etc...) - have all necessary tools
 - WORKING - DONE -creeps respawn - have all necessary tools
 -player keeps killing creeps, thus keeps getting new items - have all necessary tools
 -there is a small "town" with some npcs (shop and quest giver) - have all necessary tools (use watched-watching sys to keep track of when playing entity comes near shop or quest giver)
