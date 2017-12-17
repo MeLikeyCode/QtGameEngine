@@ -113,7 +113,6 @@ private:
     QPointer<Game> game_; // the game that is currently visualizing the map, null if not currently being visualizing
     std::set<WeatherEffect*> weatherEffects_;
 
-    QGraphicsRectItem* guiLayer_;
     QGraphicsRectItem* weatherLayer_;
     QGraphicsRectItem* entityLayer_;
     QGraphicsRectItem* terrainLayer_;

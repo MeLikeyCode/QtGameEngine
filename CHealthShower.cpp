@@ -1,14 +1,18 @@
 #include "CHealthShower.h"
 
+#include <QTimer>
+
 #include "STLWrappers.h"
 #include "Entity.h"
 #include "Map.h"
 #include "Bar.h"
 #include "cassert"
 
-CHealthShower::CHealthShower()
+CHealthShower::CHealthShower():
+    timer_(new QTimer(this))
 {
-    // empty
+    connect(timer_,&QTimer::timeout,this,&CHealthShower::onTick_);
+    timer_->start(0);
 }
 
 void CHealthShower::addEntity(Entity *entity)
@@ -150,5 +154,21 @@ void CHealthShower::onEntitysMapUnVisualized_(Map *mapUnVisualized)
     for (Entity* e:entitiesInMap){
         Bar* bar = entityToBar_[e];
         g->removeGui(bar);
+    }
+}
+
+void CHealthShower::onTick_()
+{
+    for (auto entBarPair : entityToBar_){
+        Entity* e = entBarPair.first;
+        Bar* b = entBarPair.second;
+
+        Map* m = e->map();
+        Game* g = nullptr;
+        if (m)
+            g = m->game();
+
+        if (g)
+            b->setGuiPos(g->mapFromMap(e->pos()));
     }
 }

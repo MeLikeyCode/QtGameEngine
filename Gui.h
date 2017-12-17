@@ -39,11 +39,9 @@ public:
     /// This function is virtual, so that sub classes may provide a better implementation if they wish.
     virtual QRectF getGuiBoundingBox();
 
-protected:
-    std::unordered_set<Gui*> childGuis_;
+private:
     Gui* parentGui_;
-
-    QPointF pos_; // relative to the parent (or top left of screen if no parent)
+    std::unordered_set<Gui*> childGuis_;
 
     std::vector<QRectF> getBoundingBoxesFor_(QGraphicsItem* gi, QGraphicsItem *mapTo);
 };

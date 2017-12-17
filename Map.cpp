@@ -29,7 +29,6 @@ Map::Map(PathingMap pathingMap):
     pathingMap_(pathingMap),
     scene_(new QGraphicsScene(this)),
     game_(nullptr),
-    guiLayer_(new QGraphicsRectItem()),
     weatherLayer_(new QGraphicsRectItem()),
     entityLayer_(new QGraphicsRectItem()),
     terrainLayer_(new QGraphicsRectItem())
@@ -40,7 +39,6 @@ Map::Map(PathingMap pathingMap):
     scene_->addItem(terrainLayer_);
     scene_->addItem(entityLayer_);
     scene_->addItem(weatherLayer_);
-    scene_->addItem(guiLayer_);
 
     // add a default TerrainLayer
     TerrainLayer* defaultTerrain = new TerrainLayer(width()/256+1, height()/256+1);

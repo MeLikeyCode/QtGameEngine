@@ -15,16 +15,17 @@ Gui::~Gui()
     }
 }
 
+/// Returns the position of the Gui relative to its parent (or relative to
+/// the top left of the screen if no parent).
 QPointF Gui::guiPos()
 {
-    return pos_;
+    return getGraphicsItem()->pos();
 }
 
 /// Sets the position of the Gui relative to its parent (or relative to
 /// top left of screen if no parent)
 void Gui::setGuiPos(const QPointF &pos)
 {
-    pos_ = pos;
     getGraphicsItem()->setPos(pos);
 }
 

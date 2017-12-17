@@ -118,6 +118,8 @@ private:
     QTimer* guiUpdateTimer_;
     std::unordered_set<Gui*> guis_;
 
+    QGraphicsRectItem* guiLayer_;
+
     // watched/watching entities
     std::map<Entity*, std::set<Entity*>> watchedToWatching_; // each Entity that is watched to the Entities that are watching it
     std::map<Entity*, std::set<Entity*>> watchingToWatched_; // each Entity that is watching to the Entities that its watching

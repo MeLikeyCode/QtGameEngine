@@ -31,8 +31,11 @@ extern Entity* player;
 
 /// Creates an instance of the Game with some default options.
 Game::Game(MapGrid *mapGrid, int xPosOfStartingMap, int yPosOfStartingMap):
-    mapGrid_(mapGrid)
+    mapGrid_(mapGrid),
+    guiLayer_(new QGraphicsRectItem())
 {
+    guiLayer_->setZValue(INFINITY);
+
     // register types that needed to be used in cross thread signal-slot stuff
     qRegisterMetaType<PathingMap>();
     qRegisterMetaType<std::vector<QPointF>>();
@@ -44,6 +47,7 @@ Game::Game(MapGrid *mapGrid, int xPosOfStartingMap, int yPosOfStartingMap):
 
     currentMap_ = mapGrid_->mapAt(xPosOfStartingMap,yPosOfStartingMap);
     setScene(currentMap_->scene());
+    scene()->addItem(guiLayer_);
 
     // disable QGraphicsView's scroll bars
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -74,6 +78,8 @@ MapGrid *Game::mapGrid()
 void Game::setCurrentMap(Map *map){
     assert(map != nullptr);
 
+    scene()->removeItem(guiLayer_); // remove guis from previous map
+
     Map* oldMap = currentMap_;
     currentMap_ = map;
 
@@ -81,10 +87,7 @@ void Game::setCurrentMap(Map *map){
     setSceneRect(0,0,width(),height());
     map->setGame_(this);
 
-    // move guis over
-    for (Gui* gui:guis_){
-        scene()->addItem(gui->getGraphicsItem());
-    }
+    scene()->addItem(guiLayer_); // add guis to new map
 
     // emit map changed signal
     if (oldMap != currentMap_)
@@ -235,16 +238,15 @@ void Game::keyReleaseEvent(QKeyEvent *event)
 /// Adds the specified Gui to the game.
 void Game::addGui(Gui *gui)
 {
-    assert(currentMap() != nullptr);
-
+    gui->getGraphicsItem()->setParentItem(guiLayer_);
     guis_.insert(gui);
-    gui->getGraphicsItem()->setParentItem(currentMap()->guiLayer_);
-    gui->getGraphicsItem()->setVisible(true); // when a gui is added to a game, it's always visible
+    gui->getGraphicsItem()->setVisible(true); // when a gui is added to a game, it's always visible // TODO remove: why is this here?
 }
 
 /// Removes the specified Gui from the game.
 void Game::removeGui(Gui *gui)
 {
+    gui->setParentGui(nullptr);
     scene()->removeItem(gui->getGraphicsItem());
     guis_.erase(gui);
 }
@@ -508,10 +510,7 @@ void Game::setWatchedWatchingRange(Entity *watched, Entity *watching, double ran
 
 void Game::updateGuiPositions()
 {
-    for (Gui* gui:guis_){
-        QPointF newPos = mapToScene(gui->guiPos().toPoint());
-        gui->getGraphicsItem()->setPos(newPos);
-    }
+    guiLayer_->setPos(mapToScene(QPoint(0,0)));
 }
 
 /// Executed whenever an Entity moves.
