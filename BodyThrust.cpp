@@ -42,7 +42,7 @@ void BodyThrust::useImplementation()
     // set point that will be checked for collision
     double ownerWidth = theOwner->sprite()->boundingBox().width();
     double ownerHeight = theOwner->sprite()->boundingBox().height();
-    collisionPoint_ = QPointF(ownerWidth/2,ownerHeight/2);
+    collisionPoint_ = QPointF(64,64);
 
     // if its already thrusting, don't do anything
     if (alreadyThrusting_){
@@ -130,11 +130,11 @@ void BodyThrust::thrustStep_()
         return;
     }
 
-    // if still moving forward, kill things with tip, then move backward
+    // if still moving forward, damage things in the way, then move backward
     // due to collision
     std::unordered_set<Entity*> collidingEntities = theOwner->map()->entities(theOwner->mapToMap(collisionPoint_));
     for (Entity* e: collidingEntities){
-        if (e != (Entity*)theOwner && e->parent() != (Entity*)theOwner && headingForward_){
+        if (e != theOwner && e->parent() != theOwner && headingForward_){
             theOwner->damage(e,damage_);
             headingBackwardDueToCollision_ = true;
             headingBackward_ = false;

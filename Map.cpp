@@ -210,7 +210,7 @@ std::unordered_set<Entity *> Map::entities(const QPointF &atPoint)
         QPolygonF bRect(entity->mapToMap(entity->boundingRect()));
 
         // see if the bounding rect contains the point
-        if (bRect.contains(atPoint))
+        if (bRect.containsPoint(atPoint,Qt::FillRule::OddEvenFill))
             ents.insert(entity);
     }
 
