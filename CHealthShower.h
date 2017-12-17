@@ -26,6 +26,7 @@ public slots:
     void onEntityLeavesMap_(Entity* sender, Map* mapLeft);
     void onEntitysMapVisualized_(Map* mapVisualized);
     void onEntitysMapUnVisualized_(Map* mapUnVisualized);
+    void onEntityDying_(Entity* sender);
 
     void onTick_();
 

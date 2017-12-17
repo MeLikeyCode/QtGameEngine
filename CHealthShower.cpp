@@ -36,8 +36,12 @@ void CHealthShower::addEntity(Entity *entity)
         connect(entitysMap,&Map ::unsetAsCurrentMap,this,&CHealthShower::onEntitysMapUnVisualized_);
     }
 
+    // listen to dying
+    connect(entity,&Entity::dying,this,&CHealthShower::onEntityDying_);
+
     // create bar
     Bar* bar = new Bar();
+    bar->setWidth(40);
     bar->setMinValue(0);
     bar->setMaxValue(entity->maxHealth());
     bar->setCurrentValue(entity->health());
@@ -157,8 +161,45 @@ void CHealthShower::onEntitysMapUnVisualized_(Map *mapUnVisualized)
     }
 }
 
+/// Executed when an entity dies.
+/// Cleans up.
+void CHealthShower::onEntityDying_(Entity *sender)
+{
+    // unlisten for move and health changed signals
+    disconnect(sender,&Entity::healthChanged,this,&CHealthShower::onEntityHealthChanged_);
+    disconnect(sender,&Entity::moved,this,&CHealthShower::onEntityMoved_);
+
+    // unlisten to map entered/left
+    disconnect(sender,&Entity::mapEntered,this,&CHealthShower::onEntityEntersMap_);
+    disconnect(sender,&Entity::mapLeft,this,&CHealthShower::onEntityLeavesMap_);
+
+    // remove gui
+    Map* m = sender->map();
+    if (m){
+        Game* g = m->game();
+        if (g){
+            g->removeGui(entityToBar_[sender]);
+        }
+    }
+
+    STLWrappers::remove(entities_,sender);
+    STLWrappers::remove(entityToBar_,sender);
+}
+
+/// Executed after all *window* events (mouse/paint/resize etc) have been handled.
+/// Will ensure that the health bars are in the proper place relative to their entities.
 void CHealthShower::onTick_()
 {
+    // implementation detail:
+    // - when you start() a QTimer with a interval of 0, its call back will be executed after
+    //   all the *window* events have been handled.
+    // - this makes the GUI "responsive" because window events are given priority, only after
+    //   they are finished will this function execute.
+    // - the recommended strategy is to have this function do a little bit of work and then return,
+    //   then continue your work during the *next* invokation. If you do too much work in one invocation
+    //   there will be too much time spent before the next window events have a chance to be executed
+    //   thus your application will be unresponsive.
+
     for (auto entBarPair : entityToBar_){
         Entity* e = entBarPair.first;
         Bar* b = entBarPair.second;
