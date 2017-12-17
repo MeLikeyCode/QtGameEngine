@@ -9,7 +9,7 @@ var indexSectionsWithContent =
   6: "mqs",
   7: "cfiprs",
   8: "egims",
-  9: "h"
+  9: "hw"
 };
 
 var indexSectionNames =

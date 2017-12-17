@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['welcome_20to_20the_20documentation_21',['Welcome to the documentation!',['../index.html',1,'']]],
   ['watchedentities',['watchedEntities',['../class_game.html#ad654805531c9244fe57f31538f788d57',1,'Game::watchedEntities()'],['../class_game.html#a86ea15289277ff8204a52ac28f93430e',1,'Game::watchedEntities(Entity *of)']]],
   ['watchedentityentersrange',['watchedEntityEntersRange',['../class_game.html#a428af02ffacd2c1d0c4e919dbdb7e1a1',1,'Game']]],
   ['watchedentityleavesrange',['watchedEntityLeavesRange',['../class_game.html#a8880fac4252d52a1909d77335285ee3d',1,'Game']]],
