@@ -9,7 +9,6 @@
 class Entity;
 class Map;
 class Bar;
-class QTimer;
 
 class CHealthShower : public QObject
 {
@@ -27,13 +26,9 @@ public slots:
     void onEntitysMapVisualized_(Map* mapVisualized);
     void onEntitysMapUnVisualized_(Map* mapUnVisualized);
 
-    void onTick_();
-
 private:
     std::unordered_set<Entity*> entities_;
-    std::unordered_map<Entity*,Map*> entityToMap_;
     std::unordered_map<Entity*,Bar*> entityToBar_;
-    QTimer* timer_;
 };
 
 #endif // CHEALTHSHOWER_H

@@ -262,8 +262,8 @@ int main(int argc, char *argv[])
 
     // create health shower
     CHealthShower* hs = new CHealthShower();
-    hs->addEntity(spiderEntity);
     hs->addEntity(player);
+    hs->addEntity(spiderEntity);
 
     return a.exec();
 }
