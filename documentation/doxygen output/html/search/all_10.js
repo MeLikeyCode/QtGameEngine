@@ -20,6 +20,7 @@ var searchData=
   ['rangedweaponslot',['RangedWeaponSlot',['../class_ranged_weapon_slot.html',1,'']]],
   ['rangedweaponslot_2ecpp',['RangedWeaponSlot.cpp',['../_ranged_weapon_slot_8cpp.html',1,'']]],
   ['rangedweaponslot_2eh',['RangedWeaponSlot.h',['../_ranged_weapon_slot_8h.html',1,'']]],
+  ['readme_2emd',['readme.md',['../readme_8md.html',1,'']]],
   ['regular',['regular',['../class_game.html#aff75625d209dcc845f1ea67b6783ca6aaaf37d08ae228a87dc6b265fd1019c97d',1,'Game']]],
   ['remove',['remove',['../class_scroll_window.html#a05fe180d519e5dc6a9649925969ef2e9',1,'ScrollWindow::remove()'],['../namespace_s_t_l_wrappers.html#a1c57af718faca30ceae51858e8d5c508',1,'STLWrappers::remove(ContainerType &amp;fromContainer, const ItemType &amp;item)'],['../namespace_s_t_l_wrappers.html#a983582c582b0f48f0729022aa5dcf4ab',1,'STLWrappers::remove(std::set&lt; ItemType &gt; &amp;fromContainer, const ItemType &amp;item)'],['../namespace_s_t_l_wrappers.html#ac68e085deb08377d9d84cb925ce3a48d',1,'STLWrappers::remove(std::unordered_set&lt; ItemType &gt; &amp;fromContainer, const ItemType &amp;item)'],['../namespace_s_t_l_wrappers.html#aaa9bc1f27be4f8e4c0c74d007017fa74',1,'STLWrappers::remove(std::map&lt; KeyType, ValueType &gt; &amp;fromContainer, const KeyType &amp;item)'],['../namespace_s_t_l_wrappers.html#ac375ef5d449c9dbb7907fc4c52077ac7',1,'STLWrappers::remove(std::unordered_map&lt; KeyType, ValueType &gt; &amp;fromContainer, const KeyType &amp;item)']]],
   ['removeall',['removeAll',['../class_scroll_window.html#af090ee5df1522f511bd92c0e29dae093',1,'ScrollWindow']]],

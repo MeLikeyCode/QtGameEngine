@@ -11,5 +11,6 @@ var searchData=
   ['hovered',['hovered',['../class_label.html#a46e8edbfe5c55ece6a892090d304c041',1,'Label']]],
   ['hoverenterevent',['hoverEnterEvent',['../class_label.html#aa5e1a30ad07eb20c7485354648be9611',1,'Label::hoverEnterEvent()'],['../class_panel.html#a370d3646831d031bddb83ddfb50e191f',1,'Panel::hoverEnterEvent()']]],
   ['hoverleaveevent',['hoverLeaveEvent',['../class_label.html#aa2a2a884f3bf2eb2b435de10546803c6',1,'Label::hoverLeaveEvent()'],['../class_panel.html#a196fc3444f36b18908c6a88d9607a5d3',1,'Panel::hoverLeaveEvent()']]],
-  ['hovermoveevent',['hoverMoveEvent',['../class_panel.html#ac893372b561b867b41bfe8b00dca86cd',1,'Panel']]]
+  ['hovermoveevent',['hoverMoveEvent',['../class_panel.html#ac893372b561b867b41bfe8b00dca86cd',1,'Panel']]],
+  ['how_20to_20generate_20documentation',['How to generate documentation',['../md_readme.html',1,'']]]
 ];
