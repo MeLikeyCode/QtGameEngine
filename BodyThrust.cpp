@@ -132,7 +132,7 @@ void BodyThrust::thrustStep_()
 
     // if still moving forward, damage things in the way, then move backward
     // due to collision
-    std::unordered_set<Entity*> collidingEntities = theOwner->map()->entities(theOwner->mapToMap(collisionPoint_));
+    std::unordered_set<Entity*> collidingEntities = ownersMap->entities(theOwner->mapToMap(collisionPoint_));
     for (Entity* e: collidingEntities){
         if (e != theOwner && e->parent() != theOwner && headingForward_){
             theOwner->damage(e,damage_);
