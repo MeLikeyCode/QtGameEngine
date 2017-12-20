@@ -16,7 +16,7 @@ ItemTeleport::ItemTeleport()
     soundEffect_ = new Sound("qrc:/resources/sounds/blink.wav", this);
 }
 
-void ItemTeleport::use(const QPointF &point)
+void ItemTeleport::use_(const QPointF &point)
 {
     // make sure the item is in an inventory
     assert(inventory() != nullptr);

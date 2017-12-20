@@ -10,7 +10,7 @@ class ItemPushback : public EntityTargetItem
 public:
     ItemPushback();
 
-    virtual void use(Entity *onEntity);
+    virtual void use_(Entity *onEntity);
 };
 
 #endif // ITEMPUSHBACK_H

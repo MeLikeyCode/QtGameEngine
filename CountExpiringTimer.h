@@ -5,7 +5,7 @@
 #include <QTimer>
 
 /// Represents a timer that will fire a specific number of times and then
-/// disconnects itself.
+/// deletes itself.
 /// @author Abdullah Aghazadah
 /// @date 6-8-15
 class CountExpiringTimer: public QObject {

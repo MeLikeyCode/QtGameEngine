@@ -23,7 +23,7 @@ ItemRainOfSpears::ItemRainOfSpears()
 
 /// Executed when the ItemRainOfSpears is asked to be used. Will generate a
 /// bunch of falling spears.
-void ItemRainOfSpears::use()
+void ItemRainOfSpears::use_()
 {
     // make sure the item is in an inventory
     assert(inventory() != nullptr);

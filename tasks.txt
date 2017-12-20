@@ -722,18 +722,24 @@ dream interface
     itemDropper->addEntity(e1);
     itemDropper->addEntity(e2);
 
+===TASK===------DONE
+Show health bar above spiders.
+
+===TASK===---------DONE
+Spiders do not damage player, fix.
+
+Spiders use BodyThrust ability, when spider does collision test on its path, no entities are returned.
+
 =============================================================================
 =============================================================================
 =========================UNFINISHED TASKS====================================
 =============================================================================
 =============================================================================
 
-
-===TASK===
-Show health bar above spiders.
-
-
-
+===TASK===>> PICK UP HERE AFTER GYM << redo item using system
+When an item's number of charges is set to 0, the item should emit chargeChanged(sender,0).
+Inventory should listen to chargeChanged signals of its items
+    In response it should remove the item (from its internal data structures (including listening data structures) and map)
 
 
 ===TASK===
@@ -747,15 +753,6 @@ Create youtube tutorial that creates a *basic game*
 -there is a small "town" with some npcs (shop and quest giver) - have all necessary tools (use watched-watching sys to keep track of when playing entity comes near shop or quest giver)
 -shop entity can sell you weapons in exchange for GoldItem - can show in tut how to make the ShopGuiBehavior
 -quest giver has a few quests such as "kill 10 x", when completed, you get bonus gold - can connect to when quest completed, spawn gold coin at loc of player
-
-===TASK===
-
-
-
-
-
-
-
 
 
 

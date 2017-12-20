@@ -41,6 +41,9 @@ signals:
     void itemAdded(Item* item);
     void itemRemoved(Item* item);
 
+public slots:
+    void onItemDying_(Entity* dyingItem);
+
 private:
     Entity* entity_;
     std::unordered_set<Item*> items_;

@@ -11,7 +11,7 @@ class ItemRainOfSpears : public NoTargetItem
 public:
     ItemRainOfSpears();
 
-    virtual void use();
+    virtual void use_();
 public slots:
     void spearStep_();
     int times_;

@@ -154,7 +154,7 @@ double InventoryViewer::width()
     return bgWidth;
 }
 
-/// Executed when an Item is added to the InventoryViewer's Inventory.
+/// Executed when an Item is added or removed from the InventoryViewer's Inventory.
 void InventoryViewer::onItemAddedOrRemovedFromInventory(Item *item)
 {
     setInventory(inventory_);

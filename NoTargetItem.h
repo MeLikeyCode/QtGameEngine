@@ -10,7 +10,9 @@
 class NoTargetItem : public Item
 {
 public:
-    virtual void use() = 0;
+    void use();
+protected:
+    virtual void use_() = 0;
 };
 
 #endif // NOTARGETITEM_H

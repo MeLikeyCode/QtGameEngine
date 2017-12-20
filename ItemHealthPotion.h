@@ -8,7 +8,7 @@ class ItemHealthPotion : public NoTargetItem
 public:
     ItemHealthPotion(int amountToHealBy_);
 
-    virtual void use();
+    virtual void use_();
 
 private:
     int amountToHealBy_;

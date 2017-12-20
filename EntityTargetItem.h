@@ -11,7 +11,9 @@ class Entity;
 class EntityTargetItem : public Item
 {
 public:
-    virtual void use(Entity* onEntity) = 0;
+    void use(Entity* onEntity);
+protected:
+    virtual void use_(Entity* onEntity) = 0;
 };
 
 #endif // ENTITYTARGETITEM_H

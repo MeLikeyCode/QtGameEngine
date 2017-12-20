@@ -37,15 +37,19 @@ void Item::setInventory(Inventory *inv)
 }
 
 /// Returns the number of charges the Item has.
+/// -1 means infinite.
 int Item::numOfCharges()
 {
     return numOfCharges_;
 }
 
 /// Sets the number of charges the Item has.
+/// -1 means infinite.
 void Item::setNumOfCharges(int n)
 {
     numOfCharges_ = n;
+    if (numOfCharges_ == 0)
+        deleteLater();
 }
 
 /// Sets the description text of the Item.

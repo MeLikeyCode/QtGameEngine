@@ -57,6 +57,9 @@ void Inventory::addItem(Item *item)
         }
     }
 
+    // listen to when the item dies
+    connect(item,&Item::dying,this,&Inventory::onItemDying_);
+
     emit itemAdded(item);
 }
 
@@ -151,4 +154,11 @@ std::unordered_set<PointTargetItem *> Inventory::getPointTargetItems()
 std::unordered_set<Item *> Inventory::getItems()
 {
     return items_;
+}
+
+/// Executed when an item of the inventory is dying.
+/// Will remove the item from the inventory.
+void Inventory::onItemDying_(Entity *dyingItem)
+{
+    removeItem(static_cast<Item*>(dyingItem));
 }

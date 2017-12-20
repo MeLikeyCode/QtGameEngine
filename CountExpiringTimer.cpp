@@ -46,7 +46,6 @@ void CountExpiringTimer::fired_(){
 
     ++numTimesFired_;
     if (numTimesFired_ > numTimesToFire_){
-        timer_->disconnect();
-        delete this;
+        deleteLater();
     }
 }

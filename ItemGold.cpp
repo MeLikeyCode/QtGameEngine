@@ -9,7 +9,7 @@ ItemGold::ItemGold()
     setSprite(sprite);
 }
 
-void ItemGold::use()
+void ItemGold::use_()
 {
     // does nothing
 }

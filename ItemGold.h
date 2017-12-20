@@ -11,7 +11,7 @@ class ItemGold : public NoTargetItem
 public:
     ItemGold();
 
-    virtual void use();
+    virtual void use_();
 };
 
 #endif // ITEMGOLD_H

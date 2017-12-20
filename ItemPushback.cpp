@@ -13,7 +13,7 @@ ItemPushback::ItemPushback()
     setSprite(sprite);
 }
 
-void ItemPushback::use(Entity *onEntity)
+void ItemPushback::use_(Entity *onEntity)
 {
     // make sure the item is in an inventory
     assert(inventory() != nullptr);

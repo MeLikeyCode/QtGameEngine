@@ -3,6 +3,7 @@
 #include "Entity.h"
 #include "TopDownSprite.h"
 #include <QPixmap>
+#include <cassert>
 
 ItemHealthPotion::ItemHealthPotion(int amountToHealBy_):
     amountToHealBy_(amountToHealBy_)
@@ -13,7 +14,7 @@ ItemHealthPotion::ItemHealthPotion(int amountToHealBy_):
 
 /// Executed when the item is used.
 /// Will heal owner.
-void ItemHealthPotion::use()
+void ItemHealthPotion::use_()
 {
     Entity* o = owner();
 

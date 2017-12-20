@@ -12,7 +12,9 @@ class QPointF;
 class PointTargetItem : public Item
 {
 public:
-    virtual void use(const QPointF& point) = 0;
+    void use(const QPointF& point);
+protected:
+    virtual void use_(const QPointF& point) = 0;
 };
 
 #endif // POINTTARGETENTITY_H
