@@ -7,25 +7,22 @@
 #include <QRect>
 #include <cassert>
 
-/// Creates a QPixmap of the specified size filled with the specified color
-QPixmap qPixmapFromColor(QSize size, QColor color)
-{
-    QImage img(size,QImage::Format_ARGB32);
-    img.fill(color);
-    return QPixmap::fromImage(img);
-}
+namespace QtUtils {
 
-/// Returns the distance between the two points.
-double distance(QPointF p1, QPointF p2)
-{
-    double deltaX = p2.x() - p1.x();
-    double deltaY = p2.y() - p1.y();
-    return qAbs(qSqrt(qPow(deltaX,2) + qPow(deltaY,2)));
-}
+    /// Creates a QPixmap of the specified size filled with the specified color
+    QPixmap qPixmapFromColor(QSize size, QColor color)
+    {
+        QImage img(size,QImage::Format_ARGB32);
+        img.fill(color);
+        return QPixmap::fromImage(img);
+    }
 
-/// Returns the shortest distance between two rects.
-double shortestDistanceBetweenRects(QRectF r1, QRectF r2)
-{
-    assert(false); // not implemented yet
-    return -1;
+    /// Returns the distance between the two points.
+    double distance(QPointF p1, QPointF p2)
+    {
+        double deltaX = p2.x() - p1.x();
+        double deltaY = p2.y() - p1.y();
+        return qAbs(qSqrt(qPow(deltaX,2) + qPow(deltaY,2)));
+    }
+
 }

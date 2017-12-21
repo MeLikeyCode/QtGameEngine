@@ -143,13 +143,13 @@ void Panel::draw_()
         border_->setVisible(false);
 
     // draw background if show background
-    setPixmap(qPixmapFromColor(QSize(width_,height_),Qt::transparent));
+    setPixmap(QtUtils::qPixmapFromColor(QSize(width_,height_),Qt::transparent));
     if (!showBackground_)
         return;
     if (backgroundIsPixmap_){
         backgroundPixmap_ = backgroundPixmap_.scaled(width_,height_);
         setPixmap(backgroundPixmap_);
     }else{   
-        setPixmap(qPixmapFromColor(QSize(width_,height_),backgroundColor_));
+        setPixmap(QtUtils::qPixmapFromColor(QSize(width_,height_),backgroundColor_));
     }
 }

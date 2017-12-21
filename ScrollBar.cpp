@@ -226,21 +226,21 @@ void ScrollBar::draw_()
     const double EPSILON = 3;
     if (qAbs(fgBarLength_ - bgBarLength_) < EPSILON && !showEvenIfFull_){
         QColor transparent(Qt::transparent);
-        setPixmap(qPixmapFromColor(QSize(bgBarWidth_,bgBarLength_),transparent));
-        fgBar_->setPixmap(qPixmapFromColor(QSize(fgBarWidth_,fgBarLength_),transparent));
+        setPixmap(QtUtils::qPixmapFromColor(QSize(bgBarWidth_,bgBarLength_),transparent));
+        fgBar_->setPixmap(QtUtils::qPixmapFromColor(QSize(fgBarWidth_,fgBarLength_),transparent));
         return;
     }
 
     // draw the background bar
     if (bgBarIsColor_)
-        setPixmap(qPixmapFromColor(QSize(bgBarWidth_,bgBarLength_),bgBarColor_));
+        setPixmap(QtUtils::qPixmapFromColor(QSize(bgBarWidth_,bgBarLength_),bgBarColor_));
     else
         setPixmap(bgBarPixmap_);
 
     // draw the foreground bar
     // size/color
     if (fgBarIsColor_)
-        fgBar_->setPixmap(qPixmapFromColor(QSize(fgBarWidth_,fgBarLength_),fgBarColor_));
+        fgBar_->setPixmap(QtUtils::qPixmapFromColor(QSize(fgBarWidth_,fgBarLength_),fgBarColor_));
     else
         fgBar_->setPixmap(fgBarPixmap_);
     // position foreground bar

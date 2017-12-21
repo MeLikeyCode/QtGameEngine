@@ -1,5 +1,7 @@
 #include "Game.h"
 
+#include <STLWrappers.h>
+
 #include "Map.h"
 #include <QMouseEvent>
 #include "Spear.h" // TODO remove, test
@@ -238,14 +240,23 @@ void Game::keyReleaseEvent(QKeyEvent *event)
 /// Adds the specified Gui to the game.
 void Game::addGui(Gui *gui)
 {
+    // prevent double adds
+    if (STLWrappers::contains(guis_,gui))
+        return;
+
     gui->getGraphicsItem()->setParentItem(guiLayer_);
     guis_.insert(gui);
     gui->getGraphicsItem()->setVisible(true); // when a gui is added to a game, it's always visible // TODO remove: why is this here?
 }
 
 /// Removes the specified Gui from the game.
+/// Does nothing if the gui is already removed.
 void Game::removeGui(Gui *gui)
 {
+    // prevent removing something that isn't even here
+    if (!STLWrappers::contains(guis_,gui))
+        return;
+
     gui->setParentGui(nullptr);
     scene()->removeItem(gui->getGraphicsItem());
     guis_.erase(gui);
@@ -533,7 +544,7 @@ void Game::onEntityMoved(Entity *entity)
     for (Entity* watching:watchingEntities(entity)){
         // entity - watching variables
         std::pair<Entity*,Entity*> watchedWatchingPair = std::make_pair(entity,watching);
-        double dist = distance(entity->pos(),watching->pos());
+        double dist = QtUtils::distance(entity->pos(),watching->pos());
         double range = watchedWatchingRange(entity,watching);
         bool alreadyInRange = watchedWatchingPairToEnterRangeEmitted_[watchedWatchingPair]; // already in range?
 
@@ -555,7 +566,7 @@ void Game::onEntityMoved(Entity *entity)
     for (Entity* watched:watchedEntities(entity)){
         // entity - watching variables
         std::pair<Entity*,Entity*> watchedWatchingPair = std::make_pair(watched,entity);
-        double dist = distance(entity->pos(),watched->pos());
+        double dist = QtUtils::distance(entity->pos(),watched->pos());
         double range = watchedWatchingRange(watched,entity);
         bool alreadyInRange = watchedWatchingPairToEnterRangeEmitted_[watchedWatchingPair];
 

@@ -132,7 +132,7 @@ void ECChaser::onEntityEntersFOV_(Entity *entity)
     chaseStep_();
     chaseTimer_->start(2000); // TODO: store in a (modifiable) variable somewhere
 
-    double distBW = distance(entityControlled()->pos(),entity->pos());
+    double distBW = QtUtils::distance(entityControlled()->pos(),entity->pos());
     emit entityChaseStarted(entity, distBW);
 }
 
@@ -172,7 +172,7 @@ void ECChaser::onControlledEntityMoved_()
         return;
 
     if (!paused_){
-        double distBW = distance(entityControlled()->pos(),targetEntity_->pos());
+        double distBW = QtUtils::distance(entityControlled()->pos(),targetEntity_->pos());
         emit entityChaseContinued(targetEntity_,distBW);
     }
 }

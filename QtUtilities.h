@@ -14,9 +14,13 @@ class QRectF;
 /// @date 10-11-16
 /// @file
 
-QPixmap qPixmapFromColor(QSize size, QColor color);
+namespace QtUtils {
+    QPixmap qPixmapFromColor(QSize size, QColor color);
+    double distance(QPointF p1, QPointF p2);
+}
 
-double distance(QPointF p1, QPointF p2);
-double shortestDistanceBetweenRects(QRectF r1, QRectF r2);
+
+
+
 
 #endif // QTUTILITIES_H

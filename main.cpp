@@ -44,6 +44,7 @@
 #include "CItemDropper.h"
 #include "CHealthShower.h"
 #include "DialogGui.h"
+#include "ECDialogShower.h"
 
 Entity* player;
 CItemDropper* itemDropper;
@@ -255,7 +256,7 @@ int main(int argc, char *argv[])
     spiderEntity->addSound("die","qrc:/resources/sounds/spiderDie.mp3");
 
     // create a spawner
-    MCSpawner* spawner = new MCSpawner(map1,QRectF(0,0,map1->width(),map1->height()),MCSpawner::SpawnType::Spider,10,0.3);
+    //MCSpawner* spawner = new MCSpawner(map1,QRectF(0,0,map1->width(),map1->height()),MCSpawner::SpawnType::Spider,10,0.3);
 
     // create an item dropper
     itemDropper = new CItemDropper();
@@ -283,7 +284,15 @@ int main(int argc, char *argv[])
     dg->setResponseForChoice(screwYouResponse,startTextChoice1);
     dg->setResponseForChoice(adventureResponse,startTextChoice2);
 
-    game->addGui(dg);
+    Choice* backChoice = new Choice("lemme try again");
+    dg->addChoice(screwYouResponse, backChoice);
+    dg->setResponseForChoice(startingText, backChoice);
+
+    double guix = game->width() - dg->getGuiBoundingBox().width();
+    dg->setGuiPos(QPointF(guix,0));
+
+    ECDialogShower* ds = new ECDialogShower(spiderEntity,dg);
+    ds->addEntityOfInterest(player);
 
     return a.exec();
 }

@@ -17,7 +17,11 @@ DialogGui::DialogGui():
     // set positions //TODO: temp, move to draw function, and parametrize to allow
     // user customization such as width, offset, etc..
     bottomScrollWindow_->setGuiPos(QPointF(0,topScrollWindow_->height()));
-    responseLabel_->setGuiPos(QPointF(25,10));
+    responseLabel_->setGuiPos(QPointF(60,35));
+
+    // set default look
+    topScrollWindow_->setBackgroundPixmap(QPixmap(":/resources/graphics/misc/paper.png"));
+    bottomScrollWindow_->setBackgroundPixmap(QPixmap(":/resources/graphics/misc/paper.png"));
 }
 
 /// Sets the currently displayed Response of the DialogGui.
@@ -112,7 +116,7 @@ void DialogGui::draw_()
     for (Choice* choice:choices){
         Label* choicesLabel = new Label();
         choicesLabel->setText(choice->text());
-        bottomScrollWindow_->add(choicesLabel,QPointF(10,i*25+10));
+        bottomScrollWindow_->add(choicesLabel,QPointF(40,i*25+25));
         i++;
         labelToChoice_[choicesLabel] = choice;
         connect(choicesLabel,&Label::clicked,this,&DialogGui::choiceLabelClicked_);

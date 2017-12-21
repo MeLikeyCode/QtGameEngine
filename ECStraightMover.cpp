@@ -103,7 +103,7 @@ void ECStraightMover::onMoveStep_()
 
     // if close enough, stop moving
     const double EPSILON = 50;
-    if (distance(theEntity->pos(),targetPos_) < EPSILON){
+    if (QtUtils::distance(theEntity->pos(),targetPos_) < EPSILON){
         emit entitySuccesfullyMoved(this);
         stopMovingEntity();
         return;

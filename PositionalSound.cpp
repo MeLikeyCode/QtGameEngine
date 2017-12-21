@@ -86,7 +86,7 @@ int PositionalSound::getCalculatedVolume_()
     assert(game != nullptr); // fcn cannot be called if map_ is not being visualized
 
     const double FALLOFF_SLOPE = 0.0005; // rate at which volume falls as distance grows
-    double distFromCamera = distance(game->centerCamPos(),pos_);
+    double distFromCamera = QtUtils::distance(game->centerCamPos(),pos_);
     double someFrac = -FALLOFF_SLOPE * distFromCamera + 1;
     if (someFrac < 0)
         someFrac = 0;

@@ -39,7 +39,7 @@ private:
 /// Represents a Gui that can be used to present an interactive dialog.
 ///
 /// Initially a "response" is displayed with all the "choices" for that response.
-/// When a certain choice is clicked, the response of that choice will be displayed,
+/// When a certain choice is clicked, the responses of that choice will be displayed,
 /// along with all of the choices for that new response.
 ///
 /// So each response has a bunch of choices that are displayed when that response is

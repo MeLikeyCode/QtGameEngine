@@ -736,11 +736,24 @@ Spiders use BodyThrust ability, when spider does collision test on its path, no 
 =============================================================================
 =============================================================================
 
-===TASK===>> PICK UP HERE AFTER GYM << redo item using system
-When an item's number of charges is set to 0, the item should emit chargeChanged(sender,0).
-Inventory should listen to chargeChanged signals of its items
-    In response it should remove the item (from its internal data structures (including listening data structures) and map)
+===Task===
+Add a entity that will talk to you.
+|
+v
+Creat a ECDialogShower entity that will pop a dialog whenever 'entities of interest' comes within some distance of the controlled entity.
+|
+V
+dream api:
+DialogGui* dg; // assume dialog gui is prepared with choices/respones
+ECDialogShower* ds = new ECDialogShower(e); // e is an Entity*
+ds->
+ds->setDistance(100);
 
+===TASK===
+Add a shop entity.
+|
+v
+Create a ECShopShower entity that will pop up 
 
 ===TASK===
 IMPORTANT - work on THIS task only (while doing it, you will discover new things to do)
