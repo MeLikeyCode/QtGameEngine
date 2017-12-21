@@ -43,6 +43,7 @@
 #include "MCSpawner.h"
 #include "CItemDropper.h"
 #include "CHealthShower.h"
+#include "DialogGui.h"
 
 Entity* player;
 CItemDropper* itemDropper;
@@ -264,6 +265,25 @@ int main(int argc, char *argv[])
     CHealthShower* hs = new CHealthShower();
     hs->addEntity(player);
     hs->addEntity(spiderEntity);
+
+    DialogGui* dg = new DialogGui();
+    Response* startingText = new Response("Hello stranger, what brings thee here?");
+    Choice* startTextChoice1 = new Choice("Screw you!");
+    Choice* startTextChoice2 = new Choice("I'm looking for adventure!");
+
+    dg->addResponse(startingText);
+    dg->addChoice(startingText,startTextChoice1);
+    dg->addChoice(startingText,startTextChoice2);
+    dg->setResponse(startingText); // set initial text
+
+    Response* screwYouResponse = new Response("You're manners are not very good...ATTACK!");
+    Response* adventureResponse = new Response("I salute thee! You should talk to our village elder for some quests.");
+    dg->addResponse(screwYouResponse);
+    dg->addResponse(adventureResponse);
+    dg->setResponseForChoice(screwYouResponse,startTextChoice1);
+    dg->setResponseForChoice(adventureResponse,startTextChoice2);
+
+    game->addGui(dg);
 
     return a.exec();
 }
