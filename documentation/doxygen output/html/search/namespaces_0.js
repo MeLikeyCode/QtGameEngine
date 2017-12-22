@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['std',['std',['../namespacestd.html',1,'']]],
-  ['stlwrappers',['STLWrappers',['../namespace_s_t_l_wrappers.html',1,'']]]
+  ['qtutils',['QtUtils',['../namespace_qt_utils.html',1,'']]]
 ];

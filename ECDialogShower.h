@@ -27,6 +27,8 @@ private:
     double distance_;
     QPointer<DialogGui> gui_;
     std::unordered_set<QPointer<Entity>> entitiesOfInterest_;
+
+    virtual void onControlledEntityDying(Entity* controlledEntity);
 };
 
 #endif // ECDIALOGSHOWER_H

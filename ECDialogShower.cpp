@@ -82,3 +82,16 @@ void ECDialogShower::onEntityMoved_()
             entitysGame->removeGui(gui_.data());
     }
 }
+
+/// Executed when the controlled entity dies.
+/// Will make sure gui is hidden.
+void ECDialogShower::onControlledEntityDying(Entity *controlledEntity)
+{
+    Entity* ec = entityControlled();
+    Map* entitysMap = ec->map();
+    if (entitysMap){
+        Game* entitysGame = entitysMap->game();
+        if (entitysGame)
+            entitysGame->removeGui(gui_);
+    }
+}

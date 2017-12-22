@@ -746,8 +746,13 @@ V
 dream api:
 DialogGui* dg; // assume dialog gui is prepared with choices/respones
 ECDialogShower* ds = new ECDialogShower(e); // e is an Entity*
-ds->
+ds->addEntityOfInterest(e1); // when e1 gets near e show the gui
+ds->addEntityOfInterest(e2); // when e1 or e2 gets near e show the gui
 ds->setDistance(100);
+
+    ===TASK===
+    Have ECDialogShower listen to when controlled entity dies and in response, make sure dialog gui isn't showing
+        - make EntityController listen to when controlled entity dies, and in response call virtual function onControlledEntityDies (default impl does nothing)
 
 ===TASK===
 Add a shop entity.

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['game',['Game',['../class_game.html',1,'Game'],['../class_map.html#aa2fab026580d6f14280c2ffb8063a314',1,'Map::Game()'],['../class_game.html#af0bd21df6f0e75c947209643c835396a',1,'Game::Game()'],['../class_map.html#adf77022dff38cee5b731bfac082bbc77',1,'Map::game()']]],
+  ['game',['Game',['../class_game.html',1,'Game'],['../class_map.html#adf77022dff38cee5b731bfac082bbc77',1,'Map::game()'],['../class_map.html#aa2fab026580d6f14280c2ffb8063a314',1,'Map::Game()'],['../class_game.html#af0bd21df6f0e75c947209643c835396a',1,'Game::Game()']]],
   ['game_2ecpp',['Game.cpp',['../_game_8cpp.html',1,'']]],
   ['game_2eh',['Game.h',['../_game_8h.html',1,'']]],
   ['getentitytargetitems',['getEntityTargetItems',['../class_inventory.html#a5e170585a487228f0b3aac4d4852b864',1,'Inventory']]],

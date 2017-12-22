@@ -62,6 +62,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="class_no_target_item-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">NoTargetItem Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -88,8 +89,9 @@ Inheritance diagram for NoTargetItem:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a6c2584724cd7b98c547bc376bc95722b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_no_target_item.html#a6c2584724cd7b98c547bc376bc95722b">use</a> ()=0</td></tr>
-<tr class="separator:a6c2584724cd7b98c547bc376bc95722b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80ac4570ad9b58a3244e81662bb38ff0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_no_target_item.html#a80ac4570ad9b58a3244e81662bb38ff0">use</a> ()</td></tr>
+<tr class="memdesc:a80ac4570ad9b58a3244e81662bb38ff0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uses the item.  <a href="#a80ac4570ad9b58a3244e81662bb38ff0">More...</a><br /></td></tr>
+<tr class="separator:a80ac4570ad9b58a3244e81662bb38ff0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_item"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_item')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_item.html">Item</a></td></tr>
 <tr class="memitem:a64fb85e16525d94470e6e06f1b2a3032 inherit pub_methods_class_item"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_inventory.html">Inventory</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item.html#a64fb85e16525d94470e6e06f1b2a3032">inventory</a> ()</td></tr>
 <tr class="memdesc:a64fb85e16525d94470e6e06f1b2a3032 inherit pub_methods_class_item"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the <a class="el" href="class_inventory.html" title="Represents a collection of Items. ">Inventory</a> that this <a class="el" href="class_item.html" title="Abstract class that represents any Item (such as HealthPotion, Axe, etc..) that can be in an Inventor...">Item</a> belongs to.  <a href="class_item.html#a64fb85e16525d94470e6e06f1b2a3032">More...</a><br /></td></tr>
@@ -303,6 +305,14 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ac7f3a9ccd54e3eebdb636ca9c05a7a37 inherit pub_methods_class_entity"><td class="mdescLeft">&#160;</td><td class="mdescRight">Plays the specified sound, if it exists, else does nothing.  <a href="class_entity.html#ac7f3a9ccd54e3eebdb636ca9c05a7a37">More...</a><br /></td></tr>
 <tr class="separator:ac7f3a9ccd54e3eebdb636ca9c05a7a37 inherit pub_methods_class_entity"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a40817541b8ff834c548afe6c8c1a3395"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_no_target_item.html#a40817541b8ff834c548afe6c8c1a3395">use_</a> ()=0</td></tr>
+<tr class="separator:a40817541b8ff834c548afe6c8c1a3395"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_class_item"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_item')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_item.html">Item</a></td></tr>
+<tr class="memitem:a297720c02984eab37332ae795d22189d inherit pro_methods_class_item"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item.html#a297720c02984eab37332ae795d22189d">Item</a> ()</td></tr>
+<tr class="separator:a297720c02984eab37332ae795d22189d inherit pro_methods_class_item"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_slots_class_entity"><td colspan="2" onclick="javascript:toggleInherit('pub_slots_class_entity')"><img src="closed.png" alt="-"/>&#160;Public Slots inherited from <a class="el" href="class_entity.html">Entity</a></td></tr>
@@ -327,17 +337,33 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:a7bf53a21eb829e7607bc9606f78ec0c6 inherit signals_class_entity"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity.html#a7bf53a21eb829e7607bc9606f78ec0c6">dying</a> (<a class="el" href="class_entity.html">Entity</a> *sender)</td></tr>
 <tr class="memdesc:a7bf53a21eb829e7607bc9606f78ec0c6 inherit signals_class_entity"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted right before the entity is about to diee.  <a href="class_entity.html#a7bf53a21eb829e7607bc9606f78ec0c6">More...</a><br /></td></tr>
 <tr class="separator:a7bf53a21eb829e7607bc9606f78ec0c6 inherit signals_class_entity"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_methods_class_item"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_item')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_item.html">Item</a></td></tr>
-<tr class="memitem:a297720c02984eab37332ae795d22189d inherit pro_methods_class_item"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_item.html#a297720c02984eab37332ae795d22189d">Item</a> ()</td></tr>
-<tr class="separator:a297720c02984eab37332ae795d22189d inherit pro_methods_class_item"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Abstract class that represents an <a class="el" href="class_item.html" title="Abstract class that represents any Item (such as HealthPotion, Axe, etc..) that can be in an Inventor...">Item</a> that does not require any targets to use. </p>
 <p>It can simply be used. </p><dl class="section author"><dt>Author</dt><dd>Abdullah Aghazadah </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2/13/16 </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a6c2584724cd7b98c547bc376bc95722b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6c2584724cd7b98c547bc376bc95722b">&#9670;&nbsp;</a></span>use()</h2>
+<a id="a80ac4570ad9b58a3244e81662bb38ff0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a80ac4570ad9b58a3244e81662bb38ff0">&#9670;&nbsp;</a></span>use()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void NoTargetItem::use </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Uses the item. </p>
+
+</div>
+</div>
+<a id="a40817541b8ff834c548afe6c8c1a3395"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40817541b8ff834c548afe6c8c1a3395">&#9670;&nbsp;</a></span>use_()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -346,7 +372,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void NoTargetItem::use </td>
+          <td class="memname">virtual void NoTargetItem::use_ </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -354,17 +380,18 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="class_item_gold.html#aa9bbdde4e59d4444808cf675e1163431">ItemGold</a>, <a class="el" href="class_item_rain_of_spears.html#a59ab1ad03c5b4ebf1e96bb0d86dc28ae">ItemRainOfSpears</a>, and <a class="el" href="class_item_health_potion.html#a6ea550c86b0521acf1eacdbf9d48f305">ItemHealthPotion</a>.</p>
+<p>Implemented in <a class="el" href="class_item_gold.html#a5941970dda1233c5ba49f13e83824697">ItemGold</a>, <a class="el" href="class_item_rain_of_spears.html#a9def3884c813f05be438a49b001d858d">ItemRainOfSpears</a>, and <a class="el" href="class_item_health_potion.html#a2e4d042c003e72d711a91c0733c284bd">ItemHealthPotion</a>.</p>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>C:/GitHubProjects/QtGameEngine/<a class="el" href="_no_target_item_8h_source.html">NoTargetItem.h</a></li>
+<li>C:/GitHubProjects/QtGameEngine/<a class="el" href="_no_target_item_8cpp.html">NoTargetItem.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

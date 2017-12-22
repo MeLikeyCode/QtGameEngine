@@ -1,7 +1,7 @@
 var searchData=
 [
   ['q_5fdeclare_5fmetatype',['Q_DECLARE_METATYPE',['../_pathing_map_8h.html#ab013dfaa2c0ded0ae6798b1f38ec2643',1,'PathingMap.h']]],
-  ['qpixmapfromcolor',['qPixmapFromColor',['../_qt_utilities_8cpp.html#a1af149297edb0f33330cf0f85104576b',1,'qPixmapFromColor(QSize size, QColor color):&#160;QtUtilities.cpp'],['../_qt_utilities_8h.html#a1af149297edb0f33330cf0f85104576b',1,'qPixmapFromColor(QSize size, QColor color):&#160;QtUtilities.cpp']]],
+  ['qpixmapfromcolor',['qPixmapFromColor',['../namespace_qt_utils.html#af6d393a6a3819d73a89ed31df40db9ac',1,'QtUtils']]],
   ['quest',['Quest',['../class_quest.html#ac5605f7dfb08e0ab27b26f211eaddf56',1,'Quest::Quest()'],['../class_quests.html#a62c78d355794c3657ad44b0d4b9724c9',1,'Quests::quest()']]],
   ['questaccepted',['questAccepted',['../class_quest_acceptor.html#a0045c8170c57453cd26e749fabef958c',1,'QuestAcceptor']]],
   ['questacceptor',['QuestAcceptor',['../class_quest_acceptor.html#af2463084fa289996cc5c7fc671ef651b',1,'QuestAcceptor']]],

@@ -55,6 +55,11 @@ public:
     Entity* entityControlled();
     void setEntityControlled(Entity* entityControlled);
 
+    virtual void onControlledEntityDying(Entity* controlledEntity);
+
+public slots:
+    void onControlledEntityDying_(Entity* sender);
+
 private:
     QPointer<Entity> entityControlled_; // QPointer to prevent dangling pointer issues
 };

@@ -5,6 +5,7 @@ var searchData=
   ['eccamerafollower',['ECCameraFollower',['../class_e_c_camera_follower.html',1,'']]],
   ['ecchaser',['ECChaser',['../class_e_c_chaser.html',1,'']]],
   ['eccurrentmapgrabber',['ECCurrentMapGrabber',['../class_e_c_current_map_grabber.html',1,'']]],
+  ['ecdialogshower',['ECDialogShower',['../class_e_c_dialog_shower.html',1,'']]],
   ['ecfieldofviewemitter',['ECFieldOfViewEmitter',['../class_e_c_field_of_view_emitter.html',1,'']]],
   ['ecitempickerupper',['ECItemPickerUpper',['../class_e_c_item_picker_upper.html',1,'']]],
   ['eckeyboardmover4directional',['ECKeyboardMover4Directional',['../class_e_c_keyboard_mover4_directional.html',1,'']]],

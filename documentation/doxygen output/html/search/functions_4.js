@@ -5,6 +5,7 @@ var searchData=
   ['eccamerafollower',['ECCameraFollower',['../class_e_c_camera_follower.html#a5552fdc4de59e867320dbe976d11ea91',1,'ECCameraFollower']]],
   ['ecchaser',['ECChaser',['../class_e_c_chaser.html#a3b06a5cac4151e12cfe31eabd2ed43ce',1,'ECChaser']]],
   ['eccurrentmapgrabber',['ECCurrentMapGrabber',['../class_e_c_current_map_grabber.html#a57f1db8852a8bc96c7d389e5e79900d1',1,'ECCurrentMapGrabber']]],
+  ['ecdialogshower',['ECDialogShower',['../class_e_c_dialog_shower.html#a2bd8336f5f3acc130fa79e51c79628ea',1,'ECDialogShower']]],
   ['ecfieldofviewemitter',['ECFieldOfViewEmitter',['../class_e_c_field_of_view_emitter.html#a7252eda0e3346014a719f73fa42e582c',1,'ECFieldOfViewEmitter']]],
   ['ecitempickerupper',['ECItemPickerUpper',['../class_e_c_item_picker_upper.html#a0ea1dc5ff2cc02238d574805d7364706',1,'ECItemPickerUpper']]],
   ['eckeyboardmover4directional',['ECKeyboardMover4Directional',['../class_e_c_keyboard_mover4_directional.html#a41ea0aa08e973df57cbd84bfccd8154b',1,'ECKeyboardMover4Directional']]],

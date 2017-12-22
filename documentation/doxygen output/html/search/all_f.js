@@ -1,9 +1,10 @@
 var searchData=
 [
   ['q_5fdeclare_5fmetatype',['Q_DECLARE_METATYPE',['../_pathing_map_8h.html#ab013dfaa2c0ded0ae6798b1f38ec2643',1,'PathingMap.h']]],
-  ['qpixmapfromcolor',['qPixmapFromColor',['../_qt_utilities_8cpp.html#a1af149297edb0f33330cf0f85104576b',1,'qPixmapFromColor(QSize size, QColor color):&#160;QtUtilities.cpp'],['../_qt_utilities_8h.html#a1af149297edb0f33330cf0f85104576b',1,'qPixmapFromColor(QSize size, QColor color):&#160;QtUtilities.cpp']]],
+  ['qpixmapfromcolor',['qPixmapFromColor',['../namespace_qt_utils.html#af6d393a6a3819d73a89ed31df40db9ac',1,'QtUtils']]],
   ['qtutilities_2ecpp',['QtUtilities.cpp',['../_qt_utilities_8cpp.html',1,'']]],
   ['qtutilities_2eh',['QtUtilities.h',['../_qt_utilities_8h.html',1,'']]],
+  ['qtutils',['QtUtils',['../namespace_qt_utils.html',1,'']]],
   ['quest',['Quest',['../class_quest.html',1,'Quest'],['../class_quest.html#ac5605f7dfb08e0ab27b26f211eaddf56',1,'Quest::Quest()'],['../class_quests.html#a62c78d355794c3657ad44b0d4b9724c9',1,'Quests::quest()']]],
   ['quest_2ecpp',['Quest.cpp',['../_quest_8cpp.html',1,'']]],
   ['quest_2eh',['Quest.h',['../_quest_8h.html',1,'']]],

@@ -8,6 +8,8 @@ var searchData=
   ['ecchaser_2eh',['ECChaser.h',['../_e_c_chaser_8h.html',1,'']]],
   ['eccurrentmapgrabber_2ecpp',['ECCurrentMapGrabber.cpp',['../_e_c_current_map_grabber_8cpp.html',1,'']]],
   ['eccurrentmapgrabber_2eh',['ECCurrentMapGrabber.h',['../_e_c_current_map_grabber_8h.html',1,'']]],
+  ['ecdialogshower_2ecpp',['ECDialogShower.cpp',['../_e_c_dialog_shower_8cpp.html',1,'']]],
+  ['ecdialogshower_2eh',['ECDialogShower.h',['../_e_c_dialog_shower_8h.html',1,'']]],
   ['ecenemyattacker_2ecpp',['ECEnemyAttacker.cpp',['../_e_c_enemy_attacker_8cpp.html',1,'']]],
   ['ecenemyattacker_2eh',['ECEnemyAttacker.h',['../_e_c_enemy_attacker_8h.html',1,'']]],
   ['ecfieldofviewemitter_2ecpp',['ECFieldOfViewEmitter.cpp',['../_e_c_field_of_view_emitter_8cpp.html',1,'']]],
