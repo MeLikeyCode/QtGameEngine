@@ -20,7 +20,7 @@ class Panel;
 /// if not, try it out :)
 /// @author Abdullah Aghazadah
 /// @date 10-9-16
-class ScrollWindow : public QObject, public Gui
+class ScrollWindow : public Gui
 {
     Q_OBJECT
 public:

@@ -125,7 +125,7 @@ SOURCES += main.cpp \
     CItemDropper.cpp \
     ItemHealthPotion.cpp \
     CHealthShower.cpp \
-    ECDialogShower.cpp
+    ECGuiShower.cpp
 
 HEADERS  += \
     Map.h \
@@ -237,7 +237,7 @@ HEADERS  += \
     STLWrappers.h \
     ItemHealthPotion.h \
     CHealthShower.h \
-    ECDialogShower.h
+    ECGuiShower.h
 
 RESOURCES += \
     res.qrc

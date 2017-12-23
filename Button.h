@@ -14,7 +14,7 @@ class QGraphicsTextItem;
 /// options such as the text color, padding b/w the text and the button's edges,
 /// weather the text is bold/italic, etc...
 /// When the Button is clicked, it will emit a clicked() signal.
-class Button : public QObject, public Gui, public QGraphicsPixmapItem
+class Button : public Gui, public QGraphicsPixmapItem
 {
     Q_OBJECT
 public:

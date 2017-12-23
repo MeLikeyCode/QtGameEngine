@@ -1,9 +1,13 @@
 #include "Label.h"
+
+#include <QGraphicsTextItem>
+
 #include <QFont>
 #include <QDebug>
 #include <QBrush>
 
 Label::Label():
+    textItem_(new QGraphicsTextItem(this)),
     font_("Tahoma"),
     fontSize_(12),
     width_(200),
@@ -66,13 +70,24 @@ void Label::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void Label::draw_()
 {
     // set text
-    setPlainText(QString::fromStdString(text_));
+    textItem_->setPlainText(QString::fromStdString(text_));
 
     // set the font (font, size, color)
     QFont font(font_.c_str(),fontSize_);
-    setFont(font);
-    setDefaultTextColor(fontColor_);
+    textItem_->setFont(font);
+    textItem_-> setDefaultTextColor(fontColor_);
 
     // set the width
-    setTextWidth(width_);
+    textItem_->setTextWidth(width_);
+}
+
+
+QRectF Label::boundingRect() const
+{
+    return textItem_->boundingRect();
+}
+
+void Label::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    // do nothing, textItem_ will do the painting
 }

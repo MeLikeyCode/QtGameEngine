@@ -16,7 +16,7 @@ class Panel;
 /// Represents a Gui that visualizes and allows mouse interaction with an Ability.
 /// When the Ability in the AbilityCell is clicked, AbilityCell will emit a signal.
 /// @author Abdullah Aghazadah
-class AbilityCell: public QObject, public Gui
+class AbilityCell: public Gui
 {
     Q_OBJECT
 public:

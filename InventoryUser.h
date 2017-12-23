@@ -13,7 +13,7 @@ class Entity;
 
 /// A Gui that allows "using" the Items in an Inventory.
 /// @author Abdullah Aghazadah
-class InventoryUser : public QObject, public Gui
+class InventoryUser : public Gui
 {
     Q_OBJECT
 public:

@@ -11,7 +11,7 @@ class QGraphicsPixmapItem;
 
 /// A Gui that represents a progress bar of some sorts.
 /// @author Abdullah Aghazadah
-class Bar : public QObject, public Gui
+class Bar: public Gui
 {
     Q_OBJECT
 public:

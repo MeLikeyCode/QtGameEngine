@@ -21,7 +21,7 @@ class ShopGuiBehavior;
 /// The seller Inventory will be displayed. Clicking on items results in the item's
 /// description being displayed. Clicking on "buy" will result in the selected
 /// item being transfered from the seller to the buyer, if the behavior approves.
-class ShopGui : public QObject, public Gui
+class ShopGui : public Gui
 {
     Q_OBJECT
 public:

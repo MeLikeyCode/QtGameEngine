@@ -1,6 +1,7 @@
 #ifndef GUI_H
 #define GUI_H
 
+#include <QObject>
 #include <QPointF>
 #include <unordered_set>
 
@@ -18,8 +19,12 @@ class QRectF;
 /// Most Guis emit signals when they are interacted with.
 /// When a parent Gui is deleted, it will delete all of its child Guis.
 ///@author Abdullah Aghazadah
-class Gui
+class Gui: public QObject // inherits from QOBject b/c:
+                          // 1) be able to use a QPointer<Gui>
+                          // 2) most sub classes will need to inherit from QObject anyway
+                          // 3) use signals and slots in the future
 {
+    Q_OBJECT
 public:
     Gui();
     ~Gui();

@@ -17,7 +17,7 @@ class ScrollWindow;
 /// Represents a GUI element that visualizes and allows mouse interaction with
 /// an Inventory. When an item in the inventory viewer is clicked, the
 /// InventoryViewer emits a signal.
-class InventoryViewer : public QObject, public Gui
+class InventoryViewer : public Gui
 {
     Q_OBJECT
 public:

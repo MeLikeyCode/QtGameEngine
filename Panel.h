@@ -16,7 +16,7 @@ class QGraphicsSceneHoverEvent;
 /// You can modify various options such as the size, color, background image, etc...
 /// The panel will emit events when the mouse hovers/unhovers over it and when
 /// the mouse clicks it.
-class Panel : public QObject, public QGraphicsPixmapItem, public Gui
+class Panel : public Gui, public QGraphicsPixmapItem
 {
     Q_OBJECT
 public:

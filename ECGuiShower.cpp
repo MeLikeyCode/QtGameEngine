@@ -1,31 +1,33 @@
-#include "ECDialogShower.h"
+#include "ECGuiShower.h"
 
 #include <QtUtilities.h>
-#include <Map.h>
-#include <Game.h>
-#include <STLWrappers.h>
 
-ECDialogShower::ECDialogShower(Entity *controlledEntity, DialogGui* gui):
+#include "Map.h"
+#include "Game.h"
+#include "STLWrappers.h"
+#include "Gui.h"
+
+ECGuiShower::ECGuiShower(Entity *controlledEntity, Gui* gui):
     EntityController(controlledEntity),
     gui_(gui),
     distance_(150)
 {
-    connect(controlledEntity,&Entity::moved,this,&ECDialogShower::onEntityMoved_);
+    connect(controlledEntity,&Entity::moved,this,&ECGuiShower::onEntityMoved_);
 }
 
-void ECDialogShower::addEntityOfInterest(Entity *entity)
+void ECGuiShower::addEntityOfInterest(Entity *entity)
 {
-    disconnect(entity,&Entity::moved,this,&ECDialogShower::onEntityMoved_); // prevent double connect
-    connect(entity,&Entity::moved,this,&ECDialogShower::onEntityMoved_);
+    disconnect(entity,&Entity::moved,this,&ECGuiShower::onEntityMoved_); // prevent double connect
+    connect(entity,&Entity::moved,this,&ECGuiShower::onEntityMoved_);
     entitiesOfInterest_.insert(QPointer<Entity>(entity));
 }
 
-void ECDialogShower::setDistance(double distance)
+void ECGuiShower::setDistance(double distance)
 {
     distance_ = distance;
 }
 
-double ECDialogShower::distance() const
+double ECGuiShower::distance() const
 {
     return distance_;
 }
@@ -34,7 +36,7 @@ double ECDialogShower::distance() const
 /// entities of interst) moves. If the distance between *any* of the entities
 /// of interest and the controlled entity is less than the threshold distance,
 /// will make sure the dialog gui is shown, otherwise will make sure its hidden.
-void ECDialogShower::onEntityMoved_()
+void ECGuiShower::onEntityMoved_()
 {
     // algorithmic approach:
     // - compute the distance between each entity of interest and the controlled entity
@@ -85,7 +87,7 @@ void ECDialogShower::onEntityMoved_()
 
 /// Executed when the controlled entity dies.
 /// Will make sure gui is hidden.
-void ECDialogShower::onControlledEntityDying(Entity *controlledEntity)
+void ECGuiShower::onControlledEntityDying(Entity *controlledEntity)
 {
     Entity* ec = entityControlled();
     Map* entitysMap = ec->map();

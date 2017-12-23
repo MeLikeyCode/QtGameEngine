@@ -91,7 +91,7 @@ private:
 ///
 /// @author Abdullah Aghazadah
 /// @date 11/2/16
-class DialogGui : public QObject, public Gui
+class DialogGui : public Gui
 {
     Q_OBJECT
 public:

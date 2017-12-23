@@ -44,7 +44,7 @@
 #include "CItemDropper.h"
 #include "CHealthShower.h"
 #include "DialogGui.h"
-#include "ECDialogShower.h"
+#include "ECGuiShower.h"
 
 Entity* player;
 CItemDropper* itemDropper;
@@ -291,7 +291,7 @@ int main(int argc, char *argv[])
     double guix = game->width() - dg->getGuiBoundingBox().width();
     dg->setGuiPos(QPointF(guix,0));
 
-    ECDialogShower* ds = new ECDialogShower(spiderEntity,dg);
+    ECGuiShower* ds = new ECGuiShower(spiderEntity,dg);
     ds->addEntityOfInterest(player);
 
     return a.exec();
