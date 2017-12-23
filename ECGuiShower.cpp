@@ -53,11 +53,13 @@ void ECGuiShower::onEntityMoved_()
     if (ec == nullptr)
         return;
 
-//    // lets clear dead entities of interst
-//    for (Entity* e:entitiesOfInterest_){
-//        if (e == nullptr)
-//            STLWrappers::remove(entitiesOfInterest_,e);
-//    }
+    // lets clear dead entities of interst
+    for (Entity* e:entitiesOfInterest_){
+        if (e == nullptr)
+            entitiesOfInterest_.erase(e);
+            //STLWrappers::remove(entitiesOfInterest_,e); // doesn't work for some reason!
+            //STLWrappers::remove(entitiesOfInterest_,QPointer<Entity>(e)); // have to do this! why!?
+    }
 
     // set up variables
     double threshold = distance();
@@ -67,21 +69,30 @@ void ECGuiShower::onEntityMoved_()
         entitysGame = entitysMap->game();
     }
 
-    bool thresholdMet = false;
-    for (Entity* e:entitiesOfInterest_)
-        if (QtUtils::distance(e->pos(),ec->pos()) < threshold)
-            thresholdMet = true;
+    Entity* entityWithinRange = nullptr; // the *first* entity within range
+    for (Entity* e:entitiesOfInterest_){
+        if (QtUtils::distance(e->pos(),ec->pos()) < threshold){
+            entityWithinRange = e;
+        }
+    }
 
-    // if threshold met, make sure gui is added
-    if (thresholdMet){
+    // if someone met the threshold (i.e. is in range), make sure gui is added
+    if (entityWithinRange){
         if (entitysGame){
-            entitysGame->addGui(gui_);
+            if (!entitysGame->containsGui(gui_)){
+                entitysGame->addGui(gui_);
+                emit guiShown(this,entityWithinRange);
+            }
         }
     }
     // otherwise, make sure its removed
     else{
-        if (entitysGame)
-            entitysGame->removeGui(gui_.data());
+        if (entitysGame){
+            if (entitysGame->containsGui(gui_)){
+                entitysGame->removeGui(gui_.data());
+                emit guiHidden(this);
+            }
+        }
     }
 }
 

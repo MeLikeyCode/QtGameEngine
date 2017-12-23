@@ -1,7 +1,5 @@
 #include "Game.h"
 
-#include <STLWrappers.h>
-
 #include "Map.h"
 #include <QMouseEvent>
 #include "Spear.h" // TODO remove, test
@@ -22,6 +20,7 @@
 #include <QGraphicsItem>
 #include "TopDownSprite.h"
 #include "QtUtilities.h"
+#include "STLWrappers.h"
 
 #include "ECPathMover.h" // TODO: delete, test only
 #include "ECBodyThruster.h" // TODO: delete, test only
@@ -244,6 +243,7 @@ void Game::addGui(Gui *gui)
     if (STLWrappers::contains(guis_,gui))
         return;
 
+    gui->game_ = this;
     gui->getGraphicsItem()->setParentItem(guiLayer_);
     guis_.insert(gui);
     gui->getGraphicsItem()->setVisible(true); // when a gui is added to a game, it's always visible // TODO remove: why is this here?
@@ -260,6 +260,12 @@ void Game::removeGui(Gui *gui)
     gui->setParentGui(nullptr);
     scene()->removeItem(gui->getGraphicsItem());
     guis_.erase(gui);
+}
+
+/// Returns true if the Game contains the specified Gui.
+bool Game::containsGui(Gui *gui)
+{
+    return STLWrappers::contains(guis_,gui);
 }
 
 /// Converts the specified point from Game coordinates to Map coordinates (

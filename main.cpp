@@ -45,6 +45,10 @@
 #include "CHealthShower.h"
 #include "DialogGui.h"
 #include "ECGuiShower.h"
+#include "ShopGui.h"
+#include "ECMerchant.h"
+#include "ItemHealthPotion.h"
+#include "ItemTeleport.h"
 
 Entity* player;
 CItemDropper* itemDropper;
@@ -267,6 +271,7 @@ int main(int argc, char *argv[])
     hs->addEntity(player);
     hs->addEntity(spiderEntity);
 
+    // create a dialog gui (to test gui shower)
     DialogGui* dg = new DialogGui();
     Response* startingText = new Response("Hello stranger, what brings thee here?");
     Choice* startTextChoice1 = new Choice("Screw you!");
@@ -291,8 +296,22 @@ int main(int argc, char *argv[])
     double guix = game->width() - dg->getGuiBoundingBox().width();
     dg->setGuiPos(QPointF(guix,0));
 
-    ECGuiShower* ds = new ECGuiShower(spiderEntity,dg);
-    ds->addEntityOfInterest(player);
+//    // create gui shower
+//    ECGuiShower* ds = new ECGuiShower(spiderEntity,dg);
+//    ds->addEntityOfInterest(player);
+
+    // create a merchant
+    Axe* iaxe = new Axe();
+    iaxe->setDescription("A trusty axe.");
+
+    spiderEntity->inventory()->addItem(iaxe);
+    spiderEntity->inventory()->addItem(new FireballLauncher());
+    spiderEntity->inventory()->addItem(new Bow());
+    spiderEntity->inventory()->addItem(new ItemHealthPotion(10));
+    spiderEntity->inventory()->addItem(new ItemTeleport());
+
+    ECMerchant* merchant = new ECMerchant(spiderEntity);
+    merchant->addEntityOfInterest(player);
 
     return a.exec();
 }

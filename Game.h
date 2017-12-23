@@ -51,6 +51,7 @@ public:
 
     void addGui(Gui *gui);
     void removeGui(Gui *gui);
+    bool containsGui(Gui* gui);
 
     std::set<int> keysPressed();
     QPoint getMousePos();

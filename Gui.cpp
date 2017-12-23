@@ -1,9 +1,11 @@
 #include "Gui.h"
 #include <QGraphicsItem>
+#include "Game.h"
 
 /// Returns the position of the Gui relative to its parent (or relative to
 /// top left of screen if no parent).
-Gui::Gui(): parentGui_(nullptr)
+Gui::Gui():
+    parentGui_(nullptr)
 {
 }
 
@@ -61,6 +63,12 @@ void Gui::setParentGui(Gui *gui)
     getGraphicsItem()->setVisible(true);
     gui->childGuis_.insert(this);
     parentGui_ = gui;
+}
+
+/// Returns the Game that the Gui is in.
+Game *Gui::game()
+{
+    return game_;
 }
 
 QRectF Gui::getGuiBoundingBox()

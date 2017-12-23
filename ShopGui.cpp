@@ -8,7 +8,7 @@
 #include "Game.h"
 #include "ShopBehaviorNoCost.h"
 
-ShopGui::ShopGui(Game *game):
+ShopGui::ShopGui():
     inventoryViewer_(new InventoryViewer()),
     selecteditem_(nullptr),
     shopBehavior_(new ShopBehaviorNoCost()),
@@ -16,8 +16,7 @@ ShopGui::ShopGui(Game *game):
     descriptionLabel_(new Label()),
     priceLabel_(new Label()),
     buyButton_(new Button()),
-    closeButton_(new Button()),
-    game_(game)
+    closeButton_(new Button())
 {
     // set up parent/child relationship b/w sub guis
     panel_->setParentGui(inventoryViewer_.get());
@@ -105,8 +104,10 @@ void ShopGui::onBuyButtonClicked()
 }
 
 /// Executed when the close button is clicked.
-/// Will close the ShopGui.
+/// Will remove the ShopGui from the Game.
 void ShopGui::onCloseButtonClicked()
 {
-    game_->removeGui(this);
+    Game* g = game();
+    if (g)
+        g->removeGui(this);
 }

@@ -23,6 +23,7 @@ class Entity;
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class ECGuiShower : public EntityController
 {
+    Q_OBJECT
 public:
     ECGuiShower(Entity* controlledEntity, Gui* gui);
 
@@ -32,6 +33,14 @@ public:
 
 public slots:
     void onEntityMoved_();
+
+signals:
+    /// Emitted when the gui is shown due to an entity of interest coming within range of the controlled entity.
+    /// @param entityOfInterst The entity that triggered the gui to show.
+    void guiShown(ECGuiShower* sender, Entity* entityOfInterest);
+
+    /// Emitted when the gui is hidden due to no entities of interest being within range of the controlled entity.
+    void guiHidden(ECGuiShower* sender);
 
 private:
     double distance_;

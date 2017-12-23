@@ -25,7 +25,7 @@ class ShopGui : public Gui
 {
     Q_OBJECT
 public:
-    ShopGui(Game* game);
+    ShopGui();
 
     void setBuyer(Inventory* buyer);
     void setSeller(Inventory* seller);
@@ -51,8 +51,6 @@ private:
     Label* priceLabel_;
     Button* buyButton_;
     Button* closeButton_;
-
-    Game* game_; // needed for closeButton_ to be able to remove gui from game
 };
 
 #endif // SHOPGUI_H

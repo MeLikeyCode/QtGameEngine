@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QPointF>
 #include <unordered_set>
+#include <QPointer>
 
 class QGraphicsItem;
 class Game;
@@ -25,6 +26,7 @@ class Gui: public QObject // inherits from QOBject b/c:
                           // 3) use signals and slots in the future
 {
     Q_OBJECT
+    friend class Game; // game needs to access Gui::game_ variable (needs to set it during Game::addGui/removeGui)
 public:
     Gui();
     ~Gui();
@@ -34,6 +36,8 @@ public:
     void setGuiRotation(double degrees);
 
     void setParentGui(Gui* gui);
+
+    Game* game();
 
     /// Returns the root QGraphicsItem that has the drawings for the Gui.
     /// This is the QGraphicsItem that goes in the scene when Game::addGui() is called.
@@ -46,6 +50,7 @@ public:
 
 private:
     Gui* parentGui_;
+    QPointer<Game> game_;
     std::unordered_set<Gui*> childGuis_;
 
     std::vector<QRectF> getBoundingBoxesFor_(QGraphicsItem* gi, QGraphicsItem *mapTo);
