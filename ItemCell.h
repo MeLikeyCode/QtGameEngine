@@ -12,6 +12,7 @@ class QGraphicsItem;
 class QGraphicsPixmapItem;
 class QColor;
 class QPixmap;
+class QGraphicsSimpleTextItem;
 
 /// Represents a Gui that visualizes and allows mouse interaction with an Item.
 /// When the Item in the ItemCell is clicked, ItemCell will emit a signal.
@@ -34,14 +35,16 @@ public:
     QGraphicsItem* getGraphicsItem();
 
 public slots:
-    void onClicked_(Panel *panel, QPointF pos, int button);
+    void onBGPanelClicked_(Panel *panel, QPointF pos, int button);
+    void onItemChargesChanged_(Item* sender);
 
 signals:
     void clicked(ItemCell* itemCell, int button);
 
 private:
-    std::unique_ptr<QGraphicsPixmapItem> picture_;
     std::unique_ptr<Panel> background_;
+    std::unique_ptr<QGraphicsPixmapItem> picture_;
+    QGraphicsSimpleTextItem* numChargesText_;
     QPointer<Item> item_;
 
     void draw_();

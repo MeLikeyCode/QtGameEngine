@@ -50,6 +50,7 @@ void Item::setNumOfCharges(int n)
     numOfCharges_ = n;
     if (numOfCharges_ == 0)
         deleteLater();
+    emit numChargesChanged(this);
 }
 
 /// Sets the description text of the Item.

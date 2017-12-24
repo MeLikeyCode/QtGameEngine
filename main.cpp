@@ -296,22 +296,27 @@ int main(int argc, char *argv[])
     double guix = game->width() - dg->getGuiBoundingBox().width();
     dg->setGuiPos(QPointF(guix,0));
 
-//    // create gui shower
-//    ECGuiShower* ds = new ECGuiShower(spiderEntity,dg);
-//    ds->addEntityOfInterest(player);
+    // create gui shower
+    ECGuiShower* ds = new ECGuiShower(spiderEntity,dg);
+    ds->addEntityOfInterest(player);
 
-    // create a merchant
-    Axe* iaxe = new Axe();
-    iaxe->setDescription("A trusty axe.");
+//    // create a merchant
+//    Axe* iaxe = new Axe();
+//    iaxe->setDescription("A trusty axe.");
 
-    spiderEntity->inventory()->addItem(iaxe);
-    spiderEntity->inventory()->addItem(new FireballLauncher());
-    spiderEntity->inventory()->addItem(new Bow());
-    spiderEntity->inventory()->addItem(new ItemHealthPotion(10));
-    spiderEntity->inventory()->addItem(new ItemTeleport());
+//    spiderEntity->inventory()->addItem(iaxe);
+//    spiderEntity->inventory()->addItem(new FireballLauncher());
+//    spiderEntity->inventory()->addItem(new Bow());
+//    spiderEntity->inventory()->addItem(new ItemHealthPotion(10));
+//    spiderEntity->inventory()->addItem(new ItemTeleport());
 
-    ECMerchant* merchant = new ECMerchant(spiderEntity);
-    merchant->addEntityOfInterest(player);
+//    ECMerchant* merchant = new ECMerchant(spiderEntity);
+//    merchant->addEntityOfInterest(player);
+
+    ItemHealthPotion* hpLotsOfCharges = new ItemHealthPotion(10);
+    hpLotsOfCharges->setNumOfCharges(8);
+    player->inventory()->addItem(hpLotsOfCharges);
+
 
     return a.exec();
 }

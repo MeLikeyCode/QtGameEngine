@@ -15,6 +15,7 @@ class Inventory;
 /// @date 2/13/16
 class Item: public Entity
 {
+    Q_OBJECT
     // An Item can be inside an Inventory.
     // When an Item is removed from the Inventory, the Inventory needs to
     // set the private inventory_ pointer to nullptr
@@ -27,6 +28,10 @@ public:
     void setNumOfCharges(int n);
     void setDescription(std::string description);
     std::string description();
+
+signals:
+    /// Emitted when the number of charges of the items changes (either increases or decreases).
+    void numChargesChanged(Item* sender);
 
 protected:
     Item(); // constructor protected so that objects cannot be instantiated, but subclasses
