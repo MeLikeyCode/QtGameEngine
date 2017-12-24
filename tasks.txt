@@ -748,15 +748,7 @@ ds->addEntityOfInterest(e1); // when e1 gets near e show the gui
 ds->addEntityOfInterest(e2); // when e1 or e2 gets near e show the gui
 ds->setDistance(100);
 
-=============================================================================
-=============================================================================
-=========================UNFINISHED TASKS====================================
-=============================================================================
-=============================================================================
-
-
-
-===TASK===
+===TASK===----------DONE
 Add a shop entity.
 |
 v
@@ -765,6 +757,41 @@ Create a ECShopShower entity that will pop up a ShopGui when an entity of intere
 |
 V
 -create class ECShopShower
+
+===TASK===---------DONE
+Make InventoryCell show the number of charges of the items in it.
+
+=============================================================================
+=============================================================================
+=========================UNFINISHED TASKS====================================
+=============================================================================
+=============================================================================
+
+===TASK===
+Figure out the path finding issue - investigate
+|
+v
+Before an entity moves to a specified point, it checks to see if it can "fit" at that point.
+It does this by taking its pathing map and placing it at that point and seeing if it intersects with any filled cells of the map at that point.
+
+This is an issue b/c sometimes the cell is filled because of the entitys own pathing map! (it can't move there because its pathing map hits with 
+cells of the map that are filled by its pathing map).
+
+In order for each entity to know which map cells are filled b/c of their own pathing map, i would have to keep track of of this information somewhere (in the map, etc)
+
+A better approach would be to use the pathfinding system as a "static" thing. Just so that you can calculate a path.
+I will use other means for collision detection.
+For example, on an entitys image, you can "mark" areas that are "solid" (another channel - or another image)
+
+Yes..yes..i like this idea!, leads me to the following task:
+
+===TASK===
+Invent a way for clients to specify "solid" parts of entities.
+(They can mark it somehow, via an image channel, a seperate image that they associate with the Entity or EntitySprite, etc...)
+(Maybe they can even mark it dynamically via polygons and paths?)
+
+Before moving an entity, check if its collising with any solids parts of other entities.
+
 
 ===TASK===
 IMPORTANT - work on THIS task only (while doing it, you will discover new things to do)
