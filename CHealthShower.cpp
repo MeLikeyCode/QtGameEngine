@@ -1,12 +1,13 @@
 #include "CHealthShower.h"
 
 #include <QTimer>
+#include <cassert>
 
 #include "STLWrappers.h"
 #include "Entity.h"
 #include "Map.h"
 #include "Bar.h"
-#include "cassert"
+#include "EntitySprite.h"
 
 CHealthShower::CHealthShower():
     timer_(new QTimer(this))
@@ -209,7 +210,10 @@ void CHealthShower::onTick_()
         if (m)
             g = m->game();
 
-        if (g)
-            b->setGuiPos(g->mapFromMap(e->pos()));
+        if (g){
+            double x = e->topLeft().x() + e->boundingRect().width() / 2 - b->getGuiBoundingBox().width() / 2;
+            double y = e->topLeft().y();
+            b->setGuiPos(g->mapFromMap(QPointF(x,y)));
+        }
     }
 }

@@ -91,6 +91,9 @@ Map *Entity::map() const{
 ///
 /// The position is returned relative to the parent Entity. If there is no
 /// parent Entitiy, it is returned relative to the Map.
+///
+/// This position of an entity isn't necessarly the top left or center of its sprite.
+/// EntitySprite::origin() tells you which pos of the sprite will count as the pos of the entity.
 QPointF Entity::pos() const{
     return currentPos_;
 }
@@ -126,6 +129,20 @@ double Entity::z() const
 double Entity::height() const
 {
     return height_;
+}
+
+/// Returns the top left position of the Entity (its sprite) relative to the parent entity.
+/// If the entity has no parent entity, returns the top left relative to the Map.
+QPointF Entity::topLeft() const
+{
+    EntitySprite* spr = sprite();
+
+    // if entity doesn't have a sprite, top left is just pos
+    if (!spr)
+        return currentPos_;
+
+    // else, return top left of sprite
+    return currentPos_ - spr->origin();
 }
 
 /// Sets the position of the Entity.

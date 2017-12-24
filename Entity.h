@@ -68,6 +68,7 @@ public:
     double y() const;
     double z() const;
     double height() const;
+    QPointF topLeft() const;
     void setPos(const QPointF &pos);
     void setPos(std::string namedPos, const QPointF& pos);
     void setPos(const QPointF& moveThisPt, const QPointF& toThisPoint);
