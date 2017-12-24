@@ -761,6 +761,9 @@ V
 ===TASK===---------DONE
 Make InventoryCell show the number of charges of the items in it.
 
+===TASK===---------DONE
+Make ECHealthShower put health bar on upper center of sprite corner.
+
 =============================================================================
 =============================================================================
 =========================UNFINISHED TASKS====================================
@@ -768,29 +771,53 @@ Make InventoryCell show the number of charges of the items in it.
 =============================================================================
 
 ===TASK===
-Figure out the path finding issue - investigate
+Final way to resolve pathfinding/moving issue.
+
+Map has a PathingMap
+each Entity has a PathingMap
+The overall pathing map of the map is the "merge" of all its entities (plus any that have been manually filled).
+Whenever an entity is added/removed to map or moves, we need to recalculate the overall pathing map
+    Way 1: ineffecient but simple thus easy to implement/maintainable (if i don't need the speed why do it?)
+        - start with the original pathing map of the map (the on that may be *manually* filled)
+        - go through each entity that was added, "merge" the entity's path with the maps path
+            - map should keep track of these layers (in other words, for each cell of the map's pathing map, we need to know all the pathing maps that were merged there)
+                - Map::pathingMapsAt(QPolygonF region) -> std::vector<PathingMap*> (entities will have to have pointer to pathing map now instead of value - might be more efficient anyways)
+
+Before we move an entity to a specified pointer
+    - we temporarly remove the entitys own pathing map at that location (Map::removePathingMap(entity->pathingMap))
+    - we check if the entity can fit at the specified pos (Map::pathingMapCanFit(e->pathingMap(),atPos))
+    - if so, we move him there
+
+When an entity moves:
+    for now: call map()->updatePathingMap() which will
+        - go to "Way 1" above
+    later (shortly) changed to:
+        - when an entity is added to the map, map should listen to its moved() signal, in response it should:
+            - updatePathingMap()
+        - when an entity is removed from the map, map should stop listening to that signal
+        * this is a clearner design
+
+implementation details (data structures)
+|
 |
 v
-Before an entity moves to a specified point, it checks to see if it can "fit" at that point.
-It does this by taking its pathing map and placing it at that point and seeing if it intersects with any filled cells of the map at that point.
 
-This is an issue b/c sometimes the cell is filled because of the entitys own pathing map! (it can't move there because its pathing map hits with 
-cells of the map that are filled by its pathing map).
-
-In order for each entity to know which map cells are filled b/c of their own pathing map, i would have to keep track of of this information somewhere (in the map, etc)
-
-A better approach would be to use the pathfinding system as a "static" thing. Just so that you can calculate a path.
-I will use other means for collision detection.
-For example, on an entitys image, you can "mark" areas that are "solid" (another channel - or another image)
-
-Yes..yes..i like this idea!, leads me to the following task:
-
-===TASK===
-Invent a way for clients to specify "solid" parts of entities.
-(They can mark it somehow, via an image channel, a seperate image that they associate with the Entity or EntitySprite, etc...)
-(Maybe they can even mark it dynamically via polygons and paths?)
-
-Before moving an entity, check if its collising with any solids parts of other entities.
+-give Map the member:
+    - std::unordered_set<PathingMap*> pathingMaps_; // in addition to its own pathingMap_* and the overallPathingMap_* (which will be the "merged")
+    - redo updatePathingMap():
+        - delete old overall pathing map (faster than clearing it)
+        - create a brand new (unfilled) overallPathingMap_
+        - merge map's own pathingMap_ into the overallPathingMap
+        - go through each pathing map in pathingMaps_
+            - merge them in the overallPathingMap_
+    - redo entities to have a pointer to a pathing map instead of value
+    - redo Map::addEntity():
+        - call Map::addPathingMap(entity->pathingMap(), atEntityPos)
+    - redo Map::removeEntity():
+        - call Map::removePathingMap(entity->pathingMap())
+    - redo Entity:setPos():
+        - call Map::removePathingMap(entity->pathingMap()) // remove pathing map from old pos
+        - call Map::addPathingMap(entity->pathingMap(), newEntityPos) // add it to new pos
 
 
 ===TASK===
