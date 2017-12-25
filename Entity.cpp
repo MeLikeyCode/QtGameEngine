@@ -18,7 +18,7 @@
 
 /// Constructs a default entity.
 Entity::Entity():
-    pathingMap_(1,1,64),            // default 1x1 unfilled (in body) PathingMap
+    pathingMap_(new PathingMap(1,1,32)),            // default 1x1 unfilled (in body) PathingMap
     map_(nullptr),
     sprite_(new TopDownSprite()),
     children_(),
@@ -38,6 +38,8 @@ Entity::Entity():
     rotationSpeed_(360),
     zValue_(0)
 {
+    pathingMap_->fill();
+
     sprite_->setParent(this);
     inventory_->entity_ = this;
 }
@@ -69,15 +71,15 @@ Entity::~Entity()
     }
 }
 
-/// Returns the PathingMap of the Entity.
-PathingMap Entity::pathingMap() const{
-    return pathingMap_;
+/// Returns (a reference to) the PathingMap of the Entity.
+PathingMap& Entity::pathingMap() const{
+    return *pathingMap_;
 }
 
 /// Sets the PathingMap of the Entity.
 /// The PathingMap is placed at the specified position relative to the Entity.
-void Entity::setPathingMap(const PathingMap &pathingMap, const QPointF& pos){
-    pathingMap_ = pathingMap;
+void Entity::setPathingMap(PathingMap &pathingMap, const QPointF& pos){
+    pathingMap_ = &pathingMap;
     pathingMapPos_ = pos;
 }
 
@@ -164,6 +166,8 @@ void Entity::setPos(const QPointF &pos){
     // if the Entity is in a Map, update the PathingMap
     Map* entitysMap = map();
     if (entitysMap){
+        entitysMap->removePathingMap(pathingMap());
+        entitysMap->addPathingMap(pathingMap(),mapToMap(pathingMapPos()));
         entitysMap->updatePathingMap();
 
         //if the map is in a game, let map know entity moved (watched-watching pair)
@@ -398,7 +402,16 @@ bool Entity::canFit(const QPointF &atPos)
         return false;
     }
 
-    return map()->pathingMap().canFit(pathingMap(),atPos);
+    Map* m = map();
+
+    // temporarly remove own pathing map
+    m->removePathingMap(pathingMap());
+    m->updatePathingMap();
+    bool can = m->pathingMap().canFit(pathingMap(),atPos);
+    m->addPathingMap(pathingMap(),mapToMap(pathingMapPos()));
+    m->updatePathingMap();
+
+    return can;
 }
 
 /// Returns the children of this Entity.

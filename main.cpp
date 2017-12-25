@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
 
     // create the Maps
     Map* map1 = new Map();
-    Map* map2 = new Map(PathingMap(50,50,64));
+    Map* map2 = new Map(new PathingMap(50,50,64));
     // add some random trees
     addRandomTrees(map1,5);
 

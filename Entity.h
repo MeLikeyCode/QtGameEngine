@@ -54,8 +54,8 @@ public:
     virtual ~Entity();
 
     // pathing map
-    PathingMap pathingMap() const;  // TODO do not return by value, too expensive to copy (maybe return const ref?)
-    void setPathingMap(const PathingMap& pathingMap, const QPointF &pos=QPointF(0,0));
+    PathingMap &pathingMap() const;  // TODO do not return by value, too expensive to copy (maybe return const ref?)
+    void setPathingMap(PathingMap& pathingMap, const QPointF &pos=QPointF(0,0));
 
     // map
     Map* map() const;
@@ -167,7 +167,7 @@ signals:
 
 private:
     // main attributes
-    PathingMap pathingMap_;
+    PathingMap* pathingMap_;
     QPointF pathingMapPos_;
     QPointF currentPos_;
     double zPos_;

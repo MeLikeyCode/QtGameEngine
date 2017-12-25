@@ -64,7 +64,6 @@ namespace STLWrappers
 	{
 		return inContainer.find(item);
 	}
-	///
 	///@}
 
 	/// Returns true if the specified container contains the specified item.
@@ -76,9 +75,11 @@ namespace STLWrappers
 		return find(container, item) != std::end(container);
 	}
 
+	/// @name containsAll(container,items)
 	/// Returns true if the specified container contains *all* the specified items.
 	/// If the container is a map (or unordered map), the items should be keys.
 	///@{
+	/// containsAll() overload for all types except initializer lists
 	template<typename ContainerToCheckType, typename ContainerOfItemsType>
 	bool containsAll(const ContainerToCheckType& container, const ContainerOfItemsType& items)
 	{
@@ -114,7 +115,7 @@ namespace STLWrappers
 	/// @note The most efficient removal algorithm available for the container is used.
 	///@{
 	///
-	/// Overload that works for any container that the "erase and remove" idiom works for.
+	/// remove() Overload that works for any container that the "erase and remove" idiom works for.
 	/// Complexity is linear.
 	template<typename ContainerType, typename ItemType>
 	void remove(ContainerType& fromContainer, const ItemType& item)
@@ -149,16 +150,21 @@ namespace STLWrappers
 	{
 		fromContainer.erase(item);
 	}
-	///
 	///@}
 
-	/// @name add(inContainer, item)
 	/// Adds an item to the end of a container.
 	/// @note Uses the most efficient insertion operation available for the container.
 	template<typename ContainerType, typename ItemType>
 	void add(ContainerType& inContainer, const ItemType& item)
 	{
 		inContainer.insert(std::end(inContainer), item);
+	}
+
+	/// Adds a key and value to a map (or unordered map).
+	template<typename  MapType, typename KeyType, typename ValueType>
+	void add(MapType& inMap, const KeyType& key, const ValueType& value)
+	{
+		inMap[key] = value;
 	}
 
 	/// @name count(inContianer, item)
@@ -200,7 +206,6 @@ namespace STLWrappers
 	{
 		return inContainer.count(item);
 	}
-	///
 	///@}
 
 }

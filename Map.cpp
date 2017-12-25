@@ -13,26 +13,30 @@
 #include "PositionalSound.h"
 #include "Utilities.h"
 #include "EntitySprite.h"
+#include "STLWrappers.h"
 
 // TODO remove test
 #include <QDebug>
 
-Map::Map() : Map(PathingMap(50,50,32))
+Map::Map() : Map(new PathingMap(50,50,32))
 {
     // ctor chained
 }
 
-Map::Map(PathingMap pathingMap):
-    numCellsWide_(pathingMap.numCellsWide()),
-    numCellsLong_(pathingMap.numCellsLong()),
-    cellSize_(pathingMap.cellSize()),
-    pathingMap_(pathingMap),
+Map::Map(PathingMap *pathingMap):
+    numCellsWide_(pathingMap->numCellsWide()),
+    numCellsLong_(pathingMap->numCellsLong()),
+    cellSize_(pathingMap->cellSize()),
+    ownPathingMap_(pathingMap),
+    overallPathingMap_(new PathingMap(numCellsWide_,numCellsLong_,cellSize_)),
     scene_(new QGraphicsScene(this)),
     game_(nullptr),
     weatherLayer_(new QGraphicsRectItem()),
     entityLayer_(new QGraphicsRectItem()),
     terrainLayer_(new QGraphicsRectItem())
 {
+    assert(pathingMap != nullptr); // a Map cannot be constructed with a null PathingMap
+
     scene_->setSceneRect(0,0,width(),height());
 
     // add layers in proper order
@@ -75,35 +79,57 @@ QPointF Map::getMousePosition()
     return game()->mapToScene(pos);
 }
 
-/// Returns a reference to the Map's PathingMap.
+/// Returns a reference to the Map's overall PathingMap.
 PathingMap &Map::pathingMap(){
-    return pathingMap_;
+    return *overallPathingMap_;
 }
 
-/// Updates the PathingMap with the positions of all entities.
+/// Adds a PathingMap to the map's overall pathing map.
+/// Use removePathingMap() to remove pathing maps from the map's overall pathing map.
+void Map::addPathingMap(PathingMap &pm, const QPointF &atPos)
+{
+    STLWrappers::add(additionalPathingMaps_, &pm, atPos);
+}
+
+/// Removes a PathingMap from the map's overall pathing map.
+/// use addPathingMap() to add pathing maps to the map's overall pathing map.
+void Map::removePathingMap(PathingMap &pm)
+{
+    STLWrappers::remove(additionalPathingMaps_,&pm);
+}
+
+/// Recalculate the pathing map of the map.
+/// Takes into account all the pathing maps that have been added as well as the original
+/// pathing map that the map was constructed with.
 void Map::updatePathingMap()
 {
     // approach:
-    // - clear pathing map (make it all unfil)
-    // - traverse through entities, put thier pathingmap in pathing map
+    // - delete old overall pathing map
+    // - create a new one (deleting/creating a PathingMap is cheaper than clearing one)
+    // - merge own pathing map with overall pathing map
+    // - for each additional pathing map:
+    //      - merge it with overall pathing map
 
-    // unfill the entire PathingMap
-    pathingMap().unfill();
+    delete overallPathingMap_;
+    overallPathingMap_ = new PathingMap(numCellsWide_,numCellsLong_,cellSize_);
 
-    // fill each Entity's pathing map
-    for (Entity* entity:entities()){
-        pathingMap().addFilling(entity->pathingMap(),entity->pos() + entity->pathingMapPos());
+    overallPathingMap_->addFilling(*ownPathingMap_,QPointF(0,0));
+
+    for (auto& pathingMapPosPair:additionalPathingMaps_){
+        PathingMap* pm = pathingMapPosPair.first;
+        QPointF pos = pathingMapPosPair.second;
+        overallPathingMap_->addFilling(*pm,pos);
     }
 
-    // drawPathingMap(); // TODO: DEBUG, enable this to visualize pathing map
+    drawPathingMap();
 }
 
 int Map::width() const{
-    return pathingMap_.width();
+    return ownPathingMap_->width();
 }
 
 int Map::height() const{
-    return pathingMap_.height();
+    return ownPathingMap_->height();
 }
 
 QSizeF Map::size() const{
@@ -596,6 +622,7 @@ void Map::addEntity(Entity *entity){
     entity->map_ = this;
 
     // update the PathingMap
+    addPathingMap(entity->pathingMap(),entity->pathingMapPos());
     updatePathingMap();
 
     // recursively add all child entities
@@ -634,7 +661,8 @@ void Map::removeEntity(Entity *entity)
     // set its internal pointer
     entity->map_ = nullptr;
 
-    // TODO: remove the leftover pathing of the Entity
+    // remove the pathing of the Entity
+    removePathingMap(entity->pathingMap());
     updatePathingMap();
 
     // emit entity left map event

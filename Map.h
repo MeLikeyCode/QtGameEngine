@@ -34,7 +34,7 @@ class Map: public QObject // so we can use QPointer<Map>
 public:
     // constructor
     Map();
-    Map(PathingMap pathingMap);
+    Map(PathingMap* pathingMap);
 
     bool contains(const QPointF& pos);
     bool contains(Entity* entity);
@@ -42,6 +42,8 @@ public:
     QPointF getMousePosition();
 
     PathingMap& pathingMap();
+    void addPathingMap(PathingMap& pm, const QPointF& atPos);
+    void removePathingMap(PathingMap& pm);
     void updatePathingMap();
 
     int width() const;
@@ -107,7 +109,9 @@ private:
     int numCellsWide_;
     int numCellsLong_;
     int cellSize_;
-    PathingMap pathingMap_;
+    PathingMap* ownPathingMap_; // Map's own pathing map, this can be arbitrarly filled by client
+    std::unordered_map<PathingMap*,QPointF> additionalPathingMaps_; // additional pathing maps (and their location) that can be added/removed via addPathingMap()/removePathingMap()
+    PathingMap* overallPathingMap_; // the "merge" of "ownPathingMap_" and all "additionalPathingMaps_"
     std::unordered_set<Entity*> entities_;
     std::vector<std::unique_ptr<TerrainLayer>> terrainLayers_;
     QPointer<Game> game_; // the game that is currently visualizing the map, null if not currently being visualizing

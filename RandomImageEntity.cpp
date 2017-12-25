@@ -22,12 +22,13 @@ RandomImageEntity::RandomImageEntity(std::vector<QPixmap> pixmaps, const Pathing
     TopDownSprite* tds = new TopDownSprite(pixmaps[randIndex]);
     setSprite(tds);
 
-    double pathingMapX = pixmaps[0].width() / 2.0 - pathingMap.cellSize() / 2.0;
-    double pathingMapY = pixmaps[0].height() / 2.0 - pathingMap.cellSize() / 2.0;
+    PathingMap* pmCopy = new PathingMap(pathingMap);
+    double pathingMapX = pixmaps[0].width() / 2.0 - pmCopy->cellSize() / 2.0;
+    double pathingMapY = pixmaps[0].height() / 2.0 - pmCopy->cellSize() / 2.0;
 
     setInvulnerable(true); // make random image entities invulnerable ( they are just for show for gods sake! :P)
 
-    setPathingMap(pathingMap,QPointF(pathingMapX,pathingMapY));
+    setPathingMap(*pmCopy,QPointF(pathingMapX,pathingMapY));
 }
 
 RandomImageEntity::RandomImageEntity(std::string resourceFolderPath, std::string imagePrefix, int numOfImages, const PathingMap &pm)
@@ -50,5 +51,6 @@ RandomImageEntity::RandomImageEntity(std::string resourceFolderPath, std::string
 
     setInvulnerable(true); // make random image entities invulnerable ( they are just for show for gods sake! :P)
 
-    setPathingMap(pm,QPointF(pathingMapX,pathingMapY));
+    PathingMap* pmCopy = new PathingMap(pm);
+    setPathingMap(*pmCopy,QPointF(pathingMapX,pathingMapY));
 }
