@@ -45,6 +45,7 @@ void MCSpawner::onTimeout_()
     // create entity here
     Entity* entity = new Entity();
     entity->addEnemyGroup(1);
+    entity->setOrigin(QPointF(64,64));
     if (spawnType_ == SpawnType::Spider){
         AngledSprite* spiderSprite = new AngledSprite();
         entity->setSprite(spiderSprite);
@@ -71,7 +72,6 @@ void MCSpawner::onTimeout_()
             spiderSprite->addAnimation((180+45*i) % 360,"dieTwo",spiderSpriteSheet,Node(24,0+i),Node(31,0+i));
         }
         spiderSprite->play("stand",-1,10,0);
-        spiderSprite->setOrigin(QPointF(64,64));
 
         ECBodyThruster* bt = new ECBodyThruster(entity);
         bt->setThrustDistance(100);

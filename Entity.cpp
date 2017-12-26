@@ -38,8 +38,6 @@ Entity::Entity():
     rotationSpeed_(360),
     zValue_(0)
 {
-    pathingMap_->fill();
-
     sprite_->setParent(this);
     inventory_->entity_ = this;
 }
@@ -137,14 +135,7 @@ double Entity::height() const
 /// If the entity has no parent entity, returns the top left relative to the Map.
 QPointF Entity::topLeft() const
 {
-    EntitySprite* spr = sprite();
-
-    // if entity doesn't have a sprite, top left is just pos
-    if (!spr)
-        return currentPos_;
-
-    // else, return top left of sprite
-    return currentPos_ - spr->origin();
+    return currentPos_ - origin();
 }
 
 /// Sets the position of the Entity.
@@ -158,8 +149,8 @@ void Entity::setPos(const QPointF &pos){
     // if has a sprite
     EntitySprite* entitysSprite = sprite();
     if (entitysSprite != nullptr){
-        entitysSprite->underlyingItem_->setPos(pos - entitysSprite->origin()); // set position of sprite
-        qreal bot = pos.y() + boundingRect().height() - sprite()->origin().y();
+        entitysSprite->underlyingItem_->setPos(pos - origin()); // set position of sprite
+        qreal bot = pos.y() + boundingRect().height() - origin().y();
         sprite()->underlyingItem_->setZValue(bot); // set z value (lower -> higher)
     }
 
@@ -276,7 +267,7 @@ void Entity::setSprite(EntitySprite *sprite){
     }
 
     // make sure the new sprite is positioned correctly
-    sprite->underlyingItem_->setPos(currentPos_ - sprite->origin());
+    sprite->underlyingItem_->setPos(currentPos_ - origin());
 
     // if the Entity is already in a map
     if (map_){
@@ -293,6 +284,9 @@ void Entity::setSprite(EntitySprite *sprite){
 
     // set the zvalue of the new sprite
     sprite->underlyingItem_->setZValue(zValue());
+
+    // set origin to be the middle of the new sprite
+    setOrigin(QPointF(sprite->boundingBox().width()/2,sprite->boundingBox().height()/2));
 }
 
 /// Returns the Entity's Sprite. If the Entity does not have a sprite,
@@ -367,16 +361,24 @@ void Entity::setZValue(double zValue)
 {
     zValue_ = zValue; // update internal variable
 
-    // if has a sprite, update sprites z value
-    if (sprite() != nullptr){
-        sprite()->underlyingItem_->setZValue(zValue);
-    }
+    // update underlying sprites z value
+    sprite()->underlyingItem_->setZValue(zValue);
 }
 
 /// Returns the z value of the Entity. See setZValue() for more info.
 double Entity::zValue()
 {
     return zValue_;
+}
+
+QPointF Entity::origin() const
+{
+    return origin_;
+}
+
+void Entity::setOrigin(const QPointF &to)
+{
+    origin_ = to;
 }
 
 /// Instantly moves the Entity to the specified cell in the Map.

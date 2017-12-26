@@ -764,17 +764,7 @@ Make InventoryCell show the number of charges of the items in it.
 ===TASK===---------DONE
 Make ECHealthShower put health bar on upper center of sprite corner.
 
-=============================================================================
-=============================================================================
-=========================UNFINISHED TASKS====================================
-=============================================================================
-=============================================================================
-
-===TASK===
-Right now, you specify the "origin" in an EntitySprite.
-Change to so that the origin is specified in an Entity. This makes more sense.
-
-===TASK===
+===TASK===---------DONE
 Final way to resolve pathfinding/moving issue.
 
 Map has a PathingMap
@@ -828,6 +818,25 @@ end:
     actual: 3:40 pm
 
 estimation accuracy: EXCELLENT!
+
+=============================================================================
+=============================================================================
+=========================UNFINISHED TASKS====================================
+=============================================================================
+=============================================================================
+
+===TASK===
+Right now, you specify the "origin" in an EntitySprite.
+Change to so that the origin is specified in an Entity. This makes more sense.
+"The entity's origin point specified which point of the sprite to use as the origin (i.e. to rotate around and move about).
+
+start: 7:14
+end:
+    estimated: 8:45
+    actual:
+
+estimate accuracy: 
+
 
 
 ===TASK===

@@ -54,15 +54,3 @@ void EntitySprite::onTemporaryAnimationDone_(EntitySprite *sender, std::string a
         play(animationPlayingBefore_.name(),animationPlayingBefore_.timesLeftToPlay(),animationPlayingBefore_.fps(),animationPlayingBefore_.currentFrame());
     }
 }
-
-void EntitySprite::setOrigin(const QPointF &pos)
-{
-    pos_ = pos;
-    assert(underlyingItem_);
-    underlyingItem_->setTransformOriginPoint(pos);
-}
-
-QPointF EntitySprite::origin() const
-{
-    return pos_;
-}

@@ -591,8 +591,7 @@ void Map::addTerrainLayer(TerrainLayer *terrainLayer){
     terrainLayer->parentItem_->setParentItem(terrainLayer_);
 }
 
-/// Adds the specified Entity (and all of its children) to the Map and updates
-/// the PathingMap of the Map to reflect the additional content.
+/// Adds the specified Entity (and all of its children) to the Map.
 /// If the Entity is already in the Map, does nothing.
 /// If the Entity is in another Map, it will be removed from that Map first.
 void Map::addEntity(Entity *entity){
@@ -611,7 +610,7 @@ void Map::addEntity(Entity *entity){
     entities_.insert(entity);
 
     // add its sprite to the interal QGraphicsScene
-    entity->sprite()->underlyingItem_->setParentItem(terrainLayer_);
+    entity->sprite()->underlyingItem_->setParentItem(entityLayer_);
 
     // add its children's sprite's as a child of its sprites
     for (Entity* childEntity:entity->children()){
@@ -622,7 +621,7 @@ void Map::addEntity(Entity *entity){
     entity->map_ = this;
 
     // update the PathingMap
-    addPathingMap(entity->pathingMap(),entity->pathingMapPos());
+    addPathingMap(entity->pathingMap(),entity->mapToMap(entity->pathingMapPos()));
     updatePathingMap();
 
     // recursively add all child entities

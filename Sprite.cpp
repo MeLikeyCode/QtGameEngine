@@ -253,8 +253,4 @@ void Sprite::commonInitialize_()
 
     playingAnimation_ = "";
     playingAnimationFPS_ = -1;
-
-    // set origin
-    setTransformOriginPoint(pixmapItem_->boundingRect().width()/2,
-                            pixmapItem_->boundingRect().height()/2);
 }

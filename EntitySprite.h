@@ -96,12 +96,6 @@ public:
     /// Returns the currently displayed frame of the EntitySprite.
     virtual QPixmap currentlyDisplayedFrame() const = 0;
 
-    /// Sets the position of the EntitySprite that will be used as the origin point.
-    void setOrigin(const QPointF& pos);
-
-    /// Returns the origin point of the EntitySprite.
-    QPointF origin() const;
-
     /// Scales the EntitySprite.
     void scale(double scale);
 
@@ -131,7 +125,6 @@ protected:
     virtual void setFacingAngle_(double angle) = 0;
 
     double facingAngle_; // the angle that the EntitySprite is supposed to be facing
-    QPointF pos_;
 
     PlayingAnimationInfo animationPlayingBefore_;
 };

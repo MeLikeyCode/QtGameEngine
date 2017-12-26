@@ -92,11 +92,11 @@ int main(int argc, char *argv[])
     player->setGroup(1);
     player->setMaxHealth(100);
     player->setHealth(100);
+    player->pathingMap().fill();
 
     // create an EntitySprite for the entity
     SpriteSheet minitaurSpriteSheet(":/resources/graphics/characterSpritesheets/minotaur_alpha.png",24,8,128,128);
     AngledSprite* sprplayer = new AngledSprite();
-    sprplayer->setOrigin(QPointF(64,64));
     for (int i = 0, n = 8; i < n; ++i){ // for each angle
         // stand
         sprplayer->addAnimation((180+45*i) % 360,"stand",minitaurSpriteSheet,Node(0,0+i),Node(3,0+i));
@@ -109,6 +109,7 @@ int main(int argc, char *argv[])
         // attack
         sprplayer->addAnimation((180+45*i) % 360,"attack",minitaurSpriteSheet,Node(12,0+i),Node(18,0+i));
     }
+    player->setOrigin(QPointF(64,64));
     player->setSprite(sprplayer);
 
     // add entity to a map
@@ -228,6 +229,7 @@ int main(int argc, char *argv[])
 
     // create a test spider
     Entity* spiderEntity = new Entity();
+    spiderEntity->pathingMap().fill();
     AngledSprite* spiderSprite = new AngledSprite();
     spiderEntity->setSprite(spiderSprite);
     SpriteSheet spiderSpriteSheet(":/resources/graphics/characterSpritesheets/spider.png",48,8,128,128);
@@ -250,7 +252,7 @@ int main(int argc, char *argv[])
         spiderSprite->addAnimation((180+45*i) % 360,"die",spiderSpriteSheet,Node(18,0+i),Node(23,0+i));
     }
     spiderSprite->play("stand",-1,10,0);
-    spiderSprite->setOrigin(QPointF(64,64));
+    spiderEntity->setOrigin(QPointF(64,64));
     spiderEntity->setPos(QPointF(500,500));
     map1->addEntity(spiderEntity);
 
