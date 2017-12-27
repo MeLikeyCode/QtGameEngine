@@ -1,6 +1,10 @@
 #include "PathingMap.h"
+
 #include <cassert>
 #include <QDebug> // TODO: remove
+#include <QImage>
+
+#include "Grid.h"
 
 /// Constructs a PathingMap with no cells.
 PathingMap::PathingMap():
@@ -21,6 +25,32 @@ PathingMap::PathingMap( int numCellsWide,  int numCellsLong,  int cellSize):
     cellSize_(cellSize)
 {
     // constructor code goes here
+}
+
+/// Constructs a pathing map from a painted image.
+/// Fully transparent pixels count as "free" areas while any non fully transparent pixels
+/// count as "filled" areas.
+PathingMap::PathingMap(const std::string imagePath, int cellSize)
+{
+    QImage image(imagePath.c_str());
+    int imageWidth = image.width();
+    int imageHeight = image.height();
+    numCellsWide_ = imageWidth/cellSize;
+    numCellsLong_ = imageHeight/cellSize;
+    cellSize_ = cellSize;
+
+    Grid grid(numCellsWide_,numCellsLong_,cellSize,cellSize);
+
+    pathGrid_ = PathGrid(numCellsWide_,numCellsLong_);
+
+    for (int y = 0; y < imageHeight; y++){
+        for (int x = 0; x < imageWidth; x++){
+            int alpha = qAlpha(image.pixel(x,y));
+            if (alpha != 0)
+                fill(grid.pointToCell(QPointF(x,y)));
+        }
+    }
+
 }
 
 /// Returns a vector of Nodes representing the cells enclosed by the rectangular

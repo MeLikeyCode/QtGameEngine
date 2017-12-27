@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
     Map* map1 = new Map();
     Map* map2 = new Map(new PathingMap(50,50,64));
     // add some random trees
-    addRandomTrees(map1,5);
+    //addRandomTrees(map1,5);
 
     // create a TerrainLayer (tiles) that can go in a map
     TerrainLayer* dryTerrain = new TerrainLayer(map2->width()/256+1,
@@ -321,6 +321,17 @@ int main(int argc, char *argv[])
     hpLotsOfCharges->setNumOfCharges(8);
     player->inventory()->addItem(hpLotsOfCharges);
 
+    // test new way to specify pathing map of an entity
+    Entity* bldgEntity = new Entity();
+
+    TopDownSprite* bldgSprite = new TopDownSprite(QPixmap(":/resources/graphics/buildings/bldg1.png"));
+    bldgEntity->setSprite(bldgSprite);
+
+    PathingMap* bldgPM = new PathingMap(":/resources/graphics/buildings/bldg1pathing.png",32);
+    bldgEntity->setPathingMap(*bldgPM);
+
+    bldgEntity->setPos(QPointF(500,900));
+    map1->addEntity(bldgEntity);
 
     return a.exec();
 }

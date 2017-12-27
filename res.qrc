@@ -84,5 +84,7 @@
         <file>graphics/characterSpritesheets/spider.png</file>
         <file>sounds/spiderDie.mp3</file>
         <file>graphics/misc/healthpotion.png</file>
+        <file>graphics/buildings/bldg1.png</file>
+        <file>graphics/buildings/bldg1pathing.png</file>
     </qresource>
 </RCC>
