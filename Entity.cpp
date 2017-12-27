@@ -81,6 +81,12 @@ void Entity::setPathingMap(PathingMap &pathingMap, const QPointF& pos){
     pathingMapPos_ = pos;
 }
 
+/// Sets the position of the entity's PathingMap relative to the entity.
+void Entity::setPathingMapPos(const QPointF &to)
+{
+    pathingMapPos_ = to;
+}
+
 /// Returns a pointer to the Map that the Entity is in. If the Entity is not
 /// in any Maps, returns nullptr.
 Map *Entity::map() const{
@@ -258,8 +264,9 @@ Node Entity::cellPos(){
     return map()->pathingMap().pointToCell(pos());
 }
 
-/// Sets the Sprite of the Entity. This does not *delete* the old sprite, it simply
-/// sets the current art to the specified sprite.
+/// Sets the Sprite of the Entity.
+/// This does *not* delete the old sprite. You are responsible for the old sprite's lifetime. Use
+/// sprite() to get a pointer to the old sprite before calling this function.
 void Entity::setSprite(EntitySprite *sprite){
     // set all childrens' sprites' parent to new sprite
     for (Entity* child: children()){

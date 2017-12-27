@@ -54,8 +54,9 @@ public:
     virtual ~Entity();
 
     // pathing map
-    PathingMap &pathingMap() const;  // TODO do not return by value, too expensive to copy (maybe return const ref?)
+    PathingMap& pathingMap() const;
     void setPathingMap(PathingMap& pathingMap, const QPointF &pos=QPointF(0,0));
+    void setPathingMapPos(const QPointF& to);
 
     // map
     Map* map() const;

@@ -111,6 +111,7 @@ int main(int argc, char *argv[])
     }
     player->setOrigin(QPointF(64,64));
     player->setSprite(sprplayer);
+    player->setPathingMapPos(QPointF(64,64));
 
     // add entity to a map
     map1->addEntity(player);
@@ -255,6 +256,7 @@ int main(int argc, char *argv[])
     spiderEntity->setOrigin(QPointF(64,64));
     spiderEntity->setPos(QPointF(500,500));
     map1->addEntity(spiderEntity);
+    spiderEntity->setPathingMapPos(QPointF(64,64));
 
     ECBodyThruster* bt = new ECBodyThruster(spiderEntity);
     bt->setThrustDistance(100);
