@@ -198,10 +198,10 @@ int main(int argc, char *argv[])
     game->addGui(invUser);
 
 //    // add a weather effect (can add multiple at the same time)
-//    RainWeather* rain = new RainWeather();
-//    map1->addWeatherEffect(*rain);
-//    FogWeather* fog = new FogWeather();
-//    map1->addWeatherEffect(*fog);
+    RainWeather* rain = new RainWeather();
+    map1->addWeatherEffect(*rain);
+    FogWeather* fog = new FogWeather();
+    map1->addWeatherEffect(*fog);
 
 
 
@@ -324,14 +324,16 @@ int main(int argc, char *argv[])
     // test new way to specify pathing map of an entity
     Entity* bldgEntity = new Entity();
 
-    TopDownSprite* bldgSprite = new TopDownSprite(QPixmap(":/resources/graphics/buildings/bldg1.png"));
+    QPixmap bldgpixmap(":/resources/graphics/buildings/bldg2.png");
+    TopDownSprite* bldgSprite = new TopDownSprite(bldgpixmap);
     bldgEntity->setSprite(bldgSprite);
 
-    PathingMap* bldgPM = new PathingMap(":/resources/graphics/buildings/bldg1pathing.png",32);
+    PathingMap* bldgPM = new PathingMap(":/resources/graphics/buildings/bldg2pathing.png",32);
     bldgEntity->setPathingMap(*bldgPM);
 
-    bldgEntity->setPos(QPointF(500,900));
+    bldgEntity->setPos(QPointF(600,900));
     map1->addEntity(bldgEntity);
+    //bldgSprite->scale(0.85);
 
     return a.exec();
 }

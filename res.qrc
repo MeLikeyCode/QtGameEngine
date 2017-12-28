@@ -86,5 +86,7 @@
         <file>graphics/misc/healthpotion.png</file>
         <file>graphics/buildings/bldg1.png</file>
         <file>graphics/buildings/bldg1pathing.png</file>
+        <file>graphics/buildings/bldg2.png</file>
+        <file>graphics/buildings/bldg2pathing.png</file>
     </qresource>
 </RCC>
