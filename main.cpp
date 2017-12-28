@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
     Map* map1 = new Map();
     Map* map2 = new Map(new PathingMap(50,50,64));
     // add some random trees
-    //addRandomTrees(map1,5);
+    addRandomTrees(map1,5);
 
     // create a TerrainLayer (tiles) that can go in a map
     TerrainLayer* dryTerrain = new TerrainLayer(map2->width()/256+1,

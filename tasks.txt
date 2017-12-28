@@ -819,12 +819,6 @@ end:
 
 estimation accuracy: EXCELLENT!
 
-=============================================================================
-=============================================================================
-=========================UNFINISHED TASKS====================================
-=============================================================================
-=============================================================================
-
 ===TASK===
 Right now, you specify the "origin" in an EntitySprite.
 Change to so that the origin is specified in an Entity. This makes more sense.
@@ -832,12 +826,117 @@ Change to so that the origin is specified in an Entity. This makes more sense.
 
 start: 7:14
 end:
-    estimated: 8:45
-    actual:
+    estimated: 7:45
+    actual: 7:42
 
-estimate accuracy: 
+estimate accuracy: EXCELLENT
+
+===TASK===-------DONE
+By default, make pathing map pos be in the center of the entity's sprite.
+
+===TASK===-------DONE
+Come up with an easier way for users to specify pathing map for an entity.
+
+idea 1:
+    - client specifies an image which has the pathing map painted on it
+    - any pixels with an alpha of !0 is counted 
+    |
+    V
+    interface:
+        Entity* e; // assume e points to a valid Entity
+        e->setSprite(s); // s points to a valid Sprite
+        e->setPathingMap( new PathingMap("path/to/image/image.ext",numCellsWide,numCellsLong),atPos); // extracts a PathingMap from specified image
+
+    algorithm for extracting PathingMap from image:
+        - PathingMap::PathingMap(imagePath,numCellsWide,numCellsLong): // pathing map ctor
+            - create PathingMap with specified numCellsWide/Long/cellSize (cellSize can be extracted b/c we know size of image)
+            - pathing map is initially completely unfilled
+            - for each pixel (more efficient to just go for each n pixel) in the image, if its alpha is not 0, mark coorisponding cell as filled
+
+    steps:
+    - get an image of a building
+    - on a new layer paint its pathing map (leave all empty areas as fully transparent)
+    - take the new layer and save it as a seperate image (png i guess)
+    - implement PathingMap::PathingMap(imagepath, numCellsW, numCellsLong) ctor
+    - create an entity, set its sprite to be the sprite of the building, set its pathing map to be one constructed with the painting of its pathing map you did earlier
+
+    start: 6:50
+    end:
+        estimated: 7:25
+        actual: 7:30
+
+    estimation accuracy: EXCELLENT! (for the 3rd time in a row! Only off by 5 mins!)
 
 
+=============================================================================
+=============================================================================
+=========================UNFINISHED TASKS====================================
+=============================================================================
+=============================================================================
+
+===TASK===
+Come up with a faster way for users to create maps.
+
+requirements
+- has to be relatively fast to implement
+- has to be pretty easy for users to create maps
+
+idea 1:
+    - leverage Tiled 2d
+    - user uses Tiled software to build maps
+    - save xml file
+    - Map ctor takes xml file
+
+idea 2:
+    - create own gui where users can
+        - create terrain layers from pictures
+        - add terrain layers to the map
+        - create entities, attach entity controllers to them
+        - add entities to the maps
+
+    liking this idea more...further exploration
+
+        file format:
+        <Map>
+            <TerrainLayers>
+                <TerrainLayer>
+                    <width>32</width>
+                    <imagePath>path/to/image.png</imagePath>
+                </TerrainLayer>
+            </TerrainLayers>
+            <WeatherEffects>
+                <WeatherEffect>
+                    <RainWeather>
+                        ...rain elements...
+                    </RainWeather>
+                </WeatherEffect>
+            </WeatherEffects
+            <Entities>
+                <Items>
+                </Items>
+                <Entity>
+                    <Sprite>
+                        ...sprite elements...
+                    <Sprite>
+                    <PathingMap>
+                        ...pathing map elements...
+                    <PathingMap>
+                    <Controllers>
+                        <ECBodyThruster>
+                            ... ....
+                        </ECBodyThruster>
+                        <ECItemPickerUpper>
+                            ... ...
+                        </ECItemPickerUpper>
+                    </Controllers>
+                </Entity>
+            </Entities>
+        </Map>
+
+    - I can specify a file format (probably xml) that represents a Map, its properties, its contents (weather effect, entities) and their properties.
+    - I can create a GUI that allows you to drag and drop stuff on top a map and a "save" functionality that exports it in my file format
+    - I can have a map ctor that takes that file and generates a map from it (TODO: research on using the Qt MOC object system for run time type info/creationg)
+        - I think I can leverage Qt's MOC object sytem to create objects at run time if I just know the class names
 
 ===TASK===
 IMPORTANT - work on THIS task only (while doing it, you will discover new things to do)
