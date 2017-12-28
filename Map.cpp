@@ -121,7 +121,7 @@ void Map::updatePathingMap()
         overallPathingMap_->addFilling(*pm,pos);
     }
 
-    drawPathingMap();
+    //drawPathingMap();
 }
 
 int Map::width() const{

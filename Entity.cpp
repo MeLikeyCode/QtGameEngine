@@ -75,10 +75,20 @@ PathingMap& Entity::pathingMap() const{
 }
 
 /// Sets the PathingMap of the Entity.
-/// The PathingMap is placed at the specified position relative to the Entity.
+/// The old PathingMap is removed from the entity's Map, however it is not deleted.
+/// Client is responsible for lifetime of old map.
+/// @param pos The pos that the PathingMap is placed relative to the Entity.
 void Entity::setPathingMap(PathingMap &pathingMap, const QPointF& pos){
+    PathingMap* oldPM = pathingMap_;
+
+    // update internal variables
     pathingMap_ = &pathingMap;
     pathingMapPos_ = pos;
+
+    // remove old pathing map from map
+    Map* entitysMap = map();
+    if (entitysMap)
+        entitysMap->removePathingMap(*oldPM);
 }
 
 /// Sets the position of the entity's PathingMap relative to the entity.
