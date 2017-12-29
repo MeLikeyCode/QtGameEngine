@@ -149,11 +149,13 @@ void CHealthShower::onEntitysMapUnVisualized_(Map *mapUnVisualized)
     std::vector<Entity*> entitiesInMap;
     for (Entity* e : entities_){
         Map* entitysMap = e->map();
-        if (entitysMap == mapUnVisualized)
-            entitiesInMap.push_back(e);
+        if (entitysMap){
+            if (entitysMap == mapUnVisualized)
+                entitiesInMap.push_back(e);
 
-        if (entitysMap->game() != nullptr)
-            g = entitysMap->game();
+            if (entitysMap->game() != nullptr)
+                g = entitysMap->game();
+        }
     }
 
     for (Entity* e:entitiesInMap){

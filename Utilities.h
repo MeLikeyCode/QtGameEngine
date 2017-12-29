@@ -15,7 +15,7 @@ class AIEntity;
 class Entity;
 
 // convenience functions
-void addRandomTrees(Map* mapToAddTreesTo, int numTreesToAdd);
+void addRandomTrees(Map* mapToAddTreesTo, int numTreesToAdd, const std::string& treeNumber, int numImages);
 void addRandomRocks(Map* mapToAddRocksTo, int numRocksToAdd);
 void addRandomBushes(Map* mapToAddBushesTo, int numBushesToAdd);
 

@@ -49,6 +49,7 @@
 #include "ECMerchant.h"
 #include "ItemHealthPotion.h"
 #include "ItemTeleport.h"
+#include "RandomImageEntity.h"
 
 Entity* player;
 CItemDropper* itemDropper;
@@ -58,7 +59,8 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     // play music
-    Sound* bgMusic = new Sound("qrc:/resources/sounds/music.mp3");
+    Sound* bgMusic = new Sound("qrc:/resources/sounds/music3.mp3");
+    bgMusic->setVolume(50);
     bgMusic->play(-1);
 
     // create a MapGrid to put some Maps inside
@@ -67,17 +69,6 @@ int main(int argc, char *argv[])
     // create the Maps
     Map* map1 = new Map();
     Map* map2 = new Map(new PathingMap(50,50,64));
-    // add some random trees
-    addRandomTrees(map1,5);
-
-    // create a TerrainLayer (tiles) that can go in a map
-    TerrainLayer* dryTerrain = new TerrainLayer(map2->width()/256+1,
-                                                map2->height()/256+1,
-                                                QPixmap(":resources/graphics/terrain/grassstonedry.png"));
-    dryTerrain->fill();
-
-    // add a terrain layer into map
-    map2->addTerrainLayer(dryTerrain);
 
     // put Maps in MapGrid
     mapGrid->setMapAtPos(map1,0,1);
@@ -179,6 +170,7 @@ int main(int argc, char *argv[])
     map1->addEntity(axeItem);
 
     ItemRainOfSpears* ros = new ItemRainOfSpears();
+    ros->setNumOfCharges(2);
     ros->setPos(QPointF(200,200));
     map1->addEntity(ros);
 
@@ -263,9 +255,6 @@ int main(int argc, char *argv[])
     bt->addTargetEntity(player);
     spiderEntity->addSound("die","qrc:/resources/sounds/spiderDie.mp3");
 
-    // create a spawner
-    //MCSpawner* spawner = new MCSpawner(map1,QRectF(0,0,map1->width(),map1->height()),MCSpawner::SpawnType::Spider,10,0.3);
-
     // create an item dropper
     itemDropper = new CItemDropper();
     itemDropper->addEntity(spiderEntity);
@@ -286,14 +275,14 @@ int main(int argc, char *argv[])
     dg->addChoice(startingText,startTextChoice2);
     dg->setResponse(startingText); // set initial text
 
-    Response* screwYouResponse = new Response("You're manners are not very good...ATTACK!");
+    Response* screwYouResponse = new Response("You're manners are not very good...you won't last long here, kid.");
     Response* adventureResponse = new Response("I salute thee! You should talk to our village elder for some quests.");
     dg->addResponse(screwYouResponse);
     dg->addResponse(adventureResponse);
     dg->setResponseForChoice(screwYouResponse,startTextChoice1);
     dg->setResponseForChoice(adventureResponse,startTextChoice2);
 
-    Choice* backChoice = new Choice("lemme try again");
+    Choice* backChoice = new Choice("<back>");
     dg->addChoice(screwYouResponse, backChoice);
     dg->setResponseForChoice(startingText, backChoice);
 
@@ -317,6 +306,7 @@ int main(int argc, char *argv[])
 //    ECMerchant* merchant = new ECMerchant(spiderEntity);
 //    merchant->addEntityOfInterest(player);
 
+    // give player 8 health potions
     ItemHealthPotion* hpLotsOfCharges = new ItemHealthPotion(10);
     hpLotsOfCharges->setNumOfCharges(8);
     player->inventory()->addItem(hpLotsOfCharges);
@@ -357,6 +347,62 @@ int main(int argc, char *argv[])
     flowers->fill();
     map1->addTerrainLayer(flowers);
     flowers->setPos(QPointF(750,500));
+
+    bEntity->setInvulnerable(true);
+    well->setInvulnerable(true);
+
+    // add random trees in map 2
+    addRandomTrees(map2,15,"Two",8);
+    addRandomTrees(map2,15,"Three",8);
+    addRandomTrees(map2,15,"Four",8);
+
+    // add weather effects in map 2
+    map2->addWeatherEffect(*(new FogWeather()));
+    map2->addWeatherEffect(*(new RainWeather()));
+
+    // create a spanwer in map 2
+    MCSpawner* spawner = new MCSpawner(map2,QRectF(0,0,map2->width(),map2->height()),MCSpawner::SpawnType::Spider,10,0.3);
+
+    // create villager sprite
+    SpriteSheet villagerSS(":/resources/graphics/characterSpritesheets/villager.png",17,8,91,163);
+    AngledSprite* sprVillager = new AngledSprite();
+    for (int i = 0, n = 8; i < n; ++i){ // for each angle
+        // stand
+        sprVillager->addAnimation((90+45*i) % 360,"stand",villagerSS,Node(16,0+i),Node(16,0+i));
+
+        // walk
+        sprVillager->addAnimation((90+45*i) % 360,"walk",villagerSS,Node(0,0+i),Node(14,0+i));
+    }
+
+    // create villager
+    sprVillager->play("stand",-1,1,0);
+    Entity* villager = new Entity();
+    villager->setOrigin(QPointF(91.0/2,163.0/2));
+    villager->setSprite(sprVillager);
+    villager->setPathingMapPos(QPointF(91.0/2,163.0/2));
+    villager->setPos(bEntity->botRight() - QPointF(150,150));
+    map1->addEntity(villager);
+    sprVillager->scale(0.65);
+    villager->setFacingAngle(135);
+
+    RandomImageEntity* tree = new RandomImageEntity(":/resources/graphics/tree", "treeOne" , 5, *(new PathingMap()));
+    RandomImageEntity* tree2 = new RandomImageEntity(":/resources/graphics/tree", "treeOne" , 5, *(new PathingMap()));
+    RandomImageEntity* tree3 = new RandomImageEntity(":/resources/graphics/tree", "treeOne" , 5, *(new PathingMap()));
+    RandomImageEntity* tree4 = new RandomImageEntity(":/resources/graphics/tree", "treeOne" , 5, *(new PathingMap()));
+    RandomImageEntity* tree5 = new RandomImageEntity(":/resources/graphics/tree", "treeOne" , 5, *(new PathingMap()));
+    RandomImageEntity* tree6 = new RandomImageEntity(":/resources/graphics/tree", "treeOne" , 5, *(new PathingMap()));
+    tree2->setPos(QPointF(300,300));
+    tree3->setPos(QPointF(800,375));
+    tree4->setPos(QPointF(1200,1400));
+    tree5->setPos(QPointF(200,1400));
+    tree6->setPos(QPointF(1400,200));
+    tree->setPos(bEntity->pos() + QPointF(300,0));
+    map1->addEntity(tree);
+    map1->addEntity(tree2);
+    map1->addEntity(tree3);
+    map1->addEntity(tree4);
+    map1->addEntity(tree5);
+    map1->addEntity(tree6);
 
     return a.exec();
 }

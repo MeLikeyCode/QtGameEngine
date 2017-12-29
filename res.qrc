@@ -91,5 +91,31 @@
         <file>graphics/terrain/grasspatch.png</file>
         <file>graphics/buildings/well.png</file>
         <file>graphics/buildings/wellpathing.png</file>
+        <file>sounds/music3.mp3</file>
+        <file>graphics/tree/treeFour0.png</file>
+        <file>graphics/tree/treeFour1.png</file>
+        <file>graphics/tree/treeFour2.png</file>
+        <file>graphics/tree/treeFour3.png</file>
+        <file>graphics/tree/treeFour4.png</file>
+        <file>graphics/tree/treeFour5.png</file>
+        <file>graphics/tree/treeFour6.png</file>
+        <file>graphics/tree/treeFour7.png</file>
+        <file>graphics/tree/treeThree0.png</file>
+        <file>graphics/tree/treeThree1.png</file>
+        <file>graphics/tree/treeThree2.png</file>
+        <file>graphics/tree/treeThree3.png</file>
+        <file>graphics/tree/treeThree4.png</file>
+        <file>graphics/tree/treeThree5.png</file>
+        <file>graphics/tree/treeThree6.png</file>
+        <file>graphics/tree/treeThree7.png</file>
+        <file>graphics/tree/treeTwo0.png</file>
+        <file>graphics/tree/treeTwo1.png</file>
+        <file>graphics/tree/treeTwo2.png</file>
+        <file>graphics/tree/treeTwo3.png</file>
+        <file>graphics/tree/treeTwo4.png</file>
+        <file>graphics/tree/treeTwo5.png</file>
+        <file>graphics/tree/treeTwo6.png</file>
+        <file>graphics/tree/treeTwo7.png</file>
+        <file>graphics/characterSpritesheets/villager.png</file>
     </qresource>
 </RCC>

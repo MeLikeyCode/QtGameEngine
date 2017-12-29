@@ -66,7 +66,7 @@ void Game::launch(){
     showNormal(); // TODO: eventually should showFullscreen() (or parametrize to
                   // allow launching normal or full screen
 
-    //showFullScreen();
+    showFullScreen();
     setSceneRect(0,0,width(),height());
 }
 

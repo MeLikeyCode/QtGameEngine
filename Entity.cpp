@@ -151,7 +151,14 @@ double Entity::height() const
 /// If the entity has no parent entity, returns the top left relative to the Map.
 QPointF Entity::topLeft() const
 {
-    return currentPos_ - origin();
+    return currentPos_ - origin(); // TODO this function might be only correct when sprite is unrotated, use mapping to make more accurate
+}
+
+/// Returns the bottom right position of the Entity (its sprite) relative to the parent Entity.
+/// If the entity has no parent entity, returns the top left relative to the Map.
+QPointF Entity::botRight() const
+{
+    return currentPos_ + origin();
 }
 
 /// Sets the position of the Entity.
@@ -541,6 +548,9 @@ double Entity::rotationSpeed()
 /// use setMaxHealth() if you want to change the maximum health of an entity.
 void Entity::setHealth(double health)
 {
+    if (isInvulnerable())
+        return;
+
     health_ = health; // update internal var (clamp to max)
     if (health_ > maxHealth())
         health_ = maxHealth();
