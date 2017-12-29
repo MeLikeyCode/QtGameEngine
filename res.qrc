@@ -88,5 +88,6 @@
         <file>graphics/buildings/bldg1pathing.png</file>
         <file>graphics/buildings/bldg2.png</file>
         <file>graphics/buildings/bldg2pathing.png</file>
+        <file>graphics/terrain/grasspatch.png</file>
     </qresource>
 </RCC>

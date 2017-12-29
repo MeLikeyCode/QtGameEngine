@@ -334,6 +334,8 @@ int main(int argc, char *argv[])
     bldgEntity->setPos(QPointF(600,900));
     map1->addEntity(bldgEntity);
     //bldgSprite->scale(0.85);
+    QPixmap grassPatch (":/resources/graphics/terrain/grasspatch.png");
+    map1->addTerrainDecoration(grassPatch,bldgEntity->pos() - QPointF(grassPatch.width()/2,0));
 
     return a.exec();
 }

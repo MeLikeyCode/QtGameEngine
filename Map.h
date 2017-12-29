@@ -87,6 +87,8 @@ public:
 
     void addPositionalSound(PositionalSound* sound);
 
+    void addTerrainDecoration(const QPixmap& picture, const QPointF atPos);
+
 signals:
     /// Emitted when the Map is set as the current Map for the game.
     void setAsCurrentMap(Map* sender);

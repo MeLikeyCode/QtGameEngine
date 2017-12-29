@@ -121,7 +121,7 @@ void Map::updatePathingMap()
         overallPathingMap_->addFilling(*pm,pos);
     }
 
-    drawPathingMap();
+    //drawPathingMap();
 }
 
 int Map::width() const{
@@ -381,6 +381,13 @@ void Map::removeWeatherEffect(WeatherEffect& weatherEffect)
 void Map::addPositionalSound(PositionalSound *sound)
 {
     sound->setMap_(this);
+}
+
+/// Adds a picture ontop of the terrain at the specified position as a decoration.
+void Map::addTerrainDecoration(const QPixmap &picture, const QPointF atPos)
+{
+    QGraphicsPixmapItem* pmItem = new QGraphicsPixmapItem(picture,terrainLayer_);
+    pmItem->setPos(atPos);
 }
 
 /// Executed when the game's camera moves around its current map.
