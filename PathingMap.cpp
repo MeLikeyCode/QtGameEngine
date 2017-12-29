@@ -3,6 +3,7 @@
 #include <cassert>
 #include <QDebug> // TODO: remove
 #include <QImage>
+#include <QPixmap>
 
 #include "Grid.h"
 
@@ -30,9 +31,9 @@ PathingMap::PathingMap( int numCellsWide,  int numCellsLong,  int cellSize):
 /// Constructs a pathing map from a painted image.
 /// Fully transparent pixels count as "free" areas while any non fully transparent pixels
 /// count as "filled" areas.
-PathingMap::PathingMap(const std::string imagePath, int cellSize)
+PathingMap::PathingMap(const QPixmap& pixmap, int cellSize)
 {
-    QImage image(imagePath.c_str());
+    QImage image(pixmap.toImage());
     int imageWidth = image.width();
     int imageHeight = image.height();
     numCellsWide_ = imageWidth/cellSize;

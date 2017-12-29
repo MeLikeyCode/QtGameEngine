@@ -30,7 +30,7 @@ public:
     // constructors
     PathingMap();
     PathingMap(int numCellsWide, int numCellsLong, int cellSize);
-    PathingMap(const std::string imagePath, int cellSize);
+    PathingMap(const QPixmap &pixmap, int cellSize);
     PathingMap(const PathingMap& copy) = default;   // make compiler generate default copy ctor
                                                     // (memberwise copy).
     // readers ("getters")

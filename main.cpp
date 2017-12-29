@@ -255,7 +255,7 @@ int main(int argc, char *argv[])
     spiderSprite->play("stand",-1,10,0);
     spiderEntity->setOrigin(QPointF(64,64));
     spiderEntity->setPos(QPointF(500,500));
-    map1->addEntity(spiderEntity);
+    //map1->addEntity(spiderEntity);
     spiderEntity->setPathingMapPos(QPointF(64,64));
 
     ECBodyThruster* bt = new ECBodyThruster(spiderEntity);
@@ -322,20 +322,41 @@ int main(int argc, char *argv[])
     player->inventory()->addItem(hpLotsOfCharges);
 
     // test new way to specify pathing map of an entity
-    Entity* bldgEntity = new Entity();
+    Entity* bEntity = new Entity();
 
-    QPixmap bldgpixmap(":/resources/graphics/buildings/bldg2.png");
-    TopDownSprite* bldgSprite = new TopDownSprite(bldgpixmap);
-    bldgEntity->setSprite(bldgSprite);
+    QPixmap bPixmap(":/resources/graphics/buildings/bldg2.png");
+    bPixmap = bPixmap.scaled(0.85*bPixmap.width(),0.85*bPixmap.height());
+    TopDownSprite* bSprite = new TopDownSprite(bPixmap);
+    bEntity->setSprite(bSprite);
 
-    PathingMap* bldgPM = new PathingMap(":/resources/graphics/buildings/bldg2pathing.png",32);
-    bldgEntity->setPathingMap(*bldgPM);
+    QPixmap bPMPixmap(":/resources/graphics/buildings/bldg2pathing.png");
+    bPMPixmap = bPMPixmap.scaled(0.85*bPMPixmap.width(),0.85*bPMPixmap.height());
+    PathingMap* bPM = new PathingMap(bPMPixmap,32);
+    bEntity->setPathingMap(*bPM);
 
-    bldgEntity->setPos(QPointF(600,900));
-    map1->addEntity(bldgEntity);
-    //bldgSprite->scale(0.85);
+    bEntity->setPos(QPointF(600,900));
+    map1->addEntity(bEntity);
     QPixmap grassPatch (":/resources/graphics/terrain/grasspatch.png");
-    map1->addTerrainDecoration(grassPatch,bldgEntity->pos() - QPointF(grassPatch.width()/2,0));
+    map1->addTerrainDecoration(grassPatch,bEntity->pos() - QPointF(grassPatch.width()/2,0));
+
+    // add well
+    Entity* well = new Entity();
+
+    QPixmap wellPixmap(":/resources/graphics/buildings/well.png");
+    wellPixmap = wellPixmap.scaledToWidth(wellPixmap.width()*0.5);
+    QPixmap wellPMPixmap(":/resources/graphics/buildings/wellpathing.png");
+    wellPMPixmap = wellPMPixmap.scaledToWidth(wellPMPixmap.width()*0.5);
+
+    well->setSprite(new TopDownSprite(wellPixmap));
+    well->setPathingMap(*(new PathingMap(wellPMPixmap,32)));
+
+    well->setPos(QPointF(1300,900));
+    map1->addEntity(well);
+
+    TerrainLayer* flowers = new TerrainLayer(2,2,QPixmap(":resources/graphics/terrain/flowersopacity.png"));
+    flowers->fill();
+    map1->addTerrainLayer(flowers);
+    flowers->setPos(QPointF(750,500));
 
     return a.exec();
 }

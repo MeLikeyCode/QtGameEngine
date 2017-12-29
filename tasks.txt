@@ -867,13 +867,6 @@ idea 1:
 
     estimation accuracy: EXCELLENT! (for the 3rd time in a row! Only off by 5 mins!)
 
-
-=============================================================================
-=============================================================================
-=========================UNFINISHED TASKS====================================
-=============================================================================
-=============================================================================
-
 ===TASK===
 Come up with a faster way for users to create maps.
 
@@ -937,6 +930,28 @@ idea 2:
     - I can create a GUI that allows you to drag and drop stuff on top a map and a "save" functionality that exports it in my file format
     - I can have a map ctor that takes that file and generates a map from it (TODO: research on using the Qt MOC object system for run time type info/creationg)
         - I think I can leverage Qt's MOC object sytem to create objects at run time if I just know the class names
+
+===TASK===--------DONE
+Seperate building from ground foilage, place both in map.
+Place foilage as....terrain layer?
+    
+    come up with a way to "layers" for top down sprites
+
+    dream interface
+
+
+=============================================================================
+=============================================================================
+=========================UNFINISHED TASKS====================================
+=============================================================================
+=============================================================================
+
+
+
+===TASK===
+Create a small village
+    - get graphics for a few buildings, place em
+    
 
 ===TASK===
 IMPORTANT - work on THIS task only (while doing it, you will discover new things to do)
