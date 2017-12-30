@@ -3,35 +3,14 @@
 #include "stdlib.h" // rand() and srand()
 #include "time.h" // time(0) -> current time in ms
 #include "TopDownSprite.h"
+#include "Utilities.h"
 
-RandomImageEntity::RandomImageEntity(std::vector<QPixmap> pixmaps, const PathingMap &pathingMap)
-{
-    // TODO: lots of duplicate code b/w this and below ctor, factor out
-
-    // approach:
-    // - pick a random pixmap from the pixmaps
-    // - set the Entity's sprite as that pixmap
-
-    // seed
-    srand(time(nullptr));
-
-    // pick random frame index
-    int randIndex = rand() % pixmaps.size(); // 0 to one less than num of pixmaps
-
-    // set the sprites pixmap to that pixmap
-    TopDownSprite* tds = new TopDownSprite(pixmaps[randIndex]);
-    setSprite(tds);
-
-    PathingMap* pmCopy = new PathingMap(pathingMap);
-    double pathingMapX = pixmaps[0].width() / 2.0 - pmCopy->cellSize() / 2.0;
-    double pathingMapY = pixmaps[0].height() / 2.0 - pmCopy->cellSize() / 2.0;
-
-    setInvulnerable(true); // make random image entities invulnerable ( they are just for show for gods sake! :P)
-
-    setPathingMap(*pmCopy,QPointF(pathingMapX,pathingMapY));
-}
-
-RandomImageEntity::RandomImageEntity(std::string resourceFolderPath, std::string imagePrefix, int numOfImages, const PathingMap &pm)
+/// Constructs an entity whos display image will be randomly chosen from a set of images in a folder.
+/// @param resourceFolderPath folder with the images
+/// @param imagePrefix the prefix of the images
+/// @param numOfImages how many images of the specified prefix are in the folder (must start with number 0)
+/// @param pathingMap the pathing map to use for the entity.
+RandomImageEntity::RandomImageEntity(std::string resourceFolderPath, std::string imagePrefix, int numOfImages, PathingMap &pathingMap)
 {
     std::vector<QPixmap> pixmaps;
     for (int i = 0, n = numOfImages; i < n; ++i){
@@ -40,17 +19,14 @@ RandomImageEntity::RandomImageEntity(std::string resourceFolderPath, std::string
     }
 
     // pick random frame index
-    int randIndex = rand() % pixmaps.size(); // 0 to one less than num of pixmaps
+    int randIndex = randInt(0,pixmaps.size()-1);
 
     // set the sprites pixmap to that pixmap
-    TopDownSprite* tds = new TopDownSprite(pixmaps[randIndex]);
-    setSprite(tds);
+    TopDownSprite* spr = new TopDownSprite(pixmaps[randIndex]);
+    setSprite(spr);
 
-    double pathingMapX = 390;
-    double pathingMapY = 545;
+    // set pathing map
+    setPathingMap(pathingMap);
 
     setInvulnerable(true); // make random image entities invulnerable ( they are just for show for gods sake! :P)
-
-    PathingMap* pmCopy = new PathingMap(pm);
-    setPathingMap(*pmCopy,QPointF(pathingMapX,pathingMapY));
 }

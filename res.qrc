@@ -117,5 +117,9 @@
         <file>graphics/tree/treeTwo6.png</file>
         <file>graphics/tree/treeTwo7.png</file>
         <file>graphics/characterSpritesheets/villager.png</file>
+        <file>graphics/tree/treeFourpathing.png</file>
+        <file>graphics/tree/treeOnepathing.png</file>
+        <file>graphics/tree/treeThreepathing.png</file>
+        <file>graphics/tree/treeTwopathing.png</file>
     </qresource>
 </RCC>

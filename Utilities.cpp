@@ -3,6 +3,8 @@
 /// @date 8-17-16
 /// @file
 
+#include "Utilities.h"
+
 #include <stdlib.h>
 #include <time.h>
 #include <cassert>
@@ -14,56 +16,32 @@
 #include "EntitySprite.h"
 #include "RandomGenerator.h"
 
+
 /// Adds the specified number of trees randomly scattered on the specified Map.
 void addRandomTrees(Map *mapToAddTreesTo, int numTreesToAdd, const std::string& treeNumber, int numImages)
 {
-    srand(time(0));
     for (int i = 0, n = numTreesToAdd; i < n; i++){
-        PathingMap pathingMap(1,1,32);
-        pathingMap.fill();
+        std::string pmPath;
+        if (std::string(treeNumber) == std::string("One"))
+            pmPath = "treeOnepathing";
+        if (std::string(treeNumber) == std::string("Two"))
+            pmPath = "treeTwopathing";
+        if (std::string(treeNumber) == std::string("Three"))
+            pmPath = "treeThreepathing";
+        if (std::string(treeNumber) == std::string("Four"))
+            pmPath = "treeFourpathing";
+        std::string fullp = ":/resources/graphics/tree/" + pmPath + ".png";
+        PathingMap* pm = new PathingMap(QPixmap(fullp.c_str()),32);
 
-        RandomImageEntity* tree = new RandomImageEntity(":/resources/graphics/tree","tree" + treeNumber,numImages,pathingMap);
+        RandomImageEntity* tree = new RandomImageEntity(":/resources/graphics/tree","tree" + treeNumber,numImages,*pm);
         mapToAddTreesTo->addEntity(tree);
         tree->setInvulnerable(true);
 
-        double randXPos = rand() % mapToAddTreesTo->width() - 100;
-        double randYPos = rand() % mapToAddTreesTo->height() - 100;
+        double randXPos = randDouble(100,mapToAddTreesTo->width()-100);
+        double randYPos = randDouble(100,mapToAddTreesTo->height()-100);
         tree->setPos(QPointF(randXPos,randYPos));
     }
 }
-
-/// Adds the specified number of rocks randomly scattered on the specified Map.
-void addRandomRocks(Map *mapToAddRocksTo, int numRocksToAdd)
-{
-    for (int i = 0, n = numRocksToAdd; i < n; i++){
-        PathingMap pathingMap(1,1,32);
-        pathingMap.fill();
-
-        RandomImageEntity* rock = new RandomImageEntity(":/resources/graphics/rock","rock",3,pathingMap);
-        mapToAddRocksTo->addEntity(rock);
-
-        double randXPos = rand() % mapToAddRocksTo->width() - 100;
-        double randYPos = rand() % mapToAddRocksTo->height() - 100;
-        rock->setPos(QPointF(randXPos,randYPos));
-    }
-}
-
-/// Adds the specified number of bushes randomly scattered on the specified Map.
-void addRandomBushes(Map *mapToAddBushesTo, int numBushesToAdd)
-{
-    for (int i = 0, n = numBushesToAdd; i < n; i++){
-        PathingMap pathingMap(1,1,32);
-        pathingMap.fill();
-
-        RandomImageEntity* rock = new RandomImageEntity(":/resources/graphics/bush","bush",4,pathingMap);
-        mapToAddBushesTo->addEntity(rock);
-
-        double randXPos = rand() % mapToAddBushesTo->width() - 100;
-        double randYPos = rand() % mapToAddBushesTo->height() - 100;
-        rock->setPos(QPointF(randXPos,randYPos));
-    }
-}
-
 
 
 /// Given a step size and a target rate, will tell you the frequency needed to get the

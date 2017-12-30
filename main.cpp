@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
     MapGrid* mapGrid = new MapGrid(3,3);
 
     // create the Maps
-    Map* map1 = new Map();
+    Map* map1 = new Map(new PathingMap(100,100,16));
     Map* map2 = new Map(new PathingMap(50,50,64));
 
     // put Maps in MapGrid
@@ -189,11 +189,11 @@ int main(int argc, char *argv[])
     InventoryUser* invUser = new InventoryUser(game,player->inventory());
     game->addGui(invUser);
 
-//    // add a weather effect (can add multiple at the same time)
-    RainWeather* rain = new RainWeather();
-    map1->addWeatherEffect(*rain);
-    FogWeather* fog = new FogWeather();
-    map1->addWeatherEffect(*fog);
+////    // add a weather effect (can add multiple at the same time)
+//    RainWeather* rain = new RainWeather();
+//    map1->addWeatherEffect(*rain);
+//    FogWeather* fog = new FogWeather();
+//    map1->addWeatherEffect(*fog);
 
 
 
@@ -353,12 +353,12 @@ int main(int argc, char *argv[])
 
     // add random trees in map 2
     addRandomTrees(map2,15,"Two",8);
-    addRandomTrees(map2,15,"Three",8);
-    addRandomTrees(map2,15,"Four",8);
+//    addRandomTrees(map2,15,"Three",8);
+//    addRandomTrees(map2,15,"Four",8);
 
     // add weather effects in map 2
-    map2->addWeatherEffect(*(new FogWeather()));
-    map2->addWeatherEffect(*(new RainWeather()));
+//    map2->addWeatherEffect(*(new FogWeather()));
+//    map2->addWeatherEffect(*(new RainWeather()));
 
     // create a spanwer in map 2
     MCSpawner* spawner = new MCSpawner(map2,QRectF(0,0,map2->width(),map2->height()),MCSpawner::SpawnType::Spider,10,0.3);
@@ -385,12 +385,14 @@ int main(int argc, char *argv[])
     sprVillager->scale(0.65);
     villager->setFacingAngle(135);
 
-    RandomImageEntity* tree = new RandomImageEntity(":/resources/graphics/tree", "treeOne" , 5, *(new PathingMap()));
-    RandomImageEntity* tree2 = new RandomImageEntity(":/resources/graphics/tree", "treeOne" , 5, *(new PathingMap()));
-    RandomImageEntity* tree3 = new RandomImageEntity(":/resources/graphics/tree", "treeOne" , 5, *(new PathingMap()));
-    RandomImageEntity* tree4 = new RandomImageEntity(":/resources/graphics/tree", "treeOne" , 5, *(new PathingMap()));
-    RandomImageEntity* tree5 = new RandomImageEntity(":/resources/graphics/tree", "treeOne" , 5, *(new PathingMap()));
-    RandomImageEntity* tree6 = new RandomImageEntity(":/resources/graphics/tree", "treeOne" , 5, *(new PathingMap()));
+    PathingMap treePM(QPixmap(":/resources/graphics/tree/treeOnepathing.png"),32);
+
+    RandomImageEntity* tree = new RandomImageEntity(":/resources/graphics/tree", "treeOne" , 5, *(new PathingMap(treePM)));
+    RandomImageEntity* tree2 = new RandomImageEntity(":/resources/graphics/tree", "treeOne" , 5, *(new PathingMap(treePM)));
+    RandomImageEntity* tree3 = new RandomImageEntity(":/resources/graphics/tree", "treeOne" , 5, *(new PathingMap(treePM)));
+    RandomImageEntity* tree4 = new RandomImageEntity(":/resources/graphics/tree", "treeOne" , 5, *(new PathingMap(treePM)));
+    RandomImageEntity* tree5 = new RandomImageEntity(":/resources/graphics/tree", "treeOne" , 5, *(new PathingMap(treePM)));
+    RandomImageEntity* tree6 = new RandomImageEntity(":/resources/graphics/tree", "treeOne" , 5, *(new PathingMap(treePM)));
     tree2->setPos(QPointF(300,300));
     tree3->setPos(QPointF(800,375));
     tree4->setPos(QPointF(1200,1400));

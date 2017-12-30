@@ -44,8 +44,8 @@ PathingMap::PathingMap(const QPixmap& pixmap, int cellSize)
 
     pathGrid_ = PathGrid(numCellsWide_,numCellsLong_);
 
-    for (int y = 0; y < imageHeight; y++){
-        for (int x = 0; x < imageWidth; x++){
+    for (int y = 0; y < imageHeight; y+=8){
+        for (int x = 0; x < imageWidth; x+=8){
             int alpha = qAlpha(image.pixel(x,y));
             if (alpha != 0)
                 fill(grid.pointToCell(QPointF(x,y)));

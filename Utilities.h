@@ -16,8 +16,6 @@ class Entity;
 
 // convenience functions
 void addRandomTrees(Map* mapToAddTreesTo, int numTreesToAdd, const std::string& treeNumber, int numImages);
-void addRandomRocks(Map* mapToAddRocksTo, int numRocksToAdd);
-void addRandomBushes(Map* mapToAddBushesTo, int numBushesToAdd);
 
 // mathmatical
 double frequency(double stepSize, double rate);

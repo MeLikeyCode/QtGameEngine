@@ -5,8 +5,8 @@
 #include "Entity.h"
 #include <vector>
 
-/// An Entity whos displayed image is randomly picked from one of the specified pixmaps.
-/// The Entity's PathingMap stays the same, no matter which image is randomly picked.
+/// An Entity whos displayed image is randomly picked from a set of images in a folder.
+/// No matter which image is picked, the same pathing map that is specified will be used for the entity.
 /// This class is useful for generating eye-candy that needs a little variation in imagery,
 /// such as trees, bushes, rocks, etc...
 /// @author Abdullah Aghazadah
@@ -14,8 +14,7 @@
 class RandomImageEntity : public Entity
 {
 public:
-    RandomImageEntity(std::vector<QPixmap> pixmaps, const PathingMap& pathingMap);
-    RandomImageEntity(std::string resourceFolderPath, std::string imagePrefix, int numOfImages, const PathingMap& pm);
+    RandomImageEntity(std::string resourceFolderPath, std::string imagePrefix, int numOfImages, PathingMap& pathingMap);
 };
 
 #endif // RANDOMIMAGEENTITY_H

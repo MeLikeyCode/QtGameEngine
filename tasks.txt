@@ -946,7 +946,11 @@ Place foilage as....terrain layer?
 =============================================================================
 =============================================================================
 
+===TASK===
+Give trees proper pathing map.
 
+===TASK===
+-move EntitySprite::scale() to Entity::scale() and ensure it scales PathingMap too
 
 ===TASK===
 Create a small village
