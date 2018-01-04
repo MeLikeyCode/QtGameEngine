@@ -27,7 +27,6 @@ ECFieldOfViewEmitter::ECFieldOfViewEmitter(Entity *entity, double fovAngle, doub
     brush.setColor(Qt::red);
     polyItem_->setBrush(brush);
     polyItem_->setOpacity(0.3);
-    //entityControlled()->map()->scene()->addItem(polyItem_); // DEBUG: enable this line to visualize fov
 }
 
 /// Executed periodically for the entity controller to check the field of view
@@ -107,6 +106,7 @@ std::unordered_set<Entity *> ECFieldOfViewEmitter::entitiesInView()
 
     // TEST remove TODO remove
     polyItem_->setPolygon(poly);
+    //entitysMap->scene()->addItem(polyItem_);
 
     std::unordered_set<Entity*> entities = entitysMap->entities(poly);
     entities.erase(entityControlled());
