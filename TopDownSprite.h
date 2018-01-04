@@ -32,7 +32,11 @@ public:
                       const Node& from,
                       const Node& to);
 
-    void addAnimation(std::string resourceFolder, int numOfImages, std::string imagePrefix);
+    void addAnimation(std::string resourceFolder,
+                      int numOfImages,
+                      std::string imagePrefix);
+
+    void addFrame(const QPixmap& frame, const std::string& toAnimation);
 
     virtual double actualFacingAngle() const override;
     virtual QRectF boundingBox() const override;

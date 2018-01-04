@@ -121,5 +121,36 @@
         <file>graphics/tree/treeOnepathing.png</file>
         <file>graphics/tree/treeThreepathing.png</file>
         <file>graphics/tree/treeTwopathing.png</file>
+        <file>graphics/tree/animTree/animTree0.png</file>
+        <file>graphics/tree/animTree/animTree1.png</file>
+        <file>graphics/tree/animTree/animTree2.png</file>
+        <file>graphics/tree/animTree/animTree3.png</file>
+        <file>graphics/tree/animTree/animTree4.png</file>
+        <file>graphics/tree/animTree/animTree5.png</file>
+        <file>graphics/tree/animTree/animTree6.png</file>
+        <file>graphics/tree/animTree/animTree7.png</file>
+        <file>graphics/tree/animTree/animTree8.png</file>
+        <file>graphics/tree/animTree/animTree9.png</file>
+        <file>graphics/tree/animTree/animTree10.png</file>
+        <file>graphics/tree/animTree/animTree11.png</file>
+        <file>graphics/tree/animTree/animTree12.png</file>
+        <file>graphics/tree/animTree/animTree13.png</file>
+        <file>graphics/tree/animTree/animTree15.png</file>
+        <file>graphics/tree/animTree/animTree16.png</file>
+        <file>graphics/tree/animTree/animTree17.png</file>
+        <file>graphics/tree/animTree/animTree18.png</file>
+        <file>graphics/tree/animTree/animTree19.png</file>
+        <file>graphics/tree/animTree/animTree20.png</file>
+        <file>graphics/tree/animTree/animTree21.png</file>
+        <file>graphics/tree/animTree/animTree22.png</file>
+        <file>graphics/tree/animTree/animTree23.png</file>
+        <file>graphics/tree/animTree/animTree24.png</file>
+        <file>graphics/tree/animTree/animTree25.png</file>
+        <file>graphics/tree/animTree/animTree26.png</file>
+        <file>graphics/tree/animTree/animTree27.png</file>
+        <file>graphics/tree/animTree/animTree28.png</file>
+        <file>graphics/tree/animTree/animTree29.png</file>
+        <file>graphics/tree/animTree/animTreepathing.png</file>
+        <file>graphics/tree/animTree/animTree14.png</file>
     </qresource>
 </RCC>

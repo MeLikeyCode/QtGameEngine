@@ -206,7 +206,6 @@ void Entity::setPos(const QPointF &pos){
         emit moved(this,lastPosCpy,this->pos());
     }
 
-
 }
 
 /// Sets the position of the Entity by moving the specified named position.

@@ -122,6 +122,7 @@ void Map::updatePathingMap()
     }
 
     //drawPathingMap();
+//    drawEntityBBoxes();
 }
 
 int Map::width() const{
@@ -202,6 +203,21 @@ void Map::drawPathingMap(){
         }
     }
 
+}
+
+void Map::drawEntityBBoxes()
+{
+    static std::vector<QGraphicsPolygonItem*> polygons;
+
+    for (QGraphicsPolygonItem* p:polygons){
+        scene()->removeItem(p);
+        delete p;
+    }
+    polygons.clear();
+
+    for(Entity* e:entities()){
+        polygons.push_back(scene()->addPolygon(e->mapToMap(e->boundingRect())));
+    }
 }
 
 /// Returns the distance (in pixels) b/w the two Entities.

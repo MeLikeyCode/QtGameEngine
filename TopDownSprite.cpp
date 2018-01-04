@@ -42,6 +42,13 @@ void TopDownSprite::addAnimation(std::string resourceFolder, int numOfImages, st
     sprite_->addFrames(resourceFolder,numOfImages,imagePrefix);
 }
 
+/// Adds a single frame to an animation.
+/// If the animation doesn't exist, it will be created with the specified frame being the 1st.
+void TopDownSprite::addFrame(const QPixmap &frame, const std::string &toAnimation)
+{
+    sprite_->addFrame(frame,toAnimation);
+}
+
 double TopDownSprite::actualFacingAngle() const
 {
     // the actual facing angle of a TopDownSprite will always be the facing angle

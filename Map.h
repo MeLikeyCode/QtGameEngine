@@ -68,6 +68,7 @@ public:
 
     // for testing
     void drawPathingMap();
+    void drawEntityBBoxes();
 
     double distance(Entity* e1, Entity* e2);
 

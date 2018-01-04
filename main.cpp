@@ -387,7 +387,20 @@ int main(int argc, char *argv[])
 
     PathingMap treePM(QPixmap(":/resources/graphics/tree/treeOnepathing.png"),32);
 
-    RandomImageEntity* tree = new RandomImageEntity(":/resources/graphics/tree", "treeOne" , 5, *(new PathingMap(treePM)));
+    Entity* animatedTree = new Entity();
+    TopDownSprite* animatedTreeSpr = new TopDownSprite();
+    animatedTreeSpr->addAnimation(":/resources/graphics/tree/animTree",30,"animTree");
+    for (int i = 28, n = 1; i >= n; --i){
+        std::string fullPath = ":/resources/graphics/tree/animTree/animTree" + std::to_string(i) + ".png";
+        animatedTreeSpr->addFrame(QPixmap(fullPath.c_str()),"animTree");
+    }
+    animatedTree->setSprite(animatedTreeSpr);
+    animatedTree->setPathingMap(*(new PathingMap(QPixmap(":/resources/graphics/tree/animTree/animTreepathing.png"),32)));
+    animatedTree->setInvulnerable(true);
+    map1->addEntity(animatedTree);
+    animatedTree->setPos(bEntity->pos() + QPointF(300,0));
+    animatedTree->sprite()->play("animTree",-1,8,0);
+
     RandomImageEntity* tree2 = new RandomImageEntity(":/resources/graphics/tree", "treeOne" , 5, *(new PathingMap(treePM)));
     RandomImageEntity* tree3 = new RandomImageEntity(":/resources/graphics/tree", "treeOne" , 5, *(new PathingMap(treePM)));
     RandomImageEntity* tree4 = new RandomImageEntity(":/resources/graphics/tree", "treeOne" , 5, *(new PathingMap(treePM)));
@@ -398,8 +411,6 @@ int main(int argc, char *argv[])
     tree4->setPos(QPointF(1200,1400));
     tree5->setPos(QPointF(200,1400));
     tree6->setPos(QPointF(1400,200));
-    tree->setPos(bEntity->pos() + QPointF(300,0));
-    map1->addEntity(tree);
     map1->addEntity(tree2);
     map1->addEntity(tree3);
     map1->addEntity(tree4);
