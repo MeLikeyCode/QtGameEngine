@@ -635,6 +635,10 @@ void Map::addEntity(Entity *entity){
     // add its sprite to the interal QGraphicsScene
     entity->sprite()->underlyingItem_->setParentItem(entityLayer_);
 
+    // update z
+    qreal bot = entity->mapToMap(entity->boundingRect().bottomRight()).y();
+    entity->sprite()->underlyingItem_->setZValue(bot); // set z value (lower in map -> draw higher on top)
+
     // add its children's sprite's as a child of its sprites
     for (Entity* childEntity:entity->children()){
         childEntity->setParentEntity(entity);

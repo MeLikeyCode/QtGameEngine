@@ -84,8 +84,6 @@ public:
     QPointF pathingMapPos() const;
     int facingAngle();
     void setFacingAngle(double angle);
-    void setZValue(double zValue);
-    double zValue();
     QPointF origin() const;
     void setOrigin(const QPointF& to);
 
@@ -180,7 +178,6 @@ private:
     double facingAngle_;
     double speed_; // pixels per second
     double rotationSpeed_; // degrees per second
-    double zValue_;
     Map* map_;
     EntitySprite* sprite_;
     std::unordered_set<Entity*> children_;

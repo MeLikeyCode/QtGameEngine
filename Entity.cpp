@@ -35,8 +35,7 @@ Entity::Entity():
     inventory_(new Inventory()),
     speed_(250),
     facingAngle_(0),
-    rotationSpeed_(360),
-    zValue_(0)
+    rotationSpeed_(360)
 {
     sprite_->setParent(this);
     inventory_->entity_ = this;
@@ -173,16 +172,19 @@ void Entity::setPos(const QPointF &pos){
     EntitySprite* entitysSprite = sprite();
     if (entitysSprite != nullptr){
         entitysSprite->underlyingItem_->setPos(pos - origin()); // set position of sprite
-        qreal bot = pos.y() + boundingRect().height() - origin().y();
-        sprite()->underlyingItem_->setZValue(bot); // set z value (lower -> higher)
     }
 
-    // if the Entity is in a Map, update the PathingMap
+    // if the Entity is in a Map
     Map* entitysMap = map();
     if (entitysMap){
+        // update the PathingMap
         entitysMap->removePathingMap(pathingMap());
         entitysMap->addPathingMap(pathingMap(),mapToMap(pathingMapPos()));
         entitysMap->updatePathingMap();
+
+        // update z
+        qreal bot = mapToMap(boundingRect().bottomRight()).y();
+        sprite()->underlyingItem_->setZValue(bot); // set z value (lower in map -> draw higher on top)
 
         //if the map is in a game, let map know entity moved (watched-watching pair)
         // TODO: remove this, instead have game listen to when entites move
@@ -289,7 +291,7 @@ void Entity::setSprite(EntitySprite *sprite){
         child->sprite()->underlyingItem_->setParentItem(sprite->underlyingItem_);
     }
 
-    // make sure the new sprite is positioned correctly
+    // make sure the new sprite is positioned correctly on the scene
     sprite->underlyingItem_->setPos(currentPos_ - origin());
 
     // if the Entity is already in a map
@@ -297,6 +299,10 @@ void Entity::setSprite(EntitySprite *sprite){
         // remove old sprite/add new sprite
         map()->scene()->removeItem(sprite_->underlyingItem_);
         map()->scene()->addItem(sprite->underlyingItem_);
+
+        // ensure sprite has proper z
+        qreal bot = mapToMap(boundingRect().bottomRight()).y();
+        sprite->underlyingItem_->setZValue(bot); // set z value (lower in map -> draw higher on top)
     }
 
     // set internal sprite_ pointer to the new sprite
@@ -304,9 +310,6 @@ void Entity::setSprite(EntitySprite *sprite){
 
     // set scaling of the new sprite
     scaleBasedOnZ_();
-
-    // set the zvalue of the new sprite
-    sprite->underlyingItem_->setZValue(zValue());
 
     // set origin to be the middle of the new sprite
     setOrigin(QPointF(sprite->boundingBox().width()/2,sprite->boundingBox().height()/2));
@@ -377,21 +380,6 @@ void Entity::setFacingAngle(double angle)
     facingAngle_ = angle;
     if (sprite_)
         sprite_->setFacingAngle(angle);
-}
-
-/// Sets the z value of the Entity. Entities with a higher z value are drawn ontop of entities with a lower z value.
-void Entity::setZValue(double zValue)
-{
-    zValue_ = zValue; // update internal variable
-
-    // update underlying sprites z value
-    sprite()->underlyingItem_->setZValue(zValue);
-}
-
-/// Returns the z value of the Entity. See setZValue() for more info.
-double Entity::zValue()
-{
-    return zValue_;
 }
 
 QPointF Entity::origin() const

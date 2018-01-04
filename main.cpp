@@ -398,24 +398,26 @@ int main(int argc, char *argv[])
     animatedTree->setPathingMap(*(new PathingMap(QPixmap(":/resources/graphics/tree/animTree/animTreepathing.png"),32)));
     animatedTree->setInvulnerable(true);
     map1->addEntity(animatedTree);
-    animatedTree->setPos(bEntity->pos() + QPointF(300,0));
     animatedTree->sprite()->play("animTree",-1,8,0);
+    animatedTree->setPos(bEntity->pos() + QPointF(300,0));
 
     RandomImageEntity* tree2 = new RandomImageEntity(":/resources/graphics/tree", "treeOne" , 5, *(new PathingMap(treePM)));
     RandomImageEntity* tree3 = new RandomImageEntity(":/resources/graphics/tree", "treeOne" , 5, *(new PathingMap(treePM)));
     RandomImageEntity* tree4 = new RandomImageEntity(":/resources/graphics/tree", "treeOne" , 5, *(new PathingMap(treePM)));
     RandomImageEntity* tree5 = new RandomImageEntity(":/resources/graphics/tree", "treeOne" , 5, *(new PathingMap(treePM)));
     RandomImageEntity* tree6 = new RandomImageEntity(":/resources/graphics/tree", "treeOne" , 5, *(new PathingMap(treePM)));
-    tree2->setPos(QPointF(300,300));
-    tree3->setPos(QPointF(800,375));
-    tree4->setPos(QPointF(1200,1400));
-    tree5->setPos(QPointF(200,1400));
-    tree6->setPos(QPointF(1400,200));
+
     map1->addEntity(tree2);
     map1->addEntity(tree3);
     map1->addEntity(tree4);
     map1->addEntity(tree5);
     map1->addEntity(tree6);
+
+    tree2->setPos(QPointF(300,300));
+    tree3->setPos(QPointF(800,375));
+    tree4->setPos(QPointF(1200,1400));
+    tree5->setPos(QPointF(200,1400));
+    tree6->setPos(QPointF(1400,200));
 
     return a.exec();
 }
