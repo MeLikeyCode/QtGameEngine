@@ -45,8 +45,18 @@ void Inventory::addItem(Item *item)
     }
 
     // add to this inventory
-    items_.insert(item);
-    item->inventory_ = this;
+    bool stacked = false;
+    for (Item* i:items_){ // stack
+        if (std::type_index(typeid(*i)) == std::type_index(typeid(*item))){
+            i->setNumOfCharges(i->numOfCharges() + item->numOfCharges());
+            item->deleteLater();
+            stacked = true;
+        }
+    }
+    if (!stacked){ // don't stack
+        items_.insert(item);
+        item->inventory_ = this;
+    }
 
     // remove item from ground
     Entity* owner = entity();
