@@ -21,12 +21,13 @@ TopDownSprite::TopDownSprite(const QPixmap &pixmap): sprite_(new Sprite(pixmap))
     commonInitialize_();
 }
 
-/// Adds an animation to the TopDownSprite from frames of a SpriteSheet.
-/// @param animationName What to call the animation.
+/// Adds frames from a SpriteSheet to the TopDownSprite.
+/// @param animationName Name of the animation.
 /// @param fromSpriteSheet The SpriteSheet to add frames from.
 /// @param from Where on the SpriteSheet to start adding frames from.
 /// @param to Where on the SpriteSheet to stop adding frames from.
-void TopDownSprite::addAnimation(std::string animationName, const SpriteSheet &fromSpriteSheet, const Node &from, const Node &to)
+/// If the animation with the specified name doesn't exit, it will be created.
+void TopDownSprite::addFrames(std::string animationName, const SpriteSheet &fromSpriteSheet, const Node &from, const Node &to)
 {
     bool hasDigits = std::find_if(std::begin(animationName),std::end(animationName),[](char c){return isdigit(c);}) != std::end(animationName);
     assert(!hasDigits); // numbers not allowed in animation names
@@ -34,7 +35,10 @@ void TopDownSprite::addAnimation(std::string animationName, const SpriteSheet &f
     sprite_->addFrames(from,to,fromSpriteSheet,animationName);
 }
 
-void TopDownSprite::addAnimation(std::string resourceFolder, int numOfImages, std::string imagePrefix)
+/// Another way to add frames to an animation (from a set of images with the same prefix and
+/// incrementing postfix numbers in the same folder). See addAnimation(std::string, const
+/// SpriteSheet&, const Node&, const Node&) for more info.
+void TopDownSprite::addFrames(std::string resourceFolder, int numOfImages, std::string imagePrefix)
 {
     bool hasDigits = std::find_if(std::begin(imagePrefix),std::end(imagePrefix),[](char c){return isdigit(c);}) != std::end(imagePrefix);
     assert(!hasDigits); // numbers not allowed in animation names
@@ -42,8 +46,8 @@ void TopDownSprite::addAnimation(std::string resourceFolder, int numOfImages, st
     sprite_->addFrames(resourceFolder,numOfImages,imagePrefix);
 }
 
-/// Adds a single frame to an animation.
-/// If the animation doesn't exist, it will be created with the specified frame being the 1st.
+/// Adds a single frame to the TopDownSprite.
+/// If the specified animation doesn't exist, it will be created.
 void TopDownSprite::addFrame(const QPixmap &frame, const std::string &toAnimation)
 {
     sprite_->addFrame(frame,toAnimation);

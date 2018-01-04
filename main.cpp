@@ -90,15 +90,15 @@ int main(int argc, char *argv[])
     AngledSprite* sprplayer = new AngledSprite();
     for (int i = 0, n = 8; i < n; ++i){ // for each angle
         // stand
-        sprplayer->addAnimation((180+45*i) % 360,"stand",minitaurSpriteSheet,Node(0,0+i),Node(3,0+i));
+        sprplayer->addFrames((180+45*i) % 360,"stand",minitaurSpriteSheet,Node(0,0+i),Node(3,0+i));
         for (int j = 2; j > 0; --j){
             sprplayer->addFrame(minitaurSpriteSheet.tileAt(Node(j,0+i)),"stand",(180+45*i) % 360);
         }
         // walk
-        sprplayer->addAnimation((180+45*i) % 360,"walk",minitaurSpriteSheet,Node(4,0+i),Node(11,0+i));
+        sprplayer->addFrames((180+45*i) % 360,"walk",minitaurSpriteSheet,Node(4,0+i),Node(11,0+i));
 
         // attack
-        sprplayer->addAnimation((180+45*i) % 360,"attack",minitaurSpriteSheet,Node(12,0+i),Node(18,0+i));
+        sprplayer->addFrames((180+45*i) % 360,"attack",minitaurSpriteSheet,Node(12,0+i),Node(18,0+i));
     }
     player->setOrigin(QPointF(64,64));
     player->setSprite(sprplayer);
@@ -228,21 +228,21 @@ int main(int argc, char *argv[])
     SpriteSheet spiderSpriteSheet(":/resources/graphics/characterSpritesheets/spider.png",48,8,128,128);
     for (int i = 0, n = 8; i < n; ++i){ // for each angle
         // stand
-        spiderSprite->addAnimation((180+45*i) % 360,"stand",spiderSpriteSheet,Node(0,0+i),Node(3,0+i));
+        spiderSprite->addFrames((180+45*i) % 360,"stand",spiderSpriteSheet,Node(0,0+i),Node(3,0+i));
         for (int j = 2; j > 0; --j){
             spiderSprite->addFrame(spiderSpriteSheet.tileAt(Node(j,0+i)),"stand",(180+45*i) % 360);
         }
         // walk
-        spiderSprite->addAnimation((180+45*i) % 360,"walk",spiderSpriteSheet,Node(4,0+i),Node(11,0+i));
+        spiderSprite->addFrames((180+45*i) % 360,"walk",spiderSpriteSheet,Node(4,0+i),Node(11,0+i));
 
         // attack
-        spiderSprite->addAnimation((180+45*i) % 360,"attack",spiderSpriteSheet,Node(12,0+i),Node(15,0+i));
+        spiderSprite->addFrames((180+45*i) % 360,"attack",spiderSpriteSheet,Node(12,0+i),Node(15,0+i));
 
         // hit
-        spiderSprite->addAnimation((180+45*i) % 360,"hit",spiderSpriteSheet,Node(18,0+i),Node(20,0+i));
+        spiderSprite->addFrames((180+45*i) % 360,"hit",spiderSpriteSheet,Node(18,0+i),Node(20,0+i));
 
         // die
-        spiderSprite->addAnimation((180+45*i) % 360,"die",spiderSpriteSheet,Node(18,0+i),Node(23,0+i));
+        spiderSprite->addFrames((180+45*i) % 360,"die",spiderSpriteSheet,Node(18,0+i),Node(23,0+i));
     }
     spiderSprite->play("stand",-1,10,0);
     spiderEntity->setOrigin(QPointF(64,64));
@@ -368,10 +368,10 @@ int main(int argc, char *argv[])
     AngledSprite* sprVillager = new AngledSprite();
     for (int i = 0, n = 8; i < n; ++i){ // for each angle
         // stand
-        sprVillager->addAnimation((90+45*i) % 360,"stand",villagerSS,Node(16,0+i),Node(16,0+i));
+        sprVillager->addFrames((90+45*i) % 360,"stand",villagerSS,Node(16,0+i),Node(16,0+i));
 
         // walk
-        sprVillager->addAnimation((90+45*i) % 360,"walk",villagerSS,Node(0,0+i),Node(14,0+i));
+        sprVillager->addFrames((90+45*i) % 360,"walk",villagerSS,Node(0,0+i),Node(14,0+i));
     }
 
     // create villager
@@ -389,7 +389,7 @@ int main(int argc, char *argv[])
 
     Entity* animatedTree = new Entity();
     TopDownSprite* animatedTreeSpr = new TopDownSprite();
-    animatedTreeSpr->addAnimation(":/resources/graphics/tree/animTree",30,"animTree");
+    animatedTreeSpr->addFrames(":/resources/graphics/tree/animTree",30,"animTree");
     for (int i = 28, n = 1; i >= n; --i){
         std::string fullPath = ":/resources/graphics/tree/animTree/animTree" + std::to_string(i) + ".png";
         animatedTreeSpr->addFrame(QPixmap(fullPath.c_str()),"animTree");

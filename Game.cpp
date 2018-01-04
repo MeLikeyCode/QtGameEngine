@@ -192,8 +192,8 @@ void Game::mousePressEvent(QMouseEvent *event){
         Entity* enemy = new Entity();
 
         TopDownSprite* spr = new TopDownSprite();
-        spr->addAnimation(":/resources/graphics/spider",7,"walk");
-        spr->addAnimation(":/resources/graphics/spider",1,"stand");
+        spr->addFrames(":/resources/graphics/spider",7,"walk");
+        spr->addFrames(":/resources/graphics/spider",1,"stand");
         spr->play("stand",-1,1,0);
         enemy->setSprite(spr);
 

@@ -4,6 +4,7 @@
 
 #include "Sprite.h"
 #include "Utilities.h"
+#include "STLWrappers.h"
 
 AngledSprite::AngledSprite(): sprite_(new Sprite())
 {
@@ -13,11 +14,11 @@ AngledSprite::AngledSprite(): sprite_(new Sprite())
     connect(sprite_,&Sprite::frameSwitched,this,&AngledSprite::onInternalSpriteFrameSwitched_);
 }
 
-/// Adds the specified pixmap as a frame to the specified animation for the specified angle.
-///
-/// If the animation already exists, the pixmap will simply be added as the next
-/// frame in the animation. If the animation does not exist, it will be created with
-/// the pixmap being its first frame.
+/// Adds a frame to the AngledSprite.
+/// @param frame The frame to add.
+/// @param toAnimation Name of the animation.
+/// @param forAngle Angle of the frame.
+/// If the animation with the specified name does not exist, it will be created.
 void AngledSprite::addFrame(const QPixmap &frame, const std::string &toAnimation, int forAngle)
 {
     assert(toAnimation != "");
@@ -37,13 +38,14 @@ void AngledSprite::addFrame(const QPixmap &frame, const std::string &toAnimation
     sprite_->addFrame(frame,toAnimation + std::to_string(forAngle));
 }
 
-/// Adds an animation to the AngledSprite.
-/// @param angle The facing angle that frames of this animation are facing.
-/// @param animationName What to call the animation.
+/// Adds frames from a SpriteSheet to the AngledSprite.
+/// @param angle The facing angle that frames are facing.
+/// @param animationName Name of the animation.
 /// @param fromSpriteSheet The SpriteSheet to create frames for the animation.
 /// @param fromNode Where on the SpriteSheet to start adding frames for the animation.
 /// @param toNode Where on the SpriteSheet to stop adding frames for the animation.
-void AngledSprite::addAnimation(int angle, std::string animationName, const SpriteSheet &fromSpriteSheet, const Node &fromNode, const Node &toNode)
+/// If the animation with the specified name does not exist, it will be created.
+void AngledSprite::addFrames(int angle, std::string animationName, const SpriteSheet &fromSpriteSheet, const Node &fromNode, const Node &toNode)
 {
     bool hasDigits = std::find_if(std::begin(animationName),std::end(animationName),[](char c){return isdigit(c);}) != std::end(animationName);
     assert(!hasDigits); // numbers not allowed in animation names
@@ -51,7 +53,9 @@ void AngledSprite::addAnimation(int angle, std::string animationName, const Spri
     if (animationToAngle_.find(animationName) == animationToAngle_.end())
         animationToAngle_[animationName] = std::vector<int>();
 
-    animationToAngle_[animationName].push_back(angle);
+    std::vector<int> anglesForThisAnim = animationToAngle_[animationName];
+    if (!STLWrappers::contains(anglesForThisAnim,angle))
+        animationToAngle_[animationName].push_back(angle);
 
     sprite_->addFrames(fromNode,toNode,fromSpriteSheet,animationName+std::to_string(angle));
 }

@@ -9,7 +9,7 @@ class Sprite;
 class SpriteSheet;
 class Node;
 
-/// Represents top down graphics for an Entity.
+/// Represents top down graphics for an Entity as well.
 /// @author Abdullah Aghazadah
 /// @date 9-23-17
 ///
@@ -27,12 +27,12 @@ public:
     TopDownSprite();
     TopDownSprite(const QPixmap& pixmap);
 
-    void addAnimation(std::string animationName,
+    void addFrames(std::string animationName,
                       const SpriteSheet& fromSpriteSheet,
                       const Node& from,
                       const Node& to);
 
-    void addAnimation(std::string resourceFolder,
+    void addFrames(std::string resourceFolder,
                       int numOfImages,
                       std::string imagePrefix);
 

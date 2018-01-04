@@ -167,7 +167,7 @@ void Sprite::addFrames(std::string resourceFolder, int numOfImages, std::string 
 }
 
 /// Adds a tile from a SpriteSheet to an animation of the Sprite.
-
+///
 /// If the animation already exists, the tile will simply be added as the next
 /// frame in the animation. If the animation does not exist, it will be created with
 /// the tile being its first frame.
@@ -178,10 +178,9 @@ void Sprite::addFrame(const Node &tile, const SpriteSheet &fromSpriteSheet, std:
 }
 
 /// Adds a specified set of tiles from a SpriteSheet to an animation of the Sprite.
-
-/// If the animation already exists, the tile will simply be added as the next
-/// frame in the animation. If the animation does not exist, it will be created with
-/// the tile being its first frame.
+///
+/// If the animation already exists, the tiles will simply be added as subsequent
+/// frames in the animation. If the animation does not exist, it will be created first.
 void Sprite::addFrames(const Node &topLeftCell, const Node &bottomRightCell, const SpriteSheet &fromSpriteSheet, std::string toAnimation)
 {
     std::vector<QPixmap> pixmaps = fromSpriteSheet.tilesAt(topLeftCell,bottomRightCell);

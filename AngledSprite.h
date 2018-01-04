@@ -21,7 +21,7 @@ public:
     AngledSprite();
 
     void addFrame(const QPixmap& frame, const std::string& toAnimation, int forAngle);
-    void addAnimation(int angle, std::string animationName, const SpriteSheet& fromSpriteSheet, const Node& fromNode, const Node& toNode);
+    void addFrames(int angle, std::string animationName, const SpriteSheet& fromSpriteSheet, const Node& fromNode, const Node& toNode);
 
     virtual double actualFacingAngle() const override;
     virtual QRectF boundingBox() const override;

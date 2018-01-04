@@ -939,6 +939,12 @@ Place foilage as....terrain layer?
 
     dream interface
 
+===TASK===-----DONE
+Give trees proper pathing map.
+
+===TASK===-------DONE
+Put animated tree in.
+
 
 =============================================================================
 =============================================================================
@@ -947,7 +953,13 @@ Place foilage as....terrain layer?
 =============================================================================
 
 ===TASK===
-Give trees proper pathing map.
+Allow clients to name an animation when they add it (currently the name of the image prefix is automatically the name of the animation)
+Change Sprite::addAnimation(resourceFolder,numImages,imagePrefix) to Sprite::addAnimation(resourceFolder, numImages, imagePrefix, animationName = imagePrefix)
+-if no animationName is specified, the prefix is used
+
+===TASK===
+Sometimes spiders don't attack when i'm in field of view.
+Find out why and fix.
 
 ===TASK===
 -move EntitySprite::scale() to Entity::scale() and ensure it scales PathingMap too
@@ -955,6 +967,7 @@ Give trees proper pathing map.
 ===TASK===
 Create a small village
     - get graphics for a few buildings, place em
+    - put a villager that sells you shit
     
 
 ===TASK===
