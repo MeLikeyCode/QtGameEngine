@@ -960,6 +960,11 @@ Change Sprite::addAnimation(resourceFolder,numImages,imagePrefix) to Sprite::add
 ===TASK===
 Sometimes spiders don't attack when i'm in field of view.
 Find out why and fix.
+Update: this seems to happen when i have a lot of spiders (could it be that their ECBodyThruster thrustStep timer event is never executing?)
+If problem is indeed above, solution:
+    Create ONE controller for all body thrusters, something like CBodyThruster
+    -every x seconds, it will check field of view of all its entities and take the proper course of action
+
 
 ===TASK===
 -move EntitySprite::scale() to Entity::scale() and ensure it scales PathingMap too
