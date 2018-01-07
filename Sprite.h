@@ -1,5 +1,4 @@
-#ifndef SPRITE_H
-#define SPRITE_H
+#pragma once
 
 #include <string>
 #include <QGraphicsItem>
@@ -16,12 +15,11 @@ class SpriteSheet;
 class Node;
 
 /// A QGraphicsItem that represents a bunch of animations that can be played.
-/// All entities have sprites (some of which are invisible and do nothing).
 /// @author Abdullah Aghazadah
 /// @date 5-16-15
 ///
 /// Since a Sprite is a QGraphicsItem, it can be placed inside a
-/// QGraphicsScene. To add a QPixmap to an animation, use
+/// QGraphicsScene. To add a frame to an animation, use
 /// Sprite::addFrame(QPixmap,std::string). The specified pixmap will then be
 /// added to the specified animation. If an animation of that name does not
 /// exist, it will be created. If an animation of that name already exists,
@@ -31,7 +29,7 @@ class Node;
 /// add tiles from a SpriteSheet as animation frames in the Sprite.
 ///
 /// A Sprite can play an animation a certain number of times by using
-/// Sprite::play(std::string,int,int). A value of -1 times means that the
+/// Sprite::play(). A value of -1 times means that the
 /// animation will be played again and again forever.
 class Sprite:public QObject, // inherits from QObject so it can use signals/slots
              public QGraphicsItem{ // inherits from QGraphicsItem so it can go inside scenes
@@ -51,7 +49,7 @@ public:
     // modifiers
     void addFrame(QPixmap frame, std::string toAnimation);
     void addFrame(const Node& tile, const SpriteSheet& fromSpriteSheet, std::string toAnimation);
-    void addFrames(std::string resourceFolder, int numOfImages, std::string imagePrefix);
+    void addFrames(std::string folder, int numOfImages, const std::string& imagePrefix, const std::string& toAnimation);
     void addFrames(const Node& topLeftCell, const Node& bottomRightCell, const SpriteSheet& fromSpriteSheet, std::string toAnimation);
     void setPixmap(QPixmap pixmap);
 
@@ -102,5 +100,3 @@ private:
 
     PlayingAnimationInfo animationPlayingLast_;
 };
-
-#endif // SPRITE_H

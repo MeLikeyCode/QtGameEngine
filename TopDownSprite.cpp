@@ -43,7 +43,7 @@ void TopDownSprite::addFrames(std::string resourceFolder, int numOfImages, std::
     bool hasDigits = std::find_if(std::begin(imagePrefix),std::end(imagePrefix),[](char c){return isdigit(c);}) != std::end(imagePrefix);
     assert(!hasDigits); // numbers not allowed in animation names
 
-    sprite_->addFrames(resourceFolder,numOfImages,imagePrefix);
+    sprite_->addFrames(resourceFolder,numOfImages,imagePrefix,imagePrefix);
 }
 
 /// Adds a single frame to the TopDownSprite.

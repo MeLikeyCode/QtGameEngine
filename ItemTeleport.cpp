@@ -33,6 +33,6 @@ void ItemTeleport::use_(const QPointF &point)
 
     // play a "poof" animation at the location of the owner
     Sprite* poofSprite = new Sprite();
-    poofSprite->addFrames(":resources/graphics/effects/poof",10,"poof");
+    poofSprite->addFrames(":resources/graphics/effects/poof",10,"poof","poof");
     owner->map()->playOnce(poofSprite,"poof",50,owner->pos());
 }

@@ -136,33 +136,28 @@ void Sprite::addFrame(QPixmap frame, std::string toAnimation){
         animation_[toAnimation] = std::vector<QPixmap>();
         animation_[toAnimation].push_back(frame);
     }     
-
-    // make sure transform point is upto date
-    setTransformOriginPoint(frame.width()/2,
-                            frame.height()/2);
 }
 
-/// Adds the _.png_ images in the specified resource folder with the specified
-/// image name prefix as frames of a newly created animation that has the same
-/// name as the image prefix.
+/// Adds a bunch of images (.png) in a folder as frames of an animation.
 ///
 /// You need to tell this function how many images with the specified prefix are
-/// in the specified resource folder. The actual names of the images in the
+/// in the specified folder. The actual names of the images in the
 /// resource folder should be the prefix with a number attached. The number
-/// should start at 0 and go up.
+/// should start at 0 and go up to n-1 (n being the number of images in with
+/// the specified prefix in the folder).
 ///
 /// Example:
 /// Sprite* sprite = new Sprite();
-/// sprite->addPixmaps(":graphics/player/walk",9,"walkdown");
+/// sprite->addPixmaps(":resources/graphics/player/walk",9,"walkdown");
 /// sprite->play("walkdown",100,50);
 ///
-/// The above example will go inside :graphics/player/walk resource folder and
+/// The above example will go inside ':/resources:graphics/player/walk' folder and
 /// add walkdown0, walkdown1, walkdown2...all the way to walkdown8 as frames for an
 /// animation called "walkdown".
-void Sprite::addFrames(std::string resourceFolder, int numOfImages, std::string imagePrefix){
+void Sprite::addFrames(std::string folder, int numOfImages, const std::string &imagePrefix, const std::string &toAnimation){
     for (int i = 0, n = numOfImages; i < n; ++i){
-        std::string fullPath = resourceFolder + "/" + imagePrefix + std::to_string(i) + ".png";
-        addFrame(QPixmap(fullPath.c_str()),imagePrefix);
+        std::string fullPath = folder + "/" + imagePrefix + std::to_string(i) + ".png";
+        addFrame(QPixmap(fullPath.c_str()),toAnimation);
     }
 }
 

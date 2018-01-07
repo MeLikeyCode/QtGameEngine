@@ -141,7 +141,7 @@ void RainWeather::createSplashesStep_()
     for (int i = 0, n = numSplashPerStep_; i < n; i++){
         Sprite* splash = new Sprite();
         splash->setOpacity(currentSplashOpacity_);
-        splash->addFrames(":/resources/graphics/effects/splash",4,"splash");
+        splash->addFrames(":/resources/graphics/effects/splash",4,"splash","splash");
         double xPos = rand() % ((int)map_->game()->cam().width()); // 0 - camWidth
         double yPos = rand() % ((int)map_->game()->cam().height());  // 0 - camHeight
         QPointF pos = map_->game()->mapToMap(QPoint(xPos,yPos));
