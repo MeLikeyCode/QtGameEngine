@@ -6,6 +6,7 @@
 #include "Button.h"
 #include "Quest.h"
 #include "ScrollWindow.h"
+#include <QDebug>
 
 QuestViewer::QuestViewer(Quests *quests):
     quests_(quests),
@@ -33,7 +34,7 @@ QuestViewer::QuestViewer(Quests *quests):
     outterPanel_->setBackgroundPixmap(QPixmap(":/resources/graphics/misc/paper.png"));
     scrollWindow_->showBackground(false);
     scrollWindow_->showBorder(false);
-    selectedQuestDescription_->setText("select a quest to see its description");
+    selectedQuestDescription_->setText("Select a quest to see its description.");
 
     draw_();
 }
@@ -100,13 +101,15 @@ void QuestViewer::draw_()
             connect(label,&Label::clicked,this,&QuestViewer::labelClicked_);
 
             questLabels_.push_back(label);
+
+            qDebug() << "e";
         }
     }
 
     // place quest labels in scroll window
     for (int i = 0, n = questLabels_.size(); i < n; i++){
         Label* label = questLabels_[i];
-        scrollWindow_->add(label,QPointF(25,i*40));
+        scrollWindow_->add(label,QPointF(25,i*40+25));
     }
 }
 

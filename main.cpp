@@ -50,6 +50,9 @@
 #include "ItemHealthPotion.h"
 #include "ItemTeleport.h"
 #include "RandomImageEntity.h"
+#include "QuestAcceptor.h"
+#include "Quests.h"
+#include "Quest.h"
 
 Entity* player;
 CItemDropper* itemDropper;
@@ -426,6 +429,22 @@ int main(int argc, char *argv[])
     tree5->setPos(QPointF(200,1400));
     tree6->setPos(QPointF(1400,200));
 
+    // create quest giver
+    Quests* quests = new Quests();
+    quests->addQuest(new Quest("Kill Spiders","We have a spider problem. Please kill 10 spiders from the northern forest."));
+    quests->addQuest(new Quest("Gather Gold","We are poor. Please gather 10 gold and bring it back to me."));
+    quests->addQuest(new Quest("Gather Gold","We are poor. Please gather 10 gold and bring it back to me."));
+    quests->addQuest(new Quest("Gather Gold","We are poor. Please gather 10 gold and bring it back to me."));
+    quests->addQuest(new Quest("Gather Gold","We are poor. Please gather 10 gold and bring it back to me."));
+
+    QuestAcceptor* questAccepter = new QuestAcceptor(game);
+    questAccepter->setQuests(quests);
+
+    game->addGui(questAccepter);
+    questAccepter->setGuiPos(QPointF(game->width() - questAccepter->getGuiBoundingBox().width(),0));
+
+    ECGuiShower* questGuiShower = new ECGuiShower(villager,questAccepter);
+    questGuiShower->addEntityOfInterest(player);
 
 
     return a.exec();
