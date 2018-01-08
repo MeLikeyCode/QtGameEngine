@@ -127,10 +127,6 @@ int main(int argc, char *argv[])
     rangedSlot->setPosition(QPointF(64,45));
     player->addSlot(rangedSlot);
 
-    // add spear to entity's inventory
-    Spear* spear = new Spear();
-    player->inventory()->addItem(spear);
-
 //    // add bow to entitys inventory and equip it
 //    Bow* bow = new Bow();
 //    player->inventory()->addItem(bow);
@@ -309,7 +305,7 @@ int main(int argc, char *argv[])
     // give player 8 health potions
     ItemHealthPotion* hpLotsOfCharges = new ItemHealthPotion(10);
     hpLotsOfCharges->setNumOfCharges(8);
-    player->inventory()->addItem(hpLotsOfCharges);
+    //player->inventory()->addItem(hpLotsOfCharges);
 
     // test new way to specify pathing map of an entity
     Entity* bEntity = new Entity();
@@ -357,13 +353,16 @@ int main(int argc, char *argv[])
 //    addRandomTrees(map2,15,"Four",8);
 
     // add weather effects in map 2
-//    map2->addWeatherEffect(*(new FogWeather()));
-//    map2->addWeatherEffect(*(new RainWeather()));
+    map2->addWeatherEffect(*(new FogWeather()));
+    map2->addWeatherEffect(*(new RainWeather()));
 
     // create a spanwer in map 2
-    MCSpawner* spawner = new MCSpawner(map2,QRectF(0,0,map2->width(),map2->height()),MCSpawner::SpawnType::Spider,10,0.3);
+    MCSpawner* spawner = new MCSpawner(map2,QRectF(0,0,map2->width(),map2->height()),MCSpawner::SpawnType::Spider,10,0.2);
 
-    // create villager sprite
+
+
+    // create villager that sells you shit
+    // villager sprite
     SpriteSheet villagerSS(":/resources/graphics/characterSpritesheets/villager.png",17,8,91,163);
     AngledSprite* sprVillager = new AngledSprite();
     for (int i = 0, n = 8; i < n; ++i){ // for each angle
@@ -373,8 +372,7 @@ int main(int argc, char *argv[])
         // walk
         sprVillager->addFrames((90+45*i) % 360,"walk",villagerSS,Node(0,0+i),Node(14,0+i));
     }
-
-    // create villager
+    // villager
     sprVillager->play("stand",-1,1,0);
     Entity* villager = new Entity();
     villager->setInvulnerable(true);
@@ -385,6 +383,14 @@ int main(int argc, char *argv[])
     map1->addEntity(villager);
     sprVillager->scale(0.65);
     villager->setFacingAngle(135);
+    // sell
+    villager->inventory()->addItem(new ItemHealthPotion(10));
+    villager->inventory()->addItem(new ItemTeleport());
+    villager->inventory()->addItem(new ItemRainOfSpears());
+    villager->inventory()->addItem(new FireballLauncher());
+
+    ECMerchant* mc = new ECMerchant(villager);
+    mc->addEntityOfInterest(player);
 
     PathingMap treePM(QPixmap(":/resources/graphics/tree/treeOnepathing.png"),32);
 
@@ -419,6 +425,8 @@ int main(int argc, char *argv[])
     tree4->setPos(QPointF(1200,1400));
     tree5->setPos(QPointF(200,1400));
     tree6->setPos(QPointF(1400,200));
+
+
 
     return a.exec();
 }

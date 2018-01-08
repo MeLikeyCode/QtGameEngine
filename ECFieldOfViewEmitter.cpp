@@ -59,7 +59,7 @@ void ECFieldOfViewEmitter::checkFov_()
         // if were not in fov earlier, emit
         if (entitiesInViewLastTime_.count(entity) == 0){
             entitiesInViewLastTime_.insert(entity);
-            qDebug() << "entity entered fov";
+            //qDebug() << "entity entered fov";
             emit entityEntersFOV(entity);
         }
     }
@@ -70,7 +70,7 @@ void ECFieldOfViewEmitter::checkFov_()
         // if the entiy is no longer in view, remove from list and emit
         if (entsInView.count(entity) == 0){
             entitiesInViewLastTime_.erase(entity);
-            qDebug() << "entity left fov";
+            // qDebug() << "entity left fov";
             emit entityLeavesFOV(entity);
         }
     }

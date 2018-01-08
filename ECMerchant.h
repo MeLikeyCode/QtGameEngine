@@ -5,6 +5,10 @@
 class ECGuiShower;
 class ShopGui;
 
+/// Adds merchant behavior to an entity.
+///
+/// When an 'entity of interest' gets near the controlled entity, a ShopGui will pop up.
+/// Use addEntityOfInterest() to add an entity that will trigger the shop gu.
 class ECMerchant : public EntityController
 {
     Q_OBJECT

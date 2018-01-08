@@ -11,7 +11,7 @@ class Quest;
 class Quests;
 
 /// Represents a Gui that allows you to select/accept quests.
-/// Similar to a QuestAcceptor, the user is allowed to browse through some quests,
+/// Similar to a QuestViewer, the user is allowed to browse through some quests,
 /// however the QuestAccepter allows you to "accept" a quest by clicking its
 /// "Accept Selected Quest" button. Each time a Quest is accepted, a signal is emitted
 /// telling you which quest was just accepted.
