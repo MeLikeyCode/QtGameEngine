@@ -13,6 +13,8 @@ void CBDamage::onCollided(Entity *entityOne, Entity *entityTwo)
     // if this collision is to be ignored, do nothing
     if (ignoredCollisions_.find(std::make_pair(entityOne,entityTwo)) != ignoredCollisions_.end())
         return;
+    if (ignoredCollisions_.find(std::make_pair(entityTwo,entityOne)) != ignoredCollisions_.end())
+        return;
 
     entityOne->setHealth(entityOne->health() - amountToDamageEntityOne_);
     entityTwo->setHealth(entityTwo->health() - amountToDamageEntityTwo_);

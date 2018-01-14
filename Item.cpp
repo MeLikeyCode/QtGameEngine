@@ -11,7 +11,7 @@ Item::Item():
     numOfCharges_(1),
     description_("Item has no description")
 {
-    // empty constructor body
+    setInvulnerable(true); // make items invulnerable by default (can obviously be overridden)
 }
 
 /// Returns the Inventory that this Item belongs to. If this Item is on the

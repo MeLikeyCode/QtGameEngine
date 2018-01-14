@@ -13,5 +13,8 @@ void WeaponSlot::use()
 {
     // call attack on the Weapon
     Weapon* asWeapon = dynamic_cast<Weapon*>(item_);
-    asWeapon->attack(QPointF(0,0));
+    QLineF line(owner()->pos(),QPointF(-100,-100));
+    line.setAngle(-1*owner()->facingAngle());
+    line.setLength(200);
+    asWeapon->attack(line.p2());
 }

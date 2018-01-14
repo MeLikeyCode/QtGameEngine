@@ -433,9 +433,9 @@ int main(int argc, char *argv[])
     Quests* quests = new Quests();
     quests->addQuest(new Quest("Kill Spiders","We have a spider problem. Please kill 10 spiders from the northern forest."));
     quests->addQuest(new Quest("Gather Gold","We are poor. Please gather 10 gold and bring it back to me."));
-    quests->addQuest(new Quest("Gather Gold","We are poor. Please gather 10 gold and bring it back to me."));
-    quests->addQuest(new Quest("Gather Gold","We are poor. Please gather 10 gold and bring it back to me."));
-    quests->addQuest(new Quest("Gather Gold","We are poor. Please gather 10 gold and bring it back to me."));
+    quests->addQuest(new Quest("Craft nets","We are hungry. Please make some nets from the vines found in the northern forest."));
+    quests->addQuest(new Quest("Craft Weapons","We have been getting raided by bandits. Please make some weapons that our villagers can use to defend themselves."));
+    quests->addQuest(new Quest("Chop trees","We need to build a wall. Please chop some trees and bring back the logs."));
 
     QuestAcceptor* questAccepter = new QuestAcceptor(game);
     questAccepter->setQuests(quests);
@@ -446,6 +446,13 @@ int main(int argc, char *argv[])
     ECGuiShower* questGuiShower = new ECGuiShower(villager,questAccepter);
     questGuiShower->addEntityOfInterest(player);
 
+    player->inventory()->addItem(new FireballLauncher());
+    player->inventory()->addItem(new ItemTeleport());
+    player->inventory()->addItem(new ItemTeleport());
+    player->inventory()->addItem(new ItemTeleport());
+    player->inventory()->addItem(new ItemTeleport());
+    player->inventory()->addItem(new ItemTeleport());
+    player->inventory()->addItem(new ItemTeleport());
 
     return a.exec();
 }

@@ -74,12 +74,13 @@ void Inventory::addItem(Item *item)
 }
 
 /// Removes the specified Item from the Inventory.
-/// Throws if the Item is not in the Inventory.
+/// Does nothing if the Item is not in the Inventory.
 /// If the Inventory belongs to an Entity who is in a map, drops the
 /// Item next to that Entity.
 void Inventory::removeItem(Item *item)
 {
-    assert (contains(item));
+    if (!contains(item))
+        return;
 
     // inventory belongs to entity who is in map
     Entity* owner = entity();

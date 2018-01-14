@@ -46,7 +46,7 @@ void FireballLauncher::attack(QPointF position)
     // create a spear projectile
     QPointF startPos = mapToMap(projectileSpawnPoint());
 
-    SpearProjectile* fireballProjectile = new SpearProjectile(600,50);
+    SpearProjectile* fireballProjectile = new SpearProjectile(600,10);
     TopDownSprite* spr = new TopDownSprite(QPixmap(":resources/graphics/effects/fireball.png"));
     fireballProjectile->setSprite(spr);
     map->addEntity(fireballProjectile);
