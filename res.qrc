@@ -152,5 +152,6 @@
         <file>graphics/tree/animTree/animTree29.png</file>
         <file>graphics/tree/animTree/animTreepathing.png</file>
         <file>graphics/tree/animTree/animTree14.png</file>
+        <file>graphics/misc/axeicon.png</file>
     </qresource>
 </RCC>

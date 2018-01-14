@@ -166,6 +166,11 @@ void Game::moveCamRight(double byAmount)
 }
 
 void Game::mousePressEvent(QMouseEvent *event){
+    QGraphicsView::mousePressEvent(event);
+
+    if (event->isAccepted())
+        return;
+
     // if in selectPosition MouseMode, emit positionSelected
     if (mouseMode_ == MouseMode::selectPosition){
         emit positionSelected(mapToMap(event->pos()));
@@ -203,14 +208,7 @@ void Game::mousePressEvent(QMouseEvent *event){
         bodyThrustContr->addTargetEntity(player);
     }
 
-    // end of TODO
-
-    // if control reaches here, we are in regular MouseMode, just let the event
-    // propogate to the correct QGraphicsItem, which will handle it
-    // TODO: someday, set up your own event propogation system at the Entity level
-    // as opposed to at the QGraphicsItem level
-
-    QGraphicsView::mousePressEvent(event);
+    // end of TODO    
 }
 
 void Game::mouseMoveEvent(QMouseEvent *event)

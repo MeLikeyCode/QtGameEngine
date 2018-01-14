@@ -22,6 +22,7 @@ AnimationAttack::AnimationAttack(const std::string& animationToPlayOnAttack, con
     soundEffect_(nullptr)
 {
     setSprite(new TopDownSprite(QPixmap())); // empty sprite
+    setIcon(QPixmap(":/resources/graphics/misc/axeicon.png"));
 }
 
 void AnimationAttack::attack(QPointF position)

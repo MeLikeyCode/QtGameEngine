@@ -104,7 +104,10 @@ void ItemCell::draw_()
     if (item_){
         double width = background_->width();
         double height = background_->height();
-        picture_->setPixmap(item_->sprite()->currentlyDisplayedFrame().scaled(width-20,height-20));
+        if (item_->icon().isNull())
+            picture_->setPixmap(item_->sprite()->currentlyDisplayedFrame().scaled(width-20,height-20));
+        else
+            picture_->setPixmap(item_->icon().scaled(width-20,height-20));
         picture_->setPos(10,10);
 
         numChargesText_->setText(QString::number(item_->numOfCharges()));

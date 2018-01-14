@@ -2,8 +2,10 @@
 #define ITEM_H
 
 #include "Entity.h"
+
 #include <vector>
 #include <string>
+#include <QPixmap>
 
 class Inventory;
 
@@ -28,6 +30,8 @@ public:
     void setNumOfCharges(int n);
     void setDescription(std::string description);
     std::string description();
+    QPixmap icon();
+    void setIcon(const QPixmap& pixmap);
 
 signals:
     /// Emitted when the number of charges of the items changes (either increases or decreases).
@@ -41,6 +45,7 @@ private:
     Inventory* inventory_; // the Inventory, nullptr means on ground
     std::string description_;
     int numOfCharges_;
+    QPixmap icon_; // optional, guis will use sprite if no icon specified
 };
 
 #endif // ITEM_H

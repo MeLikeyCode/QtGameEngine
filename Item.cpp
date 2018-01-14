@@ -1,7 +1,10 @@
 #include "Item.h"
+
 #include <cassert>
+
 #include "Inventory.h"
 #include "Sprite.h"
+
 
 Item::Item():
     inventory_(nullptr),
@@ -65,6 +68,18 @@ void Item::setDescription(std::string description)
 std::string Item::description()
 {
     return description_;
+}
+
+QPixmap Item::icon()
+{
+    return icon_;
+}
+
+/// Sets the icon of the item.
+/// If the item has no icon, guis will use its sprite.
+void Item::setIcon(const QPixmap &pixmap)
+{
+    icon_ = pixmap;
 }
 
 /// Returns the owner of the item (which is just the owner of the inventory that the item is in).
