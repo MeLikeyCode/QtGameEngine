@@ -12,7 +12,7 @@ ItemTeleport::ItemTeleport()
     // set sprite
     TopDownSprite* sprite = new TopDownSprite(QPixmap(":resources/graphics/misc/teleport.png"));
     setSprite(sprite);
-
+    setDescription("Allows user to teleport to a specified location within some distance.");
     soundEffect_ = new Sound("qrc:/resources/sounds/blink.wav", this);
 }
 

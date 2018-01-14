@@ -945,14 +945,7 @@ Give trees proper pathing map.
 ===TASK===-------DONE
 Put animated tree in.
 
-
-=============================================================================
-=============================================================================
-=========================UNFINISHED TASKS====================================
-=============================================================================
-=============================================================================
-
-===TASK===
+===TASK===-----DONE
 Allow clients to name an animation when they add it (currently the name of the image prefix is automatically the name of the animation)
 Change Sprite::addAnimation(resourceFolder,numImages,imagePrefix) to Sprite::addAnimation(resourceFolder, numImages, imagePrefix, animationName = imagePrefix)
 -if no animationName is specified, the prefix is used
@@ -965,14 +958,25 @@ If problem is indeed above, solution:
     Create ONE controller for all body thrusters, something like CBodyThruster
     -every x seconds, it will check field of view of all its entities and take the proper course of action
 
+    I cannot seem to reproduce this
 
-===TASK===
--move EntitySprite::scale() to Entity::scale() and ensure it scales PathingMap too
+=============================================================================
+=============================================================================
+=========================UNFINISHED TASKS====================================
+=============================================================================
+=============================================================================
+
+
+
+
 
 ===TASK===
 Create a small village
-    - get graphics for a few buildings, place em
-    - put a villager that sells you shit
+    - get graphics for a few buildings, place em - DONE
+    - put a villager that sells you shit - DONE
+    - fill out item description for items that villager sells
+    - allow giving gold to buy items from villager
+    - put a quest giver with some quests
     
 
 ===TASK===

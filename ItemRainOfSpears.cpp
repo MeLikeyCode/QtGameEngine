@@ -16,7 +16,7 @@ ItemRainOfSpears::ItemRainOfSpears()
     // set sprite
     TopDownSprite* sprite = new TopDownSprite(QPixmap(":/resources/graphics/weapons/trippleSpear.png"));
     setSprite(sprite);
-
+    setDescription("Rains spears in the vicinity. The spears damage enemies.");
     timer_ = new QTimer(this);
     soundEffect_ = new Sound("qrc:/resources/sounds/specialMove.wav",this);
 }

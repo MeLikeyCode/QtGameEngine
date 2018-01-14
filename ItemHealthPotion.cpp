@@ -10,6 +10,7 @@ ItemHealthPotion::ItemHealthPotion(int amountToHealBy_):
 {
     TopDownSprite* s = new TopDownSprite(QPixmap(":/resources/graphics/misc/healthpotion.png"));
     setSprite(s);
+    setDescription("A basic health potion. Heals health when used.");
 }
 
 /// Executed when the item is used.

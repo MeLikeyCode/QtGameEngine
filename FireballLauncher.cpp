@@ -13,6 +13,7 @@ FireballLauncher::FireballLauncher()
     // default sprite
     TopDownSprite* spr = new TopDownSprite(QPixmap(":resources/graphics/effects/fireball.png"));
     setSprite(spr);
+    setDescription("A Weapon that when used will launch fireballs at the clicked location.");
 
     // default projectile spawn point (center of sprite)
     resetProjectileSpawnPoint();
