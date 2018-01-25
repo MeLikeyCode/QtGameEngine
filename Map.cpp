@@ -121,8 +121,8 @@ void Map::updatePathingMap()
         overallPathingMap_->addFilling(*pm,pos);
     }
 
-    //drawPathingMap();
-//    drawEntityBBoxes();
+    //drawPathingMap(); for debugging
+//    drawEntityBBoxes(); for debugging
 }
 
 int Map::width() const{
@@ -220,15 +220,9 @@ void Map::drawEntityBBoxes()
     }
 }
 
-/// Returns the distance (in pixels) b/w the two Entities.
-double Map::distance(Entity *e1, Entity *e2){
-    QLineF line(QPointF(e1->pos()),QPointF(e2->pos()));
-    return line.length();
-}
-
 /// Returns the Entities in the specified region.
-std::unordered_set<Entity *> Map::entities(const QRectF &inRegion){
-    QPolygonF inRegionAsPoly(inRegion);
+std::unordered_set<Entity *> Map::entities(const QRectF &inRect){
+    QPolygonF inRegionAsPoly(inRect);
 
     std::unordered_set<Entity*> ents;
     for (Entity* entity:entities()){
@@ -354,7 +348,7 @@ std::unordered_set<Entity *> Map::entities(const QPolygonF &inRegion, double zRa
 
 /// Plays the specified sprite's specified animation at the specified position
 /// on the map - once.
-/// @warning Deletes the sprite after it is finished playing.
+/// @warning Deletes the sprite after it is finished playing (in other words, Map takes ownership of the sprite).
 void Map::playOnce(Sprite *sprite, std::string animationName, int delaybwFramesMS, QPointF atPos)
 {
     sprite->setPos(atPos);
@@ -702,6 +696,8 @@ QGraphicsScene *Map::scene(){
     return scene_;
 }
 
+/// Returns the Game that is currently visualizing the map.
+/// If the map isn't currently being visualized, returns nullptr.
 Game *Map::game()
 {
     return game_;

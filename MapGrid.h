@@ -1,10 +1,9 @@
-#ifndef MAPGRID_H
-#define MAPGRID_H
+#pragma once
 
 #include <vector>
 #include <QPointer>
-#include "Map.h"
 
+#include "Map.h"
 #include "PointerGrid.h"
 
 class Map;
@@ -31,5 +30,3 @@ public:
 private:
     PointerGrid<Map> pointerGrid_;
 };
-
-#endif // MAPGRID_H

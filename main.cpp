@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    // play music
+    // play music in the background
     Sound* bgMusic = new Sound("qrc:/resources/sounds/music3.mp3");
     bgMusic->setVolume(50);
     bgMusic->play(-1);

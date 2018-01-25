@@ -46,7 +46,7 @@ Node MapGrid::positionOf(Map *map) const
     return pointerGrid_.positionOf(map);
 }
 
-/// Returns a vector of all the Maps in the MapGrid (order top left to bottom right).
+/// Returns a vector of all the Maps in the MapGrid (order - left to right, top to bottom).
 std::vector<Map *> MapGrid::maps() const
 {
     return pointerGrid_.pointers();

@@ -1,21 +1,20 @@
-#ifndef GRIDSTRUCTURE_H
-#define GRIDSTRUCTURE_H
+#pragma once
 
 #include <vector>
 #include <Node.h>
 #include <cassert>
 
-/// A grid of pointers of any type.
-/// This structure is useful if you want to have a bunch of pointers arranged in cells/columns.
-/// The top left cell of the grid is (0,0), bottom right is (numPointersX - 1, numPointerY - 1)
+/// A grid of pointers of any type. This structure is useful if you want to have a bunch of
+/// pointers arranged in a gridlike fashion (cells/columns). The top left cell of the grid is
+/// (0,0), bottom right is (numPointersX - 1, numPointerY - 1)
 ///
 /// Example usage:
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.cpp
 /// PointerGrid<MyType> pointerGrid(3,3); // MyType can be any type for whom you want to store pointers for
 /// pointerGrid.setPointerAtPos(0,0,myPointer);
 /// pointer.contains(myPointer) // check if this pointer is in the PointerGrid
-/// pointer.pointerAt(0,0) // get the pointer at position (0,0)
-/// pointer.positionOf(myPointer) // get the position of your pointer
+/// pointer.pointerAt(0,0) // get the pointer at position (0,0), returns nullptr if no pointer is there
+/// pointer.positionOf(myPointer) // get the position of your pointer, throws if 'myPointer' isn't even in the grid
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 /// @author Abdullah Aghazadah
 /// @date 3/10/17
@@ -132,6 +131,3 @@ std::vector<PointerType *> PointerGrid<PointerType>::pointers() const
     }
     return resultantPointers;
 }
-
-
-#endif // GRIDSTRUCTURE_H

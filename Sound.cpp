@@ -16,7 +16,7 @@ Sound::Sound(std::string filePath, QObject *parent):
 }
 
 /// Plays the sound the specified number of times. Pass -1 to play an infinite
-/// number of times. If the Sound is already playing, it will simply restart
+/// number of times. If the Sound is already playing, it will simply *restart*
 /// playing right away.
 void Sound::play(int numOfTimes)
 {
@@ -56,6 +56,7 @@ QMediaPlayer::State Sound::state()
     return mediaPlayer_->state();
 }
 
+/// Returns the volume of the Sound. 0-100.
 int Sound::volume()
 {
     return mediaPlayer_->volume();

@@ -1,11 +1,11 @@
-#ifndef MAP_H
-#define MAP_H
+#pragma once
 
 #include <vector>
-#include "PathingMap.h"
 #include <QPointer>
-#include "Game.h"
 #include <QObject>
+
+#include "PathingMap.h"
+#include "Game.h"
 #include "PositionalSound.h"
 
 class QPolygonF;
@@ -24,15 +24,15 @@ class WeatherEffect;
 /// so that the Map's PathingMap can be updated accordingly.
 ///
 /// A Map can be visualized by a Game. If the Map is currently being visualized
-/// by a game the game() function will return that Game, otherwise it will return
+/// by a game the Map::game() function will return that Game, otherwise it will return
 /// nullptr.
 /// @author Abdullah Aghazadah
 class Map: public QObject // so we can use QPointer<Map>
 {
     Q_OBJECT
-    friend class Game; // game needs to be able to set game_ ptr of Map
+    friend class Game; // game needs to be able to set game_ ptr of Map (in Game::setCurrentMap())
 public:
-    // constructor
+    // constructors
     Map();
     Map(PathingMap* pathingMap);
 
@@ -70,10 +70,8 @@ public:
     void drawPathingMap();
     void drawEntityBBoxes();
 
-    double distance(Entity* e1, Entity* e2);
-
     /// getting all entities at a certain point/region/colliding w other entities
-    std::unordered_set<Entity*> entities(const QRectF& inRegion);
+    std::unordered_set<Entity*> entities(const QRectF& inRect);
     std::unordered_set<Entity *> entities(const QPointF& atPoint);
     std::unordered_set<Entity*> entities(const QPolygonF& inRegion);
     std::unordered_set<Entity*> entities(Entity* collidingWith);

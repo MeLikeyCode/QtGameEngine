@@ -1,5 +1,4 @@
-#ifndef SOUND_H
-#define SOUND_H
+#pragma once
 
 #include <string>
 #include <QMediaPlayer>
@@ -25,6 +24,7 @@ public:
 
     void play(int numOfTimes);
     void stop();
+
     void setVolume(int volume);
     void setMute(bool tf);
 
@@ -45,5 +45,3 @@ private:
     int numTimesPlayed_;
     int numTimesToPlay_;
 };
-
-#endif // SOUND_H
