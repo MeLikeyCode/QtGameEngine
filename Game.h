@@ -1,5 +1,4 @@
-#ifndef GAME_H
-#define GAME_H
+#pragma once
 
 #include <QGraphicsView>
 #include <set>
@@ -35,6 +34,7 @@ public:
     QPointF mapToMap(const QPoint &point);
     QPointF mapFromMap(const QPointF &point);
 
+    // camera controls
     void setCenterCamPos(QPointF position);
     QPointF centerCamPos();
     QRectF cam();
@@ -44,6 +44,7 @@ public:
     void moveCamLeft(double byAmount);
     void moveCamRight(double byAmount);
 
+    // mouse event handlers
     void mousePressEvent(QMouseEvent* event);
     void mouseMoveEvent(QMouseEvent* event);
     void keyPressEvent(QKeyEvent* event);
@@ -128,4 +129,3 @@ private:
     std::map<std::pair<Entity*,Entity*>,bool> watchedWatchingPairToEnterRangeEmitted_; // has the enters range event been emitted yet for a pair of watched watching entities?
 };
 
-#endif // GAME_H

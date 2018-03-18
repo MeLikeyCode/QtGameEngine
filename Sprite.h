@@ -16,21 +16,17 @@ class Node;
 
 /// A QGraphicsItem that represents a bunch of animations that can be played.
 /// @author Abdullah Aghazadah
-/// @date 5-16-15
 ///
-/// Since a Sprite is a QGraphicsItem, it can be placed inside a
-/// QGraphicsScene. To add a frame to an animation, use
-/// Sprite::addFrame(QPixmap,std::string). The specified pixmap will then be
-/// added to the specified animation. If an animation of that name does not
-/// exist, it will be created. If an animation of that name already exists,
-/// then the pixmap will be added as the next image in the animation. To add a
-/// bunch of images from a resource folder to an animation use
-/// Sprite::addFrames(std::string,int,std::string,std::string). You can also
-/// add tiles from a SpriteSheet as animation frames in the Sprite.
+/// Since a Sprite is a QGraphicsItem, it can be placed inside a QGraphicsScene. To add a frame to
+/// an animation, use Sprite::addFrame(QPixmap,std::string). The specified pixmap will then be
+/// added to the specified animation. If an animation of that name does not exist, it will be
+/// created. If an animation of that name already exists, then the pixmap will be added as the next
+/// image in the animation. To add a bunch of images from a folder to an animation use
+/// Sprite::addFrames(std::string,int,std::string,std::string). You can also add tiles from a
+/// SpriteSheet as animation frames in the Sprite.
 ///
-/// A Sprite can play an animation a certain number of times by using
-/// Sprite::play(). A value of -1 times means that the
-/// animation will be played again and again forever.
+/// A Sprite can play an animation a certain number of times by using Sprite::play(). A value of -1
+/// times means that the animation will be played again and again forever.
 class Sprite:public QObject, // inherits from QObject so it can use signals/slots
              public QGraphicsItem{ // inherits from QGraphicsItem so it can go inside scenes
     Q_OBJECT

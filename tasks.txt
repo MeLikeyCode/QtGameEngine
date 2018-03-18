@@ -960,6 +960,15 @@ If problem is indeed above, solution:
 
     I cannot seem to reproduce this
 
+===TASK===---DONE
+Player attacks whenever you interact with Gui. Prevent this.
+
+Solution in head right now:
+- Game's mouse event handler intercepts everything, it shouldn't do this
+
+===TASK===-------DONE
+Put "hand" attack graphics for animation attack.
+
 =============================================================================
 =============================================================================
 =========================UNFINISHED TASKS====================================
@@ -974,9 +983,9 @@ If problem is indeed above, solution:
 Create a small village
     - get graphics for a few buildings, place em - DONE
     - put a villager that sells you shit - DONE
-    - fill out item description for items that villager sells
+    - fill out item description for items that villager sells - DONE
     - allow giving gold to buy items from villager
-    - put a quest giver with some quests
+    - put a quest giver with some quests - DONE
     
 
 ===TASK===

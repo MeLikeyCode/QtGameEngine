@@ -2,7 +2,7 @@
 
 #include <string>
 
-/// Simple struct that represents information about a currently playing animation.
+/// Simple class that represents information about a currently playing animation.
 class PlayingAnimationInfo
 {
 public:

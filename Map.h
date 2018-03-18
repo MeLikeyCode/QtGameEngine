@@ -132,4 +132,3 @@ private:
     void setGame_(Game* game);
 };
 
-#endif // MAP_H
