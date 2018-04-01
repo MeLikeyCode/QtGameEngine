@@ -1,11 +1,13 @@
-#ifndef LABEL_H
-#define LABEL_H
+#pragma once
 
 #include <QObject>
-#include "Gui.h"
 #include <string>
 #include <QColor>
 #include <QGraphicsItem>
+
+#include "Gui.h"
+
+namespace qge{
 
 /// Represents a label Gui that can be added to a Game.
 /// You can set various options such as the font, font size, font color, and width.
@@ -54,4 +56,4 @@ private:
 
 };
 
-#endif // LABEL_H
+}

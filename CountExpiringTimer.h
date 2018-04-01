@@ -1,8 +1,9 @@
-#ifndef COUNTEXPIRINGTIMER_H
-#define COUNTEXPIRINGTIMER_H
+#pragma once
 
 #include <QObject>
 #include <QTimer>
+
+namespace qge{
 
 /// Represents a timer that will fire a specific number of times and then
 /// deletes itself.
@@ -32,4 +33,4 @@ private:
     QTimer* timer_;
 };
 
-#endif // COUNTEXPIRINGTIMER_H
+}

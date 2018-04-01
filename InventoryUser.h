@@ -1,14 +1,17 @@
-#ifndef INVENTORYUSER_H
-#define INVENTORYUSER_H
+#pragma once
 
-#include "Gui.h"
 #include <memory>
 #include <QObject>
+
+#include "Gui.h"
+
+class QGraphicsItem;
+
+namespace qge{
 
 class InventoryViewer;
 class Inventory;
 class Item;
-class QGraphicsItem;
 class Entity;
 
 /// A Gui that allows "using" the Items in an Inventory.
@@ -34,4 +37,4 @@ private:
     Item* lastItemUsed_;
 };
 
-#endif // INVENTORYUSER_H
+}

@@ -10,6 +10,8 @@
 #include "Game.h"
 #include "QtUtilities.h"
 
+using namespace qge;
+
 ECChaser::ECChaser(Entity* entity):
     EntityController(entity),
     stopDistance_(100),

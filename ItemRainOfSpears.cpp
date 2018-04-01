@@ -1,8 +1,10 @@
 #include "ItemRainOfSpears.h"
-#include "Sprite.h"
+
 #include <QPixmap>
-#include "SpearProjectile.h"
 #include <cassert>
+
+#include "Sprite.h"
+#include "SpearProjectile.h"
 #include "Entity.h"
 #include "Inventory.h"
 #include "stdlib.h" // TODO: use C++ random number generatio instead
@@ -10,6 +12,8 @@
 #include "Map.h"
 #include "CBDamage.h"
 #include "TopDownSprite.h"
+
+using namespace qge;
 
 ItemRainOfSpears::ItemRainOfSpears()
 {

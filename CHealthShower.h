@@ -1,15 +1,17 @@
-#ifndef CHEALTHSHOWER_H
-#define CHEALTHSHOWER_H
+#pragma once
 
 #include <QObject>
 #include <unordered_set>
 #include <unordered_map>
 #include <QPoint>
 
+class QTimer;
+
+namespace qge{
+
 class Entity;
 class Map;
 class Bar;
-class QTimer;
 
 class CHealthShower : public QObject
 {
@@ -36,4 +38,4 @@ private:
     QTimer* timer_;
 };
 
-#endif // CHEALTHSHOWER_H
+}

@@ -10,6 +10,7 @@
 #include "SpriteSheet.h"
 #include "CItemDropper.h"
 
+using namespace qge;
 
 extern CItemDropper* itemDropper;
 

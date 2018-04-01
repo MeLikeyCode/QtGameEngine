@@ -1,9 +1,13 @@
 #include "ItemHealthPotion.h"
+
+#include <QPixmap>
+#include <cassert>
+
 #include "Inventory.h"
 #include "Entity.h"
 #include "TopDownSprite.h"
-#include <QPixmap>
-#include <cassert>
+
+using namespace qge;
 
 ItemHealthPotion::ItemHealthPotion(int amountToHealBy_):
     amountToHealBy_(amountToHealBy_)

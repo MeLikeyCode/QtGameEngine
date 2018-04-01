@@ -1,15 +1,18 @@
-#ifndef INVENTORYVIEWER_H
-#define INVENTORYVIEWER_H
+#pragma once
 
-#include "Gui.h"
 #include <QPixmap>
 #include <QColor>
 #include <memory>
 #include <QPointer>
-#include "Inventory.h"
 #include <QObject>
 
+#include "Gui.h"
+#include "Inventory.h"
+
 class QPointF;
+
+namespace qge{
+
 class ItemCell;
 class Item;
 class ScrollWindow;
@@ -71,4 +74,4 @@ private:
     void draw_();
 };
 
-#endif // INVENTORYVIEWER_H
+}

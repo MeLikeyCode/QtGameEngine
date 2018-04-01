@@ -1,4 +1,5 @@
 #include "QtUtilities.h"
+
 #include <QPixmap>
 #include <QImage>
 #include <QColor>
@@ -6,6 +7,8 @@
 #include <QPoint>
 #include <QRect>
 #include <cassert>
+
+namespace qge{
 
 namespace QtUtils {
 
@@ -24,5 +27,7 @@ namespace QtUtils {
         double deltaY = p2.y() - p1.y();
         return qAbs(qSqrt(qPow(deltaX,2) + qPow(deltaY,2)));
     }
+
+}
 
 }

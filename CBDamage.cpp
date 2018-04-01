@@ -1,5 +1,8 @@
 #include "CBDamage.h"
+
 #include "Entity.h"
+
+using namespace qge;
 
 CBDamage::CBDamage(double amountToDamageEntityOne, double amountToDamageEntityTwo):
     amountToDamageEntityOne_(amountToDamageEntityOne),

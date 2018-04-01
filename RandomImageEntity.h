@@ -1,9 +1,11 @@
-#ifndef RANDOMIMAGEENTITY_H
-#define RANDOMIMAGEENTITY_H
+#pragma once
+
+#include <vector>
 
 #include "PathingMap.h"
 #include "Entity.h"
-#include <vector>
+
+namespace qge{
 
 /// An Entity whos displayed image is randomly picked from a set of images in a folder.
 /// No matter which image is picked, the same pathing map that is specified will be used for the entity.
@@ -17,4 +19,4 @@ public:
     RandomImageEntity(std::string resourceFolderPath, std::string imagePrefix, int numOfImages, PathingMap& pathingMap);
 };
 
-#endif // RANDOMIMAGEENTITY_H
+}

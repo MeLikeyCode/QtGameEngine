@@ -1,10 +1,12 @@
-#ifndef CBDAMAGE_H
-#define CBDAMAGE_H
+#pragma once
 
-#include "CollisionBehavior.h"
 #include <unordered_set>
 #include <utility>
+
+#include "CollisionBehavior.h"
 #include "Entity.h"
+
+namespace qge{
 
 /// A CollisionBehavior that will damage one, both, or none of the colliding entities.
 /// You can specifiy collisions to ignore.
@@ -24,4 +26,4 @@ private:
     std::unordered_set<std::pair<Entity*,Entity*>> ignoredCollisions_;
 };
 
-#endif // CBDAMAGE_H
+}

@@ -1,7 +1,11 @@
 #include "ScrollWindow.h"
-#include "ScrollBar.h"
+
 #include <cassert>
+
+#include "ScrollBar.h"
 #include "Panel.h"
+
+using namespace qge;
 
 ScrollWindow::ScrollWindow(): ScrollWindow(300,300)
 {

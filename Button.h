@@ -1,12 +1,14 @@
-#ifndef BUTTON_H
-#define BUTTON_H
+#pragma once
 
-#include "Gui.h"
 #include <string>
 #include <QGraphicsPixmapItem>
 #include <QColor>
 
+#include "Gui.h"
+
 class QGraphicsTextItem;
+
+namespace qge{
 
 // TODO: reimplement using Panel as background (reduces duplicate code)
 
@@ -56,4 +58,4 @@ private:
     void draw_();
 };
 
-#endif // BUTTON_H
+}

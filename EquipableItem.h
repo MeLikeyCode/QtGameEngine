@@ -1,10 +1,12 @@
-#ifndef EQUIPABLEITEM_H
-#define EQUIPABLEITEM_H
+#pragma once
 
 #include "Item.h"
 #include <QPixmap>
 
 class QPointF;
+
+namespace qge{
+
 class Entity;
 class Slot;
 
@@ -28,4 +30,4 @@ private:
     QPointF attachmentPoint_;
 };
 
-#endif // EQUIPABLEITEM_H
+}

@@ -2,10 +2,11 @@
 
 #include <cassert>
 
-
 #include "Sprite.h"
 #include "SpriteSheet.h"
 #include "Node.h"
+
+using namespace qge;
 
 /// Constructs a TopDownSprite that will have no animations but the frame will by default display a
 /// "Default" graphic.

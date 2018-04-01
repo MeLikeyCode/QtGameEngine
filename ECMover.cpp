@@ -1,5 +1,8 @@
 #include "ECMover.h"
+
 #include <cassert>
+
+using namespace qge;
 
 /// Constructs a Mover that can move the specified Entity.
 ECMover::ECMover(Entity* entity):

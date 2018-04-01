@@ -8,6 +8,8 @@
 #include "Map.h"
 #include "CBDamage.h"
 
+using namespace qge;
+
 FireballLauncher::FireballLauncher()
 {
     // default sprite

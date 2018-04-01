@@ -1,7 +1,11 @@
 #include "ECCameraFollower.h"
+
 #include <cassert>
+
 #include "Map.h"
 #include "Game.h"
+
+using namespace qge;
 
 ECCameraFollower::ECCameraFollower(Entity *entity):
     EntityController(entity)

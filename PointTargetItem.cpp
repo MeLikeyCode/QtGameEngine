@@ -1,5 +1,7 @@
 #include "PointTargetItem.h"
 
+using namespace qge;
+
 /// Uses the item on the specified point.
 void PointTargetItem::use(const QPointF &point)
 {

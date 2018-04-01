@@ -1,10 +1,11 @@
-#ifndef ECGRABCURRENTMAP_H
-#define ECGRABCURRENTMAP_H
+#pragma once
 
 #include <QPointer>
 
 #include "EntityController.h"
 #include "Entity.h"
+
+namespace qge{
 
 class Map;
 
@@ -28,4 +29,4 @@ public slots:
     void onEntityEntersMap(Entity* controlledEntity, Map* mapJustEntered, Map* oldMap);
 };
 
-#endif // ECGRABCURRENTMAP_H
+}

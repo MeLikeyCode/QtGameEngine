@@ -1,7 +1,11 @@
 #include "PathGrid.h"
+
 #include <cassert>
 #include <QDebug>
+
 #include "Tree.h"
+
+using namespace qge;
 
 /// Constructs a PathGrid with no Nodes.
 PathGrid::PathGrid():

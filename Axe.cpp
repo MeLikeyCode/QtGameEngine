@@ -1,13 +1,17 @@
 #include "Axe.h"
-#include "Sprite.h"
-#include "Map.h"
+
 #include <QGraphicsScene>
 #include <QDebug> // TODO: remove
+
+#include "Sprite.h"
+#include "Map.h"
 #include "Inventory.h"
 #include "Entity.h"
 #include "Sound.h"
 #include "CollisionBehavior.h"
 #include "TopDownSprite.h"
+
+using namespace qge;
 
 Axe::Axe()
 {

@@ -1,11 +1,14 @@
 #include "ECEnemyAttacker.h"
 
-#include "ECChaser.h"
 #include <cassert>
+
+#include "ECChaser.h"
 #include "Slot.h"
 #include "Weapon.h"
 #include "WeaponSlot.h"
 #include "Utilities.h"
+
+using namespace qge;
 
 ECAttacker::ECAttacker(Entity *entity):
     EntityController(entity),

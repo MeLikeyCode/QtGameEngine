@@ -9,6 +9,8 @@
 #include "Bar.h"
 #include "EntitySprite.h"
 
+using namespace qge;
+
 CHealthShower::CHealthShower():
     timer_(new QTimer(this))
 {

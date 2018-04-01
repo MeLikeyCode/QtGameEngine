@@ -1,11 +1,10 @@
-#ifndef SPEAR_H
-#define SPEAR_H
+#pragma once
 
-// inherits
+#include <QTimer>
+
 #include "MeleeWeapon.h"
 
-// value members
-#include <QTimer>
+namespace qge{
 
 class Sound;
 
@@ -46,4 +45,4 @@ private:
     Sound* soundEffect_;
 };
 
-#endif // SPEAR_H
+}

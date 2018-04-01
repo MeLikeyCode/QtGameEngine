@@ -1,10 +1,12 @@
-#ifndef GRAPH_H
-#define GRAPH_H
+#pragma once
 
 #include <unordered_set>
 #include <unordered_map>
+
 #include "Node.h"
 #include "Edge.h"
+
+namespace qge{
 
 class Tree;
 
@@ -76,4 +78,4 @@ private:
     void calculateCosts_(Node from, Node to) const;
 };
 
-#endif // GRAPH_H
+}

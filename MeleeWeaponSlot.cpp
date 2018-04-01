@@ -2,6 +2,8 @@
 
 #include "MeleeWeapon.h"
 
+using namespace qge;
+
 bool MeleeWeaponSlot::canBeEquipped(EquipableItem *item)
 {
     // MeeleeWeaponSlot can only equip MeleeWeapons

@@ -1,8 +1,12 @@
 #include "AbilityCell.h"
+
 #include <QGraphicsPixmapItem>
+
 #include "Panel.h"
 #include "Ability.h"
 #include "Sprite.h"
+
+using namespace qge;
 
 AbilityCell::AbilityCell(int width, int height, Ability *ability):
     picture_(new QGraphicsPixmapItem()),

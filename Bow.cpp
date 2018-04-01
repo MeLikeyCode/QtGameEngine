@@ -10,6 +10,8 @@
 #include "CBDamage.h"
 #include "TopDownSprite.h"
 
+using namespace qge;
+
 Bow::Bow()
 {
     // default sprite

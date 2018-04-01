@@ -1,17 +1,18 @@
-#ifndef QUESTVIEWER_H
-#define QUESTVIEWER_H
+#pragma once
 
-#include "Gui.h"
 #include <unordered_map>
-#include "Panel.h"
 #include <memory>
 #include <QObject>
+
+#include "Gui.h"
+#include "Panel.h"
+
+namespace qge{
 
 class Quest;
 class Quests;
 class Button;
 class Label;
-class Quest;
 class ScrollWindow;
 
 /// Gui that can visualize a bunch of quests (Quests class).
@@ -56,4 +57,4 @@ private:
     Label* selectedQuestDescription_;
 };
 
-#endif // QUESTVIEWER_H
+}

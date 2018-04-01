@@ -1,9 +1,13 @@
 #include "EquipableItem.h"
+
 #include <QPointF>
 #include <cassert>
+
 #include "Inventory.h"
 #include "Slot.h"
 #include "Entity.h"
+
+using namespace qge;
 
 EquipableItem::EquipableItem():
     slotEquippedIn_(nullptr),

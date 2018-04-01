@@ -1,7 +1,8 @@
-#ifndef ITEMHEALTHPOTION_H
-#define ITEMHEALTHPOTION_H
+#pragma once
 
 #include "NoTargetItem.h"
+
+namespace qge{
 
 class ItemHealthPotion : public NoTargetItem
 {
@@ -14,4 +15,4 @@ private:
     int amountToHealBy_;
 };
 
-#endif // ITEMHEALTHPOTION_H
+}

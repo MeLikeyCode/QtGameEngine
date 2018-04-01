@@ -1,5 +1,4 @@
-#ifndef QTUTILITIES_H
-#define QTUTILITIES_H
+#pragma once
 
 class QPixmap;
 class QImage;
@@ -7,6 +6,8 @@ class QColor;
 class QSize;
 class QPointF;
 class QRectF;
+
+namespace qge{
 
 /// This file contains a bunch of utility functions that make it easier to use
 /// some Qt features.
@@ -19,8 +20,4 @@ namespace QtUtils {
     double distance(QPointF p1, QPointF p2);
 }
 
-
-
-
-
-#endif // QTUTILITIES_H
+}

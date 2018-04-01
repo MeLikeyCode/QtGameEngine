@@ -1,16 +1,18 @@
-#ifndef ABILITYCELL_H
-#define ABILITYCELL_H
+#pragma once
 
-#include "Gui.h"
-#include "Ability.h"
 #include <QPointer>
 #include <memory>
 #include <QObject>
 
+#include "Gui.h"
+#include "Ability.h"
+
 class QGraphicsItem;
 class QGraphicsPixmapItem;
-class Panel;
 class QPointF;
+
+namespace qge{
+
 class Panel;
 
 /// Represents a Gui that visualizes and allows mouse interaction with an Ability.
@@ -45,4 +47,4 @@ private:
     void draw_();
 };
 
-#endif // ABILITYCELL_H
+}

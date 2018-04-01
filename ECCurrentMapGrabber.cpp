@@ -1,7 +1,11 @@
 #include "ECCurrentMapGrabber.h"
+
 #include <cassert>
+
 #include "Map.h"
 #include "Game.h"
+
+using namespace qge;
 
 ECCurrentMapGrabber::ECCurrentMapGrabber(Entity *entity):
     EntityController(entity)

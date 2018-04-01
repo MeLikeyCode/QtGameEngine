@@ -2,10 +2,14 @@
 
 #include <QObject>
 #include <QRectF>
+
 #include "RandomGenerator.h"
 
-class Map;
 class QTimer;
+
+namespace qge{
+
+class Map;
 
 /// A map controller that will spawn entities randomly within some radius.
 class MCSpawner: public QObject // inherits from QObject so can use signals/slots
@@ -36,3 +40,4 @@ private:
     RandomGenerator random_;
 };
 
+}

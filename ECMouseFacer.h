@@ -1,5 +1,4 @@
-#ifndef ECROTATETOMOUSE_H
-#define ECROTATETOMOUSE_H
+#pragma once
 
 #include <QPointer>
 #include <memory>
@@ -8,6 +7,9 @@
 #include "Entity.h"
 
 class QTimer;
+
+namespace qge{
+
 class ECRotater;
 
 /// An entity controller (TODO: link to doc) that makes an Entity constantly rotate
@@ -40,4 +42,4 @@ private:
     ECRotater* rotater_;
 };
 
-#endif // ECROTATETOMOUSE_H
+}

@@ -1,7 +1,5 @@
-#ifndef PANEL_H
-#define PANEL_H
+#pragma once
 
-#include "Gui.h"
 #include <QColor>
 #include <QPixmap>
 #include <QObject>
@@ -9,8 +7,12 @@
 #include <QGraphicsRectItem>
 #include <memory>
 
+#include "Gui.h"
+
 class QGraphicsSceneMouseEvent;
 class QGraphicsSceneHoverEvent;
+
+namespace qge{
 
 /// Represents a panel GUI element that can be placed in a Game.
 /// You can modify various options such as the size, color, background image, etc...
@@ -64,4 +66,4 @@ private:
     void draw_();
 };
 
-#endif // PANEL_H
+}

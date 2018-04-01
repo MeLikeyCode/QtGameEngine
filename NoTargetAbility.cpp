@@ -2,6 +2,8 @@
 #include <cassert>
 #include "Entity.h"
 
+using namespace qge;
+
 NoTargetAbility::NoTargetAbility(Entity &owner, Sprite *icon):
     Ability(owner,icon)
 {

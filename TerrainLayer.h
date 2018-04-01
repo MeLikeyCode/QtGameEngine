@@ -1,11 +1,13 @@
-#ifndef TERRAIN_H
-#define TERRAIN_H
+#pragma once
 
 #include <QPixmap>
-#include "Node.h"
-#include "Grid.h"
 #include <QPointF>
 #include <QGraphicsPixmapItem>
+
+#include "Node.h"
+#include "Grid.h"
+
+namespace qge{
 
 class Map;
 
@@ -71,4 +73,4 @@ private:
     void draw_();
 };
 
-#endif // TERRAIN_H
+}

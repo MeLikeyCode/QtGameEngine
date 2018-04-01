@@ -1,5 +1,7 @@
 #include "EntityTargetAbility.h"
 
+using namespace qge;
+
 EntityTargetAbility::EntityTargetAbility(Entity& owner, Sprite *icon):
     Ability(owner,icon)
 {

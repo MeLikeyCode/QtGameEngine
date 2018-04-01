@@ -1,13 +1,15 @@
-#ifndef SINEMOVER_H
-#define SINEMOVER_H
+#pragma once
 
 #include <QObject>
 #include <QPointer>
-#include "Entity.h"
 #include <QLineF>
+
+#include "Entity.h"
 #include "ECMover.h"
 
 class QTimer;
+
+namespace qge{
 
 /// A Mover that moves the Entity at a sine looking pattern. By default the
 /// entity will face its target pos before moving, but you can change this by
@@ -62,4 +64,4 @@ private:
     double distanceMoved_;
 };
 
-#endif // SINEMOVER_H
+}

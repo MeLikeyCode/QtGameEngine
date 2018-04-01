@@ -2,6 +2,8 @@
 
 #include <QDebug> // TODO: remove
 
+using namespace qge;
+
 Sound::Sound(std::string filePath, QObject *parent):
     QObject(parent)
 {

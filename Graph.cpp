@@ -1,8 +1,12 @@
 #include "Graph.h"
+
 #include <vector>
 #include <cassert>
-#include "Tree.h"
 #include <algorithm>
+
+#include "Tree.h"
+
+using namespace qge;
 
 /// Default constructor, constructs a Graph with no Nodes or Edges (empty Graph).
 Graph::Graph(){

@@ -1,10 +1,12 @@
-#ifndef PATHINGMAP_H
-#define PATHINGMAP_H
+#pragma once
 
-#include "PathGrid.h"
 #include <QPointF>
 #include <QRectF>
 #include <QMetaType>
+
+#include "PathGrid.h"
+
+namespace qge{
 
 /// Represents a rectangular region of space divided into square cells where
 /// each cell can either be filled or unfilled.
@@ -88,4 +90,4 @@ private:
 
 Q_DECLARE_METATYPE(PathingMap);
 
-#endif // PATHINGMAP_H
+}

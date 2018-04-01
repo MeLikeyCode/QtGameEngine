@@ -1,6 +1,9 @@
 #include "RangedWeapon.h"
+
 #include "Sprite.h"
 #include "EntitySprite.h"
+
+using namespace qge;
 
 /// Returns the point at which projectiles will be spawn.
 /// This point is in local coordinates (relative to the RangedWeapon itself).

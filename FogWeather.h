@@ -1,13 +1,15 @@
-#ifndef FOGWEATHER_H
-#define FOGWEATHER_H
+#pragma once
 
 #include <QObject>
+#include <set>
+
 #include "WeatherEffect.h"
 #include "QVector2D"
-#include <set>
 
 class QTimer;
 class QGraphicsPixmapItem;
+
+namespace qge{
 
 /// A WeatherEffect that represents fog.
 /// @see WeatherEffect
@@ -63,4 +65,4 @@ private:
     double currentOpacity_;
 };
 
-#endif // FOGWEATHER_H
+}

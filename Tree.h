@@ -1,9 +1,11 @@
-#ifndef TREE_H
-#define TREE_H
+#pragma once
+
+#include <vector>
 
 #include "Graph.h"
 #include "Node.h"
-#include <vector>
+
+namespace qge{
 
 /// Represents a tree.
 /// @author Abdullah Aghazadah
@@ -40,4 +42,4 @@ private:
     std::vector<Node> dfs(const Node& node, const Node& target, std::vector<Node> path) const;
 };
 
-#endif // TREE_H
+}

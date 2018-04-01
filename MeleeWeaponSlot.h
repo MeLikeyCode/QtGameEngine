@@ -1,7 +1,8 @@
-#ifndef MELEEWEAPONSLOT_H
-#define MELEEWEAPONSLOT_H
+#pragma once
 
 #include "Slot.h"
+
+namespace qge{
 
 class EquipableItem;
 
@@ -13,4 +14,4 @@ public:
     void use();
 };
 
-#endif // MELEEWEAPONSLOT_H
+}

@@ -1,5 +1,8 @@
 #include "Edge.h"
+
 #include <cassert>
+
+using namespace qge;
 
 /// Do not use, just so Edge can be in a map.
 Edge::Edge(){
@@ -30,6 +33,6 @@ int Edge::weight() const{
 }
 
 /// Returns true if the two edges have the same starting and ending Nodes, _regardeless of their weights_.
-bool operator==(const Edge &lhs, const Edge &rhs){
+bool qge::operator==(const Edge &lhs, const Edge &rhs){
     return (lhs.from() == rhs.from()) && (lhs.to() == rhs.to());
 }

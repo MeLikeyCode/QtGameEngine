@@ -1,7 +1,8 @@
-#ifndef EDGE_H
-#define EDGE_H
+#pragma once
 
 #include "Node.h"    
+
+namespace qge{
 
 /// Represents an edge between two Nodes.
 /// @author Abdullah Aghazadah
@@ -33,15 +34,15 @@ private:
 // comparison operator
 bool operator==(const Edge& lhs, const Edge& rhs);
 
+}
+
 // Make Edge hashable
 namespace std {
 template <>
-struct hash<Edge> // full template specialization
+struct hash<qge::Edge> // full template specialization
 {
-    size_t operator()(const Edge& edge) const{
-        return hash<Node>()(edge.from()) ^ hash<Node>()(edge.to());
+    size_t operator()(const qge::Edge& edge) const{
+        return hash<qge::Node>()(edge.from()) ^ hash<qge::Node>()(edge.to());
     }
 };
 }
-
-#endif // EDGE_H

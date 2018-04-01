@@ -1,9 +1,13 @@
 #include "Projectile.h"
-#include "Map.h"
-#include "CollisionBehavior.h"
+
 #include <QTimer>
 #include <QDebug> // TODO: remove, test
 #include <cassert>
+
+#include "Map.h"
+#include "CollisionBehavior.h"
+
+using namespace qge;
 
 /// Constructs a Project from the specified behaviors.
 /// You can pass in null for any of the behaviors, but be sure to use the setters

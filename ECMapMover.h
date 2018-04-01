@@ -1,5 +1,4 @@
-#ifndef ECMOVETONEXTMAP_H
-#define ECMOVETONEXTMAP_H
+#pragma once
 
 #include <QPointer>
 
@@ -7,6 +6,8 @@
 #include "Entity.h"
 
 class QPointF;
+
+namespace qge{
 
 /// An entity controller (TODO: add doc link) that makes it such that when the
 /// controlled entity touches the border of it's map, it will go to the next map
@@ -35,4 +36,4 @@ private:
     double borderThreshold_;
 };
 
-#endif // ECMOVETONEXTMAP_H
+}

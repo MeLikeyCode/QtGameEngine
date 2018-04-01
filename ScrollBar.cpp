@@ -1,8 +1,12 @@
 #include "ScrollBar.h"
-#include "QtUtilities.h"
+
 #include <QGraphicsSceneMouseEvent>
 #include <cassert>
 #include <QDebug> // TODO: remove
+
+#include "QtUtilities.h"
+
+using namespace qge;
 
 /// Constructs a default sized ScrollBar.
 ScrollBar::ScrollBar():

@@ -1,5 +1,4 @@
-#ifndef ECGRABCAM_H
-#define ECGRABCAM_H
+#pragma once
 
 #include <QObject>
 #include <QPointer>
@@ -7,6 +6,8 @@
 
 #include "EntityController.h"
 #include "Entity.h"
+
+namespace qge{
 
 /// An entity controller that makes the game's camera follow the entity around.
 /// Each time the entity moves, the controller will make the game's camera
@@ -29,4 +30,4 @@ public slots:
     void onEntityMoved_(Entity* entity, QPointF fromPos, QPointF toPos);
 };
 
-#endif // ECGRABCAM_H
+}

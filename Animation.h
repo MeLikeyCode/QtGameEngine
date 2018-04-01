@@ -1,15 +1,17 @@
-#ifndef ANIMATION_H
-#define ANIMATION_H
+#pragma once
 
 #include <vector>
 #include <QSizeF>
 #include <QObject>
 #include <QGraphicsItem>
 
-class SpriteSheet;
-class Node;
 class QTimer;
 class QPixmap;
+
+namespace qge{
+
+class SpriteSheet;
+class Node;
 
 /// A QGraphicsItem that represents a series of images that will be shown one after the other at a
 /// certain speed ("frames per second").
@@ -77,4 +79,4 @@ private:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 };
 
-#endif // ANIMATION_H
+}

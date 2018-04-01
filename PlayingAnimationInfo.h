@@ -2,6 +2,8 @@
 
 #include <string>
 
+namespace qge{
+
 /// Simple class that represents information about a currently playing animation.
 class PlayingAnimationInfo
 {
@@ -23,3 +25,4 @@ private:
     int currentFrame_;
 };
 
+}

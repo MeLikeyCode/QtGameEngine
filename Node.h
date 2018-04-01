@@ -1,7 +1,8 @@
-#ifndef NODE_H
-#define NODE_H
+#pragma once
 
 #include <vector>
+
+namespace qge{
 
 class Graph;
 
@@ -34,17 +35,19 @@ private:
 };
 
 // non member comparison operators
-bool operator==(const Node& lhs, const Node& rhs);
-bool operator!=(const Node& lhs, const Node& rhs);
+bool operator==(const qge::Node& lhs, const qge::Node& rhs);
+bool operator!=(const qge::Node& lhs, const qge::Node& rhs);
+
+}
+
+
 
 // make node hashable
 namespace std {
-template <> struct hash<Node>
+template <> struct hash<qge::Node>
 {
-    size_t operator()(const Node& node) const{
+    size_t operator()(const qge::Node& node) const{
         return hash<int>()(node.x()) + hash<int>()(node.y());
     }
 };
 }
-
-#endif // NODE_H

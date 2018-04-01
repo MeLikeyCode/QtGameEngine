@@ -1,5 +1,7 @@
 #include "Node.h"
 
+using namespace qge;
+
 /// Constructs a Node with values x = 0, and y = 0.
 Node::Node(): x_(0), y_(0){
 
@@ -31,12 +33,12 @@ void Node::setY( int y){
 }
 
 /// Returns true if both Nodes have the same x and y values.
-bool operator==(const Node &lhs, const Node &rhs){
+bool qge::operator==(const Node &lhs, const Node &rhs){
     return (lhs.x() == rhs.x()) && (lhs.y() == rhs.y());
 }
 
 /// Returns true if the two Nodes do not have the same x and y values.
-bool operator!=(const Node &lhs, const Node &rhs)
+bool qge::operator!=(const Node &lhs, const Node &rhs)
 {
-    return !(operator==(lhs,rhs));
+    return !(qge::operator==(lhs,rhs));
 }

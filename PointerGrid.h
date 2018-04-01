@@ -4,6 +4,8 @@
 #include <Node.h>
 #include <cassert>
 
+namespace qge{
+
 /// A grid of pointers of any type. This structure is useful if you want to have a bunch of
 /// pointers arranged in a gridlike fashion (cells/columns). The top left cell of the grid is
 /// (0,0), bottom right is (numPointersX - 1, numPointerY - 1)
@@ -130,4 +132,6 @@ std::vector<PointerType *> PointerGrid<PointerType>::pointers() const
         }
     }
     return resultantPointers;
+}
+
 }

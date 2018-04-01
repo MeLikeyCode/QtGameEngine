@@ -1,15 +1,17 @@
-#ifndef PROJECTILE_H
-#define PROJECTILE_H
+#pragma once
 
 #include <unordered_set>
+#include <QPointer>
+#include <memory>
+
 #include "Entity.h"
 #include "ECMover.h"
 #include "CollisionBehavior.h"
-#include <memory>
-#include <QPointer>
 #include "DestReachedBehavior.h"
 
 class QTimer;
+
+namespace qge{
 
 /// An Entity that represents a projectile that moves a certain way and collides with things
 /// along the way.
@@ -85,4 +87,4 @@ private:
     QTimer* homeTimer_;
 };
 
-#endif // PROJECTILE_H
+}

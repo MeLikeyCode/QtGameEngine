@@ -1,10 +1,14 @@
 #include "Slot.h"
+
+#include <cassert>
+
 #include "EquipableItem.h"
 #include "Sprite.h"
 #include "Entity.h"
-#include <cassert>
 #include "Map.h"
 #include "Inventory.h"
+
+using namespace qge;
 
 Slot::Slot():
     item_(nullptr),

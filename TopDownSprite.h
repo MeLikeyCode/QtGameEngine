@@ -1,9 +1,10 @@
-#ifndef TOPDOWNSPRITE_H
-#define TOPDOWNSPRITE_H
+#pragma once
 
 #include <string>
 
 #include "EntitySprite.h"
+
+namespace qge{
 
 class Sprite;
 class SpriteSheet;
@@ -59,4 +60,4 @@ private:
     void commonInitialize_();
 };
 
-#endif // TOPDOWNSPRITE_H
+}

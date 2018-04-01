@@ -1,5 +1,8 @@
 #include "PlayingAnimationInfo.h"
+
 #include <cassert>
+
+using namespace qge;
 
 /// Constructs a PlayingAnimationInfo that reprsents no animation playing.
 PlayingAnimationInfo::PlayingAnimationInfo():

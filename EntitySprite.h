@@ -1,5 +1,4 @@
-#ifndef ENTITYSPRITE_H
-#define ENTITYSPRITE_H
+#pragma once
 
 #include <QObject>
 #include <string>
@@ -11,6 +10,8 @@
 class QGraphicsItem;
 class QRectF;
 class QPixmap;
+
+namespace qge{
 
 /// Represents the visual aspect of an Entity.
 /// An EntitySprite has a facing angle. When it is asked to play one of its animations, it
@@ -129,4 +130,4 @@ protected:
     PlayingAnimationInfo animationPlayingBefore_;
 };
 
-#endif // ENTITYSPRITE_H
+}

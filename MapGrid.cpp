@@ -1,6 +1,9 @@
 #include "MapGrid.h"
+
 #include <cassert>
 #include <Node.h>
+
+using namespace qge;
 
 MapGrid::MapGrid(int numMapsHorizontally, int numMapsVertically):
     pointerGrid_(numMapsHorizontally,numMapsVertically)

@@ -1,10 +1,14 @@
 #include "RangedWeaponSlot.h"
-#include "RangedWeapon.h"
+
 #include <QLineF>
+#include <cassert>
+
+#include "RangedWeapon.h"
 #include "Inventory.h"
 #include "Entity.h"
 #include "QPointF"
-#include <cassert>
+
+using namespace qge;
 
 /// Returns weather the RangedWeaponSlot can equip the specified item.
 bool RangedWeaponSlot::canBeEquipped(EquipableItem *item)

@@ -6,6 +6,8 @@
 #include <QPointF>
 #include <QRectF>
 
+using namespace qge;
+
 RandomGenerator::RandomGenerator()
 {
     // seed

@@ -1,7 +1,8 @@
-#ifndef DRBDESTROYPROJECTILE_H
-#define DRBDESTROYPROJECTILE_H
+#pragma once
 
 #include "DestReachedBehavior.h"
+
+namespace qge{
 
 /// A DestReachedBehavior that simply destroys the projectile.
 /// @author Abdullah Aghazadah
@@ -12,4 +13,4 @@ public:
     virtual void onDestinationReached(Projectile& projectile);
 };
 
-#endif // DRBDESTROYPROJECTILE_H
+}

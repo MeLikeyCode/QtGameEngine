@@ -1,12 +1,16 @@
 #include "Inventory.h"
+
+#include <cassert>
+
 #include "EquipableItem.h"
 #include "NoTargetItem.h"
 #include "EntityTargetItem.h"
 #include "PointTargetItem.h"
-#include <cassert>
 #include "Sprite.h"
 #include "Entity.h"
 #include "Map.h"
+
+using namespace qge;
 
 Inventory::Inventory():
     entity_(nullptr)

@@ -1,5 +1,4 @@
-#ifndef ECMOVEBYKEYBOARDEIGHTDIRECTIONAL_H
-#define ECMOVEBYKEYBOARDEIGHTDIRECTIONAL_H
+#pragma once
 
 #include <QPointer>
 
@@ -7,6 +6,8 @@
 #include "Entity.h"
 
 class QTimer;
+
+namespace qge{
 
 /// An entity controller (TODO: link to documentation) that
 /// moves an Entity relative to the screen in response to keyboard keys.
@@ -40,4 +41,4 @@ private:
     void playAnimIfHas_(std::string anim);
 };
 
-#endif // ECMOVEBYKEYBOARDEIGHTDIRECTIONAL_H
+}

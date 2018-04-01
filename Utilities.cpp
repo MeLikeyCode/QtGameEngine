@@ -16,9 +16,10 @@
 #include "EntitySprite.h"
 #include "RandomGenerator.h"
 
+using namespace qge;
 
 /// Adds the specified number of trees randomly scattered on the specified Map.
-void addRandomTrees(Map *mapToAddTreesTo, int numTreesToAdd, const std::string& treeNumber, int numImages)
+void qge::addRandomTrees(Map *mapToAddTreesTo, int numTreesToAdd, const std::string& treeNumber, int numImages)
 {
     for (int i = 0, n = numTreesToAdd; i < n; i++){
         std::string pmPath;
@@ -51,7 +52,7 @@ void addRandomTrees(Map *mapToAddTreesTo, int numTreesToAdd, const std::string& 
 /// I.e. if my character rotates 10 degrees at a time (stepSize) and I want him to
 /// rotate at 50 degrees per second, how often (in seconds) should I move him?
 /// Obviously, you need to make sure you are consistent in your units.
-double frequency(double stepSize, double targetRate)
+double qge::frequency(double stepSize, double targetRate)
 {
     // stepFrequency = stepSize / targetRate
 
@@ -60,7 +61,7 @@ double frequency(double stepSize, double targetRate)
 }
 
 /// Converts seconds to milliseconds.
-double secondsToMs(double seconds)
+double qge::secondsToMs(double seconds)
 {
     static const int MS_IN_S = 1000;
 
@@ -69,7 +70,7 @@ double secondsToMs(double seconds)
 }
 
 /// Converts milliseconds to seconds.
-double msToSeconds(double milliseconds)
+double qge::msToSeconds(double milliseconds)
 {
     return milliseconds/1000.0;
 }
@@ -78,7 +79,7 @@ double msToSeconds(double milliseconds)
 /// Generates a random 32 bit number (unsigned).
 /// This function is a lot more inexpensive than rand() but also not as reliable
 /// (i.e. for scientific purposes).
-quint32 fastRandom()
+quint32 qge::fastRandom()
 {
     static quint32 num = 7;
 
@@ -91,7 +92,7 @@ quint32 fastRandom()
 
 /// Returns the angle in 'allAngles' that is the closest to the 'targetAngle'.
 /// Angles are measured from 0-360 and "wrap around".
-double closestAngle(const std::vector<int> &allAngles, double targetAngle)
+double qge::closestAngle(const std::vector<int> &allAngles, double targetAngle)
 {
     assert(!allAngles.empty());
 
@@ -116,14 +117,14 @@ double closestAngle(const std::vector<int> &allAngles, double targetAngle)
     return closest;
 }
 
-double randInt(int from, int to)
+double qge::randInt(int from, int to)
 {
     static RandomGenerator generator;
 
     return generator.randInt(from,to);
 }
 
-double randDouble(double from, double to)
+double qge::randDouble(double from, double to)
 {
     static RandomGenerator generator;
 

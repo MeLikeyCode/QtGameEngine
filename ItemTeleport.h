@@ -1,7 +1,8 @@
-#ifndef ITEMTELEPORT_H
-#define ITEMTELEPORT_H
+#pragma once
 
 #include "PointTargetItem.h"
+
+namespace qge{
 
 class Sound;
 
@@ -15,4 +16,4 @@ private:
     Sound* soundEffect_;
 };
 
-#endif // ITEMTELEPORT_H
+}

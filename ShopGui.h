@@ -1,17 +1,20 @@
-#ifndef SHOPGUI_H
-#define SHOPGUI_H
+#pragma once
+
+#include <QPointer>
+#include <QObject>
 
 #include "Gui.h"
 #include "InventoryViewer.h"
-#include <QPointer>
-#include <QObject>
+
+class QGraphicsItem;
+
+namespace qge{
 
 class Inventory;
 class Panel;
 class Label;
 class Button;
 class Item;
-class QGraphicsItem;
 class ShopGuiBehavior;
 
 /// A Gui that allows you to transfer Items visually from a "seller" Inventory
@@ -53,4 +56,4 @@ private:
     Button* closeButton_;
 };
 
-#endif // SHOPGUI_H
+}

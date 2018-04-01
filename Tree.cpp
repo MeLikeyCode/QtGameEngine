@@ -1,5 +1,8 @@
 #include "Tree.h"
+
 #include <cassert>
+
+using namespace qge;
 
 /// Constructs a Tree with just a root Node.
 Tree::Tree(const Node &root): root_(root), graph_(){

@@ -7,6 +7,8 @@
 #include "Utilities.h"
 #include "Node.h"
 
+using namespace qge;
+
 /// Constructs an Animation with no frames.
 /// Use addFrame() or addFrames() to add some frames.
 Animation::Animation(QGraphicsItem *parent):

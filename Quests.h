@@ -1,9 +1,11 @@
-#ifndef QUESTS_H
-#define QUESTS_H
+#pragma once
 
 #include <QObject>
 #include <vector>
+
 #include "Quest.h"
+
+namespace qge{
 
 /// Represents a collection of Quests. Will emit events whenever a quest
 /// is added, removed, or if the status of any quest is changed.
@@ -40,4 +42,4 @@ private:
     std::vector<Quest*> quests_;
 };
 
-#endif // QUESTS_H
+}

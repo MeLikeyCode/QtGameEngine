@@ -1,5 +1,8 @@
 #include "AsyncShortestPathFinder.h"
+
 #include <QDebug>
+
+using namespace qge;
 
 /// Calculates a Path from a starting point to an ending point in the specified
 /// PathingMap.

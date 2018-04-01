@@ -1,5 +1,7 @@
 #include "Weapon.h"
 
+using namespace qge;
+
 Weapon::Weapon():
     castRange_(100)
 {

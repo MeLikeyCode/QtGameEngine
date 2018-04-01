@@ -1,9 +1,11 @@
-#ifndef FIREBALLLAUNCHER_H
-#define FIREBALLLAUNCHER_H
+#pragma once
 
 #include "RangedWeapon.h"
 
 class QPointF;
+
+namespace qge{
+
 class Sound;
 
 /// A RangedWeapon that on attack() will launch a fireball towards the specified position.
@@ -17,4 +19,4 @@ private:
     Sound* soundEffect_;
 };
 
-#endif // FIREBALLLAUNCHER_H
+}

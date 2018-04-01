@@ -1,5 +1,4 @@
-#ifndef ECCHECKFOV_H
-#define ECCHECKFOV_H
+#pragma once
 
 #include <unordered_set>
 #include <QPointer>
@@ -9,6 +8,8 @@
 #include "Entity.h"
 
 class QTimer;
+
+namespace qge{
 
 /// An entity controller that checks the field of view of
 /// the controlled entity and emits a signal whenever other entities enter or leave the
@@ -66,4 +67,4 @@ private:
     std::unordered_set<Entity*> entitiesInViewLastTime_;
 };
 
-#endif // ECCHECKFOV_H
+}

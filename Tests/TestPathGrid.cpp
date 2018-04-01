@@ -4,6 +4,8 @@
 #include <cassert>
 #include <algorithm>
 
+using namespace qge;
+
 TestPathGrid::TestPathGrid(){
     // create a PathGrid
     PathGrid pathGrid(5,5);

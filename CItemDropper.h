@@ -1,8 +1,9 @@
-#ifndef CITEMDROPPER_H
-#define CITEMDROPPER_H
+#pragma once
 
 #include <QObject>
 #include <unordered_set>
+
+namespace qge{
 
 class Entity;
 
@@ -23,4 +24,4 @@ private:
 
 };
 
-#endif // CITEMDROPPER_H
+}

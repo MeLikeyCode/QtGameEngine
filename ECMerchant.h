@@ -2,6 +2,8 @@
 
 #include "EntityController.h"
 
+namespace qge{
+
 class ECGuiShower;
 class ShopGui;
 
@@ -25,3 +27,5 @@ private:
     ECGuiShower* guiShower_;
     ShopGui* shopGui_;
 };
+
+}

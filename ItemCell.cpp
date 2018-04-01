@@ -13,6 +13,7 @@
 #include "Sprite.h"
 #include "EntitySprite.h"
 
+using namespace qge;
 
 /// Constructs an ItemCell with the given width, height, and Item.
 ItemCell::ItemCell(int width, int height, Item *item):

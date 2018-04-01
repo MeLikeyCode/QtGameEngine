@@ -1,5 +1,4 @@
-#ifndef ECATTACKENEMIESWITHWEAPON_H
-#define ECATTACKENEMIESWITHWEAPON_H
+#pragma once
 
 #include <QPointer>
 #include <QObject>
@@ -7,6 +6,8 @@
 
 #include "Entity.h"
 #include "EntityController.h"
+
+namespace qge{
 
 class ECChaser;
 
@@ -48,4 +49,4 @@ private:
     ECChaser* controllerChaseEnemies_;
 };
 
-#endif // ECATTACKENEMIESWITHWEAPON_H
+}

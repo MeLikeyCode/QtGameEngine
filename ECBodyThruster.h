@@ -1,5 +1,4 @@
-#ifndef ECBODYTHRUSTER_H
-#define ECBODYTHRUSTER_H
+#pragma once
 
 #include <QPointer>
 #include <QObject>
@@ -8,9 +7,12 @@
 #include "EntityController.h"
 #include "Entity.h"
 
+class QTimer;
+
+namespace qge{
+
 class ECChaser;
 class BodyThrust;
-class QTimer;
 
 /// An entity controller that causes the controlled entity to chase certain other entites
 /// in its field of view and use the BodyThrust ability on them when close enough.
@@ -53,4 +55,4 @@ private:
     void bodyThrustIfCloseEnough_();
 };
 
-#endif // ECBODYTHRUSTER_H
+}

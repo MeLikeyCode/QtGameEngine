@@ -2,19 +2,22 @@
 
 #include <string>
 #include <cassert>
+#include <QGraphicsScene>
+#include <QLineF>
+#include <algorithm>
+
 #include "Map.h"
 #include "EntitySprite.h"
 #include "TopDownSprite.h"
-#include <QGraphicsScene>
-#include <QLineF>
 #include "Game.h"
 #include "EquipableItem.h"
 #include "Inventory.h"
 #include "Slot.h"
-#include <algorithm>
 #include "QGraphicsItem"
 #include "EntityController.h"
 #include "Utilities.h"
+
+using namespace qge;
 
 /// Constructs a default entity.
 Entity::Entity():

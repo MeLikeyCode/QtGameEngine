@@ -1,8 +1,9 @@
-#ifndef QUEST_H
-#define QUEST_H
+#pragma once
 
 #include <QObject>
 #include <string>
+
+namespace qge{
 
 /// Enumeration representing the status of a Quest.
 enum class QuestStatus {
@@ -38,4 +39,4 @@ private:
     QuestStatus status_;
 };
 
-#endif // QUEST_H
+}

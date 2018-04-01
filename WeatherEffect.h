@@ -1,9 +1,11 @@
-#ifndef WEATHER_H
-#define WEATHER_H
+#pragma once
 
 #include <QObject>
-#include "Map.h"
 #include <QPointer>
+
+#include "Map.h"
+
+namespace qge{
 
 /// Abstract class that represents a weather effect for a Map. To add a
 /// WeatherEffect effect to a Map, first create an instance of the
@@ -79,4 +81,4 @@ private:
     void setMap_(Map &map);
 };
 
-#endif // WEATHER_H
+}

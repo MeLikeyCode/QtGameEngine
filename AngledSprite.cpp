@@ -6,6 +6,8 @@
 #include "Utilities.h"
 #include "STLWrappers.h"
 
+using namespace qge;
+
 AngledSprite::AngledSprite(): sprite_(new Sprite())
 {
     underlyingItem_ = sprite_;

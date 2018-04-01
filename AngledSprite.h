@@ -1,5 +1,4 @@
-#ifndef ANGLEDSPRITE_H
-#define ANGLEDSPRITE_H
+#pragma once
 
 #include <string>
 #include <vector>
@@ -8,11 +7,15 @@
 
 #include "EntitySprite.h"
 
-class Sprite;
 class QRectF;
+class QPixmap;
+
+namespace qge{
+
+class Sprite;
 class SpriteSheet;
 class Node;
-class QPixmap;
+
 
 class AngledSprite : public EntitySprite
 {
@@ -54,4 +57,4 @@ private:
 
 };
 
-#endif // ANGLEDSPRITE_H
+}

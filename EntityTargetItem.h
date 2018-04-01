@@ -1,7 +1,8 @@
-#ifndef ENTITYTARGETITEM_H
-#define ENTITYTARGETITEM_H
+#pragma once
 
 #include "Item.h"
+
+namespace qge{
 
 class Entity;
 
@@ -16,4 +17,4 @@ protected:
     virtual void use_(Entity* onEntity) = 0;
 };
 
-#endif // ENTITYTARGETITEM_H
+}

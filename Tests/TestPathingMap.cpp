@@ -4,6 +4,8 @@
 #include <cassert>
 #include <algorithm>
 
+using namespace qge;
+
 TestPathingMap::TestPathingMap(){
     // =test construction=
     PathingMap pathingMap(5,5,100);

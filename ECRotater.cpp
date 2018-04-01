@@ -1,10 +1,14 @@
 #include "ECRotater.h"
+
+#include <cassert>
+#include <QTimer>
+#include <QLineF>
+
 #include "Entity.h"
 #include "Sprite.h"
-#include <cassert>
-#include <QLineF>
-#include <QTimer>
 #include "Utilities.h"
+
+using namespace qge;
 
 ECRotater::ECRotater(Entity* entity):
     EntityController(entity),

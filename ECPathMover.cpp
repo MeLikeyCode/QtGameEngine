@@ -1,13 +1,17 @@
 #include "ECPathMover.h"
+
 #include <QTimer>
 #include <cassert>
 #include <AsyncShortestPathFinder.h>
+#include <QLineF>
+
 #include "Sprite.h"
 #include "Map.h"
 #include "ECRotater.h"
-#include <QLineF>
 #include "Utilities.h"
 #include "EntitySprite.h"
+
+using namespace qge;
 
 ECPathMover::ECPathMover(Entity *entity):
     ECMover(entity),

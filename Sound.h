@@ -5,6 +5,8 @@
 #include <QObject>
 #include <QTimer>
 
+namespace qge{
+
 /// Represents a sound that can be played a certain number of times (including
 /// an infinite number of times). The sound will emit a signal when its done
 /// playing however many times it has been asked to play.
@@ -45,3 +47,5 @@ private:
     int numTimesPlayed_;
     int numTimesToPlay_;
 };
+
+}

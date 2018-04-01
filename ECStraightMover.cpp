@@ -7,6 +7,8 @@
 #include "Utilities.h"
 #include "QtUtilities.h"
 
+using namespace qge;
+
 ECStraightMover::ECStraightMover(Entity *entity):
     ECMover(entity),
     speed_(entity->speed()),

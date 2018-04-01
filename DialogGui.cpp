@@ -1,7 +1,11 @@
 #include "DialogGui.h"
+
+#include <cassert>
+
 #include "Label.h"
 #include "ScrollWindow.h"
-#include <cassert>
+
+using namespace qge;
 
 /// Constructs a default DialogGui, which shows no Response/Choices.
 DialogGui::DialogGui():

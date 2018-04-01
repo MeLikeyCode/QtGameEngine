@@ -1,13 +1,15 @@
-#ifndef STRAIGHTMOVER_H
-#define STRAIGHTMOVER_H
+#pragma once
 
 #include <QPointer>
 #include <QObject>
-#include "Entity.h"
 #include <QPointF>
+
+#include "Entity.h"
 #include "ECMover.h"
 
 class QTimer;
+
+namespace qge{
 
 /// A Mover that moves the Entity in a straight line. By default, the entity
 /// will be moved at a speed determined by its Entity::speed() function, but
@@ -57,4 +59,4 @@ private:
     int stepSize_;
 };
 
-#endif // STRAIGHTMOVER_H
+}

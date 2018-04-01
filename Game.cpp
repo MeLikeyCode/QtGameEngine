@@ -1,7 +1,12 @@
 #include "Game.h"
 
-#include "Map.h"
+#include <cstdlib>
 #include <QMouseEvent>
+#include <ctime>
+#include <cassert>
+#include <QGraphicsItem>
+
+#include "Map.h"
 #include "Spear.h" // TODO remove, test
 #include "Entity.h"
 #include "Slot.h"
@@ -10,14 +15,10 @@
 #include "Axe.h"
 #include "Bow.h"
 #include "InventoryViewer.h"
-#include <cstdlib>
-#include <ctime>
 #include "WeatherEffect.h"
 #include "RainWeather.h"
 #include "MapGrid.h"
 #include "Gui.h"
-#include <cassert>
-#include <QGraphicsItem>
 #include "TopDownSprite.h"
 #include "QtUtilities.h"
 #include "STLWrappers.h"
@@ -27,6 +28,8 @@
 #include "Sprite.h" // TODO: delete, test only
 #include "RangedWeaponSlot.h" // TODO: delete, test only
 #include "MeleeWeaponSlot.h"
+
+using namespace qge;
 
 extern Entity* player;
 

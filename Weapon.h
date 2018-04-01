@@ -1,7 +1,8 @@
-#ifndef WEAPON_H
-#define WEAPON_H
+#pragma once
 
 #include "EquipableItem.h"
+
+namespace qge{
 
 /// An abstract class that represents an EquipableItem that can
 /// attack towards a position.
@@ -19,4 +20,4 @@ private:
     double castRange_; // how far can this weapon be used from?
 };
 
-#endif // WEAPON_H
+}

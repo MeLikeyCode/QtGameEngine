@@ -1,10 +1,11 @@
-#ifndef ECMOVEBYKEYBOARDPERSPECTIVE_H
-#define ECMOVEBYKEYBOARDPERSPECTIVE_H
+#pragma once
 
 #include <QPointer>
 
 #include "EntityController.h"
 #include "Entity.h"
+
+namespace qge{
 
 /// An entity controller (TODO: link to doc) that moves an Entity relative to
 /// his own facing angle in response to keyboard keys.
@@ -34,4 +35,4 @@ private:
     void playAnimIfExistsAndNoOtherPlaying_(std::string anim);
 };
 
-#endif // ECMOVEBYKEYBOARDPERSPECTIVE_H
+}

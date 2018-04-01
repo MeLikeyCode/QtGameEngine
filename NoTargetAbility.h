@@ -1,7 +1,8 @@
-#ifndef NOTARGETABILITY_H
-#define NOTARGETABILITY_H
+#pragma once
 
 #include "Ability.h"
+
+namespace qge{
 
 /// An Ability that can simply be used with no target.
 /// @author Abdullah Aghazadah
@@ -17,4 +18,4 @@ protected:
     virtual void useImplementation() = 0;
 };
 
-#endif // NOTARGETABILITY_H
+}

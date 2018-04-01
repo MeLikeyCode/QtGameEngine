@@ -1,9 +1,13 @@
 #include "ECMapMover.h"
+
 #include <cassert>
+
 #include "Map.h"
 #include "Game.h"
 #include "MapGrid.h"
 #include "Node.h"
+
+using namespace qge;
 
 ECMapMover::ECMapMover(Entity *entity):
     EntityController(entity),

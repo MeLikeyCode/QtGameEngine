@@ -1,5 +1,6 @@
-#ifndef COLLISIONBEHAVIOR_H
-#define COLLISIONBEHAVIOR_H
+#pragma once
+
+namespace qge{
 
 class Entity;
 
@@ -16,4 +17,4 @@ public:
     virtual void onCollided(Entity* entityOne, Entity* entityTwo) = 0;
 };
 
-#endif // COLLISIONBEHAVIOR_H
+}

@@ -1,8 +1,9 @@
-#ifndef INVENTORY_H
-#define INVENTORY_H
+#pragma once
 
 #include <unordered_set>
 #include <QObject>
+
+namespace qge{
 
 class Item;
 class Entity;
@@ -49,4 +50,4 @@ private:
     std::unordered_set<Item*> items_;
 };
 
-#endif // INVENTORY_H
+}

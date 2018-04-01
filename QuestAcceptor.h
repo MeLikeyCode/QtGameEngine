@@ -1,10 +1,12 @@
-#ifndef QUESTACCEPTOR_H
-#define QUESTACCEPTOR_H
+#pragma once
+
+#include <memory>
+#include <QObject>
 
 #include "Gui.h"
 #include "QuestViewer.h"
-#include <memory>
-#include <QObject>
+
+namespace qge{
 
 class Button;
 class Quest;
@@ -50,4 +52,4 @@ private:
     Game* game_; // needed for close button to remove the GUI
 };
 
-#endif // QUESTACCEPTOR_H
+}

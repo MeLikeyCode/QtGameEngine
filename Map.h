@@ -11,6 +11,9 @@
 class QPolygonF;
 class QGraphicsItem;
 class QGraphicsScene;
+
+namespace qge{
+
 class TerrainLayer;
 class Entity;
 class Sprite;
@@ -132,3 +135,4 @@ private:
     void setGame_(Game* game);
 };
 
+}

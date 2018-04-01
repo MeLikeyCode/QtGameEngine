@@ -1,4 +1,5 @@
 #include <QGraphicsRectItem>
+
 #include <QBrush>
 #include <QtMath>
 #include <unordered_set>
@@ -11,6 +12,8 @@
 #include "ItemCell.h"
 #include "Item.h"
 #include "ScrollWindow.h"
+
+using namespace qge;
 
 /// Creates a default InventoryViewer which visualizes the specified Inventory.
 InventoryViewer::InventoryViewer(Inventory *inventory):

@@ -1,7 +1,8 @@
-#ifndef WEAPONSLOT_H
-#define WEAPONSLOT_H
+#pragma once
 
 #include "Slot.h"
+
+namespace qge{
 
 class EquipableItem;
 
@@ -12,4 +13,4 @@ public:
     void use();
 };
 
-#endif // WEAPONSLOT_H
+}

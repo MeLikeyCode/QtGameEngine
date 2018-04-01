@@ -1,11 +1,15 @@
 #include "RainWeather.h"
+
 #include <QTimer>
+#include <cassert>
+
 #include "Game.h"
 #include "Sprite.h"
 #include "Map.h"
-#include <cassert>
 #include "Utilities.h"
 #include "Sound.h"
+
+using namespace qge;
 
 RainWeather::RainWeather(QPixmap rainGraphic, int numOfRains, int rainFalldownSpeed, int rainMoveAmountPerStep, int splashStepFreqMs, int numSplashPerStep, double rainInitialOpacity, double rainMaxOpacity, double rainOpacityStepSize, int rainInitialToMaxOpacityTimeMS, double splashInitialOpacity, double splashFinalOpacity, double splashOpacityStepSize, int splashInitialToFinalOpacityTimeMS):
     rainMoveTimer_(new QTimer(this)),

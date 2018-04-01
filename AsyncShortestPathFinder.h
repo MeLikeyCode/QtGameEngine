@@ -1,9 +1,11 @@
-#ifndef ASYNCSHORTESTPATHFINDER_H
-#define ASYNCSHORTESTPATHFINDER_H
+#pragma once
 
 #include <QObject>
 #include <QThread>
+
 #include "PathingMap.h"
+
+namespace qge{
 
 // private helper class
 class Worker : public QObject
@@ -45,4 +47,4 @@ private:
     QThread workerThread_;
 };
 
-#endif // ASYNCSHORTESTPATHFINDER_H
+}

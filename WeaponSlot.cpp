@@ -2,6 +2,8 @@
 
 #include "Weapon.h"
 
+using namespace qge;
+
 bool WeaponSlot::canBeEquipped(EquipableItem *item)
 {
     // WeaponSlot can only equip Weapons

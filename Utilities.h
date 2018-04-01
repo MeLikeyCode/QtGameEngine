@@ -1,8 +1,11 @@
-#ifndef UTILITIES_H
-#define UTILITIES_H
+#pragma once
 
 #include <QtGlobal>
 #include <vector>
+
+class QPointF;
+
+namespace qge{
 
 /// This file contains a bunch of utility functions for the game engine.
 /// @author Abdullah Aghazadah
@@ -10,7 +13,6 @@
 /// @file
 
 class Map;
-class QPointF;
 class AIEntity;
 class Entity;
 
@@ -26,4 +28,4 @@ double closestAngle(const std::vector<int>& allAngles, double targetAngle);
 double randInt(int from, int to);
 double randDouble(double from, double to);
 
-#endif // UTILITIES_H
+}

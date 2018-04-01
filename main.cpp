@@ -54,6 +54,8 @@
 #include "Quests.h"
 #include "Quest.h"
 
+using namespace qge;
+
 Entity* player;
 CItemDropper* itemDropper;
 

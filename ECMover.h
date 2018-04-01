@@ -1,5 +1,4 @@
-#ifndef MOVER_H
-#define MOVER_H
+#pragma once
 
 #include <QPointer>
 
@@ -7,6 +6,8 @@
 #include "Entity.h"
 
 class QPointF;
+
+namespace qge{
 
 /// A EntityController that can somehow move an Entity from its current position to a
 /// specified position. *How* the object moves depends on the concrete Mover
@@ -98,4 +99,4 @@ private:
     bool isMovingEntity_;
 };
 
-#endif // MOVER_H
+}

@@ -1,11 +1,15 @@
 #include "ECKeyboardMover4Directional.h"
-#include "Map.h"
+
 #include <QTimer>
 #include <cassert>
+
+#include "Map.h"
 #include "Game.h"
 #include "Sprite.h"
 #include "Utilities.h"
 #include "EntitySprite.h"
+
+using namespace qge;
 
 ECKeyboardMover4Directional::ECKeyboardMover4Directional(Entity *entity):
     EntityController(entity),

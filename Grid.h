@@ -1,10 +1,12 @@
-#ifndef GRID_H
-#define GRID_H
+#pragma once
 
 #include <vector>
 
 class QPointF;
 class QRectF;
+
+namespace qge{
+
 class Node;
 
 /// Represents a region of 2d space that is divided into a grid of cells.
@@ -66,4 +68,4 @@ private:
     int height_;
 };
 
-#endif // GRID_H
+}

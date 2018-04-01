@@ -1,10 +1,12 @@
-#ifndef PATHGRID_H
-#define PATHGRID_H
+#pragma once
 
 #include <vector>
-#include "Node.h"
 #include <unordered_map>
+
+#include "Node.h"
 #include "Graph.h"
+
+namespace qge{
 
 /// Represents a grid of Nodes, each of which can either be filled or unfilled.
 /// @author Abdullah Aghazadah
@@ -55,4 +57,4 @@ private:
 
 };
 
-#endif // PATHGRID_H
+}

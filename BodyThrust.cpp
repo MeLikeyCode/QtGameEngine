@@ -1,14 +1,18 @@
 #include "BodyThrust.h"
-#include "Sprite.h"
-#include "Map.h"
+
 #include <QGraphicsScene>
 #include <QDebug> // TODO: remove
+#include <cassert>
+
+#include "Sprite.h"
+#include "Map.h"
 #include "Inventory.h"
 #include "Entity.h"
 #include "Sound.h"
-#include <cassert>
 #include "QTimer"
 #include "EntitySprite.h"
+
+using namespace qge;
 
 BodyThrust::BodyThrust(Entity &owner):
     NoTargetAbility(owner,nullptr)

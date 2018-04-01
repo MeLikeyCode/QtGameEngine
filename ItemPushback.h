@@ -1,7 +1,8 @@
-#ifndef ITEMPUSHBACK_H
-#define ITEMPUSHBACK_H
+#pragma once
 
 #include "EntityTargetItem.h"
+
+namespace qge{
 
 class Entity;
 
@@ -13,4 +14,4 @@ public:
     virtual void use_(Entity *onEntity);
 };
 
-#endif // ITEMPUSHBACK_H
+}

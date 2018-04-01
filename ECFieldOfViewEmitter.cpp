@@ -1,13 +1,17 @@
 #include "ECFieldOfViewEmitter.h"
-#include "Entity.h"
+
 #include <cassert>
-#include "Map.h"
 #include <QObject>
 #include <QTimer>
 #include <QLineF>
 #include <QPointF>
 #include <QPolygonF>
 #include <QDebug>
+
+#include "Entity.h"
+#include "Map.h"
+
+using namespace qge;
 
 ECFieldOfViewEmitter::ECFieldOfViewEmitter(Entity *entity, double fovAngle, double fovDistance):
     EntityController(entity),

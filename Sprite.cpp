@@ -10,6 +10,8 @@
 #include "Utilities.h"
 #include "PlayingAnimationInfo.h"
 
+using namespace qge;
+
 /// Constructs a Sprite with a default displayed frame.
 Sprite::Sprite(QGraphicsItem *parent): QGraphicsItem(parent)
 {

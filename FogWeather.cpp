@@ -1,13 +1,17 @@
 #include "FogWeather.h"
+
 #include <QTimer>
-#include "Map.h"
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
-#include "Game.h"
 #include <cassert>
-#include "Utilities.h"
 #include <QRectF>
 #include <QDebug>
+
+#include "Utilities.h"
+#include "Map.h"
+#include "Game.h"
+
+using namespace qge;
 
 FogWeather::FogWeather(QPixmap tileableFogGraphic, int tileWidth, int tileHeight, double initialOpacity, double finalOpacity, double opacityFadeTimeMs, double opacityStepSize) :
     opacityTimer_(new QTimer(this)),

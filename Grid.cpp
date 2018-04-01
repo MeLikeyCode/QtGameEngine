@@ -6,6 +6,8 @@
 
 #include "Node.h"
 
+using namespace qge;
+
 /// Constructs an empty Grid (no cells).
 Grid::Grid():
     numXCells_(0),

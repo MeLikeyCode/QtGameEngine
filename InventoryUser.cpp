@@ -1,4 +1,7 @@
 #include "InventoryUser.h"
+
+#include <cassert>
+
 #include "InventoryViewer.h"
 #include "Game.h"
 #include "EquipableItem.h"
@@ -8,7 +11,8 @@
 #include "PointTargetItem.h"
 #include "EntityTargetItem.h"
 #include "Entity.h"
-#include <cassert>
+
+using namespace qge;
 
 /// Constructs an InventoryViewer.
 /// Game is needed because "using" some items requires changing the

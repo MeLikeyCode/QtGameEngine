@@ -1,5 +1,4 @@
-#ifndef GUI_H
-#define GUI_H
+#pragma once
 
 #include <QObject>
 #include <QPointF>
@@ -7,9 +6,12 @@
 #include <QPointer>
 
 class QGraphicsItem;
-class Game;
 class QGraphicsItem;
 class QRectF;
+
+namespace qge{
+
+class Game;
 
 /// Abstract class that Represents a GUI element in a Game.
 ///
@@ -56,4 +58,4 @@ private:
     std::vector<QRectF> getBoundingBoxesFor_(QGraphicsItem* gi, QGraphicsItem *mapTo);
 };
 
-#endif // GUI_H
+}

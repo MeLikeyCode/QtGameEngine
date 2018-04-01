@@ -1,7 +1,8 @@
-#ifndef ITEMGOLD_H
-#define ITEMGOLD_H
+#pragma once
 
 #include "NoTargetItem.h"
+
+namespace qge{
 
 /// An Item of value.
 /// Does not do anything, some shops and such will take some of this item
@@ -14,4 +15,4 @@ public:
     virtual void use_();
 };
 
-#endif // ITEMGOLD_H
+}

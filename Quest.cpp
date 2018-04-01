@@ -1,5 +1,7 @@
 #include "Quest.h"
 
+using namespace qge;
+
 /// Constructs a Quest with the specified name, description and optionally, initial status.
 Quest::Quest(const std::string &name, const std::string &description, QuestStatus initialStatus):
     name_(name),

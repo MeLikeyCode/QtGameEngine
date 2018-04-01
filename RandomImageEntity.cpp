@@ -1,9 +1,12 @@
 #include "RandomImageEntity.h"
+
 #include "Sprite.h"
 #include "stdlib.h" // rand() and srand()
 #include "time.h" // time(0) -> current time in ms
 #include "TopDownSprite.h"
 #include "Utilities.h"
+
+using namespace qge;
 
 /// Constructs an entity whos display image will be randomly chosen from a set of images in a folder.
 /// @param resourceFolderPath folder with the images

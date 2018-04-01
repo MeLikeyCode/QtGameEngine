@@ -1,11 +1,15 @@
 #include "ItemTeleport.h"
+
+#include <cassert>
+
 #include "Sprite.h"
 #include "Entity.h"
-#include <cassert>
 #include "Inventory.h"
 #include "Map.h"
 #include "Sound.h"
 #include "TopDownSprite.h"
+
+using namespace qge;
 
 ItemTeleport::ItemTeleport()
 {

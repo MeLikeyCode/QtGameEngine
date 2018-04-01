@@ -6,6 +6,8 @@
 #include <QDebug>
 #include <QBrush>
 
+using namespace qge;
+
 Label::Label():
     textItem_(new QGraphicsTextItem(this)),
     font_("Tahoma"),

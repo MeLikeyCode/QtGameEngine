@@ -1,10 +1,11 @@
-#ifndef ECPICKUPITEM_H
-#define ECPICKUPITEM_H
+#pragma once
 
 #include <QPointer>
 
 #include "EntityController.h"
 #include "Entity.h"
+
+namespace qge{
 
 /// An entity controller that causes the controlled entity to pick up items
 /// as he collides with them.
@@ -18,4 +19,4 @@ public slots:
     void onCollide(Entity* controlledEntity, Entity* collidedWith);
 };
 
-#endif // ECPICKUPITEM_H
+}

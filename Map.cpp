@@ -1,19 +1,22 @@
 #include "Map.h"
 
-#include "TerrainLayer.h"
-#include "Entity.h"
+#include <QGraphicsScene>
 #include <cassert>
 #include <QBrush>
-#include <QGraphicsScene>
+#include <QGraphicsOpacityEffect>
+
+#include "TerrainLayer.h"
+#include "Entity.h"
 #include "Game.h"
 #include "WeatherEffect.h"
-#include <QGraphicsOpacityEffect>
 #include "Sprite.h"
 #include "Sound.h"
 #include "PositionalSound.h"
 #include "Utilities.h"
 #include "EntitySprite.h"
 #include "STLWrappers.h"
+
+using namespace qge;
 
 // TODO remove test
 #include <QDebug>

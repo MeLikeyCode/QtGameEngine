@@ -1,9 +1,10 @@
-#ifndef POINTTARGETENTITY_H
-#define POINTTARGETENTITY_H
+#pragma once
 
 #include "Item.h"
 
 class QPointF;
+
+namespace qge{
 
 /// An abstract class that represents an Item that can be used on some location
 /// (Point).
@@ -17,4 +18,4 @@ protected:
     virtual void use_(const QPointF& point) = 0;
 };
 
-#endif // POINTTARGETENTITY_H
+}

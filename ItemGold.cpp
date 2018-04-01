@@ -1,6 +1,9 @@
 #include "ItemGold.h"
+
 #include "Sprite.h"
 #include "TopDownSprite.h"
+
+using namespace qge;
 
 ItemGold::ItemGold()
 {

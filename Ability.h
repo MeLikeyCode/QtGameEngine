@@ -1,9 +1,11 @@
-#ifndef ABILITY_H
-#define ABILITY_H
+#pragma once
 
 #include <QPointer>
+
 #include "Entity.h"
 #include "Sprite.h"
+
+namespace qge{
 
 /// An abstract class that represents an ability.
 /// An Ability has an owner and an icon.
@@ -40,4 +42,4 @@ private:
     QPointer<Sprite> icon_;
 };
 
-#endif // ABILITY_H
+}

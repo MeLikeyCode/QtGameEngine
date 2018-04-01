@@ -1,13 +1,15 @@
-#ifndef BODYTHRUST_H
-#define BODYTHRUST_H
+#pragma once
 
 #include "NoTargetAbility.h"
+
 #include <QObject>
 #include <QPointF>
-
 #include <PlayingAnimationInfo.h>
 
 class QTimer;
+
+namespace qge{
+
 class Sound;
 
 /// An Ability that causes the using entity to thrust its body forward at its current
@@ -56,4 +58,4 @@ private:
     void done_();
 };
 
-#endif // BODYTHRUST_H
+}

@@ -1,11 +1,15 @@
 #include "SpearProjectile.h"
+
+#include <QPixmap>
+
 #include "ECStraightMover.h"
 #include "CBDamage.h"
 #include "DRBDestroyProjectile.h"
-#include <QPixmap>
 #include "Sprite.h"
 #include "Utilities.h"
 #include "TopDownSprite.h"
+
+using namespace qge;
 
 SpearProjectile::SpearProjectile(double range, double damage):
     Projectile(nullptr, nullptr, new DRBDestroyProjectile()),

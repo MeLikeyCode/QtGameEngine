@@ -1,6 +1,10 @@
 #include "Gui.h"
+
 #include <QGraphicsItem>
+
 #include "Game.h"
+
+using namespace qge;
 
 /// Returns the position of the Gui relative to its parent (or relative to
 /// top left of screen if no parent).

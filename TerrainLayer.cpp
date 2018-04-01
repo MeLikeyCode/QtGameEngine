@@ -1,10 +1,14 @@
 #include "TerrainLayer.h"
+
 #include <QRectF>
 #include <QPixmap>
-#include "Node.h"
 #include <QGraphicsScene>
 #include <QGraphicsOpacityEffect>
 #include <QGraphicsPixmapItem>
+
+#include "Node.h"
+
+using namespace qge;
 
 void TerrainLayer::setAlphaChannel(QPixmap& pixmap, int const alpha)
 {

@@ -5,6 +5,7 @@
 #include "Inventory.h"
 #include "Sprite.h"
 
+using namespace qge;
 
 Item::Item():
     inventory_(nullptr),

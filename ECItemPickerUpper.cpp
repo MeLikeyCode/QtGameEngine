@@ -1,8 +1,11 @@
 #include "ECItemPickerUpper.h"
+
+#include <cassert>
+
 #include "Inventory.h"
 #include "Item.h"
 
-#include <cassert>
+using namespace qge;
 
 ECItemPickerUpper::ECItemPickerUpper(Entity *entity):
     EntityController(entity)

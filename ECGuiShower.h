@@ -5,6 +5,8 @@
 
 #include "EntityController.h"
 
+namespace qge{
+
 class Gui;
 class Entity;
 
@@ -49,3 +51,5 @@ private:
 
     virtual void onControlledEntityDying(Entity* controlledEntity);
 };
+
+}

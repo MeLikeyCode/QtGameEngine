@@ -1,10 +1,13 @@
 #include "MeleeWeapon.h"
+
 #include <cassert>
+
 #include "Sprite.h"
 #include "Map.h"
 #include "EntitySprite.h"
-
 #include "Inventory.h"
+
+using namespace qge;
 
 /// Set the tip of the MeleeWeapon.
 /// @see MeleeWeapon::tip()

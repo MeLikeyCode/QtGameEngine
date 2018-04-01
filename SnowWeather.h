@@ -1,12 +1,14 @@
-#ifndef SNOWWEATHER_H
-#define SNOWWEATHER_H
+#pragma once
 
-#include "WeatherEffect.h"
 #include <vector>
 #include <QObject>
 
+#include "WeatherEffect.h"
+
 class QGraphicsPixmapItem;
 class QTimer;
+
+namespace qge{
 
 /// Class that represents a snow weather effect.
 /// @see WeatherEffect
@@ -40,4 +42,4 @@ private:
     void startTimers_();
 };
 
-#endif // SNOWWEATHER_H
+}

@@ -1,5 +1,7 @@
 #include "PointTargetAbility.h"
 
+using namespace qge;
+
 PointTargetAbility::PointTargetAbility(Entity &owner, Sprite *icon):
     Ability(owner,icon)
 {

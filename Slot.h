@@ -1,8 +1,9 @@
-#ifndef SLOT_H
-#define SLOT_H
+#pragma once
 
 #include <QPointF>
 #include <string>
+
+namespace qge{
 
 class EquipableItem;
 class Entity;
@@ -47,4 +48,4 @@ protected:
     Entity* owner_; // who this slot belongs to
 };
 
-#endif // SLOT_H
+}

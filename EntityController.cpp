@@ -1,5 +1,7 @@
 #include "EntityController.h"
 
+using namespace qge;
+
 EntityController::EntityController(Entity *entityToControl) : entityControlled_(entityToControl)
 {
     // Entity maintains a collection of EntityControllers that are operating on it.

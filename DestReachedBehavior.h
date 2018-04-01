@@ -1,5 +1,6 @@
-#ifndef DESTREACHEDBEHAVIOR_H
-#define DESTREACHEDBEHAVIOR_H
+#pragma once
+
+namespace qge{
 
 class Projectile;
 
@@ -20,4 +21,4 @@ public:
     virtual void onDestinationReached(Projectile& projectile) = 0;
 };
 
-#endif // DESTREACHEDBEHAVIOR_H
+}

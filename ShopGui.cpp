@@ -1,4 +1,5 @@
 #include "ShopGui.h"
+
 #include "InventoryViewer.h"
 #include "Panel.h"
 #include "Label.h"
@@ -7,6 +8,8 @@
 #include "Item.h"
 #include "Game.h"
 #include "ShopBehaviorNoCost.h"
+
+using namespace qge;
 
 ShopGui::ShopGui():
     inventoryViewer_(new InventoryViewer()),

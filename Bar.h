@@ -1,13 +1,15 @@
-#ifndef BAR_H
-#define BAR_H
+#pragma once
 
 #include <QObject>
-#include "Gui.h"
 #include <QColor>
 #include <QPixmap>
 #include <memory>
 
+#include "Gui.h"
+
 class QGraphicsPixmapItem;
+
+namespace qge{
 
 /// A Gui that represents a progress bar of some sorts.
 /// @author Abdullah Aghazadah
@@ -61,4 +63,4 @@ private:
     void draw_();
 };
 
-#endif // BAR_H
+}

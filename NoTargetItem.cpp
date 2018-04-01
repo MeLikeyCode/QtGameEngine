@@ -1,5 +1,7 @@
 #include "NoTargetItem.h"
 
+using namespace qge;
+
 /// Uses the item.
 void NoTargetItem::use()
 {

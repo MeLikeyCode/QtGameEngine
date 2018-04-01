@@ -1,17 +1,20 @@
-#ifndef DIALOGGUI_H
-#define DIALOGGUI_H
+#pragma once
 
 #include <unordered_map>
 #include <unordered_set>
 #include <memory>
+
 #include "Gui.h"
 #include <QObject>
+
+class QGraphicsItem;
+
+namespace qge{
 
 class Response;
 class Label;
 class ScrollWindow;
 class Label;
-class QGraphicsItem;
 
 /// Represents a choice that can be presented in a DialogGui when a certain
 /// response is presented.
@@ -134,4 +137,4 @@ private:
     void draw_();
 };
 
-#endif // DIALOGGUI_H
+}

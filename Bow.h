@@ -1,9 +1,11 @@
-#ifndef BOW_H
-#define BOW_H
+#pragma once
 
 #include "RangedWeapon.h"
 
 class QPointF;
+
+namespace qge{
+
 class Sound;
 
 class Bow : public RangedWeapon
@@ -17,4 +19,4 @@ private:
     Sound* soundEffect_;
 };
 
-#endif // BOW_H
+}

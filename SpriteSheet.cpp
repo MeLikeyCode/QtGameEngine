@@ -5,6 +5,8 @@
 
 #include "Node.h"
 
+using namespace qge;
+
 /// Constructs a SpriteSheet from the specified file and with the specified number/sized tiles.
 SpriteSheet::SpriteSheet(std::string filepath, int numXTiles, int numYTiles, double tileWidth, double tileHeight):
     grid_(numXTiles,numYTiles,tileWidth,tileHeight)

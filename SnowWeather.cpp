@@ -1,11 +1,15 @@
 #include "SnowWeather.h"
+
 #include <QTimer>
-#include "Map.h"
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
 #include <cassert>
-#include "Game.h"
 #include <QDebug>
+
+#include "Map.h"
+#include "Game.h"
+
+using namespace qge;
 
 SnowWeather::SnowWeather():
     globularSnowTimer_(new QTimer(this)),

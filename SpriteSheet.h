@@ -1,8 +1,10 @@
-#ifndef SPRITESHEET_H
-#define SPRITESHEET_H
+#pragma once
+
+#include <QPixmap>
 
 #include "Grid.h"
-#include <QPixmap>
+
+namespace qge{
 
 class Node;
 
@@ -34,4 +36,4 @@ private:
     QPixmap pixmap_;
 };
 
-#endif // SPRITESHEET_H
+}

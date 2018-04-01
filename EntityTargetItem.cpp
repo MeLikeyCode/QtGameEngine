@@ -1,5 +1,7 @@
 #include "EntityTargetItem.h"
 
+using namespace qge;
+
 /// Uses the item on the specified entity.
 void EntityTargetItem::use(Entity *onEntity)
 {

@@ -7,6 +7,8 @@
 #include "BodyThrust.h"
 #include "QtUtilities.h"
 
+using namespace qge;
+
 ECBodyThruster::ECBodyThruster(Entity *entity):
     EntityController(entity),
     controllerChaseEnemies_(new ECChaser(entity)),

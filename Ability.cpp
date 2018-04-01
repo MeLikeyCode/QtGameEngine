@@ -1,6 +1,8 @@
 #include "Ability.h"
 #include <cassert>
 
+using namespace qge;
+
 /// Returns the owner of the Ability.
 Entity *Ability::owner()
 {

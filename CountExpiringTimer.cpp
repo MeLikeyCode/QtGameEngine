@@ -1,5 +1,8 @@
 #include "CountExpiringTimer.h"
+
 #include <cassert>
+
+using namespace qge;
 
 CountExpiringTimer::CountExpiringTimer(QObject *parent):
     QObject(parent),

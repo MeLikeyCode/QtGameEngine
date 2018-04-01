@@ -1,4 +1,5 @@
 #include "CItemDropper.h"
+
 #include "STLWrappers.h"
 #include "Entity.h"
 #include "Map.h"
@@ -6,6 +7,7 @@
 #include "ItemHealthPotion.h"
 #include "Utilities.h"
 
+using namespace qge;
 using namespace STLWrappers;
 
 void CItemDropper::addEntity(Entity *entity)

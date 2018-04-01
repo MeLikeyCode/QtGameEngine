@@ -1,11 +1,12 @@
-#ifndef ITEM_H
-#define ITEM_H
-
-#include "Entity.h"
+#pragma once
 
 #include <vector>
 #include <string>
 #include <QPixmap>
+
+#include "Entity.h"
+
+namespace qge{
 
 class Inventory;
 
@@ -48,4 +49,4 @@ private:
     QPixmap icon_; // optional, guis will use sprite if no icon specified
 };
 
-#endif // ITEM_H
+}

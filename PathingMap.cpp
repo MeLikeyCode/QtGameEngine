@@ -7,6 +7,8 @@
 
 #include "Grid.h"
 
+using namespace qge;
+
 /// Constructs a PathingMap with no cells.
 PathingMap::PathingMap():
     numCellsWide_(0),

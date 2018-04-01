@@ -1,9 +1,11 @@
-#ifndef SPEARPROJECTILE_H
-#define SPEARPROJECTILE_H
+#pragma once
 
 #include "Projectile.h"
 
 class QPointF;
+
+namespace qge{
+
 class Map;
 
 /// Represents a Projectile that simply goes from the start position
@@ -23,4 +25,4 @@ private:
     double distTravelledSoFar_;
 };
 
-#endif // SPEARPROJECTILE_H
+}

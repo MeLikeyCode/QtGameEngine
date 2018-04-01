@@ -1,8 +1,12 @@
 #include "ECMouseFacer.h"
+
 #include <cassert>
 #include <QTimer>
+
 #include "ECRotater.h"
 #include "Map.h"
+
+using namespace qge;
 
 ECMouseFacer::ECMouseFacer(Entity *entity):
     EntityController(entity),

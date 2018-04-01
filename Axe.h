@@ -1,9 +1,11 @@
-#ifndef AXE_H
-#define AXE_H
+#pragma once
 
 #include "MeleeWeapon.h"
 
 class QTimer;
+
+namespace qge{
+
 class Sound;
 
 /// Represents an Axe.
@@ -45,4 +47,4 @@ private:
     Sound* soundEffect_;
 };
 
-#endif // AXE_H
+}

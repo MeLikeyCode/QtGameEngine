@@ -1,6 +1,7 @@
 #include "AnimationAttack.h"
 
 #include <cassert>
+#include <QDebug>
 
 #include "PositionalSound.h"
 #include "Slot.h"
@@ -9,7 +10,7 @@
 #include "Map.h"
 #include "Utilities.h"
 
-#include <QDebug>
+using namespace qge;
 
 AnimationAttack::AnimationAttack(const std::string& animationToPlayOnAttack, const std::string& soundToPlayOnAttack, int damage, double arcRange, double arcAngle):
     animationToPlayOnAttack_(animationToPlayOnAttack),

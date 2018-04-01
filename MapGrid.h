@@ -6,6 +6,8 @@
 #include "Map.h"
 #include "PointerGrid.h"
 
+namespace qge{
+
 class Map;
 
 /// Represents a grid of maps. You can get/set the Map at each Node ("cell") of
@@ -30,3 +32,5 @@ public:
 private:
     PointerGrid<Map> pointerGrid_;
 };
+
+}

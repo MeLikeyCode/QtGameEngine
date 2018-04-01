@@ -1,18 +1,21 @@
-#ifndef INVENTORYCELL_H
-#define INVENTORYCELL_H
+#pragma once
 
-#include "Gui.h"
 #include <QPointer>
-#include "Item.h"
 #include <memory>
 #include <QObject>
 
-class Panel;
+#include "Item.h"
+#include "Gui.h"
+
 class QGraphicsItem;
 class QGraphicsPixmapItem;
 class QColor;
 class QPixmap;
 class QGraphicsSimpleTextItem;
+
+namespace qge{
+
+class Panel;
 
 /// Represents a Gui that visualizes and allows mouse interaction with an Item.
 /// When the Item in the ItemCell is clicked, ItemCell will emit a signal.
@@ -50,4 +53,4 @@ private:
     void draw_();
 };
 
-#endif // INVENTORYCELL_H
+}

@@ -4,6 +4,8 @@
 
 #include "MeleeWeapon.h"
 
+namespace qge{
+
 class PositionalSound;
 
 /// A MeleeWeapon that on attack() will cause a specified animation of the owner to be played.
@@ -34,3 +36,4 @@ private:
     int attackingFrameNumber_; // the frame number to actually attack on (create arc and damage entities)
 };
 
+}

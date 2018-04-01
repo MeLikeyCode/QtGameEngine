@@ -4,6 +4,8 @@
 #include <QGraphicsItem>
 #include <cassert>
 
+using namespace qge;
+
 EntitySprite::EntitySprite(): underlyingItem_(nullptr)
 {
     // empty

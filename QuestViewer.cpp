@@ -1,12 +1,16 @@
 #include "QuestViewer.h"
+
+#include <QGraphicsRectItem>
+#include <QDebug>
+
 #include "Quests.h"
 #include "Panel.h"
-#include <QGraphicsRectItem>
 #include "Label.h"
 #include "Button.h"
 #include "Quest.h"
 #include "ScrollWindow.h"
-#include <QDebug>
+
+using namespace qge;
 
 QuestViewer::QuestViewer(Quests *quests):
     quests_(quests),

@@ -1,9 +1,10 @@
-#ifndef POINTTARGETABILITY_H
-#define POINTTARGETABILITY_H
+#pragma once
 
 #include "Ability.h"
 
 class QPointF;
+
+namespace qge{
 
 class PointTargetAbility: public Ability {
 public:
@@ -15,4 +16,4 @@ protected:
     virtual void useImplementation(const QPointF& atPoint) = 0;
 };
 
-#endif // POINTTARGETABILITY_H
+}

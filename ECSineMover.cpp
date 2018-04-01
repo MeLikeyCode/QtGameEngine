@@ -1,8 +1,12 @@
 #include "ECSineMover.h"
+
 #include <QTimer>
-#include "Utilities.h"
 #include <cassert>
 #include <QtMath>
+
+#include "Utilities.h"
+
+using namespace qge;
 
 ECSineMover::ECSineMover(Entity *entity):
     ECMover(entity),

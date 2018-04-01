@@ -1,9 +1,13 @@
 #include "PositionalSound.h"
+
+#include <cassert>
+#include <QtUtilities.h>
+
 #include "Sound.h"
 #include "Map.h"
 #include "Game.h"
-#include <cassert>
-#include <QtUtilities.h>
+
+using namespace qge;
 
 PositionalSound::PositionalSound(Map *inMap, std::string filePath, QPointF pos):
     map_(inMap),

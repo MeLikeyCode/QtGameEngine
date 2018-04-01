@@ -1,11 +1,14 @@
-#ifndef RAINWEATHER_H
-#define RAINWEATHER_H
+#pragma once
+
+#include <QObject>
 
 #include "WeatherEffect.h"
-#include <QObject>
 
 class QTimer;
 class QGraphicsPixmapItem;
+
+namespace qge{
+
 class Sound;
 
 /// Class that represents a rain weather effect.
@@ -73,4 +76,4 @@ private:
     double currentSplashOpacity_;
 };
 
-#endif // RAINWEATHER_H
+}

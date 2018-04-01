@@ -1,5 +1,6 @@
-#ifndef SHOPGUIBEHAVIOR_H
-#define SHOPGUIBEHAVIOR_H
+#pragma once
+
+namespace qge{
 
 class Inventory;
 class Item;
@@ -15,4 +16,4 @@ public:
     virtual bool buy(Item* item, Inventory* seller, Inventory* buyer) = 0;
 };
 
-#endif // SHOPGUIBEHAVIOR_H
+}

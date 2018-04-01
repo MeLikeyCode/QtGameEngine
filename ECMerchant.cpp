@@ -3,6 +3,8 @@
 #include "ECGuiShower.h"
 #include "ShopGui.h"
 
+using namespace qge;
+
 ECMerchant::ECMerchant(Entity *seller): EntityController(seller)
 {
     shopGui_ = new ShopGui();

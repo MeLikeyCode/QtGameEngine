@@ -1,15 +1,18 @@
-#ifndef ECPATHMOVER_H
-#define ECPATHMOVER_H
+#pragma once
 
 #include <QPointer>
 #include <QPointF>
 #include <vector>
 #include <QPointF>
-#include "Entity.h"
 #include <memory>
+
+#include "Entity.h"
 #include "ECMover.h"
 
 class QTimer;
+
+namespace qge{
+
 class AsyncShortestPathFinder;
 class ECRotater;
 
@@ -74,4 +77,4 @@ private:
     void stepTowardsTarget_();
 };
 
-#endif // ECPATHMOVER_H
+}

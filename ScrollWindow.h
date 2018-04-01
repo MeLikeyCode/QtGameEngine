@@ -1,16 +1,17 @@
+#pragma once
 
-#ifndef SCROLLWINDOW_H
-#define SCROLLWINDOW_H
-
-#include "Gui.h"
 #include <vector>
 #include <QPointF>
 #include <unordered_map>
 #include <QColor>
 #include <QPixmap>
-#include "ScrollBar.h"
 #include <memory>
 #include <QObject>
+
+#include "ScrollBar.h"
+#include "Gui.h"
+
+namespace qge{
 
 class Panel;
 
@@ -66,4 +67,4 @@ private:
     void draw_();
 };
 
-#endif // SCROLLWINDOW_H
+}

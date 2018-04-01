@@ -1,7 +1,8 @@
-#ifndef ENTITYTARGETABILITY_H
-#define ENTITYTARGETABILITY_H
+#pragma once
 
 #include "Ability.h"
+
+namespace qge{
 
 class Entity;
 
@@ -19,4 +20,4 @@ protected:
     virtual void useImplementation(Entity& onEntity) = 0;
 };
 
-#endif // ENTITYTARGETABILITY_H
+}

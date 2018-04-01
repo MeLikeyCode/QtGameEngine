@@ -1,10 +1,14 @@
 #include "ItemPushback.h"
-#include "Entity.h"
+
 #include <cassert>
-#include "Inventory.h"
 #include <QPixmap>
+
+#include "Entity.h"
+#include "Inventory.h"
 #include "Sprite.h"
 #include "TopDownSprite.h"
+
+using namespace qge;
 
 ItemPushback::ItemPushback()
 {

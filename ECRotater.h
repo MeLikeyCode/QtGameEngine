@@ -1,5 +1,4 @@
-#ifndef ECROTATE_H
-#define ECROTATE_H
+#pragma once
 
 #include <QObject>
 #include <QPointF>
@@ -9,6 +8,8 @@
 #include "Entity.h"
 
 class QTimer;
+
+namespace qge{
 
 /// An entity controller (TODO: add doc link) that allows you to rotate
 /// an entity. You can have an entity rotate until it faces a certain angle
@@ -62,4 +63,4 @@ private:
     void rotateTowardsTargetAngle_();
 };
 
-#endif // ECROTATE_H
+}

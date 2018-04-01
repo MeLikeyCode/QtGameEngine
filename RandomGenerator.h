@@ -3,6 +3,8 @@
 class QPointF;
 class QRectF;
 
+namespace qge{
+
 /// Allows generating random numbers/points.
 /// Seeds in the constructor.
 /// Value semantics - create, use, let die (cheap).
@@ -19,3 +21,4 @@ public:
     QPointF randQPointF(const QRectF& inRegion);
 };
 
+}

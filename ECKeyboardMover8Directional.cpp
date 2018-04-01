@@ -1,11 +1,15 @@
 #include "ECKeyboardMover8Directional.h"
-#include "Map.h"
+
 #include <QTimer>
 #include <cassert>
+
+#include "Map.h"
 #include "Game.h"
 #include "Sprite.h"
 #include "Utilities.h"
 #include "EntitySprite.h"
+
+using namespace qge;
 
 ECKeyboardMover8Directional::ECKeyboardMover8Directional(Entity *entity):
     EntityController(entity),

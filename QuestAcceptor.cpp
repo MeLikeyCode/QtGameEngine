@@ -1,7 +1,10 @@
 #include "QuestAcceptor.h"
+
 #include "QuestViewer.h"
 #include "Game.h"
 #include "Button.h"
+
+using namespace qge;
 
 QuestAcceptor::QuestAcceptor(Game *game):
     questViewer_(new QuestViewer()),

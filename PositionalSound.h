@@ -1,10 +1,11 @@
-#ifndef POSITIONALSOUND_H
-#define POSITIONALSOUND_H
+#pragma once
 
 #include <QPointF>
 #include <string>
 #include <memory>
 #include <QObject>
+
+namespace qge{
 
 class Map;
 class Sound;
@@ -54,4 +55,4 @@ private:
     void setMap_(Map* map);
 };
 
-#endif // POSITIONALSOUND_H
+}

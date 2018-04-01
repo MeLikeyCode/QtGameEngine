@@ -7,6 +7,8 @@
 #include "STLWrappers.h"
 #include "Gui.h"
 
+using namespace qge;
+
 ECGuiShower::ECGuiShower(Entity *controlledEntity, Gui* gui):
     EntityController(controlledEntity),
     gui_(gui),

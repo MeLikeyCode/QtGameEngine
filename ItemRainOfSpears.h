@@ -1,9 +1,11 @@
-#ifndef ITEMRAINOFSPEARS_H
-#define ITEMRAINOFSPEARS_H
+#pragma once
 
 #include "NoTargetItem.h"
 
 class QTimer;
+
+namespace qge{
+
 class Sound;
 
 class ItemRainOfSpears : public NoTargetItem
@@ -19,4 +21,4 @@ public slots:
     Sound* soundEffect_;
 };
 
-#endif // ITEMRAINOFSPEARS_H
+}

@@ -1,14 +1,16 @@
-#ifndef SCROLLBAR_H
-#define SCROLLBAR_H
+#pragma once
 
-#include "Gui.h"
 #include <QGraphicsPixmapItem>
 #include <QColor>
 #include <QPixmap>
 #include <QObject>
 
+#include "Gui.h"
+
 class QGraphicsSceneMouseEvent;
 class QGraphicsItem;
+
+namespace qge{
 
 /// Represents a GUI that has a little dragable bar ( called a "foreground bar")
 /// that you can drag from one end to the other on a "background bar".
@@ -85,4 +87,4 @@ private:
     bool fgBarIsTooLow_();
 };
 
-#endif // SCROLLBAR_H
+}

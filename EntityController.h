@@ -1,8 +1,10 @@
-#ifndef ENTITYCONTROLLER_H
-#define ENTITYCONTROLLER_H
+#pragma once
 
 #include <QObject>
+
 #include "Entity.h"
+
+namespace qge{
 
 class Entity;
 
@@ -64,4 +66,4 @@ private:
     QPointer<Entity> entityControlled_; // QPointer to prevent dangling pointer issues
 };
 
-#endif // ENTITYCONTROLLER_H
+}

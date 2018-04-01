@@ -1,5 +1,4 @@
-#ifndef ECMOVEBYKEYBOARDFOURDIRECTIONAL_H
-#define ECMOVEBYKEYBOARDFOURDIRECTIONAL_H
+#pragma once
 
 #include <QPointer>
 
@@ -7,6 +6,8 @@
 #include "Entity.h"
 
 class QTimer;
+
+namespace qge{
 
 /// An entity controller (TODO: link to documentation) that moves the entity
 /// in 4 directions (up, down, left, and right) in response to the keyboard.
@@ -35,4 +36,5 @@ private:
 
     void playAnimationIfItExists_(std::string animation);
 };
-#endif // ECMOVEBYKEYBOARDFOURDIRECTIONAL_H
+
+}

@@ -4,6 +4,8 @@
 #include <set>
 #include <unordered_set>
 
+namespace qge{
+
 class Map;
 class MapGrid;
 class Entity;
@@ -129,3 +131,4 @@ private:
     std::map<std::pair<Entity*,Entity*>,bool> watchedWatchingPairToEnterRangeEmitted_; // has the enters range event been emitted yet for a pair of watched watching entities?
 };
 
+}

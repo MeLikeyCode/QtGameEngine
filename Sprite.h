@@ -11,6 +11,9 @@
 
 class QGraphicsPixmapItem;
 class QTimer;
+
+namespace qge{
+
 class SpriteSheet;
 class Node;
 
@@ -96,3 +99,5 @@ private:
 
     PlayingAnimationInfo animationPlayingLast_;
 };
+
+}

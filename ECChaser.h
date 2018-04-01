@@ -1,5 +1,4 @@
-#ifndef ECCHASEENEMIES_H
-#define ECCHASEENEMIES_H
+#pragma once
 
 #include <QPointer>
 #include <unordered_set>
@@ -8,9 +7,12 @@
 #include "EntityController.h"
 #include "Entity.h"
 
+class QTimer;
+
+namespace qge{
+
 class ECPathMover;
 class ECFieldOfViewEmitter;
-class QTimer;
 
 /// An entity controller that makes it so the controlled entity will chase certain other entities
 /// that enter its field of view.
@@ -107,4 +109,4 @@ private:
     void disconnectFromTargetSignals_();
 };
 
-#endif // ECCHASEENEMIES_H
+}

@@ -1,10 +1,8 @@
-#ifndef ENTITY_H
-#define ENTITY_H
+#pragma once
 
-#include "PathingMap.h"
 #include <unordered_map>
-#include <string>
 #include <unordered_set>
+#include <string>
 #include <typeinfo> // run time type identification (RTTI)
 #include <typeindex>// same ^
 #include <set>
@@ -12,16 +10,21 @@
 #include <utility>
 #include <memory>
 
+#include "PathingMap.h"
+
+class QPointF;
+class QTimer;
+
+namespace qge{
+
 class Map;
 class Inventory;
 class EquipableItem;
 class Item;
 class EntitySprite;
-class QPointF;
 class Slot;
 class Inventory;
 class AsyncShortestPathFinder;
-class QTimer;
 class EntityController;
 class PositionalSound;
 
@@ -205,23 +208,23 @@ private:
     void scaleBasedOnZ_();
 };
 
+}
+
 // make QPointer<Entity> hashable (simply "delegate" to hasing a regular Entity*)
 namespace std {
-template <> struct hash<QPointer<Entity>>
+template <> struct hash<QPointer<qge::Entity>>
 {
-    size_t operator()(const QPointer<Entity>& node) const{
-        return hash<Entity*>()(node.data());
+    size_t operator()(const QPointer<qge::Entity>& node) const{
+        return hash<qge::Entity*>()(node.data());
     }
 };
 }
 
 // hash pair of entities (order shouldn't matter)
 namespace std{
-    template <> struct hash<std::pair<Entity*,Entity*>>{
-    size_t operator()(const std::pair<Entity*,Entity*>& pairOfEntities) const{
-        return (53 + hash<Entity*>()(pairOfEntities.first)) * 53 + hash<Entity*>()(pairOfEntities.second);
+    template <> struct hash<std::pair<qge::Entity*,qge::Entity*>>{
+    size_t operator()(const std::pair<qge::Entity*,qge::Entity*>& pairOfEntities) const{
+        return (53 + hash<qge::Entity*>()(pairOfEntities.first)) * 53 + hash<qge::Entity*>()(pairOfEntities.second);
     }
 };
 }
-
-#endif // ENTITY_H
