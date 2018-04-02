@@ -27,8 +27,6 @@ SOURCES += main.cpp \
     PathGrid.cpp \
     PathingMap.cpp \
     Tree.cpp \
-    Tests/TestPathGrid.cpp \
-    Tests/TestPathingMap.cpp \
     CountExpiringTimer.cpp \
     MeleeWeapon.cpp \
     Spear.cpp \
@@ -139,8 +137,6 @@ HEADERS  += \
     PathGrid.h \
     PathingMap.h \
     Tree.h \
-    Tests/TestPathGrid.h \
-    Tests/TestPathingMap.h \
     CountExpiringTimer.h \
     MeleeWeapon.h \
     Spear.h \
