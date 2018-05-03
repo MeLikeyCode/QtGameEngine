@@ -132,38 +132,10 @@ int main(int argc, char *argv[])
     rangedSlot->setPosition(QPointF(64,45));
     player->addSlot(rangedSlot);
 
-//    // add bow to entitys inventory and equip it
-//    Bow* bow = new Bow();
-//    player->inventory()->addItem(bow);
-//    rangedSlot->equip(bow);
-
-    // add fireball to entitys inventory and equip it
-//    FireballLauncher* fireballOrb = new FireballLauncher();
-//    player->inventory()->addItem(fireballOrb);
-//    rangedSlot->equip(fireballOrb);
-
+    // equip something in slot
     AnimationAttack* animAttack = new AnimationAttack("attack","qrc:/resources/sounds/axe.wav",10,85,90);
     player->inventory()->addItem(animAttack);
     rightHandMelee->equip(animAttack);
-
-//    // create an entity that will thrust nearby enemy entities
-//    Entity* enemy = new Entity();
-//    map1->addEntity(enemy);
-//    ECBodyThruster* bodyThrustContr = new ECBodyThruster(*enemy);
-//    enemy->addEnemyGroup(0);
-
-//    // create an entity that attacks nearby enemy entites with weapon
-//    Entity* enemy2 = new Entity();
-//    map1->addEntity(enemy2);
-
-//    Spear* enemySpear = new Spear();
-//    enemy2->inventory()->addItem(enemySpear);
-//    WeaponSlot* enemyWS = new WeaponSlot();
-//    enemy2->addSlot(enemyWS);
-//    enemyWS->equip(enemySpear);
-//    enemy2->addEnemyGroup(0);
-
-//    ECAttackEnemiesWithWeapon* attackContr = new ECAttackEnemiesWithWeapon(*enemy2);
 
     // drop some items on the ground
     Axe* axeItem = new Axe();
@@ -179,91 +151,22 @@ int main(int argc, char *argv[])
     pushBackItem->setPos(QPointF(300,300));
     map1->addEntity(pushBackItem);
 
-
-
-//    // create an inventory viewer to visuallize the inventory of player
-//    InventoryViewer* invViewer = new InventoryViewer();
-//    invViewer->setInventory(player->inventory());
-//    game->addGui(invViewer);
-
     // create a gui that allows visualizing/using of inventory of player
     InventoryUser* invUser = new InventoryUser(game,player->inventory());
     game->addGui(invUser);
 
-//    // add a weather effect (can add multiple at the same time)
+    // add a weather effect (can add multiple at the same time, if they play nice with each other)
     RainWeather* rain = new RainWeather();
     map1->addWeatherEffect(*rain);
     FogWeather* fog = new FogWeather();
     map1->addWeatherEffect(*fog);
 
-
-
-//    // create a test chaser enemy
-//    Entity* testFOVEntity = new Entity();
-//    testFOVEntity->setGroup(2);
-//    testFOVEntity->addEnemyGroup(0);
-//    testFOVEntity->setPos(QPoint(50,700));
-//    map1->addEntity(testFOVEntity);
-//    ECEnemyChaser* ecChase = new ECEnemyChaser(testFOVEntity);
-
-//    // test ECFieldOfViewEmitter
-//    Entity* e = new Entity();
-//    e->sprite()->setOrigin({32,32});
-//    map1->addEntity(e);
-//    ECFieldOfViewEmitter* fovEmitter = new ECFieldOfViewEmitter(e);
-//    e->setPos(QPointF(100,400));
-
-//    // test ECChaser
-//    Entity* e = new Entity();
-//    e->sprite()->setOrigin({32,32});
-//    map1->addEntity(e);
-//    ECChaser* chaser = new ECChaser(e);
-//    chaser->addChasee(player);
-//    e->setPos({100,600});
-
-    // create a test spider
-    Entity* spiderEntity = new Entity();
-    spiderEntity->pathingMap().fill();
-    AngledSprite* spiderSprite = new AngledSprite();
-    spiderEntity->setSprite(spiderSprite);
-    SpriteSheet spiderSpriteSheet(":/resources/graphics/characterSpritesheets/spider.png",48,8,128,128);
-    for (int i = 0, n = 8; i < n; ++i){ // for each angle
-        // stand
-        spiderSprite->addFrames((180+45*i) % 360,"stand",spiderSpriteSheet,Node(0,0+i),Node(3,0+i));
-        for (int j = 2; j > 0; --j){
-            spiderSprite->addFrame(spiderSpriteSheet.tileAt(Node(j,0+i)),"stand",(180+45*i) % 360);
-        }
-        // walk
-        spiderSprite->addFrames((180+45*i) % 360,"walk",spiderSpriteSheet,Node(4,0+i),Node(11,0+i));
-
-        // attack
-        spiderSprite->addFrames((180+45*i) % 360,"attack",spiderSpriteSheet,Node(12,0+i),Node(15,0+i));
-
-        // hit
-        spiderSprite->addFrames((180+45*i) % 360,"hit",spiderSpriteSheet,Node(18,0+i),Node(20,0+i));
-
-        // die
-        spiderSprite->addFrames((180+45*i) % 360,"die",spiderSpriteSheet,Node(18,0+i),Node(23,0+i));
-    }
-    spiderSprite->play("stand",-1,10,0);
-    spiderEntity->setOrigin(QPointF(64,64));
-    spiderEntity->setPos(QPointF(500,500));
-    //map1->addEntity(spiderEntity);
-    spiderEntity->setPathingMapPos(QPointF(64,64));
-
-    ECBodyThruster* bt = new ECBodyThruster(spiderEntity);
-    bt->setThrustDistance(100);
-    bt->addTargetEntity(player);
-    spiderEntity->addSound("die","qrc:/resources/sounds/spiderDie.mp3");
-
     // create an item dropper
     itemDropper = new CItemDropper();
-    itemDropper->addEntity(spiderEntity);
 
     // create health shower
     CHealthShower* hs = new CHealthShower();
     hs->addEntity(player);
-    hs->addEntity(spiderEntity);
 
     // create a dialog gui (to test gui shower)
     DialogGui* dg = new DialogGui();
@@ -290,36 +193,14 @@ int main(int argc, char *argv[])
     double guix = game->width() - dg->getGuiBoundingBox().width();
     dg->setGuiPos(QPointF(guix,0));
 
-    // create gui shower
-    ECGuiShower* ds = new ECGuiShower(spiderEntity,dg);
-    ds->addEntityOfInterest(player);
-
-//    // create a merchant
-//    Axe* iaxe = new Axe();
-//    iaxe->setDescription("A trusty axe.");
-
-//    spiderEntity->inventory()->addItem(iaxe);
-//    spiderEntity->inventory()->addItem(new FireballLauncher());
-//    spiderEntity->inventory()->addItem(new Bow());
-//    spiderEntity->inventory()->addItem(new ItemHealthPotion(10));
-//    spiderEntity->inventory()->addItem(new ItemTeleport());
-
-//    ECMerchant* merchant = new ECMerchant(spiderEntity);
-//    merchant->addEntityOfInterest(player);
-
-    // give player 8 health potions
-    ItemHealthPotion* hpLotsOfCharges = new ItemHealthPotion(10);
-    hpLotsOfCharges->setNumOfCharges(8);
-    //player->inventory()->addItem(hpLotsOfCharges);
-
-    // test new way to specify pathing map of an entity
+    // add a building
     Entity* bEntity = new Entity();
-
     QPixmap bPixmap(":/resources/graphics/buildings/bldg2.png");
     bPixmap = bPixmap.scaled(0.85*bPixmap.width(),0.85*bPixmap.height());
     TopDownSprite* bSprite = new TopDownSprite(bPixmap);
     bEntity->setSprite(bSprite);
 
+    // add its pathing
     QPixmap bPMPixmap(":/resources/graphics/buildings/bldg2pathing.png");
     bPMPixmap = bPMPixmap.scaled(0.85*bPMPixmap.width(),0.85*bPMPixmap.height());
     PathingMap* bPM = new PathingMap(bPMPixmap,32);
@@ -344,7 +225,7 @@ int main(int argc, char *argv[])
     well->setPos(QPointF(1300,900));
     map1->addEntity(well);
 
-    TerrainLayer* flowers = new TerrainLayer(2,2,QPixmap(":resources/graphics/terrain/flowersopacity.png"));
+    TerrainLayer* flowers = new TerrainLayer(2,2,QPixmap(":/resources/graphics/terrain/flowersopacity.png"));
     flowers->fill();
     map1->addTerrainLayer(flowers);
     flowers->setPos(QPointF(750,500));
@@ -352,10 +233,9 @@ int main(int argc, char *argv[])
     bEntity->setInvulnerable(true);
     well->setInvulnerable(true);
 
-    // add random trees in map 2
     addRandomTrees(map2,15,"Two",8);
-//    addRandomTrees(map2,15,"Three",8);
-//    addRandomTrees(map2,15,"Four",8);
+    addRandomTrees(map2,5,"Three",8);
+    addRandomTrees(map2,5,"Four",8);
 
     // add weather effects in map 2
     map2->addWeatherEffect(*(new FogWeather()));
@@ -364,9 +244,7 @@ int main(int argc, char *argv[])
     // create a spanwer in map 2
     MCSpawner* spawner = new MCSpawner(map2,QRectF(0,0,map2->width(),map2->height()),MCSpawner::SpawnType::Spider,10,0.2);
 
-
-
-    // create villager that sells you shit
+    // create villager that sells you stuff
     // villager sprite
     SpriteSheet villagerSS(":/resources/graphics/characterSpritesheets/villager.png",17,8,91,163);
     AngledSprite* sprVillager = new AngledSprite();
