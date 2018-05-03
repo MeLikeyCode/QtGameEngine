@@ -385,11 +385,16 @@ void Entity::setFacingAngle(double angle)
         sprite_->setFacingAngle(angle);
 }
 
+/// Returns the origin of the Entity.
+/// @see setOrigin()
 QPointF Entity::origin() const
 {
     return origin_;
 }
 
+/// Sets the point, relative to the top left corner of its sprite, that the entity's "origin" should
+/// be considered. When the position of the Entity is set, this is the point of the sprite that is
+/// moved to the specified position.
 void Entity::setOrigin(const QPointF &to)
 {
     origin_ = to;
