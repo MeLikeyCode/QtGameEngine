@@ -6,6 +6,7 @@
 
 #include "Map.h"
 #include "CollisionBehavior.h"
+#include "STLWrappers.h"
 
 using namespace qge;
 
@@ -20,6 +21,7 @@ Projectile::Projectile(ECMover *mover,
     destReachedBehavior_(destReachedBehavior)
 {
     setMover(mover);
+    addCollisionToIgnore("scenery");
 
     // listen to when projectile collides with anything
     connect(this, &Entity::collided,this,&Projectile::onCollided_);
@@ -76,11 +78,22 @@ void Projectile::setDestReachedBehavior(DestReachedBehavior *drb)
     destReachedBehavior_.reset(drb);
 }
 
+void Projectile::addCollisionToIgnore(const std::string &tag)
+{
+    STLWrappers::add(collisionsToIgnore_,tag);
+}
+
 /// Executed when the Projectile collides with something.
 /// Will delegate what happens to the CollisionBehavior.
 void Projectile::onCollided_(Entity *self, Entity *collidedWith)
 {
     Q_UNUSED(self);
+
+    // this collision should be ignored
+    for (const std::string& tag : collisionsToIgnore_)
+        if (collidedWith->containsTag(tag))
+            return;
+
     collisionBehavior_->onCollided(this, collidedWith);
 }
 

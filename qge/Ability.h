@@ -20,8 +20,10 @@ namespace qge{
 /// The main difference between Abilities and Items is the fact that Items are
 /// Entities, therefore they can be on the ground where as Abilities cannot.
 ///
-/// To create your own abilities, you should subclass NoTargetAbility, PointTargetAbility, or
-/// EntityTargetAbility depending on what type of target your ability needs.
+/// How to create your own abilities
+/// --------------------------------
+/// Subclass NoTargetAbility, PointTargetAbility, or EntityTargetAbility depending on what type of
+/// target your ability needs.
 class Ability : public QObject // need QPointers to Ability
 {
     Q_OBJECT

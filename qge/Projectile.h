@@ -20,7 +20,9 @@ namespace qge{
 /// ECMover of the Projectile determines how the projectile moves. The
 /// CollisionBehavior determines how the projectile responds when it collides
 /// with Entities. The DestReachedBehavior determines what happens when the
-/// Projectile reaches its destination.
+/// Projectile reaches its destination. If you don't want the projectile
+/// to collide with a certain group of entities, give that group a tag, and then
+/// call addCollisionToIgnore() passing in that tag.
 ///
 /// To shoot a projectile towards a certain pos use shootTowards(). To have the
 /// projectile "home" to an Entity (i.e. follow the Entity while traveling),
@@ -46,8 +48,6 @@ namespace qge{
 /// are included as well as several concrete Projectile subclasses that you can
 /// use as examples to follow.
 ///
-/// @see
-///
 /// @author Abdullah Aghazadah
 /// @date 2/21/16
 class Projectile: public Entity
@@ -72,6 +72,9 @@ public:
     DestReachedBehavior* destReachedBehavior();
     void setDestReachedBehavior(DestReachedBehavior* drb);
 
+    // collision ignoring
+    void addCollisionToIgnore(const std::string& tag);
+
 public slots:
     void onCollided_(Entity* self, Entity* collidedWith);
     void onSuccesfullyMoved_(ECMover* byMover);
@@ -82,6 +85,9 @@ private:
     ECMover* mover_;
     std::unique_ptr<CollisionBehavior> collisionBehavior_;
     std::unique_ptr<DestReachedBehavior> destReachedBehavior_;
+
+    // ignore collisions with entities that have these tags
+    std::set<std::string> collisionsToIgnore_;
 
     QPointer<Entity> homeTo_;
     QTimer* homeTimer_;

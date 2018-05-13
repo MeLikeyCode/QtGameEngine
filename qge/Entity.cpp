@@ -16,6 +16,7 @@
 #include "QGraphicsItem"
 #include "EntityController.h"
 #include "Utilities.h"
+#include "STLWrappers.h"
 
 using namespace qge;
 
@@ -33,7 +34,6 @@ Entity::Entity():
     canOnlyBeDamagedByMode_(false), // by default, can be damaged by all
     groupNumber_(0),                     // default group id of 0
     invulnerable_(false),
-    isScenery_(false),
     zPos_(0),
     height_(0),
     inventory_(new Inventory()),
@@ -395,7 +395,8 @@ QPointF Entity::origin() const
 
 /// Sets the point, relative to the top left corner of its sprite, that the entity's "origin" should
 /// be considered. When the position of the Entity is set, this is the point of the sprite that is
-/// moved to the specified position.
+/// moved to the specified position. When the Entity rotates, this is the point about which the sprite
+/// will rotate.
 void Entity::setOrigin(const QPointF &to)
 {
     origin_ = to;
@@ -501,6 +502,20 @@ QPointF Entity::namedPoint(std::string name)
     assert(namedPoints_.count(name));
 
     return namedPoints_[name];
+}
+
+/// Adds a tag to the Entity.
+/// Tags are just a way to associate string information with entities.
+void Entity::addTag(const std::string &tag)
+{
+    STLWrappers::add(tags_,tag);
+}
+
+/// Returns true if the Entity has the specified tag.
+/// @see addTag()
+bool Entity::containsTag(const std::string &tag)
+{
+    return STLWrappers::contains(tags_,tag);
 }
 
 /// Sets the speed that the entity should generally travel at (in pixels per second).
@@ -658,19 +673,6 @@ bool Entity::isInvulnerable()
 void Entity::setInvulnerable(bool tf)
 {
     invulnerable_ = tf;
-}
-
-/// Returns true if the Entity is a "scenery".
-/// A "scenery" is an entity such as a tree, rock, house, etc. Sort of like "background" things.
-bool Entity::isScenery()
-{
-    return isScenery_;
-}
-
-/// @see isScenery()
-void Entity::setIsScenery(bool tf)
-{
-    isScenery_ = tf;
 }
 
 /// Set the group that the Entity is a part of.

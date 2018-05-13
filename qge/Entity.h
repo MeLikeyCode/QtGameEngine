@@ -61,7 +61,7 @@ public:
     void setPathingMap(PathingMap& pathingMap, const QPointF &pos=QPointF(0,0));
     void setPathingMapPos(const QPointF& to);
 
-    // map
+    // map b/w Entity local coor system and Map coor system
     Map* map() const;
     QPointF mapToMap(const QPointF& point) const;
     QPolygonF mapToMap(const QRectF& rect) const;
@@ -99,8 +99,13 @@ public:
     void setParentEntity(Entity* parent);
     Entity* parent();
 
+    // named points
     void addNamedPoint(const QPointF& point, std::string name);
     QPointF namedPoint(std::string name);
+
+    // tags
+    void addTag(const std::string& tag);
+    bool containsTag(const std::string& tag);
 
     void setSpeed(double speed);
     double speed();
@@ -119,8 +124,6 @@ public:
     bool canBeDamagedBy(Entity* entity);
     bool isInvulnerable();
     void setInvulnerable(bool tf);
-    bool isScenery();
-    void setIsScenery(bool tf);
 
     // group/enemy groups
     void setGroup(int groupNumber_);
@@ -188,6 +191,7 @@ private:
     std::unordered_set<Entity*> children_;
     Entity* parent_;
     std::map<std::string,QPointF> namedPoints_;
+    std::set<std::string> tags_;
 
     double health_;
     double maxHealth_;
@@ -197,7 +201,6 @@ private:
     int groupNumber_;
     std::unordered_set<int> enemyGroups_;
     bool invulnerable_;
-    bool isScenery_;
 
     Inventory* inventory_;
     std::unordered_map<std::string,Slot*> stringToSlot_;

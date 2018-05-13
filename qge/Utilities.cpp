@@ -35,8 +35,8 @@ void qge::addRandomTrees(Map *mapToAddTreesTo, int numTreesToAdd, const std::str
         PathingMap* pm = new PathingMap(QPixmap(fullp.c_str()),32);
 
         RandomImageEntity* tree = new RandomImageEntity(":/resources/graphics/tree","tree" + treeNumber,numImages,*pm);
+        tree->addTag("scenery");
         mapToAddTreesTo->addEntity(tree);
-        tree->setIsScenery(true);
 
         double randXPos = randDouble(100,mapToAddTreesTo->width()-100);
         double randYPos = randDouble(100,mapToAddTreesTo->height()-100);
@@ -78,7 +78,7 @@ double qge::msToSeconds(double milliseconds)
 
 /// Generates a random 32 bit number (unsigned).
 /// This function is a lot more inexpensive than rand() but also not as reliable
-/// (i.e. for scientific purposes).
+/// (i.e. don't use for scientific purposes).
 quint32 qge::fastRandom()
 {
     static quint32 num = 7;
@@ -129,4 +129,11 @@ double qge::randDouble(double from, double to)
     static RandomGenerator generator;
 
     return generator.randDouble(from,to);
+}
+
+/// Adds a tag to all the specified entities.
+void qge::addTag(const std::string &tag, std::initializer_list<Entity *> entities)
+{
+    for (Entity* entity:entities)
+        entity->addTag(tag);
 }

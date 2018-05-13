@@ -157,9 +157,9 @@ int main(int argc, char *argv[])
 
     // add a weather effect (can add multiple at the same time, if they play nice with each other)
     RainWeather* rain = new RainWeather();
-    map1->addWeatherEffect(*rain);
-    FogWeather* fog = new FogWeather();
-    map1->addWeatherEffect(*fog);
+//    map1->addWeatherEffect(*rain);
+//    FogWeather* fog = new FogWeather();
+//    map1->addWeatherEffect(*fog);
 
     // create an item dropper
     itemDropper = new CItemDropper();
@@ -298,6 +298,7 @@ int main(int argc, char *argv[])
     RandomImageEntity* tree4 = new RandomImageEntity(":/resources/graphics/tree", "treeOne" , 5, *(new PathingMap(treePM)));
     RandomImageEntity* tree5 = new RandomImageEntity(":/resources/graphics/tree", "treeOne" , 5, *(new PathingMap(treePM)));
     RandomImageEntity* tree6 = new RandomImageEntity(":/resources/graphics/tree", "treeOne" , 5, *(new PathingMap(treePM)));
+    addTag("scenery",{tree2,tree3,tree4,tree5});
     map1->addEntity(tree2);
     map1->addEntity(tree3);
     map1->addEntity(tree4);
