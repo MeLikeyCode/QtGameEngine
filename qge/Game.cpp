@@ -68,8 +68,8 @@ Game::Game(MapGrid *mapGrid, int xPosOfStartingMap, int yPosOfStartingMap):
 void Game::launch(){
     showNormal(); // TODO: eventually should showFullscreen() (or parametrize to
                   // allow launching normal or full screen
-
-    showFullScreen();
+    setFixedSize(1280,720);
+//    showFullScreen();
     setSceneRect(0,0,width(),height());
 }
 

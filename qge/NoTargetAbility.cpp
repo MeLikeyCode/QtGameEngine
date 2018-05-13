@@ -4,7 +4,7 @@
 
 using namespace qge;
 
-NoTargetAbility::NoTargetAbility(Entity &owner, Sprite *icon):
+NoTargetAbility::NoTargetAbility(Entity *owner, Sprite *icon):
     Ability(owner,icon)
 {
     // empty

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QPointer>
+#include <string>
 
 #include "Entity.h"
 #include "Sprite.h"
@@ -18,28 +19,35 @@ namespace qge{
 /// this is something that each Ability subclass should handle on its own.
 /// The main difference between Abilities and Items is the fact that Items are
 /// Entities, therefore they can be on the ground where as Abilities cannot.
-/// @author Abdullah Aghazadah
+///
+/// To create your own abilities, you should subclass NoTargetAbility, PointTargetAbility, or
+/// EntityTargetAbility depending on what type of target your ability needs.
 class Ability : public QObject // need QPointers to Ability
 {
     Q_OBJECT
 public:
     // owner
     Entity* owner();
-    void setOwner(Entity& owner);
+    void setOwner(Entity* owner);
 
     // icon
     Sprite* icon();
     void setIcon(Sprite* sprite);
 
+    // description
+    std::string description();
+    void setDescription(const std::string& description);
+
 protected:
     // ctor protected so that abstract class cannot be constructed
     // yet derived classes can still call ctor
-    Ability(Entity& owner, Sprite *icon = nullptr);
+    Ability(Entity* owner = nullptr, Sprite *icon = nullptr);
 
     void assertOwnerIsAlive_();
 private:
     QPointer<Entity> owner_;
     QPointer<Sprite> icon_;
+    std::string description_;
 };
 
 }

@@ -12,7 +12,7 @@ using namespace qge;
 ECBodyThruster::ECBodyThruster(Entity *entity):
     EntityController(entity),
     controllerChaseEnemies_(new ECChaser(entity)),
-    bodyThrustAbility_(new BodyThrust(*entity)),
+    bodyThrustAbility_(new BodyThrust(entity)),
     periodicCheckTimer_(new QTimer(this)),
     lastEntityChased_(nullptr)
 {

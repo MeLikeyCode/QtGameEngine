@@ -10,9 +10,9 @@ Entity *Ability::owner()
 }
 
 /// Sets the owner of the Ability.
-void Ability::setOwner(Entity &owner)
+void Ability::setOwner(Entity *owner)
 {
-    owner_ = &owner;
+    owner_ = owner;
 }
 
 /// Returns the icon of the Ability. If the Ability has no icon, returns nullptr.
@@ -28,10 +28,21 @@ void Ability::setIcon(Sprite *sprite)
     icon_ = sprite;
 }
 
+std::string Ability::description()
+{
+    return description_;
+}
+
+void Ability::setDescription(const std::string &description)
+{
+    description_ = description;
+}
+
 /// Constructs an Ability with the specified owner and icon.
-Ability::Ability(Entity &owner, Sprite* icon):
-    owner_(&owner),
-    icon_(icon)
+Ability::Ability(Entity *owner, Sprite* icon):
+    owner_(owner),
+    icon_(icon),
+    description_("No description.")
 {
     // empty ctor body
 }

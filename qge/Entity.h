@@ -119,6 +119,8 @@ public:
     bool canBeDamagedBy(Entity* entity);
     bool isInvulnerable();
     void setInvulnerable(bool tf);
+    bool isScenery();
+    void setIsScenery(bool tf);
 
     // group/enemy groups
     void setGroup(int groupNumber_);
@@ -195,6 +197,7 @@ private:
     int groupNumber_;
     std::unordered_set<int> enemyGroups_;
     bool invulnerable_;
+    bool isScenery_;
 
     Inventory* inventory_;
     std::unordered_map<std::string,Slot*> stringToSlot_;

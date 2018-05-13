@@ -6,7 +6,7 @@ class QTimer;
 
 namespace qge{
 
-class Sound;
+class RainOfSpearsAbility;
 
 class ItemRainOfSpears : public NoTargetItem
 {
@@ -15,10 +15,7 @@ public:
 
     virtual void use_();
 public slots:
-    void spearStep_();
-    int times_;
-    QTimer* timer_;
-    Sound* soundEffect_;
+    RainOfSpearsAbility* ability_;
 };
 
 }

@@ -8,7 +8,7 @@ namespace qge{
 /// @author Abdullah Aghazadah
 class NoTargetAbility : public Ability {
 public:
-    NoTargetAbility(Entity& owner, Sprite* icon = nullptr);
+    NoTargetAbility(Entity* owner, Sprite* icon = nullptr);
 
     void use();
 

@@ -10,7 +10,7 @@ class Entity;
 /// @author Abdullah Aghazadah
 class EntityTargetAbility : public Ability {
 public:
-    EntityTargetAbility(Entity& owner, Sprite* icon);
+    EntityTargetAbility(Entity* owner=nullptr, Sprite* icon=nullptr);
 
     void use(Entity &onEntity);
 

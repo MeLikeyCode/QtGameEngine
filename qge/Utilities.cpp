@@ -36,7 +36,7 @@ void qge::addRandomTrees(Map *mapToAddTreesTo, int numTreesToAdd, const std::str
 
         RandomImageEntity* tree = new RandomImageEntity(":/resources/graphics/tree","tree" + treeNumber,numImages,*pm);
         mapToAddTreesTo->addEntity(tree);
-        tree->setInvulnerable(true);
+        tree->setIsScenery(true);
 
         double randXPos = randDouble(100,mapToAddTreesTo->width()-100);
         double randYPos = randDouble(100,mapToAddTreesTo->height()-100);

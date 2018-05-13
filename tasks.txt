@@ -976,7 +976,15 @@ Put "hand" attack graphics for animation attack.
 =============================================================================
 
 
+===TASK===
+Make RainOfSpears move work
+-it collides with trees, it should not
 
+===TASK===
+Add FireShards item which shoots fireballs in 360 direction
+
+===TASK===
+Make RainOfSpears and FireShards Abilities. Give these abilities to items.
 
 
 ===TASK===

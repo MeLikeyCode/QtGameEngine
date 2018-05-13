@@ -33,6 +33,7 @@ Entity::Entity():
     canOnlyBeDamagedByMode_(false), // by default, can be damaged by all
     groupNumber_(0),                     // default group id of 0
     invulnerable_(false),
+    isScenery_(false),
     zPos_(0),
     height_(0),
     inventory_(new Inventory()),
@@ -657,6 +658,19 @@ bool Entity::isInvulnerable()
 void Entity::setInvulnerable(bool tf)
 {
     invulnerable_ = tf;
+}
+
+/// Returns true if the Entity is a "scenery".
+/// A "scenery" is an entity such as a tree, rock, house, etc. Sort of like "background" things.
+bool Entity::isScenery()
+{
+    return isScenery_;
+}
+
+/// @see isScenery()
+void Entity::setIsScenery(bool tf)
+{
+    isScenery_ = tf;
 }
 
 /// Set the group that the Entity is a part of.

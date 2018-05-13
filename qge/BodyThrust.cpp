@@ -14,7 +14,7 @@
 
 using namespace qge;
 
-BodyThrust::BodyThrust(Entity &owner):
+BodyThrust::BodyThrust(Entity *owner):
     NoTargetAbility(owner,nullptr)
 {
     // default thrust parameters

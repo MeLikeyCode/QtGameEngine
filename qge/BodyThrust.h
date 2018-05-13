@@ -21,7 +21,7 @@ class BodyThrust: public NoTargetAbility {
     Q_OBJECT
 public:
     // constructor
-    BodyThrust(Entity& owner);
+    BodyThrust(Entity* owner);
 
     virtual void useImplementation();
 
