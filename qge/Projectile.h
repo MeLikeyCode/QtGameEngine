@@ -22,7 +22,9 @@ namespace qge{
 /// with Entities. The DestReachedBehavior determines what happens when the
 /// Projectile reaches its destination. If you don't want the projectile
 /// to collide with a certain group of entities, give that group a tag, and then
-/// call addCollisionToIgnore() passing in that tag.
+/// call addEntitiesToNotCollideWith() passing in that tag. If you want the projectile to
+/// collide but not damage a certain group of entities, give that group a tag and
+/// call addEntitiesToNotDamage() passing in that tag.
 ///
 /// To shoot a projectile towards a certain pos use shootTowards(). To have the
 /// projectile "home" to an Entity (i.e. follow the Entity while traveling),
@@ -30,16 +32,18 @@ namespace qge{
 /// passing in the new position of the Entity.
 ///
 /// Example usage
-/// =============
+/// -------------
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.cpp
 /// Projectile* p = new SomeConcreteProjectileClass(aMover, aCollisionBehavior, listOfEntitiesToNotDmg);
+/// p->addEntitiesToNotCollideWith("ghost"); // pass through all entities tagged with "ghost"
+/// p->addEntitiesToNotDamage("good guy"); // collide with but do not damage all entities tagged with "good guy"
 /// p->setPointPos(somePos); // set the position of the projectile
 /// p->shootTowards(someOtherPos); // shoot the projectile towards the specified pos
 /// p->homeTowards(someEntity); // periodically redirects the projectile to follow said entity
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ///
 /// How to create your own custom Projectiles
-/// =========================================
+/// -----------------------------------------
 /// To create your own custom projectile, you simply need to create your own custom
 /// Mover, CollisionBehavior, and DestReachedBehavior. Then give your projectile
 /// these behaviors.
@@ -72,8 +76,10 @@ public:
     DestReachedBehavior* destReachedBehavior();
     void setDestReachedBehavior(DestReachedBehavior* drb);
 
-    // collision ignoring
-    void addCollisionToIgnore(const std::string& tag);
+    void addEntitiesToNotCollideWith(const std::string& tag);
+    void addEntityToNotCollideWith(Entity* entity);
+    void addEntitiesToNotDamage(const std::string& tag);
+    void addEntityToNotDamage(Entity* entity);
 
 public slots:
     void onCollided_(Entity* self, Entity* collidedWith);
@@ -86,8 +92,11 @@ private:
     std::unique_ptr<CollisionBehavior> collisionBehavior_;
     std::unique_ptr<DestReachedBehavior> destReachedBehavior_;
 
-    // ignore collisions with entities that have these tags
-    std::set<std::string> collisionsToIgnore_;
+
+    std::set<std::string> doNotCollideTags_; // ignore collisions with entities that have these tags
+    std::set<std::string> doNotDamageTags_; // collide with but do not damage these entities
+    std::set<Entity*> doNotCollideEntities_; // ignore collisions with these entities
+    std::set<Entity*> doNotDamageEntities_; // collide with but do not damage these entites
 
     QPointer<Entity> homeTo_;
     QTimer* homeTimer_;

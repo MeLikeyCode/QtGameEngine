@@ -125,7 +125,7 @@ void Spear::thrustStep()
     Entity* theOwner = inventory()->entity();
     for (Entity* e: collidingEntities){
         if (e != this && e!= theOwner && e->parent() != theOwner && headingForward_){
-            collisionBehavior()->onCollided(this,e); // let collision behavior handle collision
+            collisionBehavior()->onCollided(this,e,{},{}); // let collision behavior handle collision
             headingBackwardDueToCollision_ = true;
             headingBackward_ = false;
             headingForward_ = false;

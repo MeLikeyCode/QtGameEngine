@@ -113,7 +113,7 @@ void Axe::swingStep()
         std::unordered_set<Entity*> collidingEntities = map()->entities(mapToMap(tip()));
         for (Entity* e: collidingEntities){
             if (e != this && e != theOwner && e->parent() != theOwner){
-                collisionBehavior()->onCollided(this,e);
+                collisionBehavior()->onCollided(this,e,{},{});
                 hitSomethingComingBackFromDraw_ = true;
                 return;
             }
@@ -131,7 +131,7 @@ void Axe::swingStep()
         std::unordered_set<Entity*> collidingEntities = map()->entities(mapToMap(tip()));
         for (Entity* e: collidingEntities){
             if (e != this && e != theOwner && e->parent() != theOwner){
-                collisionBehavior()->onCollided(this,e);
+                collisionBehavior()->onCollided(this,e,{},{});
                 hitSomethingDuringForwardStep_ = true;
                 stepsToGoBackwardToNeutral_ = currentForwardStep_;
                 return;

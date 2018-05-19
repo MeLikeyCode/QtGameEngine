@@ -1,6 +1,7 @@
 #include "CBDamage.h"
 
 #include "Entity.h"
+#include "STLWrappers.h"
 
 using namespace qge;
 
@@ -11,21 +12,17 @@ CBDamage::CBDamage(double amountToDamageEntityOne, double amountToDamageEntityTw
 
 }
 
-void CBDamage::onCollided(Entity *entityOne, Entity *entityTwo)
+void CBDamage::onCollided(Entity *entityOne, Entity *entityTwo, const std::set<std::string>& doNotDamageTags, const std::set<Entity*>& doNotDamageEntities)
 {
-    // if this collision is to be ignored, do nothing
-    if (ignoredCollisions_.find(std::make_pair(entityOne,entityTwo)) != ignoredCollisions_.end())
-        return;
-    if (ignoredCollisions_.find(std::make_pair(entityTwo,entityOne)) != ignoredCollisions_.end())
+    // # if this collision is to be ignored, do nothing
+    // ignore due to tag
+    for (const std::string& tag : doNotDamageTags)
+        if (entityOne->containsTag(tag) || entityTwo->containsTag(tag))
+            return;
+    // ignore due to specific entity
+    if (STLWrappers::containsAny(doNotDamageEntities,{entityOne,entityTwo}))
         return;
 
     entityOne->setHealth(entityOne->health() - amountToDamageEntityOne_);
     entityTwo->setHealth(entityTwo->health() - amountToDamageEntityTwo_);
-}
-
-/// Specifies that the collision between these two entities should be ignored.
-void CBDamage::addCollisionToIgnore(Entity *one, Entity *two)
-{
-    ignoredCollisions_.insert(std::make_pair(one,two));
-    ignoredCollisions_.insert(std::make_pair(two,one));
 }

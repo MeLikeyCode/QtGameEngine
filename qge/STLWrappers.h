@@ -5,6 +5,7 @@
 /// -find(inContainer, item) -> iterator to item if found, else end iterator
 /// -contains(container, item) -> true if container contains item, else false
 /// -containsAll(container, items) -> true if container contains all the specified items
+/// -containsAny(container,items) -> true if container contains any of the specified items
 /// -add(inContainer, item) -> adds item to the container
 /// -remove(fromContainer, item) -> removes item from the container
 /// -count(inContainer,item) -> number of times item is in the container
@@ -109,6 +110,42 @@ namespace STLWrappers
 		return true;
 	}
 	///@}
+
+    /// @name containsAny(container,items)
+    /// Returns true if the specified container contains *any* of the specified items.
+    /// If the container is a map (or unordered map), the items should be keys.
+    ///@{
+    /// containsAny() overload for all types except initializer lists
+    template<typename ContainerToCheckType, typename ContainerOfItemsType>
+    bool containsAny(const ContainerToCheckType& container, const ContainerOfItemsType& items)
+    {
+        // approach:
+        // - for each item in items
+        //		- if its is contained in container, return true
+        // - at the end return false
+
+        for (const auto& item : items)
+            if (contains(container, item))
+                return true;
+        return false;
+    }
+    ///
+    /// containsAny() overload for initializer lists
+    template<typename ContainerToCheckType, typename ItemType>
+    bool containsAny(const ContainerToCheckType& container, const std::initializer_list<ItemType>& items)
+    {
+        // approach:
+        // - for each item in items
+        //		- if its is contained in container, return true
+        // - at the end return false
+
+        for (const auto& item : items)
+            if (contains(container, item))
+                return true;
+        return false;
+    }
+    ///@}
+
 
 	/// @name remove(fromContainer, item)
 	/// Removes the specified item from the container (if it exists).

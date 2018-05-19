@@ -10,7 +10,7 @@
 
 using namespace qge;
 
-/// Constructs a Project from the specified behaviors.
+/// Constructs a Projectile with the specified behaviors.
 /// You can pass in null for any of the behaviors, but be sure to use the setters
 /// to set all the behaviors prior to calling shootTowards() or homeTowards().
 Projectile::Projectile(ECMover *mover,
@@ -21,7 +21,7 @@ Projectile::Projectile(ECMover *mover,
     destReachedBehavior_(destReachedBehavior)
 {
     setMover(mover);
-    addCollisionToIgnore("scenery");
+    addEntitiesToNotCollideWith("scenery");
 
     // listen to when projectile collides with anything
     connect(this, &Entity::collided,this,&Projectile::onCollided_);
@@ -78,9 +78,30 @@ void Projectile::setDestReachedBehavior(DestReachedBehavior *drb)
     destReachedBehavior_.reset(drb);
 }
 
-void Projectile::addCollisionToIgnore(const std::string &tag)
+/// This projectile will not even collide (i.e. pass through) entities that have the specified tag.
+void Projectile::addEntitiesToNotCollideWith(const std::string &tag)
 {
-    STLWrappers::add(collisionsToIgnore_,tag);
+    STLWrappers::add(doNotCollideTags_,tag);
+}
+
+/// This projectile will not collide (i.e. pass through) the specified entity.
+void Projectile::addEntityToNotCollideWith(Entity *entity)
+{
+    STLWrappers::add(doNotCollideEntities_,entity);
+}
+
+/// This projectile should not damage entities with the specified tag.
+/// Projectile and projectile related behavior subclasses (particularly CollisionBehaviors),
+/// please check this list before damaging entities.
+void Projectile::addEntitiesToNotDamage(const std::string &tag)
+{
+    STLWrappers::add(doNotDamageTags_,tag);
+}
+
+/// This projectile will collide with but not damage the specified entity.
+void Projectile::addEntityToNotDamage(Entity *entity)
+{
+    STLWrappers::add(doNotDamageEntities_,entity);
 }
 
 /// Executed when the Projectile collides with something.
@@ -90,11 +111,11 @@ void Projectile::onCollided_(Entity *self, Entity *collidedWith)
     Q_UNUSED(self);
 
     // this collision should be ignored
-    for (const std::string& tag : collisionsToIgnore_)
+    for (const std::string& tag : doNotCollideTags_)
         if (collidedWith->containsTag(tag))
             return;
 
-    collisionBehavior_->onCollided(this, collidedWith);
+    collisionBehavior_->onCollided(this, collidedWith, doNotDamageTags_, doNotDamageEntities_);
 }
 
 /// Executed when the Projectile has finished its moving (has reached its final
