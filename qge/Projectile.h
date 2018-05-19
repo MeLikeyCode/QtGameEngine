@@ -37,7 +37,7 @@ namespace qge{
 /// Projectile* p = new SomeConcreteProjectileClass(aMover, aCollisionBehavior, listOfEntitiesToNotDmg);
 /// p->addEntitiesToNotCollideWith("ghost"); // pass through all entities tagged with "ghost"
 /// p->addEntitiesToNotDamage("good guy"); // collide with but do not damage all entities tagged with "good guy"
-/// p->setPointPos(somePos); // set the position of the projectile
+/// p->setPos(somePos); // set the position of the projectile
 /// p->shootTowards(someOtherPos); // shoot the projectile towards the specified pos
 /// p->homeTowards(someEntity); // periodically redirects the projectile to follow said entity
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

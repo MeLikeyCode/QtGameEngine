@@ -114,6 +114,9 @@ void Projectile::onCollided_(Entity *self, Entity *collidedWith)
     for (const std::string& tag : doNotCollideTags_)
         if (collidedWith->containsTag(tag))
             return;
+    for (Entity* entity:doNotCollideEntities_)
+        if (collidedWith == entity)
+            return;
 
     collisionBehavior_->onCollided(this, collidedWith, doNotDamageTags_, doNotDamageEntities_);
 }

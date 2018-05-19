@@ -14,8 +14,7 @@ using namespace qge;
 RainOfSpearsAbility::RainOfSpearsAbility(Entity* owner, Sprite *icon):
     NoTargetAbility(owner,icon)
 {
-    Sprite* sprite = new Sprite(QPixmap(":/resources/graphics/weapons/trippleSpear.png"));
-    setIcon(sprite);
+    setIcon(new Sprite(QPixmap(":/resources/graphics/weapons/trippleSpear.png")));
     setDescription("Rains spears around the owner. The spears damage enemies of the owner.");
     timer_ = new QTimer(this);
     soundEffect_ = new Sound("qrc:/resources/sounds/specialMove.wav",this);

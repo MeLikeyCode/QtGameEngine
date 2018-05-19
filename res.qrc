@@ -153,5 +153,6 @@
         <file>graphics/tree/animTree/animTreepathing.png</file>
         <file>graphics/tree/animTree/animTree14.png</file>
         <file>graphics/misc/axeicon.png</file>
+        <file>graphics/effects/fireRain.png</file>
     </qresource>
 </RCC>

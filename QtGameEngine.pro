@@ -128,7 +128,9 @@ SOURCES += \ # this is just so we can line up all our sources nicely
     qge/CHealthShower.cpp \
     qge/ECGuiShower.cpp \
     qge/ECMerchant.cpp \
-    qge/RainOfSpearsAbility.cpp
+    qge/RainOfSpearsAbility.cpp \
+    qge/ShardsOfFireAbility.cpp \
+    qge/ItemShardsOfFire.cpp
 
 # these are the headers we use
 HEADERS  += \ # this is just so we can line up all our headers nicely
@@ -241,7 +243,9 @@ HEADERS  += \ # this is just so we can line up all our headers nicely
     qge/CHealthShower.h \
     qge/ECGuiShower.h \
     qge/ECMerchant.h \
-    qge/RainOfSpearsAbility.h
+    qge/RainOfSpearsAbility.h \
+    qge/ShardsOfFireAbility.h \
+    qge/ItemShardsOfFire.h
 
 RESOURCES += \
     res.qrc

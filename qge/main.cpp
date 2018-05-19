@@ -53,6 +53,7 @@
 #include "QuestAcceptor.h"
 #include "Quests.h"
 #include "Quest.h"
+#include "ItemShardsOfFire.h"
 
 using namespace qge;
 
@@ -146,6 +147,11 @@ int main(int argc, char *argv[])
     ros->setNumOfCharges(2);
     ros->setPos(QPointF(200,200));
     map1->addEntity(ros);
+
+    ItemShardsOfFire* sof = new ItemShardsOfFire();
+    sof->setNumOfCharges(10);
+    sof->setPos(QPointF(220,220));
+    map1->addEntity(sof);
 
     ItemPushback* pushBackItem = new ItemPushback();
     pushBackItem->setPos(QPointF(300,300));

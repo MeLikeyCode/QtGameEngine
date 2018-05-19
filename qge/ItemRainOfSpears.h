@@ -14,7 +14,7 @@ public:
     ItemRainOfSpears();
 
     virtual void use_();
-public slots:
+public:
     RainOfSpearsAbility* ability_;
 };
 
