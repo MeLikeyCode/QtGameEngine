@@ -6,6 +6,7 @@
 #include "SpearProjectile.h"
 #include "Map.h"
 #include "TopDownSprite.h"
+#include "ECSineMover.h"
 
 qge::ShardsOfFireAbility::ShardsOfFireAbility(int numShards, double shardDistance, qge::Entity *owner, qge::Sprite *icon):
     NoTargetAbility(owner,icon),

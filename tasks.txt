@@ -969,22 +969,82 @@ Solution in head right now:
 ===TASK===-------DONE
 Put "hand" attack graphics for animation attack.
 
+===TASK===-------DONE
+Make RainOfSpears move work
+-it collides with trees, it should not
+
+===TASK===-------DONE
+Make RainOfSpears and FireShards Abilities. Give these abilities to items.
+
+===TASK===-----DONE
+-need  a way for to specify projectiles to not collide with certain things such as trees, rocks etc
+    - can include a list into each projectile instance - most flexible but most tedius
+    - can make it type based - bad idea
+    - can give some entities tags (such as "scenery")
+    - can give projectiles tags of items to not collide with (all projectiles by default avoid scenery)
+    - collision behaviors wont collide with em
+
+===TASK===-----DONE
+-Give entities tags
+-Give projectiles do_not_collide tag and do not_dmg tags
+    -do not collide prevents collision with entities
+    -do not damage allows collision but prevents damage
+-Collision behaviors should not colide 
+
+===TASK===---------DONE
+Come up with an easy way to prevent projectiles from colliding with or damaging certain entites
+
+solution 1 (naiive)
+-each entity should have a list of entities it shouldn't damage or collide with
+    cons:
+        -CollisionBehavior is how projectiles decide what happens on collision
+        -We need every single Collision behavior to see a) see if one of the colliding entities is a projectile and b) if so, check that projectile's ignoreDamage_ before damaging
+    quick idea
+        -before calling the CollisionBehavior, check the noDamage
+
+solution 2
+-
+
 =============================================================================
 =============================================================================
 =========================UNFINISHED TASKS====================================
 =============================================================================
 =============================================================================
 
+===TASK===
+Often times you want to create an item that simply delegates to an ability.
+Right now, you have to create a new subclass of Item.
+This will result in too many classes.
+Make it so that you can
+- create a AbilityItem instance
+- create a Ability
+- set AbilityItem's ability
+* when the AbilityItem's ability is set, set its icon to the ability's icon
+
+then
+-delete ItemRainOfSpears and ItemShardsOfFire. Instead just create AbilityItem and assign RainOfSpearsAbility and ShardsOfFireAbility
+
+
+
+
 
 ===TASK===
-Make RainOfSpears move work
--it collides with trees, it should not
+Add FireShards Ability/Item which shoots fireballs in 360 direction
+-create FireShardsAbility
+-create FireShardsItem
+-make item delegate to the ability
+-FireShardAbility::useImplementation:
+    - for each angle 0, 15, 30 ... 360:
+        - create a SpearProjectile, set its graphics to fireball
+        - set its position to position of owner
+        - set its target to line extended from pos of owner with specified angle at some radius
+        - shoot it
 
 ===TASK===
-Add FireShards item which shoots fireballs in 360 direction
-
-===TASK===
-Make RainOfSpears and FireShards Abilities. Give these abilities to items.
+Move groups and relationship between groups to a higher up Diplomacy kind of class
+-The Diplomacy object tells you which groupds are enemies with which other groups
+-give each entity a group #
+-in the diplomacy object, keep track of which group numbers are enmies with whom
 
 
 ===TASK===

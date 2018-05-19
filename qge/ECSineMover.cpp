@@ -15,8 +15,8 @@ ECSineMover::ECSineMover(Entity *entity):
     wavelength_(100),
     targetPos_(),
     startPos_(),
-    stepSize_(1),
-    speed_(200),
+    stepSize_(15),
+    speed_(500),
     range_(0),
     faceTarget_(true),
     distanceMoved_(0)
@@ -48,7 +48,7 @@ void ECSineMover::moveEntity_(const QPointF& pos)
     }
 
     // start moving
-    //connect(moveTimer_,&QTimer::timeout,this,&SineMover::onMoveStep_);
+    connect(moveTimer_,&QTimer::timeout,this,&ECSineMover::onMoveStep_);
     moveTimer_->start(secondsToMs(frequency(stepSize_,speed_)));
 }
 

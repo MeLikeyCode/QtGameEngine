@@ -25,7 +25,7 @@ namespace qge{
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ///
 /// @author Abdullah Aghazadah
-class ECSineMover : ECMover
+class ECSineMover : public ECMover
 {
     Q_OBJECT
 public:

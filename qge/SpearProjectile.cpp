@@ -22,7 +22,6 @@ SpearProjectile::SpearProjectile(double range, double damage):
 
     // set Mover
     ECStraightMover* sm = new ECStraightMover(this);
-    sm->setFaceTarget(true);
     setMover(sm);
 
     // set CollisionBehavior
