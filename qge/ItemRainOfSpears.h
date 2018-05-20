@@ -12,10 +12,7 @@ class ItemRainOfSpears : public NoTargetItem
 {
 public:
     ItemRainOfSpears();
-
     virtual void use_();
-public:
-    RainOfSpearsAbility* ability_;
 };
 
 }

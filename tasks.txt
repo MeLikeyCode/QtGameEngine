@@ -1013,13 +1013,18 @@ solution 2
 
 ===TASK===
 Often times you want to create an item that simply delegates to an ability.
-Right now, you have to create a new subclass of Item.
+In other words, when the item is used, it will simply use an ability.
+If you want to create an item that does this, right now, you have to create a new subclass of Item.
 This will result in too many classes.
 Make it so that you can
 - create a AbilityItem instance
 - create a Ability
 - set AbilityItem's ability
 * when the AbilityItem's ability is set, set its icon to the ability's icon
+
+    ShardsOfFireAbility* ability = ...
+    AbilityItem* item = new AbilityItem(ability)
+
 
 then
 -delete ItemRainOfSpears and ItemShardsOfFire. Instead just create AbilityItem and assign RainOfSpearsAbility and ShardsOfFireAbility
