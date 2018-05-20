@@ -27,9 +27,9 @@ void NoTargetItem::use()
         setNumOfCharges(numOfCharges()-1);
 }
 
-/// Sets the ability that will be used when the item is used.
-/// Can be nullptr. If the ability is nullptr, then the virtual use_() function will
-/// be called when use() is called.
+/// Sets the ability of the item.
+/// Giving the item an ability means setting the icon/sprite of the item to the
+/// icon of the ability and using the ability when the item is used.
 void NoTargetItem::setAbility(NoTargetAbility *ability)
 {
     ability_ = ability;
