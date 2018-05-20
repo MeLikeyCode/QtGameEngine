@@ -3,6 +3,7 @@
 #include <cassert>
 
 #include "EntityTargetAbility.h"
+#include "TopDownSprite.h"
 
 using namespace qge;
 
@@ -36,6 +37,8 @@ void EntityTargetItem::use(Entity *onEntity)
 void EntityTargetItem::setAbility(EntityTargetAbility *ability)
 {
     ability_ = ability;
-    if (ability)
+    if (ability){
         setIcon(ability->icon());
+        setSprite(new TopDownSprite(ability->icon()));
+    }
 }

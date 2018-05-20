@@ -1,6 +1,7 @@
 #include "NoTargetItem.h"
 
 #include "NoTargetAbility.h"
+#include "TopDownSprite.h"
 
 using namespace qge;
 
@@ -32,6 +33,8 @@ void NoTargetItem::use()
 void NoTargetItem::setAbility(NoTargetAbility *ability)
 {
     ability_ = ability;
-    if (ability)
+    if (ability){
         setIcon(ability->icon());
+        setSprite(new TopDownSprite(ability->icon()));
+    }
 }

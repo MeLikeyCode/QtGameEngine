@@ -1,6 +1,7 @@
 #include "PointTargetItem.h"
 
 #include "PointTargetAbility.h"
+#include "TopDownSprite.h"
 
 using namespace qge;
 
@@ -32,6 +33,8 @@ void PointTargetItem::use(const QPointF &point)
 void PointTargetItem::setAbility(PointTargetAbility *ability)
 {
     ability_ = ability;
-    if (ability)
+    if (ability){
         setIcon(ability->icon());
+        setSprite(new TopDownSprite(ability->icon()));
+    }
 }
