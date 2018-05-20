@@ -10,7 +10,7 @@ class Entity;
 /// @author Abdullah Aghazadah
 class EntityTargetAbility : public Ability {
 public:
-    EntityTargetAbility(Entity* owner=nullptr, Sprite* icon=nullptr);
+    EntityTargetAbility(Entity* owner=nullptr, QPixmap icon=QPixmap());
 
     void use(Entity &onEntity);
 

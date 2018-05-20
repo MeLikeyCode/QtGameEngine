@@ -8,7 +8,7 @@ namespace qge{
 
 class PointTargetAbility: public Ability {
 public:
-    PointTargetAbility(Entity* owner=nullptr, Sprite* icon = nullptr);
+    PointTargetAbility(Entity* owner=nullptr, QPixmap icon = QPixmap());
 
     void use(const QPointF& atPoint);
 

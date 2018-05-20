@@ -77,6 +77,6 @@ void AbilityCell::draw_()
 
     // overwrite with ability's icon if has ability
     if (ability_ != nullptr){
-        picture_->setPixmap(ability_->icon()->currentFrame().scaled(width-20,height-20));
+        picture_->setPixmap(ability_->icon().scaled(width-20,height-20));
     }
 }

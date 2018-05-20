@@ -15,7 +15,7 @@
 using namespace qge;
 
 BodyThrust::BodyThrust(Entity *owner):
-    NoTargetAbility(owner,nullptr)
+    NoTargetAbility(owner)
 {
     // default thrust parameters
     currentThrustStep_ = 0;
@@ -30,8 +30,6 @@ BodyThrust::BodyThrust(Entity *owner):
     damage_ = 5;
 
     soundEffect_ = new Sound("qrc:/resources/sounds/spear.wav");
-
-    setIcon(new Sprite());
 
     setOwner(owner);
 }

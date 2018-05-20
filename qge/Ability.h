@@ -33,8 +33,8 @@ public:
     void setOwner(Entity* owner);
 
     // icon
-    Sprite* icon();
-    void setIcon(Sprite* sprite);
+    QPixmap icon();
+    void setIcon(const QPixmap& icon);
 
     // description
     std::string description();
@@ -43,12 +43,12 @@ public:
 protected:
     // ctor protected so that abstract class cannot be constructed
     // yet derived classes can still call ctor
-    Ability(Entity* owner = nullptr, Sprite *icon = nullptr);
+    Ability(Entity* owner = nullptr, QPixmap icon = QPixmap());
 
     void assertOwnerIsAlive_();
 private:
     QPointer<Entity> owner_;
-    QPointer<Sprite> icon_;
+    QPixmap icon_;
     std::string description_;
 };
 

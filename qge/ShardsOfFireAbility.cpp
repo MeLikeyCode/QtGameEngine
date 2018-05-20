@@ -8,12 +8,12 @@
 #include "TopDownSprite.h"
 #include "ECSineMover.h"
 
-qge::ShardsOfFireAbility::ShardsOfFireAbility(int numShards, double shardDistance, qge::Entity *owner, qge::Sprite *icon):
-    NoTargetAbility(owner,icon),
+qge::ShardsOfFireAbility::ShardsOfFireAbility(int numShards, double shardDistance, qge::Entity *owner):
+    NoTargetAbility(owner),
     numShards_(numShards),
     shardDistance_(shardDistance)
 {
-    setIcon(new Sprite(QPixmap(":/resources/graphics/effects/fireRain.png")));
+    setIcon(QPixmap(":/resources/graphics/effects/fireRain.png"));
     setDescription("Expells shards of fire from the owner.");
     soundEffect_ = new Sound("qrc:/resources/sounds/fireball.wav");
 }

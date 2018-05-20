@@ -15,17 +15,16 @@ void Ability::setOwner(Entity *owner)
     owner_ = owner;
 }
 
-/// Returns the icon of the Ability. If the Ability has no icon, returns nullptr.
-Sprite *Ability::icon()
+/// Returns the icon of the Ability (or null pixmap if it has no icon).
+QPixmap Ability::icon()
 {
     return icon_;
 }
 
-/// Sets the icon of the Ability to the specified Sprite.
-/// Pass in nullptr to give the Ability no icon.
-void Ability::setIcon(Sprite *sprite)
+/// Sets the icon of the Ability.
+void Ability::setIcon(const QPixmap &icon)
 {
-    icon_ = sprite;
+    icon_ = icon;
 }
 
 std::string Ability::description()
@@ -39,7 +38,7 @@ void Ability::setDescription(const std::string &description)
 }
 
 /// Constructs an Ability with the specified owner and icon.
-Ability::Ability(Entity *owner, Sprite* icon):
+Ability::Ability(Entity *owner, QPixmap icon):
     owner_(owner),
     icon_(icon),
     description_("No description.")

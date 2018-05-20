@@ -13,7 +13,7 @@ class RainOfSpearsAbility : public NoTargetAbility
 {
     Q_OBJECT
 public:
-    RainOfSpearsAbility(Entity* owner=nullptr, Sprite* icon = nullptr);
+    RainOfSpearsAbility(Entity* owner=nullptr);
 
     void useImplementation() override;
 

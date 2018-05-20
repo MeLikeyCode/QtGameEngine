@@ -2,7 +2,7 @@
 
 using namespace qge;
 
-PointTargetAbility::PointTargetAbility(Entity *owner, Sprite *icon):
+PointTargetAbility::PointTargetAbility(Entity *owner, QPixmap icon):
     Ability(owner,icon)
 {
     // empty

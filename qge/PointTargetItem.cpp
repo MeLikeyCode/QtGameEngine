@@ -33,5 +33,5 @@ void PointTargetItem::setAbility(PointTargetAbility *ability)
 {
     ability_ = ability;
     if (ability)
-        setIcon(ability->icon()->currentFrame());
+        setIcon(ability->icon());
 }

@@ -37,5 +37,5 @@ void EntityTargetItem::setAbility(EntityTargetAbility *ability)
 {
     ability_ = ability;
     if (ability)
-        setIcon(ability->icon()->currentFrame());
+        setIcon(ability->icon());
 }

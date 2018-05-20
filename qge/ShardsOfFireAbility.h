@@ -9,7 +9,7 @@ class Sound;
 class ShardsOfFireAbility : public NoTargetAbility
 {
 public:
-    ShardsOfFireAbility(int numShards, double shardDistance, Entity* owner=nullptr, Sprite* icon=nullptr);
+    ShardsOfFireAbility(int numShards, double shardDistance, Entity* owner=nullptr);
     void useImplementation() override;
 
 private:

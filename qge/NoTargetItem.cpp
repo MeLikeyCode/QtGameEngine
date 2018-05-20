@@ -33,5 +33,5 @@ void NoTargetItem::setAbility(NoTargetAbility *ability)
 {
     ability_ = ability;
     if (ability)
-        setIcon(ability->icon()->currentFrame());
+        setIcon(ability->icon());
 }
