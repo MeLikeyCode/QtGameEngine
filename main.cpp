@@ -54,6 +54,8 @@
 #include "Quests.h"
 #include "Quest.h"
 #include "ItemShardsOfFire.h"
+#include "MeleeWeaponSlot.h"
+#include "MyEventHandler.h"
 
 using namespace qge;
 
@@ -82,6 +84,7 @@ int main(int argc, char *argv[])
 
     // create a Game to visualize the Maps
     Game* game = new Game(mapGrid,0,1);
+    EventHandler* eventHandler = new EventHandler(game);
     game->launch();
 
     // create an entity that is controlled via keyboard/mouse

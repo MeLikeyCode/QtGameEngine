@@ -31,8 +31,6 @@
 
 using namespace qge;
 
-extern Entity* player;
-
 /// Creates an instance of the Game with some default options.
 Game::Game(MapGrid *mapGrid, int xPosOfStartingMap, int yPosOfStartingMap):
     mapGrid_(mapGrid),
@@ -169,8 +167,10 @@ void Game::moveCamRight(double byAmount)
 }
 
 void Game::mousePressEvent(QMouseEvent *event){
+    // do normal QGraphicsView event handling (it will pass it to the QGraphicsItems at location).
     QGraphicsView::mousePressEvent(event);
 
+    // if event was handled (by one of the QGraphicsItems), we're done
     if (event->isAccepted())
         return;
 
@@ -190,33 +190,34 @@ void Game::mousePressEvent(QMouseEvent *event){
         }
     }
 
-    // TODO: everything until end of this todo is test code, remove it
-
-    if (event->button() == Qt::LeftButton)
-        ((MeleeWeaponSlot*)player->slot("melee"))->use(); // use whatever item is equipped in the players "melee" slot
-
-    if (event->button() == Qt::RightButton){
-        // create an enemy for the player
-        Entity* enemy = new Entity();
-
-        TopDownSprite* spr = new TopDownSprite();
-        spr->addFrames(":/resources/graphics/spider",7,"walk");
-        spr->addFrames(":/resources/graphics/spider",1,"stand");
-        spr->play("stand",-1,1,0);
-        enemy->setSprite(spr);
-
-        player->map()->addEntity(enemy);
-        enemy->setPos(mapToMap(event->pos()));
-        ECBodyThruster* bodyThrustContr = new ECBodyThruster(enemy);
-        bodyThrustContr->addTargetEntity(player);
-    }
-
-    // end of TODO    
+    // if execution got to here, mouseMode_ must be regular, just emit mousePressed event
+    emit mousePressed(event->pos(),event->button());
 }
 
 void Game::mouseMoveEvent(QMouseEvent *event)
 {
+    // do normal QGraphicsView event handling (it will pass the even to QGraphicsItems)
     QGraphicsView::mouseMoveEvent(event);
+
+    // if one of the QGraphicsItems handled the event, we're done
+    if (event->isAccepted())
+        return;
+
+    // otherwise, simply emit mouseMove signal
+    emit mouseMoved(event->pos());
+}
+
+void Game::mouseReleaseEvent(QMouseEvent *event)
+{
+    // do normal QGraphicsView event handling (passing to QGraphicsItems)
+    QGraphicsView::mouseReleaseEvent(event);
+
+    // if one of the QGraphicsItems handled the event, we're done
+    if (event->isAccepted())
+        return;
+
+    // otherwise, simply emit mouseReleased event
+    emit mouseReleased(event->pos(), event->button());
 }
 
 void Game::keyPressEvent(QKeyEvent *event)

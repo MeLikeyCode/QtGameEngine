@@ -49,6 +49,7 @@ public:
     // mouse event handlers
     void mousePressEvent(QMouseEvent* event);
     void mouseMoveEvent(QMouseEvent* event);
+    void mouseReleaseEvent(QMouseEvent* event);
     void keyPressEvent(QKeyEvent* event);
     void keyReleaseEvent(QKeyEvent* event);
 
@@ -76,11 +77,26 @@ public:
     void setWatchedWatchingRange(Entity* watched, Entity* watching, double range);
 
 signals:
-    /// Emitted Whenever a position is selected while Game is in selectPosition mode.
+    /// Emitted whenever a position is selected while Game is in selectPosition MouseMode.
+    /// @param pos The position that was selected, in Map coordinates (of the current Map).
     void positionSelected(QPointF pos);
 
-    /// Emitted whenever an Entity is selected while the Game is in select Entity mode.
+    /// Emitted whenever an Entity is selected while the Game is in selectEntity MouseMode.
     void entitySelected(Entity* entity);
+
+    /// Emitted whenever the a mouse button is pressed down while Game is in regular MouseMode.
+    /// @param pos The position selected, in screen coordinates.
+    /// @param button The mouse button that was pressed.
+    void mousePressed(QPointF pos, Qt::MouseButton button);
+
+    /// Emitted whenever the mouse is moved while the Game is in regular MouseMode.
+    /// @param The position (in screen coordinates) that the mouse moved to.
+    void mouseMoved(QPointF pos);
+
+    /// Emitted whenever a mouse button is released while the Game is in regular MouseMode.
+    /// @param The position (in screen coordinates) at which the mouse was released at.
+    /// @param button The mouse button that was released.
+    void mouseReleased(QPointF pos, Qt::MouseButton button);
 
     /// Emitted when the current Map of the game is changed.
     void mapChanged(Map* oldMap, Map* newMap);

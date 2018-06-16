@@ -13,7 +13,6 @@ LIBS += -L"C:/Program Files (x86)/Windows Kits/10/Lib/10.0.10240.0/ucrt/x64" # s
 
 # these are the sources we need
 SOURCES += \ # this is just so we can line up all our sources nicely
-    qge/main.cpp \
     qge/Map.cpp \
     qge/Game.cpp \
     qge/Grid.cpp \

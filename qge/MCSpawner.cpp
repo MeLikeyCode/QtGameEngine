@@ -8,11 +8,8 @@
 #include "AngledSprite.h"
 #include "ECBodyThruster.h"
 #include "SpriteSheet.h"
-#include "CItemDropper.h"
 
 using namespace qge;
-
-extern CItemDropper* itemDropper;
 
 MCSpawner::MCSpawner(Map *map, const QRectF &region, MCSpawner::SpawnType spawnType, int max, double numPerSec):
     map_(map),
@@ -83,7 +80,4 @@ void MCSpawner::onTimeout_()
     // add entity to map
     map_->addEntity(entity);
     entity->setPos(randPoint);
-
-    // add entity to item dropper
-    itemDropper->addEntity(entity);
 }
