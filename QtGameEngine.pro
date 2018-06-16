@@ -1,9 +1,9 @@
+TARGET = qge # this is what our executable is called
+TEMPLATE = app # make an executable (not static or dynamic lib)
+
 QT       += core gui multimedia # we want to use these qt modules
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets # we require at least qt version 4
-
-TARGET = qge # this is what our executable is called
-TEMPLATE = app # make an executable (not static or dynamic lib)
 
 CONFIG += c++11 # we require a C++11 compatible compiler
 
@@ -242,4 +242,4 @@ HEADERS  += \ # this is just so we can line up all our headers nicely
     qge/ItemShardsOfFire.h
 
 RESOURCES += \ # this is our resource file (specifies resources (images, audio files, etc) we want embedded in our executable)
-    res.qrc
+    qge/res.qrc
