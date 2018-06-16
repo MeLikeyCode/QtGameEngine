@@ -1005,13 +1005,7 @@ solution 1 (naiive)
 solution 2
 -
 
-=============================================================================
-=============================================================================
-=========================UNFINISHED TASKS====================================
-=============================================================================
-=============================================================================
-
-===TASK===
+===TASK====------------DONE
 Often times you want to create an item that simply delegates to an ability.
 In other words, when the item is used, it will simply use an ability.
 If you want to create an item that does this, right now, you have to create a new subclass of Item.
@@ -1029,11 +1023,7 @@ Make it so that you can
 then
 -delete ItemRainOfSpears and ItemShardsOfFire. Instead just create AbilityItem and assign RainOfSpearsAbility and ShardsOfFireAbility
 
-
-
-
-
-===TASK===
+===TASK===-----------DONE
 Add FireShards Ability/Item which shoots fireballs in 360 direction
 -create FireShardsAbility
 -create FireShardsItem
@@ -1044,6 +1034,12 @@ Add FireShards Ability/Item which shoots fireballs in 360 direction
         - set its position to position of owner
         - set its target to line extended from pos of owner with specified angle at some radius
         - shoot it
+
+=============================================================================
+=============================================================================
+=========================UNFINISHED TASKS====================================
+=============================================================================
+=============================================================================
 
 ===TASK===
 Move groups and relationship between groups to a higher up Diplomacy kind of class
