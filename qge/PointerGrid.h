@@ -1,8 +1,9 @@
 #pragma once
 
 #include <vector>
-#include <Node.h>
 #include <cassert>
+
+#include "Node.h"
 
 namespace qge{
 

@@ -1,15 +1,8 @@
-TARGET = qge # this is what our executable is called
-TEMPLATE = app # make an executable (not static or dynamic lib)
+QT       += core gui widgets multimedia # we want to use these qt modules
 
-QT       += core gui multimedia # we want to use these qt modules
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets # we require at least qt version 4
+greaterThan(QT_MAJOR_VERSION, 4): # we require at least qt version 4
 
 CONFIG += c++11 # we require a C++11 compatible compiler
-
-INCLUDEPATH += "C:/Program Files (x86)/Windows Kits/10/Include/10.0.10240.0/ucrt" # search this directory for headers
-INCLUDEPATH += "qge" # search this one too
-LIBS += -L"C:/Program Files (x86)/Windows Kits/10/Lib/10.0.10240.0/ucrt/x64" # search this directory for .lib files (static libraries)
 
 # these are the sources we need
 SOURCES += \ # this is just so we can line up all our sources nicely

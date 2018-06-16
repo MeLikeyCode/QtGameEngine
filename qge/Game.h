@@ -87,16 +87,16 @@ signals:
     /// Emitted whenever the a mouse button is pressed down while Game is in regular MouseMode.
     /// @param pos The position selected, in screen coordinates.
     /// @param button The mouse button that was pressed.
-    void mousePressed(QPointF pos, Qt::MouseButton button);
+    void mousePressed(QPoint pos, Qt::MouseButton button);
 
     /// Emitted whenever the mouse is moved while the Game is in regular MouseMode.
     /// @param The position (in screen coordinates) that the mouse moved to.
-    void mouseMoved(QPointF pos);
+    void mouseMoved(QPoint pos);
 
     /// Emitted whenever a mouse button is released while the Game is in regular MouseMode.
     /// @param The position (in screen coordinates) at which the mouse was released at.
     /// @param button The mouse button that was released.
-    void mouseReleased(QPointF pos, Qt::MouseButton button);
+    void mouseReleased(QPoint pos, Qt::MouseButton button);
 
     /// Emitted when the current Map of the game is changed.
     void mapChanged(Map* oldMap, Map* newMap);

@@ -1,16 +1,19 @@
 #pragma once
 
 #include <QObject>
+#include <QPoint>
 
-class Game;
+namespace qge{
+    class Game;
+}
 
 class EventHandler : public QObject
 {
     Q_OBJECT
 public:
-    EventHandler(Game* forGame);
+    EventHandler(qge::Game* forGame);
 public slots:
-    void onMousePress(QPointF pos, Qt::MouseButton button);
+    void onMousePressed(QPoint pos, Qt::MouseButton button);
 private:
-    Game* game_;
+    qge::Game* game_;
 };

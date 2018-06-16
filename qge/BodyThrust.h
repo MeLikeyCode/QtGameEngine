@@ -4,7 +4,8 @@
 
 #include <QObject>
 #include <QPointF>
-#include <PlayingAnimationInfo.h>
+
+#include "PlayingAnimationInfo.h"
 
 class QTimer;
 

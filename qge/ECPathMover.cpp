@@ -2,9 +2,9 @@
 
 #include <QTimer>
 #include <cassert>
-#include <AsyncShortestPathFinder.h>
 #include <QLineF>
 
+#include "AsyncShortestPathFinder.h"
 #include "Sprite.h"
 #include "Map.h"
 #include "ECRotater.h"

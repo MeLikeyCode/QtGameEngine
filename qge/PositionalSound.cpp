@@ -1,11 +1,11 @@
 #include "PositionalSound.h"
 
 #include <cassert>
-#include <QtUtilities.h>
 
 #include "Sound.h"
 #include "Map.h"
 #include "Game.h"
+#include "QtUtilities.h"
 
 using namespace qge;
 

@@ -1,7 +1,8 @@
 #include "MapGrid.h"
 
 #include <cassert>
-#include <Node.h>
+
+#include "Node.h"
 
 using namespace qge;
 

@@ -1,7 +1,6 @@
 #include "ECGuiShower.h"
 
-#include <QtUtilities.h>
-
+#include "QtUtilities.h"
 #include "Map.h"
 #include "Game.h"
 #include "STLWrappers.h"
