@@ -1,9 +1,3 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2015-05-12T22:11:25
-#
-#-------------------------------------------------
-
 QT       += core gui multimedia # we want to use these qt modules
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets # we require at least qt version 4
@@ -247,5 +241,5 @@ HEADERS  += \ # this is just so we can line up all our headers nicely
     qge/ShardsOfFireAbility.h \
     qge/ItemShardsOfFire.h
 
-RESOURCES += \
+RESOURCES += \ # this is our resource file (specifies resources (images, audio files, etc) we want embedded in our executable)
     res.qrc
