@@ -8,7 +8,9 @@ LIBS += -L"C:/Program Files (x86)/Windows Kits/10/Lib/10.0.10240.0/ucrt/x64" # s
 
 SOURCES += \
     main.cpp \
-    MyEventHandler.cpp
+    MyEventHandler.cpp \
+    SpiderCreator.cpp \
 
 HEADERS += \
-    MyEventHandler.h
+    MyEventHandler.h \
+    SpiderCreator.h \

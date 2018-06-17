@@ -41,6 +41,7 @@
 #include "qge/ECGuiShower.h"
 
 #include "MyEventHandler.h"
+#include "SpiderCreator.h"
 
 using namespace qge;
 
@@ -236,7 +237,7 @@ int main(int argc, char *argv[])
     map2->addWeatherEffect(*(new RainWeather()));
 
     // create a spanwer in map 2
-    MCSpawner* spawner = new MCSpawner(map2,QRectF(0,0,map2->width(),map2->height()),MCSpawner::SpawnType::Spider,10,0.2);
+    MCSpawner* spawner = new MCSpawner(map2,QRectF(0,0,map2->width(),map2->height()),10,0.2,new SpiderCreator());
 
     // create villager that sells you stuff
     // villager sprite
