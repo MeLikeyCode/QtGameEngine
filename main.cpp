@@ -46,7 +46,6 @@
 using namespace qge;
 
 Entity* player;
-CItemDropper* itemDropper;
 
 int main(int argc, char *argv[])
 {
@@ -155,9 +154,6 @@ int main(int argc, char *argv[])
 //    map1->addWeatherEffect(*rain);
 //    FogWeather* fog = new FogWeather();
 //    map1->addWeatherEffect(*fog);
-
-    // create an item dropper
-    itemDropper = new CItemDropper();
 
     // create health shower
     CHealthShower* hs = new CHealthShower();

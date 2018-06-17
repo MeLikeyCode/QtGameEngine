@@ -4,7 +4,13 @@
 #include "qge/AngledSprite.h"
 #include "qge/SpriteSheet.h"
 #include "qge/ECBodyThruster.h"
+#include "qge/CItemDropper.h"
 
+SpiderCreator::SpiderCreator():
+    itemDropper_(new qge::CItemDropper())
+{
+    // empty
+}
 
 qge::Entity *SpiderCreator::createEntity()
 {
@@ -44,6 +50,8 @@ qge::Entity *SpiderCreator::createEntity()
     bt->setThrustDistance(100);
 
     entity->addSound("die","qrc:/resources/sounds/spiderDie.mp3");
+
+    itemDropper_->addEntity(entity);
 
     return entity;
 }
