@@ -1,5 +1,5 @@
-How to generate documentation
-=============================
+@page howToGenerateDocumentation How to generate documentation
+
 1. launch a shell (powershell, command prompt, bash, etc)
 2. cd into the `QtGameEngine/documentation` directory
 3. run `doxygen DoxyfileFull` or `doxygen DoxyfileFast`. `doxygen DoxyfileFull` will include more diagrams in the documentation but take longer. 
