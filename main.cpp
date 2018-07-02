@@ -233,7 +233,7 @@ int main(int argc, char *argv[])
     map2->addWeatherEffect(*(new RainWeather()));
 
     // create a spanwer in map 2
-    MCSpawner* spawner = new MCSpawner(map2,QRectF(0,0,map2->width(),map2->height()),10,0.2,new SpiderCreator());
+    MCSpawner* spawner = new MCSpawner(map2,QRectF(0,0,map2->width(),map2->height()),100,1,new SpiderCreator());
 
     // create villager that sells you stuff
     // villager sprite
