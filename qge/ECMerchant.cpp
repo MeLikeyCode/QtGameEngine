@@ -5,11 +5,14 @@
 
 using namespace qge;
 
-ECMerchant::ECMerchant(Entity *seller): EntityController(seller)
+/// Constructs an ECMerchant.
+/// @param seller The Entity whom we want selling items.
+/// @param shopGuiPos The position (in screen space) we want the ShopGui popping up in.
+ECMerchant::ECMerchant(Entity *seller, const QPoint &shopGuiPos): EntityController(seller)
 {
     shopGui_ = new ShopGui();
     shopGui_->setSeller(seller->inventory());
-    shopGui_->setGuiPos(QPointF(300,0));
+    shopGui_->setGuiPos(shopGuiPos);
 
     guiShower_ = new ECGuiShower(seller, shopGui_);
 
