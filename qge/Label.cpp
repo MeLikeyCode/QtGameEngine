@@ -8,12 +8,12 @@
 
 using namespace qge;
 
-Label::Label():
+Label::Label(const std::string &text):
     textItem_(new QGraphicsTextItem(this)),
     font_("Tahoma"),
     fontSize_(12),
     width_(200),
-    text_("some COOL text"),
+    text_(text),
     fontColor_(Qt::blue)
 {
     draw_();

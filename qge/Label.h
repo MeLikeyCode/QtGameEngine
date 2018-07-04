@@ -18,7 +18,7 @@ class Label : public Gui, public QGraphicsItem
 {
     Q_OBJECT
 public:
-    Label();
+    Label(const std::string& text="");
 
     QGraphicsItem* getGraphicsItem();
 
