@@ -34,7 +34,7 @@ double ECGuiShower::distance() const
 }
 
 /// Executed when any of the entities (the controlled entity or any of the
-/// entities of interst) moves. If the distance between *any* of the entities
+/// entities of interest) moves. If the distance between *any* of the entities
 /// of interest and the controlled entity is less than the threshold distance,
 /// will make sure the dialog gui is shown, otherwise will make sure its hidden.
 void ECGuiShower::onEntityMoved_()
@@ -59,7 +59,7 @@ void ECGuiShower::onEntityMoved_()
         if (e == nullptr)
             entitiesOfInterest_.erase(e);
             //STLWrappers::remove(entitiesOfInterest_,e); // doesn't work for some reason!
-            //STLWrappers::remove(entitiesOfInterest_,QPointer<Entity>(e)); // have to do this! why!?
+            //STLWrappers::remove(entitiesOfInterest_,QPointer<Entity>(e)); // have to do this! why!? TODO: potential improvement in STLWrappers library!
     }
 
     // set up variables
@@ -72,7 +72,7 @@ void ECGuiShower::onEntityMoved_()
 
     Entity* entityWithinRange = nullptr; // the *first* entity within range
     for (Entity* e:entitiesOfInterest_){
-        if (QtUtils::distance(e->pos(),ec->pos()) < threshold){
+        if (QtUtils::distance(e->pos(),ec->pos()) < threshold && e->map() == entitysMap){
             entityWithinRange = e;
         }
     }
