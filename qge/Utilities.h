@@ -19,6 +19,7 @@ class Entity;
 // convenience functions
 void addRandomTrees(Map* mapToAddTreesTo, int numTreesToAdd, const std::string& treeNumber, int numImages);
 void addTag(const std::string& tag, std::initializer_list<Entity*> entities);
+Entity* getMinitaurEntity();
 
 // mathmatical
 double frequency(double stepSize, double rate);

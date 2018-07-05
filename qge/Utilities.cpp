@@ -15,6 +15,8 @@
 #include "PathingMap.h"
 #include "EntitySprite.h"
 #include "RandomGenerator.h"
+#include "SpriteSheet.h"
+#include "AngledSprite.h"
 
 using namespace qge;
 
@@ -136,4 +138,31 @@ void qge::addTag(const std::string &tag, std::initializer_list<Entity *> entitie
 {
     for (Entity* entity:entities)
         entity->addTag(tag);
+}
+
+/// Convenience function which creates an entity and gives it the built in minitaur sprite.
+Entity *qge::getMinitaurEntity()
+{
+    qge::Entity* entity = new qge::Entity();
+
+    qge::SpriteSheet minitaurSpriteSheet(":/resources/graphics/characterSpritesheets/minotaur_alpha.png", 24, 8, 128, 128);
+
+    qge::AngledSprite* entitySprite = new qge::AngledSprite();
+
+    for (int i = 0, n = 8; i < n; ++i){ // for each angle
+        // stand
+        entitySprite->addFrames((180+45*i) % 360, "stand", minitaurSpriteSheet, qge::Node(0,0+i), qge::Node(3,0+i));
+        for (int j = 2; j > 0; --j){
+            entitySprite->addFrame(minitaurSpriteSheet.tileAt(qge::Node(j,0+i)),"stand",(180+45*i) % 360);
+        }
+        // walk
+        entitySprite->addFrames((180+45*i) % 360,"walk",minitaurSpriteSheet,qge::Node(4,0+i),qge::Node(11,0+i));
+        // attack
+        entitySprite->addFrames((180+45*i) % 360,"attack",minitaurSpriteSheet,qge::Node(12,0+i),qge::Node(18,0+i));
+    }
+
+    entity->setOrigin(QPointF(64,64));
+    entity->setSprite(entitySprite);
+
+    return entity;
 }
