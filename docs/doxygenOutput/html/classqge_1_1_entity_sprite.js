@@ -1,0 +1,26 @@
+var classqge_1_1_entity_sprite =
+[
+    [ "EntitySprite", "classqge_1_1_entity_sprite.html#a91b2f90200e7a6d9dcb759d007fb1ebd", null ],
+    [ "~EntitySprite", "classqge_1_1_entity_sprite.html#a545f77026041bde19c179c6ca2181918", null ],
+    [ "actualFacingAngle", "classqge_1_1_entity_sprite.html#a81cc29160c112a8afabba66e7d39352d", null ],
+    [ "animationFinished", "classqge_1_1_entity_sprite.html#a1b33290d9f77219ae1716bb10df8e5c0", null ],
+    [ "animationFinishedCompletely", "classqge_1_1_entity_sprite.html#a84cec09b730fbc586293e51cf91de59c", null ],
+    [ "boundingBox", "classqge_1_1_entity_sprite.html#a0a2054573eed2572e61320a6fe70e31e", null ],
+    [ "currentlyDisplayedFrame", "classqge_1_1_entity_sprite.html#a398c8694789845b0064d046f66a92ee0", null ],
+    [ "facingAngle", "classqge_1_1_entity_sprite.html#a6bc4fde207d4fa7f37ad54d7e7747978", null ],
+    [ "frameSwitched", "classqge_1_1_entity_sprite.html#ac22f4f58e4e3f5e98ab4d2a3cd2f221e", null ],
+    [ "hasAnimation", "classqge_1_1_entity_sprite.html#ac0f0a20d7d61b2265d42da57e924cac7", null ],
+    [ "onTemporaryAnimationDone_", "classqge_1_1_entity_sprite.html#a2676403a5f38f70168e1b70d244c1e72", null ],
+    [ "play", "classqge_1_1_entity_sprite.html#a5f570e1f1bb794e3f6e6488f538771a1", null ],
+    [ "playingAnimation", "classqge_1_1_entity_sprite.html#afebf39c5cd577ca2fc432bf4e5e5c074", null ],
+    [ "playThenGoBackToOldAnimation", "classqge_1_1_entity_sprite.html#a5f37452ea1fc6dbc3646b449ca29a511", null ],
+    [ "scale", "classqge_1_1_entity_sprite.html#ab03364a3cc869196d054ea9176545242", null ],
+    [ "setFacingAngle", "classqge_1_1_entity_sprite.html#adac5c223a35b5f04288dd87b5215ab5a", null ],
+    [ "setFacingAngle_", "classqge_1_1_entity_sprite.html#a908b945ce3d32cca24313312ff99f034", null ],
+    [ "stop", "classqge_1_1_entity_sprite.html#af297dc9e5eadff822bde61ca435efae3", null ],
+    [ "Entity", "classqge_1_1_entity_sprite.html#a614439ccac0344926adc4c0165d64060", null ],
+    [ "Map", "classqge_1_1_entity_sprite.html#ad2f32e921244459f7cc6d50355429cc6", null ],
+    [ "animationPlayingBefore_", "classqge_1_1_entity_sprite.html#a51dc00bb49c0698b230bcfaac35faf30", null ],
+    [ "facingAngle_", "classqge_1_1_entity_sprite.html#aa311dae6d340d2f07b4edb604d875776", null ],
+    [ "underlyingItem_", "classqge_1_1_entity_sprite.html#a8669d96493190126882a0e0fec1c116d", null ]
+];

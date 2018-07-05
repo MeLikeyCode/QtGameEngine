@@ -1,0 +1,25 @@
+var classqge_1_1_sprite =
+[
+    [ "Sprite", "classqge_1_1_sprite.html#a2ba455b38e05a7418161f48c7fd6a30f", null ],
+    [ "Sprite", "classqge_1_1_sprite.html#adc6571f4908c36736aa22ffabf4a853d", null ],
+    [ "addFrame", "classqge_1_1_sprite.html#a2bf899e0c3585c9141f2dc5862f1c3ce", null ],
+    [ "addFrame", "classqge_1_1_sprite.html#a2121f9838c8169296b2d23d0ac9bdac9", null ],
+    [ "addFrames", "classqge_1_1_sprite.html#a3b8585b086b918315be6387bc3259134", null ],
+    [ "addFrames", "classqge_1_1_sprite.html#a492435907dbb9561157593f5fd55d0b3", null ],
+    [ "animationFinished", "classqge_1_1_sprite.html#af33b5a1df1d2cdbe32a77cb407e6bd30", null ],
+    [ "animationFinishedCompletely", "classqge_1_1_sprite.html#a3baa123a9c353af1c8f428a5efe3b3d1", null ],
+    [ "animations", "classqge_1_1_sprite.html#a0f057ae904ce7f185d41cc834342363c", null ],
+    [ "boundingRect", "classqge_1_1_sprite.html#abfa8fce8b48f20235ff4344e6eee63c7", null ],
+    [ "currentFrame", "classqge_1_1_sprite.html#a9a7cec3978a1b8b2dbd8d3334fad3d9e", null ],
+    [ "currentFrameNumber", "classqge_1_1_sprite.html#a8158fb1c5439fc9199260b5fc795c7c0", null ],
+    [ "frameSwitched", "classqge_1_1_sprite.html#ac01a5cee4de585311c474fc56a46f04d", null ],
+    [ "hasAnimation", "classqge_1_1_sprite.html#a7b9ac89c2ff294464d58c3574948f548", null ],
+    [ "nextFrame_", "classqge_1_1_sprite.html#a58250cb72c7166c38067ff02b4c98dce", null ],
+    [ "onTemporaryPlayDone_", "classqge_1_1_sprite.html#a24d282a4b34c3fb29550ffb68e1795c6", null ],
+    [ "paint", "classqge_1_1_sprite.html#a134484258b42a59f65fd0302a27d07cd", null ],
+    [ "play", "classqge_1_1_sprite.html#ae7b732ee92e8ee95718eeffbe684e2fe", null ],
+    [ "playingAnimation", "classqge_1_1_sprite.html#a9d1aa2b67b953ab2d07b11487b3e9073", null ],
+    [ "playThenGoBackToOldAnimation", "classqge_1_1_sprite.html#afebc20c7eb50557ea11cac60529ef7bd", null ],
+    [ "setPixmap", "classqge_1_1_sprite.html#abc12aa5cca2312533f0bd8206f9eb989", null ],
+    [ "stop", "classqge_1_1_sprite.html#a4e1174d7e566d570897bbaa85b8e8328", null ]
+];
