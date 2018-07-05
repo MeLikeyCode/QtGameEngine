@@ -11,13 +11,11 @@ namespace qge{
 
 class Map;
 
-/// Represents a bunch of QPixmaps arranged in a grid. They get auto blended.
-/// You can set the QPixmap to use for the Terrain by calling setPixmap(QPixmap).
-/// Once you have set the QPixmap, you can start filling certain cells with
-/// that pixmap by calling fill(const Node). You can unfill cells by calling
-/// unfill(const Node). You can always change the pixmap by calling setPixmap(QPixmap)
-/// again. You can always change the size of cells by calling setTileWidth/setTileHeight().
-/// You can set the position of the TerrainLayer by using setPos(QPointF).
+/// Represents a bunch of auto blended QPixmaps arranged in a grid that can go inside a Map. You
+/// can set the QPixmap to use for the Terrain by calling setPixmap(QPixmap). You can fill/unfill
+/// certain cells by calling fill(const Node&)/unfill(const Node&). You set the size of cells by
+/// calling setTileWidth/setTileHeight(). You can set the position of the TerrainLayer by using
+/// setPos(QPointF).
 class TerrainLayer{
     friend class Map; // Map needs to access parentItem_
 public:

@@ -52,6 +52,8 @@ TerrainLayer::TerrainLayer(int numXTiles, int numYTiles, QPixmap pixmap):
     }
 
     linearFadePercent_ = 0.2; // 20%
+
+    fill();
 }
 
 /// Sets the position of the TerrainLayer within a Map.
