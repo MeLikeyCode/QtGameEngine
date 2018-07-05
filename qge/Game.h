@@ -13,7 +13,11 @@ class InventoryViewer;
 class Entity;
 class Gui;
 
-/// Represents an instance of the game.
+/// Represents the game as a whole.
+/// This is basically the window the will visualize a Map.
+/// This class is a singleton, thus you can only construct one instance.
+/// If you try to construct a second one, an exception will be thrown.
+/// The Game::game pointer is global, you can access it from anywhere.
 /// @author Abdullah Aghazadah
 /// @date 6-3-15
 ///
@@ -26,6 +30,7 @@ public:
     enum class MouseMode { regular, selectPosition, selectEntity };
 
     // constructor
+    static Game* game;
     Game(MapGrid* mapGrid, int xPosOfStartingMap, int yPosOfStartingMap);
 
     void launch();

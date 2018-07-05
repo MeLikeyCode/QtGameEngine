@@ -31,11 +31,17 @@
 
 using namespace qge;
 
+Game* Game::game = nullptr;
+
 /// Creates an instance of the Game with some default options.
 Game::Game(MapGrid *mapGrid, int xPosOfStartingMap, int yPosOfStartingMap):
     mapGrid_(mapGrid),
     guiLayer_(new QGraphicsRectItem())
 {
+    if (game != nullptr)
+        std::logic_error("Game is a singleton. You can only construct one instance.");
+    Game::game = this;
+
     guiLayer_->setZValue(INFINITY);
 
     // register types that needed to be used in cross thread signal-slot stuff
