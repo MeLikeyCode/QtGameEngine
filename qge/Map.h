@@ -37,6 +37,7 @@ class Map: public QObject // so we can use QPointer<Map>
 public:
     // constructors
     Map();
+    Map(int numCellsX, int numCellsY, double cellSize);
     Map(PathingMap* pathingMap);
 
     bool contains(const QPointF& pos);

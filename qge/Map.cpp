@@ -21,9 +21,18 @@ using namespace qge;
 // TODO remove test
 #include <QDebug>
 
+/// Constructs a Map with 50x50, 32x32 sized cells.
 Map::Map() : Map(new PathingMap(50,50,32))
 {
     // ctor chained
+}
+
+/// Constructs a Map with the given number of cells in each direction
+/// and the given cell size.
+Map::Map(int numCellsX, int numCellsY, double cellSize):
+    Map(new PathingMap(numCellsX,numCellsY,cellSize))
+{
+    // empty
 }
 
 Map::Map(PathingMap *pathingMap):
@@ -76,8 +85,12 @@ bool Map::contains(Entity *entity)
 }
 
 /// Returns the current mouse position in Map coordinates.
+/// Throws if the Map isn't the Game's current map.
 QPointF Map::getMousePosition()
 {
+    if (game() == nullptr)
+        throw std::logic_error("Map isn't the current map.");
+
     QPoint pos = game()->getMousePos();
     return game()->mapToScene(pos);
 }
