@@ -20,10 +20,9 @@ ECCurrentMapGrabber::ECCurrentMapGrabber(Entity *entity):
 /// Will set that map as the game's current map.
 void ECCurrentMapGrabber::onEntityEntersMap(Entity *controlledEntity, Map *mapJustEntered, Map *oldMap)
 {
-    // do nothing if the entered map is not in a game
-    Game* game = mapJustEntered->game();
-    if (game == nullptr)
+    // do nothing if entity left a map
+    if (mapJustEntered == nullptr)
         return;
 
-    game->setCurrentMap(mapJustEntered);
+    Game::game->setCurrentMap(mapJustEntered);
 }

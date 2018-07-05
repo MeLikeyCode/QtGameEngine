@@ -37,6 +37,10 @@ void ECMouseFacer::rotateStep_()
     if (entitysMap == nullptr)
         return;
 
+    // do nothing if the entity's map isn't game's current map
+    if (entitysMap->game() == nullptr)
+        return;
+
     // TODO: ECRotater is way too slow right now.
     // When you speed it up, enable the line immediately below and disable all lines after that (in this function)
     // rotater_->rotateTowards(entitysMap->getMousePosition());
