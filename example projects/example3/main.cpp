@@ -9,15 +9,15 @@
 
 #include <QApplication>
 
-#include "../qge/MapGrid.h"
-#include "../qge/Map.h"
-#include "../qge/Game.h"
-#include "../qge/Entity.h"
-#include "../qge/Utilities.h"
-#include "../qge/EntitySprite.h"
+#include "qge/MapGrid.h"
+#include "qge/Map.h"
+#include "qge/Game.h"
+#include "qge/Entity.h"
+#include "qge/Utilities.h"
+#include "qge/EntitySprite.h"
 
-#include "../qge/ECKeyboardMoverPerspective.h"
-#include "../qge/ECMouseFacer.h"
+#include "qge/ECKeyboardMoverPerspective.h"
+#include "qge/ECMouseFacer.h"
 
 
 int main(int argc, char *argv[])

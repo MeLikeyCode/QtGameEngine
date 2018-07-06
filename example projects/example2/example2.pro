@@ -4,7 +4,8 @@
 #
 #-------------------------------------------------
 
-include(../qge/qge.pri)
+include(../../qge/qge.pri) # include qge.pri
+INCLUDEPATH += ../../      # so we can #include "qge/SomeHeader.h"
 
 QT       += core gui
 

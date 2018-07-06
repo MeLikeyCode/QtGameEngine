@@ -20,13 +20,13 @@
 
 #include <QApplication>
 
-#include "../qge/MapGrid.h"
-#include "../qge/Map.h"
-#include "../qge/Game.h"
-#include "../qge/Entity.h"
-#include "../qge/SpriteSheet.h"
-#include "../qge/AngledSprite.h"
-#include "../qge/Node.h"
+#include "qge/MapGrid.h"
+#include "qge/Map.h"
+#include "qge/Game.h"
+#include "qge/Entity.h"
+#include "qge/SpriteSheet.h"
+#include "qge/AngledSprite.h"
+#include "qge/Node.h"
 
 
 int main(int argc, char *argv[])

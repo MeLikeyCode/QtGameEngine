@@ -7,9 +7,9 @@
 
 #include <QApplication>
 
-#include "../qge/MapGrid.h"
-#include "../qge/Map.h"
-#include "../qge/Game.h"
+#include "qge/MapGrid.h"
+#include "qge/Map.h"
+#include "qge/Game.h"
 
 
 int main(int argc, char *argv[])
