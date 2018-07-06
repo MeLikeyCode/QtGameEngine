@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Qt Game Engine: Conventions</title>
+<title>Qt Game Engine: General Coding Conventions</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -92,10 +92,30 @@ $(document).ready(function(){initNavTree('conventions.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Conventions </div>  </div>
+<div class="title">General Coding Conventions </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>TODO </p>
+<div class="textblock"><h1>Object Lifetime Conventions </h1>
+<ul>
+<li>container objects own lifetime of containee objects and this is generally implemented by leveraging QObject’s parent/child system</li>
+<li>methods for adding/removing a containee are in the container</li>
+<li>when there is only one containee in the container (i.e. just a setter) and the setter is called again to swap, container will release ownership of the old containee and the client code calling the setter will be responsible for the released objects lifetime</li>
+</ul>
+<h1>Naming Conventions </h1>
+<ul>
+<li>private members (both member functions and variables) should be postfixed with one underscore<ul>
+<li>public members that are meant for internal use (e.g. some slots) should should be treated as private</li>
+</ul>
+</li>
+<li>class, struct, enum, should use CamelCaseNaming</li>
+<li>functions should use camelCaseWithLowerInitialLetter</li>
+</ul>
+<h1>Other Conventions </h1>
+<ul>
+<li>signals pass the sender as the first argument (this makes it easy for clients to connect to multiple objects)</li>
+<li>expensive “updates” must be called manually (to allow client to make multiple changes and then call update just once) -e.g. Map::addPathingMap()/removePathingMap() does not call Map::updateOverallPathingMap(), client makes a bunch of changes to the map, then <em>manually</em> calls updateOverallPathingMap() once.</li>
+<li>document every public function you make </li>
+</ul>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

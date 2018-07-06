@@ -141,7 +141,11 @@ Signals</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a0f5ad0fd4563497b4214038cbca8b582"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_map.html#a0f5ad0fd4563497b4214038cbca8b582">Map</a> ()</td></tr>
+<tr class="memdesc:a0f5ad0fd4563497b4214038cbca8b582"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a> with 50x50, 32x32 sized cells.  <a href="#a0f5ad0fd4563497b4214038cbca8b582">More...</a><br /></td></tr>
 <tr class="separator:a0f5ad0fd4563497b4214038cbca8b582"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a726d420ec2c79a9889e2b2f634e0ff95"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_map.html#a726d420ec2c79a9889e2b2f634e0ff95">Map</a> (int numCellsX, int numCellsY, double <a class="el" href="classqge_1_1_map.html#a8f3a5d0a4c7da87dccb8d8d1a46ac56b">cellSize</a>)</td></tr>
+<tr class="memdesc:a726d420ec2c79a9889e2b2f634e0ff95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a> with the given number of cells in each direction and the given cell size.  <a href="#a726d420ec2c79a9889e2b2f634e0ff95">More...</a><br /></td></tr>
+<tr class="separator:a726d420ec2c79a9889e2b2f634e0ff95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8531662173714e3defcaf528bd5fb49d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_map.html#a8531662173714e3defcaf528bd5fb49d">Map</a> (<a class="el" href="classqge_1_1_pathing_map.html">PathingMap</a> *<a class="el" href="classqge_1_1_map.html#a32f6d4bd6ec466274381cb90174b626c">pathingMap</a>)</td></tr>
 <tr class="separator:a8531662173714e3defcaf528bd5fb49d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac06d9bb6d1313cc1aca2ae4c14b646de"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_map.html#ac06d9bb6d1313cc1aca2ae4c14b646de">contains</a> (const QPointF &amp;pos)</td></tr>
@@ -192,13 +196,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:adfdb012a8dc8aa77d39c68f6d7461c8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the specified entity (and all of its children) from the map.  <a href="#adfdb012a8dc8aa77d39c68f6d7461c8a">More...</a><br /></td></tr>
 <tr class="separator:adfdb012a8dc8aa77d39c68f6d7461c8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab4c0f6a1878a2fbb1c89d2f4fae2e216"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_map.html#ab4c0f6a1878a2fbb1c89d2f4fae2e216">addTerrainLayer</a> (<a class="el" href="classqge_1_1_terrain_layer.html">TerrainLayer</a> *terrainLayer)</td></tr>
-<tr class="memdesc:ab4c0f6a1878a2fbb1c89d2f4fae2e216"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds the specified <a class="el" href="classqge_1_1_terrain_layer.html" title="Represents a bunch of QPixmaps arranged in a grid. ">TerrainLayer</a> to the <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a>.  <a href="#ab4c0f6a1878a2fbb1c89d2f4fae2e216">More...</a><br /></td></tr>
+<tr class="memdesc:ab4c0f6a1878a2fbb1c89d2f4fae2e216"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds the specified <a class="el" href="classqge_1_1_terrain_layer.html" title="Represents a bunch of auto blended QPixmaps arranged in a grid that can go inside a Map...">TerrainLayer</a> to the <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a>.  <a href="#ab4c0f6a1878a2fbb1c89d2f4fae2e216">More...</a><br /></td></tr>
 <tr class="separator:ab4c0f6a1878a2fbb1c89d2f4fae2e216"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aea7963f8c72e5288586dc7d6bb903aca"><td class="memItemLeft" align="right" valign="top">QGraphicsScene *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_map.html#aea7963f8c72e5288586dc7d6bb903aca">scene</a> ()</td></tr>
 <tr class="memdesc:aea7963f8c72e5288586dc7d6bb903aca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns (a pointer to) the internal scene.  <a href="#aea7963f8c72e5288586dc7d6bb903aca">More...</a><br /></td></tr>
 <tr class="separator:aea7963f8c72e5288586dc7d6bb903aca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf77022dff38cee5b731bfac082bbc77"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classqge_1_1_game.html">Game</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_map.html#adf77022dff38cee5b731bfac082bbc77">game</a> ()</td></tr>
-<tr class="memdesc:adf77022dff38cee5b731bfac082bbc77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a> that is currently visualizing the map.  <a href="#adf77022dff38cee5b731bfac082bbc77">More...</a><br /></td></tr>
+<tr class="memdesc:adf77022dff38cee5b731bfac082bbc77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a> that is currently visualizing the map.  <a href="#adf77022dff38cee5b731bfac082bbc77">More...</a><br /></td></tr>
 <tr class="separator:adf77022dff38cee5b731bfac082bbc77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5b6afe6dadeba2f1eacaeb3138f4e546"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_map.html#a5b6afe6dadeba2f1eacaeb3138f4e546">drawPathingMap</a> ()</td></tr>
 <tr class="memdesc:a5b6afe6dadeba2f1eacaeb3138f4e546"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws the <a class="el" href="classqge_1_1_pathing_map.html" title="Represents a rectangular region of space divided into square cells where each cell can either be fill...">PathingMap</a> for testing purposes. Filled cells are red.  <a href="#a5b6afe6dadeba2f1eacaeb3138f4e546">More...</a><br /></td></tr>
@@ -250,10 +254,10 @@ Friends</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents a map which can contain a bunch of interacting Entities. </p>
 <p>A <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a> has a <a class="el" href="classqge_1_1_pathing_map.html" title="Represents a rectangular region of space divided into square cells where each cell can either be fill...">PathingMap</a> which keeps track of which cells are free and which are blocked. Each <a class="el" href="classqge_1_1_entity.html" title="An Entity is the base class for anything that can go inside a Map. ">Entity</a> can also contain its own <a class="el" href="classqge_1_1_pathing_map.html" title="Represents a rectangular region of space divided into square cells where each cell can either be fill...">PathingMap</a> therefore the <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a> is notified every time an <a class="el" href="classqge_1_1_entity.html" title="An Entity is the base class for anything that can go inside a Map. ">Entity</a> is added/moved so that the <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a>'s <a class="el" href="classqge_1_1_pathing_map.html" title="Represents a rectangular region of space divided into square cells where each cell can either be fill...">PathingMap</a> can be updated accordingly.</p>
-<p>A <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a> can be visualized by a <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a>. If the <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a> is currently being visualized by a game the <a class="el" href="classqge_1_1_map.html#adf77022dff38cee5b731bfac082bbc77" title="Returns the Game that is currently visualizing the map. ">Map::game()</a> function will return that <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a>, otherwise it will return nullptr. </p><dl class="section author"><dt>Author</dt><dd>Abdullah Aghazadah </dd></dl>
+<p>A <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a> can be visualized by a <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a>. If the <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a> is currently being visualized by a game the <a class="el" href="classqge_1_1_map.html#adf77022dff38cee5b731bfac082bbc77" title="Returns the Game that is currently visualizing the map. ">Map::game()</a> function will return that <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a>, otherwise it will return nullptr. </p><dl class="section author"><dt>Author</dt><dd>Abdullah Aghazadah </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a0f5ad0fd4563497b4214038cbca8b582"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0f5ad0fd4563497b4214038cbca8b582">&#9670;&nbsp;</a></span>Map() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f5ad0fd4563497b4214038cbca8b582">&#9670;&nbsp;</a></span>Map() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -267,10 +271,48 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Constructs a <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a> with 50x50, 32x32 sized cells. </p>
+
+</div>
+</div>
+<a id="a726d420ec2c79a9889e2b2f634e0ff95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a726d420ec2c79a9889e2b2f634e0ff95">&#9670;&nbsp;</a></span>Map() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Map::Map </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>numCellsX</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>numCellsY</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>cellSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructs a <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a> with the given number of cells in each direction and the given cell size. </p>
+
 </div>
 </div>
 <a id="a8531662173714e3defcaf528bd5fb49d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8531662173714e3defcaf528bd5fb49d">&#9670;&nbsp;</a></span>Map() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8531662173714e3defcaf528bd5fb49d">&#9670;&nbsp;</a></span>Map() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -407,8 +449,8 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Adds the specified <a class="el" href="classqge_1_1_terrain_layer.html" title="Represents a bunch of QPixmaps arranged in a grid. ">TerrainLayer</a> to the <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a>. </p>
-<p>TerrainLayers stack in the order added (the later added, the "topper").  The <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a> will uniquely own the lifetime of the specified <a class="el" href="classqge_1_1_terrain_layer.html" title="Represents a bunch of QPixmaps arranged in a grid. ">TerrainLayer</a>. </p>
+<p>Adds the specified <a class="el" href="classqge_1_1_terrain_layer.html" title="Represents a bunch of auto blended QPixmaps arranged in a grid that can go inside a Map...">TerrainLayer</a> to the <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a>. </p>
+<p>TerrainLayers stack in the order added (the later added, the "topper").  The <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a> will uniquely own the lifetime of the specified <a class="el" href="classqge_1_1_terrain_layer.html" title="Represents a bunch of auto blended QPixmaps arranged in a grid that can go inside a Map...">TerrainLayer</a>. </p>
 
 </div>
 </div>
@@ -458,7 +500,7 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Emitted when the game camera moves around the <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a>. </p>
-<p>This is only emitted when this map is set as the current <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a> for the <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a>. </p>
+<p>This is only emitted when this map is set as the current <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a> for the <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a>. </p>
 
 </div>
 </div>
@@ -796,7 +838,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Returns the <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a> that is currently visualizing the map. </p>
+<p>Returns the <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a> that is currently visualizing the map. </p>
 <p>If the map isn't currently being visualized, returns nullptr. </p>
 
 </div>
@@ -817,6 +859,7 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Returns the current mouse position in <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a> coordinates. </p>
+<p>Throws if the <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a> isn't the <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a>'s current map. </p>
 
 </div>
 </div>

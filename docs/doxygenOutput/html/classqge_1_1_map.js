@@ -1,6 +1,7 @@
 var classqge_1_1_map =
 [
     [ "Map", "classqge_1_1_map.html#a0f5ad0fd4563497b4214038cbca8b582", null ],
+    [ "Map", "classqge_1_1_map.html#a726d420ec2c79a9889e2b2f634e0ff95", null ],
     [ "Map", "classqge_1_1_map.html#a8531662173714e3defcaf528bd5fb49d", null ],
     [ "addEntity", "classqge_1_1_map.html#a61265c2d0083509ea5c916124b1683f5", null ],
     [ "addPathingMap", "classqge_1_1_map.html#ac11bd5dda081f47681fb39ff07fc32e7", null ],

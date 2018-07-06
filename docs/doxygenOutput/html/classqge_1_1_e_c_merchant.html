@@ -100,7 +100,7 @@ $(document).ready(function(){initNavTree('classqge_1_1_e_c_merchant.html','');})
 </div><!--header-->
 <div class="contents">
 
-<p>Adds merchant behavior to an entity.  
+<p>An <a class="el" href="classqge_1_1_entity_controller.html" title="An object that provides some sort of behavior for an Entity (i.e &quot;controls&quot; the Entity in some way)...">EntityController</a> that adds merchant-like behavior to an entity.  
  <a href="classqge_1_1_e_c_merchant.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_e_c_merchant_8h_source.html">ECMerchant.h</a>&gt;</code></p>
@@ -128,8 +128,9 @@ Public Slots</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad9b3cd5e4da4f8e8eac936285f7ec6e4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_e_c_merchant.html#ad9b3cd5e4da4f8e8eac936285f7ec6e4">ECMerchant</a> (<a class="el" href="classqge_1_1_entity.html">Entity</a> *seller)</td></tr>
-<tr class="separator:ad9b3cd5e4da4f8e8eac936285f7ec6e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c01dfac64401d42aa34431f1821cc5a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_e_c_merchant.html#a2c01dfac64401d42aa34431f1821cc5a">ECMerchant</a> (<a class="el" href="classqge_1_1_entity.html">Entity</a> *seller, const QPoint &amp;shopGuiPos=QPoint(0, 0))</td></tr>
+<tr class="memdesc:a2c01dfac64401d42aa34431f1821cc5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an <a class="el" href="classqge_1_1_e_c_merchant.html" title="An EntityController that adds merchant-like behavior to an entity. ">ECMerchant</a>.  <a href="#a2c01dfac64401d42aa34431f1821cc5a">More...</a><br /></td></tr>
+<tr class="separator:a2c01dfac64401d42aa34431f1821cc5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ac81e305e5d8f3925295abf02033c56"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_e_c_merchant.html#a9ac81e305e5d8f3925295abf02033c56">addEntityOfInterest</a> (<a class="el" href="classqge_1_1_entity.html">Entity</a> *entity)</td></tr>
 <tr class="separator:a9ac81e305e5d8f3925295abf02033c56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad76ea63eb58e5c9cf416496c7a996f8a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_e_c_merchant.html#ad76ea63eb58e5c9cf416496c7a996f8a">setDistance</a> (double distance)</td></tr>
@@ -150,11 +151,11 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a1d7251ee3fdbdf520eed27e2bc59e92e inherit pub_methods_classqge_1_1_entity_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Adds merchant behavior to an entity. </p>
-<p>When an 'entity of interest' gets near the controlled entity, a <a class="el" href="classqge_1_1_shop_gui.html" title="A Gui that allows you to transfer Items visually from a &quot;seller&quot; Inventory to a &quot;buyer&quot; Inventory...">ShopGui</a> will pop up. Use <a class="el" href="classqge_1_1_e_c_merchant.html#a9ac81e305e5d8f3925295abf02033c56">addEntityOfInterest()</a> to add an entity that will trigger the shop gu. </p>
+<div class="textblock"><p>An <a class="el" href="classqge_1_1_entity_controller.html" title="An object that provides some sort of behavior for an Entity (i.e &quot;controls&quot; the Entity in some way)...">EntityController</a> that adds merchant-like behavior to an entity. </p>
+<p>When an 'entity of interest' gets near the controlled entity, a <a class="el" href="classqge_1_1_shop_gui.html" title="A Gui that allows you to transfer Items visually from a &quot;seller&quot; Inventory to a &quot;buyer&quot; Inventory...">ShopGui</a> will pop up. Use <a class="el" href="classqge_1_1_e_c_merchant.html#a9ac81e305e5d8f3925295abf02033c56">addEntityOfInterest()</a> to add an entity that will trigger the <a class="el" href="classqge_1_1_shop_gui.html" title="A Gui that allows you to transfer Items visually from a &quot;seller&quot; Inventory to a &quot;buyer&quot; Inventory...">ShopGui</a> popping up. The <a class="el" href="classqge_1_1_shop_gui.html" title="A Gui that allows you to transfer Items visually from a &quot;seller&quot; Inventory to a &quot;buyer&quot; Inventory...">ShopGui</a> will transfer items between the controlled entity and the trigger entity (an entity of interest). </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ad9b3cd5e4da4f8e8eac936285f7ec6e4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad9b3cd5e4da4f8e8eac936285f7ec6e4">&#9670;&nbsp;</a></span>ECMerchant()</h2>
+<a id="a2c01dfac64401d42aa34431f1821cc5a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c01dfac64401d42aa34431f1821cc5a">&#9670;&nbsp;</a></span>ECMerchant()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -163,11 +164,30 @@ Public Member Functions</h2></td></tr>
           <td class="memname">ECMerchant::ECMerchant </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classqge_1_1_entity.html">Entity</a> *&#160;</td>
-          <td class="paramname"><em>seller</em></td><td>)</td>
+          <td class="paramname"><em>seller</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const QPoint &amp;&#160;</td>
+          <td class="paramname"><em>shopGuiPos</em> = <code>QPoint(0,0)</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Constructs an <a class="el" href="classqge_1_1_e_c_merchant.html" title="An EntityController that adds merchant-like behavior to an entity. ">ECMerchant</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">seller</td><td>The <a class="el" href="classqge_1_1_entity.html" title="An Entity is the base class for anything that can go inside a Map. ">Entity</a> whom we want selling items. </td></tr>
+    <tr><td class="paramname">shopGuiPos</td><td>The position (in screen space) we want the <a class="el" href="classqge_1_1_shop_gui.html" title="A Gui that allows you to transfer Items visually from a &quot;seller&quot; Inventory to a &quot;buyer&quot; Inventory...">ShopGui</a> popping up in. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

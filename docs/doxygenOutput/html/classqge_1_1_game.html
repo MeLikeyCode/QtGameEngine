@@ -97,13 +97,14 @@ $(document).ready(function(){initNavTree('classqge_1_1_game.html','');});
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="classqge_1_1_game-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">qge::Game Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Represents an instance of the game.  
+<p>Represents the game as a whole.  
  <a href="classqge_1_1_game.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_game_8h_source.html">Game.h</a>&gt;</code></p>
@@ -143,19 +144,19 @@ Public Slots</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="signals"></a>
 Signals</h2></td></tr>
 <tr class="memitem:a3761f2b26d6ccf66dd576cc3df5d84e1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_game.html#a3761f2b26d6ccf66dd576cc3df5d84e1">positionSelected</a> (QPointF pos)</td></tr>
-<tr class="memdesc:a3761f2b26d6ccf66dd576cc3df5d84e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted whenever a position is selected while <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a> is in selectPosition MouseMode.  <a href="#a3761f2b26d6ccf66dd576cc3df5d84e1">More...</a><br /></td></tr>
+<tr class="memdesc:a3761f2b26d6ccf66dd576cc3df5d84e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted whenever a position is selected while <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a> is in selectPosition MouseMode.  <a href="#a3761f2b26d6ccf66dd576cc3df5d84e1">More...</a><br /></td></tr>
 <tr class="separator:a3761f2b26d6ccf66dd576cc3df5d84e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a66bef3eed707616e0a76b8e7435917ba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_game.html#a66bef3eed707616e0a76b8e7435917ba">entitySelected</a> (<a class="el" href="classqge_1_1_entity.html">Entity</a> *entity)</td></tr>
-<tr class="memdesc:a66bef3eed707616e0a76b8e7435917ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted whenever an <a class="el" href="classqge_1_1_entity.html" title="An Entity is the base class for anything that can go inside a Map. ">Entity</a> is selected while the <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a> is in selectEntity MouseMode.  <a href="#a66bef3eed707616e0a76b8e7435917ba">More...</a><br /></td></tr>
+<tr class="memdesc:a66bef3eed707616e0a76b8e7435917ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted whenever an <a class="el" href="classqge_1_1_entity.html" title="An Entity is the base class for anything that can go inside a Map. ">Entity</a> is selected while the <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a> is in selectEntity MouseMode.  <a href="#a66bef3eed707616e0a76b8e7435917ba">More...</a><br /></td></tr>
 <tr class="separator:a66bef3eed707616e0a76b8e7435917ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a03e3b765133a4d82a61a0cf6cd5fcc24"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_game.html#a03e3b765133a4d82a61a0cf6cd5fcc24">mousePressed</a> (QPoint pos, Qt::MouseButton button)</td></tr>
-<tr class="memdesc:a03e3b765133a4d82a61a0cf6cd5fcc24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted whenever the a mouse button is pressed down while <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a> is in regular MouseMode.  <a href="#a03e3b765133a4d82a61a0cf6cd5fcc24">More...</a><br /></td></tr>
+<tr class="memdesc:a03e3b765133a4d82a61a0cf6cd5fcc24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted whenever the a mouse button is pressed down while <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a> is in regular MouseMode.  <a href="#a03e3b765133a4d82a61a0cf6cd5fcc24">More...</a><br /></td></tr>
 <tr class="separator:a03e3b765133a4d82a61a0cf6cd5fcc24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a64673184d1276ea466345319bd2d7169"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_game.html#a64673184d1276ea466345319bd2d7169">mouseMoved</a> (QPoint pos)</td></tr>
-<tr class="memdesc:a64673184d1276ea466345319bd2d7169"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted whenever the mouse is moved while the <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a> is in regular MouseMode.  <a href="#a64673184d1276ea466345319bd2d7169">More...</a><br /></td></tr>
+<tr class="memdesc:a64673184d1276ea466345319bd2d7169"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted whenever the mouse is moved while the <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a> is in regular MouseMode.  <a href="#a64673184d1276ea466345319bd2d7169">More...</a><br /></td></tr>
 <tr class="separator:a64673184d1276ea466345319bd2d7169"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a08a347dc239c68438c8ac754b09b9460"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_game.html#a08a347dc239c68438c8ac754b09b9460">mouseReleased</a> (QPoint pos, Qt::MouseButton button)</td></tr>
-<tr class="memdesc:a08a347dc239c68438c8ac754b09b9460"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted whenever a mouse button is released while the <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a> is in regular MouseMode.  <a href="#a08a347dc239c68438c8ac754b09b9460">More...</a><br /></td></tr>
+<tr class="memdesc:a08a347dc239c68438c8ac754b09b9460"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted whenever a mouse button is released while the <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a> is in regular MouseMode.  <a href="#a08a347dc239c68438c8ac754b09b9460">More...</a><br /></td></tr>
 <tr class="separator:a08a347dc239c68438c8ac754b09b9460"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a14ce899201d731f9a348b1f7bdf22cd0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_game.html#a14ce899201d731f9a348b1f7bdf22cd0">mapChanged</a> (<a class="el" href="classqge_1_1_map.html">Map</a> *oldMap, <a class="el" href="classqge_1_1_map.html">Map</a> *newMap)</td></tr>
 <tr class="memdesc:a14ce899201d731f9a348b1f7bdf22cd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when the current <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a> of the game is changed.  <a href="#a14ce899201d731f9a348b1f7bdf22cd0">More...</a><br /></td></tr>
@@ -167,30 +168,30 @@ Signals</h2></td></tr>
 <tr class="memdesc:afe999f7914de0155e989de496d91414a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a watched <a class="el" href="classqge_1_1_entity.html" title="An Entity is the base class for anything that can go inside a Map. ">Entity</a> leaves range of one of its watching entities.  <a href="#afe999f7914de0155e989de496d91414a">More...</a><br /></td></tr>
 <tr class="separator:afe999f7914de0155e989de496d91414a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42c716dcb217f82c97c11d0d3a907c8b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_game.html#a42c716dcb217f82c97c11d0d3a907c8b">camMoved</a> (QPointF newPos)</td></tr>
-<tr class="memdesc:a42c716dcb217f82c97c11d0d3a907c8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a>'s camera moves.  <a href="#a42c716dcb217f82c97c11d0d3a907c8b">More...</a><br /></td></tr>
+<tr class="memdesc:a42c716dcb217f82c97c11d0d3a907c8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a>'s camera moves.  <a href="#a42c716dcb217f82c97c11d0d3a907c8b">More...</a><br /></td></tr>
 <tr class="separator:a42c716dcb217f82c97c11d0d3a907c8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:af0bd21df6f0e75c947209643c835396a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_game.html#af0bd21df6f0e75c947209643c835396a">Game</a> (<a class="el" href="classqge_1_1_map_grid.html">MapGrid</a> *<a class="el" href="classqge_1_1_game.html#af5c06e3108ba1cd1bad4572ce427e270">mapGrid</a>, int xPosOfStartingMap, int yPosOfStartingMap)</td></tr>
-<tr class="memdesc:af0bd21df6f0e75c947209643c835396a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an instance of the <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a> with some default options.  <a href="#af0bd21df6f0e75c947209643c835396a">More...</a><br /></td></tr>
+<tr class="memdesc:af0bd21df6f0e75c947209643c835396a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an instance of the <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a> with some default options.  <a href="#af0bd21df6f0e75c947209643c835396a">More...</a><br /></td></tr>
 <tr class="separator:af0bd21df6f0e75c947209643c835396a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a35c46e76cde7773850820233754e0bc0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_game.html#a35c46e76cde7773850820233754e0bc0">launch</a> ()</td></tr>
-<tr class="memdesc:a35c46e76cde7773850820233754e0bc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Launches the <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a>.  <a href="#a35c46e76cde7773850820233754e0bc0">More...</a><br /></td></tr>
+<tr class="memdesc:a35c46e76cde7773850820233754e0bc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Launches the <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a>.  <a href="#a35c46e76cde7773850820233754e0bc0">More...</a><br /></td></tr>
 <tr class="separator:a35c46e76cde7773850820233754e0bc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af5c06e3108ba1cd1bad4572ce427e270"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classqge_1_1_map_grid.html">MapGrid</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_game.html#af5c06e3108ba1cd1bad4572ce427e270">mapGrid</a> ()</td></tr>
 <tr class="separator:af5c06e3108ba1cd1bad4572ce427e270"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c31109eba5928a9ff3b8889961be162"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_game.html#a6c31109eba5928a9ff3b8889961be162">setCurrentMap</a> (<a class="el" href="classqge_1_1_map.html">Map</a> *<a class="el" href="classqge_1_1_game.html#a16c7177bd275e009d26be6438ba530ff">currentMap</a>)</td></tr>
-<tr class="memdesc:a6c31109eba5928a9ff3b8889961be162"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the current <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a> that the <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a> is visualizing.  <a href="#a6c31109eba5928a9ff3b8889961be162">More...</a><br /></td></tr>
+<tr class="memdesc:a6c31109eba5928a9ff3b8889961be162"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the current <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a> that the <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a> is visualizing.  <a href="#a6c31109eba5928a9ff3b8889961be162">More...</a><br /></td></tr>
 <tr class="separator:a6c31109eba5928a9ff3b8889961be162"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16c7177bd275e009d26be6438ba530ff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classqge_1_1_map.html">Map</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_game.html#a16c7177bd275e009d26be6438ba530ff">currentMap</a> ()</td></tr>
-<tr class="memdesc:a16c7177bd275e009d26be6438ba530ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a>'s current <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a>.  <a href="#a16c7177bd275e009d26be6438ba530ff">More...</a><br /></td></tr>
+<tr class="memdesc:a16c7177bd275e009d26be6438ba530ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a>'s current <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a>.  <a href="#a16c7177bd275e009d26be6438ba530ff">More...</a><br /></td></tr>
 <tr class="separator:a16c7177bd275e009d26be6438ba530ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d218131f747b6262fa2d60f8a8f1e5e"><td class="memItemLeft" align="right" valign="top">QPointF&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_game.html#a4d218131f747b6262fa2d60f8a8f1e5e">mapToMap</a> (const QPoint &amp;point)</td></tr>
-<tr class="memdesc:a4d218131f747b6262fa2d60f8a8f1e5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the specified point from <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a> coordinates to <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a> coordinates ( of the current <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a>).  <a href="#a4d218131f747b6262fa2d60f8a8f1e5e">More...</a><br /></td></tr>
+<tr class="memdesc:a4d218131f747b6262fa2d60f8a8f1e5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the specified point from <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a> coordinates to <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a> coordinates ( of the current <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a>).  <a href="#a4d218131f747b6262fa2d60f8a8f1e5e">More...</a><br /></td></tr>
 <tr class="separator:a4d218131f747b6262fa2d60f8a8f1e5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5fb1c870d99845c3901b359d97901f75"><td class="memItemLeft" align="right" valign="top">QPointF&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_game.html#a5fb1c870d99845c3901b359d97901f75">mapFromMap</a> (const QPointF &amp;point)</td></tr>
-<tr class="memdesc:a5fb1c870d99845c3901b359d97901f75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the specified point from <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a> coordinates to <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a> coordinates.  <a href="#a5fb1c870d99845c3901b359d97901f75">More...</a><br /></td></tr>
+<tr class="memdesc:a5fb1c870d99845c3901b359d97901f75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the specified point from <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a> coordinates to <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a> coordinates.  <a href="#a5fb1c870d99845c3901b359d97901f75">More...</a><br /></td></tr>
 <tr class="separator:a5fb1c870d99845c3901b359d97901f75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeb0cfd063cdf702816adf01f58e1da6d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_game.html#aeb0cfd063cdf702816adf01f58e1da6d">setCenterCamPos</a> (QPointF position)</td></tr>
 <tr class="memdesc:aeb0cfd063cdf702816adf01f58e1da6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the center of the camear to be looking at the specified point on the current <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a>.  <a href="#aeb0cfd063cdf702816adf01f58e1da6d">More...</a><br /></td></tr>
@@ -233,16 +234,16 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a8947e5507b3c0a5313e7a31e2c6cb87b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the specified <a class="el" href="classqge_1_1_gui.html" title="Abstract class that Represents a GUI element in a Game. ">Gui</a> from the game.  <a href="#a8947e5507b3c0a5313e7a31e2c6cb87b">More...</a><br /></td></tr>
 <tr class="separator:a8947e5507b3c0a5313e7a31e2c6cb87b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeddad788190840db69f52946a90de506"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_game.html#aeddad788190840db69f52946a90de506">containsGui</a> (<a class="el" href="classqge_1_1_gui.html">Gui</a> *gui)</td></tr>
-<tr class="memdesc:aeddad788190840db69f52946a90de506"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a> contains the specified <a class="el" href="classqge_1_1_gui.html" title="Abstract class that Represents a GUI element in a Game. ">Gui</a>.  <a href="#aeddad788190840db69f52946a90de506">More...</a><br /></td></tr>
+<tr class="memdesc:aeddad788190840db69f52946a90de506"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a> contains the specified <a class="el" href="classqge_1_1_gui.html" title="Abstract class that Represents a GUI element in a Game. ">Gui</a>.  <a href="#aeddad788190840db69f52946a90de506">More...</a><br /></td></tr>
 <tr class="separator:aeddad788190840db69f52946a90de506"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c1cf776dbdf663c0574170bb810b5f0"><td class="memItemLeft" align="right" valign="top">std::set&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_game.html#a3c1cf776dbdf663c0574170bb810b5f0">keysPressed</a> ()</td></tr>
 <tr class="memdesc:a3c1cf776dbdf663c0574170bb810b5f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the keys that are <em>currently</em> pressed.  <a href="#a3c1cf776dbdf663c0574170bb810b5f0">More...</a><br /></td></tr>
 <tr class="separator:a3c1cf776dbdf663c0574170bb810b5f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad26402199348981e1a180e60ed3f0dc6"><td class="memItemLeft" align="right" valign="top">QPoint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_game.html#ad26402199348981e1a180e60ed3f0dc6">getMousePos</a> ()</td></tr>
-<tr class="memdesc:ad26402199348981e1a180e60ed3f0dc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current mouse position in <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a> coordinates.  <a href="#ad26402199348981e1a180e60ed3f0dc6">More...</a><br /></td></tr>
+<tr class="memdesc:ad26402199348981e1a180e60ed3f0dc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current mouse position in <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a> coordinates.  <a href="#ad26402199348981e1a180e60ed3f0dc6">More...</a><br /></td></tr>
 <tr class="separator:ad26402199348981e1a180e60ed3f0dc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac23fb4c82760b8b6f4cf5f32be4333b8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classqge_1_1_game.html#a22dd98a64ced24b7ebd40ff0a141ac60">MouseMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_game.html#ac23fb4c82760b8b6f4cf5f32be4333b8">mouseMode</a> ()</td></tr>
-<tr class="memdesc:ac23fb4c82760b8b6f4cf5f32be4333b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the MouseMode that the <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a> is in.  <a href="#ac23fb4c82760b8b6f4cf5f32be4333b8">More...</a><br /></td></tr>
+<tr class="memdesc:ac23fb4c82760b8b6f4cf5f32be4333b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the MouseMode that the <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a> is in.  <a href="#ac23fb4c82760b8b6f4cf5f32be4333b8">More...</a><br /></td></tr>
 <tr class="separator:ac23fb4c82760b8b6f4cf5f32be4333b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1ba6a35154d98abd5d606560c0205291"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_game.html#a1ba6a35154d98abd5d606560c0205291">setMouseMode</a> (<a class="el" href="classqge_1_1_game.html#a22dd98a64ced24b7ebd40ff0a141ac60">MouseMode</a> mode)</td></tr>
 <tr class="memdesc:a1ba6a35154d98abd5d606560c0205291"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the MouseMode that the game should b in.  <a href="#a1ba6a35154d98abd5d606560c0205291">More...</a><br /></td></tr>
@@ -285,12 +286,17 @@ Public Member Functions</h2></td></tr>
 Public Attributes</h2></td></tr>
 <tr class="memitem:aa12adeba12d3b25952c78bfb64991565"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classqge_1_1_entity.html">Entity</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_game.html#aa12adeba12d3b25952c78bfb64991565">enemies_</a></td></tr>
 <tr class="separator:aa12adeba12d3b25952c78bfb64991565"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:ab652813f5a3cffb0ef4bfd08345b99ce"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classqge_1_1_game.html">Game</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classqge_1_1_game.html#ab652813f5a3cffb0ef4bfd08345b99ce">game</a> = nullptr</td></tr>
+<tr class="separator:ab652813f5a3cffb0ef4bfd08345b99ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Represents an instance of the game. </p>
-<dl class="section author"><dt>Author</dt><dd>Abdullah Aghazadah </dd></dl>
+<div class="textblock"><p>Represents the game as a whole. </p>
+<p>This is basically the window the will visualize a <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a>. This class is a singleton, thus you can only construct one instance. If you try to construct a second one, an exception will be thrown. The <a class="el" href="classqge_1_1_game.html#ab652813f5a3cffb0ef4bfd08345b99ce">Game::game</a> pointer is global, you can access it from anywhere. </p><dl class="section author"><dt>Author</dt><dd>Abdullah Aghazadah </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>6-3-15</dd></dl>
-<p>A <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a> represents an instance of the game as a whole. It controls things such as GUIs, screen size, changing maps, etc... </p>
+<p>A <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a> represents an instance of the game as a whole. It controls things such as GUIs, screen size, changing maps, etc... </p>
 </div><h2 class="groupheader">Member Enumeration Documentation</h2>
 <a id="a22dd98a64ced24b7ebd40ff0a141ac60"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a22dd98a64ced24b7ebd40ff0a141ac60">&#9670;&nbsp;</a></span>MouseMode</h2>
@@ -352,7 +358,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Creates an instance of the <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a> with some default options. </p>
+<p>Creates an instance of the <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a> with some default options. </p>
 
 </div>
 </div>
@@ -457,7 +463,7 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Emitted <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a>'s camera moves. </p>
+<p>Emitted <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a>'s camera moves. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">newPos</td><td>the new position of the camera (its center). </td></tr>
@@ -502,7 +508,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Returns true if the <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a> contains the specified <a class="el" href="classqge_1_1_gui.html" title="Abstract class that Represents a GUI element in a Game. ">Gui</a>. </p>
+<p>Returns true if the <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a> contains the specified <a class="el" href="classqge_1_1_gui.html" title="Abstract class that Represents a GUI element in a Game. ">Gui</a>. </p>
 
 </div>
 </div>
@@ -521,7 +527,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Returns the <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a>'s current <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a>. </p>
+<p>Returns the <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a>'s current <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a>. </p>
 <p>The current <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a> is the one currently being visualized. </p>
 
 </div>
@@ -550,7 +556,7 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Emitted whenever an <a class="el" href="classqge_1_1_entity.html" title="An Entity is the base class for anything that can go inside a Map. ">Entity</a> is selected while the <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a> is in selectEntity MouseMode. </p>
+<p>Emitted whenever an <a class="el" href="classqge_1_1_entity.html" title="An Entity is the base class for anything that can go inside a Map. ">Entity</a> is selected while the <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a> is in selectEntity MouseMode. </p>
 
 </div>
 </div>
@@ -569,7 +575,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Returns the current mouse position in <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a> coordinates. </p>
+<p>Returns the current mouse position in <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a> coordinates. </p>
 
 </div>
 </div>
@@ -643,7 +649,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Launches the <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a>. </p>
+<p>Launches the <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a>. </p>
 
 </div>
 </div>
@@ -701,7 +707,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Converts the specified point from <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a> coordinates to <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a> coordinates. </p>
+<p>Converts the specified point from <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a> coordinates to <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a> coordinates. </p>
 
 </div>
 </div>
@@ -738,7 +744,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Converts the specified point from <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a> coordinates to <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a> coordinates ( of the current <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a>). </p>
+<p>Converts the specified point from <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a> coordinates to <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a> coordinates ( of the current <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a>). </p>
 
 </div>
 </div>
@@ -757,7 +763,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Returns the MouseMode that the <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a> is in. </p>
+<p>Returns the MouseMode that the <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a> is in. </p>
 
 </div>
 </div>
@@ -785,7 +791,7 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Emitted whenever the mouse is moved while the <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a> is in regular MouseMode. </p>
+<p>Emitted whenever the mouse is moved while the <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a> is in regular MouseMode. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">The</td><td>position (in screen coordinates) that the mouse moved to. </td></tr>
@@ -847,7 +853,7 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Emitted whenever the a mouse button is pressed down while <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a> is in regular MouseMode. </p>
+<p>Emitted whenever the a mouse button is pressed down while <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a> is in regular MouseMode. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">pos</td><td>The position selected, in screen coordinates. </td></tr>
@@ -910,7 +916,7 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Emitted whenever a mouse button is released while the <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a> is in regular MouseMode. </p>
+<p>Emitted whenever a mouse button is released while the <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a> is in regular MouseMode. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">The</td><td>position (in screen coordinates) at which the mouse was released at. </td></tr>
@@ -1151,7 +1157,7 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Emitted whenever a position is selected while <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a> is in selectPosition MouseMode. </p>
+<p>Emitted whenever a position is selected while <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a> is in selectPosition MouseMode. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">pos</td><td>The position that was selected, in <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a> coordinates (of the current <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a>). </td></tr>
@@ -1291,7 +1297,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Sets the current <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a> that the <a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a> is visualizing. </p>
+<p>Sets the current <a class="el" href="classqge_1_1_map.html" title="Represents a map which can contain a bunch of interacting Entities. ">Map</a> that the <a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a> is visualizing. </p>
 
 </div>
 </div>
@@ -1459,7 +1465,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Emitted when a watched <a class="el" href="classqge_1_1_entity.html" title="An Entity is the base class for anything that can go inside a Map. ">Entity</a> enters within range of one of its watching entities. </p>
-<p><a class="el" href="classqge_1_1_game.html" title="Represents an instance of the game. ">Game</a> allows you to keep track of some Entities that are being watched by some other Entities. Whenever a "watched" entity moves, game will determine if its within range of any of the entities that are watching it (i.e. the "watching" entities), if so, a signal will be emitted.</p>
+<p><a class="el" href="classqge_1_1_game.html" title="Represents the game as a whole. ">Game</a> allows you to keep track of some Entities that are being watched by some other Entities. Whenever a "watched" entity moves, game will determine if its within range of any of the entities that are watching it (i.e. the "watching" entities), if so, a signal will be emitted.</p>
 <p>For example, suppose you have entityA and entityB. You want entityA to be notified whenever entityB enters within 100 pixels of it. You can do this by calling addWatchedEntity(entityB, entityA, 100); </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">range</td><td>the range of the watching entity that the watched entity just entered. </td></tr>
@@ -1634,6 +1640,28 @@ Public Attributes</h2></td></tr>
           <td class="memname">std::vector&lt;<a class="el" href="classqge_1_1_entity.html">Entity</a>*&gt; qge::Game::enemies_</td>
         </tr>
       </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab652813f5a3cffb0ef4bfd08345b99ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab652813f5a3cffb0ef4bfd08345b99ce">&#9670;&nbsp;</a></span>game</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classqge_1_1_game.html">Game</a> * Game::game = nullptr</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>

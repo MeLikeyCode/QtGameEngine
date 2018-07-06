@@ -8,9 +8,7 @@ var hierarchy =
       [ "qge::DRBDestroyProjectile", "classqge_1_1_d_r_b_destroy_projectile.html", null ]
     ] ],
     [ "qge::Edge", "classqge_1_1_edge.html", null ],
-    [ "qge::EntityCreator", "classqge_1_1_entity_creator.html", [
-      [ "SpiderCreator", "class_spider_creator.html", null ]
-    ] ],
+    [ "qge::EntityCreator", "classqge_1_1_entity_creator.html", null ],
     [ "qge::Graph", "classqge_1_1_graph.html", null ],
     [ "qge::Grid", "classqge_1_1_grid.html", null ],
     [ "std::hash< qge::Edge >", "structstd_1_1hash_3_01qge_1_1_edge_01_4.html", null ],
@@ -39,7 +37,6 @@ var hierarchy =
       [ "qge::Game", "classqge_1_1_game.html", null ]
     ] ],
     [ "QObject", null, [
-      [ "EventHandler", "class_event_handler.html", null ],
       [ "qge::Ability", "classqge_1_1_ability.html", [
         [ "qge::EntityTargetAbility", "classqge_1_1_entity_target_ability.html", null ],
         [ "qge::NoTargetAbility", "classqge_1_1_no_target_ability.html", [

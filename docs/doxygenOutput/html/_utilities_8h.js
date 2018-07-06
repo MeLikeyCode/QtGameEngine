@@ -5,6 +5,7 @@ var _utilities_8h =
     [ "closestAngle", "_utilities_8h.html#a68ead4c173ce0a8d50c872ac3991e4d8", null ],
     [ "fastRandom", "_utilities_8h.html#a653beddee29b2565ea848c4d0d3dbfde", null ],
     [ "frequency", "_utilities_8h.html#a63c957644b2cb57cbaadbb1d3b1c3685", null ],
+    [ "getMinitaurEntity", "_utilities_8h.html#ae54b1d98cda6f301c07bf5bda6a968bb", null ],
     [ "msToSeconds", "_utilities_8h.html#a7e5bd0dbc5d34103f89d390e4ca0933c", null ],
     [ "randDouble", "_utilities_8h.html#ad1ca96662786fce54b84d6ce4252b208", null ],
     [ "randInt", "_utilities_8h.html#a162dce905373793ee18058a295e727b7", null ],

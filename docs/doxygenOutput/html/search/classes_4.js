@@ -24,6 +24,5 @@ var searchData=
   ['entitysprite',['EntitySprite',['../classqge_1_1_entity_sprite.html',1,'qge']]],
   ['entitytargetability',['EntityTargetAbility',['../classqge_1_1_entity_target_ability.html',1,'qge']]],
   ['entitytargetitem',['EntityTargetItem',['../classqge_1_1_entity_target_item.html',1,'qge']]],
-  ['equipableitem',['EquipableItem',['../classqge_1_1_equipable_item.html',1,'qge']]],
-  ['eventhandler',['EventHandler',['../class_event_handler.html',1,'']]]
+  ['equipableitem',['EquipableItem',['../classqge_1_1_equipable_item.html',1,'qge']]]
 ];

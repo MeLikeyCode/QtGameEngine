@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['readme',['readme',['../md__c_1__git_hub_projects__qt_game_engine_readme.html',1,'']]],
   ['rainmovestep_5f',['rainMoveStep_',['../classqge_1_1_rain_weather.html#a1307f43e9ca3964c5d3738476b1b9c9c',1,'qge::RainWeather']]],
   ['rainofspearsability',['RainOfSpearsAbility',['../classqge_1_1_rain_of_spears_ability.html',1,'qge::RainOfSpearsAbility'],['../classqge_1_1_rain_of_spears_ability.html#a8225a05319aab593586967ab4759b491',1,'qge::RainOfSpearsAbility::RainOfSpearsAbility()']]],
   ['rainofspearsability_2ecpp',['RainOfSpearsAbility.cpp',['../_rain_of_spears_ability_8cpp.html',1,'']]],
@@ -24,7 +23,6 @@ var searchData=
   ['rangedweaponslot',['RangedWeaponSlot',['../classqge_1_1_ranged_weapon_slot.html',1,'qge']]],
   ['rangedweaponslot_2ecpp',['RangedWeaponSlot.cpp',['../_ranged_weapon_slot_8cpp.html',1,'']]],
   ['rangedweaponslot_2eh',['RangedWeaponSlot.h',['../_ranged_weapon_slot_8h.html',1,'']]],
-  ['readme_2emd',['readme.md',['../readme_8md.html',1,'']]],
   ['regular',['regular',['../classqge_1_1_game.html#a22dd98a64ced24b7ebd40ff0a141ac60aaf37d08ae228a87dc6b265fd1019c97d',1,'qge::Game']]],
   ['remove',['remove',['../classqge_1_1_scroll_window.html#a05fe180d519e5dc6a9649925969ef2e9',1,'qge::ScrollWindow::remove()'],['../namespace_s_t_l_wrappers.html#a1c57af718faca30ceae51858e8d5c508',1,'STLWrappers::remove(ContainerType &amp;fromContainer, const ItemType &amp;item)'],['../namespace_s_t_l_wrappers.html#a983582c582b0f48f0729022aa5dcf4ab',1,'STLWrappers::remove(std::set&lt; ItemType &gt; &amp;fromContainer, const ItemType &amp;item)'],['../namespace_s_t_l_wrappers.html#ac68e085deb08377d9d84cb925ce3a48d',1,'STLWrappers::remove(std::unordered_set&lt; ItemType &gt; &amp;fromContainer, const ItemType &amp;item)'],['../namespace_s_t_l_wrappers.html#aaa9bc1f27be4f8e4c0c74d007017fa74',1,'STLWrappers::remove(std::map&lt; KeyType, ValueType &gt; &amp;fromContainer, const KeyType &amp;item)'],['../namespace_s_t_l_wrappers.html#ac375ef5d449c9dbb7907fc4c52077ac7',1,'STLWrappers::remove(std::unordered_map&lt; KeyType, ValueType &gt; &amp;fromContainer, const KeyType &amp;item)']]],
   ['removeall',['removeAll',['../classqge_1_1_scroll_window.html#af090ee5df1522f511bd92c0e29dae093',1,'qge::ScrollWindow']]],

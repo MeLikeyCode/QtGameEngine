@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['owner_5f',['owner_',['../classqge_1_1_slot.html#a8ffd775dc36c896488fda44d913df58b',1,'qge::Slot']]]
+  ['name_5f',['name_',['../classqge_1_1_slot.html#a6fc53c10e7c230ab4820860231a2e12b',1,'qge::Slot']]]
 ];

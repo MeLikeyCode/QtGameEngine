@@ -12,7 +12,7 @@ var searchData=
   ['eckeyboardmover8directional',['ECKeyboardMover8Directional',['../classqge_1_1_e_c_keyboard_mover8_directional.html#a3860091bd772b6437c437d06b16913d8',1,'qge::ECKeyboardMover8Directional']]],
   ['eckeyboardmoverperspective',['ECKeyboardMoverPerspective',['../classqge_1_1_e_c_keyboard_mover_perspective.html#aff111e7f027bc8d6d57e02fb723ebaca',1,'qge::ECKeyboardMoverPerspective']]],
   ['ecmapmover',['ECMapMover',['../classqge_1_1_e_c_map_mover.html#ab7629769ca140b1c35d33ffa36c69eaa',1,'qge::ECMapMover']]],
-  ['ecmerchant',['ECMerchant',['../classqge_1_1_e_c_merchant.html#ad9b3cd5e4da4f8e8eac936285f7ec6e4',1,'qge::ECMerchant']]],
+  ['ecmerchant',['ECMerchant',['../classqge_1_1_e_c_merchant.html#a2c01dfac64401d42aa34431f1821cc5a',1,'qge::ECMerchant']]],
   ['ecmousefacer',['ECMouseFacer',['../classqge_1_1_e_c_mouse_facer.html#a41f756969ad63a035e35b8cf87126753',1,'qge::ECMouseFacer']]],
   ['ecmover',['ECMover',['../classqge_1_1_e_c_mover.html#afd029f7b42c78bafe5c5ec19f27f95ed',1,'qge::ECMover']]],
   ['ecpathmover',['ECPathMover',['../classqge_1_1_e_c_path_mover.html#a7723589b2f689bed9ab150baec11fffe',1,'qge::ECPathMover']]],
@@ -38,6 +38,5 @@ var searchData=
   ['entitytargetitem',['EntityTargetItem',['../classqge_1_1_entity_target_item.html#ac43984e334d64bbaf40c7abcc22b7761',1,'qge::EntityTargetItem']]],
   ['equip',['equip',['../classqge_1_1_slot.html#a0a17fb36f24e6e4e7ef402aed7e91e8a',1,'qge::Slot']]],
   ['equipableitem',['EquipableItem',['../classqge_1_1_equipable_item.html#ac7bc2a9a1394b84b235cf17cfc7bdd3a',1,'qge::EquipableItem']]],
-  ['equipitem',['equipItem',['../classqge_1_1_entity.html#ad15934f92268b1f91256c9d89461a87b',1,'qge::Entity::equipItem(EquipableItem *item, std::string slot)'],['../classqge_1_1_entity.html#a13dd72f47942cb833b57e694df989885',1,'qge::Entity::equipItem(EquipableItem *item, Slot *slot)']]],
-  ['eventhandler',['EventHandler',['../class_event_handler.html#a77af9b34fc0ff878665b81d89f113765',1,'EventHandler']]]
+  ['equipitem',['equipItem',['../classqge_1_1_entity.html#ad15934f92268b1f91256c9d89461a87b',1,'qge::Entity::equipItem(EquipableItem *item, std::string slot)'],['../classqge_1_1_entity.html#a13dd72f47942cb833b57e694df989885',1,'qge::Entity::equipItem(EquipableItem *item, Slot *slot)']]]
 ];

@@ -1,6 +1,6 @@
 var classqge_1_1_label =
 [
-    [ "Label", "classqge_1_1_label.html#af8f2bccf9faadcb2ca964bd2347dde24", null ],
+    [ "Label", "classqge_1_1_label.html#afad18b861eac8240961b7956c4f70fbf", null ],
     [ "clicked", "classqge_1_1_label.html#a7d52d6104eedd066e7e30c17bc2ac9ef", null ],
     [ "getGraphicsItem", "classqge_1_1_label.html#a696abe4250b2697461be302b3c323835", null ],
     [ "hovered", "classqge_1_1_label.html#ab2f18120080d04707108c36fa1ed2ec5", null ],

@@ -11,7 +11,6 @@ var searchData=
   ['sound',['Sound',['../classqge_1_1_sound.html',1,'qge']]],
   ['spear',['Spear',['../classqge_1_1_spear.html',1,'qge']]],
   ['spearprojectile',['SpearProjectile',['../classqge_1_1_spear_projectile.html',1,'qge']]],
-  ['spidercreator',['SpiderCreator',['../class_spider_creator.html',1,'']]],
   ['sprite',['Sprite',['../classqge_1_1_sprite.html',1,'qge']]],
   ['spritesheet',['SpriteSheet',['../classqge_1_1_sprite_sheet.html',1,'qge']]]
 ];

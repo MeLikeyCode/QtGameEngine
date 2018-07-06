@@ -22,8 +22,6 @@ var searchData=
   ['spear_2eh',['Spear.h',['../_spear_8h.html',1,'']]],
   ['spearprojectile_2ecpp',['SpearProjectile.cpp',['../_spear_projectile_8cpp.html',1,'']]],
   ['spearprojectile_2eh',['SpearProjectile.h',['../_spear_projectile_8h.html',1,'']]],
-  ['spidercreator_2ecpp',['SpiderCreator.cpp',['../_spider_creator_8cpp.html',1,'']]],
-  ['spidercreator_2eh',['SpiderCreator.h',['../_spider_creator_8h.html',1,'']]],
   ['sprite_2ecpp',['Sprite.cpp',['../_sprite_8cpp.html',1,'']]],
   ['sprite_2eh',['Sprite.h',['../_sprite_8h.html',1,'']]],
   ['spritesheet_2ecpp',['SpriteSheet.cpp',['../_sprite_sheet_8cpp.html',1,'']]],

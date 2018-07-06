@@ -1,4 +1,9 @@
-Welcome to the documentation! {#mainpage}
+Welcome to the QGE documentation! {#mainpage}
 ==================================================
 
-Note for the future: This page will basically "tie" the entire documentation together. It will have links to pages that document specific sub systems (e.g. projectile system, ability system, etc) as well as links to the visio diagrams. Furthermore, it will have links to additional resources, such as tutorials, video tutorials, examples, etc. This is what I meant by this page "tieing" the entire documentation together. It should be the main portal which will guide users to more specific resources.
+I recommend you start by watching my YouTube tutorial videos on how to use the engine.
+TODO put link here
+
+Then check out the example projects in the `QtGameEngine/examples` directory. Run the examples, play with them, change them, improve them. As you are messing with the examples, read the documentation for the classes that you use (you can use the `Classes` link on the left sidebar or use the Search on the top right of the page) . That should get you nice and warmed up. 
+
+Next, you might want to consider looking at the diagrams in the `QtGameEngine/docs/diagrams` folder. They should give you a nice big picture of the game engine.

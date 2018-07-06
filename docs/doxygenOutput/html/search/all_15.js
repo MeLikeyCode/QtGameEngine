@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['welcome_20to_20the_20documentation_21',['Welcome to the documentation!',['../index.html',1,'']]],
+  ['welcome_20to_20the_20qge_20documentation_21',['Welcome to the QGE documentation!',['../index.html',1,'']]],
   ['watchedentities',['watchedEntities',['../classqge_1_1_game.html#ad654805531c9244fe57f31538f788d57',1,'qge::Game::watchedEntities()'],['../classqge_1_1_game.html#a86ea15289277ff8204a52ac28f93430e',1,'qge::Game::watchedEntities(Entity *of)']]],
   ['watchedentityentersrange',['watchedEntityEntersRange',['../classqge_1_1_game.html#a20c91d9819b9b6166562ba424788cf56',1,'qge::Game']]],
   ['watchedentityleavesrange',['watchedEntityLeavesRange',['../classqge_1_1_game.html#afe999f7914de0155e989de496d91414a',1,'qge::Game']]],

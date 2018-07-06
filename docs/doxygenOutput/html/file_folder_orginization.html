@@ -95,7 +95,53 @@ $(document).ready(function(){initNavTree('file_folder_orginization.html','');});
 <div class="title">File/Folder Orginization </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>TODO </p>
+<div class="textblock"><p>Let's look at what's inside the root <code>QtGameEngine</code> folder.</p><ul>
+<li><code>QtGameEngine</code> folder - The root folder for the project.<ul>
+<li><code>.git</code> folder - used by git.</li>
+<li><code>docs</code> folder - all documentation shall go here.</li>
+<li><code>example projects</code> folder - some example projects using the game engine are here.</li>
+<li><code>qge</code> folder - source code, project include file, and resources for the game engine.</li>
+<li><code>test project</code> folder - a project that uses the engine, meant to be used as a quick test harness.</li>
+<li><code>.gitignore</code> file - specifies files that should be ignored by git version control.</li>
+</ul>
+</li>
+</ul>
+<p>Let's dive in and take a look at what's inside the <code>docs</code> folder.</p><ul>
+<li><code>QtGameEngine</code> folder<ul>
+<li><code>docs</code> folder<ul>
+<li><code>diagrams</code> folder - Some diagrams that help visually explain/document high level design/archeteture of the engine.</li>
+<li><code>DoxyfileFast</code>/<code>DoxyFileFull</code> files - these files tell doxygen where the source code is and where to put the documentation (along with some other documentation related options). You run <code>doxygen DoxyfileFast</code> or <code>doxygen DoxyfileFull</code> to generate the documentation. <code>DoxyfileFull</code> takes longer but produces more diagrams.</li>
+<li><code>doxygenOutput</code> folder - the generated doxygen is put inside an <code>html</code> folder which is in this folder.</li>
+<li><code>images</code> folder - images that the documentation uses are placed here.</li>
+<li><code>pages</code> folder - additional pages for the documentation.</li>
+<li><code>index.html</code> file - supposed to represent the root of the documentation website, simply redirets to <code>doxygenOutput/html/index.html</code>.</li>
+<li><code>README.md</code> file - git readme file for the repo.</li>
+<li><code>LICENSE.md</code> file - git license file for the repo.</li>
+<li><code>CONTRIBUTING.md</code> file - a file that people interested in contributing to the engine should read.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Let's zoom back out and this time dive in to have a look at the <code>qge</code> folder.</p><ul>
+<li><code>QtGameEngine</code> folder<ul>
+<li><code>qge</code> folder<ul>
+<li><code>graphics</code> folder - images that the engine uses are placed here.</li>
+<li><code>sounds</code> folder - sounds/music that the engine uses are placed here.</li>
+<li><code>res.qrc</code> file - this file allows us to easily package all the qge graphics/sounds into the executable itself<ul>
+<li>Note: The game engine comes with a small number of images/sounds, so it's ok to put them into the executable. If your game has a lot of sounds/images, you probably want to ship them in a folder to avoid bloating the executable.</li>
+</ul>
+</li>
+<li><code>qge.pri</code> file - This is the file you <code>include()</code> into your game's .pro (project) file so that you can easily use the engine.</li>
+<li><code>.h/.cpp</code> files - There is a bunch of .h and .cpp files, these are the source of the engine.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Those are the most important parts of the file/folder structure you need to be aware of!</p>
+<p>Thanks for reading!</p>
+<p>-Abdullah </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

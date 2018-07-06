@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['main',['main',['../main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main.cpp']]],
-  ['map',['Map',['../classqge_1_1_map.html#a0f5ad0fd4563497b4214038cbca8b582',1,'qge::Map::Map()'],['../classqge_1_1_map.html#a8531662173714e3defcaf528bd5fb49d',1,'qge::Map::Map(PathingMap *pathingMap)'],['../classqge_1_1_entity.html#a0cee8293b41f14ff775432925e00183a',1,'qge::Entity::map()']]],
+  ['map',['Map',['../classqge_1_1_map.html#a0f5ad0fd4563497b4214038cbca8b582',1,'qge::Map::Map()'],['../classqge_1_1_map.html#a726d420ec2c79a9889e2b2f634e0ff95',1,'qge::Map::Map(int numCellsX, int numCellsY, double cellSize)'],['../classqge_1_1_map.html#a8531662173714e3defcaf528bd5fb49d',1,'qge::Map::Map(PathingMap *pathingMap)'],['../classqge_1_1_entity.html#a0cee8293b41f14ff775432925e00183a',1,'qge::Entity::map()']]],
   ['mapat',['mapAt',['../classqge_1_1_map_grid.html#a4b7b9de629c22bb440e1d27ffe66615c',1,'qge::MapGrid']]],
   ['mapchanged',['mapChanged',['../classqge_1_1_game.html#a14ce899201d731f9a348b1f7bdf22cd0',1,'qge::Game']]],
   ['mapentered',['mapEntered',['../classqge_1_1_entity.html#acab77d97d66e515a1802271c2d85f544',1,'qge::Entity']]],
