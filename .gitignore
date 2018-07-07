@@ -3,3 +3,6 @@
 
 # ignore test project builds
 /build-*
+
+# ignore jekyll site folder
+/docs/_site
