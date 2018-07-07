@@ -1,2 +1,5 @@
 # ignore all example project builds
-/example projects/build*
+/example projects/build-*
+
+# ignore test project builds
+/build-*
