@@ -1,1 +1,2 @@
-# nothing so far
+# ignore all example project builds
+/example projects/build*
