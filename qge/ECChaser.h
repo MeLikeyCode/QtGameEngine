@@ -56,6 +56,8 @@ public:
     void setStopDistance(double distance);
     double stopDistance() const;
 
+    void setShowFOV(bool tf);
+
 signals:
     /// Emitted whenever the controlled entity *starts* chasing an entity.
     /// @param distToChasedEntity the distance between the controlled entity and the chased

@@ -111,6 +111,12 @@ double ECChaser::stopDistance() const
     return stopDistance_;
 }
 
+/// Determines whether the field of view of the controlled enity is shown or not.
+void ECChaser::setShowFOV(bool tf)
+{
+    fovEmitter_->setShowFOV(tf);
+}
+
 /// Executed whenever an entity enters the fov of the controlled entity.
 /// If the controlled entity doesn't already have a target entity, will set the newly
 /// entering entity as the target entity.

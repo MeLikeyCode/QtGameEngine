@@ -17,7 +17,7 @@ class BodyThrust;
 /// An entity controller that causes the controlled entity to chase certain other entites
 /// in its field of view and use the BodyThrust ability on them when close enough.
 ///
-/// Will chase both "target" entities and any entities that are enmies of the controlled entity.
+/// Will chase both "target" entities and any entities that are enemies of the controlled entity.
 ///
 /// Example usage:
 /// ==============
@@ -36,6 +36,9 @@ public:
 
     void setThrustDistance(double distance);
     void setAnimationToPlayWhileThrusting(const std::string& animationName);
+
+    void setShowFOV(bool tf);
+
 public slots:
     void onChaseContinued_(Entity* entityChased, double distance);
     void onChasePaused_(Entity* entity);

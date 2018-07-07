@@ -18,19 +18,27 @@ ECFieldOfViewEmitter::ECFieldOfViewEmitter(Entity *entity, double fovAngle, doub
     fieldOfViewAngle_(fovAngle),
     fieldOfViewDistance_(fovDistance),
     fieldOfViewCheckDelayMs_(50),
-    timerCheckFov_(new QTimer(this))
+    timerCheckFov_(new QTimer(this)),
+    showFOV_(false)
 {
     // connect timer to keep checking fov
     connect(timerCheckFov_,&QTimer::timeout,this,&ECFieldOfViewEmitter::checkFov_);
     timerCheckFov_->start(fieldOfViewCheckDelayMs_);
 
-    // TODO: remove, for debugging only
-    polyItem_= new QGraphicsPolygonItem();
+    // create polygon item for visualization purposes
+    fovVisual_= new QGraphicsPolygonItem();
     QBrush brush;
     brush.setStyle(Qt::SolidPattern);
     brush.setColor(Qt::red);
-    polyItem_->setBrush(brush);
-    polyItem_->setOpacity(0.3);
+    fovVisual_->setBrush(brush);
+    fovVisual_->setOpacity(0.3);
+}
+
+ECFieldOfViewEmitter::~ECFieldOfViewEmitter()
+{
+    // clean up field of view visualization
+    ensureFOVVisualIsRemoved_();
+    delete fovVisual_;
 }
 
 /// Executed periodically for the entity controller to check the field of view
@@ -81,6 +89,16 @@ void ECFieldOfViewEmitter::checkFov_()
 
 }
 
+void ECFieldOfViewEmitter::ensureFOVVisualIsRemoved_()
+{
+    auto entity = entityControlled();
+    if (entity){
+        auto map = entity->map();
+        if (map)
+            map->scene()->removeItem(fovVisual_);
+    }
+}
+
 /// Returns all the entities in the fov of the entity being controlled.
 std::unordered_set<Entity *> ECFieldOfViewEmitter::entitiesInView()
 {
@@ -108,9 +126,12 @@ std::unordered_set<Entity *> ECFieldOfViewEmitter::entitiesInView()
 
     QPolygonF poly(points);
 
-    // TEST remove TODO remove
-    polyItem_->setPolygon(poly);
-    //entitysMap->scene()->addItem(polyItem_);
+    fovVisual_->setPolygon(poly);
+
+    if (showFOV_){
+        entitysMap->scene()->removeItem(fovVisual_);
+        entitysMap->scene()->addItem(fovVisual_);
+    }
 
     std::unordered_set<Entity*> entities = entitysMap->entities(poly);
     entities.erase(entityControlled());
@@ -149,4 +170,16 @@ void ECFieldOfViewEmitter::turnOn()
 void ECFieldOfViewEmitter::turnOff()
 {
     timerCheckFov_->stop();
+}
+
+/// If true is passed in, draws the field of view of the controlled entity.
+/// If false is passed in, does not draw the field of view. Simple enough.
+void ECFieldOfViewEmitter::setShowFOV(bool tf)
+{
+    showFOV_ = tf;
+
+    // if false, make sure visual is removed
+    if (!showFOV_){
+        ensureFOVVisualIsRemoved_();
+    }
 }

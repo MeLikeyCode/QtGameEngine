@@ -57,6 +57,12 @@ void ECBodyThruster::setAnimationToPlayWhileThrusting(const std::string &animati
     bodyThrustAbility_->setAnimationToPlayWhileThrusting(animationName);
 }
 
+/// Determines whether the field of view of the controlled enity is shown or not.
+void ECBodyThruster::setShowFOV(bool tf)
+{
+    controllerChaseEnemies_->setShowFOV(tf);
+}
+
 /// Executed whenever the controlled enity moves closer to the chased entity.
 /// Will see if close enough, if so, will BodyThrust chased entity.
 void ECBodyThruster::onChaseContinued_(Entity *entityChased, double distance)

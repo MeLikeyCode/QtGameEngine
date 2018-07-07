@@ -36,6 +36,7 @@ class ECFieldOfViewEmitter: public EntityController
     Q_OBJECT
 public:
     ECFieldOfViewEmitter(Entity* entity, double fovAngle=90, double fovDistance=600);
+    ~ECFieldOfViewEmitter();
 
     std::unordered_set<Entity*> entitiesInView();
 
@@ -44,6 +45,8 @@ public:
 
     void turnOn();
     void turnOff();
+
+    void setShowFOV(bool tf);
 
 public slots:
     void checkFov_();
@@ -61,10 +64,14 @@ private:
     double fieldOfViewCheckDelayMs_; // in ms
     QTimer* timerCheckFov_;
 
-    QGraphicsPolygonItem* polyItem_; // TODO: remove, for debugging only
+    bool showFOV_;
+    QGraphicsPolygonItem* fovVisual_;
 
     // helper
     std::unordered_set<Entity*> entitiesInViewLastTime_;
+
+    // helper functions
+    void ensureFOVVisualIsRemoved_();
 };
 
 }
