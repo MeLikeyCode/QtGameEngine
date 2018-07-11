@@ -1,6 +1,9 @@
 theme: jekyll-theme-merlot
 repository: MeLikeyCode/QtGameEngine
 
-title: Qt Game Engine
+include: [CONTRIBUTING.md, CODE_OF_CONDUCT.md]
 
+title: Qt Game Engine
+logo: images/logo.svg
 show_downloads: true
+
