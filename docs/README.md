@@ -14,11 +14,12 @@ If you just want to use the engine to build your own game (not necessarly contri
 1. Download/extract.
 2. Copy the `qge` folder to the same directory as your `.pro` file.
 3. Add `include(qge/qge.pri)` in your `.pro` file.
+
 That's it! Now you can simply `#include <qge/SomeHeader.h>` to use QGE classes. I sincerely hope you enjoy *using* the game engine as much as I enjoyed *making* it.
 
 Tutorials/Documentation
 =============
-I've created some YouTube [tutorials](TODO link to tutorials) on creating a basic game using the engine. That is a great place to start! Next, you may want to check out the example projects in the `QtGameEngine/examples` folder. As you're working on the tutorials/examples, have the [documentation](doxygenOutput/html/index.html) open so you can look at the documentation of the various classes you use along your journey.
+I've created some [YouTube tutorials](TODO link to tutorials) on creating a basic game using the engine. That is a great place to start! Next, you may want to check out the example projects in the `QtGameEngine/examples` folder. As you're working on the tutorials/examples, have the [documentation](doxygenOutput/html/index.html) open so you can look at the documentation of the various classes you use along your journey.
 
 Contributing
 ============
