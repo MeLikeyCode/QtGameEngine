@@ -20,7 +20,8 @@ Let's dive in and take a look at what's inside the `docs` folder.
         - `index.html` file - supposed to represent the root of the documentation website, simply redirets to `doxygenOutput/html/index.html`.
         - `README.md` file - git readme file for the repo.
         - `LICENSE.md` file - git license file for the repo.
-        - `CONTRIBUTING.md` file - a file that people interested in contributing to the engine should read.
+        - `CONTRIBUTING.md`/`CODE_OF_CONDUCT.md` files - people interested in contributing to the engine should read these.
+        - `_config.yml`/`Gemfile`/`Gemfile.lock` - github uses these files to automatically generate a website for us.
 
 Let's zoom back out and this time dive in to have a look at the `qge` folder.
 - `QtGameEngine` folder
