@@ -91,7 +91,7 @@ public:
     void setOrigin(const QPointF& to);
 
     // sprite
-    void setSprite(EntitySprite* sprite);
+    void setSprite(EntitySprite* sprite, bool setOriginToCenterOfSprite = true);
     EntitySprite* sprite() const;
 
     // parent/child relationship

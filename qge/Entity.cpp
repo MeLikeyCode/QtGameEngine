@@ -289,10 +289,17 @@ Node Entity::cellPos(){
 /// Sets the Sprite of the Entity.
 /// This does *not* delete the old sprite. You are responsible for the old sprite's lifetime. Use
 /// sprite() to get a pointer to the old sprite before calling this function.
-void Entity::setSprite(EntitySprite *sprite){
+void Entity::setSprite(EntitySprite *sprite, bool setOriginToCenterOfSprite){
     // set all childrens' sprites' parent to new sprite
     for (Entity* child: children()){
         child->sprite()->underlyingItem_->setParentItem(sprite->underlyingItem_);
+    }
+
+    // set origin
+    if (setOriginToCenterOfSprite){
+        double cx = sprite->boundingBox().width() / 2.0;
+        double cy = sprite->boundingBox().height() / 2.0;
+        setOrigin(QPointF(cx,cy));
     }
 
     // make sure the new sprite is positioned correctly on the scene

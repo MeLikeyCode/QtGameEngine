@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
     qge::Map* map = new qge::Map();
 
     // create map grid
-    qge::MapGrid* mapGrid = new qge::MapGrid(1,2); // HEY! PAY ATTENTION HERE! We change the size of the map grid so we can put 2 maps stacked vertically
+    qge::MapGrid* mapGrid = new qge::MapGrid(1,2);
     mapGrid->setMapAtPos(map,0,1); // add map to map grid
 
     // create game

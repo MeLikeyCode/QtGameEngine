@@ -161,7 +161,6 @@ Entity *qge::getMinitaurEntity()
         entitySprite->addFrames((180+45*i) % 360,"attack",minitaurSpriteSheet,qge::Node(12,0+i),qge::Node(18,0+i));
     }
 
-    entity->setOrigin(QPointF(64,64));
     entity->setSprite(entitySprite);
 
     return entity;
