@@ -393,6 +393,15 @@ void Entity::setFacingAngle(double angle)
         sprite_->setFacingAngle(angle);
 }
 
+/// Makes the Entity face a certain point in the map.
+void Entity::facePoint(const QPointF &point)
+{
+    assert(map());
+
+    QLineF line(pos(),point);
+    setFacingAngle(-1 * line.angle());
+}
+
 /// Returns the origin of the Entity.
 /// @see setOrigin()
 QPointF Entity::origin() const

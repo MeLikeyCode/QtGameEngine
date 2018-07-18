@@ -87,6 +87,7 @@ public:
     QPointF pathingMapPos() const;
     int facingAngle();
     void setFacingAngle(double angle);
+    void facePoint(const QPointF& point);
     QPointF origin() const;
     void setOrigin(const QPointF& to);
 

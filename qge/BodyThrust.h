@@ -30,6 +30,7 @@ public:
     double thrustSpeed();
     void setThrustSpeed(double speed);
     void setThrustDistance(double distance);
+    bool thrusting() const;
 
     void setAnimationToPlayWhileThrusting(const std::string& animation);
 
@@ -43,6 +44,7 @@ private:
     double thrustLengthEachStep_;
     double thrustDistance_; // calculate from other attributes, here for perf
     double thrustSpeed_; // calculated from other attributes, here for perf
+    bool damaged_;
     bool headingForward_; // is the spear heading forward or backward?
     bool headingBackward_;
     bool headingBackwardDueToCollision_;

@@ -53,6 +53,7 @@ void BodyThrust::useImplementation()
 
     soundEffect_->play(1);
 
+    damaged_ = false;
     headingBackward_ = false;
     headingForward_ = true;
     currentThrustStep_ = 0;
@@ -96,6 +97,12 @@ void BodyThrust::setThrustDistance(double distance)
     thrustDistance_ = thrustLengthEachStep_ * numOfThrusts;
 }
 
+/// Returns true if the ability is currently being used, false other wise.
+bool BodyThrust::thrusting() const
+{
+    return alreadyThrusting_;
+}
+
 /// Sets the animation that should play when the owner is thrusting forward.
 /// Pass in "" to have no animation play (leave w.e. animation the owner has at the time).
 void BodyThrust::setAnimationToPlayWhileThrusting(const std::string &animation)
@@ -106,7 +113,7 @@ void BodyThrust::setAnimationToPlayWhileThrusting(const std::string &animation)
 /// Executed periodically to take the entity one step closer to body thrusting.
 void BodyThrust::thrustStep_()
 {
-    const int EXTRA_BACK_STEPS = 10;
+    const int EXTRA_BACK_STEPS = 0;
 
     Entity* theOwner = owner(); // if the entity to thrust is dead, were done
     if (theOwner == nullptr){
@@ -132,22 +139,22 @@ void BodyThrust::thrustStep_()
         return;
     }
 
-    // if still moving forward, damage things in the way, then move backward
-    // due to collision
+    // if still moving forward, damage things in the way, (then move backward) <- don't do the move backward yet (over-inflated bboxes won't let this work properly)
     std::unordered_set<Entity*> collidingEntities = ownersMap->entities(theOwner->mapToMap(collisionPoint_));
     for (Entity* e: collidingEntities){
-        if (e != theOwner && e->parent() != theOwner && headingForward_){
+        if (e != theOwner && e->parent() != theOwner && headingForward_ && !damaged_){
             theOwner->damage(e,damage_);
-            headingBackwardDueToCollision_ = true;
-            headingBackward_ = false;
-            headingForward_ = false;
+            damaged_ = true;
+//            headingBackwardDueToCollision_ = true;
+//            headingBackward_ = false;
+//            headingForward_ = false;
         }
     }
 
     // if heading backward due to collision, move backward
     if (headingBackwardDueToCollision_ && currentThrustStep_ > 0){
         // move owner backward at current angle
-        QLineF line(theOwner->pos(),QPointF(1,1));
+        QLineF line(theOwner->pos(),theOwner->pos()+QPointF(1,1));
         line.setAngle(360-theOwner->facingAngle());
         line.setAngle(line.angle() + 180);
         line.setLength(thrustLengthEachStep_);
@@ -163,7 +170,7 @@ void BodyThrust::thrustStep_()
     // if moving forward, move forward
     if (headingForward_ && currentThrustStep_ < maxThrustSteps_){
         // move owner forward at current angle
-        QLineF line(theOwner->pos(),QPointF(1,1));
+        QLineF line(theOwner->pos(),theOwner->pos()+QPointF(1,1));
         line.setAngle(360-theOwner->facingAngle());
         line.setLength(thrustLengthEachStep_);
         double newX = theOwner->pos().x() + line.dx();
@@ -180,7 +187,7 @@ void BodyThrust::thrustStep_()
     // if moving backward, move backward
     if (headingBackward_ && currentThrustStep_ < maxThrustSteps_ + EXTRA_BACK_STEPS){
         // move owner backward at current angle
-        QLineF line(theOwner->pos(),QPointF(1,1));
+        QLineF line(theOwner->pos(),theOwner->pos()+QPointF(1,1));
         line.setAngle(360-theOwner->facingAngle());
         line.setAngle(line.angle() + 180);
         line.setLength(thrustLengthEachStep_);
@@ -213,6 +220,7 @@ void BodyThrust::resetVariables()
     headingForward_ = false;
     headingBackwardDueToCollision_ = false;
     alreadyThrusting_ = false;
+    damaged_ = false;
 }
 
 void BodyThrust::done_()

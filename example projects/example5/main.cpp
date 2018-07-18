@@ -44,7 +44,6 @@ int main(int argc, char *argv[])
 
     // add the entity into the map at position (300,300)
     entity->setPos(QPointF(300,300));
-    entity->setFacingAngle(0);
     map->addEntity(entity);
 
     // play the stand animation of the entity
@@ -119,7 +118,7 @@ int main(int argc, char *argv[])
 
     // Run the game and test it out! Get in the field of view of the spider and watch him chase you down! Once he's close enough, he'll thrust at you, damaging you.
     // Set the health of your mintaur to 100 or something like that so that you don't die as fast!
-//    entity->setHealth(100);
+    entity->setHealth(100);
 
     game->launch(); // launch game
     return a.exec();

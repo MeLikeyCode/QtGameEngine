@@ -93,7 +93,7 @@ void ECBodyThruster::bodyThrustIfCloseEnough_()
         return;
 
     double dist = QtUtils::distance(lastEntityChased_->pos(),entityControlled()->pos());
-    if (dist < bodyThrustAbility_->thrustDistance()){
+    if (dist < bodyThrustAbility_->thrustDistance() && !bodyThrustAbility_->thrusting()){
         bodyThrustAbility_->useImplementation();
         emit thrusted(lastEntityChased_);
     }
