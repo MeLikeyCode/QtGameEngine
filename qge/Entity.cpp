@@ -728,9 +728,10 @@ bool Entity::isAnEnemyGroup(int groupNumber)
     return enemyGroups_.find(groupNumber) != enemyGroups_.end();
 }
 
-/// Add the specified Slot to the Entity.
-void Entity::addSlot(Slot *slot)
+/// Add the specified Slot to the Entity and gives it the specified name.
+void Entity::addSlot(Slot *slot, const std::string &name)
 {
+    slot->setName(name);
     stringToSlot_[slot->name()] = slot;
     slot->owner_ = this;
 }

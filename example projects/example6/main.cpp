@@ -120,13 +120,17 @@ int main(int argc, char *argv[])
 
     // let's create a call back function for when the mouse is clicked.
     auto mousePressedCallback = [entity](QPoint pos, Qt::MouseButton button){
+        // if left click
         if (button == Qt::MouseButton::LeftButton){
             entity->slot("weapon")->use(); // use whatever item is equipped in the slot named "weapon"
         }
     };
+    
+    // let's give the player a weapon slot
+    entity->addSlot(new qge::MeleeWeaponSlot(),"weapon");
+    entity->slot("weapon")->equip(new qge::AnimationAttack("attack","qrc:/resources/sounds/axe.wav",10,60,90));
 
-    QObject::connect(game,&qge::Game::mousePressed,[]())
-
+    QObject::connect(game,&qge::Game::mousePressed,mousePressedCallback);
 
     game->launch(); // launch game
     return a.exec();

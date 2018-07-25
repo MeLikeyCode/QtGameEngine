@@ -59,8 +59,11 @@ bool Slot::equip(EquipableItem *item)
     // assertions
     Entity* theOwner = owner();
     assert(theOwner != nullptr);    // make sure has an owner
-    assert(theOwner->inventory()->contains(item));  // make sure owner's inventory contains
-                                                    // the item being equipped in this slot
+
+    // if item is not in inventory, add it
+    auto inv = theOwner->inventory();
+    if (!inv->contains(item))
+        inv->addItem(item);
 
     // return false if the item cannot be equipped
     if (!canBeEquipped(item)){

@@ -134,7 +134,7 @@ public:
     bool isAnEnemyGroup(int groupNumber);
 
     // slot/equipment/inventory
-    void addSlot(Slot* slot);
+    void addSlot(Slot* slot, const std::string& name);
     Slot* slot(std::string name);
     std::unordered_set<Slot*> getSlots();
     bool equipItem(EquipableItem* item, std::string slot);

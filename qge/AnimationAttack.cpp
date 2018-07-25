@@ -41,7 +41,7 @@ void AnimationAttack::attack(QPointF position)
     assert(ownersSprite != nullptr);
 
     // play sound
-    soundEffect_ = new PositionalSound(ownersMap, "qrc:/resources/sounds/axe.wav",QPointF());
+    soundEffect_ = new PositionalSound(ownersMap, soundToPlayOnAttack_,QPointF());
     soundEffect_->setPos(owner->pos());
     soundEffect_->play(1);
 
