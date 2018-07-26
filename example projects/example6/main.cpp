@@ -128,8 +128,15 @@ int main(int argc, char *argv[])
     
     // let's give the player a weapon slot
     entity->addSlot(new qge::MeleeWeaponSlot(),"weapon");
-    entity->slot("weapon")->equip(new qge::AnimationAttack("attack","qrc:/resources/sounds/axe.wav",10,60,90));
 
+    // let's create a weapon to equip in the slot
+    // AnimationAttack is a MeleeWeapon that will play an animation and then damage enemies in an arc in front.
+    qge::AnimationAttack* animationWeapon = new qge::AnimationAttack("attack","qrc:/resources/sounds/axe.wav",10,60,90);
+
+    // equip the weapon in the slot
+    entity->slot("weapon")->equip(animationWeapon);
+
+    // when the mouse is pressed, make the weapon attack.
     QObject::connect(game,&qge::Game::mousePressed,mousePressedCallback);
 
     game->launch(); // launch game
