@@ -65,8 +65,9 @@ void ECMapMover::onEntityMoved(Entity *controlledEntity, QPointF fromPos, QPoint
     if (entityPos.y() < borderThreshold_){
         Map* m = mapGrid->mapAt(mapPos.x(),mapPos.y()-1);
         if (m){
+            double fracAlong = entity->x() / entitysMap->width();
             m->addEntity(entity);
-            entity->setPos(QPointF(entity->x(),m->height() - borderThreshold_*2));
+            entity->setPos(QPointF(fracAlong * m->width(),m->height() - borderThreshold_*2));
         }
     }
 
@@ -74,8 +75,9 @@ void ECMapMover::onEntityMoved(Entity *controlledEntity, QPointF fromPos, QPoint
     if (entityPos.y() > entitysMap->height() - borderThreshold_){
         Map* m = mapGrid->mapAt(mapPos.x(),mapPos.y()+1);
         if (m){
+            double fracAlong = entity->x() / entitysMap->width();
             m->addEntity(entity);
-            entity->setPos(QPointF(entity->x(),borderThreshold_*2));
+            entity->setPos(QPointF(fracAlong * m->width(),borderThreshold_*2));
         }
     }
 
@@ -83,8 +85,9 @@ void ECMapMover::onEntityMoved(Entity *controlledEntity, QPointF fromPos, QPoint
     if (entityPos.x() < borderThreshold_){
         Map* m = mapGrid->mapAt(mapPos.x()-1,mapPos.y());
         if (m){
+            double fracAlong = entity->y() / entitysMap->height();
             m->addEntity(entity);
-            entity->setPos(QPointF(m->width() - borderThreshold_*2,entity->y()));
+            entity->setPos(QPointF(m->width() - borderThreshold_*2,fracAlong * m->height()));
         }
     }
 
@@ -92,8 +95,9 @@ void ECMapMover::onEntityMoved(Entity *controlledEntity, QPointF fromPos, QPoint
     if (entityPos.x() > entitysMap->width() - borderThreshold_){
         Map* m = mapGrid->mapAt(mapPos.x()+1,mapPos.y());
         if (m){
+            double fracAlong = entity->y() / entitysMap->height();
             m->addEntity(entity);
-            entity->setPos(QPointF(borderThreshold_*2,entity->y()));
+            entity->setPos(QPointF(borderThreshold_*2,fracAlong * m->height()));
         }
     }
 }
