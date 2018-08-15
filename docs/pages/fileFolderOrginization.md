@@ -6,7 +6,7 @@ Let's look at what's inside the root `QtGameEngine` folder.
     - `docs` folder - all documentation shall go here.
     - `example projects` folder - some example projects using the game engine are here.
     - `qge` folder - source code, project include file, and resources for the game engine.
-    - `test project` folder - a project that uses the engine, meant to be used as a quick test harness.
+    - `test project` folder - a project that uses the engine, meant to be used as a quick manual test harness for playing/testing new features/bug fixes. This folder does not have unit tests.
     - `.gitignore` file - specifies files that should be ignored by git version control.
 
 Let's dive in and take a look at what's inside the `docs` folder.
