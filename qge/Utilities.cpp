@@ -165,3 +165,38 @@ Entity *qge::getMinitaurEntity()
 
     return entity;
 }
+
+Entity *qge::getSpiderEntity()
+{
+    qge::Entity* spiderEntity = new qge::Entity();
+
+    qge::SpriteSheet spiderSpriteSheet(":/resources/graphics/characterSpritesheets/spider.png",48,8,128,128);
+
+    qge::AngledSprite* spiderSprite = new qge::AngledSprite();
+    for (int i = 0, n = 8; i < n; ++i){ // for each angle
+        // stand
+        spiderSprite->addFrames((180+45*i) % 360,"stand",spiderSpriteSheet,qge::Node(0,0+i),qge::Node(3,0+i));
+        for (int j = 2; j > 0; --j){
+            spiderSprite->addFrame(spiderSpriteSheet.tileAt(qge::Node(j,0+i)),"stand",(180+45*i) % 360);
+        }
+        // walk
+        spiderSprite->addFrames((180+45*i) % 360,"walk",spiderSpriteSheet,qge::Node(4,0+i),qge::Node(11,0+i));
+
+        // attack
+        spiderSprite->addFrames((180+45*i) % 360,"attack",spiderSpriteSheet,qge::Node(12,0+i),qge::Node(15,0+i));
+
+        // hit (animation that will play when the spider is hit - but not killed)
+        spiderSprite->addFrames((180+45*i) % 360,"hit",spiderSpriteSheet,qge::Node(18,0+i),qge::Node(20,0+i));
+
+        // die (animation that will play when spider dies)
+        spiderSprite->addFrames((180+45*i) % 360,"die",spiderSpriteSheet,qge::Node(18,0+i),qge::Node(23,0+i));
+
+        // dieTwo (a second animation that might play when spider dies - just adds variety)
+        spiderSprite->addFrames((180+45*i) % 360,"dieTwo",spiderSpriteSheet,qge::Node(24,0+i),qge::Node(31,0+i));
+    }
+
+    spiderEntity->setSprite(spiderSprite);
+    spiderEntity->sprite()->play("stand",-1,15,0);
+
+    return spiderEntity;
+}
