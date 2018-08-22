@@ -17,7 +17,7 @@ class Map;
 class MapGrid
 {
 public:
-    MapGrid(int numMapsHorizontally = 0, int numMapsVertically = 0);
+    MapGrid(int numMapsHorizontally = 1, int numMapsVertically = 1);
 
     // setters
     void setMapAtPos(Map* map, int xPos, int yPos);
