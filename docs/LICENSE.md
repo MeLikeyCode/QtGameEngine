@@ -1,1 +1,1 @@
-TODO put licensing info here.
+I am planning to release the engine under the MIT license, but I want to think about this for a little longer. Don't worry, whatever license I end up choosing I promise you it will be very liberal. In the meantime, go ahead and use the engine, don't let this licensing business be a barrier for you. As I mentioned before, the license I choose will be very liberal anyways!
