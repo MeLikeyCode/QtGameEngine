@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
     // facing angle 20 degrees and you press up, it will move forward at that angle. The ECKeyboardMover4Directional
     // controller moves the entity relative to the screen, not its facing direction.
 
-    // BONUS OBJECTIVE 1: Try out ECKeyboardMover4Directional and ECKeyboardMover8Directional (also skim their documentation).
+    // BONUS OBJECTIVE: Try out ECKeyboardMover4Directional and ECKeyboardMover8Directional (also skim their documentation).
 
     game->launch(); // launch game
     return a.exec();
