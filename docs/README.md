@@ -4,7 +4,7 @@ Welcome!
 Qt Game Engine (QGE) is a game engine written in C++ and built on top of the amazing Qt framework. It presents a very **easy** and more importantly, a **fun** to use interface for creating your own 2d games from a top down or angled (e.g. isometric-like) viewpoint. The game engine is very **well written**, **well documented**, and **easily extensible**.
 
 Click the picture below to view a video of the engine in action.
-[![demo teaser video](images/demoVideoSnapshot.png)](https://www.youtube.com/watch?v=WUk3jxSSSqQ "demo teaser video")
+[![demo teaser video](images/demoVideoSnapshot.png)](https://youtu.be/MfMuob8VWuY "demo teaser video")
 
 I've written the engine with my top priority being that it is fun to use. For me, building things by plugging a bunch of different parts together and wiring them correctly is insanely fun, so that is how i've designed the engine to be. 
 
