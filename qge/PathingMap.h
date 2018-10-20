@@ -88,6 +88,6 @@ private:
     int cellSize_;
 };
 
-Q_DECLARE_METATYPE(PathingMap);
-
 }
+
+Q_DECLARE_METATYPE(qge::PathingMap);
