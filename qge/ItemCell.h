@@ -3,6 +3,7 @@
 #include <QPointer>
 #include <memory>
 #include <QObject>
+#include <QGraphicsPixmapItem>
 
 #include "Item.h"
 #include "Gui.h"
