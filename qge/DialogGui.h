@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "Gui.h"
+#include "ScrollWindow.h"
 #include <QObject>
 
 class QGraphicsItem;
