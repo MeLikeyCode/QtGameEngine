@@ -5,6 +5,8 @@
 #include <memory>
 #include <QObject>
 
+#include "Sound.h"
+
 namespace qge{
 
 class Map;
