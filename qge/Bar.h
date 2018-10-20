@@ -3,6 +3,7 @@
 #include <QObject>
 #include <QColor>
 #include <QPixmap>
+#include <QGraphicsPixmapItem>
 #include <memory>
 
 #include "Gui.h"
