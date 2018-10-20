@@ -8,6 +8,7 @@
 
 #include "Gui.h"
 #include "Inventory.h"
+#include "ScrollWindow.h"
 
 class QPointF;
 
