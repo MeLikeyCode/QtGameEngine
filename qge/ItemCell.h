@@ -6,6 +6,7 @@
 
 #include "Item.h"
 #include "Gui.h"
+#include "Panel.h"
 
 class QGraphicsItem;
 class QGraphicsPixmapItem;
