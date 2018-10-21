@@ -112,14 +112,12 @@ int main(int argc, char *argv[])
 
     // create some slots for the entity
     WeaponSlot* rightHandMelee = new WeaponSlot();
-    rightHandMelee->setName("melee");
     rightHandMelee->setPosition(QPointF(25,50));
-    player->addSlot(rightHandMelee);
+    player->addSlot(rightHandMelee,"melee");
 
     RangedWeaponSlot* rangedSlot = new RangedWeaponSlot();
-    rangedSlot->setName("ranged");
     rangedSlot->setPosition(QPointF(64,45));
-    player->addSlot(rangedSlot);
+    player->addSlot(rangedSlot,"ranged");
 
     // equip something in slot
     AnimationAttack* animAttack = new AnimationAttack("attack","qrc:/resources/sounds/axe.wav",10,85,90);
