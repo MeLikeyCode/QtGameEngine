@@ -7,6 +7,7 @@
 #include "PathingMap.h"
 #include "Game.h"
 #include "PositionalSound.h"
+#include "TerrainLayer.h"
 
 class QPolygonF;
 class QGraphicsItem;

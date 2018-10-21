@@ -3,9 +3,11 @@
 #include <QPointer>
 #include <memory>
 #include <QObject>
+#include <QGraphicsPixmapItem>
 
 #include "Item.h"
 #include "Gui.h"
+#include "Panel.h"
 
 class QGraphicsItem;
 class QGraphicsPixmapItem;

@@ -4,6 +4,7 @@
 #include <QObject>
 
 #include "Gui.h"
+#include "InventoryViewer.h"
 
 class QGraphicsItem;
 

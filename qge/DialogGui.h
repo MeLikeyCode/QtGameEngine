@@ -3,9 +3,10 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <memory>
+#include <QObject>
 
 #include "Gui.h"
-#include <QObject>
+#include "ScrollWindow.h"
 
 class QGraphicsItem;
 

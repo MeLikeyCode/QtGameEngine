@@ -11,6 +11,7 @@
 #include <memory>
 
 #include "PathingMap.h"
+#include "AsyncShortestPathFinder.h"
 
 class QPointF;
 class QTimer;
