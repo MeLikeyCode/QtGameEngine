@@ -13,6 +13,6 @@ If you would like to become a contributer, I suggest you start by learning how t
 
 Version control pattern
 -----------------------
-We will be following the **github-flow** version control pattern, which means that master is **always** deployable. Branch off master, make your changes, test them, and when you are ready, open a pull request to master.
+We will be following the [github-flow](https://guides.github.com/introduction/flow/) version control pattern, which means that master is **always** deployable. Branch off master, make your changes, **test them**, and when you are ready, open a pull request to master. It is worth reiterating, anything that wants to go into master must be tested first.
 
 I look forward to working with you all!
