@@ -2,7 +2,7 @@ QT       += core gui widgets multimedia # we want to use these qt modules
 
 greaterThan(QT_MAJOR_VERSION, 4): # we require at least qt version 4
 
-CONFIG += c++11 # we require a C++11 compatible compiler
+CONFIG += c++14 # we require a C++14 compatible compiler
 
 # these are the sources we need
 SOURCES += \ # this is just so we can line up all our sources nicely
