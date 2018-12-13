@@ -705,7 +705,7 @@ void Entity::setGroup(int groupNumber)
 
 /// Returns the group of the Entity. See setGroup() for more information on some of
 /// the kind of things groups are used for.
-int Entity::group()
+int Entity::group() const
 {
     return groupNumber_;
 }
@@ -726,6 +726,13 @@ std::unordered_set<int> Entity::enemyGroups()
 bool Entity::isAnEnemyGroup(int groupNumber)
 {
     return enemyGroups_.find(groupNumber) != enemyGroups_.end();
+}
+
+/// Tells you how this entity feels towards the specified entity.
+/// @see DiplomacyManager
+Relationship Entity::relationshipTowards(const Entity &otherEntity) const
+{
+    return Game::game->diplomacyManager().getRelationship(group(),otherEntity.group());
 }
 
 /// Add the specified Slot to the Entity and gives it the specified name.

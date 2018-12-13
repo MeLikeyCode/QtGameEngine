@@ -118,6 +118,7 @@ SOURCES += \ # this is just so we can line up all our sources nicely
     $$PWD/ShardsOfFireAbility.cpp \
     $$PWD/ItemShardsOfFire.cpp \
     $$PWD/EntityCreator.cpp \
+    $$PWD/DiplomacyManager.cpp
 
 # these are the headers we use
 HEADERS  += \ # this is just so we can line up all our headers nicely
@@ -234,6 +235,7 @@ HEADERS  += \ # this is just so we can line up all our headers nicely
     $$PWD/ShardsOfFireAbility.h \
     $$PWD/ItemShardsOfFire.h \
     $$PWD/EntityCreator.h \
+    $$PWD/DiplomacyManager.h
 
 RESOURCES += \ # this is our resource file (specifies resources (images, audio files, etc) we want embedded in our executable)
     $$PWD/res.qrc

@@ -12,6 +12,7 @@
 
 #include "PathingMap.h"
 #include "AsyncShortestPathFinder.h"
+#include "DiplomacyManager.h"
 
 class QPointF;
 class QTimer;
@@ -129,10 +130,11 @@ public:
 
     // group/enemy groups
     void setGroup(int groupNumber_);
-    int group();
+    int group() const;
     void addEnemyGroup(int groupNumber);
     std::unordered_set<int> enemyGroups();
     bool isAnEnemyGroup(int groupNumber);
+    Relationship relationshipTowards(const Entity& otherEntity) const;
 
     // slot/equipment/inventory
     void addSlot(Slot* slot, const std::string& name);

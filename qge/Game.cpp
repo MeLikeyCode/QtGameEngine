@@ -533,6 +533,11 @@ void Game::setWatchedWatchingRange(Entity *watched, Entity *watching, double ran
     watchedWatchingPairToRange_[watchedWatchingPair] = range;
 }
 
+DiplomacyManager &Game::diplomacyManager()
+{
+    return diplomacyManager_;
+}
+
 void Game::updateGuiPositions()
 {
     guiLayer_->setPos(mapToScene(QPoint(0,0)));

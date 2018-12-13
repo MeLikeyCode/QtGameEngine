@@ -4,6 +4,8 @@
 #include <set>
 #include <unordered_set>
 
+#include "DiplomacyManager.h"
+
 namespace qge{
 
 class Map;
@@ -20,9 +22,6 @@ class Gui;
 /// The Game::game pointer is global, you can access it from anywhere.
 /// @author Abdullah Aghazadah
 /// @date 6-3-15
-///
-/// A Game represents an instance of the game as a whole.
-/// It controls things such as GUIs, screen size, changing maps, etc...
 class Game: public QGraphicsView{
     Q_OBJECT //todo delete test
 public:
@@ -80,6 +79,8 @@ public:
     std::set<Entity*> watchingEntities(Entity *of);
     double watchedWatchingRange(Entity* watched, Entity* watching);
     void setWatchedWatchingRange(Entity* watched, Entity* watching, double range);
+
+    DiplomacyManager& diplomacyManager();
 
 signals:
     /// Emitted whenever a position is selected while Game is in selectPosition MouseMode.
@@ -144,6 +145,8 @@ private:
     std::unordered_set<Gui*> guis_;
 
     QGraphicsRectItem* guiLayer_;
+
+    DiplomacyManager diplomacyManager_;
 
     // watched/watching entities
     std::map<Entity*, std::set<Entity*>> watchedToWatching_; // each Entity that is watched to the Entities that are watching it
