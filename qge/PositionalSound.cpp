@@ -113,9 +113,9 @@ void PositionalSound::setMap_(Map *map)
     }
 
     // listen to when this map is visualized/unvisualized
-    disconnect(0, &Map::camMoved, this, &PositionalSound::onCamMoved_);
-    disconnect(0, &Map::setAsCurrentMap, this, &PositionalSound::onMapVisualized_);
-    disconnect(0, &Map::unsetAsCurrentMap, this, &PositionalSound::onMapNoLongerVisualized_);
+    disconnect(map_, &Map::camMoved, this, &PositionalSound::onCamMoved_);
+    disconnect(map_, &Map::setAsCurrentMap, this, &PositionalSound::onMapVisualized_);
+    disconnect(map_, &Map::unsetAsCurrentMap, this, &PositionalSound::onMapNoLongerVisualized_);
     connect(map_, &Map::camMoved, this, &PositionalSound::onCamMoved_);
     connect(map_, &Map::setAsCurrentMap, this, &PositionalSound::onMapVisualized_);
     connect(map_, &Map::unsetAsCurrentMap, this, &PositionalSound::onMapNoLongerVisualized_);
