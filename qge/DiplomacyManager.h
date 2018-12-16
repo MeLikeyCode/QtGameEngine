@@ -4,11 +4,20 @@
 
 namespace qge{
 
+/// Specifies how one group views another.
 enum class Relationship{
+
+    /// Views the group as a friend.
     FRIEND,
+
+    /// Views the group as neutral.
     NEUTRAL,
+
+    /// Views the group as an enemy.
     ENEMY,
-    UNSPECIFIED, // The relationship is not specified
+
+    /// It is not specified how the group is viewed.
+    UNSPECIFIED,
 };
 
 /// An object that can keep track of the relationship between groups.
