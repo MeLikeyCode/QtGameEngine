@@ -1,8 +1,5 @@
 #include "RainWeather.h"
 
-#include <QTimer>
-#include <cassert>
-
 #include "Game.h"
 #include "Sprite.h"
 #include "Map.h"

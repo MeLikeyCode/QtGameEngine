@@ -1,7 +1,5 @@
 #include "Slot.h"
 
-#include <cassert>
-
 #include "EquipableItem.h"
 #include "Sprite.h"
 #include "Entity.h"

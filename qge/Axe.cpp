@@ -1,8 +1,5 @@
 #include "Axe.h"
 
-#include <QGraphicsScene>
-#include <QDebug> // TODO: remove
-
 #include "Sprite.h"
 #include "Map.h"
 #include "Inventory.h"

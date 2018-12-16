@@ -1,9 +1,6 @@
 #pragma once
 
-#include <QObject>
-#include <unordered_set>
-#include <unordered_map>
-#include <QPoint>
+#include "Vendor.h"
 
 class QTimer;
 

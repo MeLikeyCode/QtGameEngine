@@ -1,10 +1,5 @@
 #include "Button.h"
 
-#include <QGraphicsRectItem>
-#include <QGraphicsTextItem>
-#include <QBrush>
-#include <QFont>
-
 using namespace qge;
 
 Button::Button():

@@ -1,8 +1,5 @@
 #include "PathGrid.h"
 
-#include <cassert>
-#include <QDebug>
-
 #include "Tree.h"
 
 using namespace qge;

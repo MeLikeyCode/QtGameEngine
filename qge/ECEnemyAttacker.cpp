@@ -1,7 +1,5 @@
 #include "ECEnemyAttacker.h"
 
-#include <cassert>
-
 #include "ECChaser.h"
 #include "Slot.h"
 #include "Weapon.h"

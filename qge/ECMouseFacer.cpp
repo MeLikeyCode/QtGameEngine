@@ -1,8 +1,5 @@
 #include "ECMouseFacer.h"
 
-#include <cassert>
-#include <QTimer>
-
 #include "ECRotater.h"
 #include "Map.h"
 

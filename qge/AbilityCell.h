@@ -1,8 +1,6 @@
 #pragma once
 
-#include <QPointer>
-#include <memory>
-#include <QObject>
+#include "Vendor.h"
 
 #include "Gui.h"
 #include "Ability.h"

@@ -1,9 +1,5 @@
 #include "ECRotater.h"
 
-#include <cassert>
-#include <QTimer>
-#include <QLineF>
-
 #include "Entity.h"
 #include "Sprite.h"
 #include "Utilities.h"

@@ -1,8 +1,5 @@
 #include "ECBodyThruster.h"
 
-#include <cassert>
-#include <QTimer>
-
 #include "ECChaser.h"
 #include "BodyThrust.h"
 #include "QtUtilities.h"

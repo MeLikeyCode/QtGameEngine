@@ -1,7 +1,5 @@
 #include "ECMapMover.h"
 
-#include <cassert>
-
 #include "Map.h"
 #include "Game.h"
 #include "MapGrid.h"

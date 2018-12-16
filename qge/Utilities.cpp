@@ -5,11 +5,6 @@
 
 #include "Utilities.h"
 
-#include <stdlib.h>
-#include <time.h>
-#include <cassert>
-#include <QtMath>
-
 #include "Map.h"
 #include "RandomImageEntity.h"
 #include "PathingMap.h"

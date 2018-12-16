@@ -1,7 +1,6 @@
 #pragma once
 
-#include <QObject>
-#include <QRectF>
+#include "Vendor.h"
 
 #include "RandomGenerator.h"
 #include "EntityCreator.h"

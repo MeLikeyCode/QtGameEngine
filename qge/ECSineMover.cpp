@@ -1,9 +1,5 @@
 #include "ECSineMover.h"
 
-#include <QTimer>
-#include <cassert>
-#include <QtMath>
-
 #include "Utilities.h"
 
 using namespace qge;

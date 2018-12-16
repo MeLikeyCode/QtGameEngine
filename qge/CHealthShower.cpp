@@ -1,8 +1,5 @@
 #include "CHealthShower.h"
 
-#include <QTimer>
-#include <cassert>
-
 #include "STLWrappers.h"
 #include "Entity.h"
 #include "Map.h"

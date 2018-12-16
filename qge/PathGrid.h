@@ -1,7 +1,6 @@
 #pragma once
 
-#include <vector>
-#include <unordered_map>
+#include "Vendor.h"
 
 #include "Node.h"
 #include "Graph.h"

@@ -1,9 +1,5 @@
 #include "Graph.h"
 
-#include <vector>
-#include <cassert>
-#include <algorithm>
-
 #include "Tree.h"
 
 using namespace qge;

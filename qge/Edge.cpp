@@ -1,7 +1,5 @@
 #include "Edge.h"
 
-#include <cassert>
-
 using namespace qge;
 
 /// Do not use, just so Edge can be in a map.

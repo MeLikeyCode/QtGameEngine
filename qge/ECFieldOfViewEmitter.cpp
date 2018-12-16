@@ -1,13 +1,5 @@
 #include "ECFieldOfViewEmitter.h"
 
-#include <cassert>
-#include <QObject>
-#include <QTimer>
-#include <QLineF>
-#include <QPointF>
-#include <QPolygonF>
-#include <QDebug>
-
 #include "Entity.h"
 #include "Map.h"
 

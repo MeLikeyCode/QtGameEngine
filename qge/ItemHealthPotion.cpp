@@ -1,8 +1,5 @@
 #include "ItemHealthPotion.h"
 
-#include <QPixmap>
-#include <cassert>
-
 #include "Inventory.h"
 #include "Entity.h"
 #include "TopDownSprite.h"

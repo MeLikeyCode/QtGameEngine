@@ -1,11 +1,5 @@
 #include "SnowWeather.h"
 
-#include <QTimer>
-#include <QGraphicsScene>
-#include <QGraphicsPixmapItem>
-#include <cassert>
-#include <QDebug>
-
 #include "Map.h"
 #include "Game.h"
 

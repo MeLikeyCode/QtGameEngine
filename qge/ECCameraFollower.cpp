@@ -1,7 +1,5 @@
 #include "ECCameraFollower.h"
 
-#include <cassert>
-
 #include "Map.h"
 #include "Game.h"
 

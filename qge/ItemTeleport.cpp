@@ -1,7 +1,5 @@
 #include "ItemTeleport.h"
 
-#include <cassert>
-
 #include "Sprite.h"
 #include "Entity.h"
 #include "Inventory.h"

@@ -1,7 +1,6 @@
 #pragma once
 
-#include <QPointF>
-#include <string>
+#include "Vendor.h"
 
 namespace qge{
 

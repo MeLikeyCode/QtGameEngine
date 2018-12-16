@@ -1,7 +1,5 @@
 #include "EntityTargetItem.h"
 
-#include <cassert>
-
 #include "EntityTargetAbility.h"
 #include "TopDownSprite.h"
 

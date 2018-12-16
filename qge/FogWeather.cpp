@@ -1,12 +1,5 @@
 #include "FogWeather.h"
 
-#include <QTimer>
-#include <QGraphicsScene>
-#include <QGraphicsPixmapItem>
-#include <cassert>
-#include <QRectF>
-#include <QDebug>
-
 #include "Utilities.h"
 #include "Map.h"
 #include "Game.h"

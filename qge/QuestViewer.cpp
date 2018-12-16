@@ -1,8 +1,5 @@
 #include "QuestViewer.h"
 
-#include <QGraphicsRectItem>
-#include <QDebug>
-
 #include "Quests.h"
 #include "Panel.h"
 #include "Label.h"

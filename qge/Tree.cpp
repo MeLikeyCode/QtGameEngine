@@ -1,7 +1,5 @@
 #include "Tree.h"
 
-#include <cassert>
-
 using namespace qge;
 
 /// Constructs a Tree with just a root Node.

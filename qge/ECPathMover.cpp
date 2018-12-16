@@ -1,9 +1,5 @@
 #include "ECPathMover.h"
 
-#include <QTimer>
-#include <cassert>
-#include <QLineF>
-
 #include "AsyncShortestPathFinder.h"
 #include "Sprite.h"
 #include "Map.h"

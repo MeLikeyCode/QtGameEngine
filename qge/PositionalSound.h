@@ -1,9 +1,6 @@
 #pragma once
 
-#include <QPointF>
-#include <string>
-#include <memory>
-#include <QObject>
+#include "Vendor.h"
 
 #include "Sound.h"
 

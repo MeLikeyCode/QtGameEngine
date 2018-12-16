@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Vendor.h"
+
 #include "EntityTargetItem.h"
 
 namespace qge{

@@ -1,9 +1,6 @@
 #pragma once
 
-#include <string>
-#include <vector>
-#include <unordered_set>
-#include <unordered_map>
+#include "Vendor.h"
 
 #include "EntitySprite.h"
 

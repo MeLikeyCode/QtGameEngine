@@ -1,11 +1,5 @@
 #include "Panel.h"
 
-#include <QGraphicsPixmapItem>
-#include <QBrush>
-#include <QGraphicsRectItem>
-#include <QPen>
-#include <QGraphicsSceneMouseEvent>
-
 #include "QtUtilities.h"
 
 using namespace qge;

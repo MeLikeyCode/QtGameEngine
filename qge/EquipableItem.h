@@ -1,7 +1,8 @@
 #pragma once
 
+#include "Vendor.h"
+
 #include "Item.h"
-#include <QPixmap>
 
 class QPointF;
 

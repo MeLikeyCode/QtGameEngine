@@ -239,3 +239,6 @@ HEADERS  += \ # this is just so we can line up all our headers nicely
 
 RESOURCES += \ # this is our resource file (specifies resources (images, audio files, etc) we want embedded in our executable)
     $$PWD/res.qrc
+
+PRECOMPILED_HEADER += \
+    $$PWD/Vendor.h

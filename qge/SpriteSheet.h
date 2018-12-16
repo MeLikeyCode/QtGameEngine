@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QPixmap>
+#include "Vendor.h"
 
 #include "Grid.h"
 

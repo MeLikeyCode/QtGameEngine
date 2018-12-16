@@ -1,7 +1,5 @@
 #include "Bar.h"
 
-#include <QGraphicsPixmapItem>
-
 using namespace qge;
 
 Bar::Bar():

@@ -1,8 +1,6 @@
 #pragma once
 
-#include <QGraphicsView>
-#include <set>
-#include <unordered_set>
+#include "Vendor.h"
 
 #include "DiplomacyManager.h"
 

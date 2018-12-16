@@ -1,8 +1,5 @@
 #include "SpriteSheet.h"
 
-#include <QPixmap>
-#include <QRect>
-
 #include "Node.h"
 
 using namespace qge;

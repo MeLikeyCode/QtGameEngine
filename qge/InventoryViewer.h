@@ -1,10 +1,6 @@
 #pragma once
 
-#include <QPixmap>
-#include <QColor>
-#include <memory>
-#include <QPointer>
-#include <QObject>
+#include "Vendor.h"
 
 #include "Gui.h"
 #include "Inventory.h"

@@ -1,9 +1,6 @@
 #pragma once
 
-#include <QObject>
-#include <QPointF>
-#include <unordered_set>
-#include <QPointer>
+#include "Vendor.h"
 
 class QGraphicsItem;
 class QGraphicsItem;

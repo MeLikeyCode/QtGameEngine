@@ -1,7 +1,5 @@
 #include "AbilityCell.h"
 
-#include <QGraphicsPixmapItem>
-
 #include "Panel.h"
 #include "Ability.h"
 #include "Sprite.h"

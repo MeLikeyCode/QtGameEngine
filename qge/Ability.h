@@ -1,7 +1,6 @@
 #pragma once
 
-#include <QPointer>
-#include <string>
+#include "Vendor.h"
 
 #include "Entity.h"
 #include "Sprite.h"

@@ -1,9 +1,6 @@
 #pragma once
 
-#include <string>
-#include <QMediaPlayer>
-#include <QObject>
-#include <QTimer>
+#include "Vendor.h"
 
 namespace qge{
 

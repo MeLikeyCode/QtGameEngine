@@ -1,8 +1,6 @@
 #pragma once
 
-#include <vector>
-#include <string>
-#include <QPixmap>
+#include "Vendor.h"
 
 #include "Entity.h"
 

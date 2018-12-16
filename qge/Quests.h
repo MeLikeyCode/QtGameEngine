@@ -1,7 +1,6 @@
 #pragma once
 
-#include <QObject>
-#include <vector>
+#include "Vendor.h"
 
 #include "Quest.h"
 

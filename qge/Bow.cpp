@@ -6,7 +6,6 @@
 #include "Sprite.h"
 #include "Entity.h"
 #include "Sound.h"
-#include <cassert>
 #include "CBDamage.h"
 #include "TopDownSprite.h"
 

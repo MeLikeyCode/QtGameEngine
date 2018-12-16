@@ -1,7 +1,5 @@
 #include "AngledSprite.h"
 
-#include <cassert>
-
 #include "Sprite.h"
 #include "Utilities.h"
 #include "STLWrappers.h"

@@ -1,9 +1,6 @@
 #pragma once
 
-#include <QObject>
-#include <string>
-#include <QSize>
-#include <QPointF>
+#include "Vendor.h"
 
 #include "PlayingAnimationInfo.h"
 

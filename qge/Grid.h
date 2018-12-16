@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector>
+#include "Vendor.h"
 
 class QPointF;
 class QRectF;

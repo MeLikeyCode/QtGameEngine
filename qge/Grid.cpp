@@ -1,9 +1,5 @@
 #include "Grid.h"
 
-#include <QPointF>
-#include <cassert>
-#include <QRectF>
-
 #include "Node.h"
 
 using namespace qge;

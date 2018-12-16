@@ -1,7 +1,5 @@
 #include "RainOfSpearsAbility.h"
 
-#include <QTimer>
-
 #include "Sprite.h"
 #include "Sound.h"
 #include "SpearProjectile.h"

@@ -1,12 +1,6 @@
 #pragma once
 
-#include <vector>
-#include <QPointF>
-#include <unordered_map>
-#include <QColor>
-#include <QPixmap>
-#include <memory>
-#include <QObject>
+#include "Vendor.h"
 
 #include "ScrollBar.h"
 #include "Gui.h"

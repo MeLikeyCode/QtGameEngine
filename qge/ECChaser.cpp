@@ -1,9 +1,5 @@
 #include "ECChaser.h"
 
-#include <cassert>
-#include <QTimer>
-#include <QDebug> // TODO: test remove
-
 #include "ECFieldOfViewEmitter.h"
 #include "ECPathMover.h"
 #include "Map.h"
