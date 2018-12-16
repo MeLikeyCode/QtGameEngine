@@ -1,8 +1,5 @@
 #include "AnimationAttack.h"
 
-#include <cassert>
-#include <QDebug>
-
 #include "PositionalSound.h"
 #include "Slot.h"
 #include "EntitySprite.h"

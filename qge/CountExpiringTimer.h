@@ -1,7 +1,6 @@
 #pragma once
 
-#include <QObject>
-#include <QTimer>
+#include "Vendor.h"
 
 namespace qge{
 

@@ -1,12 +1,3 @@
-#include <QGraphicsRectItem>
-
-#include <QBrush>
-#include <QtMath>
-#include <unordered_set>
-#include <iterator>
-#include <QPointF>
-#include <QGraphicsScene>
-
 #include "InventoryViewer.h"
 #include "Inventory.h"
 #include "ItemCell.h"

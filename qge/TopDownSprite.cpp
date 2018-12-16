@@ -1,7 +1,5 @@
 #include "TopDownSprite.h"
 
-#include <cassert>
-
 #include "Sprite.h"
 #include "SpriteSheet.h"
 #include "Node.h"

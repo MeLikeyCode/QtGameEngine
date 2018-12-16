@@ -1,11 +1,5 @@
 #include "Label.h"
 
-#include <QGraphicsTextItem>
-
-#include <QFont>
-#include <QDebug>
-#include <QBrush>
-
 using namespace qge;
 
 Label::Label(const std::string &text):

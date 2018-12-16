@@ -1,8 +1,5 @@
 #include "ECKeyboardMover4Directional.h"
 
-#include <QTimer>
-#include <cassert>
-
 #include "Map.h"
 #include "Game.h"
 #include "Sprite.h"

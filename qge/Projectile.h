@@ -1,8 +1,6 @@
 #pragma once
 
-#include <unordered_set>
-#include <QPointer>
-#include <memory>
+#include "Vendor.h"
 
 #include "Entity.h"
 #include "ECMover.h"

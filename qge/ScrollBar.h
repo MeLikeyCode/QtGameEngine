@@ -1,9 +1,6 @@
 #pragma once
 
-#include <QGraphicsPixmapItem>
-#include <QColor>
-#include <QPixmap>
-#include <QObject>
+#include "Vendor.h"
 
 #include "Gui.h"
 

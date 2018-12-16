@@ -1,10 +1,5 @@
 #include "PathingMap.h"
 
-#include <cassert>
-#include <QDebug> // TODO: remove
-#include <QImage>
-#include <QPixmap>
-
 #include "Grid.h"
 
 using namespace qge;

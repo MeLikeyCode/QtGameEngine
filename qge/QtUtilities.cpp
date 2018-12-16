@@ -1,13 +1,5 @@
 #include "QtUtilities.h"
 
-#include <QPixmap>
-#include <QImage>
-#include <QColor>
-#include <QtMath>
-#include <QPoint>
-#include <QRect>
-#include <cassert>
-
 namespace qge{
 
 namespace QtUtils {

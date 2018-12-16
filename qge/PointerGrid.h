@@ -1,7 +1,6 @@
 #pragma once
 
-#include <vector>
-#include <cassert>
+#include "Vendor.h"
 
 #include "Node.h"
 

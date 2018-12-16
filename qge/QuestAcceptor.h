@@ -1,7 +1,6 @@
 #pragma once
 
-#include <memory>
-#include <QObject>
+#include "Vendor.h"
 
 #include "Gui.h"
 #include "QuestViewer.h"

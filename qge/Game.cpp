@@ -1,11 +1,5 @@
 #include "Game.h"
 
-#include <cstdlib>
-#include <QMouseEvent>
-#include <ctime>
-#include <cassert>
-#include <QGraphicsItem>
-
 #include "Map.h"
 #include "Spear.h" // TODO remove, test
 #include "Entity.h"

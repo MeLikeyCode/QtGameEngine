@@ -1,7 +1,6 @@
 #pragma once
 
-#include <vector>
-#include <QPointer>
+#include "Vendor.h"
 
 #include "Map.h"
 #include "PointerGrid.h"

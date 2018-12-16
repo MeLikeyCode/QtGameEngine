@@ -1,9 +1,6 @@
 #pragma once
 
-#include <vector>
-#include <QSizeF>
-#include <QObject>
-#include <QGraphicsItem>
+#include "Vendor.h"
 
 class QTimer;
 class QPixmap;

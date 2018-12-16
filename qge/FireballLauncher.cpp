@@ -4,7 +4,6 @@
 #include "SpearProjectile.h"
 #include "Sound.h"
 #include "Inventory.h"
-#include "cassert"
 #include "Map.h"
 #include "CBDamage.h"
 

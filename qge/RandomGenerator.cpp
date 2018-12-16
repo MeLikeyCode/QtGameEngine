@@ -1,11 +1,5 @@
 #include "RandomGenerator.h"
 
-#include <ctime> // time()
-#include <cstdlib> // srand() and rand()
-#include <cmath> // fmod (float modulus - in c/c++ '%' is only for integral types)
-#include <QPointF>
-#include <QRectF>
-
 using namespace qge;
 
 RandomGenerator::RandomGenerator()

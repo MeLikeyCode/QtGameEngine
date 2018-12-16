@@ -1,7 +1,6 @@
 #pragma once
 
-#include <QObject>
-#include <set>
+#include "Vendor.h"
 
 #include "WeatherEffect.h"
 #include "QVector2D"

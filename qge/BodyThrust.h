@@ -1,10 +1,8 @@
 #pragma once
 
+#include "Vendor.h"
+
 #include "NoTargetAbility.h"
-
-#include <QObject>
-#include <QPointF>
-
 #include "PlayingAnimationInfo.h"
 
 class QTimer;

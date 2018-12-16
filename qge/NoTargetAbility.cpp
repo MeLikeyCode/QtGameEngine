@@ -1,5 +1,5 @@
 #include "NoTargetAbility.h"
-#include <cassert>
+
 #include "Entity.h"
 
 using namespace qge;

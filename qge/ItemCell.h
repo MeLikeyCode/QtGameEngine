@@ -1,9 +1,6 @@
 #pragma once
 
-#include <QPointer>
-#include <memory>
-#include <QObject>
-#include <QGraphicsPixmapItem>
+#include "Vendor.h"
 
 #include "Item.h"
 #include "Gui.h"

@@ -1,7 +1,5 @@
 #include "ECItemPickerUpper.h"
 
-#include <cassert>
-
 #include "Inventory.h"
 #include "Item.h"
 

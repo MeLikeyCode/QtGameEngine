@@ -1,7 +1,5 @@
 #include "PositionalSound.h"
 
-#include <cassert>
-
 #include "Sound.h"
 #include "Map.h"
 #include "Game.h"

@@ -1,7 +1,6 @@
 #pragma once
 
-#include <QtGlobal>
-#include <vector>
+#include "Vendor.h"
 
 class QPointF;
 

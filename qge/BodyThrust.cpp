@@ -1,9 +1,5 @@
 #include "BodyThrust.h"
 
-#include <QGraphicsScene>
-#include <QDebug> // TODO: remove
-#include <cassert>
-
 #include "Sprite.h"
 #include "Map.h"
 #include "Inventory.h"

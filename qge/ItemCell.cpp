@@ -1,12 +1,5 @@
 #include "ItemCell.h"
 
-#include <cassert>
-#include <QPixmap>
-#include <QImage>
-#include <QGraphicsSceneMouseEvent>
-#include <QGraphicsSimpleTextItem>
-#include <QBrush>
-
 #include "Item.h"
 #include "Inventory.h"
 #include "Panel.h"

@@ -1,10 +1,5 @@
 #include "Sprite.h"
 
-#include <cassert>
-#include <QDebug>
-#include <QGraphicsScene>
-#include <QTimer>
-
 #include "Node.h"
 #include "SpriteSheet.h"
 #include "Utilities.h"

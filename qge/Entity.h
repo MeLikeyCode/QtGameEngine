@@ -1,12 +1,6 @@
 #pragma once
 
-#include <unordered_map>
-#include <unordered_set>
-#include <string>
-#include <set>
-#include <QPointer>
-#include <utility>
-#include <memory>
+#include "Vendor.h"
 
 #include "PathingMap.h"
 #include "AsyncShortestPathFinder.h"

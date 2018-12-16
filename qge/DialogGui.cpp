@@ -1,7 +1,5 @@
 #include "DialogGui.h"
 
-#include <cassert>
-
 #include "Label.h"
 #include "ScrollWindow.h"
 

@@ -1,7 +1,5 @@
 #include "InventoryUser.h"
 
-#include <cassert>
-
 #include "InventoryViewer.h"
 #include "Game.h"
 #include "EquipableItem.h"

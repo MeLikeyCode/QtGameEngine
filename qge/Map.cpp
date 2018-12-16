@@ -1,10 +1,5 @@
 #include "Map.h"
 
-#include <QGraphicsScene>
-#include <cassert>
-#include <QBrush>
-#include <QGraphicsOpacityEffect>
-
 #include "TerrainLayer.h"
 #include "Entity.h"
 #include "Game.h"

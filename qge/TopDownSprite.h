@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string>
+#include "Vendor.h"
 
 #include "EntitySprite.h"
 

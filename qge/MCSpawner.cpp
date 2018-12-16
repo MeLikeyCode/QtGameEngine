@@ -1,8 +1,5 @@
 #include "MCSpawner.h"
 
-#include <QTimer>
-#include <cassert>
-
 #include "Entity.h"
 #include "Map.h"
 #include "AngledSprite.h"

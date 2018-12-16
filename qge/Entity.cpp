@@ -1,11 +1,5 @@
 #include "Entity.h"
 
-#include <string>
-#include <cassert>
-#include <QGraphicsScene>
-#include <QLineF>
-#include <algorithm>
-
 #include "Map.h"
 #include "EntitySprite.h"
 #include "TopDownSprite.h"

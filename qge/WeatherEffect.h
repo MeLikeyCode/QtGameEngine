@@ -1,7 +1,6 @@
 #pragma once
 
-#include <QObject>
-#include <QPointer>
+#include "Vendor.h"
 
 #include "Map.h"
 

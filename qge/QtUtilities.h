@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Vendor.h"
+
 class QPixmap;
 class QImage;
 class QColor;

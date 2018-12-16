@@ -1,7 +1,5 @@
 #include "ScrollWindow.h"
 
-#include <cassert>
-
 #include "ScrollBar.h"
 #include "Panel.h"
 

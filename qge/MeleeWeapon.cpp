@@ -1,7 +1,5 @@
 #include "MeleeWeapon.h"
 
-#include <cassert>
-
 #include "Sprite.h"
 #include "Map.h"
 #include "EntitySprite.h"

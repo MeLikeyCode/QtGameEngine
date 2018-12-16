@@ -1,8 +1,6 @@
 #pragma once
 
-#include <unordered_map>
-#include <memory>
-#include <QObject>
+#include "Vendor.h"
 
 #include "Gui.h"
 #include "Panel.h"

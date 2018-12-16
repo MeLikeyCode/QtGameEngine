@@ -1,7 +1,5 @@
 #include "ECKeyboardMoverPerspective.h"
 
-#include <cassert>
-
 #include "Map.h"
 #include "QTimer"
 #include "Utilities.h"

@@ -1,8 +1,6 @@
 #pragma once
 
-#include <QPointF>
-#include <QRectF>
-#include <QMetaType>
+#include "Vendor.h"
 
 #include "PathGrid.h"
 

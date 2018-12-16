@@ -1,6 +1,6 @@
 #pragma once
 
-#include <memory>
+#include "Vendor.h"
 
 #include "Weapon.h"
 #include "CollisionBehavior.h"

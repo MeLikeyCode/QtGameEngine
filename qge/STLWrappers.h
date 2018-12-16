@@ -12,11 +12,7 @@
 /// All functions use the most efficient search, add, and removal operations available for the container.
 /// @file
 
-#include <algorithm>
-#include <set>
-#include <unordered_set>
-#include <map>
-#include <unordered_map>
+#include "Vendor.h"
 
 /// This namespace contains some STL wrapper functions that provide a simpler interface to the STL.
 /// Read the STLWrappers.h documentation for more info.

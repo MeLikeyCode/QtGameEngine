@@ -1,7 +1,5 @@
 #include "ShardsOfFireAbility.h"
 
-#include <QLine>
-
 #include "Sound.h"
 #include "SpearProjectile.h"
 #include "Map.h"

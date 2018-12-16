@@ -1,8 +1,6 @@
 #pragma once
 
-#include <QObject>
-#include <QPointF>
-#include <QPointer>
+#include "Vendor.h"
 
 #include "EntityController.h"
 #include "Entity.h"

@@ -1,9 +1,5 @@
 #include "ECStraightMover.h"
 
-#include <QTimer>
-#include <cassert>
-#include <QLineF>
-
 #include "Utilities.h"
 #include "QtUtilities.h"
 

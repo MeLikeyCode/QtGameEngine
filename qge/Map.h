@@ -1,8 +1,6 @@
 #pragma once
 
-#include <vector>
-#include <QPointer>
-#include <QObject>
+#include "Vendor.h"
 
 #include "PathingMap.h"
 #include "Game.h"

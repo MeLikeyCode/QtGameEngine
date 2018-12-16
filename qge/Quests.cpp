@@ -1,9 +1,5 @@
 #include "Quests.h"
 
-#include <cassert>
-
-#include "algorithm"
-
 using namespace qge;
 
 Quests::Quests()

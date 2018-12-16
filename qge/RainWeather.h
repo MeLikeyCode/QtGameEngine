@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QObject>
+#include "Vendor.h"
 
 #include "WeatherEffect.h"
 

@@ -1,7 +1,6 @@
 #pragma once
 
-#include <QObject>
-#include <string>
+#include "Vendor.h"
 
 namespace qge{
 

@@ -1,8 +1,5 @@
 #include "Animation.h"
 
-#include <QTimer>
-#include <stdexcept>
-
 #include "SpriteSheet.h"
 #include "Utilities.h"
 #include "Node.h"

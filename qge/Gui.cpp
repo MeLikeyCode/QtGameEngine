@@ -1,7 +1,5 @@
 #include "Gui.h"
 
-#include <QGraphicsItem>
-
 #include "Game.h"
 
 using namespace qge;

@@ -1,7 +1,6 @@
 #pragma once
 
-#include <QPointer>
-#include <QObject>
+#include "Vendor.h"
 
 #include "Gui.h"
 #include "InventoryViewer.h"

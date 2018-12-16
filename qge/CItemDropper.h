@@ -1,7 +1,6 @@
 #pragma once
 
-#include <QObject>
-#include <unordered_set>
+#include "Vendor.h"
 
 namespace qge{
 

@@ -1,10 +1,6 @@
 #pragma once
 
-#include <QPointer>
-#include <QPointF>
-#include <vector>
-#include <QPointF>
-#include <memory>
+#include "Vendor.h"
 
 #include "Entity.h"
 #include "ECMover.h"

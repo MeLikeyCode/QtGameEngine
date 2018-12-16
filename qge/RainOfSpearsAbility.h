@@ -1,7 +1,8 @@
 #pragma once
 
-#include "NoTargetAbility.h"
+#include "Vendor.h"
 
+#include "NoTargetAbility.h"
 
 namespace qge{
 

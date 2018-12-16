@@ -1,8 +1,5 @@
 #include "RangedWeaponSlot.h"
 
-#include <QLineF>
-#include <cassert>
-
 #include "RangedWeapon.h"
 #include "Inventory.h"
 #include "Entity.h"

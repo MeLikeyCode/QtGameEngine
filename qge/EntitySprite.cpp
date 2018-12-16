@@ -1,9 +1,5 @@
 #include "EntitySprite.h"
 
-#include <QRectF>
-#include <QGraphicsItem>
-#include <cassert>
-
 using namespace qge;
 
 EntitySprite::EntitySprite(): underlyingItem_(nullptr)

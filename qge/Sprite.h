@@ -1,11 +1,6 @@
 #pragma once
 
-#include <string>
-#include <QGraphicsItem>
-#include <QObject>
-#include <unordered_map>
-#include <vector>
-#include <QPixmap>
+#include "Vendor.h"
 
 #include "PlayingAnimationInfo.h"
 

@@ -1,8 +1,5 @@
 #include "ItemPushback.h"
 
-#include <cassert>
-#include <QPixmap>
-
 #include "Entity.h"
 #include "Inventory.h"
 #include "Sprite.h"

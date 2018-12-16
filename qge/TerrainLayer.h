@@ -1,8 +1,6 @@
 #pragma once
 
-#include <QPixmap>
-#include <QPointF>
-#include <QGraphicsPixmapItem>
+#include "Vendor.h"
 
 #include "Node.h"
 #include "Grid.h"

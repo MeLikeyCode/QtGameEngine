@@ -1,7 +1,6 @@
 #pragma once
 
-#include <QObject>
-#include <QThread>
+#include "Vendor.h"
 
 #include "PathingMap.h"
 

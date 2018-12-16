@@ -1,5 +1,4 @@
 #include "Ability.h"
-#include <cassert>
 
 using namespace qge;
 

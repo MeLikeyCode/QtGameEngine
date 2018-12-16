@@ -1,9 +1,5 @@
 #include "ScrollBar.h"
 
-#include <QGraphicsSceneMouseEvent>
-#include <cassert>
-#include <QDebug> // TODO: remove
-
 #include "QtUtilities.h"
 
 using namespace qge;

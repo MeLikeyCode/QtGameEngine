@@ -1,9 +1,5 @@
 #include "Projectile.h"
 
-#include <QTimer>
-#include <QDebug> // TODO: remove, test
-#include <cassert>
-
 #include "Map.h"
 #include "CollisionBehavior.h"
 #include "STLWrappers.h"

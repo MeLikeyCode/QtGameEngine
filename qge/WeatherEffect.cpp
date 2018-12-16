@@ -1,7 +1,5 @@
 #include "WeatherEffect.h"
 
-#include <cassert>
-
 #include "Map.h"
 
 using namespace qge;
