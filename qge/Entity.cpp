@@ -451,7 +451,7 @@ bool Entity::canFit(const QPointF &atPos)
 }
 
 /// Returns the children of this Entity.
-std::unordered_set<Entity *> Entity::children()
+std::unordered_set<Entity *> Entity::children() const
 {
     return children_;
 }
@@ -488,6 +488,28 @@ void Entity::setParentEntity(Entity *parent)
 Entity *Entity::parent()
 {
     return parent_;
+}
+
+/// Returns true if `entity` is a direct child of this Entity.
+bool Entity::hasChild(Entity* entity) const
+{
+    return children_.find(entity) != std::end(children_);
+}
+
+/// Returns true if `entity` is a child (or a child of a child) of this Entity.
+bool Entity::hasChildRecursive(Entity *entity) const
+{
+    // base case
+    if (hasChild(entity))
+        return true;
+
+    // recursive case
+    for (Entity* child: children_){
+        if (child->hasChildRecursive(entity))
+            return true;
+    }
+
+    return false;
 }
 
 /// Maps a point from local (Entity) coordinates to the Map (scene) coordinates.
@@ -635,6 +657,7 @@ void Entity::damageEnemy(Entity *enemy, double amount) const
         enemy->sprite()->playThenGoBackToOldAnimation("hit",1,10,0);
 }
 
+/// Damages the specified entity, but only if it is an enemy or neutral.
 void Entity::damageEnemyAndNeutral(Entity *enemyOrNeutral, double amount) const
 {
     DiplomacyManager& dm = Game::game->diplomacyManager();
@@ -648,6 +671,19 @@ void Entity::damageEnemyAndNeutral(Entity *enemyOrNeutral, double amount) const
         enemyOrNeutral->sprite()->playThenGoBackToOldAnimation("hit",1,10,0);
 }
 
+/// Damages the specified entity, but only if it's not a child of this entity.
+void Entity::damageAnyoneExceptChildren(Entity *entity, double amount) const
+{
+    // if entity isn't a child (or child of child), then damage it
+    if (!hasChildRecursive(entity))
+        entity->setHealth(entity->health() - amount);
+
+    // play hit animation
+    if (entity->sprite()->hasAnimation("hit"))
+        entity->sprite()->playThenGoBackToOldAnimation("hit",1,10,0);
+}
+
+/// Damages he specified entity, regardless of relationship.
 void Entity::damageAnyone(Entity *anyEntity, double amount) const
 {
     anyEntity->setHealth(anyEntity->health() - amount);

@@ -98,9 +98,11 @@ public:
     EntitySprite* sprite() const;
 
     // parent/child relationship
-    std::unordered_set<Entity*> children();
+    std::unordered_set<Entity*> children() const;
     void setParentEntity(Entity* parent);
     Entity* parent();
+    bool hasChild(Entity *entity) const;
+    bool hasChildRecursive(Entity* entity) const;
 
     // named points
     void addNamedPoint(const QPointF& point, std::string name);
@@ -122,7 +124,8 @@ public:
 
     void damageEnemy(Entity* enemy, double amount) const;
     void damageEnemyAndNeutral(Entity* enemyOrNeutral, double amount) const;
-    void damageAnyone(Entity* anyEntity, double amount) const;
+    void damageAnyoneExceptChildren(Entity* anyEntity, double amount) const;
+    void damageAnyone(Entity* entity, double amount) const;
 
     bool isInvulnerable();
     void setInvulnerable(bool tf);
