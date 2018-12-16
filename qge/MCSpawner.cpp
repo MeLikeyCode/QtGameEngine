@@ -50,7 +50,7 @@ void MCSpawner::onTimeout_()
     QPointF randPoint = random_.randQPointF(region_);
 
     Entity* entity = entityCreator_->createEntity();
-    entity->addEnemyGroup(1); // TODO, WHAT?
+    Game::game->diplomacyManager().setRelationship(entity->group(),1,Relationship::ENEMY); // TODO, WHAT?
     map_->addEntity(entity);
     entity->setPos(randPoint);
 }

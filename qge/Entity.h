@@ -3,8 +3,6 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <string>
-#include <typeinfo> // run time type identification (RTTI)
-#include <typeindex>// same ^
 #include <set>
 #include <QPointer>
 #include <utility>
@@ -37,14 +35,15 @@ class PositionalSound;
 /// When an Entity is first added to a Map, the map will use the Entitie's
 /// PathingMap and position to update its own PathingMap. When an Entity is
 /// moved, it will notify the Map so that it can once again update the
-/// PathingMap.
+/// PathingMap. When an entity is removed from the Map, the Map's pathing map
+/// will be updated.
 ///
 /// Entities support parent/child relationships. When a parent Entity moves or
 /// rotates, so do all of its children. When a parent Entity is deleted, so
 /// are all of its children. When a parent Entity is added/removed to/from a Map,
 /// so are all of its children.
 ///
-/// Entities can be controlled by entity controllers (TODO: link to doc).
+/// Entities can be controlled by entity controllers.
 class Entity: public QObject
 {
     Q_OBJECT
@@ -92,6 +91,7 @@ public:
     void facePoint(const QPointF& point);
     QPointF origin() const;
     void setOrigin(const QPointF& to);
+    QRectF boundingRect();
 
     // sprite
     void setSprite(EntitySprite* sprite, bool setOriginToCenterOfSprite = true);
@@ -119,21 +119,17 @@ public:
     double health();
     void setMaxHealth(double maxHealth);
     double maxHealth();
-    void damage(Entity* entity, double amount);
 
-    void setCanOnlyBeDamagedBy(bool tf);
-    void addCanBeDamagedBy(std::type_index typeOfEntity);
-    void addCannotBeDamagedBy(std::type_index typeOfEntity);
-    bool canBeDamagedBy(Entity* entity);
+    void damageEnemy(Entity* enemy, double amount) const;
+    void damageEnemyAndNeutral(Entity* enemyOrNeutral, double amount) const;
+    void damageAnyone(Entity* anyEntity, double amount) const;
+
     bool isInvulnerable();
     void setInvulnerable(bool tf);
 
     // group/enemy groups
     void setGroup(int groupNumber_);
     int group() const;
-    void addEnemyGroup(int groupNumber);
-    std::unordered_set<int> enemyGroups();
-    bool isAnEnemyGroup(int groupNumber);
     Relationship relationshipTowards(const Entity& otherEntity) const;
 
     // slot/equipment/inventory
@@ -147,7 +143,6 @@ public:
 
     // misc
     bool canFit(const QPointF& atPos);
-    QRectF boundingRect();
 
     // sounds
     void addSound(const std::string& soundName, const std::string& filepath);
@@ -199,11 +194,7 @@ private:
 
     double health_;
     double maxHealth_;
-    std::set<std::type_index> canOnlyBeDamagedBy_;
-    std::set<std::type_index> canBeDamagedByAllExcept_;
-    bool canOnlyBeDamagedByMode_;
     int groupNumber_;
-    std::unordered_set<int> enemyGroups_;
     bool invulnerable_;
 
     Inventory* inventory_;

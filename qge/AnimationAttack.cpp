@@ -82,7 +82,7 @@ void AnimationAttack::onFrameSwitched_(EntitySprite *ownersSprite, int fromFrame
         std::unordered_set<Entity*> entsInRegion = entitysMap->entities(poly);
         for (Entity* e:entsInRegion){
             if (e != this && e != owner) { // don't hurt self
-                this->damage(e,damage_);
+                owner->damageEnemy(e,damage_);
             }
         }
 

@@ -29,9 +29,6 @@ Entity::Entity():
     parent_(nullptr),
     health_(10),                    // default health of 10
     maxHealth_(100),                // deafult max health of 100
-    canOnlyBeDamagedBy_(),
-    canBeDamagedByAllExcept_(),
-    canOnlyBeDamagedByMode_(false), // by default, can be damaged by all
     groupNumber_(0),                     // default group id of 0
     invulnerable_(false),
     zPos_(0),
@@ -624,57 +621,40 @@ double Entity::maxHealth()
     return maxHealth_;
 }
 
-/// Attempts to damage the specified Entity. Every Entity can specifiy,
-/// what can and can't damage them.
-void Entity::damage(Entity *entity, double amount)
+/// Damages the specified entity, but only if it's an enemy.
+void Entity::damageEnemy(Entity *enemy, double amount) const
 {
-    // if can't damage the entity, return
-    if (!entity->canBeDamagedBy(this) || entity->isInvulnerable() ){
-        return;
+    DiplomacyManager& dm = Game::game->diplomacyManager();
+    Relationship relation = dm.getRelationship(group(),enemy->group());
+    if (relation == Relationship::ENEMY){
+        enemy->setHealth(enemy->health() - amount);
     }
 
     // play hit animation
-    if (entity->sprite()->hasAnimation("hit"))
-        entity->sprite()->playThenGoBackToOldAnimation("hit",1,10,0);
-
-    // damage
-    entity->setHealth(entity->health() - amount);
+    if (enemy->sprite()->hasAnimation("hit"))
+        enemy->sprite()->playThenGoBackToOldAnimation("hit",1,10,0);
 }
 
-/// True sets is so that the entity can only be damaged by entites specified
-/// in the canOnlyBeDamagedBy_ set.
-/// False sets it so that the entity can be damaged by all except those
-/// specified in the canBeDamagedByAllExcept_ set.
-void Entity::setCanOnlyBeDamagedBy(bool tf)
+void Entity::damageEnemyAndNeutral(Entity *enemyOrNeutral, double amount) const
 {
-    canOnlyBeDamagedByMode_ = tf;
-}
-
-/// Adds a type that this Entity can be damaged by.
-void Entity::addCanBeDamagedBy(std::type_index typeOfEntity)
-{
-    canOnlyBeDamagedBy_.insert(typeOfEntity);
-}
-
-void Entity::addCannotBeDamagedBy(std::type_index typeOfEntity)
-{
-    canBeDamagedByAllExcept_.insert(typeOfEntity);
-}
-
-/// Returns true if the Entity can be damaged by the specified entity.
-bool Entity::canBeDamagedBy(Entity *entity)
-{
-    // entity is not in the list of thigns allowed to damage
-    if (canOnlyBeDamagedByMode_ && canOnlyBeDamagedBy_.count(std::type_index(typeid(*entity))) == 0){
-        return false;
-    }
-    // entity is in the list of things not allowed to domage
-    if (!canOnlyBeDamagedByMode_ && canBeDamagedByAllExcept_.count(std::type_index(typeid(*entity))) != 0){
-        return false;
+    DiplomacyManager& dm = Game::game->diplomacyManager();
+    Relationship relation = dm.getRelationship(group(),enemyOrNeutral->group());
+    if (relation == Relationship::ENEMY || relation == Relationship::NEUTRAL){
+        enemyOrNeutral->setHealth(enemyOrNeutral->health() - amount);
     }
 
-    // entity should be able to dmage
-    return true;
+    // play hit animation
+    if (enemyOrNeutral->sprite()->hasAnimation("hit"))
+        enemyOrNeutral->sprite()->playThenGoBackToOldAnimation("hit",1,10,0);
+}
+
+void Entity::damageAnyone(Entity *anyEntity, double amount) const
+{
+    anyEntity->setHealth(anyEntity->health() - amount);
+
+    // play hit animation
+    if (anyEntity->sprite()->hasAnimation("hit"))
+        anyEntity->sprite()->playThenGoBackToOldAnimation("hit",1,10,0);
 }
 
 /// Returns true if the Entity is invulnerable. An invulnerable Entity cannot
@@ -698,6 +678,7 @@ void Entity::setInvulnerable(bool tf)
 /// entity controllers can easily figure out which entities should attack which
 /// other entities. Similarly, certain entity controllers may want the controlled
 /// entity to "heal" or "support" nearby friendly entities.
+/// @see DiplomacyManager
 void Entity::setGroup(int groupNumber)
 {
     groupNumber_ = groupNumber;
@@ -708,24 +689,6 @@ void Entity::setGroup(int groupNumber)
 int Entity::group() const
 {
     return groupNumber_;
-}
-
-/// Adds a group number that this entity should consider enemy.
-void Entity::addEnemyGroup(int groupNumber)
-{
-    enemyGroups_.insert(groupNumber);
-}
-
-/// Returns the group numbers that this entity considers enemies.
-std::unordered_set<int> Entity::enemyGroups()
-{
-    return enemyGroups_;
-}
-
-/// Returns true if the specified group number is an enemy.
-bool Entity::isAnEnemyGroup(int groupNumber)
-{
-    return enemyGroups_.find(groupNumber) != enemyGroups_.end();
 }
 
 /// Tells you how this entity feels towards the specified entity.

@@ -5,6 +5,7 @@
 #include "qge/SpriteSheet.h"
 #include "qge/ECBodyThruster.h"
 #include "qge/CItemDropper.h"
+#include "qge/Game.h"
 
 SpiderCreator::SpiderCreator():
     itemDropper_(new qge::CItemDropper())
@@ -17,7 +18,7 @@ qge::Entity *SpiderCreator::createEntity()
     // create entity here
     qge::Entity* entity = new qge::Entity();
     entity->setGroup(0);
-    entity->addEnemyGroup(1);
+    qge::Game::game->diplomacyManager().setRelationship(entity->group(),1,qge::Relationship::ENEMY);
     entity->setOrigin(QPointF(64,64));
 
     qge::AngledSprite* spiderSprite = new qge::AngledSprite();

@@ -1,6 +1,7 @@
 #include "Inventory.h"
 
 #include <cassert>
+#include <typeindex>
 
 #include "EquipableItem.h"
 #include "NoTargetItem.h"
