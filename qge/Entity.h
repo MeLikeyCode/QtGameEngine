@@ -85,10 +85,11 @@ public:
     void facePoint(const QPointF& point);
     QPointF origin() const;
     void setOrigin(const QPointF& to);
-    QRectF boundingRect();
+    void setBoundingRect(const QRectF& rect);
+    QRectF boundingRect() const;
 
     // sprite
-    void setSprite(EntitySprite* sprite, bool setOriginToCenterOfSprite = true);
+    void setSprite(EntitySprite* sprite, bool autoSetOriginAndBBox = true);
     EntitySprite* sprite() const;
 
     // parent/child relationship
@@ -177,6 +178,7 @@ private:
     QPointF pathingMapPos_;
     QPointF currentPos_;
     QPointF origin_; // location of the sprite that is the considered the "origin" of this entity
+    QRectF boundingRect_;
     double zPos_;
     double height_;
     double facingAngle_;

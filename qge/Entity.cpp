@@ -280,17 +280,15 @@ Node Entity::cellPos(){
 /// Sets the Sprite of the Entity.
 /// This does *not* delete the old sprite. You are responsible for the old sprite's lifetime. Use
 /// sprite() to get a pointer to the old sprite before calling this function.
-void Entity::setSprite(EntitySprite *sprite, bool setOriginToCenterOfSprite){
+/// @param autoSetOriginAndBBox If true, will automatically update the origin of the entity to be
+/// at the very center of the new sprite, and will automatically update the bounding box of the entity
+/// to encompass the whole sprite. For most sprites, you usually want to do this, that is why the
+/// parameter defaults to true. But if for example, the sprite has a lot of transparent pixels
+/// along the borders, you may want to leave your manually set bounding box.
+void Entity::setSprite(EntitySprite *sprite, bool autoSetOriginAndBBox){
     // set all childrens' sprites' parent to new sprite
     for (Entity* child: children()){
         child->sprite()->underlyingItem_->setParentItem(sprite->underlyingItem_);
-    }
-
-    // set origin
-    if (setOriginToCenterOfSprite){
-        double cx = sprite->boundingBox().width() / 2.0;
-        double cy = sprite->boundingBox().height() / 2.0;
-        setOrigin(QPointF(cx,cy));
     }
 
     // make sure the new sprite is positioned correctly on the scene
@@ -307,14 +305,19 @@ void Entity::setSprite(EntitySprite *sprite, bool setOriginToCenterOfSprite){
         sprite->underlyingItem_->setZValue(bot); // set z value (lower in map -> draw higher on top)
     }
 
+    // auto set origin and bounding box
+    if (autoSetOriginAndBBox){
+        double cx = sprite->boundingBox().width() / 2;
+        double cy = sprite->boundingBox().height() / 2;
+        setOrigin(QPointF(cx,cy));
+        boundingRect_ = sprite->boundingBox();
+    }
+
     // set internal sprite_ pointer to the new sprite
     sprite_ = sprite;
 
     // set scaling of the new sprite
     scaleBasedOnZ_();
-
-    // set origin to be the middle of the new sprite
-    setOrigin(QPointF(sprite->boundingBox().width()/2,sprite->boundingBox().height()/2));
 }
 
 /// Returns the Entity's Sprite. If the Entity does not have a sprite,
@@ -323,9 +326,12 @@ EntitySprite *Entity::sprite() const{
     return sprite_;
 }
 
-QRectF Entity::boundingRect()
+/// Returns the bounding rect of the entity.
+/// The bounding rect is the area of the entity's sprite that is considered to be it's "solid" part.
+/// This is the area that will be used to test for collisions and such.
+QRectF Entity::boundingRect() const
 {
-    return sprite()->boundingBox();
+    return boundingRect_;
 }
 
 /// Adds a sound to the entity with the specified name.
@@ -407,6 +413,13 @@ QPointF Entity::origin() const
 void Entity::setOrigin(const QPointF &to)
 {
     origin_ = to;
+}
+
+/// Sets the bounding rect of the entity.
+/// @see boundingRect()
+void Entity::setBoundingRect(const QRectF &rect)
+{
+    boundingRect_ = rect;
 }
 
 /// Instantly moves the Entity to the specified cell in the Map.
