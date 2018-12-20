@@ -1,5 +1,8 @@
-#ifndef VENDOR_H
-#define VENDOR_H
+#pragma once
+
+/// This file includes commonly included (and infrequently changed) header files.
+/// Instead of including any of these headers individually, just include this file.
+/// @file
 
 // Standard libraries
 #include <cstdlib>
@@ -55,6 +58,3 @@
 #include <QMouseEvent>
 #include <QPen>
 #include <QLine>
-
-
-#endif // VENDOR_H
