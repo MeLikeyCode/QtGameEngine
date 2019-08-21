@@ -29,10 +29,14 @@ TerrainLayer::TerrainLayer(int numXTiles, int numYTiles):
     // ctro chaining
 }
 
+/// Constructs a TerrainLayer with the specified number of tiles in the x and y direction.
+/// Each filled cell of the TerrainLayer will contain the specified pixmap.
+/// By default, every single cell is marked as filled (use unfill() to unfill some of the cells).
 TerrainLayer::TerrainLayer(int numXTiles, int numYTiles, QPixmap pixmap):
     numXTiles_(numXTiles),
     numYTiles_(numYTiles),
     pixmap_(pixmap),
+    enableFade_(true),
     parentItem_(new QGraphicsPixmapItem())
 {
     tileWidth_ = pixmap.width();
@@ -48,7 +52,6 @@ TerrainLayer::TerrainLayer(int numXTiles, int numYTiles, QPixmap pixmap):
     linearFadePercent_ = 0.2; // 20%
 
     fill();
-    setEnableFade(false);
 }
 
 /// Sets the position of the TerrainLayer within a Map.
@@ -141,15 +144,9 @@ void TerrainLayer::fill(){
 /// Pass in true to enable the fading; pass in false to disable it.
 bool TerrainLayer::setEnableFade(bool flag)
 {
-    if (flag){
-        for (Node cell : grid_.cells()){
-            setCorrectFade_(cell.x(),cell.y());
-        }
-    }
-    else{
-        for (Node cell : grid_.cells()){
-            pixmapAt_(cell.x(),cell.y())->setGraphicsEffect(nullptr);
-        }
+    enableFade_ = flag;
+    for (Node cell : grid_.cells()){
+        setCorrectFade_(cell.x(),cell.y());
     }
 }
 
@@ -183,6 +180,11 @@ Node TerrainLayer::positionOf_(QGraphicsPixmapItem *pixmapItem)
 /// Executed whenver the specified cell needs to recalculate itsfade.
 void TerrainLayer::setCorrectFade_(int x, int y)
 {
+    if (!enableFade_){
+        pixmapAt_(x,y)->setGraphicsEffect(nullptr);
+        return;
+    }
+
     // find out if its top, left, middle, etc...
     bool isTopLeft = false;
     bool isTopRight = false;

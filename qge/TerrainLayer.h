@@ -9,11 +9,28 @@ namespace qge{
 
 class Map;
 
-/// Represents a bunch of auto blended QPixmaps arranged in a grid that can go inside a Map. You
-/// can set the QPixmap to use for the Terrain by calling setPixmap(QPixmap). You can fill/unfill
-/// certain cells by calling fill(const Node&)/unfill(const Node&). You set the size of cells by
-/// calling setTileWidth/setTileHeight(). You can set the position of the TerrainLayer by using
-/// setPos(QPointF).
+/// Represents a grid with a bunch of cells; each of its cells can contain a QPixmap or it can be empty.
+///
+/// This grid can be placed in a Map by using the Map's `addTerrainLayer()` method. QPixmaps in a grid will be
+/// nicely blended. I can see this class being very useful for a tile map kind of effect.
+///
+/// Example
+/// -------
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.cpp
+/// TerrainLayer* tl = new TerrainLayer(10,10,myPixmap); // Create a 10x10 grid, each filled cell will contain myPixmap
+/// // Note: By default all cells are filled, use unfill() to unfill specified cells
+/// tl->setPos(QPointF(100,100)); // place the TerrainLayer's top left corner at (100,100) of the Map
+/// Map* map;
+/// map->addTerrainLayer(tl); // add the TerrainLayer to the Map (will go on top of any other TerrainLayers of the Map)
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+///
+/// @note You cannot place 2 *different* QPixmaps in the same TerrainLayer, you choose one QPixmap, and then you mark a cell
+/// as either filled or not. If a cell is marked as filled, the QPixmap will appear there, otherwise it won't. You can add
+/// multiple TerrainLayers in a Map to compensate for this fact.
+///
+/// Functions exist for setting the pixmap to be used, for filling/unfilling cells, for setting the size of cells,
+/// and for setting the position of the top left corner of the TerrainLayer in the Map. If you want to disable the nice
+/// blending/fading, call setEnableFade(false).
 class TerrainLayer{
     friend class Map; // Map needs to access parentItem_
 public:
@@ -23,7 +40,6 @@ public:
     // constructor
     TerrainLayer(int numXTiles, int numYTiles);
     TerrainLayer(int numXTiles, int numYTiles, QPixmap pixmap);
-
 
     void setPos(const QPointF& pos);
     QPointF pos();
@@ -47,6 +63,7 @@ private:
     QPixmap pixmap_;
     QPointF pos_;
     std::vector<QGraphicsPixmapItem*> tiles_;
+    bool enableFade_;
 
     // constants (TODO: make variable)
     double linearFadePercent_;
