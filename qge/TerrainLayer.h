@@ -36,6 +36,8 @@ public:
     bool filled(const Node& cell);
     void fill();
 
+    bool setEnableFade(bool flag);
+
 private:
     // main attributes
     int numXTiles_;

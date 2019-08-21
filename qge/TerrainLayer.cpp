@@ -48,6 +48,7 @@ TerrainLayer::TerrainLayer(int numXTiles, int numYTiles, QPixmap pixmap):
     linearFadePercent_ = 0.2; // 20%
 
     fill();
+    setEnableFade(false);
 }
 
 /// Sets the position of the TerrainLayer within a Map.
@@ -133,6 +134,22 @@ void TerrainLayer::fill(){
     for (Node cell:grid_.cells()){
         // fill it with the specified pixmap
         fill(cell);
+    }
+}
+
+/// Use to enable/disable the fading of edges/corners of the cells in the TerrainLayer.
+/// Pass in true to enable the fading; pass in false to disable it.
+bool TerrainLayer::setEnableFade(bool flag)
+{
+    if (flag){
+        for (Node cell : grid_.cells()){
+            setCorrectFade_(cell.x(),cell.y());
+        }
+    }
+    else{
+        for (Node cell : grid_.cells()){
+            pixmapAt_(cell.x(),cell.y())->setGraphicsEffect(nullptr);
+        }
     }
 }
 
