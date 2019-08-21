@@ -64,6 +64,8 @@ public:
     void removeEntity(Entity *entity);
 
     void addTerrainLayer(TerrainLayer* terrainLayer);
+    void removeTerrainLayer(TerrainLayer* terrainLayer);
+    std::vector<TerrainLayer*> terrainLayers();
 
     QGraphicsScene* scene();
 
@@ -117,7 +119,7 @@ private:
     std::unordered_map<PathingMap*,QPointF> additionalPathingMaps_; // additional pathing maps (and their location) that can be added/removed via addPathingMap()/removePathingMap()
     PathingMap* overallPathingMap_; // the "merge" of "ownPathingMap_" and all "additionalPathingMaps_"
     std::unordered_set<Entity*> entities_;
-    std::vector<std::unique_ptr<TerrainLayer>> terrainLayers_;
+    std::vector<TerrainLayer*> terrainLayers_;
     QPointer<Game> game_; // the game that is currently visualizing the map, null if not currently being visualizing
     std::set<WeatherEffect*> weatherEffects_;
 

@@ -434,8 +434,23 @@ void Map::onMapChanged_(Map *oldMap, Map *newMap)
 /// TerrainLayers stack in the order added (the later added, the "topper").
 /// @lifetime The Map will uniquely own the lifetime of the specified TerrainLayer.
 void Map::addTerrainLayer(TerrainLayer *terrainLayer){
-    terrainLayers_.push_back(std::unique_ptr<TerrainLayer>(terrainLayer));
+    terrainLayers_.push_back(terrainLayer);
     terrainLayer->parentItem_->setParentItem(terrainLayer_);
+}
+
+/// Remove the specified TerrainLayer from the Map.
+/// @lifetime You now uniquely own the lifetime of the removed terrain layer.
+/// @see addTerrainLayer() terrainLayers()
+void Map::removeTerrainLayer(TerrainLayer *terrainLayer)
+{
+    STLWrappers::remove(terrainLayers_,terrainLayer);
+    terrainLayer->parentItem_->setParentItem(nullptr);
+}
+
+/// Returns all the TerrainLayers that have been added to the Map.
+std::vector<TerrainLayer *> Map::terrainLayers()
+{
+    return terrainLayers_;
 }
 
 /// Adds the specified Entity (and all of its children) to the Map.

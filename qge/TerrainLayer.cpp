@@ -23,6 +23,9 @@ void TerrainLayer::setAlphaChannel(QPixmap& pixmap, int const alpha)
   pixmap = QPixmap::fromImage(image);
 }
 
+/// Constructs a TerrainLayer with the specified number of tiles in the x and y direction.
+/// The pixmap is a default grassy picture and everything is filled. Use unfill() to unfill
+/// some cells and use setPixmap() to change the pixmap.
 TerrainLayer::TerrainLayer(int numXTiles, int numYTiles):
     TerrainLayer(numXTiles,numYTiles,QPixmap(":resources/graphics/terrain/grass.png"))
 {
