@@ -445,6 +445,7 @@ void Map::removeTerrainLayer(TerrainLayer *terrainLayer)
 {
     STLWrappers::remove(terrainLayers_,terrainLayer);
     terrainLayer->parentItem_->setParentItem(nullptr);
+    scene_->removeItem(terrainLayer->parentItem_);
 }
 
 /// Returns all the TerrainLayers that have been added to the Map.
