@@ -10,6 +10,7 @@
 #include "Utilities.h"
 #include "EntitySprite.h"
 #include "STLWrappers.h"
+#include "Gui.h"
 
 using namespace qge;
 
@@ -39,6 +40,7 @@ Map::Map(PathingMap *pathingMap):
     scene_(new QGraphicsScene(this)),
     game_(nullptr),
     weatherLayer_(new QGraphicsRectItem()),
+    guiLayer_(new QGraphicsRectItem()),
     entityLayer_(new QGraphicsRectItem()),
     terrainLayer_(new QGraphicsRectItem())
 {
@@ -49,6 +51,7 @@ Map::Map(PathingMap *pathingMap):
     // add layers in proper order
     scene_->addItem(terrainLayer_);
     scene_->addItem(entityLayer_);
+    scene_->addItem(guiLayer_);
     scene_->addItem(weatherLayer_);
 
     // add a default TerrainLayer
@@ -406,6 +409,17 @@ void Map::addTerrainDecoration(const QPixmap &picture, const QPointF atPos)
 {
     QGraphicsPixmapItem* pmItem = new QGraphicsPixmapItem(picture,terrainLayer_);
     pmItem->setPos(atPos);
+}
+
+void Map::addGui(Gui *gui)
+{
+    gui->getGraphicsItem()->setParentItem(this->guiLayer_);
+}
+
+void Map::removeGui(Gui *gui)
+{
+    gui->getGraphicsItem()->setParentItem(nullptr);
+    scene_->removeItem(gui->getGraphicsItem());
 }
 
 /// Executed when the game's camera moves around its current map.

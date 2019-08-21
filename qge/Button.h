@@ -37,6 +37,8 @@ public:
 
     void mousePressEvent(QGraphicsSceneMouseEvent* event);
 
+    void setOnClickCB(std::function<void(Button*)> cb);
+
 signals:
     /// Emitted when the Button is clicked.
     void clicked();
@@ -51,6 +53,7 @@ private:
     bool textIsItalic_;
     int fontSize_;
     std::string text_;
+    std::function<void(Button*)> onClickCB_; // a function that is called whenever the Button i clicked (in addition to the clicked signal being emitted)
 
     // helper functions
     void draw_();

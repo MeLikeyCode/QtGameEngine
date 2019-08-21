@@ -14,6 +14,10 @@ Button::Button():
     fontSize_(12),
     textItem_(nullptr)
 {
+    this->onClickCB_ = [](Button* button){
+      // do nothing
+    };
+
     draw_();
 }
 
@@ -89,6 +93,15 @@ double Button::width()
 void Button::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     emit clicked();
+    this->onClickCB_(this);
+}
+
+/// Set a function that should be called whenever the button is clicked (in addition
+/// to the clicked signal being emitted). This is here for convenience.
+/// If you no longer want the function to be called, do setOnClickCB(aFunctionThatDoesNothing).
+void Button::setOnClickCB(std::function<void (Button *)> cb)
+{
+    onClickCB_ = cb;
 }
 
 /// Redraws the background and the text using the font size and padding and such.

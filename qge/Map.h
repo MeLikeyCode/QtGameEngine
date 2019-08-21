@@ -93,6 +93,9 @@ public:
 
     void addTerrainDecoration(const QPixmap& picture, const QPointF atPos);
 
+    void addGui(Gui* gui);
+    void removeGui(Gui* gui);
+
 signals:
     /// Emitted when the Map is set as the current Map for the game.
     void setAsCurrentMap(Map* sender);
@@ -124,6 +127,7 @@ private:
     std::set<WeatherEffect*> weatherEffects_;
 
     QGraphicsRectItem* weatherLayer_;
+    QGraphicsRectItem* guiLayer_;
     QGraphicsRectItem* entityLayer_;
     QGraphicsRectItem* terrainLayer_;
 

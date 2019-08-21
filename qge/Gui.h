@@ -10,10 +10,11 @@ namespace qge{
 
 class Game;
 
-/// Abstract class that Represents a GUI element in a Game.
+/// Abstract class that Represents a GUI element that can be added to a Game or a Map.
 ///
 /// A Gui is placed relative to its parent Gui, if it does not have a parent
-/// Gui, its place relative to the top left hand corner of the Game's screen.
+/// Gui, its place relative to the top left hand corner of the Game's screen
+/// (if added to Game) or to top left hand corner of the Map (if added to Map).
 ///
 /// Most Guis offer functions for customizing their look in some way.
 /// Most Guis emit signals when they are interacted with.
