@@ -131,7 +131,6 @@ private:
     QGraphicsScene* scene_;
 
     // helper functions
-    void setFadingBorder_();
     void setGame_(Game* game);
 };
 
