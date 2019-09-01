@@ -36,9 +36,9 @@ void EntityController::setEntityControlled(Entity* entity)
     connect(entityControlled_,&Entity::dying,this,&EntityController::onControlledEntityDying_); // listen to death of new entity
 }
 
-/// Executed when the controlled entity is dying.
-/// Default implementation does nothing.
-/// This function exists so that sub classes can easily respond to the controlled entity dying.
+/// Executed when the controlled entity is dying. Default implementation does
+/// nothing. This function exists so that sub classes can easily respond to the
+/// controlled entity dying (by simply over riding this function).
 void EntityController::onControlledEntityDying(Entity *controlledEntity)
 {
     // default impl, do nothing

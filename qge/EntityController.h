@@ -22,29 +22,35 @@ class Entity;
 /// // Note: Concrete EntityControllers will most likely have additional methods and/or signals.
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ///
-/// The best way to get an idea of what kind of things EntityControllers do with their controlled entity
-/// is to look at a few example EntityControllers.
+/// The best way to get an idea of what kind of things EntityControllers do
+/// with their controlled entity is to look at a few example EntityControllers.
+/// **As a naming convention, all concrete EntityControllers have the prefix
+/// EC**. You can use this fact to easily search for them. Alternatively, you
+/// can use QtCreator's type hierarchy feature to find all classes that inherit
+/// from EntityController.
 ///
-/// @note As a naming convention, all concrete EntityControllers have the prefix EC.
-///
-/// ECFieldOfViewEmitter will emit a signal whenever another entity either enters or leaves its
-/// controlled entity's field of view. ECMoveByKeyboardFourDirectional will move its controlled
-/// entity in response to the keyboard keys being pressed. ECRotater allows you to rotate its
+/// Let's briefly discuss a few concrete EntityControllers.
+/// ECFieldOfViewEmitter will emit a signal whenever another entity either
+/// enters or leaves its controlled entity's field of view.
+/// ECMoveByKeyboardFourDirectional will move its controlled entity in response
+/// to the keyboard keys being pressed. ECRotater allows you to rotate its
 /// controlled entity via its rotateRight(), rotateLeft(), etc... functions.
 ///
-/// As you can see some EntitiyControllers simply "watch" their controlled entity and emit signals
-/// when they see something interesting (e.g. ECFieldOFViewEmitter), other EntityControllers allow
-/// you to do something to the controlled entity (e.g. ECRotater), and some EntityControllers make
-/// the controlled entity do something in response to some external event (e.g.
-/// ECKeyboardMover4Directional). In summary, EntityControllers allow you to give a certain Entity
-/// some functionality.
+/// As you can see some EntitiyControllers simply "watch" their controlled
+/// entity and emit signals when they see something interesting (e.g.
+/// ECFieldOFViewEmitter), other EntityControllers allow you to do something to
+/// the controlled entity (e.g. ECRotater), and some EntityControllers make the
+/// controlled entity do something in response to some external event (e.g.
+/// ECKeyboardMover4Directional). In summary, EntityControllers allow you to
+/// give a certain Entity some functionality.
 ///
 /// Lifetime
 /// ========
-/// When an Entity is deconstructed, it will deconstruct all of the EntityControllers that are
-/// operating on it. This stays consistent with our general policy of "container" objects owning
-/// the lifetime of their "contained" objects. We leverage the QObject parent/child system in order
-/// to enforce this policy.
+/// When an Entity is deconstructed, it will deconstruct all of the
+/// EntityControllers that are operating on it. This stays consistent with our
+/// general policy of "container" objects owning the lifetime of their
+/// "contained" objects. Implementation Note: We leverage the QObject
+/// parent/child system in order to enforce this policy.
 class EntityController : public QObject // inherits from QObject for 'parent-child lifetime managment' and
                                         // because most sub classes will probably need to inherit from QObject anyways
 {
