@@ -479,7 +479,7 @@ void Map::addEntity(Entity *entity){
 
     // if the Entity is in another Map, remove it first
     Map* entitysMap = entity->map();
-    if (entitysMap != nullptr && entitysMap != this ){
+    if (entitysMap != nullptr && entitysMap != this ){ // TODO: The second check in this "if" is unnecessary, I think!
         entitysMap->removeEntity(entity);
     }
 
@@ -493,7 +493,7 @@ void Map::addEntity(Entity *entity){
     qreal bot = entity->mapToMap(entity->boundingRect().bottomRight()).y();
     entity->sprite()->underlyingItem_->setZValue(bot); // set z value (lower in map -> draw higher on top)
 
-    // add its children's sprite's as a child of its sprites
+    // add its children's sprite's as a child of its sprites // TODO: Why is this block needed? I don't think its needed...but double check!
     for (Entity* childEntity:entity->children()){
         childEntity->setParentEntity(entity);
     }
@@ -512,6 +512,7 @@ void Map::addEntity(Entity *entity){
 
     // notify that this entity (and all of its child entities) have been added to the map.
     emit entity->mapEntered(entity,this,entitysMap);
+    emit entityAdded(this,entity);
 }
 
 /// Removes the specified entity (and all of its children) from the map. If the
@@ -547,6 +548,7 @@ void Map::removeEntity(Entity *entity)
 
     // emit entity left map event
     entity->mapLeft(entity,this);
+    emit entityRemoved(this,entity);
 }
 
 /// Returns (a pointer to) the internal scene.

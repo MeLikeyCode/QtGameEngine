@@ -87,6 +87,7 @@ public:
     void setOrigin(const QPointF& to);
     void setBoundingRect(const QRectF& rect);
     QRectF boundingRect() const;
+    QPolygonF boundingPolygonInMap() const;
 
     // sprite
     void setSprite(EntitySprite* sprite, bool autoSetOriginAndBBox = true);

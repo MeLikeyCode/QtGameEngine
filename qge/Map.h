@@ -108,6 +108,16 @@ signals:
     /// This is only emitted when this map is set as the current Map for the Game.
     void camMoved(QPointF newCamPos);
 
+    /// Emitted when an Entity is added to the Map.
+    void entityAdded(Map* sender, Entity* addedEntity);
+
+    /// Emitted when an Entity is removed from the Map.
+    void entityRemoved(Map* sender, Entity* removedEntity);
+
+    /// Emitted when an Entity in the Map moves.
+    void entityMoved(Map* sender, Entity* movedEntity);
+
+
 public slots:
     void onCamMoved_(QPointF newCamPos);
     void onMapChanged_(Map* oldMap, Map* newMap);

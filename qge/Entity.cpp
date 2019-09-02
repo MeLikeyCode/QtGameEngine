@@ -201,6 +201,9 @@ void Entity::setPos(const QPointF &pos){
         QPointF lastPosCpy = lastPos_;
         lastPos_ = this->pos(); // update last position
         emit moved(this,lastPosCpy,this->pos());
+        if (map()){
+            map()->entityMoved(map(),this); // emit Map::entityMoved too
+        }
     }
 
 }
@@ -326,12 +329,19 @@ EntitySprite *Entity::sprite() const{
     return sprite_;
 }
 
-/// Returns the bounding rect of the entity.
+/// Returns the bounding rect of the entity (in local space).
 /// The bounding rect is the area of the entity's sprite that is considered to be it's "solid" part.
 /// This is the area that will be used to test for collisions and such.
 QRectF Entity::boundingRect() const
 {
     return boundingRect_;
+}
+
+/// Returns a polygon representing the bounding region of the Entity in its Map.
+/// This polygon is in Map space.
+QPolygonF Entity::boundingPolygonInMap() const
+{
+    return mapToMap(boundingRect());
 }
 
 /// Adds a sound to the entity with the specified name.
