@@ -102,6 +102,14 @@ signals:
     /// @param button The mouse button that was released.
     void mouseReleased(QPoint pos, Qt::MouseButton button);
 
+    /// Emitted when a key is pressed.
+    /// @param key Integer describing the key that was pressed. Compare with constants in Qt::key_.
+    void keyPressed(int key);
+
+    /// Emitted when a key is released.
+    /// @param key Integer describing the key that was released. Compare with constants in Qt::key_.
+    void keyReleased(int key);
+
     /// Emitted when the current Map of the game is changed.
     void mapChanged(Map* oldMap, Map* newMap);
 

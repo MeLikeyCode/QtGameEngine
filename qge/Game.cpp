@@ -167,7 +167,7 @@ void Game::moveCamRight(double byAmount)
 }
 
 void Game::mousePressEvent(QMouseEvent *event){
-    // do normal QGraphicsView event handling (it will pass it to the QGraphicsItems at location).
+    // do normal QGraphicsView event handling (it will pass it to the QGraphicsScene, which will pass to QGraphicsItems at location).
     QGraphicsView::mousePressEvent(event);
 
     // if event was handled (by one of the QGraphicsItems), we're done
@@ -228,6 +228,8 @@ void Game::keyPressEvent(QKeyEvent *event)
 
     if (!event->isAutoRepeat()){
         keysPressed_.insert(event->key());
+        emit keyPressed(event->key());
+        qDebug() << "pressed";
     }
 }
 
@@ -235,6 +237,8 @@ void Game::keyReleaseEvent(QKeyEvent *event)
 {
     if (!event->isAutoRepeat()){
         keysPressed_.erase(event->key());
+        emit keyReleased(event->key());
+        qDebug() << "released";
     }
 }
 

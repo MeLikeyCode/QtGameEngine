@@ -117,7 +117,6 @@ signals:
     /// Emitted when an Entity in the Map moves.
     void entityMoved(Map* sender, Entity* movedEntity);
 
-
 public slots:
     void onCamMoved_(QPointF newCamPos);
     void onMapChanged_(Map* oldMap, Map* newMap);
