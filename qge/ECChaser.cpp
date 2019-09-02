@@ -118,9 +118,6 @@ void ECChaser::setShowFOV(bool tf)
 /// entering entity as the target entity.
 void ECChaser::onEntityEntersFOV_(Entity *entity)
 {
-    // TODO: test remove
-    qDebug() << "onEntityEntersFOF_ executed";
-
     // if the controlled entity already has a target entity, do nothing
     if (targetEntity_ != nullptr)
         return;
@@ -144,8 +141,6 @@ void ECChaser::onEntityEntersFOV_(Entity *entity)
 /// Will unset the leaving entity as the target entity.
 void ECChaser::onEntityLeavesFOV_(Entity *entity)
 {
-    qDebug() << "onEntityLeavesFOV_ executed"; // TODO: remove, test
-
     // if leaving entity isn't the target of controlled entity, do nothing
     if (entity != targetEntity_)
         return;
@@ -185,7 +180,6 @@ void ECChaser::onControlledEntityMoved_()
 /// Will stop moving towards the chased entity.
 void ECChaser::onStopRangeEntered_(Entity *watched, Entity *watching, double range)
 {
-    qDebug() << "onEntityEntersRange_ executed"; // TODO: remove test
     pathMover_->stopMovingEntity();
     paused_ = true;
     emit entityChasePaused(targetEntity_);
@@ -195,7 +189,6 @@ void ECChaser::onStopRangeEntered_(Entity *watched, Entity *watching, double ran
 /// Will start chasing it again.
 void ECChaser::onStopRangeLeft_(Entity *watched, Entity *watching, double range)
 {
-    qDebug() << "onEntityLeavesRange_ executed"; // TODO: remove test
     paused_ = false;
 }
 

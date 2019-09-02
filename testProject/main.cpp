@@ -39,6 +39,7 @@
 #include "qge/ItemTeleport.h"
 #include "qge/FireballLauncher.h"
 #include "qge/ECGuiShower.h"
+#include "qge/MCRegionEmitter.h"
 
 #include "MyEventHandler.h"
 #include "SpiderCreator.h"
@@ -323,6 +324,20 @@ int main(int argc, char *argv[])
     player->inventory()->addItem(new ItemTeleport());
     player->inventory()->addItem(new ItemTeleport());
     player->inventory()->addItem(new ItemTeleport());
+
+    // test MCRegionEnteredEmitter
+    QVector<QPointF> pts;
+    pts.append(QPointF(0,0));
+    pts.append(QPointF(500,0));
+    pts.append(QPointF(500,500));
+    QPolygonF polygon(pts);
+    qge::MCRegionEmitter* re = new qge::MCRegionEmitter(map1,polygon);
+    re->setOnEntityEnteredCB([](qge::MCRegionEmitter* sender, qge::Entity* entity){
+        qDebug() << "entered";
+    });
+    re->setOnEntityLeftCB([](qge::MCRegionEmitter* sender, Entity* entity){
+        qDebug() << "exited";
+    });
 
     return a.exec();
 }
