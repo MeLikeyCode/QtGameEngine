@@ -48,7 +48,7 @@ public:
     void moveCamLeft(double byAmount);
     void moveCamRight(double byAmount);
 
-    // mouse event handlers
+    // mouse/key event handlers
     void mousePressEvent(QMouseEvent* event);
     void mouseMoveEvent(QMouseEvent* event);
     void mouseReleaseEvent(QMouseEvent* event);

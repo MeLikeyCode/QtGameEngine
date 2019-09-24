@@ -222,14 +222,9 @@ void Game::mouseReleaseEvent(QMouseEvent *event)
 
 void Game::keyPressEvent(QKeyEvent *event)
 {
-    if (event->key() == Qt::Key_Escape){
-        close();
-    }
-
     if (!event->isAutoRepeat()){
         keysPressed_.insert(event->key());
         emit keyPressed(event->key());
-        qDebug() << "pressed";
     }
 }
 
@@ -238,7 +233,6 @@ void Game::keyReleaseEvent(QKeyEvent *event)
     if (!event->isAutoRepeat()){
         keysPressed_.erase(event->key());
         emit keyReleased(event->key());
-        qDebug() << "released";
     }
 }
 
