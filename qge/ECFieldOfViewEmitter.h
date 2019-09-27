@@ -16,16 +16,12 @@ namespace qge{
 /// You can also use entitiesInView() to get
 /// all the current entities in the controlled entity's field of view.
 ///
-/// TODO: By default, ECFieldOfViewEmitter will emit a signal when *any* entity enters the
-/// controlled entity's field of view, but you can have it only emit signals when
-/// certain entities of interest enters the field of view of the controlled entity.
-///
 /// Example usage:
 /// ==============
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.cpp
-/// ECCheckFOV* c = new ECCheckFOV(entity);
-/// connect(c,&ECCheckFOV::entityEntersFOV,this,myCallback);
-/// connect(c,&ECCheckFOV::entityLeavesFOV,this,myCallback);
+/// ECFieldOfViewEmitter* c = new ECFieldOfViewEmitter(entity);
+/// connect(c,&ECFieldOfViewEmitter::entityEntersFOV,this,myCallback);
+/// connect(c,&ECFieldOfViewEmitter::entityLeavesFOV,this,myCallback);
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 /// @author Abdullah Aghazadah
 /// @date 11/23/16
