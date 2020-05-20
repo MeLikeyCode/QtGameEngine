@@ -145,7 +145,7 @@ void TerrainLayer::fill(){
 
 /// Use to enable/disable the fading of edges/corners of the cells in the TerrainLayer.
 /// Pass in true to enable the fading; pass in false to disable it.
-bool TerrainLayer::setEnableFade(bool flag)
+void TerrainLayer::setEnableFade(bool flag)
 {
     enableFade_ = flag;
     for (Node cell : grid_.cells()){

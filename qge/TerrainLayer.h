@@ -52,7 +52,7 @@ public:
     bool filled(const Node& cell);
     void fill();
 
-    bool setEnableFade(bool flag);
+    void setEnableFade(bool flag);
 
 private:
     // main attributes
