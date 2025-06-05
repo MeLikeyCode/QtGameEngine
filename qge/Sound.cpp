@@ -6,13 +6,15 @@ Sound::Sound(std::string filePath, QObject *parent):
     QObject(parent)
 {
     // initialize
+    audioOutput_ = new QAudioOutput;
     mediaPlayer_ = new QMediaPlayer(this);
-    mediaPlayer_->setMedia(QUrl(filePath.c_str()));
+    mediaPlayer_->setAudioOutput(audioOutput_);
+    mediaPlayer_->setSource (QUrl(filePath.c_str()));
 
     numTimesPlayed_ = 0;
     numTimesToPlay_ = 0;
 
-    connect(mediaPlayer_,&QMediaPlayer::stateChanged,this,&Sound::stateChanged_);
+    connect(mediaPlayer_,&QMediaPlayer::playbackStateChanged,this,&Sound::stateChanged_);
 }
 
 /// Plays the sound the specified number of times. Pass -1 to play an infinite
@@ -23,7 +25,7 @@ void Sound::play(int numOfTimes)
     numTimesToPlay_ = numOfTimes;
     numTimesPlayed_ = 1;
 
-    if (mediaPlayer_->state() == QMediaPlayer::PlayingState){
+    if (mediaPlayer_->playbackState() == QMediaPlayer::PlayingState){
         mediaPlayer_->stop();
     }
 
@@ -41,25 +43,25 @@ void Sound::stop()
 /// Sets the volume of the sound, from 0-100.
 void Sound::setVolume(int volume)
 {
-    mediaPlayer_->setVolume(volume);
+    audioOutput_->setVolume(volume);
 }
 
 /// Mutes/unmutes the Sound.
 void Sound::setMute(bool tf)
 {
-    mediaPlayer_->setMuted(tf);
+    audioOutput_->setMuted(tf);
 }
 
 /// Returns the state of the Sound (i.e. playing, stopped, etc...)
-QMediaPlayer::State Sound::state()
+QMediaPlayer::PlaybackState Sound::state()
 {
-    return mediaPlayer_->state();
+    return mediaPlayer_->playbackState();
 }
 
 /// Returns the volume of the Sound. 0-100.
 int Sound::volume()
 {
-    return mediaPlayer_->volume();
+    return audioOutput_->volume();
 }
 
 /// Executed each time the state of the internal MediaPlayer changes.
@@ -71,7 +73,7 @@ void Sound::stateChanged_()
     // - if so, play it again
     // - otherwise, emit finished() signal
 
-    if (mediaPlayer_->state() == QMediaPlayer::StoppedState){
+    if (mediaPlayer_->playbackState() == QMediaPlayer::StoppedState){
         if (numTimesPlayed_ < numTimesToPlay_ || numTimesToPlay_ == -1){
             mediaPlayer_->setPosition(0);
             mediaPlayer_->play();
