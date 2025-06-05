@@ -51,6 +51,7 @@
 #include <QPolygonF>
 #include <QMetaType>
 #include <QMediaPlayer>
+#include <QAudioOutput>
 #include <QtGlobal>
 #include <QBrush>
 #include <QFont>

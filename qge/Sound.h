@@ -27,7 +27,7 @@ public:
     void setVolume(int volume);
     void setMute(bool tf);
 
-    QMediaPlayer::State state();
+    QMediaPlayer::PlaybackState state();
     int volume();
 
 signals:
@@ -40,6 +40,7 @@ signals:
 public slots:
     void stateChanged_();
 private:
+    QAudioOutput* audioOutput_;
     QMediaPlayer* mediaPlayer_;
     int numTimesPlayed_;
     int numTimesToPlay_;
